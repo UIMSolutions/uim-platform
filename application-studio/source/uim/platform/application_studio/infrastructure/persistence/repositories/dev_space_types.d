@@ -35,9 +35,8 @@ class DevSpaceTypeRepository : TenantRepository!(DevSpaceType, DevSpaceTypeId), 
 unittest {
     mixin(ShowTest!("Running DevSpaceTypeRepository tests..."));
 
-    void testCountByCategory() {
+    void testCountByCategory(IDevSpaceTypeRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new DevSpaceTypeRepository();
 
         // Create test entities
         auto entity1 = DevSpaceType(tenantId, DevSpaceTypeId("dst1"));
@@ -67,9 +66,8 @@ unittest {
         repo.remove(entity3);
     }
 
-    void testFindByCategory() {
+    void testFindByCategory(IDevSpaceTypeRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new DevSpaceTypeRepository();
 
         // Create test entities
         auto entity1 = DevSpaceType(tenantId, DevSpaceTypeId("dst1"));
@@ -105,9 +103,8 @@ unittest {
         repo.remove(entity3);
     }
 
-    void testRemoveByCategory() {
+    void testRemoveByCategory(IDevSpaceTypeRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new DevSpaceTypeRepository();
 
         // Create test entities
         auto entity1 = DevSpaceType(tenantId, DevSpaceTypeId("dst1"));
@@ -137,9 +134,9 @@ unittest {
     }
 
     void runAllTests() {
-        testCountByCategory();
-        testFindByCategory();
-        testRemoveByCategory();
+        testCountByCategory(new DevSpaceTypeRepository());
+        testFindByCategory(new DevSpaceTypeRepository());
+        testRemoveByCategory(new DevSpaceTypeRepository());
     }
 
     runAllTests();

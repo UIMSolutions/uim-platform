@@ -34,14 +34,19 @@ class RunConfigurationRepository : TenantRepository!(RunConfiguration, RunConfig
 unittest {
     mixin(ShowTest!("Running RunConfigurationRepository tests..."));
 
-    void testCountByProject() {
+    void testCountByProject(IRunConfigurationRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new RunConfigurationRepository();
 
         // Create test entities
-        auto entity1 = RunConfiguration(RunConfigurationId("rc1"), tenantId, ProjectId("proj1"), "RunConfig 1");
-        auto entity2 = RunConfiguration(RunConfigurationId("rc2"), tenantId, ProjectId("proj2"), "RunConfig 2");
-        auto entity3 = RunConfiguration(RunConfigurationId("rc3"), tenantId, ProjectId("proj1"), "RunConfig 3");
+        auto entity1 = RunConfiguration(tenantId, RunConfigurationId("rc1"));
+        entity1.projectId = ProjectId("proj1");
+        entity1.name = "RunConfig 1";
+        auto entity2 = RunConfiguration(tenantId, RunConfigurationId("rc2"));
+        entity2.projectId = ProjectId("proj2");
+        entity2.name = "RunConfig 2";
+        auto entity3 = RunConfiguration(tenantId, RunConfigurationId("rc3"));
+        entity3.projectId = ProjectId("proj1");
+        entity3.name = "RunConfig 3";
 
         // Add entities to the repository
         repo.save(entity1);
@@ -58,14 +63,19 @@ unittest {
         repo.remove(entity3);
     }
 
-    void testFindByProject() {
+    void testFindByProject(IRunConfigurationRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new RunConfigurationRepository();
 
         // Create test entities
-        auto entity1 = RunConfiguration(RunConfigurationId("rc1"), tenantId, ProjectId("proj1"), "RunConfig 1");
-        auto entity2 = RunConfiguration(RunConfigurationId("rc2"), tenantId, ProjectId("proj2"), "RunConfig 2");
-        auto entity3 = RunConfiguration(RunConfigurationId("rc3"), tenantId, ProjectId("proj1"), "RunConfig 3");
+        auto entity1 = RunConfiguration(tenantId, RunConfigurationId("rc1"));
+        entity1.projectId = ProjectId("proj1");
+        entity1.name = "RunConfig 1";
+        auto entity2 = RunConfiguration(tenantId, RunConfigurationId("rc2"));
+        entity2.projectId = ProjectId("proj2");
+        entity2.name = "RunConfig 2";
+        auto entity3 = RunConfiguration(tenantId, RunConfigurationId("rc3"));
+        entity3.projectId = ProjectId("proj1");
+        entity3.name = "RunConfig 3";
 
         // Add entities to the repository
         repo.save(entity1);
@@ -88,14 +98,21 @@ unittest {
         repo.remove(entity3);
     }
 
-    void testRemoveByProject() {
+    void testRemoveByProject(IRunConfigurationRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new RunConfigurationRepository();
 
         // Create test entities
-        auto entity1 = RunConfiguration(RunConfigurationId("rc1"), tenantId, ProjectId("proj1"), "RunConfig 1");
-        auto entity2 = RunConfiguration(RunConfigurationId("rc2"), tenantId, ProjectId("proj2"), "RunConfig 2");
-        auto entity3 = RunConfiguration(RunConfigurationId("rc3"), tenantId, ProjectId("proj1"), "RunConfig 3");
+        auto entity1 = RunConfiguration(tenantId, RunConfigurationId("rc1"));
+        entity1.projectId = ProjectId("proj1");
+        entity1.name = "RunConfig 1";
+
+        auto entity2 = RunConfiguration(tenantId, RunConfigurationId("rc2"));
+        entity2.projectId = ProjectId("proj2");
+        entity2.name = "RunConfig 2";
+
+        auto entity3 = RunConfiguration(tenantId, RunConfigurationId("rc3"));
+        entity3.projectId = ProjectId("proj1");
+        entity3.name = "RunConfig 3";
 
         // Add entities to the repository
         repo.save(entity1);
@@ -112,9 +129,9 @@ unittest {
     }
 
     void runAllTests() {
-        testCountByProject();
-        testFindByProject();
-        testRemoveByProject();
+        testCountByProject(new RunConfigurationRepository());
+        testFindByProject(new RunConfigurationRepository());
+        testRemoveByProject(new RunConfigurationRepository());
     }
 
     runAllTests();

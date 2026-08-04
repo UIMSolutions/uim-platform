@@ -59,15 +59,15 @@ unittest {
 
         // Create test entities
         auto devSpace1 = DevSpace(tenantId, DevSpaceId("ds1"));
-        devSpace1.name = "owner1";
+        devSpace1.owner = "owner1";
         devSpace1.status = DevSpaceStatus.starting;
 
         auto devSpace2 = DevSpace(tenantId, DevSpaceId("ds2"));
-        devSpace2.name = "owner1";
+        devSpace2.owner = "owner1";
         devSpace2.status = DevSpaceStatus.stopping;
 
         auto devSpace3 = DevSpace(tenantId, DevSpaceId("ds3"));
-        devSpace3.name = "owner2";
+        devSpace3.owner = "owner2";
         devSpace3.status = DevSpaceStatus.starting;
 
         // Add entities to the repository
@@ -86,15 +86,15 @@ unittest {
 
         // Create test entities
         auto devSpace1 = DevSpace(tenantId, DevSpaceId("ds1"));
-        devSpace1.name = "owner1";
+        devSpace1.owner = "owner1";
         devSpace1.status = DevSpaceStatus.starting;
 
         auto devSpace2 = DevSpace(tenantId, DevSpaceId("ds2"));
-        devSpace2.name = "owner1";
+        devSpace2.owner = "owner1";
         devSpace2.status = DevSpaceStatus.stopping;
 
         auto devSpace3 = DevSpace(tenantId, DevSpaceId("ds3"));
-        devSpace3.name = "owner2";
+        devSpace3.owner = "owner2";
         devSpace3.status = DevSpaceStatus.starting;
 
         // Add entities to the repository
@@ -121,15 +121,15 @@ unittest {
 
         // Create test entities
         auto devSpace1 = DevSpace(tenantId, DevSpaceId("ds1"));
-        devSpace1.name = "owner1";
+        devSpace1.owner = "owner1";
         devSpace1.status = DevSpaceStatus.starting;
 
         auto devSpace2 = DevSpace(tenantId, DevSpaceId("ds2"));
-        devSpace2.name = "owner1";
+        devSpace2.owner = "owner1";
         devSpace2.status = DevSpaceStatus.stopping;
 
         auto devSpace3 = DevSpace(tenantId, DevSpaceId("ds3"));
-        devSpace3.name = "owner2";
+        devSpace3.owner = "owner2";
         devSpace3.status = DevSpaceStatus.starting;
 
         // Add entities to the repository
@@ -148,15 +148,15 @@ unittest {
 
         // Create test entities
         auto devSpace1 = DevSpace(tenantId, DevSpaceId("ds1"));
-        devSpace1.name = "owner1";
+        devSpace1.owner = "owner1";
         devSpace1.status = DevSpaceStatus.starting;
 
         auto devSpace2 = DevSpace(tenantId, DevSpaceId("ds2"));
-        devSpace2.name = "owner1";
+        devSpace2.owner = "owner1";
         devSpace2.status = DevSpaceStatus.stopping;
 
         auto devSpace3 = DevSpace(tenantId, DevSpaceId("ds3"));
-        devSpace3.name = "owner2";
+        devSpace3.owner = "owner2";
         devSpace3.status = DevSpaceStatus.starting;
 
         // Add entities to the repository
@@ -174,15 +174,15 @@ unittest {
 
         // Create test entities
         auto devSpace1 = DevSpace(tenantId, DevSpaceId("ds1"));
-        devSpace1.name = "owner1";
+        devSpace1.owner = "owner1";
         devSpace1.status = DevSpaceStatus.starting;
 
         auto devSpace2 = DevSpace(tenantId, DevSpaceId("ds2"));
-        devSpace2.name = "owner1";
+        devSpace2.owner = "owner1";
         devSpace2.status = DevSpaceStatus.stopping;
 
         auto devSpace3 = DevSpace(tenantId, DevSpaceId("ds3"));
-        devSpace3.name = "owner2";
+        devSpace3.owner = "owner2";
         devSpace3.status = DevSpaceStatus.starting;
 
         // Add entities to the repository
@@ -206,15 +206,15 @@ unittest {
 
         // Create test entities
         auto devSpace1 = DevSpace(tenantId, DevSpaceId("ds1"));
-        devSpace1.name = "owner1";
+        devSpace1.owner = "owner1";
         devSpace1.status = DevSpaceStatus.starting;
 
         auto devSpace2 = DevSpace(tenantId, DevSpaceId("ds2"));
-        devSpace2.name = "owner1";
+        devSpace2.owner = "owner1";
         devSpace2.status = DevSpaceStatus.stopping;
 
         auto devSpace3 = DevSpace(tenantId, DevSpaceId("ds3"));
-        devSpace3.name = "owner2";
+        devSpace3.owner = "owner2";
         devSpace3.status = DevSpaceStatus.starting;
 
         // Add entities to the repository

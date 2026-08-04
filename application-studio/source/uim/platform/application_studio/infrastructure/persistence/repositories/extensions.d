@@ -55,189 +55,213 @@ class ExtensionRepository : TenantRepository!(Extension, ExtensionId), IExtensio
 unittest {
     mixin(ShowTest!("Running ExtensionRepository tests..."));
 
-    void testCountByScope() {
+    void testCountByScope(IExtensionRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new ExtensionRepository();
 
         // Create test entities
-        auto entity1 = Extension(ExtensionId("ext1"), tenantId, "Extension 1", ExtensionScope
-                .thirdParty);
-        auto entity2 = Extension(ExtensionId("ext2"), tenantId, "Extension 2", ExtensionScope.predefined);
-        auto entity3 = Extension(ExtensionId("ext3"), tenantId, "Extension 3", ExtensionScope
-                .thirdParty);
+        auto extension1 = Extension(tenantId, ExtensionId("ext1"));
+        extension1.name = "Extension 1";
+        extension1.scope_ = ExtensionScope.thirdParty;
+        auto extension2 = Extension(tenantId, ExtensionId("ext2"));
+        extension2.name = "Extension 2";
+        extension2.scope_ = ExtensionScope.predefined;
+        auto extension3 = Extension(tenantId, ExtensionId("ext3"));
+        extension3.name = "Extension 3";
+        extension3.scope_ = ExtensionScope.predefined;
 
         // Add entities to the repository
-        repo.save(entity1);
-        repo.save(entity2);
-        repo.save(entity3);
+        repo.save(extension1);
+        repo.save(extension2);
+        repo.save(extension3);
 
         // Test countByScope
-        assert(repo.countByScope(tenantId, ExtensionScope.thirdParty) == 2);
-        assert(repo.countByScope(tenantId, ExtensionScope.predefined) == 1);
+        assert(repo.countByScope(tenantId, ExtensionScope.thirdParty) == 1);
+        assert(repo.countByScope(tenantId, ExtensionScope.predefined) == 2);
 
         // Clean up
-        repo.remove(entity1);
-        repo.remove(entity2);
-        repo.remove(entity3);
+        repo.remove(extension1);
+        repo.remove(extension2);
+        repo.remove(extension3);
     }
 
-    void testFindByScope() {
+    void testFindByScope(IExtensionRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new ExtensionRepository();
 
         // Create test entities
-        auto entity1 = Extension(ExtensionId("ext1"), tenantId, "Extension 1", ExtensionScope
-                .thirdParty);
-        auto entity2 = Extension(ExtensionId("ext2"), tenantId, "Extension 2", ExtensionScope.predefined);
-        auto entity3 = Extension(ExtensionId("ext3"), tenantId, "Extension 3", ExtensionScope
-                .thirdParty);
+        auto extension1 = Extension(tenantId, ExtensionId("ext1"));
+        extension1.name = "Extension 1";
+        extension1.scope_ = ExtensionScope.thirdParty;
+        auto extension2 = Extension(tenantId, ExtensionId("ext2"));
+        extension2.name = "Extension 2";
+        extension2.scope_ = ExtensionScope.predefined;
+        auto extension3 = Extension(tenantId, ExtensionId("ext3"));
+        extension3.name = "Extension 3";
+        extension3.scope_ = ExtensionScope.thirdParty;
 
         // Add entities to the repository
-        repo.save(entity1);
-        repo.save(entity2);
-        repo.save(entity3);
+        repo.save(extension1);
+        repo.save(extension2);
+        repo.save(extension3);
 
         // Test findByScope
         auto globalExtensions = repo.findByScope(tenantId, ExtensionScope.thirdParty);
         assert(globalExtensions.length == 2);
-        assert(globalExtensions.canFind!(e => e.id == entity1.id));
-        assert(globalExtensions.canFind!(e => e.id == entity3.id));
+        assert(globalExtensions.canFind!(e => e.id == extension1.id));
+        assert(globalExtensions.canFind!(e => e.id == extension3.id));
 
         auto localExtensions = repo.findByScope(tenantId, ExtensionScope.predefined);
         assert(localExtensions.length == 1);
-        assert(localExtensions[0].id == entity2.id);
+        assert(localExtensions[0].id == extension2.id);
 
         // Clean up
-        repo.remove(entity1);
-        repo.remove(entity2);
-        repo.remove(entity3);
+        repo.remove(extension1);
+        repo.remove(extension2);
+        repo.remove(extension3);
     }
 
-    void testRemoveByScope() {
+    void testRemoveByScope(IExtensionRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new ExtensionRepository();
 
         // Create test entities
-        auto entity1 = Extension(ExtensionId("ext1"), tenantId, "Extension 1", ExtensionScope
-                .thirdParty);
-        auto entity2 = Extension(ExtensionId("ext2"), tenantId, "Extension 2", ExtensionScope.predefined);
-        auto entity3 = Extension(ExtensionId("ext3"), tenantId, "Extension 3", ExtensionScope
-                .thirdParty);
+        auto extension1 = Extension(tenantId, ExtensionId("ext1"));
+        extension1.name = "Extension 1";
+        extension1.scope_ = ExtensionScope.thirdParty;
+        auto extension2 = Extension(tenantId, ExtensionId("ext2"));
+        extension2.name = "Extension 2";
+        extension2.scope_ = ExtensionScope.predefined;
+        auto extension3 = Extension(tenantId, ExtensionId("ext3"));
+        extension3.name = "Extension 3";
+        extension3.scope_ = ExtensionScope.thirdParty;
 
         // Add entities to the repository
-        repo.save(entity1);
-        repo.save(entity2);
-        repo.save(entity3);
+        repo.save(extension1);
+        repo.save(extension2);
+        repo.save(extension3);
 
         // Test removeByScope
         repo.removeByScope(tenantId, ExtensionScope.thirdParty);
-        assert(!repo.exists(entity1));
-        assert(!repo.exists(entity3));
-        assert(repo.exists(entity2));
+        assert(!repo.exists(extension1));
+        assert(!repo.exists(extension3));
+        assert(repo.exists(extension2));
 
         // Clean up
-        repo.remove(entity2);
+        repo.remove(extension2);
     }
 
-    void testCountByStatus() {
+    void testCountByStatus(IExtensionRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new ExtensionRepository();
 
         // Create test entities
-        auto entity1 = Extension(ExtensionId("ext1"), tenantId, "Extension 1", ExtensionScope
-                .thirdParty);
-        entity1.status = ExtensionStatus.active;
-        auto entity2 = Extension(ExtensionId("ext2"), tenantId, "Extension 2", ExtensionScope.predefined);
-        entity2.status = ExtensionStatus.inactive;
-        auto entity3 = Extension(ExtensionId("ext3"), tenantId, "Extension 3", ExtensionScope.thirdParty);
-        entity3.status = ExtensionStatus.active;
+        auto extension1 = Extension(tenantId, ExtensionId("ext1"));
+        extension1.name = "Extension 1";
+        extension1.scope_ = ExtensionScope.thirdParty;
+        extension1.status = ExtensionStatus.active;
+        auto extension2 = Extension(tenantId, ExtensionId("ext2"));
+        extension2.name = "Extension 2";
+        extension2.scope_ = ExtensionScope.predefined;
+        extension2.status = ExtensionStatus.inactive;
+        auto extension3 = Extension(tenantId, ExtensionId("ext3"));
+        extension3.name = "Extension 3";
+        extension3.scope_ = ExtensionScope.thirdParty;
+        extension3.status = ExtensionStatus.active;
 
         // Add entities to the repository
-        repo.save(entity1);
-        repo.save(entity2);
-        repo.save(entity3);
+        repo.save(extension1);
+        repo.save(extension2);
+        repo.save(extension3);
 
         // Test countByStatus
         assert(repo.countByStatus(tenantId, ExtensionStatus.active) == 2);
         assert(repo.countByStatus(tenantId, ExtensionStatus.inactive) == 1);
 
         // Clean up
-        repo.remove(entity1);
-        repo.remove(entity2);
-        repo.remove(entity3);
+        repo.remove(extension1);
+        repo.remove(extension2);
+        repo.remove(extension3);
     }
 
-    void testFindByStatus() {
+    void testFindByStatus(IExtensionRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new ExtensionRepository();
 
         // Create test entities
-        auto entity1 = Extension(ExtensionId("ext1"), tenantId, "Extension 1", ExtensionScope
-                .thirdParty);
-        entity1.status = ExtensionStatus.active;
-        auto entity2 = Extension(ExtensionId("ext2"), tenantId, "Extension 2", ExtensionScope.predefined);
-        entity2.status = ExtensionStatus.inactive;
-        auto entity3 = Extension(ExtensionId("ext3"), tenantId, "Extension 3", ExtensionScope
-                .thirdParty);
-        entity3.status = ExtensionStatus.active;
+        auto extension1 = Extension(tenantId, ExtensionId("ext1"));
+        extension1.name = "Extension 1";
+        extension1.scope_ = ExtensionScope.thirdParty;
+        extension1.status = ExtensionStatus.active;
+        auto extension2 = Extension(tenantId, ExtensionId("ext2"));
+        extension2.name = "Extension 2";
+        extension2.scope_ = ExtensionScope.predefined;
+        extension2.status = ExtensionStatus.inactive;
+        auto extension3 = Extension(tenantId, ExtensionId("ext3"));
+        extension3.name = "Extension 3";
+        extension3.scope_ = ExtensionScope.thirdParty;
+        extension3.status = ExtensionStatus.active;
 
         // Add entities to the repository
-        repo.save(entity1);
-        repo.save(entity2);
-        repo.save(entity3);
+        repo.save(extension1);
+        repo.save(extension2);
+        repo.save(extension3);
 
         // Test findByStatus
         auto activeExtensions = repo.findByStatus(tenantId, ExtensionStatus.active);
         assert(activeExtensions.length == 2);
-        assert(activeExtensions.canFind!(e => e.id == entity1.id));
-        assert(activeExtensions.canFind!(e => e.id == entity3.id));
+        assert(activeExtensions.canFind!(e => e.id == extension1.id));
+        assert(activeExtensions.canFind!(e => e.id == extension3.id));
 
         auto inactiveExtensions = repo.findByStatus(tenantId, ExtensionStatus.inactive);
         assert(inactiveExtensions.length == 1);
-        assert(inactiveExtensions[0].id == entity2.id);
+        assert(inactiveExtensions[0].id == extension2.id);
 
         // Clean up
-        repo.remove(entity1);
-        repo.remove(entity2);
-        repo.remove(entity3);
+        repo.remove(extension1);
+        repo.remove(extension2);
+        repo.remove(extension3);
     }
 
-    void testRemoveByStatus() {
+    void testRemoveByStatus(IExtensionRepository repo) {
         auto tenantId = TenantId("tenant1");
-        auto repo = new ExtensionRepository();
 
         // Create test entities
-        auto entity1 = Extension(ExtensionId("ext1"), tenantId, "Extension 1", ExtensionScope
-                .thirdParty);
-        entity1.status = ExtensionStatus.active;
-        auto entity2 = Extension(ExtensionId("ext2"), tenantId, "Extension 2", ExtensionScope.predefined);
-        entity2.status = ExtensionStatus.inactive;
-        auto entity3 = Extension(ExtensionId("ext3"), tenantId, "Extension 3", ExtensionScope
-                .thirdParty);
-        entity3.status = ExtensionStatus.active;
+        auto extension1 = Extension(tenantId, ExtensionId("ext1"));
+        extension1.name = "Extension 1";
+        extension1.description = "Description for Extension 1";
+        extension1.scope_ = ExtensionScope.thirdParty;
+        extension1.status = ExtensionStatus.active;
+        
+        auto extension2 = Extension(tenantId, ExtensionId("ext2"));
+        extension2.name = "Extension 2";
+        extension2.description = "Description for Extension 2";
+        extension2.scope_ = ExtensionScope.predefined;
+        extension2.status = ExtensionStatus.inactive;
+
+        auto extension3 = Extension(tenantId, ExtensionId("ext3"));
+        extension3.name = "Extension 3";
+        extension3.description = "Description for Extension 3";
+        extension3.scope_ = ExtensionScope.thirdParty;
+        extension3.status = ExtensionStatus.active;
 
         // Add entities to the repository
-        repo.save(entity1);
-        repo.save(entity2);
-        repo.save(entity3);
+        repo.save(extension1);
+        repo.save(extension2);
+        repo.save(extension3);
 
         // Test removeByStatus
         repo.removeByStatus(tenantId, ExtensionStatus.active);
-        assert(!repo.exists(entity1));
-        assert(!repo.exists(entity3));
-        assert(repo.exists(entity2));
+        assert(!repo.exists(extension1));
+        assert(!repo.exists(extension3));
+        assert(repo.exists(extension2));
 
         // Clean up
-        repo.remove(entity2);
+        repo.remove(extension2);
     }
 
     void runAllTests() {
-        testCountByScope();
-        testFindByScope();
-        testRemoveByScope();
-        testCountByStatus();
-        testFindByStatus();
-        testRemoveByStatus();
+        testCountByScope(new ExtensionRepository());
+        testFindByScope(new ExtensionRepository());
+        testRemoveByScope(new ExtensionRepository());
+        testCountByStatus(new ExtensionRepository());
+        testFindByStatus(new ExtensionRepository());
+        testRemoveByStatus(new ExtensionRepository());
     }
 
     runAllTests();

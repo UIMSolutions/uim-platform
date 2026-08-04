@@ -123,4 +123,12 @@ unittest {
         auto templates = repo.findByCategory(tenantId, category);
         assert(templates.length == 0);
     }
+
+    void runAllTests() {
+        testCountByCategory(new ProjectTemplateRepository());
+        testFindByCategory(new ProjectTemplateRepository());
+        testRemoveByCategory(new ProjectTemplateRepository());
+    }
+
+    runAllTests();
 }
