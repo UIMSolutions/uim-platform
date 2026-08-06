@@ -11,6 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
+/// Controller for managing app definitions via HTTP requests.
 class AppDefinitionController : ManageHttpController {
     private ManageAppDefinitionsUseCase usecase;
 
@@ -20,6 +21,7 @@ class AppDefinitionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/agentry/app-definitions", &handleList);
         router.get("/api/v1/agentry/app-definitions/*", &handleGet);
         router.post("/api/v1/agentry/app-definitions", &handleCreate);
@@ -33,14 +35,12 @@ class AppDefinitionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto items = usecase.listDefinitions(tenantId).map!(e => e.toJson()).array.toJson;
 
-        auto items = usecase.listDefinitions(tenantId);
-        auto list = items.map!(e => e.toJson()).array.toJson;
-
-        auto resp = Json.emptyObject
+        auto responseData = Json.emptyObject
             .set("count", items.length)
-            .set("resources", list);
-        return successResponse("App definition list retrieved successfully", "Retrieved", 200, resp);
+            .set("resources", items);
+        return successResponse("App definition list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -67,8 +67,8 @@ class AppDefinitionController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("App definition created successfully", "Created", 201, resp);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("App definition created successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -77,8 +77,6 @@ class AppDefinitionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
-
         auto id = AppDefinitionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid app definition ID", 400);
@@ -97,7 +95,6 @@ class AppDefinitionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto data = precheck.data;
         auto id = AppDefinitionId(precheck.id);
         if (id.isNull)
@@ -115,8 +112,8 @@ class AppDefinitionController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("App definition updated successfully", "Updated", 200, resp);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("App definition updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -125,8 +122,6 @@ class AppDefinitionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
-
         auto id = AppDefinitionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid app definition ID", 400);

@@ -11,6 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
+/// Use case for managing app definitions.
 class ManageAppDefinitionsUseCase {
     private IAppDefinitionRepository repo;
 
@@ -35,38 +36,38 @@ class ManageAppDefinitionsUseCase {
     }
 
     CommandResult createDefinition(AppDefinitionDTO dto) {
-        auto def = AppDefinition(dto.tenantId, dto.definitionId, dto.createdBy);
-        def.applicationId = dto.applicationId;
-        def.name = dto.name;
-        def.description = dto.description;
-        def.definitionContent = dto.definitionContent;
-        def.definitionFormat = dto.definitionFormat;
-        def.schemaVersion = dto.schemaVersion;
-        def.authoredBy = dto.authoredBy;
-        def.targetPlatform = dto.targetPlatform;
-        def.businessObjectModel = dto.businessObjectModel;
+        auto entity = AppDefinition(dto.tenantId, dto.definitionId, dto.createdBy);
+        entity.applicationId = dto.applicationId;
+        entity.name = dto.name;
+        entity.description = dto.description;
+        entity.definitionContent = dto.definitionContent;
+        entity.definitionFormat = dto.definitionFormat;
+        entity.schemaVersion = dto.schemaVersion;
+        entity.authoredBy = dto.authoredBy;
+        entity.targetPlatform = dto.targetPlatform;
+        entity.businessObjectModel = dto.businessObjectModel;
 
-        if (!AgentryValidator.isValidAppDefinition(def))
+        if (!AgentryValidator.isValidAppDefinition(entity))
             return CommandResult(false, "", "Invalid app definition data");
 
-        repo.save(def);
-        return CommandResult(true, def.id.value, "");
+        repo.save(entity);
+        return CommandResult(true, entity.id.value, "App definition created successfully");
     }
 
     CommandResult updateDefinition(AppDefinitionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.definitionId);
-        if (existing.isNull)
+        auto entity = repo.findById(dto.tenantId, dto.definitionId);
+        if (entity.isNull)
             return CommandResult(false, "", "App definition not found");
 
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.definitionContent.length > 0) existing.definitionContent = dto.definitionContent;
-        if (dto.schemaVersion.length > 0) existing.schemaVersion = dto.schemaVersion;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        if (dto.targetPlatform.length > 0) existing.targetPlatform = dto.targetPlatform;
+        if (dto.name.length > 0) entity.name = dto.name;
+        if (dto.description.length > 0) entity.description = dto.description;
+        if (dto.definitionContent.length > 0) entity.definitionContent = dto.definitionContent;
+        if (dto.schemaVersion.length > 0) entity.schemaVersion = dto.schemaVersion;
+        if (!dto.updatedBy.isNull) entity.updatedBy = dto.updatedBy;
+        if (dto.targetPlatform.length > 0) entity.targetPlatform = dto.targetPlatform;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 
     CommandResult deleteDefinition(TenantId tenantId, AppDefinitionId id) {
@@ -75,7 +76,7 @@ class ManageAppDefinitionsUseCase {
             return CommandResult(false, "", "App definition not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return CommandResult(true, entity.id.value, "App definition deleted successfully");
     }
 }
 

@@ -9,6 +9,6 @@ public {
     import uim.platform.agentry.domain.enumerations;
     import uim.platform.agentry.domain.types;
     import uim.platform.agentry.domain.entities;
-    import uim.platform.agentry.domain.repositories;
+    import uim.platform.agentry.domain.ports.repositories;
     import uim.platform.agentry.domain.services;
 }
