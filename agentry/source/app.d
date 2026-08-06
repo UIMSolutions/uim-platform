@@ -16,6 +16,14 @@ version (unittest) {
 
     auto router = new URLRouter();
 
+    auto restPath = "/rest/v1/";
+    router.registerRestInterface(new AppDefinitionService(
+        new ManageAppDefinitionsUseCase(
+          new AppDefinitionRepository())), restPath ~ "agentry/app-definitions");
+    foreach (route; router.getAllRoutes()) {
+      writeln("Methode: ", route.method, ", Pfad: ", route.pattern);
+    }
+
     {
       import uim.platform.agentry.presentation.http;
 

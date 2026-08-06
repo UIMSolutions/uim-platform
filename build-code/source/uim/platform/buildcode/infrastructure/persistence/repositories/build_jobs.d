@@ -11,50 +11,70 @@ mixin(ShowModule!());
 
 @safe:
 
-class BuildJobRepository : IBuildJobRepository {
-  private BuildJob[string] _store;
+class BuildJobRepository : TenantRepository!(BuildJob, BuildJobId), IBuildJobRepository {
 
-  override void save(BuildJob entity)               { _store[entity.id.value] = entity; }
-  override void update(BuildJob entity)             { _store[entity.id.value] = entity; }
-  override void remove(TenantId tenantId, BuildJobId id) { _store.remove(id.value); }
-
-  override BuildJob findById(TenantId tenantId, BuildJobId id) {
-    if (id.value in _store) return _store[id.value];
-    BuildJob j; return j;
+  size_t countByPipeline(TenantId tenantId, string pipelineId) {
+    return findByPipeline(tenantId, pipelineId).length;
   }
 
-  override BuildJob[] findByTenant(TenantId tenantId) {
-    BuildJob[] result;
-    foreach (j; _store.byValue)
-      if (j.tenantId == tenantId) result ~= j;
-    return result;
+  BuildJob[] filterByPipeline(BuildJob[] jobs, string pipelineId) {
+    return jobs.filter!(j => j.pipelineId.value == pipelineId).array;
   }
 
-  override BuildJob[] findByPipeline(TenantId tenantId, string pipelineId) {
-    BuildJob[] result;
-    foreach (j; _store.byValue)
-      if (j.tenantId == tenantId && j.pipelineId.value == pipelineId) result ~= j;
-    return result;
+  BuildJob[] findByPipeline(TenantId tenantId, string pipelineId) {
+    return filterByPipeline(findByTenant(tenantId), pipelineId);
   }
 
-  override BuildJob[] findByProject(TenantId tenantId, string projectId) {
-    BuildJob[] result;
-    foreach (j; _store.byValue)
-      if (j.tenantId == tenantId && j.projectId.value == projectId) result ~= j;
-    return result;
+  void removeByPipeline(TenantId tenantId, string pipelineId) {
+    findByPipeline(tenantId, pipelineId).each!(j => remove(j));
   }
 
-  override BuildJob[] findByStatus(TenantId tenantId, JobStatus status) {
-    BuildJob[] result;
-    foreach (j; _store.byValue)
-      if (j.tenantId == tenantId && j.status == status) result ~= j;
-    return result;
+  size_t countByProject(TenantId tenantId, string projectId) {
+    return findByProject(tenantId, projectId).length;
   }
 
-  override BuildJob[] findByBranch(TenantId tenantId, string branch) {
-    BuildJob[] result;
-    foreach (j; _store.byValue)
-      if (j.tenantId == tenantId && j.branch == branch) result ~= j;
-    return result;
+  BuildJob[] filterByProject(BuildJob[] jobs, string projectId) {
+    return jobs.filter!(j => j.projectId.value == projectId).array;
   }
+
+  BuildJob[] findByProject(TenantId tenantId, string projectId) {
+    return filterByProject(findByTenant(tenantId), projectId);
+  }
+
+  void removeByProject(TenantId tenantId, string projectId) {
+    findByProject(tenantId, projectId).each!(j => remove(j));
+  }
+
+  size_t countByStatus(TenantId tenantId, JobStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  BuildJob[] filterByStatus(BuildJob[] jobs, JobStatus status) {
+    return jobs.filter!(j => j.status == status).array;
+  }
+
+  BuildJob[] findByStatus(TenantId tenantId, JobStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, JobStatus status) {
+    findByStatus(tenantId, status).each!(j => remove(j));
+  }
+
+  size_t countByBranch(TenantId tenantId, string branch) {
+    return findByBranch(tenantId, branch).length;
+  }
+
+  BuildJob[] filterByBranch(BuildJob[] jobs, string branch) {
+    return jobs.filter!(j => j.branch == branch).array;
+  }
+
+  BuildJob[] findByBranch(TenantId tenantId, string branch) {
+    return filterByBranch(findByTenant(tenantId), branch);
+  }
+
+  void removeByBranch(TenantId tenantId, string branch) {
+    findByBranch(tenantId, branch).each!(j => remove(j));
+  }
+  
 }

@@ -19,8 +19,12 @@ class ExportJobRepository : TenantRepository!(ExportJob, ExportJobId), IExportJo
     return findByPackage(tenantId, packageId).length;
   }
 
+  ExportJob[] filterByPackage(ExportJob[] jobs, ContentPackageId packageId) {
+    return jobs.filter!(e => e.packageId == packageId).array;
+  }
+
   ExportJob[] findByPackage(TenantId tenantId, ContentPackageId packageId) {
-    return findByTenant(tenantId).filter!(e => e.packageId == packageId).array;
+    return filterByPackage(findByTenant(tenantId), packageId);
   }
 
   void removeByPackage(TenantId tenantId, ContentPackageId packageId) {

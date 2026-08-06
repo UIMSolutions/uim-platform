@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 interface ITemplateRepository : ITenantRepository!(ProjectTemplate, TemplateId) {
-  ProjectTemplate[]  findByProjectType(TenantId tenantId, ProjectType type);
-  ProjectTemplate[]  findByTechStack(TenantId tenantId, TechStack stack);
-  ProjectTemplate[]  findBuiltIn(TenantId tenantId);
+  ProjectTemplate[] findByProjectType(TenantId tenantId, ProjectType type);
+  ProjectTemplate[] findByTechStack(TenantId tenantId, TechStack stack);
+  ProjectTemplate[] findBuiltIn(TenantId tenantId);
 }

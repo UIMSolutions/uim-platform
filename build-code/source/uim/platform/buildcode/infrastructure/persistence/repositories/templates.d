@@ -11,43 +11,42 @@ mixin(ShowModule!());
 
 @safe:
 
-class TemplateRepository : TemplateRepository {
-  private ProjectTemplate[string] _store;
+class TemplateRepository : TenantRepository!(ProjectTemplate, TemplateId), ITemplateRepository {
 
-  override void save(ProjectTemplate entity)              { _store[entity.id.value] = entity; }
-  override void update(ProjectTemplate entity)            { _store[entity.id.value] = entity; }
-  override void remove(TenantId tenantId, TemplateId id)    { _store.remove(id.value); }
-
-  override ProjectTemplate findById(TenantId tenantId, TemplateId id) {
-    if (id.value in _store) return _store[id.value];
-    ProjectTemplate t; return t;
+  size_t countByProjectType(TenantId tenantId, ProjectType type) {
+    return findByProjectType(tenantId, type).length;
   }
 
-  override ProjectTemplate[] findByTenant(TenantId tenantId) {
-    ProjectTemplate[] result;
-    foreach (t; _store.byValue)
-      if (t.tenantId == tenantId) result ~= t;
-    return result;
+  ProjectTemplate[] filterByProjectType(ProjectTemplate[] templates, ProjectType type) {
+    return templates.filter!(t => t.projectType == type).array;
   }
 
-  override ProjectTemplate[] findByProjectType(TenantId tenantId, ProjectType type) {
-    ProjectTemplate[] result;
-    foreach (t; _store.byValue)
-      if (t.tenantId == tenantId && t.projectType == type) result ~= t;
-    return result;
+  ProjectTemplate[] findByProjectType(TenantId tenantId, ProjectType type) {
+    return filterByProjectType(findByTenant(tenantId), type);
   }
 
-  override ProjectTemplate[] findByTechStack(TenantId tenantId, TechStack stack) {
-    ProjectTemplate[] result;
-    foreach (t; _store.byValue)
-      if (t.tenantId == tenantId && t.techStack == stack) result ~= t;
-    return result;
+  void removeByProjectType(TenantId tenantId, ProjectType type) {
+    findByProjectType(tenantId, type).each!(t => remove(t));
   }
 
-  override ProjectTemplate[] findBuiltIn(TenantId tenantId) {
-    ProjectTemplate[] result;
-    foreach (t; _store.byValue)
-      if (t.tenantId == tenantId && t.isBuiltIn) result ~= t;
-    return result;
+  size_t countByTechStack(TenantId tenantId, TechStack stack) {
+    return findByTechStack(tenantId, stack).length;
   }
+
+  ProjectTemplate[] filterByTechStack(ProjectTemplate[] templates, TechStack stack) {
+    return templates.filter!(t => t.techStack == stack).array;
+  }
+
+  ProjectTemplate[] findByTechStack(TenantId tenantId, TechStack stack) {
+    return filterByTechStack(findByTenant(tenantId), stack);
+  }
+
+  void removeByTechStack(TenantId tenantId, TechStack stack) {
+    findByTechStack(tenantId, stack).each!(t => remove(t));
+  }
+
+  ProjectTemplate[] findBuiltIn(TenantId tenantId) {
+    return findByTenant(tenantId).filter!(t => t.isBuiltIn).array;
+  }
+  
 }

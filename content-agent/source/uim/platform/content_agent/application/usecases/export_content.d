@@ -63,8 +63,8 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     pkg.updatedAt = currentTimestamp();
     packageRepo.update(pkg);
 
-    recordActivity(req.tenantId, ActivityType.exportCompleted, pkg.id.value, pkg.name,
-      "Export completed for package: " ~ pkg.name, req.startedBy);
+    // recordActivity(req.tenantId, ActivityType.exportCompleted, pkg.id.value, pkg.name,
+    //   "Export completed for package: " ~ pkg.name, req.startedBy);
 
     return CommandResult(true, pkg.id.value, "");
   }

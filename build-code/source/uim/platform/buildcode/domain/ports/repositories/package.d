@@ -1,6 +1,6 @@
 module uim.platform.buildcode.domain.ports.repositories;
 
-public {
+public:
   import uim.platform.buildcode.domain.ports.repositories.projects;
   import uim.platform.buildcode.domain.ports.repositories.devspaces;
   import uim.platform.buildcode.domain.ports.repositories.templates;
@@ -9,4 +9,3 @@ public {
   import uim.platform.buildcode.domain.ports.repositories.deployments;
   import uim.platform.buildcode.domain.ports.repositories.ai_requests;
   import uim.platform.buildcode.domain.ports.repositories.service_bindings;
-}

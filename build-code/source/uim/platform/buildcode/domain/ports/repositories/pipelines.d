@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 interface IPipelineRepository : ITenantRepository!(Pipeline, PipelineId) {
-  Pipeline[]  findByProject(TenantId tenantId, string projectId);
-  Pipeline[]  findByStage(TenantId tenantId, PipelineStage stage);
-  Pipeline[]  findActive(TenantId tenantId);
+  Pipeline[] findByProject(TenantId tenantId, string projectId);
+  Pipeline[] findByStage(TenantId tenantId, PipelineStage stage);
+  Pipeline[] findActive(TenantId tenantId);
 }

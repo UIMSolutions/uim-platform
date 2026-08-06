@@ -11,50 +11,70 @@ mixin(ShowModule!());
 
 @safe:
 
-class AIRequestRepository : AIRequestRepository {
-  private AIRequest[string] _store;
+class AIRequestRepository : TenantRepository!(AIRequest, AIRequestId), IAIRequestRepository {
 
-  override void save(AIRequest entity)                { _store[entity.id.value] = entity; }
-  override void update(AIRequest entity)              { _store[entity.id.value] = entity; }
-  override void remove(TenantId tenantId, AIRequestId id) { _store.remove(id.value); }
-
-  override AIRequest findById(TenantId tenantId, AIRequestId id) {
-    if (id.value in _store) return _store[id.value];
-    AIRequest r; return r;
+  size_t countByProject(TenantId tenantId, string projectId) {
+    return findByProject(tenantId, projectId).length;
   }
 
-  override AIRequest[] findByTenant(TenantId tenantId) {
-    AIRequest[] result;
-    foreach (r; _store.byValue)
-      if (r.tenantId == tenantId) result ~= r;
-    return result;
+  AIRequest[] filterByProject(AIRequest[] requests, string projectId) {
+    return requests.filter!(r => r.projectId.value == projectId).array
   }
 
-  override AIRequest[] findByProject(TenantId tenantId, string projectId) {
-    AIRequest[] result;
-    foreach (r; _store.byValue)
-      if (r.tenantId == tenantId && r.projectId.value == projectId) result ~= r;
-    return result;
+  AIRequest[] findByProject(TenantId tenantId, string projectId) {
+    return filterByProject(findByTenant(tenantId), projectId);
   }
 
-  override AIRequest[] findByStatus(TenantId tenantId, AIRequestStatus status) {
-    AIRequest[] result;
-    foreach (r; _store.byValue)
-      if (r.tenantId == tenantId && r.status == status) result ~= r;
-    return result;
+  void deleteByProject(TenantId tenantId, string projectId) {
+    findByProject(tenantId, projectId).each!(r => remove(r));
   }
 
-  override AIRequest[] findByType(TenantId tenantId, AIGenerationType type) {
-    AIRequest[] result;
-    foreach (r; _store.byValue)
-      if (r.tenantId == tenantId && r.generationType == type) result ~= r;
-    return result;
+  size_t countByStatus(TenantId tenantId, AIRequestStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  override AIRequest[] findByUser(TenantId tenantId, string userId) {
-    AIRequest[] result;
-    foreach (r; _store.byValue)
-      if (r.tenantId == tenantId && r.requestedBy == userId) result ~= r;
-    return result;
+  AIRequest[] filterByStatus(AIRequest[] requests, AIRequestStatus status) {
+    return requests.filter!(r => r.status == status).array;
   }
+
+  AIRequest[] findByStatus(TenantId tenantId, AIRequestStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, AIRequestStatus status) {
+    findByStatus(tenantId, status).each!(r => remove(r));
+  }
+
+  size_t countByType(TenantId tenantId, AIGenerationType type) {
+    return findByType(tenantId, type).length;
+  }
+
+  AIRequest[] filterByType(AIRequest[] requests, AIGenerationType type) {
+    return requests.filter!(r => r.generationType == type).array;
+  }
+
+  AIRequest[] findByType(TenantId tenantId, AIGenerationType type) {
+    return filterByType(findByTenant(tenantId), type);
+  }
+
+  void removeByType(TenantId tenantId, AIGenerationType type) {
+    findByType(tenantId, type).each!(r => remove(r));
+  }
+
+  size_t countByUser(TenantId tenantId, string userId) {
+    return findByUser(tenantId, userId).length;
+  }
+
+  AIRequest[] filterByUser(AIRequest[] requests, string userId) {
+    return requests.filter!(r => r.requestedBy == userId).array;
+  }
+
+  AIRequest[] findByUser(TenantId tenantId, string userId) {
+    return filterByUser(findByTenant(tenantId), userId);
+  }
+
+  void removeByUser(TenantId tenantId, string userId) {
+    findByUser(tenantId, userId).each!(r => remove(r));
+  }
+
 }

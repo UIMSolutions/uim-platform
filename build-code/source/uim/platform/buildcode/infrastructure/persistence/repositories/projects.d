@@ -11,58 +11,57 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProjectRepository : ProjectRepository {
-  private Project[string] _store;
+class ProjectRepository : TenantRepository!(Project, ProjectId), IProjectRepository {
 
-  override void save(Project entity) {
-    _store[entity.id.value] = entity;
+  size_t countByStatus(TenantId tenantId, ProjectStatus status) {
+    return findByStatus(tenantId, status).length;
   }
 
-  override void update(Project entity) {
-    _store[entity.id.value] = entity;
+  Project[] filterByStatus(Project[] projects, ProjectStatus status) {
+    return projects.filter!(p => p.status == status).array;
   }
 
-  override void remove(TenantId tenantId, ProjectId id) {
-    _store.remove(id.value);
+  Project[] findByStatus(TenantId tenantId, ProjectStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
-  override Project findById(TenantId tenantId, ProjectId id) {
-    if (id.value in _store) return _store[id.value];
-    Project p;
-    return p;
+  void removeByStatus(TenantId tenantId, ProjectStatus status) {
+    findByStatus(tenantId, status).each!(p => remove(p));
   }
 
-  override Project[] findByTenant(TenantId tenantId) {
-    Project[] result;
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId) result ~= p;
-    return result;
+  size_t countByType(TenantId tenantId, ProjectType type) {
+    return findByType(tenantId, type).length;
   }
 
-  override Project[] findByStatus(TenantId tenantId, ProjectStatus status) {
-    Project[] result;
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId && p.status == status) result ~= p;
-    return result;
+  Project[] filterByType(Project[] projects, ProjectType type) {
+    return projects.filter!(p => p.type == type).array;
   }
 
-  override Project[] findByType(TenantId tenantId, ProjectType type) {
-    Project[] result;
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId && p.type == type) result ~= p;
-    return result;
+  Project[] findByType(TenantId tenantId, ProjectType type) {
+    return filterByType(findByTenant(tenantId), type);
   }
 
-  override Project[] findByOwner(TenantId tenantId, string ownerEmail) {
-    Project[] result;
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId && p.ownerEmail == ownerEmail) result ~= p;
-    return result;
+  void removeByType(TenantId tenantId, ProjectType type) {
+    findByType(tenantId, type).each!(p => remove(p));
   }
 
-  override bool nameExists(TenantId tenantId, string name) {
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId && p.name == name) return true;
-    return false;
+  size_t countByOwner(TenantId tenantId, string ownerEmail) {
+    return findByOwner(tenantId, ownerEmail).length;
+  }
+
+  Project[] filterByOwner(Project[] projects, string ownerEmail) {
+    return projects.filter!(p => p.ownerEmail == ownerEmail).array;
+  }
+
+  Project[] findByOwner(TenantId tenantId, string ownerEmail) {
+    return filterByOwner(findByTenant(tenantId), ownerEmail);
+  }
+
+  void removeByOwner(TenantId tenantId, string ownerEmail) {
+    findByOwner(tenantId, ownerEmail).each!(p => remove(p));
+  }
+
+  bool nameExists(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(p => p.name == name);
   }
 }

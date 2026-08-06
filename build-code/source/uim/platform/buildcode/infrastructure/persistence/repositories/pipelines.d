@@ -11,43 +11,54 @@ mixin(ShowModule!());
 
 @safe:
 
-class PipelineRepository : PipelineRepository {
-  private Pipeline[string] _store;
+class PipelineRepository : TenantRepository!(Pipeline, PipelineId), IPipelineRepository {
 
-  override void save(Pipeline entity)              { _store[entity.id.value] = entity; }
-  override void update(Pipeline entity)            { _store[entity.id.value] = entity; }
-  override void remove(TenantId tenantId, PipelineId id) { _store.remove(id.value); }
-
-  override Pipeline findById(TenantId tenantId, PipelineId id) {
-    if (id.value in _store) return _store[id.value];
-    Pipeline p; return p;
+  size_t countByProject(TenantId tenantId, string projectId) {
+    return findByProject(tenantId, projectId).length;
   }
 
-  override Pipeline[] findByTenant(TenantId tenantId) {
-    Pipeline[] result;
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId) result ~= p;
-    return result;
+  Pipeline[] filterByProject(Pipeline[] pipelines, string projectId) {
+    return pipelines.filter!(p => p.projectId.value == projectId).array;
   }
 
-  override Pipeline[] findByProject(TenantId tenantId, string projectId) {
-    Pipeline[] result;
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId && p.projectId.value == projectId) result ~= p;
-    return result;
+  Pipeline[] findByProject(TenantId tenantId, string projectId) {
+    return filterByProject(findByTenant(tenantId), projectId);
+  }
+
+  void removeByProject(TenantId tenantId, string projectId) {
+    findByProject(tenantId, projectId).each!(p => remove(p));
+  }
+
+  size_t countByStage(TenantId tenantId, PipelineStage stage) {
+    return findByStage(tenantId, stage).length;
+  }
+
+  Pipeline[] filterByStage(Pipeline[] pipelines, PipelineStage stage) {
+    return pipelines.filter!(p => p.stage == stage).array;
   }
 
   override Pipeline[] findByStage(TenantId tenantId, PipelineStage stage) {
-    Pipeline[] result;
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId && p.stage == stage) result ~= p;
-    return result;
+    return filterByStage(findByTenant(tenantId), stage);
   }
 
-  override Pipeline[] findActive(TenantId tenantId) {
-    Pipeline[] result;
-    foreach (p; _store.byValue)
-      if (p.tenantId == tenantId && p.isActive) result ~= p;
-    return result;
+  void removeByStage(TenantId tenantId, PipelineStage stage) {
+    findByStage(tenantId, stage).each!(p => remove(p));
   }
+
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length;
+  }
+  
+  Pipeline[] filterActive(Pipeline[] pipelines) {
+    return pipelines.filter!(p => p.isActive).array;
+  }
+  
+  Pipeline[] findActive(TenantId tenantId) {
+    return filterActive(findByTenant(tenantId));
+  }
+
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).each!(p => remove(p));
+  }
+
 }

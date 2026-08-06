@@ -11,43 +11,50 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceBindingRepository : ServiceBindingRepository {
-  private ServiceBinding[string] _store;
+class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
-  override void save(ServiceBinding entity)                    { _store[entity.id.value] = entity; }
-  override void update(ServiceBinding entity)                  { _store[entity.id.value] = entity; }
-  override void remove(TenantId tenantId, ServiceBindingId id)   { _store.remove(id.value); }
-
-  override ServiceBinding findById(TenantId tenantId, ServiceBindingId id) {
-    if (id.value in _store) return _store[id.value];
-    ServiceBinding sb; return sb;
+  size_tt countByProject(TenantId tenantId, string projectId) {
+    return findByProject(tenantId, projectId).length;
   }
 
-  override ServiceBinding[] findByTenant(TenantId tenantId) {
-    ServiceBinding[] result;
-    foreach (sb; _store.byValue)
-      if (sb.tenantId == tenantId) result ~= sb;
-    return result;
+  ServiceBinding[] filterByProject(ServiceBinding[] bindings, string projectId) {
+    return bindings.filter!(sb => sb.projectId.value == projectId).array;
   }
 
-  override ServiceBinding[] findByProject(TenantId tenantId, string projectId) {
-    ServiceBinding[] result;
-    foreach (sb; _store.byValue)
-      if (sb.tenantId == tenantId && sb.projectId.value == projectId) result ~= sb;
-    return result;
+  ServiceBinding[] findByProject(TenantId tenantId, string projectId) {
+    return filterByProject(findByTenant(tenantId), projectId);
   }
 
-  override ServiceBinding[] findByServiceName(TenantId tenantId, string serviceName) {
-    ServiceBinding[] result;
-    foreach (sb; _store.byValue)
-      if (sb.tenantId == tenantId && sb.serviceName == serviceName) result ~= sb;
-    return result;
+  void removeByProject(TenantId tenantId, string projectId) {
+    findByProject(tenantId, projectId).each!(sb => remove(sb));
   }
 
+  size_t countByServiceName(TenantId tenantId, string serviceName) {
+    return findByServiceName(tenantId, serviceName).length;
+  }
+
+  ServiceBinding[] filterByServiceName(ServiceBinding[] bindings, string serviceName) {
+    return bindings.filter!(sb => sb.serviceName == serviceName).array;
+  }
+
+  ServiceBinding[] findByServiceName(TenantId tenantId, string serviceName) {
+    return filterByServiceName(findByTenant(tenantId), serviceName);
+  }
+
+  size_t countByStatus(TenantId tenantId, BindingStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+  
+  ServiceBinding[] filterByStatus(ServiceBinding[] bindings, BindingStatus status) {
+    return bindings.filter!(sb => sb.status == status).array;
+  }
+  
   override ServiceBinding[] findByStatus(TenantId tenantId, BindingStatus status) {
-    ServiceBinding[] result;
-    foreach (sb; _store.byValue)
-      if (sb.tenantId == tenantId && sb.status == status) result ~= sb;
-    return result;
+    return filterByStatus(findByTenant(tenantId), status);
   }
+
+  void removeByStatus(TenantId tenantId, BindingStatus status) {
+    findByStatus(tenantId, status).each!(sb => remove(sb));
+  }
+  
 }

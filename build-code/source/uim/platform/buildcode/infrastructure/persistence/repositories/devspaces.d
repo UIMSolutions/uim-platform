@@ -29,10 +29,20 @@ class DevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), IDevSpaceRep
     findByProject(tenantId, projectId).each!remove(ds);
   }
 
-  override DevSpace[] findByStatus(TenantId tenantId, DevSpaceStatus status) {
-    DevSpace[] result;
-    foreach (ds; _store.byValue)
-      if (ds.tenantId == tenantId && ds.status == status) result ~= ds;
-    return result;
+  size_t countByStatus(TenantId tenantId, DevSpaceStatus status) {
+    return findByStatus(tenantId, status).length;
   }
+
+  DevSpace[] filterByStatus(DevSpace[] spaces, DevSpaceStatus status) {
+    return spaces.filter!(ds => ds.status == status).array;
+  }
+
+  DevSpace[] findByStatus(TenantId tenantId, DevSpaceStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, DevSpaceStatus status) {
+    findByStatus(tenantId, status).each!remove(ds);
+  }
+
 }
