@@ -87,7 +87,7 @@ unittest {
     // Test create
     DataConnectionDTO createDto;
     createDto.tenantId = tenantId;
-    createDto.dataConnectionId = DataConnectionId("dataConnection-1");
+    createDto.connectionId = DataConnectionId("dataConnection-1");
     createDto.name = "Test DataConnection";
     auto createResult = usecase.createDataConnection(createDto);
     assert(createResult.success, createResult.message);
@@ -103,7 +103,7 @@ unittest {
     // Test update
     DataConnectionDTO updateDto;
     updateDto.tenantId = tenantId;
-    updateDto.dataConnectionId = DataConnectionId("dataConnection-1");
+    updateDto.connectionId = DataConnectionId("dataConnection-1");
     updateDto.name = "Updated DataConnection";
     auto updateResult = usecase.updateDataConnection(updateDto);
     assert(updateResult.success, updateResult.message);

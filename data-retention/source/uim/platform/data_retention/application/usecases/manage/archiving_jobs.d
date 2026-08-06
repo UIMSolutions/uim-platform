@@ -15,11 +15,11 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     CommandResult createArchivingJob(CreateArchivingJobRequest req) {
         import std.uuid : randomUUID;
 
-        if (req.applicationGroupId.isEmpty)
+        if (req.groupId.isNull)
             return CommandResult(false, "", "Application group ID is required");
 
         auto aj = ArchivingJob(req.tenantId, ArchivingJobId(generateId), req.createdBy);
-        aj.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
+        aj.applicationGroupId = req.groupId;
         aj.operationType = req.operationType.toArchivingJobOperationType;
         aj.status = ArchivingJobStatus.scheduled;
         aj.selectionCriteria = req.selectionCriteria;

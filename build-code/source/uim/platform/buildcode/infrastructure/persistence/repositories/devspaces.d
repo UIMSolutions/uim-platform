@@ -11,30 +11,22 @@ mixin(ShowModule!());
 
 @safe:
 
-class DevSpaceRepository : DevSpaceRepository {
-  private DevSpace[string] _store;
+class DevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), IDevSpaceRepository {
 
-  override void save(DevSpace entity)             { _store[entity.id.value] = entity; }
-  override void update(DevSpace entity)           { _store[entity.id.value] = entity; }
-  override void remove(TenantId tenantId, DevSpaceId id) { _store.remove(id.value); }
-
-  override DevSpace findById(TenantId tenantId, DevSpaceId id) {
-    if (id.value in _store) return _store[id.value];
-    DevSpace ds; return ds;
+  size_t countByProject(TenantId tenantId, string projectId) {
+    return findByProject(tenantId, projectId).length;
   }
 
-  override DevSpace[] findByTenant(TenantId tenantId) {
-    DevSpace[] result;
-    foreach (ds; _store.byValue)
-      if (ds.tenantId == tenantId) result ~= ds;
-    return result;
+  DevSpace[] filterByProject(DevSpace[] spaces, string projectId) {
+    return spaces.filter!(ds => ds.projectId.value == projectId).array;
   }
 
-  override DevSpace[] findByProject(TenantId tenantId, string projectId) {
-    DevSpace[] result;
-    foreach (ds; _store.byValue)
-      if (ds.tenantId == tenantId && ds.projectId.value == projectId) result ~= ds;
-    return result;
+  DevSpace[] findByProject(TenantId tenantId, string projectId) {
+    return filterByProject(findByTenant(tenantId), projectId);
+  }
+
+  void removeByProject(TenantId tenantId, string projectId) {
+    findByProject(tenantId, projectId).each!remove(ds);
   }
 
   override DevSpace[] findByStatus(TenantId tenantId, DevSpaceStatus status) {

@@ -19,10 +19,10 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Duration must be positive");
 
         auto rr = ResidenceRule(req.tenantId);
-        rr.businessPurposeId = BusinessPurposeId(req.businessPurposeId);
+        rr.businessPurposeId = req.purposeId;
         rr.legalGroundId = LegalGroundId(req.legalGroundId);
         rr.duration = req.duration;
-        rr.periodUnit = parsePeriodUnit(req.periodUnit);
+        rr.periodUnit = req.periodUnit.toPeriodUnit;
         rr.isActive = true;
 
         repo.save(rr);
@@ -30,14 +30,16 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateResidenceRule(UpdateResidenceRuleRequest req) {
-        auto rule = repo.findById(req.tenantId, req.id);
+        auto rule = repo.findById(req.tenantId, req.ruleId);
         if (rule.isNull)
             return CommandResult(false, "", "Residence rule not found");
 
         if (req.duration > 0)
             rule.duration = req.duration;
+
         if (req.periodUnit.length > 0)
-            rule.periodUnit = parsePeriodUnit(req.periodUnit);
+            rule.periodUnit = req.periodUnit.toPeriodUnit;
+
         rule.isActive = req.isActive;
         rule.updatedAt = clockSeconds();
 
@@ -70,18 +72,4 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rule.id.value, "");
     }
 
-    private static PeriodUnit parsePeriodUnit(string s) {
-        switch (s) {
-        case "days":
-            return PeriodUnit.days;
-        case "weeks":
-            return PeriodUnit.weeks;
-        case "months":
-            return PeriodUnit.months;
-        case "years":
-            return PeriodUnit.years;
-        default:
-            return PeriodUnit.years;
-        }
-    }
 }

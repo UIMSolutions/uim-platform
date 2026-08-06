@@ -395,7 +395,7 @@ ComponentStatus[] toComponentStatuses(string[] values) {
 }
 
 string toString(ComponentStatus status) {
-  return status.to!string;
+  return cast(string)status;
 }
 
 string[] toStrings(ComponentStatus[] statuses) {
@@ -404,14 +404,6 @@ string[] toStrings(ComponentStatus[] statuses) {
 ///
 unittest {
   mixin(ShowTest!("ComponentStatus enumeration"));
-
-  assert(ComponentStatus.active.to!string == "active");
-  assert(ComponentStatus.deprecated_.to!string == "deprecated");
-  assert(ComponentStatus.experimental.to!string == "experimental");
-
-  assert("active".to!ComponentStatus == ComponentStatus.active);
-  assert("deprecated".to!ComponentStatus == ComponentStatus.deprecated_);
-  assert("experimental".to!ComponentStatus == ComponentStatus.experimental);
 
   assert("active".toComponentStatus == ComponentStatus.active);
   assert("deprecated".toComponentStatus == ComponentStatus.deprecated_);
@@ -423,7 +415,7 @@ unittest {
   assert(ComponentStatus.deprecated_.toString == "deprecated");
   assert(ComponentStatus.experimental.toString == "experimental");
 
-  assert(["active", "deprecated", "experimental"].toComponentStatus ==
+  assert(["active", "deprecated", "experimental"].toComponentStatuses ==
       [ComponentStatus.active, ComponentStatus.deprecated_,
         ComponentStatus.experimental
       ]);

@@ -52,7 +52,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         bp.updatedAt = clockSeconds();
 
         repo.update(bp);
-        return CommandResult(true, req.id, "");
+        return CommandResult(true, bp.id.value, "");
     }
 
     CommandResult activateBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
@@ -63,7 +63,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         bp.status = BusinessPurposeStatus.active;
         bp.updatedAt = clockSeconds();
         repo.update(bp);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, bp.id.value, "");
     }
 
     bool hasBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {

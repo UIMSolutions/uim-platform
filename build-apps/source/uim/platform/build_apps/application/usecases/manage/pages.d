@@ -87,7 +87,7 @@ unittest {
     createDto.pageId = PageId("page-1");
     createDto.name = "Test Page";
     auto createResult = usecase.createPage(createDto);
-    assert(createResult.success, createResult.message);
+    assert(createResult.success); // , createResult.message);
 
     // Test list
     auto items = usecase.listPages(tenantId);

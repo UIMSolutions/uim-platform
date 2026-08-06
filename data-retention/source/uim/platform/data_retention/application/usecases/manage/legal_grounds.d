@@ -24,7 +24,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         lg.businessPurposeId = BusinessPurposeId(req.businessPurposeId);
         lg.name = req.name;
         lg.description = req.description;
-        lg.type = parseLegalGroundType(req.type);
+        lg.type = req.type.toLegalGroundType;
         lg.referenceDate = req.referenceDate;
         lg.isActive = true;
         lg.createdBy = req.createdBy;
@@ -44,20 +44,20 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         if (req.description.length > 0)
             lg.description = req.description;
         if (req.type.length > 0)
-            lg.type = parseLegalGroundType(req.type);
+            lg.type = req.type.toLegalGroundType;
         if (req.referenceDate > 0)
             lg.referenceDate = req.referenceDate;
         lg.updatedAt = clockSeconds();
 
         repo.update(lg);
-        return CommandResult(true, req.id.value, "");
+        return CommandResult(true, lg.id.value, "");
     }
 
-    bool hasLegalGround(LegalGroundId id) {
-        return repo.existsById(id);
+    bool hasLegalGround(TenantId tenantId, LegalGroundId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    LegalGround getLegalGround(LegalGroundId id) {
+    LegalGround getLegalGround(TenantId tenantId, LegalGroundId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -76,24 +76,5 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
 
         repo.remove(entity);
         return CommandResult(true, entity.id.value, "");
-    }
-
-    private static LegalGroundType parseLegalGroundType(string s) {
-        switch (s) {
-        case "consent":
-            return LegalGroundType.consent;
-        case "contract":
-            return LegalGroundType.contract;
-        case "legalObligation":
-            return LegalGroundType.legalObligation;
-        case "vitalInterest":
-            return LegalGroundType.vitalInterest;
-        case "publicInterest":
-            return LegalGroundType.publicInterest;
-        case "legitimateInterest":
-            return LegalGroundType.legitimateInterest;
-        default:
-            return LegalGroundType.consent;
-        }
     }
 }

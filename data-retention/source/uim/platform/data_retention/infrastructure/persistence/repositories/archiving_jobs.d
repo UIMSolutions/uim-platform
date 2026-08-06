@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJobId), ArchivingJobRepository {
+class ArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJobId), IArchivingJobRepository {
 
     // #region ByApplicationGroup
     size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {

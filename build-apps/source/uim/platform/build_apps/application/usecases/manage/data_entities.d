@@ -81,7 +81,7 @@ unittest {
     // Test create
     DataEntityDTO createDto;
     createDto.tenantId = tenantId;
-    createDto.dataEntityId = DataEntityId("dataEntity-1");
+    createDto.entityId = DataEntityId("dataEntity-1");
     createDto.name = "Test DataEntity";
     auto createResult = usecase.createDataEntity(createDto);
     assert(createResult.success, createResult.message);
@@ -97,7 +97,7 @@ unittest {
     // Test update
     DataEntityDTO updateDto;
     updateDto.tenantId = tenantId;
-    updateDto.dataEntityId = DataEntityId("dataEntity-1");
+    updateDto.entityId = DataEntityId("dataEntity-1");
     updateDto.name = "Updated DataEntity";
     auto updateResult = usecase.updateDataEntity(updateDto);
     assert(updateResult.success, updateResult.message);

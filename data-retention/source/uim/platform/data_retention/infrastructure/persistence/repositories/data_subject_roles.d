@@ -5,14 +5,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataSubjectRoleRepository : TenantRepository!(DataSubjectRole, DataSubjectRoleId), DataSubjectRoleRepository {
+class DataSubjectRoleRepository : TenantRepository!(DataSubjectRole, DataSubjectRoleId), IDataSubjectRoleRepository {
 
     size_t countActive(TenantId tenantId) {
         return findActive(tenantId).length;
     }
 
+    DataSubjectRole[] filterActive(DataSubjectRole[] roles) {
+        return roles.filter!(a => a.isActive).array;
+    }
+
     DataSubjectRole[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(a => a.isActive).array;
+        return filterActive(findByTenant(tenantId));
     }
 
     void removeActive(TenantId tenantId) {

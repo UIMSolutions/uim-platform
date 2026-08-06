@@ -22,7 +22,7 @@ struct LegalGround {
             .set("businessPurposeId", businessPurposeId)
             .set("name", name)
             .set("description", description)
-            .set("type", type)
+            .set("type", type.toString)
             .set("referenceDate", referenceDate)
             .set("residenceEndDate", residenceEndDate)
             .set("retentionEndDate", retentionEndDate)

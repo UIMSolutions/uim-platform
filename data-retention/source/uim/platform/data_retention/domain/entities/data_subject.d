@@ -22,7 +22,7 @@ struct DataSubject {
             .set("roleId", roleId)
             .set("applicationGroupId", applicationGroupId)
             .set("externalId", externalId)
-            .set("lifecycleStatus", lifecycleStatus)
+            .set("lifecycleStatus", lifecycleStatus.toString)
             .set("endOfPurposeDate", endOfPurposeDate)
             .set("endOfRetentionDate", endOfRetentionDate)
             .set("blockedAt", blockedAt)

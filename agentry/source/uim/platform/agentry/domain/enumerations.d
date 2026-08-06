@@ -29,14 +29,17 @@ AppPlatform toAppPlatform(string value) {
     mixin(EnumSwitch("AppPlatform", "cross"));
 }
 
-AppPlatform[] toAppPlatforms(string[] values)
-    => values.map!toAppPlatform.array;
+AppPlatform[] toAppPlatforms(string[] values) {
+    return values.map!toAppPlatform.array;
+}
 
-string toString(AppPlatform value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "ios", "android", etc
+string toString(AppPlatform value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "ios", "android", etc
+}
 
-string[] toStrings(AppPlatform[] values)
-    => values.map!toString.array;
+string[] toStrings(AppPlatform[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("ios".toAppPlatform == AppPlatform.ios);
@@ -91,14 +94,17 @@ AppStatus toAppStatus(string value) {
     }
 }
 
-AppStatus[] toAppStatuses(string[] values)
-    => values.map!toAppStatus.array;
+AppStatus[] toAppStatuses(string[] values) {
+    return values.map!toAppStatus.array;
+}
 
-string toString(AppStatus value)
-    => cast(string)value; // This will return the enum member name as a string, e.g. "draft", "active", etc
+string toString(AppStatus value) {
+    return cast(string)value; // This will return the enum member name as a string, e.g. "draft", "active", etc
+}
 
-string[] toStrings(AppStatus[] values)
-    => values.map!toString.array;
+string[] toStrings(AppStatus[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("draft".toAppStatus == AppStatus.draft);
@@ -138,14 +144,17 @@ DefinitionStatus toDefinitionStatus(string value) {
     mixin(EnumSwitch("DefinitionStatus", "draft"));
 }
 
-DefinitionStatus[] toDefinitionStatuses(string[] values)
-    => values.map!toDefinitionStatus.array;
+DefinitionStatus[] toDefinitionStatuses(string[] values) {
+    return values.map!toDefinitionStatus.array;
+}
 
-string toString(DefinitionStatus value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "draft", "published", etc
+string toString(DefinitionStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "draft", "published", etc
+}
 
-string[] toStrings(DefinitionStatus[] values)
-    => values.map!toString.array;
+string[] toStrings(DefinitionStatus[] values) { 
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("draft".toDefinitionStatus == DefinitionStatus.draft);
@@ -196,12 +205,15 @@ AppVersionStatus toAppVersionStatus(string status) {
     }
 }
 
-AppVersionStatus[] toAppVersionStatuses(string[] statuses)
-    => statuses.map!toAppVersionStatus.array;
-string toString(AppVersionStatus value)
-    => cast(string)value; // This will return the enum member name as a string, e.g. "pending", "published", etc
-string[] toStrings(AppVersionStatus[] values)
-    => values.map!toString.array;
+AppVersionStatus[] toAppVersionStatuses(string[] statuses) {
+    return statuses.map!toAppVersionStatus.array;
+}
+string toString(AppVersionStatus value) {
+    return cast(string)value; // This will return the enum member name as a string, e.g. "pending", "published", etc
+}
+string[] toStrings(AppVersionStatus[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("pending".toAppVersionStatus == AppVersionStatus.pending);
@@ -244,12 +256,15 @@ DeviceStatus toDeviceStatus(string value) {
     mixin(EnumSwitch("DeviceStatus", "enrolled"));
 }
 
-DeviceStatus[] toDeviceStatuses(string[] values)
-    => values.map!toDeviceStatus.array;
-string toString(DeviceStatus value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "enrolled", "active", etc
-string[] toStrings(DeviceStatus[] values)
-    => values.map!toString.array;
+DeviceStatus[] toDeviceStatuses(string[] values) {
+    return values.map!toDeviceStatus.array;
+}
+string toString(DeviceStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "enrolled", "active", etc
+}
+string[] toStrings(DeviceStatus[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("enrolled".toDeviceStatus == DeviceStatus.enrolled);
@@ -293,14 +308,17 @@ SyncStatus toSyncStatus(string value) {
     mixin(EnumSwitch("SyncStatus", "pending"));
 }
 
-SyncStatus[] toSyncStatuses(string[] values)
-    => values.map!toSyncStatus.array;
+SyncStatus[] toSyncStatuses(string[] values) {
+    return values.map!toSyncStatus.array;
+}
 
-string toString(SyncStatus value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "pending", "inProgress", etc
+string toString(SyncStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "pending", "inProgress", etc
+}
 
-string[] toStrings(SyncStatus[] values)
-    => values.map!toString.array;
+string[] toStrings(SyncStatus[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("pending".toSyncStatus == SyncStatus.pending);
@@ -342,14 +360,17 @@ SyncDirection toSyncDirection(string value) {
     mixin(EnumSwitch("SyncDirection", "bidirectional"));
 }
 
-SyncDirection[] toSyncDirections(string[] values)
-    => values.map!toSyncDirection.array;
+SyncDirection[] toSyncDirections(string[] values) {
+    return values.map!toSyncDirection.array;
+}
 
-string toString(SyncDirection value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "upload", "download", etc
+string toString(SyncDirection value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "upload", "download", etc
+}
 
-string[] toStrings(SyncDirection[] values)
-    => values.map!toString.array;
+string[] toStrings(SyncDirection[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("upload".toSyncDirection == SyncDirection.upload);
@@ -391,12 +412,15 @@ BackendType toBackendType(string value) {
     mixin(EnumSwitch("BackendType", "custom"));
 }
 
-BackendType[] toBackendTypes(string[] values)
-    => values.map!toBackendType.array;
-string toString(BackendType value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "s4hana", "ecc", etc
-string[] toStrings(BackendType[] values)
-    => values.map!toString.array;
+BackendType[] toBackendTypes(string[] values) {
+    return values.map!toBackendType.array;
+}
+string toString(BackendType value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "s4hana", "ecc", etc
+}
+string[] toStrings(BackendType[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("s4hana".toBackendType == BackendType.s4hana);
@@ -439,12 +463,15 @@ ConnectionStatus toConnectionStatus(string value) {
     mixin(EnumSwitch("ConnectionStatus", "inactive"));
 }
 
-ConnectionStatus[] toConnectionStatuses(string[] values)
-    => values.map!toConnectionStatus.array;
-string toString(ConnectionStatus value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
-string[] toStrings(ConnectionStatus[] values)
-    => values.map!toString.array;
+ConnectionStatus[] toConnectionStatuses(string[] values) {
+    return values.map!toConnectionStatus.array;
+}
+string toString(ConnectionStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
+}
+string[] toStrings(ConnectionStatus[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("active".toConnectionStatus == ConnectionStatus.active);
@@ -489,12 +516,15 @@ DeploymentStatus toDeploymentStatus(string value) {
     mixin(EnumSwitch("DeploymentStatus", "pending"));
 }
 
-DeploymentStatus[] toDeploymentStatuses(string[] values)
-    => values.map!(toDeploymentStatus).array;
-string toString(DeploymentStatus value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "pending", "deploying", etc
-string[] toStrings(DeploymentStatus[] values)
-    => values.map!toString.array;
+DeploymentStatus[] toDeploymentStatuses(string[] values) {
+    return values.map!(toDeploymentStatus).array;
+}
+string toString(DeploymentStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "pending", "deploying", etc
+}
+string[] toStrings(DeploymentStatus[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("pending".toDeploymentStatus == DeploymentStatus.pending);
@@ -539,12 +569,15 @@ DeploymentScope toDeploymentScope(string value) {
     mixin(EnumSwitch("DeploymentScope", "tenant"));
 }
 
-DeploymentScope[] toDeploymentScopes(string[] values)
-    => values.map!(toDeploymentScope).array;
-string toString(DeploymentScope value)
-    => value.to!string; // This will return the enum member name as a string, e.g. "device", "group", etc
-string[] toStrings(DeploymentScope[] values)
-    => values.map!toString.array;
+DeploymentScope[] toDeploymentScopes(string[] values) {
+    return values.map!(toDeploymentScope).array;
+}
+string toString(DeploymentScope value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "device", "group", etc
+}
+string[] toStrings(DeploymentScope[] values) {
+    return values.map!toString.array;
+}
 ///
 unittest {
     assert("device".toDeploymentScope == DeploymentScope.device);

@@ -18,7 +18,7 @@ enum BusinessPurposeStatus : string {
 }
 
 BusinessPurposeStatus toBusinessPurposeStatus(string value) {
-    switch (name.toLower()) {
+    switch (value.toLower()) {
         case "inactive": return BusinessPurposeStatus.inactive;
         case "active": return BusinessPurposeStatus.active;
         case "deprecated": return BusinessPurposeStatus.deprecated_;

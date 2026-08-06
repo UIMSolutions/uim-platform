@@ -18,8 +18,8 @@ struct ApplicationGroup {
         return entityToJson
             .set("name", name)
             .set("description", description)
-            .set("scope", scope_)
-            .set("applicationIds", applicationIds)
+            .set("scope", scope_.toString)
+            .set("applicationIds", applicationIds.toJson)
             .set("isActive", isActive);
     }
 }

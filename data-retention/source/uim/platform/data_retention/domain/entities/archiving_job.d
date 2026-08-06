@@ -8,7 +8,7 @@ mixin(ShowModule!());
 struct ArchivingJob {
     mixin TenantEntity!(ArchivingJobId);
     
-    ApplicationGroupId applicationGroupId;
+    ApplicationGroupId groupId;
     ArchivingOperationType operationType = ArchivingOperationType.archive;
     ArchivingJobStatus status = ArchivingJobStatus.scheduled;
     string selectionCriteria;
@@ -21,9 +21,9 @@ struct ArchivingJob {
     
     Json toJson() const {
         return entityToJson
-            .set("applicationGroupId", applicationGroupId)
-            .set("operationType", operationType.to!string)
-            .set("status", status.to!string)
+            .set("applicationGroupId", groupId)
+            .set("operationType", operationType.toString)
+            .set("status", status.toString)
             .set("selectionCriteria", selectionCriteria)
             .set("scheduledAt", scheduledAt)
             .set("startedAt", startedAt)

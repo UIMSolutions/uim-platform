@@ -5,14 +5,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class ApplicationGroupRepository : TenantRepository!(ApplicationGroup, ApplicationGroupId), ApplicationGroupRepository {
+class ApplicationGroupRepository : TenantRepository!(ApplicationGroup, ApplicationGroupId), IApplicationGroupRepository {
 
     size_t countByActive(TenantId tenantId) {
         return findActive(tenantId).length;
     }
 
+    ApplicationGroup[] filterActive(ApplicationGroup[] groups) {
+        return groups.filter!(a => a.isActive).array;
+    }
+
     ApplicationGroup[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(a => a.isActive).array;
+        return filterActive(findByTenant(tenantId));
     }
 
     void removeActive(TenantId tenantId) {

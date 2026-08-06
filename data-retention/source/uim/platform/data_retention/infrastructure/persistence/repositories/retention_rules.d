@@ -5,11 +5,16 @@ mixin(ShowModule!());
 
 @safe:
 
-class RetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
+class RetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), IRetentionRuleRepository {
 
     size_t countByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return findByBusinessPurpose(tenantId, purposeId).length;
     }
+
+    RetentionRule[] filterByBusinessPurpose(RetentionRule[] rules, BusinessPurposeId purposeId) {
+        return rules.filter!(a => a.businessPurposeId == purposeId).array;
+    }
+
     RetentionRule[] findByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return findByTenant(tenantId).filter!(a => a.businessPurposeId == purposeId).array;
     }
@@ -26,10 +31,10 @@ class RetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId
     }
     
     RetentionRule[] findByLegalGround(TenantId tenantId, LegalGroundId groundId) {
-        return findByTenant(tenantId).filterByLegalGround(groundId);
+        return filterByLegalGround(findByTenant(tenantId), groundId);
     }
     void removeByLegalGround(TenantId tenantId, LegalGroundId groundId) {
-        findByLegalGround(tenantId, groundId).removeAll;
+        findByLegalGround(tenantId, groundId).each!(entity => remove(entity));
     }
 
 }

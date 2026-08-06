@@ -5,13 +5,19 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
+class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), IDataSubjectRepository {
 
         size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
             return findByApplicationGroup(tenantId, groupId).length;
         }
+
+
+    DataSubject[] filterByApplicationGroup(DataSubject[] subjects, ApplicationGroupId groupId) {
+        return subjects.filter!(a => a.applicationGroupId == groupId).array;
+    }
+
     DataSubject[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        return findByTenant(tenantId).filter!(a => a.applicationGroupId == groupId).array;
+        return filterByApplicationGroup(findByTenant(tenantId), groupId);
     }
     void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
         findByApplicationGroup(tenantId, groupId).each!(entity => remove(entity));
@@ -37,8 +43,12 @@ class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), Dat
         return findByRole(tenantId, roleId).length;
     }
 
+    DataSubject[] filterByRole(DataSubject[] subjects, DataSubjectRoleId roleId) {
+        return subjects.filter!(s => s.roleId == roleId).array;
+    }
+
     DataSubject[] findByRole(TenantId tenantId, DataSubjectRoleId roleId) {
-        return findByTenant(tenantId).filter!(a => a.roleId == roleId).array;
+        return filterByRole(findByTenant(tenantId), roleId);
     }
 
     void removeByRole(TenantId tenantId, DataSubjectRoleId roleId) {

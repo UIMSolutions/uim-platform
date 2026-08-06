@@ -82,7 +82,7 @@ struct UpdateRetentionRuleRequest {
 
 struct CreateResidenceRuleRequest {
     TenantId tenantId;
-    BusinessPurposeId businessPurposeId;
+    BusinessPurposeId purposeId;
     LegalGroundId legalGroundId;
     int duration;
     string periodUnit;
@@ -102,6 +102,8 @@ struct UpdateResidenceRuleRequest {
 
 struct CreateDataSubjectRequest {
     TenantId tenantId;
+    DataSubjectId subjectId;
+
     string roleId;
     string applicationGroupId;
     string externalId;
@@ -109,6 +111,9 @@ struct CreateDataSubjectRequest {
 }
 
 struct UpdateDataSubjectRequest {
+    TenantId tenantId;
+    DataSubjectId subjectId;
+
     string lifecycleStatus;
     string roleId;
 }
@@ -118,8 +123,9 @@ struct UpdateDataSubjectRequest {
 struct CreateDeletionRequestRequest {
     TenantId tenantId;
     DeletionRequestId requestId;
-    string dataSubjectId;
-    string applicationGroupId;
+    DataSubjectId dataSubjectId;
+    ApplicationGroupId applicationGroupId;
+
     string actionType;
     string reason;
     UserId requestedBy;
@@ -128,6 +134,7 @@ struct CreateDeletionRequestRequest {
 struct UpdateDeletionRequestRequest {
     TenantId tenantId;
     DeletionRequestId requestId;
+
     string status;
     string errorMessage;
 }
@@ -136,7 +143,8 @@ struct UpdateDeletionRequestRequest {
 
 struct CreateArchivingJobRequest {
     TenantId tenantId;
-    ApplicationGroupId applicationGroupId;
+    ArchivingJobId jobId;
+    ApplicationGroupId groupId;
     
     string operationType;
     string selectionCriteria;
@@ -145,6 +153,10 @@ struct CreateArchivingJobRequest {
 }
 
 struct UpdateArchivingJobRequest {
+    TenantId tenantId;
+    ArchivingJobId jobId;
+    ApplicationGroupId groupId;
+
     string status;
     int recordsProcessed;
     int recordsFailed;
@@ -163,6 +175,7 @@ struct CreateApplicationGroupRequest {
 }
 
 struct UpdateApplicationGroupRequest {
+    TenantId tenantId;
     string name;
     string description;
     string scope_;
@@ -182,6 +195,7 @@ struct CreateLegalEntityRequest {
 }
 
 struct UpdateLegalEntityRequest {
+    TenantId tenantId;
     string name;
     string description;
     string country;
@@ -199,6 +213,7 @@ struct CreateDataSubjectRoleRequest {
 }
 
 struct UpdateDataSubjectRoleRequest {
+    TenantId tenantId;
     string name;
     string description;
     bool isActive;

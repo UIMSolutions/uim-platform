@@ -38,7 +38,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDeletionRequest(UpdateDeletionRequestRequest req) {
-        auto dr = repo.findById(req.tenantId, req.id);
+        auto dr = repo.findById(req.tenantId, req.requestId);
         if (dr.isNull)
             return CommandResult(false, "", "Deletion request not found");
 

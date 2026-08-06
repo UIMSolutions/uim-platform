@@ -80,7 +80,7 @@ unittest {
     // Test create
     UIComponentDTO createDto;
     createDto.tenantId = tenantId;
-    createDto.uIComponentId = UIComponentId("uIComponent-1");
+    createDto.componentId = UIComponentId("uIComponent-1");
     createDto.name = "Test UIComponent";
     auto createResult = usecase.createUIComponent(createDto);
     assert(createResult.success, createResult.message);
@@ -96,7 +96,7 @@ unittest {
     // Test update
     UIComponentDTO updateDto;
     updateDto.tenantId = tenantId;
-    updateDto.uIComponentId = UIComponentId("uIComponent-1");
+    updateDto.componentId = UIComponentId("uIComponent-1");
     updateDto.name = "Updated UIComponent";
     auto updateResult = usecase.updateUIComponent(updateDto);
     assert(updateResult.success, updateResult.message);

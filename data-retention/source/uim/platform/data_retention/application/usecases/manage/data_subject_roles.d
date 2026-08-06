@@ -48,10 +48,10 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     }
 
     bool hasDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {
-        return repo.existsById(id);
+        return repo.existsById(tenantId, id);
     }
 
-    DataSubjectRole getDataSubjectRoles(TenantId tenantId, DataSubjectRoleId id) {
+    DataSubjectRole getDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {
         return repo.findById(tenantId, id);
     }
 

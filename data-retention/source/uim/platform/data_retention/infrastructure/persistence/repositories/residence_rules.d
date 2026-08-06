@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ResidenceRuleRepository : TenantRepository!(ResidenceRule, ResidenceRuleId), ResidenceRuleRepository {
+class ResidenceRuleRepository : TenantRepository!(ResidenceRule, ResidenceRuleId), IResidenceRuleRepository {
 
 
     size_t countByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
