@@ -1,0 +1,83 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.auditlog.domain.ports.usecases.exports;
+
+import uim.platform.auditlog;
+
+mixin(ShowModule!());
+@safe:
+class ManageExportsUseCase { // TODO: UIMUseCase {
+  private IExportJobRepository jobs;
+  private IAuditLogRepository audits;
+
+  this(IExportJobRepository jobs, IAuditLogRepository audits) {
+    this.jobs = jobs;
+    this.audits = audits;
+  }
+
+  CommandResult createExport(CreateExportJobRequest req) {
+    if (req.tenantId.isEmpty)
+      return CommandResult(false, "", "Tenant ID is required");
+
+    if (req.requestedBy.isNull)
+      return CommandResult(false, "", "Requester is required");
+
+    auto now = currentTimestamp();
+    auto job = ExportJob(req.tenantId);
+
+    job.requestedBy = req.requestedBy;
+    job.format_ = req.format_;
+    job.categories = req.categories;
+    job.timeFrom = req.timeFrom;
+    job.timeTo = req.timeTo;
+    job.status = ExportStatus.pending;
+
+    // Simulate immediate export completion
+    auto logs = audits.search(req.tenantId, req.categories, req.timeFrom,
+        req.timeTo, int.max, 0);
+    job.totalRecords = logs.length;
+    job.status = ExportStatus.completed;
+    job.completedAt = currentTimestamp();
+    job.downloadUrl = "/api/v1/exports/" ~ job.id.value ~ "/download";
+
+    jobs.save(job);
+    return CommandResult(true, job.id.value, "");
+  }
+
+  bool hasExport(TenantId tenantId, ExportJobId id) {
+    return jobs.existsById(tenantId, id);
+  }
+
+  ExportJob getExport(TenantId tenantId, ExportJobId id) {
+    return jobs.findById(tenantId, id);
+  }
+
+  ExportJob[] listExports(TenantId tenantId) {
+    return jobs.findByTenant(tenantId);
+  }
+
+  CommandResult deleteExport(TenantId tenantId, ExportJobId id) {
+    auto job = jobs.findById(tenantId, id);
+    if (job.isNull)
+      return CommandResult(false, "", "Export job not found");
+
+    jobs.remove(job);
+    return CommandResult(true, job.id.value, "");
+  }
+}
+
+///
+unittest {
+//     auto iExportJobRepository = new ExportJobRepository();
+//     auto iAuditLogRepository = new IAuditLogRepository();
+//     auto usecase = new ManageExportsUseCase(iExportJobRepository, iAuditLogRepository);
+//     auto tenantId = TenantId("test-tenant");
+// 
+//     // Test list
+//     auto items = usecase.listExports(tenantId);
+//     assert(items !is null);
+// 
+}
