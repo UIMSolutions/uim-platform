@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.data_retention.application.usecases.manage.data_subjects;
 import uim.platform.data_retention;
 
@@ -6,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
-    private DataSubjectRepository repo;
+    private IDataSubjectRepository repo;
 
-    this(DataSubjectRepository repo) {
+    this(IDataSubjectRepository repo) {
         this.repo = repo;
     }
 

@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.data_retention.application.usecases.manage.archiving_jobs;
 import uim.platform.data_retention;
 
@@ -6,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
-    private ArchivingJobRepository repo;
+    private IArchivingJobRepository repo;
 
-    this(ArchivingJobRepository repo) {
+    this(IArchivingJobRepository repo) {
         this.repo = repo;
     }
 
@@ -19,8 +24,8 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Application group ID is required");
 
         auto aj = ArchivingJob(req.tenantId, ArchivingJobId(generateId), req.createdBy);
-        aj.applicationGroupId = req.groupId;
-        aj.operationType = req.operationType.toArchivingJobOperationType;
+        aj.groupId = req.groupId;
+        aj.operationType = req.operationType.toArchivingOperationType;
         aj.status = ArchivingJobStatus.scheduled;
         aj.selectionCriteria = req.selectionCriteria;
         aj.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : clockSeconds();

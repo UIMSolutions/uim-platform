@@ -167,6 +167,8 @@ struct UpdateArchivingJobRequest {
 
 struct CreateApplicationGroupRequest {
     TenantId tenantId;
+    ApplicationGroupId groupId;
+
     string name;
     string description;
     string scope_;
@@ -176,6 +178,8 @@ struct CreateApplicationGroupRequest {
 
 struct UpdateApplicationGroupRequest {
     TenantId tenantId;
+    ApplicationGroupId groupId;
+
     string name;
     string description;
     string scope_;

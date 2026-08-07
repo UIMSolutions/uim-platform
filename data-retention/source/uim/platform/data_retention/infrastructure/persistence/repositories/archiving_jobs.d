@@ -13,7 +13,7 @@ class ArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJobId), 
     }
 
     ArchivingJob[] filterByApplicationGroup(ArchivingJob[] jobs, ApplicationGroupId groupId) {
-        return jobs.filter!(a => a.applicationGroupId == groupId).array;
+        return jobs.filter!(a => a.groupId == groupId).array;
     }
 
     ArchivingJob[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {

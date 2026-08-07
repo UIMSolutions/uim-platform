@@ -32,7 +32,7 @@ class ArchivingJobController : ManageHttpController {
         auto data = precheck.data;
         CreateArchivingJobRequest r;
         r.tenantId = tenantId;
-        r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+        r.groupId = ApplicationGroupId(data.getString("applicationGroupId"));
         r.operationType = data.getString("operationType");
         r.selectionCriteria = data.getString("selectionCriteria");
         r.scheduledAt = data.getLong("scheduledAt");
@@ -58,7 +58,7 @@ class ArchivingJobController : ManageHttpController {
         foreach (aj; items) {
             jarr ~= Json.emptyObject
                 .set("id", aj.id.value)
-                .set("applicationGroupId", aj.applicationGroupId.value)
+                .set("applicationGroupId", aj.groupId.value)
                 .set("operationType", aj.operationType.to!string)
                 .set("status", aj.status.to!string)
                 .set("recordsProcessed", aj.recordsProcessed);
@@ -86,7 +86,7 @@ class ArchivingJobController : ManageHttpController {
 
         auto responseData = Json.emptyObject
             .set("id", aj.id.value)
-            .set("applicationGroupId", aj.applicationGroupId.value)
+            .set("applicationGroupId", aj.groupId.value)
             .set("operationType", aj.operationType.to!string)
             .set("status", aj.status.to!string)
             .set("selectionCriteria", aj.selectionCriteria)
@@ -104,17 +104,20 @@ class ArchivingJobController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ArchivingJobId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid archiving job ID", 400);
+
         auto data = precheck.data;
         UpdateArchivingJobRequest r;
         r.tenantId = tenantId;
-        r.archivingJobId = id;
-        r.operationType = data.getString("operationType").to!OperationType;
+        r.jobId = id;
+        r.operationType = data.getString("operationType").toArchivingOperationType;
         r.status = data.getString("status");
-        r.recordsProcessed = jsonInt(j, "recordsProcessed");
-        r.recordsFailed = jsonInt(j, "recordsFailed");
+        r.recordsProcessed = jsonInt(data, "recordsProcessed");
+        r.recordsFailed = jsonInt(data, "recordsFailed");
         r.errorMessage = data.getString("errorMessage");
 
-        auto result = usecase.updateArchivingJob(id, r);
+        auto result = usecase.updateArchivingJob(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -129,6 +132,8 @@ class ArchivingJobController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ArchivingJobId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid archiving job ID", 400);
 
         auto result = usecase.deleteArchivingJob(tenantId, id);
         if (result.hasError)

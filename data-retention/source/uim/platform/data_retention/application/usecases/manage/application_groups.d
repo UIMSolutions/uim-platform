@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.data_retention.application.usecases.manage.application_groups;
 import uim.platform.data_retention;
 
@@ -6,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
-    private ApplicationGroupRepository appGroupRepository;
+    private IApplicationGroupRepository appGroupRepository;
 
-    this(ApplicationGroupRepository appGroupRepository) {
+    this(IApplicationGroupRepository appGroupRepository) {
         this.appGroupRepository = appGroupRepository;
     }
 

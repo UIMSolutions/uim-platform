@@ -20,7 +20,7 @@ struct RetentionRule {
             .set("businessPurposeId", businessPurposeId)
             .set("legalGroundId", legalGroundId)
             .set("duration", duration)
-            .set("periodUnit", periodUnit)
+            .set("periodUnit", periodUnit.toString)
             .set("actionOnExpiry", actionOnExpiry)
             .set("isActive", isActive);
     }

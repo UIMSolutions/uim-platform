@@ -36,8 +36,8 @@ class BusinessPurposeController : ManageHttpController {
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
-        r.dataSubjectRoleId = DataSubjectRoleId(data.getString("dataSubjectRoleId"));
-        r.legalEntityId = LegalEntityId(data.getString("legalEntityId"));
+        r.dataSubjectRoleId = data.getString("dataSubjectRoleId");
+        r.legalEntityId = data.getString("legalEntityId");
         r.referenceDate = data.getLong("referenceDate");
         r.createdBy = UserId(data.getString("createdBy"));
 
@@ -80,7 +80,7 @@ class BusinessPurposeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = BusinessPurposeControllerId(        precheck.id);
+        auto id = BusinessPurposeId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid business purpose ID", 400);
 
@@ -105,7 +105,7 @@ class BusinessPurposeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = BusinessPurposeControllerId(        precheck.id);
+        auto id = BusinessPurposeId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid business purpose ID", 400);
 
@@ -113,12 +113,11 @@ class BusinessPurposeController : ManageHttpController {
         UpdateBusinessPurposeRequest r;
         r.tenantId = tenantId;
         r.businessPurposeId = id;
-        r.name = data
-            .getString("name");
+        r.name = data.getString("name");
         r.description = data.getString("description");
-        r.applicationGroupId = ApplicationGroupId(        data.getString("applicationGroupId"));
-        r.dataSubjectRoleId = DataSubjectRoleId(        data.getString("dataSubjectRoleId"));
-        r.legalEntityId = LegalEntityId(        data.getString("legalEntityId"));
+        r.applicationGroupId = data.getString("applicationGroupId");
+        r.dataSubjectRoleId = data.getString("dataSubjectRoleId");
+        r.legalEntityId = data.getString("legalEntityId");
         r.referenceDate = data
             .getLong("referenceDate");
 
@@ -130,9 +129,9 @@ class BusinessPurposeController : ManageHttpController {
             .set("id", result.id)
             .set("name", r.name)
             .set("description", r.description)
-            .set("applicationGroupId", r.applicationGroupId.value)
-            .set("dataSubjectRoleId", r.dataSubjectRoleId.value)
-            .set("legalEntityId", r.legalEntityId.value)
+            .set("applicationGroupId", r.applicationGroupId)
+            .set("dataSubjectRoleId", r.dataSubjectRoleId)
+            .set("legalEntityId", r.legalEntityId)
             .set("referenceDate", r.referenceDate);
 
         return successResponse("Business purpose updated successfully", "Updated", 200, response);

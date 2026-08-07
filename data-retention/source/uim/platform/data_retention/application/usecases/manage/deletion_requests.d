@@ -11,21 +11,19 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
-    private DeletionRequestRepository repo;
+    private IDeletionRequestRepository repo;
 
-    this(DeletionRequestRepository repo) {
+    this(IDeletionRequestRepository repo) {
         this.repo = repo;
     }
 
     CommandResult createDeletionRequest(CreateDeletionRequestRequest req) {
-        import std.uuid : randomUUID;
-
-        if (req.dataSubjectId.length == 0)
+        if (req.dataSubjectId.isNull)
             return CommandResult(false, "", "Data subject ID is required");
 
         DeletionRequest dr = DeletionRequest(req.tenantId, DeletionRequestId(generateId));
-        dr.dataSubjectId = DataSubjectId(req.dataSubjectId);
-        dr.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
+        dr.dataSubjectId = req.dataSubjectId;
+        dr.groupId = ApplicationGroupId(req.applicationGroupId);
         dr.actionType = toDeletionActionType(req.actionType);
         dr.status = DeletionRequestStatus.pending;
         dr.reason = req.reason;

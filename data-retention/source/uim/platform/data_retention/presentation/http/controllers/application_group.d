@@ -58,7 +58,7 @@ class ApplicationGroupController : ManageHttpController {
         r.description = data.getString("description");
         r.scope_ = data.getString("scope");
         r.createdBy = UserId(data.getString("createdBy"));
-        r.applicationsIds = data.getArray("applicationIds").map!(item => getString(item, "")).array;
+        // TODO: r.applicationsIds = data.getArray("applicationIds").map!(item => getString(item, "")).array;
 
         auto result = usecase.createApplicationGroup(r);
         if (result.hasError)
@@ -107,7 +107,7 @@ class ApplicationGroupController : ManageHttpController {
 
         UpdateApplicationGroupRequest r;
         r.tenantId = tenantId;
-        r.applicationGroupId = id;
+        r.groupId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.scope_ = data.getString("scope");

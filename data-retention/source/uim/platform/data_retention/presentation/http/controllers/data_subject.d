@@ -33,7 +33,7 @@ class DataSubjectController : ManageHttpController {
         auto data = precheck.data;
         CreateDataSubjectRequest r;
         r.tenantId = tenantId;
-        r.roleId = RoleId(data.getString("roleId"));
+        r.roleId = data.getString("roleId");
         r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
         r.externalId = data.getString("externalId");
         r.createdBy = UserId(data.getString("createdBy"));
@@ -88,7 +88,7 @@ class DataSubjectController : ManageHttpController {
             .set("endOfPurposeDate", ds.endOfPurposeDate)
             .set("endOfRetentionDate", ds.endOfRetentionDate);
 
-        res.writeJsonBody(response, 200);
+        return successResponse("Data subject retrieved successfully", "Retrieved", 200, response);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -105,7 +105,7 @@ class DataSubjectController : ManageHttpController {
         UpdateDataSubjectRequest r;
         r.tenantId = tenantId;
         r.lifecycleStatus = data.getString("lifecycleStatus");
-        r.roleId = RoleId(data.getString("roleId"));
+        r.roleId = DataSubjectRoleId(data.getString("roleId"));
 
         auto result = usecase.updateDataSubject(id, r);
         if (result.hasError)

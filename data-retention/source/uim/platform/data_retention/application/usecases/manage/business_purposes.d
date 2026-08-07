@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.data_retention.application.usecases.manage.business_purposes;
 import uim.platform.data_retention;
 
@@ -6,15 +11,13 @@ mixin(ShowModule!());
 @safe:
 
 class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
-    private BusinessPurposeRepository repo;
+    private IBusinessPurposeRepository repo;
 
-    this(BusinessPurposeRepository repo) {
+    this(IBusinessPurposeRepository repo) {
         this.repo = repo;
     }
 
     CommandResult createBusinessPurpose(CreateBusinessPurposeRequest req) {
-        import std.uuid : randomUUID;
-
         if (req.name.isEmpty)
             return CommandResult(false, "", "Business purpose name is required");
 
@@ -32,7 +35,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateBusinessPurpose(UpdateBusinessPurposeRequest req) {
-        auto bp = repo.findById(req.tenantId, BusinessPurposeId(req.id));
+        auto bp = repo.findById(req.tenantId, BusinessPurposeId(req.purposeId));
         if (bp.isNull)
             return CommandResult(false, "", "Business purpose not found");
 

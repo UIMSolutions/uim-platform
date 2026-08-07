@@ -25,7 +25,7 @@ struct BusinessPurpose {
             .set("applicationGroupId", applicationGroupId.value)
             .set("dataSubjectRoleId", dataSubjectRoleId.value)
             .set("legalEntityId", legalEntityId.value)
-            .set("status", status.toString)
+            .set("status", status.to!string)
             .set("referenceDate", referenceDate)
             .set("endOfPurposeDate", endOfPurposeDate);
 

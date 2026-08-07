@@ -20,7 +20,7 @@ class DeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionReq
     }
 
     void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-        findByDataSubject(tenantId, subjectId).removeAll;
+        findByDataSubject(tenantId, subjectId).each!(r => remove(r));
     }
 
     size_t countByStatus(TenantId tenantId, DeletionRequestStatus status) {
@@ -36,7 +36,7 @@ class DeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionReq
     }
 
     void removeByStatus(TenantId tenantId, DeletionRequestStatus status) {
-        findByStatus(tenantId, status).removeAll;
+        findByStatus(tenantId, status).each!(r => remove(r));
     }
 
     size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
@@ -52,7 +52,7 @@ class DeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionReq
     }
 
     void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        findByApplicationGroup(tenantId, groupId).removeAll;
+        findByApplicationGroup(tenantId, groupId).each!(r => remove(r));
     }
 
 }
