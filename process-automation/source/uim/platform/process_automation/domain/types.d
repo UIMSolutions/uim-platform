@@ -11,77 +11,90 @@ mixin(ShowModule!());
 
 @safe:
 // ID aliases
-struct ArtifactId  {
-    mixin(IdTemplate);
-}
-struct ProcessId  {
+struct ArtifactId {
     mixin(IdTemplate);
 }
 
-struct ProcessStepId  {
-    mixin(IdTemplate);
-}
-struct ProcessInstanceId  {
-    mixin(IdTemplate);
-}
-struct TaskId  {
+struct ProcessId {
     mixin(IdTemplate);
 }
 
-struct TaskAttachmentId  {
+struct ProcessStepId {
     mixin(IdTemplate);
 }
 
-struct TaskCommentId  {
-    mixin(IdTemplate);
-}
-struct DecisionId  {
+struct ProcessInstanceId {
     mixin(IdTemplate);
 }
 
-struct DecisionRowId  {
+struct TaskId {
     mixin(IdTemplate);
 }
 
-struct DecisionColumnId  {
-    mixin(IdTemplate);
-}
-struct FormId  {
-    mixin(IdTemplate);
-}
-struct FormFieldId  {
-    mixin(IdTemplate);
-}
-struct FormSectionId  {
-    mixin(IdTemplate);
-}
-struct AutomationId  {
+struct TaskAttachmentId {
     mixin(IdTemplate);
 }
 
-struct AutomationStepId  {
+struct TaskCommentId {
     mixin(IdTemplate);
 }
 
-struct AutomationRunId  {
-    mixin(IdTemplate);
-}
-struct TriggerId  {
-    mixin(IdTemplate);
-}
-struct ActionId  {
-    mixin(IdTemplate);
-}
-struct VisibilityId  {
+struct DecisionId {
     mixin(IdTemplate);
 }
 
-struct VisibilityMetricId  {
+struct DecisionRowId {
     mixin(IdTemplate);
 }
-struct ProjectId  {
+
+struct DecisionColumnId {
     mixin(IdTemplate);
 }
-struct VersionId  {
+
+struct FormId {
+    mixin(IdTemplate);
+}
+
+struct FormFieldId {
+    mixin(IdTemplate);
+}
+
+struct FormSectionId {
+    mixin(IdTemplate);
+}
+
+struct AutomationId {
+    mixin(IdTemplate);
+}
+
+struct AutomationStepId {
+    mixin(IdTemplate);
+}
+
+struct AutomationRunId {
+    mixin(IdTemplate);
+}
+
+struct TriggerId {
+    mixin(IdTemplate);
+}
+
+struct ActionId {
+    mixin(IdTemplate);
+}
+
+struct VisibilityId {
+    mixin(IdTemplate);
+}
+
+struct VisibilityMetricId {
+    mixin(IdTemplate);
+}
+
+struct ProjectId {
+    mixin(IdTemplate);
+}
+
+struct VersionId {
     mixin(IdTemplate);
 }
