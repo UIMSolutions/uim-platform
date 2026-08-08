@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class TranslationProjectRepository : TenantRepository!(TranslationProject, TranslationProjectId),
-TranslationProjectRepository {
+ITranslationProjectRepository {
     
     bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).any!(p => p.name == name);
@@ -28,7 +28,7 @@ TranslationProjectRepository {
     void removeByName(TenantId tenantId, string name) {
         foreach (p; findByTenant(tenantId))
             if (p.name == name) {
-                super.remove(p.id);
+                remove(p);
                 return;
             }
     }

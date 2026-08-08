@@ -49,8 +49,8 @@ class TranslationController : HttpController {
         }
 
         auto result = usecase.translateTexts(r);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+        // if (result.hasError)
+        //     return errorResponse(result.message, 400);
     
 
         return successResponse("Translation successful", "Translated", 200, result);

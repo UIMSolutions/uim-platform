@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageNotificationsUseCase { // TODO: UIMUseCase {
-    private NotificationRepository repo;
+    private INotificationRepository repo;
 
-    this(NotificationRepository repo) {
+    this(INotificationRepository repo) {
         this.repo = repo;
     }
 

@@ -12,9 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class TranslationJobRepository
-    : TenantRepository!(TranslationJob, TranslationJobId),
-      TranslationJobRepository
-{
+    : TenantRepository!(TranslationJob, TranslationJobId),  ITranslationJobRepository {
 
     size_t countByStatus(TenantId tenantId, JobStatus status) {
         return findByStatus(tenantId, status).length;

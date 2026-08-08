@@ -19,7 +19,7 @@ enum ProjectType {
     api,
 }
 ProjectType toProjectType(string value) {
-    mixin(EnumSwitch!"ProjectType", "file");
+    mixin(EnumSwitch("ProjectType", "file"));
 }
 ProjectType[] toProjectTypes(string[] values) {
     return values.map!(v => toProjectType(v)).array;
@@ -40,7 +40,7 @@ enum ProjectStatus {
     archived,
 }
 ProjectStatus toProjectStatus(string value) {
-    mixin(EnumSwitch!"ProjectStatus", "draft");
+    mixin(EnumSwitch("ProjectStatus", "draft"));
 }
 ProjectStatus[] toProjectStatuses(string[] values) {
     return values.map!(v => toProjectStatus(v)).array;
@@ -86,7 +86,7 @@ enum TranslationProvider {
     llm,
 }
 TranslationProvider toTranslationProvider(string value) {
-    mixin(EnumSwitch!"TranslationProvider", "mltr");
+    mixin(EnumSwitch("TranslationProvider", "mltr"));
 }
 TranslationProvider[] toTranslationProviders(string[] values) {
     return values.map!(toTranslationProvider).array;
@@ -127,7 +127,7 @@ enum JobStatus {
     cancelled,
 }
 JobStatus toJobStatus(string value) {
-    mixin(EnumSwitch!"JobStatus", "pending");
+    mixin(EnumSwitch("JobStatus", "pending"));
 }
 JobStatus[] toJobStatuses(string[] values) {
     return values.map!(toJobStatus).array;
@@ -168,7 +168,7 @@ enum JobType {
     text,
 }
 JobType toJobType(string value) {
-    mixin(EnumSwitch!"JobType", "software");
+    mixin(EnumSwitch("JobType", "software"));
 }
 JobType[] toJobTypes(string[] values) {
     return values.map!(toJobType).array;
@@ -184,7 +184,7 @@ unittest {
     mixin(ShowTest!"JobType");
 
     assert("software".toJobType == JobType.software);
-    assert("document".toJ.obType == JobType.document);
+    assert("document".toJobType == JobType.document);
     assert("text".toJobType == JobType.text);
     
     assert("".toJobType == JobType.software);
@@ -207,7 +207,7 @@ enum QualityLevel {
     unknown,
 }
 QualityLevel toQualityLevel(string value) {
-    mixin(EnumSwitch!"QualityLevel", "unknown");
+    mixin(EnumSwitch("QualityLevel", "unknown"));
 }
 QualityLevel[] toQualityLevels(string[] values) {
     return values.map!(toQualityLevel).array;

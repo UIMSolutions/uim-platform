@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageEntityTypesUseCase { // TODO: UIMUseCase {
-    private EntityTypeRepository repo;
+    private IEntityTypeRepository repo;
 
-    this(EntityTypeRepository repo) {
+    this(IEntityTypeRepository repo) {
         this.repo = repo;
     }
 

@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class AutomationRuleRepository : TenantRepository!(AutomationRule, AutomationRuleId), AutomationRuleRepository {
+class AutomationRuleRepository : TenantRepository!(AutomationRule, AutomationRuleId), IAutomationRuleRepository {
 
     // #region ByTemplate
     size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId) {

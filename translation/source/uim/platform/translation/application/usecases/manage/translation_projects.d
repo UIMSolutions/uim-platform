@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTranslationProjectsUseCase {
-    private TranslationProjectRepository repo;
+    private ITranslationProjectRepository repo;
 
-    this(TranslationProjectRepository repo) {
+    this(ITranslationProjectRepository repo) {
         this.repo = repo;
     }
 
@@ -26,7 +26,7 @@ class ManageTranslationProjectsUseCase {
         if (r.targetLanguages.length == 0)
             return CommandResult(false, "", "At least one target language is required");
 
-        auto p = TranslationProject(r.tenantId, r.projectId, r.createdBy);
+        auto p = TranslationProject(r.tenantId, r.projectId); // , r.createdBy);
         p.name = r.name;
         p.description = r.description;
         p.sourceLanguage = r.sourceLanguage;

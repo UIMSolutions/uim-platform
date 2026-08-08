@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageGlossaryEntriesUseCase {
-    private GlossaryEntryRepository repo;
+    private IGlossaryEntryRepository repo;
 
-    this(GlossaryEntryRepository repo) {
+    this(IGlossaryEntryRepository repo) {
         this.repo = repo;
     }
 
@@ -28,7 +28,7 @@ class ManageGlossaryEntriesUseCase {
         if (r.sourceLanguage.length == 0 || r.targetLanguage.length == 0)
             return CommandResult(false, "", "Source and target languages are required");
 
-        auto e = GlossaryEntry(r.tenantId, r.entryId, r.createdBy);
+        auto e = GlossaryEntry(r.tenantId, r.entryId); // , r.createdBy);
         e.sourceLanguage = r.sourceLanguage;
         e.targetLanguage = r.targetLanguage;
         e.sourceTerm = r.sourceTerm;

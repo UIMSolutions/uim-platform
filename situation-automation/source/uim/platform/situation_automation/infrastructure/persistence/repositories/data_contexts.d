@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class DataContextRepository : TenantRepository!(DataContext, DataContextId), DataContextRepository {
+class DataContextRepository : TenantRepository!(DataContext, DataContextId), IDataContextRepository {
 
     // #region ByInstance
     size_t countByInstance(TenantId tenantId, SituationInstanceId instanceId) {

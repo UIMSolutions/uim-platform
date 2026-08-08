@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class GlossaryEntryRepository : TenantRepository!(GlossaryEntry, GlossaryEntryId),
-GlossaryEntryRepository {
+IGlossaryEntryRepository {
 
     size_t countByLanguagePair(TenantId tenantId, string sourceLang, string targetLang) {
         return findByLanguagePair(tenantId, sourceLang, targetLang).length;

@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class SituationInstanceRepository : TenantRepository!(SituationInstance, SituationInstanceId), SituationInstanceRepository{
+class SituationInstanceRepository : TenantRepository!(SituationInstance, SituationInstanceId), ISituationInstanceRepository{
 
     // #region ByTemplate
     size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId) {

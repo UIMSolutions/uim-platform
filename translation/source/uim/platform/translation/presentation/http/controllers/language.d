@@ -31,7 +31,7 @@ class LanguageController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto langs = usecase.supportedLanguages(tenantId);
+        auto langs = usecase.supportedLanguages(/*tenantId*/ );
 
         auto arr = Json.emptyArray;
         foreach (l; langs)

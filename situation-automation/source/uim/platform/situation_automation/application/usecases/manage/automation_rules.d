@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
-    private AutomationRuleRepository repo;
+    private IAutomationRuleRepository repo;
 
-    this(AutomationRuleRepository repo) {
+    this(IAutomationRuleRepository repo) {
         this.repo = repo;
     }
 

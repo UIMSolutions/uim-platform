@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTranslationJobsUseCase {
-    private TranslationJobRepository repo;
+    private ITranslationJobRepository repo;
     private TranslationEngine engine;
 
-    this(TranslationJobRepository repo, TranslationEngine engine) {
+    this(ITranslationJobRepository repo, TranslationEngine engine) {
         this.repo = repo;
         this.engine = engine;
     }
@@ -27,7 +27,7 @@ class ManageTranslationJobsUseCase {
         if (r.sourceLanguage.length == 0 || r.targetLanguage.length == 0)
             return CommandResult(false, "", "Source and target languages are required");
 
-        auto job = TranslationJob(r.tenantId, r.jobId, r.createdBy);
+        auto job = TranslationJob(r.tenantId, r.jobId); //, r.createdBy);
         job.jobType = r.jobType;
         job.sourceLanguage = r.sourceLanguage;
         job.targetLanguage = r.targetLanguage;

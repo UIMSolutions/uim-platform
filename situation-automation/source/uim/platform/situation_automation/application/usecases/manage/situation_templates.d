@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
-    private SituationTemplateRepository repo;
+    private ISituationTemplateRepository repo;
 
-    this(SituationTemplateRepository repo) {
+    this(ISituationTemplateRepository repo) {
         this.repo = repo;
     }
 

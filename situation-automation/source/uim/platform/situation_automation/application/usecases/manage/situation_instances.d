@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
-    private SituationInstanceRepository repo;
+    private ISituationInstanceRepository repo;
 
-    this(SituationInstanceRepository repo) {
+    this(ISituationInstanceRepository repo) {
         this.repo = repo;
     }
 

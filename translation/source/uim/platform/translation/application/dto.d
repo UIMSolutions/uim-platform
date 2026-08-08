@@ -15,6 +15,7 @@ mixin(ShowModule!());
 
 struct CreateTranslationProjectRequest {
     TenantId tenantId;
+    TranslationProjectId projectId;
     string name;
     string description;
     string projectType;
@@ -97,6 +98,7 @@ struct TranslateDocumentRequest {
 
 struct SubmitTranslationJobRequest {
     TenantId tenantId;
+    TranslationJobId jobId;
     JobType jobType;
 
     string sourceLanguage;

@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class EntityTypeRepository : TenantRepository!(EntityType, EntityTypeId), EntityTypeRepository {
+class EntityTypeRepository : TenantRepository!(EntityType, EntityTypeId), IEntityTypeRepository {
 
     // #region ByCategory
     size_t countByCategory(TenantId tenantId, EntityCategory category) {

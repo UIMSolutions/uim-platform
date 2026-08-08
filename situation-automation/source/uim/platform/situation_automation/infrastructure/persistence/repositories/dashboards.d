@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class DashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
+class DashboardRepository : TenantRepository!(Dashboard, DashboardId), IDashboardRepository {
 
     // #region ByType
     size_t countByType(TenantId tenantId, DashboardType type) {
