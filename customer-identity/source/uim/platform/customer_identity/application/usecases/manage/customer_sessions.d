@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageCustomerSessionsUseCase {
-    private CustomerSessionRepository repo;
+    private ICustomerSessionRepository repo;
 
-    this(CustomerSessionRepository repo) {
+    this(ICustomerSessionRepository repo) {
         this.repo = repo;
     }
 

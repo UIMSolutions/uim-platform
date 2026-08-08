@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageConsentRecordsUseCase {
-    private ConsentRecordRepository repo;
+    private IConsentRecordRepository repo;
 
-    this(ConsentRecordRepository repo) {
+    this(IConsentRecordRepository repo) {
         this.repo = repo;
     }
 

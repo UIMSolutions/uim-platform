@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScreenSetRepository : TenantRepository!(ScreenSet, ScreenSetId), ScreenSetRepository {
+class ScreenSetRepository : TenantRepository!(ScreenSet, ScreenSetId), IScreenSetRepository {
 
     ScreenSet[] findByFlowType(TenantId tenantId, ScreenSetFlowType flowType) {
         return findByTenant(tenantId).filter!(ss => ss.flowType == flowType).array;

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageSitePoliciesUseCase {
-    private SitePolicyRepository repo;
+    private ISitePolicyRepository repo;
 
-    this(SitePolicyRepository repo) {
+    this(ISitePolicyRepository repo) {
         this.repo = repo;
     }
 

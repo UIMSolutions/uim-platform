@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
+class IdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IIdentityProviderRepository {
 
     IdentityProvider[] findByType(TenantId tenantId, IdentityProviderType providerType) {
         return findByTenant(tenantId).filter!(ip => ip.providerType == providerType).array;

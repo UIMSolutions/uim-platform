@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageSocialIdentitiesUseCase {
-    private SocialIdentityRepository repo;
+    private ISocialIdentityRepository repo;
 
-    this(SocialIdentityRepository repo) {
+    this(ISocialIdentityRepository repo) {
         this.repo = repo;
     }
 

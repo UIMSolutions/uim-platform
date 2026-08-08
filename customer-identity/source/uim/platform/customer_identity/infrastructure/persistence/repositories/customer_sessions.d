@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CustomerSessionRepository : TenantRepository!(CustomerSession, CustomerSessionId), CustomerSessionRepository {
+class CustomerSessionRepository : TenantRepository!(CustomerSession, CustomerSessionId), ICustomerSessionRepository {
 
     CustomerSession findByToken(TenantId tenantId, string token) {
         auto items = findByTenant(tenantId).filter!(s => s.token == token).array;

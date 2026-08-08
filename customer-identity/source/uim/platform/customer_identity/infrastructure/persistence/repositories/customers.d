@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CustomerRepository : TenantRepository!(Customer, CustomerId), CustomerRepository {
+class CustomerRepository : TenantRepository!(Customer, CustomerId), ICustomerRepository {
 
     Customer findByEmail(TenantId tenantId, string email) {
         auto items = findByTenant(tenantId).filter!(c => c.email == email).array;

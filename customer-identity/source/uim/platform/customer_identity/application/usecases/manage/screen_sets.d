@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageScreenSetsUseCase {
-    private ScreenSetRepository repo;
+    private IScreenSetRepository repo;
 
-    this(ScreenSetRepository repo) {
+    this(IScreenSetRepository repo) {
         this.repo = repo;
     }
 

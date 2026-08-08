@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SitePolicyRepository : TenantRepository!(SitePolicy, SitePolicyId), SitePolicyRepository {
+class SitePolicyRepository : TenantRepository!(SitePolicy, SitePolicyId), ISitePolicyRepository {
 
     SitePolicy[] findByType(TenantId tenantId, PolicyType policyType) {
         return findByTenant(tenantId).filter!(sp => sp.policyType == policyType).array;

@@ -278,7 +278,7 @@ enum LegalBasis {
     legitimateInterests
 }
 LegalBasis toLegalBasis(string value) {
-    mixin(EnumSwitch!("LegalBasis", "consent"));
+    mixin(EnumSwitch("LegalBasis", "consent"));
 }
 LegalBasis[] toLegalBases(string[] values) {
     return values.map!(toLegalBasis).array;
@@ -333,7 +333,7 @@ enum AuditAction {
     adminAction
 }
 AuditAction toAuditAction(string value) {
-    mixin(EnumSwitch!("AuditAction", "register"));
+    mixin(EnumSwitch("AuditAction", "register"));
 }
 AuditAction[] toAuditActions(string[] values) {
     return values.map!(toAuditAction).array;
@@ -398,7 +398,7 @@ enum ResourceType {
     sitePolicy
 }
 ResourceType toResourceType(string value) {
-    mixin(EnumSwitch!("ResourceType", "customer"));
+    mixin(EnumSwitch("ResourceType", "customer"));
 }
 ResourceType[] toResourceTypes(string[] values) {
     return values.map!(toResourceType).array;
@@ -444,7 +444,7 @@ enum IdentityProviderType {
     ldap
 }
 IdentityProviderType toIdentityProviderType(string value) {
-    mixin(EnumSwitch!("IdentityProviderType", "saml"));
+    mixin(EnumSwitch("IdentityProviderType", "saml"));
 }
 IdentityProviderType[] toIdentityProviderTypes(string[] values) {
     return values.map!(toIdentityProviderType).array;
@@ -483,7 +483,7 @@ enum IdentityProviderStatus {
     testing
 }
 IdentityProviderStatus toIdentityProviderStatus(string value) {
-    mixin(EnumSwitch!("IdentityProviderStatus", "active"));
+    mixin(EnumSwitch("IdentityProviderStatus", "active"));
 }
 IdentityProviderStatus[] toIdentityProviderStatuses(string[] values) {
     return values.map!(toIdentityProviderStatus).array;
@@ -523,7 +523,7 @@ enum ScreenSetFlowType {
     liteRegistration
 }
 ScreenSetFlowType toScreenSetFlowType(string value) {
-    mixin(EnumSwitch!("ScreenSetFlowType", "registrationLogin"));
+    mixin(EnumSwitch("ScreenSetFlowType", "registrationLogin"));
 }
 ScreenSetFlowType[] toScreenSetFlowTypes(string[] values) {
     return values.map!(toScreenSetFlowType).array;
@@ -566,7 +566,7 @@ enum ScreenSetStatus {
     archived
 }
 ScreenSetStatus toScreenSetStatus(string value) {
-    mixin(EnumSwitch!("ScreenSetStatus", "draft"));
+    mixin(EnumSwitch("ScreenSetStatus", "draft"));
 }
 ScreenSetStatus[] toScreenSetStatuses(string[] values) {
     return values.map!(toScreenSetStatus).array;
@@ -606,7 +606,7 @@ enum PolicyType {
     consent
 }
 PolicyType toPolicyType(string value) {
-    mixin(EnumSwitch!("PolicyType", "password"));
+    mixin(EnumSwitch("PolicyType", "password"));
 }
 PolicyType[] toPolicyTypes(string[] values) {
     return values.map!(toPolicyType).array;
@@ -652,7 +652,7 @@ enum MfaMethod {
 }
 
 MfaMethod toMfaMethod(string value) {
-    mixin(EnumSwitch!("MfaMethod", "none"));
+    mixin(EnumSwitch("MfaMethod", "none"));
 }
 MfaMethod[] toMfaMethods(string[] values) {
     return values.map!(toMfaMethod).array;
@@ -694,7 +694,7 @@ enum PasswordComplexity {
     custom
 }
 PasswordComplexity toPasswordComplexity(string value) {
-    mixin(EnumSwitch!("PasswordComplexity", "low"));
+    mixin(EnumSwitch("PasswordComplexity", "low"));
 }
 PasswordComplexity[] toPasswordComplexities(string[] values) {
     return values.map!(toPasswordComplexity).array;
