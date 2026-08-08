@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageArtifactsUseCase { // TODO: UIMUseCase {
-    private ArtifactRepository repo;
+    private IArtifactRepository repo;
 
-    this(ArtifactRepository repo) {
+    this(IArtifactRepository repo) {
         this.repo = repo;
     }
 

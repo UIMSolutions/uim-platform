@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
-    private VisibilityRepository repo;
+    private IVisibilityRepository repo;
 
-    this(VisibilityRepository repo) {
+    this(IVisibilityRepository repo) {
         this.repo = repo;
     }
 

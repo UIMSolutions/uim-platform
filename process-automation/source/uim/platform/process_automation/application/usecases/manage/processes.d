@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageProcessesUseCase { // TODO: UIMUseCase {
-    private ProcessRepository repo;
+    private IProcessRepository repo;
 
-    this(ProcessRepository repo) {
+    this(IProcessRepository repo) {
         this.repo = repo;
     }
 

@@ -25,6 +25,7 @@ class MonthlyUsageReportHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    auto precheck = getPrecheck(req, res);
     auto id = precheck.id;
     if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing report id"), 400);

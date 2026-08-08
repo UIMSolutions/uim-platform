@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageFormsUseCase { // TODO: UIMUseCase {
-    private FormRepository repo;
+    private IFormRepository repo;
 
-    this(FormRepository repo) {
+    this(IFormRepository repo) {
         this.repo = repo;
     }
 

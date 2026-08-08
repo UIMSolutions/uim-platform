@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing UsageRecordRepository port.
 class UsageRecordRepository
-    : TenantRepository!(UsageRecord, UsageRecordId), UsageRecordRepository {
+    : TenantRepository!(UsageRecord, UsageRecordId), IUsageRecordRepository {
 
   UsageRecord[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
     return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;

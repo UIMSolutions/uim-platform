@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class AutomationRepository : TenantRepository!(Automation, AutomationId), AutomationRepository {
+class AutomationRepository : TenantRepository!(Automation, AutomationId), IAutomationRepository {
     
     size_t countByProject(TenantId tenantId, ProjectId projectId) {
         return findByProject(tenantId, projectId).length;

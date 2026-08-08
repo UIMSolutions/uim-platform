@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDecisionsUseCase { // TODO: UIMUseCase {
-    private DecisionRepository repo;
+    private IDecisionRepository repo;
 
-    this(DecisionRepository repo) {
+    this(IDecisionRepository repo) {
         this.repo = repo;
     }
 

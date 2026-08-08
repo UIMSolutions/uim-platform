@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class FormRepository : TenantRepository!(Form, FormId), FormRepository {
+class FormRepository : TenantRepository!(Form, FormId), IFormRepository {
 
     size_t countByProject(TenantId tenantId, ProjectId projectId) {
         return findByProject(tenantId, projectId).length;

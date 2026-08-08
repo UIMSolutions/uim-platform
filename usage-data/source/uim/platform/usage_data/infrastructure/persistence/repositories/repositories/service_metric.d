@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing ServiceMetricRepository port.
 class ServiceMetricRepository
-    : TenantRepository!(ServiceMetric, ServiceMetricId), ServiceMetricRepository {
+    : TenantRepository!(ServiceMetric, ServiceMetricId), IServiceMetricRepository {
 
   ServiceMetric[] findByService(TenantId tenantId, string serviceId) {
     return findByTenant(tenantId).filter!(m => m.serviceId == serviceId).array;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 /// In-memory adapter implementing MonthlyUsageReportRepository port.
 class MonthlyUsageReportRepository
     : TenantRepository!(MonthlyUsageReport, MonthlyUsageReportId),
-      MonthlyUsageReportRepository {
+      IMonthlyUsageReportRepository {
 
   MonthlyUsageReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
     return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;

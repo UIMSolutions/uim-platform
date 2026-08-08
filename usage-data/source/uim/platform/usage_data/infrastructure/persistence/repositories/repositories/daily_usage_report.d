@@ -12,7 +12,7 @@ mixin(ShowModule!());
 /// In-memory adapter implementing DailyUsageReportRepository port.
 class DailyUsageReportRepository
     : TenantRepository!(DailyUsageReport, DailyUsageReportId),
-      DailyUsageReportRepository {
+      IDailyUsageReportRepository {
 
   DailyUsageReport[] findBySubaccount(TenantId tenantId, string subaccountId) {
     return findByTenant(tenantId).filter!(r => r.subaccountId == subaccountId).array;

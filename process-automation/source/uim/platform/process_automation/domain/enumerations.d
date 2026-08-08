@@ -74,7 +74,7 @@ enum ProcessStatus {
     released,
 }
 
-ProcessStatus toProcessStatus(string status) {
+ProcessStatus toProcessStatus(string value) {
     mixin(EnumSwitch("ProcessStatus", "unknown"));
 }
 
@@ -151,12 +151,13 @@ unittest {
     assert(ProcessStatus.releasing.toString == "releasing");
     assert(ProcessStatus.released.toString == "released");
 
-    assert(["active", "inactive", "deprecated"].toProcessStatuses == [    ProcessStatus.active, ProcessStatus.inactive,
+    assert(["active", "inactive", "deprecated"].toProcessStatuses == [
+            ProcessStatus.active, ProcessStatus.inactive,
             ProcessStatus.deprecated_
         ]);
-    assert([ProcessStatus.active, ProcessStatus.inactive, ProcessStatus.deprecated_
-    ].toStrings == ["active", "inactive", "deprecated"
-    ]);
+    assert([
+        ProcessStatus.active, ProcessStatus.inactive, ProcessStatus.deprecated_
+    ].toStrings == ["active", "inactive", "deprecated"]);
 }
 
 enum ProcessCategory {
@@ -174,7 +175,7 @@ enum ProcessCategory {
     custom,
 }
 
-ProcessCategory toProcessCategory(string category) {
+ProcessCategory toProcessCategory(string value) {
     mixin(EnumSwitch("ProcessCategory", "custom"));
 }
 
@@ -207,13 +208,14 @@ unittest {
     assert(ProcessCategory.hybrid.toString == "hybrid");
     assert(ProcessCategory.custom.toString == "custom");
 
-    assert(["workflow", "approval", "notification"].toProcessCategories == [    ProcessCategory.workflow, ProcessCategory.approval,
+    assert(["workflow", "approval", "notification"].toProcessCategories == [
+            ProcessCategory.workflow, ProcessCategory.approval,
             ProcessCategory.notification
         ]);
-    assert([ProcessCategory.workflow, ProcessCategory.approval,
+    assert([
+        ProcessCategory.workflow, ProcessCategory.approval,
         ProcessCategory.notification
-    ].toStrings == ["workflow", "approval", "notification"
-    ]);
+    ].toStrings == ["workflow", "approval", "notification"]);
 }
 
 enum StepType {
@@ -259,7 +261,7 @@ enum StepType {
     custom,
 }
 
-StepType toStepType(string type) {
+StepType toStepType(string value) {
     mixin(EnumSwitch("StepType", "custom"));
 }
 
@@ -321,9 +323,11 @@ unittest {
     assert(StepType.condition.toString == "condition");
     assert(StepType.custom.toString == "custom");
 
-    assert(["startEvent", "endEvent", "userTask"].toStepTypes == [    StepType.startEvent, StepType.endEvent, StepType.userTask
+    assert(["startEvent", "endEvent", "userTask"].toStepTypes == [
+            StepType.startEvent, StepType.endEvent, StepType.userTask
         ]);
-    assert([StepType.startEvent, StepType.endEvent, StepType.userTask].toStrings == [    "startEvent", "endEvent", "userTask"
+    assert([StepType.startEvent, StepType.endEvent, StepType.userTask].toStrings == [
+            "startEvent", "endEvent", "userTask"
         ]);
 }
 
@@ -347,7 +351,7 @@ enum InstanceStatus {
     unknown,
 }
 
-InstanceStatus toInstanceStatus(string status) {
+InstanceStatus toInstanceStatus(string value) {
     mixin(EnumSwitch("InstanceStatus", "unknown"));
 }
 
@@ -384,13 +388,14 @@ unittest {
     assert(InstanceStatus.error.toString == "error");
     assert(InstanceStatus.unknown.toString == "unknown");
 
-    assert(["running", "completed", "failed"].toInstanceStatuses == [    InstanceStatus.running, InstanceStatus.completed,
+    assert(["running", "completed", "failed"].toInstanceStatuses == [
+            InstanceStatus.running, InstanceStatus.completed,
             InstanceStatus.failed
         ]);
 
-    assert([InstanceStatus.running, InstanceStatus.completed, InstanceStatus.failed
-    ].toStrings == ["running", "completed", "failed"
-    ]);
+    assert([
+        InstanceStatus.running, InstanceStatus.completed, InstanceStatus.failed
+    ].toStrings == ["running", "completed", "failed"]);
 }
 
 enum InstancePriority {
@@ -404,7 +409,7 @@ enum InstancePriority {
     critical,
 }
 
-InstancePriority toInstancePriority(string priority) {
+InstancePriority toInstancePriority(string value) {
     mixin(EnumSwitch("InstancePriority", "medium"));
 }
 
@@ -434,12 +439,13 @@ unittest {
     assert(InstancePriority.high.toString == "high");
     assert(InstancePriority.critical.toString == "critical");
 
-    assert(["low", "medium", "high"].toInstancePriorities == [    InstancePriority.low, InstancePriority.medium, InstancePriority.high
+    assert(["low", "medium", "high"].toInstancePriorities == [
+            InstancePriority.low, InstancePriority.medium, InstancePriority.high
         ]);
 
-    assert([InstancePriority.low, InstancePriority.medium, InstancePriority.high
-    ].toStrings == ["low", "medium", "high"
-    ]);
+    assert([
+        InstancePriority.low, InstancePriority.medium, InstancePriority.high
+    ].toStrings == ["low", "medium", "high"]);
 }
 
 // --- Event (for Alerting and Monitoring) ---
@@ -473,7 +479,7 @@ EventCategory[] toEventCategories(string[] categories)
     => categories.map!toEventCategory.array;
 
 string toString(EventCategory category)
-    => category.to!string;
+    => cast(string)category;
 
 string[] toStrings(EventCategory[] categories)
     => categories.map!toString.array;
@@ -495,13 +501,14 @@ unittest {
     assert(EventCategory.exception_.toString == "exception_");
     assert(EventCategory.custom.toString == "custom");
 
-    assert(["NOTIFICATION", "ALERT", "EXCEPTION"].toEventCategories == [    EventCategory.notification, EventCategory.alert,
+    assert(["NOTIFICATION", "ALERT", "EXCEPTION"].toEventCategories == [
+            EventCategory.notification, EventCategory.alert,
             EventCategory.exception_
         ]);
 
-    assert([EventCategory.notification, EventCategory.alert, EventCategory.exception_
-    ].toStrings == ["notification", "alert", "exception_"
-    ]);
+    assert([
+        EventCategory.notification, EventCategory.alert, EventCategory.exception_
+    ].toStrings == ["notification", "alert", "exception_"]);
 }
 
 // --- PATask ---
@@ -525,7 +532,7 @@ enum TaskStatus {
     unknown,
 }
 
-TaskStatus toTaskStatus(string status) {
+TaskStatus toTaskStatus(string value) {
     mixin(EnumSwitch("TaskStatus", "unknown"));
 }
 
@@ -563,10 +570,12 @@ unittest {
     assert(TaskStatus.forwarded.toString == "forwarded");
     assert(TaskStatus.unknown.toString == "unknown");
 
-    assert(["ready", "reserved", "inProgress"].toTaskStatuses == [    TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress
+    assert(["ready", "reserved", "inProgress"].toTaskStatuses == [
+            TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress
         ]);
 
-    assert([TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress].toStrings == [    "ready", "reserved", "inProgress"
+    assert([TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress].toStrings == [
+            "ready", "reserved", "inProgress"
         ]);
 }
 
@@ -583,7 +592,7 @@ enum TaskPriority {
     unknown,
 }
 
-TaskPriority toTaskPriority(string priority) {
+TaskPriority toTaskPriority(string value) {
     mixin(EnumSwitch("TaskPriority", "unknown"));
 }
 
@@ -627,7 +636,7 @@ enum TaskType {
     custom,
 }
 
-TaskType toTaskType(string type) {
+TaskType toTaskType(string value) {
     mixin(EnumSwitch("TaskType", "custom"));
 }
 
@@ -704,13 +713,14 @@ unittest {
     assert(DecisionStatus.inactive.toString == "inactive");
     assert(DecisionStatus.deprecated_.toString == "deprecated");
 
-    assert(["draft", "active", "inactive"].toDecisionStatuses == [    DecisionStatus.draft, DecisionStatus.active,
+    assert(["draft", "active", "inactive"].toDecisionStatuses == [
+            DecisionStatus.draft, DecisionStatus.active,
             DecisionStatus.inactive
         ]);
 
-    assert([DecisionStatus.draft, DecisionStatus.active, DecisionStatus.inactive
-    ].toStrings == ["draft", "active", "inactive"
-    ]);
+    assert([
+        DecisionStatus.draft, DecisionStatus.active, DecisionStatus.inactive
+    ].toStrings == ["draft", "active", "inactive"]);
 }
 
 enum DecisionType {
@@ -759,7 +769,7 @@ enum HitPolicy {
     outputOrder,
 }
 
-HitPolicy toHitPolicy(string policy) {
+HitPolicy toHitPolicy(string value) {
     mixin(EnumSwitch("HitPolicy", "first"));
 }
 
@@ -795,14 +805,18 @@ unittest {
     assert(HitPolicy.ruleOrder.toString == "ruleOrder");
     assert(HitPolicy.outputOrder.toString == "outputOrder");
 
-    assert(["first", "any", "priority", "unique", "collect", "ruleOrder",
+    assert([
+        "first", "any", "priority", "unique", "collect", "ruleOrder",
         "outputOrder"
-    ].toHitPolicies == [HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
+    ].toHitPolicies == [
+        HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
         HitPolicy.collect, HitPolicy.ruleOrder, HitPolicy.outputOrder
     ]);
-    assert([HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
+    assert([
+        HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
         HitPolicy.collect, HitPolicy.ruleOrder, HitPolicy.outputOrder
-    ].toStrings == ["first", "any", "priority", "unique", "collect", "ruleOrder",
+    ].toStrings == [
+        "first", "any", "priority", "unique", "collect", "ruleOrder",
         "outputOrder"
     ]);
 }
@@ -907,29 +921,30 @@ unittest {
     assert(ConditionType.in_.toString == "in");
     assert(ConditionType.notIn.toString == "not_in");
 
-    assert([ConditionType.equals, ConditionType.notEquals, ConditionType.greaterThan
-    ].toStrings == ["equals", "not_equals", "greater_than"
-    ]);
+    assert([
+        ConditionType.equals, ConditionType.notEquals, ConditionType.greaterThan
+    ].toStrings == ["equals", "not_equals", "greater_than"]);
 
-    assert(["equals", "not_equals", "greater_than"].toConditionTypes == [    ConditionType.equals, ConditionType.notEquals,
+    assert(["equals", "not_equals", "greater_than"].toConditionTypes == [
+            ConditionType.equals, ConditionType.notEquals,
             ConditionType.greaterThan
         ]);
 }
 // --- Form ---
 
-enum FormStatus {
+enum FormStatus : string {
     // Form is being designed and is not yet active, which may indicate that it is still being developed and may require further work and testing before it can be used in production
-    draft,
+    draft = "draft",
     // Form has been published and is active, which may indicate that it is ready for use in production and may require monitoring and maintenance to ensure its continued effectiveness and relevance over time
-    published,
+    published = "published",
     // Form has been temporarily disabled, which may indicate that it is not currently being used in production and may require resolution of underlying issues or conditions before it can be reactivated and used again
-    inactive,
+    inactive = "inactive",
     // Form has been deprecated, which may indicate that it should not be used for new instances, but existing ones can continue to use them, which may require review and archiving before they can be reactivated or used again
-    deprecated_,
+    deprecated_ = "deprecated",
     // Form has been archived, which may indicate that it is no longer active and is kept for historical reference, and may require review before it can be reactivated or used again
-    archived,
+    archived = "archived",
     // Form has encountered errors, which may indicate that it has issues that need to be resolved before it can be reactivated and used again
-    error,
+    error = "error",
 }
 
 FormStatus toFormStatus(string value) {
@@ -981,9 +996,11 @@ unittest {
     assert(FormStatus.archived.toString == "archived");
     assert(FormStatus.error.toString == "error");
 
-    assert(["draft", "published", "inactive"].toFormStatuses == [    FormStatus.draft, FormStatus.published, FormStatus.inactive
+    assert(["draft", "published", "inactive"].toFormStatuses == [
+            FormStatus.draft, FormStatus.published, FormStatus.inactive
         ]);
-    assert([FormStatus.draft, FormStatus.published, FormStatus.inactive].toStrings == [    "draft", "published", "inactive"
+    assert([FormStatus.draft, FormStatus.published, FormStatus.inactive].toStrings == [
+            "draft", "published", "inactive"
         ]);
 }
 
@@ -1020,7 +1037,7 @@ enum FieldType {
     image,
 }
 
-FieldType toFieldType(string type) {
+FieldType toFieldType(string value) {
     mixin(EnumSwitch("FieldType", "text"));
 }
 
@@ -1066,10 +1083,12 @@ unittest {
     assert(FieldType.link.toString == "link");
     assert(FieldType.image.toString == "image");
 
-    assert(["text", "number", "date"].toFieldTypes == [    FieldType.text, FieldType.number, FieldType.date
+    assert(["text", "number", "date"].toFieldTypes == [
+            FieldType.text, FieldType.number, FieldType.date
         ]);
 
-    assert([FieldType.text, FieldType.number, FieldType.date].toStrings == [    "text", "number", "date"
+    assert([FieldType.text, FieldType.number, FieldType.date].toStrings == [
+            "text", "number", "date"
         ]);
 }
 // --- Automation (RPA Bot) ---
@@ -1085,7 +1104,7 @@ enum AutomationStatus {
     error,
 }
 
-AutomationStatus toAutomationStatus(string status) {
+AutomationStatus toAutomationStatus(string value) {
     mixin(EnumSwitch("AutomationStatus", "draft"));
 }
 
@@ -1115,13 +1134,14 @@ unittest {
     assert(AutomationStatus.inactive.toString == "inactive");
     assert(AutomationStatus.error.toString == "error");
 
-    assert(["draft", "active", "inactive"].toAutomationStatuses == [    AutomationStatus.draft, AutomationStatus.active,
+    assert(["draft", "active", "inactive"].toAutomationStatuses == [
+            AutomationStatus.draft, AutomationStatus.active,
             AutomationStatus.inactive
         ]);
 
-    assert([AutomationStatus.draft, AutomationStatus.active, AutomationStatus.inactive
-    ].toStrings == ["draft", "active", "inactive"
-    ]);
+    assert([
+        AutomationStatus.draft, AutomationStatus.active, AutomationStatus.inactive
+    ].toStrings == ["draft", "active", "inactive"]);
 
 }
 
@@ -1136,7 +1156,7 @@ enum AutomationType {
     api,
 }
 
-AutomationType toAutomationType(string type) {
+AutomationType toAutomationType(string value) {
     mixin(EnumSwitch("AutomationType", "attended"));
 }
 
@@ -1166,12 +1186,13 @@ unittest {
     assert(AutomationType.hybrid.toString == "hybrid");
     assert(AutomationType.api.toString == "api");
 
-    assert(["attended", "unattended", "hybrid"].toAutomationTypes == [    AutomationType.attended, AutomationType.unattended,
+    assert(["attended", "unattended", "hybrid"].toAutomationTypes == [
+            AutomationType.attended, AutomationType.unattended,
             AutomationType.hybrid
         ]);
-    assert([AutomationType.attended, AutomationType.unattended, AutomationType.hybrid
-    ].toStrings == ["attended", "unattended", "hybrid"
-    ]);
+    assert([
+        AutomationType.attended, AutomationType.unattended, AutomationType.hybrid
+    ].toStrings == ["attended", "unattended", "hybrid"]);
 }
 
 enum AutomationRunStatus {
@@ -1189,7 +1210,7 @@ enum AutomationRunStatus {
     timedOut,
 }
 
-AutomationRunStatus toAutomationRunStatus(string status) {
+AutomationRunStatus toAutomationRunStatus(string value) {
     mixin(EnumSwitch("AutomationRunStatus", "queued"));
 }
 
@@ -1223,7 +1244,8 @@ unittest {
     assert(AutomationRunStatus.cancelled.toString == "cancelled");
     assert(AutomationRunStatus.timedOut.toString == "timedOut");
 
-    assert(["queued", "running", "completed"].toAutomationRunStatuses == [    AutomationRunStatus.queued, AutomationRunStatus.running,
+    assert(["queued", "running", "completed"].toAutomationRunStatuses == [
+            AutomationRunStatus.queued, AutomationRunStatus.running,
             AutomationRunStatus.completed
         ]);
 }
@@ -1283,9 +1305,11 @@ unittest {
     assert(TriggerType.webhook.toString == "webhook");
     assert(TriggerType.formSubmission.toString == "formSubmission");
 
-    assert(["manual", "scheduled", "api"].toTriggerType == [    TriggerType.manual, TriggerType.scheduled, TriggerType.api
+    assert(["manual", "scheduled", "api"].toTriggerType == [
+            TriggerType.manual, TriggerType.scheduled, TriggerType.api
         ]);
-    assert([TriggerType.manual, TriggerType.scheduled, TriggerType.api].toStrings == [    "manual", "scheduled", "api"
+    assert([TriggerType.manual, TriggerType.scheduled, TriggerType.api].toStrings == [
+            "manual", "scheduled", "api"
         ]);
 }
 
@@ -1298,9 +1322,10 @@ enum TriggerStatus {
     error,
 }
 
-TriggerStatus toTriggerStatus(string status) {
+TriggerStatus toTriggerStatus(string value) {
     mixin(EnumSwitch("TriggerStatus", "active"));
 }
+
 TriggerStatus[] toTriggerStatuses(string[] statuses)
     => statuses.map!toTriggerStatus.array;
 
@@ -1325,9 +1350,12 @@ unittest {
     assert(TriggerStatus.inactive.toString == "inactive");
     assert(TriggerStatus.error.toString == "error");
 
-    assert(["active", "inactive", "error"].toTriggerStatuses == [    TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error
+    assert(["active", "inactive", "error"].toTriggerStatuses == [
+            TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error
         ]);
-    assert([TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error].toStrings == ["active", "inactive", "error"]);
+    assert([TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error].toStrings == [
+            "active", "inactive", "error"
+        ]);
 }
 
 enum ScheduleFrequency {
@@ -1349,14 +1377,14 @@ enum ScheduleFrequency {
     cron,
 }
 
-ScheduleFrequency toScheduleFrequency(string freq) {
+ScheduleFrequency toScheduleFrequency(string value) {
     mixin(EnumSwitch("ScheduleFrequency", "once"));
 }
 
 ScheduleFrequency[] toScheduleFrequencies(string[] freqs)
     => freqs.map!toScheduleFrequency.array;
 
-string toString(ScheduleFrequency frequency) 
+string toString(ScheduleFrequency frequency)
     => frequency.to!string;
 
 string[] toStrings(ScheduleFrequency[] frequencies)
@@ -1387,9 +1415,13 @@ unittest {
     assert(ScheduleFrequency.yearly.toString == "yearly");
     assert(ScheduleFrequency.cron.toString == "cron");
 
-    assert(["once", "hourly", "daily"].toScheduleFrequencies == [    ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily
+    assert(["once", "hourly", "daily"].toScheduleFrequencies == [
+            ScheduleFrequency.once, ScheduleFrequency.hourly,
+            ScheduleFrequency.daily
         ]);
-    assert([ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily].toStrings
+    assert([
+        ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily
+    ].toStrings
         == ["once", "hourly", "daily"]);
 }
 
@@ -1406,7 +1438,7 @@ enum ActionStatus {
     error,
 }
 
-ActionStatus toActionStatus(string status) {
+ActionStatus toActionStatus(string value) {
     mixin(EnumSwitch("ActionStatus", "draft"));
 }
 
@@ -1436,10 +1468,12 @@ unittest {
     assert("".toActionStatus == ActionStatus.draft);
     assert("unknown".toActionStatus == ActionStatus.draft);
 
-    assert(["draft", "active", "inactive", "error"].toActionStatuses == [    ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
+    assert(["draft", "active", "inactive", "error"].toActionStatuses == [
+            ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
             ActionStatus.error
         ]);
-    assert([ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
+    assert([
+        ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
         ActionStatus.error
     ].toStrings == ["draft", "active", "inactive", "error"]);
 }
@@ -1459,7 +1493,7 @@ enum ActionType {
     custom,
 }
 
-ActionType toActionType(string type) {
+ActionType toActionType(string value) {
     mixin(EnumSwitch("ActionType", "custom"));
 }
 
@@ -1491,10 +1525,12 @@ unittest {
     assert("".toActionType == ActionType.custom);
     assert("unknown".toActionType == ActionType.custom);
 
-    assert(["rest_api", "odata", "rfc", "soap", "graphql", "custom"].toActionTypes == [    ActionType.restApi, ActionType.odata, ActionType.rfc,
+    assert(["rest_api", "odata", "rfc", "soap", "graphql", "custom"].toActionTypes == [
+            ActionType.restApi, ActionType.odata, ActionType.rfc,
             ActionType.soap, ActionType.graphql, ActionType.custom
         ]);
-    assert([ActionType.restApi, ActionType.odata, ActionType.rfc, ActionType.soap,
+    assert([
+        ActionType.restApi, ActionType.odata, ActionType.rfc, ActionType.soap,
         ActionType.graphql, ActionType.custom
     ].toStrings == ["restApi", "odata", "rfc", "soap", "graphql", "custom"]);
 
@@ -1512,7 +1548,7 @@ enum VisibilityStatus {
     error,
 }
 
-VisibilityStatus toVisibilityStatus(string status) {
+VisibilityStatus toVisibilityStatus(string value) {
     mixin(EnumSwitch("VisibilityStatus", "active"));
 }
 
@@ -1540,9 +1576,11 @@ unittest {
     assert(VisibilityStatus.inactive.toString == "inactive");
     assert(VisibilityStatus.error.toString == "error");
 
-    assert(["active", "inactive", "error"].toVisibilityStatuses == [    VisibilityStatus.active, VisibilityStatus.inactive, VisibilityStatus.error
+    assert(["active", "inactive", "error"].toVisibilityStatuses == [
+            VisibilityStatus.active, VisibilityStatus.inactive,
+            VisibilityStatus.error
         ]);
-} 
+}
 
 enum DashboardType {
     // Used for dashboards that provide an overview of the entire process, which may include high-level metrics, key performance indicators (KPIs), and visualizations to monitor the overall health and performance of the process based on the process flow and requirements
@@ -1561,9 +1599,18 @@ enum DashboardType {
     custom,
 }
 
-DashboardType toDashboardType(string type) {
+DashboardType toDashboardType(string value) {
     mixin(EnumSwitch("DashboardType", "custom"));
 }
+
+DashboardType[] toDashboardTypes(string[] types)
+    => types.map!toDashboardType.array;
+
+string toString(DashboardType type)
+    => type.to!string;
+
+string[] toStrings(DashboardType[] types)
+    => types.map!toString.array;
 
 enum MetricType {
     // Metric that counts the number of occurrences or instances of a specific event, action, or condition within the process, which may indicate the frequency or volume of certain activities based on the process flow and requirements
@@ -1585,6 +1632,15 @@ enum MetricType {
 MetricType toMetricType(string value) {
     mixin(EnumSwitch("MetricType", "count"));
 }
+
+MetricType[] toMetricTypes(string[] types)
+    => types.map!toMetricType.array;
+
+string toString(MetricType type)
+    => type.to!string;
+
+string[] toStrings(MetricType[] types)
+    => types.map!toString.array;
 // --- Artifact Store ---
 
 enum ArtifactType {
@@ -1604,21 +1660,45 @@ enum ArtifactType {
     plugin,
 }
 
-ArtifactType toArtifactType(string type) {
+ArtifactType toArtifactType(string value) {
     mixin(EnumSwitch("ArtifactType", "processTemplate"));
 }
 
-enum ArtifactStatus {
+ArtifactType[] toArtifactTypes(string[] values)
+    => values.map!toArtifactType.array;
+
+string toString(ArtifactType type)
+    => type.to!string;
+
+string[] toStrings(ArtifactType[] types)
+    => types.map!toString.array;
+
+enum ArtifactStatus : string {
     // Artifact that is available in the artifact store and can be used for new instances, which may indicate that it is ready for use in production and may require monitoring and maintenance to ensure its continued effectiveness and relevance over time based on the process flow and requirements
-    available,
+    available = "available",
     // Artifact that has been installed and is currently being used in production, which may indicate that it is active and may require monitoring and maintenance to ensure its continued effectiveness and relevance over time based on the process flow and requirements
-    installed,
+    installed = "installed",
     // Artifact that has an update available, which may indicate that there is a newer version of the artifact with improvements or bug fixes that can be installed to enhance its functionality and performance based on the process flow and requirements
-    updateAvailable,
+    updateAvailable = "updateAvailable",
     // Artifact that has been deprecated and should not be used for new instances, but existing ones can continue to use them, which may require review and archiving before they can be reactivated or used again based on the process flow and requirements
-    deprecated_,
+    deprecated_ = "deprecated",
 }
 
-ArtifactStatus toArtifactStatus(string status) {
-    mixin(EnumSwitch("ArtifactStatus", "available"));
+ArtifactStatus toArtifactStatus(string value) {
+    switch(value.toLower()) {
+        case "available": return ArtifactStatus.available;
+        case "installed": return ArtifactStatus.installed;
+        case "updateavailable": return ArtifactStatus.updateAvailable;
+        case "deprecated": return ArtifactStatus.deprecated_;
+        default: return ArtifactStatus.available;
+    }
 }
+
+ArtifactStatus[] toArtifactStatuses(string[] statuses)
+    => statuses.map!toArtifactStatus.array;
+
+string toString(ArtifactStatus status) 
+    => cast(string)status;
+
+string[] toStrings(ArtifactStatus[] statuses)
+    => statuses.map!toString.array;

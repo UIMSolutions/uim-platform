@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageActionsUseCase { // TODO: UIMUseCase {
-    private ActionRepository repo;
+    private IActionRepository repo;
 
-    this(ActionRepository repo) {
+    this(IActionRepository repo) {
         this.repo = repo;
     }
 

@@ -10,16 +10,16 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class ProcessInstanceRepository : TenantRepository!(ProcessInstance, ProcessInstanceId), ProcessInstanceRepository {
+class ProcessInstanceRepository : TenantRepository!(ProcessInstance, ProcessInstanceId), IProcessInstanceRepository {
 
     size_t countByProcess(TenantId tenantId, ProcessId processId) {
         return findByProcess(tenantId, processId).length;
     }
-    ProcessInstance[] findByProcess(TenantId tenantId, ProcessId processId) {
-        return filterByProcess(findByTenant(tenantId), processId);
-    }
     ProcessInstance[] filterByProcess(ProcessInstance[] instances, ProcessId processId) {
         return instances.filter!(i => i.processId == processId).array;
+    }
+    ProcessInstance[] findByProcess(TenantId tenantId, ProcessId processId) {
+        return filterByProcess(findByTenant(tenantId), processId);
     }
     void removeByProcess(TenantId tenantId, ProcessId processId) {
         findByProcess(tenantId, processId).each!(i => remove(i));
