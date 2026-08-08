@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
-    private TaskDefinitionRepository repo;
+    private ITaskDefinitionRepository repo;
 
-    this(TaskDefinitionRepository repo) {
+    this(ITaskDefinitionRepository repo) {
         this.repo = repo;
     }
 

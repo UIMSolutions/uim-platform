@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDefinitionId), TaskDefinitionRepository {
+class TaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDefinitionId), ITaskDefinitionRepository {
 
     bool existsByName(TenantId tenantId, string name) {
         return findByName(tenantId, name).id != TaskDefinitionId.init;

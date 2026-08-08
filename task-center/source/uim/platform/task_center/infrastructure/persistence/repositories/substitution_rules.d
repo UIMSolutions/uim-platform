@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SubstitutionRuleRepository : TenantRepository!(SubstitutionRule, SubstitutionRuleId), SubstitutionRuleRepository {
+class SubstitutionRuleRepository : TenantRepository!(SubstitutionRule, SubstitutionRuleId), ISubstitutionRuleRepository {
 
     size_t countByUser(TenantId tenantId, UserId userId) {
         return findByUser(tenantId, userId).length;

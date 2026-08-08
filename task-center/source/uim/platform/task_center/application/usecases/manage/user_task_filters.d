@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
-    private UserTaskFilterRepository repo;
+    private IUserTaskFilterRepository repo;
 
-    this(UserTaskFilterRepository repo) {
+    this(IUserTaskFilterRepository repo) {
         this.repo = repo;
     }
 

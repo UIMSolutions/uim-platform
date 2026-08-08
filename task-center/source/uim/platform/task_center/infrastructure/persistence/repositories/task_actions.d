@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskActionRepository : TenantRepository!(TaskAction, TaskActionId), TaskActionRepository {
+class TaskActionRepository : TenantRepository!(TaskAction, TaskActionId), ITaskActionRepository {
 
     size_t countByTask(TenantId tenantId, TaskId taskId) {
         return findByTask(tenantId, taskId).length;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskRepository : TenantRepository!(UIMTask, TaskId), TaskRepository {
+class TaskRepository : TenantRepository!(UIMTask, TaskId), ITaskRepository {
 
     size_t countByAssignee(TenantId tenantId, string assignee) {
         return findByAssignee(tenantId, assignee).length;

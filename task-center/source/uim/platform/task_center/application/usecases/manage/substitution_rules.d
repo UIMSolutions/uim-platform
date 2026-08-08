@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
     /// Substitution Rule Management 
 class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
-    private SubstitutionRuleRepository repo;
+    private ISubstitutionRuleRepository repo;
 
-    this(SubstitutionRuleRepository repo) {
+    this(ISubstitutionRuleRepository repo) {
         this.repo = repo;
     }
 

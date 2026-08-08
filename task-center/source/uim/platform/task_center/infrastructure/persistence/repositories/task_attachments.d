@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskAttachmentRepository : TenantRepository!(TaskAttachment, TaskAttachmentId), TaskAttachmentRepository {
+class TaskAttachmentRepository : TenantRepository!(TaskAttachment, TaskAttachmentId), ITaskAttachmentRepository {
 
     size_t countByTask(TenantId tenantId, TaskId taskId) {
         return findByTask(tenantId, taskId).length;
