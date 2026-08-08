@@ -14,7 +14,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
+class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
   size_t countByBucket(TenantId tenantId, BucketId bucketId) {
     return findByBucket(tenantId, bucketId).length;

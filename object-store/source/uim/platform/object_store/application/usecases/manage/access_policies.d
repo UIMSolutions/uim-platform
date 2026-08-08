@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for bucket access policy management.
 class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
-  private AccessPolicyRepository policyRepo;
-  private BucketRepository bucketRepo;
+  private IAccessPolicyRepository policyRepo;
+  private IBucketRepository bucketRepo;
 
-  this(AccessPolicyRepository policyRepo, BucketRepository bucketRepo) {
+  this(IAccessPolicyRepository policyRepo, IBucketRepository bucketRepo) {
     this.policyRepo = policyRepo;
     this.bucketRepo = bucketRepo;
   }

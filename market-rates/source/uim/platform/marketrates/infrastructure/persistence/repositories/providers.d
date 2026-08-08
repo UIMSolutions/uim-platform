@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProviderRepository : TenantRepository!(Provider, ProviderId), ProviderRepository {
+class ProviderRepository : TenantRepository!(Provider, ProviderId), IProviderRepository {
 
   override Provider findByCode(TenantId t, string code) {
     foreach (p; findByTenant(t))

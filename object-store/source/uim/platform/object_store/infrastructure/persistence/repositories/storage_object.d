@@ -16,7 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class StorageObjectRepository : TenantRepository!(StorageObject, StorageObjectId), StorageObjectRepository {
+class StorageObjectRepository : TenantRepository!(StorageObject, StorageObjectId), IStorageObjectRepository {
 
   bool existsByKey(TenantId tenantId, BucketId bucketId, string key) {
     return findByTenant(tenantId).any!(e => e.bucketId == bucketId && e.key == key);

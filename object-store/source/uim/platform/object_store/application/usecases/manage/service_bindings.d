@@ -17,10 +17,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for service binding management (credentials for programmatic access).
 class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-  private ServiceBindingRepository bindingRepo;
-  private BucketRepository bucketRepo;
+  private IServiceBindingRepository bindingRepo;
+  private IBucketRepository bucketRepo;
 
-  this(ServiceBindingRepository bindingRepo, BucketRepository bucketRepo) {
+  this(IServiceBindingRepository bindingRepo, IBucketRepository bucketRepo) {
     this.bindingRepo = bindingRepo;
     this.bucketRepo = bucketRepo;
   }
@@ -28,6 +28,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   CommandResult createBinding(CreateServiceBindingRequest req) {
     if (req.name.isEmpty)
       return CommandResult(false, "", "Binding name is required");
+      
     if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
 

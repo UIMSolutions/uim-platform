@@ -11,10 +11,10 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMarketRatesUseCase {
-  private MarketRateRepository rateRepo;
-  private AuditLogRepository   auditRepo;
+  private IMarketRateRepository rateRepo;
+  private IAuditLogRepository   auditRepo;
 
-  this(MarketRateRepository rateRepo, AuditLogRepository auditRepo) {
+  this(IMarketRateRepository rateRepo, IAuditLogRepository auditRepo) {
     this.rateRepo  = rateRepo;
     this.auditRepo = auditRepo;
   }

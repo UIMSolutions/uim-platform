@@ -14,7 +14,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class AccessPolicyRepository : TenantRepository!(AccessPolicy, AccessPolicyId), AccessPolicyRepository {
+class AccessPolicyRepository : TenantRepository!(AccessPolicy, AccessPolicyId), IAccessPolicyRepository {
 
   size_t countByBucket(TenantId tenantId, BucketId bucketId) {
     return findByBucket(tenantId, bucketId).length;
@@ -29,7 +29,7 @@ class AccessPolicyRepository : TenantRepository!(AccessPolicy, AccessPolicyId), 
   }
 
   void removeByBucket(TenantId tenantId, BucketId bucketId) {
-    foreach (e; findByBucket(tenantId, bucketId))
-      remove(e);
+    findByBucket(tenantId, bucketId).each!(e => remove(e));
   }
+  
 }

@@ -16,9 +16,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for bucket CRUD operations.
 class ManageBucketsUseCase { // TODO: UIMUseCase {
-  private BucketRepository repo;
+  private IBucketRepository repo;
 
-  this(BucketRepository repo) {
+  this(IBucketRepository repo) {
     this.repo = repo;
   }
 

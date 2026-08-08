@@ -5,16 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.persistence.repositories.bucket;
 
-// import uim.platform.object_store.domain.types;
-// import uim.platform.object_store.domain.entities.bucket;
-// import uim.platform.object_store.domain.ports.repositories.bucket;
-
 import uim.platform.object_store;
 
 mixin(ShowModule!());
 
 @safe:
-class BucketRepository : TenantRepository!(Bucket, BucketId), BucketRepository {
+class BucketRepository : TenantRepository!(Bucket, BucketId), IBucketRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
@@ -30,4 +26,5 @@ class BucketRepository : TenantRepository!(Bucket, BucketId), BucketRepository {
   void removeByName(TenantId tenantId, string name) {
     remove(findByName(tenantId, name));
   }
+
 }
