@@ -9,6 +9,6 @@ public {
     import uim.platform.build_apps.domain.enumerations;
     import uim.platform.build_apps.domain.types;
     import uim.platform.build_apps.domain.entities;
-    import uim.platform.build_apps.domain.repositories;
+    import uim.platform.build_apps.domain.ports.repositories;
     import uim.platform.build_apps.domain.services;
 }

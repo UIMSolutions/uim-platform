@@ -1,12 +1,12 @@
-module uim.platform.field_service.domain.repositories;
+module uim.platform.field_service.domain.ports.repositories;
 
 public {
-    import uim.platform.field_service.domain.repositories.service_calls;
-    import uim.platform.field_service.domain.repositories.activities;
-    import uim.platform.field_service.domain.repositories.assignments;
-    import uim.platform.field_service.domain.repositories.equipments;
-    import uim.platform.field_service.domain.repositories.technicians;
-    import uim.platform.field_service.domain.repositories.customers;
-    import uim.platform.field_service.domain.repositories.skills;
-    import uim.platform.field_service.domain.repositories.smartforms;
+    import uim.platform.field_service.domain.ports.repositories.service_calls;
+    import uim.platform.field_service.domain.ports.repositories.activities;
+    import uim.platform.field_service.domain.ports.repositories.assignments;
+    import uim.platform.field_service.domain.ports.repositories.equipments;
+    import uim.platform.field_service.domain.ports.repositories.technicians;
+    import uim.platform.field_service.domain.ports.repositories.customers;
+    import uim.platform.field_service.domain.ports.repositories.skills;
+    import uim.platform.field_service.domain.ports.repositories.smartforms;
 }

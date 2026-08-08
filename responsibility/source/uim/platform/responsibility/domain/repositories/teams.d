@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.responsibility.domain.repositories.teams;
+module uim.platform.responsibility.domain.ports.repositories.teams;
 
 import uim.platform.responsibility;
 

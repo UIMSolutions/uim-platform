@@ -9,6 +9,6 @@ public {
     import uim.platform.transport.domain.enumerations;
     import uim.platform.transport.domain.types;
     import uim.platform.transport.domain.entities;
-    import uim.platform.transport.domain.repositories;
+    import uim.platform.transport.domain.ports.repositories;
     import uim.platform.transport.domain.services;
 }

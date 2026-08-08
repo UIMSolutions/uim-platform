@@ -9,6 +9,6 @@ public {
     import uim.platform.print.domain.enumerations;
     import uim.platform.print.domain.types;
     import uim.platform.print.domain.entities;
-    import uim.platform.print.domain.repositories;
+    import uim.platform.print.domain.ports.repositories;
     import uim.platform.print.domain.services;
 }

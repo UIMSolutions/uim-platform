@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.persistence.repositories.repositories.predictions;
 // import uim.platform.analytics.domain.entities.prediction;
-// import uim.platform.analytics.domain.repositories.prediction;
+// import uim.platform.analytics.domain.ports.repositories.prediction;
 import uim.platform.analytics;
 
 mixin(ShowModule!());

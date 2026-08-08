@@ -9,6 +9,6 @@ public {
     import uim.platform.oauth.domain.enumerations;
     import uim.platform.oauth.domain.types;
     import uim.platform.oauth.domain.entities;
-    import uim.platform.oauth.domain.repositories;
+    import uim.platform.oauth.domain.ports.repositories;
     import uim.platform.oauth.domain.services;
 }

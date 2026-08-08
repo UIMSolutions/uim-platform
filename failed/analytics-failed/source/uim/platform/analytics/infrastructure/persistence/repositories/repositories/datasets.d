@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.persistence.repositories.repositories.datasets;
 // import uim.platform.analytics.domain.entities.dataset;
-// import uim.platform.analytics.domain.repositories.dataset;
+// import uim.platform.analytics.domain.ports.repositories.dataset;
 
 
 import uim.platform.analytics;

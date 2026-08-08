@@ -9,6 +9,6 @@ public {
     import uim.platform.dms_integration.domain.types;
     import uim.platform.dms_integration.domain.enumerations;
     import uim.platform.dms_integration.domain.entities;
-    import uim.platform.dms_integration.domain.repositories;
+    import uim.platform.dms_integration.domain.ports.repositories;
     import uim.platform.dms_integration.domain.services;
 }

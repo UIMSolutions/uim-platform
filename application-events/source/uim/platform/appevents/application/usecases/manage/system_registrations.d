@@ -7,7 +7,7 @@ module uim.platform.appevents.application.usecases.manage.system_registrations;
 
 import uim.platform.service;
 import uim.platform.appevents.domain.entities.system_registration;
-import uim.platform.appevents.domain.repositories.system_registrations;
+import uim.platform.appevents.domain.ports.repositories.system_registrations;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.application.dto;
 import std.datetime.systime : Clock;

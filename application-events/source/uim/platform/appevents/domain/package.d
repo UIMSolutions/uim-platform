@@ -9,5 +9,5 @@ public {
     import uim.platform.appevents.domain.enums;
     import uim.platform.appevents.domain.valueobjects;
     import uim.platform.appevents.domain.entities;
-    import uim.platform.appevents.domain.repositories;
+    import uim.platform.appevents.domain.ports.repositories;
 }

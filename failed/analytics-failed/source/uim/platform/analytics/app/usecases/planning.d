@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.app.usecases.planning;
 // import uim.platform.analytics.domain.entities.planning;
-// import uim.platform.analytics.domain.repositories.planning;
+// import uim.platform.analytics.domain.ports.repositories.planning;
 
 // import uim.platform.analytics.domain.values.time_granularity;
 // import uim.platform.analytics.app.dto.planning;

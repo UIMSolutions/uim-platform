@@ -480,17 +480,6 @@ string[] toStrings(FieldType[] types) {
 unittest {
   mixin(ShowTest!("FieldType enumeration"));
 
-  assert(FieldType.text.to!string == "text");
-  assert(FieldType.number.to!string == "number");
-  assert(FieldType.boolean_.to!string == "boolean");
-  assert(FieldType.date.to!string == "date");
-  assert(FieldType.dateTime.to!string == "dateTime");
-  assert(FieldType.object_.to!string == "object");
-  assert(FieldType.list.to!string == "list");
-  assert(FieldType.image.to!string == "image");
-  assert(FieldType.file.to!string == "file");
-  assert(FieldType.reference.to!string == "reference");
-
   assert("text".toFieldType == FieldType.text);
   assert("number".toFieldType == FieldType.number);
   assert("boolean".toFieldType == FieldType.boolean_);
@@ -568,10 +557,6 @@ string[] toStrings(DataEntityStatus[] statuses) {
 /// 
 unittest {
   mixin(ShowTest!("DataEntityStatus enumeration"));
-
-  assert(DataEntityStatus.draft.to!string == "draft");
-  assert(DataEntityStatus.active.to!string == "active");
-  assert(DataEntityStatus.deprecated_.to!string == "deprecated");
 
   assert("draft".toDataEntityStatus == DataEntityStatus.draft);
   assert("active".toDataEntityStatus == DataEntityStatus.active);

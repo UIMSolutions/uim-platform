@@ -3,18 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.build_apps.domain.repositories.ui_components;
+module uim.platform.process_automation.domain.ports.usecases.actions;
 
-import uim.platform.build_apps;
+import uim.platform.process_automation;
 
 mixin(ShowModule!());
 
 @safe:
+interface IManageActionsUseCase { 
 
-interface IUIComponentRepository : ITenantRepository!(UIComponent, UIComponentId) {
-
-    size_t countByCategory(TenantId tenantId, ComponentCategory category);
-    UIComponent[] findByCategory(TenantId tenantId, ComponentCategory category);
-    void removeByCategory(TenantId tenantId, ComponentCategory category);
+    CommandResult createAction(CreateActionRequest r);
+    Action getAction(TenantId tenantId, ActionId id);
+    Action[] listActions(TenantId tenantId);
+    CommandResult updateAction(UpdateActionRequest r);
+    CommandResult deleteAction(TenantId tenantId, ActionId actionId);
 
 }

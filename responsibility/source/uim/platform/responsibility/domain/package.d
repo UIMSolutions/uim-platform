@@ -13,6 +13,6 @@ public {
     import uim.platform.responsibility.domain.enumerations;
     import uim.platform.responsibility.domain.types;
     import uim.platform.responsibility.domain.entities;
-    import uim.platform.responsibility.domain.repositories;
+    import uim.platform.responsibility.domain.ports.repositories;
     import uim.platform.responsibility.domain.services;
 }

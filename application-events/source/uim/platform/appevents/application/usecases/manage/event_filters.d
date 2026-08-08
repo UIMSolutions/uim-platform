@@ -7,7 +7,7 @@ module uim.platform.appevents.application.usecases.manage.event_filters;
 
 import uim.platform.service;
 import uim.platform.appevents.domain.entities.event_filter;
-import uim.platform.appevents.domain.repositories.event_filters;
+import uim.platform.appevents.domain.ports.repositories.event_filters;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.application.dto;
 

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.app.usecases.datasources;
 // import uim.platform.analytics.domain.entities.datasource;
-// import uim.platform.analytics.domain.repositories.datasource;
+// import uim.platform.analytics.domain.ports.repositories.datasource;
 
 // import uim.platform.analytics.app.dto.datasource;
 // import uim.platform.analytics.app.ports.dataconnector;

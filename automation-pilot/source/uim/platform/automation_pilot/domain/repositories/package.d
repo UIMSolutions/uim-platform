@@ -1,12 +1,12 @@
-module uim.platform.automation_pilot.domain.repositories;
+module uim.platform.automation_pilot.domain.ports.repositories;
 
 public {
-    import uim.platform.automation_pilot.domain.repositories.catalogs;
-    import uim.platform.automation_pilot.domain.repositories.commands;
-    import uim.platform.automation_pilot.domain.repositories.command_inputs;
-    import uim.platform.automation_pilot.domain.repositories.executions;
-    import uim.platform.automation_pilot.domain.repositories.scheduled_executions;
-    import uim.platform.automation_pilot.domain.repositories.triggers;
-    import uim.platform.automation_pilot.domain.repositories.service_accounts;
-    import uim.platform.automation_pilot.domain.repositories.content_connectors;
+    import uim.platform.automation_pilot.domain.ports.repositories.catalogs;
+    import uim.platform.automation_pilot.domain.ports.repositories.commands;
+    import uim.platform.automation_pilot.domain.ports.repositories.command_inputs;
+    import uim.platform.automation_pilot.domain.ports.repositories.executions;
+    import uim.platform.automation_pilot.domain.ports.repositories.scheduled_executions;
+    import uim.platform.automation_pilot.domain.ports.repositories.triggers;
+    import uim.platform.automation_pilot.domain.ports.repositories.service_accounts;
+    import uim.platform.automation_pilot.domain.ports.repositories.content_connectors;
 }

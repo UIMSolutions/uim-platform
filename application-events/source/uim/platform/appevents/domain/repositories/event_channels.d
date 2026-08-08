@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.appevents.domain.repositories.event_channels;
+module uim.platform.appevents.domain.ports.repositories.event_channels;
 
 import uim.platform.service;
 import uim.platform.appevents.domain.entities.event_channel;

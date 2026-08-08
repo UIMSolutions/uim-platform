@@ -7,7 +7,7 @@ module uim.platform.appevents.infrastructure.persistence.file.event_channels;
 
 // import uim.platform.service;
 // import uim.platform.appevents.domain.entities.event_channel;
-// import uim.platform.appevents.domain.repositories.event_channels;
+// import uim.platform.appevents.domain.ports.repositories.event_channels;
 // import uim.platform.appevents.domain.valueobjects;
 // import uim.platform.appevents.domain.enums.channel_type;
 // import uim.platform.appevents.domain.enums.channel_status;

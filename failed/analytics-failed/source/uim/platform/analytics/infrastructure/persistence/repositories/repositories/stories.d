@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.persistence.repositories.repositories.stories;
 // import uim.platform.analytics.domain.entities.story;
-// import uim.platform.analytics.domain.repositories.story;
+// import uim.platform.analytics.domain.ports.repositories.story;
 import uim.platform.analytics;
 
 mixin(ShowModule!());

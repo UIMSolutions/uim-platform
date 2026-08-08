@@ -9,6 +9,6 @@ public {
     import uim.platform.identity.domain.types;
     import uim.platform.identity.domain.enumerations;
     import uim.platform.identity.domain.entities;
-    import uim.platform.identity.domain.repositories;
+    import uim.platform.identity.domain.ports.repositories;
     import uim.platform.identity.domain.services;
 }

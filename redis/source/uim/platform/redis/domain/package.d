@@ -9,6 +9,6 @@ public {
     import uim.platform.redis.domain.types;
     import uim.platform.redis.domain.enumerations;
     import uim.platform.redis.domain.entities;
-    import uim.platform.redis.domain.repositories;
+    import uim.platform.redis.domain.ports.repositories;
     import uim.platform.redis.domain.services;
 }

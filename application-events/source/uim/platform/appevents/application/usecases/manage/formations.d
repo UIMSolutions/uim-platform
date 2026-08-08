@@ -7,7 +7,7 @@ module uim.platform.appevents.application.usecases.manage.formations;
 
 import uim.platform.service;
 import uim.platform.appevents.domain.entities.formation;
-import uim.platform.appevents.domain.repositories.formations;
+import uim.platform.appevents.domain.ports.repositories.formations;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.application.dto;
 

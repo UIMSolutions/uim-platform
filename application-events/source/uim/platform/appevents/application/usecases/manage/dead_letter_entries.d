@@ -7,7 +7,7 @@ module uim.platform.appevents.application.usecases.manage.dead_letter_entries;
 
 import uim.platform.service;
 import uim.platform.appevents.domain.entities.dead_letter_entry;
-import uim.platform.appevents.domain.repositories.dead_letter_entries;
+import uim.platform.appevents.domain.ports.repositories.dead_letter_entries;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.dead_letter_status;
 import uim.platform.appevents.application.dto;

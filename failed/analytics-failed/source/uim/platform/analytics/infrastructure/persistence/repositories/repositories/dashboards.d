@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.persistence.repositories.repositories.dashboards;
 // import uim.platform.analytics.domain.entities.dashboard;
-// import uim.platform.analytics.domain.repositories.dashboard;
+// import uim.platform.analytics.domain.ports.repositories.dashboard;
 
 
 import uim.platform.analytics;

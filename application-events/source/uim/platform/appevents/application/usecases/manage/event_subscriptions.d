@@ -7,7 +7,7 @@ module uim.platform.appevents.application.usecases.manage.event_subscriptions;
 
 import uim.platform.service;
 import uim.platform.appevents.domain.entities.event_subscription;
-import uim.platform.appevents.domain.repositories.event_subscriptions;
+import uim.platform.appevents.domain.ports.repositories.event_subscriptions;
 import uim.platform.appevents.domain.valueobjects;
 import uim.platform.appevents.domain.enums.subscription_status;
 import uim.platform.appevents.application.dto;

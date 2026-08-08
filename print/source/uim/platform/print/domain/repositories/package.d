@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.print.domain.repositories;
+module uim.platform.print.domain.ports.repositories;
 
 public {
-    import uim.platform.print.domain.repositories.print_queues;
-    import uim.platform.print.domain.repositories.print_tasks;
-    import uim.platform.print.domain.repositories.printers;
-    import uim.platform.print.domain.repositories.print_documents;
-    import uim.platform.print.domain.repositories.print_clients;
+    import uim.platform.print.domain.ports.repositories.print_queues;
+    import uim.platform.print.domain.ports.repositories.print_tasks;
+    import uim.platform.print.domain.ports.repositories.printers;
+    import uim.platform.print.domain.ports.repositories.print_documents;
+    import uim.platform.print.domain.ports.repositories.print_clients;
 }

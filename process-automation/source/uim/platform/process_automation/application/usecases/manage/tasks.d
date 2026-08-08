@@ -1,4 +1,9 @@
- uim.platform.process_automation.application.usecases.manage.tasks;
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.process_automation.application.usecases.manage.tasks;
 
 import uim.platform.process_automation;
 
@@ -14,12 +19,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
 
     CommandResult createTask(CreateTaskRequest r) {
         auto err = ProcessValidator.validateTask(r.tenantId, r.taskId, r.name, r.assignee);
-/****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
-* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
-*****************************************************************************************************************/
-module        if (err.length > 0)
+        if (err.length > 0)
             return CommandResult(false, "", err);
 
         auto t = repo.findById(r.tenantId, r.taskId);

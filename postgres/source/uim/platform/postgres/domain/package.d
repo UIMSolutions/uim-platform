@@ -9,6 +9,6 @@ public {
     import uim.platform.postgres.domain.types;
     import uim.platform.postgres.domain.enumerations;
     import uim.platform.postgres.domain.entities;
-    import uim.platform.postgres.domain.repositories;
+    import uim.platform.postgres.domain.ports.repositories;
     import uim.platform.postgres.domain.services;
 }

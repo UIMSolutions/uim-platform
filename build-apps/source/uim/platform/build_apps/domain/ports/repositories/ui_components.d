@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.build_apps.domain.repositories.data_entities;
+module uim.platform.build_apps.domain.ports.repositories.ui_components;
 
 import uim.platform.build_apps;
 
@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IDataEntityRepository : ITenantRepository!(DataEntity, DataEntityId) {
+interface IUIComponentRepository : ITenantRepository!(UIComponent, UIComponentId) {
 
-    size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
-    DataEntity[] findByApplication(TenantId tenantId, ApplicationId applicationId);
-    void removeByApplication(TenantId tenantId, ApplicationId applicationId);
+    size_t countByCategory(TenantId tenantId, ComponentCategory category);
+    UIComponent[] findByCategory(TenantId tenantId, ComponentCategory category);
+    void removeByCategory(TenantId tenantId, ComponentCategory category);
 
 }

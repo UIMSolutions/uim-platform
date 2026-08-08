@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.app.usecases.predictions;
 // import uim.platform.analytics.domain.entities.prediction;
-// import uim.platform.analytics.domain.repositories.prediction;
+// import uim.platform.analytics.domain.ports.repositories.prediction;
 
 // import uim.platform.analytics.app.dto.prediction;
 
