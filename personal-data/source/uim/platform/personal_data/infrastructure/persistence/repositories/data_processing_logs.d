@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataProcessingLogRepository : TenantRepository!(DataProcessingLog, DataProcessingLogId), DataProcessingLogRepository {
+class DataProcessingLogRepository : TenantRepository!(DataProcessingLog, DataProcessingLogId), IDataProcessingLogRepository {
 
     // #region ByDataSubject
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {

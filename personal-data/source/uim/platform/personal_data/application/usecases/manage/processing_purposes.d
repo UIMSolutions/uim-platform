@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
-    private ProcessingPurposeRepository repo;
+    private IProcessingPurposeRepository repo;
 
-    this(ProcessingPurposeRepository repo) {
+    this(IProcessingPurposeRepository repo) {
         this.repo = repo;
     }
 

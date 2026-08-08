@@ -12,8 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 interface IAIRequestRepository : ITenantRepository!(AIRequest, AIRequestId) {
+
   AIRequest[]  findByProject(TenantId tenantId, string projectId);
   AIRequest[]  findByStatus(TenantId tenantId, AIRequestStatus status);
   AIRequest[]  findByType(TenantId tenantId, AIGenerationType type);
   AIRequest[]  findByUser(TenantId tenantId, string userId);
+
 }

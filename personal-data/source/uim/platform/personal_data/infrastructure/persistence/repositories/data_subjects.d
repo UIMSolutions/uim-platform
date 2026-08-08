@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
+class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), IDataSubjectRepository {
 
     // #region ByEmail
     bool existsByEmail(TenantId tenantId, string email) {

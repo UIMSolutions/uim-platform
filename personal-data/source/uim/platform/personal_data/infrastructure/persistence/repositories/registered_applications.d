@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RegisteredApplicationRepository : TenantRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
+class RegisteredApplicationRepository : TenantRepository!(RegisteredApplication, RegisteredApplicationId), IRegisteredApplicationRepository {
 
     bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).any!(v => v.name == name);

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
-    private DataSubjectRequestRepository repo;
+    private IDataSubjectRequestRepository repo;
 
-    this(DataSubjectRequestRepository repo) {
+    this(IDataSubjectRequestRepository repo) {
         this.repo = repo;
     }
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PersonalDataRecordRepository : TenantRepository!(PersonalDataRecord, PersonalDataRecordId), PersonalDataRecordRepository {
+class PersonalDataRecordRepository : TenantRepository!(PersonalDataRecord, PersonalDataRecordId), IPersonalDataRecordRepository {
 
     // #region ByDataSubject
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {

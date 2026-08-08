@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
-    private PersonalDataRecordRepository repo;
+    private IPersonalDataRecordRepository repo;
 
-    this(PersonalDataRecordRepository repo) {
+    this(IPersonalDataRecordRepository repo) {
         this.repo = repo;
     }
 

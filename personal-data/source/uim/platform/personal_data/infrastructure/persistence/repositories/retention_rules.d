@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
+class RetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), IRetentionRuleRepository {
 
     size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;

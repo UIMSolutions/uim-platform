@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
-    private ConsentRecordRepository repo;
+    private IConsentRecordRepository repo;
 
-    this(ConsentRecordRepository repo) {
+    this(IConsentRecordRepository repo) {
         this.repo = repo;
     }
 

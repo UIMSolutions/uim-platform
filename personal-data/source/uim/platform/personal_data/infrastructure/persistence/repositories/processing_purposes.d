@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, ProcessingPurposeId), ProcessingPurposeRepository {
+class ProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, ProcessingPurposeId), IProcessingPurposeRepository {
 
     size_t countByLegalBasis(TenantId tenantId, LegalBasis basis) {
         return findByLegalBasis(tenantId, basis).length;
