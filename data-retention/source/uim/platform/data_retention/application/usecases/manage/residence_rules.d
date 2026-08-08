@@ -25,7 +25,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
 
         auto rr = ResidenceRule(req.tenantId);
         rr.businessPurposeId = req.purposeId;
-        rr.legalGroundId = LegalGroundId(req.legalGroundId);
+        rr.legalGroundId = req.groundId;
         rr.duration = req.duration;
         rr.periodUnit = req.periodUnit.toPeriodUnit;
         rr.isActive = true;

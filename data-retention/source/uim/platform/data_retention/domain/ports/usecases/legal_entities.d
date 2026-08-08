@@ -13,7 +13,7 @@ mixin(ShowModule!());
 interface IManageLegalEntitiesUseCase { 
     
     CommandResult createLegalEntity(CreateLegalEntityRequest req);
-    CommandResult updateLegalEntity(TenantId tenantId, LegalEntityId id, UpdateLegalEntityRequest req);
+    CommandResult updateLegalEntity(UpdateLegalEntityRequest req);
     bool hasLegalEntity(TenantId tenantId, LegalEntityId id);
     LegalEntity getLegalEntity(TenantId tenantId, LegalEntityId id);
     LegalEntity[] listLegalEntities(TenantId tenantId);

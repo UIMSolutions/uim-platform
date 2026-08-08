@@ -61,15 +61,15 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return repo.existsById(tenantId, id);
     }
 
-    RetentionRule getById(TenantId tenantId, RetentionRuleId id) {
+    RetentionRule getRetentionRule(TenantId tenantId, RetentionRuleId id) {
         return repo.findById(tenantId, id);
     }
 
-    RetentionRule[] list(TenantId tenantId) {
+    RetentionRule[] listRetentionRules(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    RetentionRule[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
+    RetentionRule[] listRetentionRules(TenantId tenantId, BusinessPurposeId purposeId) {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
 
@@ -80,21 +80,6 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
 
         repo.remove(rule);
         return CommandResult(true, rule.id.value, "");
-    }
-
-    private static PeriodUnit toPeriodUnit(string s) {
-        switch (s) {
-        case "days":
-            return PeriodUnit.days;
-        case "weeks":
-            return PeriodUnit.weeks;
-        case "months":
-            return PeriodUnit.months;
-        case "years":
-            return PeriodUnit.years;
-        default:
-            return PeriodUnit.years;
-        }
     }
 
     private static DeletionActionType toDeletionActionType(string s) {

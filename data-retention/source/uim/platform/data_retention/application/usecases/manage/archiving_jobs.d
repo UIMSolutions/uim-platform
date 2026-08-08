@@ -34,8 +34,8 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, aj.id.value, "");
     }
 
-    CommandResult updateArchivingJob(TenantId tenantId, ArchivingJobId id, UpdateArchivingJobRequest req) {
-        auto aj = repo.findById(tenantId, id);
+    CommandResult updateArchivingJob(UpdateArchivingJobRequest req) {
+        auto aj = repo.findById(req.tenantId, req.jobId);
         if (aj.isNull)
             return CommandResult(false, "", "Archiving job not found");
 
@@ -51,12 +51,11 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
             aj.startedAt = clockSeconds();
         if (aj.status == ArchivingJobStatus.completed || aj.status == ArchivingJobStatus.failed)
             aj.completedAt = clockSeconds();
-        aj.updatedAt = clockSeconds();
+        aj.updatedAt = currentTimestamp();
 
         repo.update(aj);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, aj.id.value, "");
     }
-
 
     bool hasArchivingJob(TenantId tenantId, ArchivingJobId id) {
         return repo.existsById(tenantId, id);

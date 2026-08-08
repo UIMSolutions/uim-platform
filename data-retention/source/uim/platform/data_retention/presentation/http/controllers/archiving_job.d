@@ -111,7 +111,7 @@ class ArchivingJobController : ManageHttpController {
         UpdateArchivingJobRequest r;
         r.tenantId = tenantId;
         r.jobId = id;
-        r.operationType = data.getString("operationType").toArchivingOperationType;
+        r.operationType = data.getString("operationType");
         r.status = data.getString("status");
         r.recordsProcessed = jsonInt(data, "recordsProcessed");
         r.recordsFailed = jsonInt(data, "recordsFailed");

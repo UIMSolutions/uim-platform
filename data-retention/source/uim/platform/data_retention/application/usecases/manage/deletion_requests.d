@@ -18,12 +18,12 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDeletionRequest(CreateDeletionRequestRequest req) {
-        if (req.dataSubjectId.isNull)
+        if (req.subjectId.isNull)
             return CommandResult(false, "", "Data subject ID is required");
 
         DeletionRequest dr = DeletionRequest(req.tenantId, DeletionRequestId(generateId));
-        dr.dataSubjectId = req.dataSubjectId;
-        dr.groupId = ApplicationGroupId(req.applicationGroupId);
+        dr.subjectId = req.subjectId;
+        dr.groupId = req.groupId;
         dr.actionType = toDeletionActionType(req.actionType);
         dr.status = DeletionRequestStatus.pending;
         dr.reason = req.reason;

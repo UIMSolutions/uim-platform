@@ -13,7 +13,7 @@ class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), IDa
 
 
     DataSubject[] filterByApplicationGroup(DataSubject[] subjects, ApplicationGroupId groupId) {
-        return subjects.filter!(a => a.applicationGroupId == groupId).array;
+        return subjects.filter!(a => a.groupId == groupId).array;
     }
 
     DataSubject[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {

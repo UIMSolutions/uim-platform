@@ -35,7 +35,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateBusinessPurpose(UpdateBusinessPurposeRequest req) {
-        auto bp = repo.findById(req.tenantId, BusinessPurposeId(req.purposeId));
+        auto bp = repo.findById(req.tenantId, req.purposeId);
         if (bp.isNull)
             return CommandResult(false, "", "Business purpose not found");
 

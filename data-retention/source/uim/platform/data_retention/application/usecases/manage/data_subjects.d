@@ -23,7 +23,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
         auto ds = DataSubject(req.tenantId, DataSubjectId(createId), req.createdBy);
         ds.roleId = DataSubjectRoleId(req.roleId);
-        ds.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
+        ds.groupId = ApplicationGroupId(req.applicationGroupId);
         ds.externalId = req.externalId;
         ds.lifecycleStatus = DataLifecycleStatus.active;
         ds.createdAt = clockSeconds();
@@ -33,14 +33,16 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataSubject(UpdateDataSubjectRequest req) {
-        auto ds = repo.findById(req.tenantId, req.id);
+        auto ds = repo.findById(req.tenantId, req.subjectId);
         if (ds.isNull)
             return CommandResult(false, "", "Data subject not found");
 
         if (req.lifecycleStatus.length > 0)
-            ds.lifecycleStatus = req.lifecycleStatus.toLifecycleStatus;
+            ds.lifecycleStatus = req.lifecycleStatus.toDataLifecycleStatus;
+
         if (req.roleId.length > 0)
             ds.roleId = DataSubjectRoleId(req.roleId);
+        
         ds.updatedAt = currentTimestamp;
 
         repo.update(ds);

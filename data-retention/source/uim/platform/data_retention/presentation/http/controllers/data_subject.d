@@ -34,7 +34,7 @@ class DataSubjectController : ManageHttpController {
         CreateDataSubjectRequest r;
         r.tenantId = tenantId;
         r.roleId = data.getString("roleId");
-        r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+        r.applicationGroupId = data.getString("applicationGroupId");
         r.externalId = data.getString("externalId");
         r.createdBy = UserId(data.getString("createdBy"));
 
@@ -59,7 +59,7 @@ class DataSubjectController : ManageHttpController {
             jarr ~= Json.emptyObject
                 .set("id", ds.id.value).set("externalId", ds.externalId)
                 .set("roleId", ds.roleId.value)
-                .set("applicationGroupId", ds.applicationGroupId.value)
+                .set("applicationGroupId", ds.groupId.value)
                 .set("lifecycleStatus", ds.lifecycleStatus.to!string);
         }
         return successResponse(        "Data subjects retrieved successfully", "Retrieved", 200, Json.emptyObject.set("items", jarr)
@@ -83,7 +83,7 @@ class DataSubjectController : ManageHttpController {
         auto response = Json.emptyObject
             .set("id", ds.id.value).set("externalId", ds.externalId)
             .set("roleId", ds.roleId.value)
-            .set("applicationGroupId", ds.applicationGroupId.value)
+            .set("applicationGroupId", ds.groupId.value)
             .set("lifecycleStatus", ds.lifecycleStatus.to!string)
             .set("endOfPurposeDate", ds.endOfPurposeDate)
             .set("endOfRetentionDate", ds.endOfRetentionDate);
@@ -105,9 +105,9 @@ class DataSubjectController : ManageHttpController {
         UpdateDataSubjectRequest r;
         r.tenantId = tenantId;
         r.lifecycleStatus = data.getString("lifecycleStatus");
-        r.roleId = DataSubjectRoleId(data.getString("roleId"));
+        r.roleId = data.getString("roleId");
 
-        auto result = usecase.updateDataSubject(id, r);
+        auto result = usecase.updateDataSubject(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

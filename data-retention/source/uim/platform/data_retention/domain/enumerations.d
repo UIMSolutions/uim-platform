@@ -230,19 +230,24 @@ unittest {
 }
 
 /// Type of deletion action
-enum DeletionActionType {
-    block,
-    delete_,
-    anonymize
+enum DeletionActionType : string {
+    block = "block",
+    delete_ = "delete",
+    anonymize = "anonymize"
 }
 DeletionActionType toDeletionActionType(string value) {
-    mixin(EnumSwitch("DeletionActionType", "block"));
+    switch (value.toLower()) {
+        case "block": return DeletionActionType.block;
+        case "delete": return DeletionActionType.delete_;
+        case "anonymize": return DeletionActionType.anonymize;
+        default: return DeletionActionType.block;
+    }
 }
 DeletionActionType[] toDeletionActionTypes(string[] names) {
     return names.map!toDeletionActionType.array;
 }
 string toString(DeletionActionType type) {
-    return type.to!string;
+    return cast(string)type;
 }
 string[] toStrings(DeletionActionType[] types) {
     return types.map!toString.array;
@@ -259,10 +264,10 @@ unittest {
     assert("unknown".toDeletionActionType == DeletionActionType.block);
 
     assert(DeletionActionType.block.toString == "block");
-    assert(DeletionActionType.delete_.toString == "delete_");
+    assert(DeletionActionType.delete_.toString == "delete");
     assert(DeletionActionType.anonymize.toString == "anonymize");
 
-    assert([DeletionActionType.block, DeletionActionType.delete_].toStrings == ["block", "delete_"]);
+    assert([DeletionActionType.block, DeletionActionType.delete_].toStrings == ["block", "delete"]);
     assert(["block", "delete"].toDeletionActionTypes == [DeletionActionType.block, DeletionActionType.delete_]);
 }
 

@@ -35,7 +35,7 @@ class BusinessPurposeController : ManageHttpController {
         r.tenantId = tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
-        r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
+        r.applicationGroupId = data.getString("applicationGroupId");
         r.dataSubjectRoleId = data.getString("dataSubjectRoleId");
         r.legalEntityId = data.getString("legalEntityId");
         r.referenceDate = data.getLong("referenceDate");
@@ -112,7 +112,7 @@ class BusinessPurposeController : ManageHttpController {
         auto data = precheck.data;
         UpdateBusinessPurposeRequest r;
         r.tenantId = tenantId;
-        r.businessPurposeId = id;
+        r.purposeId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.applicationGroupId = data.getString("applicationGroupId");

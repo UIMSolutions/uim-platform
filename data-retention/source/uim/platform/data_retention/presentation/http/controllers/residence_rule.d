@@ -32,19 +32,20 @@ class ResidenceRuleController : ManageHttpController {
         auto data = precheck.data;
         CreateResidenceRuleRequest r;
         r.tenantId = tenantId;
-        r.businessPurposeId = BusinessPurposeId(data.getString("businessPurposeId"));
-        r.legalGroundId = LegalGroundId(data.getString("legalGroundId"));
-        r.duration = jsonInt(j, "duration");
+        r.purposeId = BusinessPurposeId(data.getString("businessPurposeId"));
+        r.groundId = LegalGroundId(data.getString("legalGroundId"));
+        r.duration = jsonInt(data, "duration");
         r.periodUnit = data.getString("periodUnit");
         r.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createResidenceRule(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto response = Json.emptyObject
             .set("id", result.id)
-            .set("businessPurposeId", r.businessPurposeId.value)
-            .set("legalGroundId", r.legalGroundId.value)
+            .set("businessPurposeId", r.purposeId.value)
+            .set("legalGroundId", r.groundId.value)
             .set("duration", r.duration)
             .set("periodUnit", r.periodUnit)
             .set("isActive", true);
@@ -60,9 +61,9 @@ class ResidenceRuleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto items = usecase.listResidenceRules(tenantId);
-        auto jarr = Json.emptyArray;
+        auto list = Json.emptyArray;
         foreach (rr; items) {
-            jarr ~= Json.emptyObject
+            list ~= Json.emptyObject
                 .set("id", rr.id.value)
                 .set("businessPurposeId", rr.businessPurposeId.value)
                 .set("legalGroundId", rr.legalGroundId.value)
@@ -72,7 +73,7 @@ class ResidenceRuleController : ManageHttpController {
         }
 
         auto responseData = Json.emptyObject
-            .set("count", list.length)
+            .set("count", items.length)
             .set("resources", list);
         return successResponse("Residence rule list retrieved successfully", "Retrieved", 200, responseData);
     }
@@ -84,18 +85,20 @@ class ResidenceRuleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ResidenceRuleId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid residence rule ID", 400);
 
         auto rr = usecase.getResidenceRule(tenantId, id);
         if (rr.isNull)
-            return errorResponse("Scan job not found", 404);
+            return errorResponse("Residence rule not found", 404);
 
-        res.writeJsonBody(Json.emptyObject
-                .set("id", rr.id.value)
-                .set("businessPurposeId", rr.businessPurposeId.value)
-                .set("legalGroundId", rr.legalGroundId.value)
-                .set("duration", rr.duration)
-                .set("periodUnit", rr.periodUnit.to!string)
-                .set("isActive", rr.isActive), 200);
+        auto responseData = Json.emptyObject
+            .set("id", rr.id.value)
+            .set("businessPurposeId", rr.businessPurposeId.value)
+            .set("legalGroundId", rr.legalGroundId.value)
+            .set("duration", rr.duration)
+            .set("periodUnit", rr.periodUnit.to!string)
+            .set("isActive", rr.isActive);
         return successResponse("Residence rule retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -111,11 +114,13 @@ class ResidenceRuleController : ManageHttpController {
 
         auto data = precheck.data;
         UpdateResidenceRuleRequest r;
-        r.duration = jsonInt(j, "duration");
+        r.tenantId = tenantId;
+        r.ruleId = id;
+        r.duration = jsonInt(data, "duration");
         r.periodUnit = data.getString("periodUnit");
         r.isActive = data.getBoolean("isActive", true);
 
-        auto result = usecase.updateResidenceRule(id, r);
+        auto result = usecase.updateResidenceRule(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -135,7 +140,10 @@ class ResidenceRuleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ResidenceRuleId(precheck.id);
-        auto result = secase.deleteResidenceRule(id);
+        if (id.isNull)
+            return errorResponse("Invalid residence rule ID", 400);
+
+        auto result = usecase.deleteResidenceRule(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

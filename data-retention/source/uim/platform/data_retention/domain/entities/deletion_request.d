@@ -8,10 +8,11 @@ mixin(ShowModule!());
 struct DeletionRequest {
     mixin TenantEntity!(DeletionRequestId);
 
-    DataSubjectId dataSubjectId;
-    ApplicationGroupId applicationGroupId;
+    DataSubjectId subjectId;
+    ApplicationGroupId groupId;
     DeletionActionType actionType = DeletionActionType.delete_;
     DeletionRequestStatus status = DeletionRequestStatus.pending;
+
     string reason;
     UserId requestedBy;
     long requestedAt;
@@ -20,8 +21,8 @@ struct DeletionRequest {
     
     Json toJson() const {
         return entityToJson
-            .set("dataSubjectId", dataSubjectId.value)
-            .set("applicationGroupId", applicationGroupId.value)
+            .set("dataSubjectId", subjectId.value)
+            .set("applicationGroupId", groupId.value)
             .set("actionType", actionType.to!string())
             .set("status", status.to!string())
             .set("reason", reason)

@@ -38,24 +38,24 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, le.id.value, "");
     }
 
-    CommandResult updateLegalEntity(TenantId tenantId, LegalEntityId id, UpdateLegalEntityRequest req) {
-        auto le = repo.findById(tenantId, id);
-        if (le.isNull)
+    CommandResult updateLegalEntity(UpdateLegalEntityRequest req) {
+        auto entity = repo.findById(req.tenantId, req.entityId);
+        if (entity.isNull)
             return CommandResult(false, "", "Legal entity not found");
 
         if (req.name.length > 0)
-            le.name = req.name;
+            entity.name = req.name;
         if (req.description.length > 0)
-            le.description = req.description;
+            entity.description = req.description;
         if (req.country.length > 0)
-            le.country = req.country;
+            entity.country = req.country;
         if (req.region.length > 0)
-            le.region = req.region;
-        le.isActive = req.isActive;
-        le.updatedAt = clockSeconds();
+            entity.region = req.region;
+        entity.isActive = req.isActive;
+        entity.updatedAt = clockSeconds();
 
-        repo.update(le);
-        return CommandResult(true, id.value, "");
+        repo.update(entity);
+        return CommandResult(true, entity.id.value, "");
     }
 
     bool hasLegalEntity(TenantId tenantId, LegalEntityId id) {

@@ -34,7 +34,7 @@ class RetentionRuleController : ManageHttpController {
         r.tenantId = tenantId;
         r.businessPurposeId = data.getString("businessPurposeId");
         r.legalGroundId = data.getString("legalGroundId");
-        r.duration = jsonInt(j, "duration");
+        r.duration = jsonInt(data, "duration");
         r.periodUnit = data.getString("periodUnit");
         r.actionOnExpiry = data.getString("actionOnExpiry");
         r.createdBy = UserId(data.getString("createdBy"));
@@ -42,6 +42,7 @@ class RetentionRuleController : ManageHttpController {
         auto result = usecase.createRetentionRule(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Retention rule created successfully", "Created", 201, responseData);
 
@@ -79,7 +80,10 @@ class RetentionRuleController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = precheck.id;
+        auto id = RetentionRuleId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid retention rule ID", 400);
+
         auto rr = usecase.getRetentionRule(tenantId, id);
         if (rr.isNull)
             return errorResponse("Retention rule not found", 404);
@@ -102,11 +106,14 @@ class RetentionRuleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = RetentionRuleId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid retention rule ID", 400);
+
         auto data = precheck.data;
         UpdateRetentionRuleRequest r;
-        r.retentionRuleId = id;
+        r.ruleId = id;
         r.tenantId = tenantId;
-        r.duration = jsonInt(j, "duration");
+        r.duration = jsonInt(data, "duration");
         r.periodUnit = data.getString("periodUnit");
         r.actionOnExpiry = data.getString("actionOnExpiry");
         r.isActive = data.getBoolean("isActive", true);

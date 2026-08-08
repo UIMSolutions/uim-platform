@@ -12,7 +12,7 @@ class DeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionReq
     }
 
     DeletionRequest[] filterByDataSubject(DeletionRequest[] requests, DataSubjectId subjectId) {
-        return requests.filter!(r => r.dataSubjectId == subjectId).array;
+        return requests.filter!(r => r.subjectId == subjectId).array;
     }
 
     DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
@@ -44,7 +44,7 @@ class DeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionReq
     }
 
     DeletionRequest[] filterByApplicationGroup(DeletionRequest[] requests, ApplicationGroupId groupId) {
-        return requests.filter!(r => r.applicationGroupId == groupId).array;
+        return requests.filter!(r => r.groupId == groupId).array;
     }
 
     DeletionRequest[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {

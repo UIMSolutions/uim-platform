@@ -9,7 +9,7 @@ struct DataSubject {
     mixin TenantEntity!(DataSubjectId);
 
     DataSubjectRoleId roleId;
-    ApplicationGroupId applicationGroupId;
+    ApplicationGroupId groupId;
     string externalId;
     DataLifecycleStatus lifecycleStatus = DataLifecycleStatus.active;
     long endOfPurposeDate;
@@ -20,7 +20,7 @@ struct DataSubject {
     Json toJson() const {
         return entityToJson
             .set("roleId", roleId)
-            .set("applicationGroupId", applicationGroupId)
+            .set("applicationGroupId", groupId)
             .set("externalId", externalId)
             .set("lifecycleStatus", lifecycleStatus.toString)
             .set("endOfPurposeDate", endOfPurposeDate)

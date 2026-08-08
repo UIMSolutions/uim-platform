@@ -78,8 +78,10 @@ class DataSubjectRoleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = DataSubjectRoleId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data subject role ID", 400);
 
-        auto dsr = usecase.getById(tenantId, id);
+        auto dsr = usecase.getDataSubjectRole(tenantId, id);
         if (dsr.isNull)
             return errorResponse("Data subject role not found", 404);
 
@@ -104,12 +106,12 @@ class DataSubjectRoleController : ManageHttpController {
         auto result = usecase.updateDataSubjectRole(tenantId, id, r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto response = Json.emptyObject
             .set("id", result.id)
             .set("name", r.name)
             .set("description", r.description)
             .set("isActive", r.isActive);
-
         return successResponse("Data subject role updated successfully", "Updated", 200, response);
     }
 
@@ -120,6 +122,8 @@ class DataSubjectRoleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = DataSubjectRoleId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data subject role ID", 400);          
 
         auto result = usecase.deleteDataSubjectRole(tenantId, id);
         if (result.hasError)

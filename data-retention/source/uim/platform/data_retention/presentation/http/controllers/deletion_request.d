@@ -32,9 +32,9 @@ class DeletionRequestController : ManageHttpController {
         auto data = precheck.data;
         CreateDeletionRequestRequest r;
         r.tenantId = tenantId;
-        r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
-        r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
-        r.actionType = data.getString("actionType").to!ActionType;
+        r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
+        r.groupId = ApplicationGroupId(data.getString("applicationGroupId"));
+        r.actionType = data.getString("actionType");
         r.reason = data.getString("reason");
         r.requestedBy = data.getString("requestedBy");
 
@@ -58,8 +58,8 @@ class DeletionRequestController : ManageHttpController {
         foreach (dr; items) {
             list ~= Json.emptyObject
                 .set("id", dr.id.value)
-                .set("dataSubjectId", dr.dataSubjectId.value)
-                .set("applicationGroupId", dr.applicationGroupId.value)
+                .set("dataSubjectId", dr.subjectId.value)
+                .set("applicationGroupId", dr.groupId.value)
                 .set("actionType", dr.actionType.to!string)
                 .set("status", dr.status.to!string);
         }
@@ -83,8 +83,8 @@ class DeletionRequestController : ManageHttpController {
 
         auto responseData = Json.emptyObject
             .set("id", dr.id.value)
-            .set("dataSubjectId", dr.dataSubjectId.value)
-            .set("applicationGroupId", dr.applicationGroupId.value)
+            .set("dataSubjectId", dr.subjectId.value)
+            .set("applicationGroupId", dr.groupId.value)
             .set("actionType", dr.actionType.to!string)
             .set("status", dr.status.to!string)
             .set("reason", dr.reason)
@@ -104,8 +104,8 @@ class DeletionRequestController : ManageHttpController {
         auto data = precheck.data;
         UpdateDeletionRequestRequest r;
         r.tenantId = tenantId;
-        r.deletionRequestId = id;
-        r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+        r.requestId = id;
+        r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
         r.status = data.getString("status");
         r.errorMessage = data.getString("errorMessage");
 
@@ -114,12 +114,12 @@ class DeletionRequestController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto response = Json.emptyObject
-            .set("id", result.id.value)
-            .set("dataSubjectId", r.dataSubjectId.value)
+            .set("id", result.id)
+            .set("dataSubjectId", r.subjectId.value)
             .set("status", r.status)
             .set("errorMessage", r.errorMessage);
 
-        return successResponse(response, 200);
+        return successResponse("Deletion request updated successfully", "Updated", 200, response);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {

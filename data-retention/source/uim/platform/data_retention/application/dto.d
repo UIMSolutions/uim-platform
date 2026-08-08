@@ -83,7 +83,7 @@ struct UpdateRetentionRuleRequest {
 struct CreateResidenceRuleRequest {
     TenantId tenantId;
     BusinessPurposeId purposeId;
-    LegalGroundId legalGroundId;
+    LegalGroundId groundId;
     int duration;
     string periodUnit;
     UserId createdBy;
@@ -123,8 +123,8 @@ struct UpdateDataSubjectRequest {
 struct CreateDeletionRequestRequest {
     TenantId tenantId;
     DeletionRequestId requestId;
-    DataSubjectId dataSubjectId;
-    ApplicationGroupId applicationGroupId;
+    DataSubjectId subjectId;
+    ApplicationGroupId groupId;
 
     string actionType;
     string reason;
@@ -134,6 +134,8 @@ struct CreateDeletionRequestRequest {
 struct UpdateDeletionRequestRequest {
     TenantId tenantId;
     DeletionRequestId requestId;
+    DataSubjectId subjectId;
+    ApplicationGroupId groupId;
 
     string status;
     string errorMessage;
@@ -157,6 +159,7 @@ struct UpdateArchivingJobRequest {
     ArchivingJobId jobId;
     ApplicationGroupId groupId;
 
+    string operationType;
     string status;
     int recordsProcessed;
     int recordsFailed;
@@ -191,6 +194,8 @@ struct UpdateApplicationGroupRequest {
 
 struct CreateLegalEntityRequest {
     TenantId tenantId;
+    LegalEntityId entityId;
+
     string name;
     string description;
     string country;
@@ -200,6 +205,8 @@ struct CreateLegalEntityRequest {
 
 struct UpdateLegalEntityRequest {
     TenantId tenantId;
+    LegalEntityId entityId;
+    
     string name;
     string description;
     string country;

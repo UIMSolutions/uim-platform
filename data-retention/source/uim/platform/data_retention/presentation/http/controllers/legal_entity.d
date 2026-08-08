@@ -52,8 +52,7 @@ class LegalEntityController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
-        auto items = usecase.listLegalEntity(tenantId);
+        auto items = usecase.listLegalEntities(tenantId);
         auto jarr = Json.emptyArray;
         foreach (le; items) {
             jarr ~= Json.emptyObject

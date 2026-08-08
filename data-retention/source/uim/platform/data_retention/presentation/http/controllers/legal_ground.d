@@ -1,4 +1,5 @@
 module uim.platform.data_retention.presentation.http.controllers.legal_ground;
+
 import uim.platform.data_retention;
 
 mixin(ShowModule!());
@@ -34,7 +35,7 @@ class LegalGroundController : ManageHttpController {
         r.tenantId = tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
-        r.businessPurposeId = BusinessPurposeId(data.getString("businessPurposeId"));
+        r.businessPurposeId = data.getString("businessPurposeId");
         r.type = data.getString("type");
         r.referenceDate = data.getLong("referenceDate");
         r.createdBy = UserId(data.getString("createdBy"));
@@ -64,8 +65,6 @@ class LegalGroundController : ManageHttpController {
                 .set("type", lg.type.to!string);
         }
 
-        auto list = items.map!(item => item.toJson()).array.toJson;
-
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
@@ -79,6 +78,9 @@ class LegalGroundController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = LegalGroundId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid legal ground ID", 400);
+
         auto lg = usecase.getLegalGround(tenantId, id);
         if (lg.isNull)
             return errorResponse("Legal ground not found", 404);
@@ -101,10 +103,13 @@ class LegalGroundController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = LegalGroundId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid legal ground ID", 400);
+
         auto data = precheck.data;
         UpdateLegalGroundRequest r;
         r.tenantId = tenantId;
-        r.legalGroundId = id;
+        r.groundId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.type = data.getString("type");
