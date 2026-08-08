@@ -12,24 +12,13 @@ mixin(ShowModule!());
 @safe:
 
 /// Port (secondary port) for feature flag persistence.
-interface IFeatureFlagRepository {
-    /// Persist a new flag (id must already be set).
-    void save(FeatureFlag flag_);
-
-    /// Replace an existing flag.
-    void update(FeatureFlag flag_);
-
-    /// Remove a flag permanently.
-    void remove(FeatureFlag flag_);
-
-    /// Retrieve a single flag by its composite key.
-    FeatureFlag findById(TenantId tenantId, FlagId id);
+interface IFeatureFlagRepository :  ITenantRepository!(FeatureFlag, FlagId) {
 
     /// Retrieve a flag by its unique name within a service instance.
     FeatureFlag findByName(TenantId tenantId, ServiceInstanceId instanceId, string name);
 
-    /// All flags for a tenant.
-    FeatureFlag[] findByTenant(TenantId tenantId);
+    /// Count of flags in a service instance.
+    size_t countByInstance(TenantId tenantId, ServiceInstanceId instanceId);
 
     /// All flags belonging to a service instance.
     FeatureFlag[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
@@ -37,6 +26,4 @@ interface IFeatureFlagRepository {
     /// All flags of a specific state within a service instance.
     FeatureFlag[] findByState(TenantId tenantId, ServiceInstanceId instanceId, FlagState state_);
 
-    /// Count of flags in a service instance.
-    size_t countByInstance(TenantId tenantId, ServiceInstanceId instanceId);
 }

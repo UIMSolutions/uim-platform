@@ -17,68 +17,68 @@ mixin(ShowModule!());
 
 @safe:
 
-/// Appends audit entries as NDJSON (one JSON object per line) to a per-tenant log file.
-class FileAuditEntryRepository : AuditEntryRepository {
-    private string basePath;
+// /// Appends audit entries as NDJSON (one JSON object per line) to a per-tenant log file.
+// class FileAuditEntryRepository : AuditEntryRepository {
+//     private string basePath;
 
-    this(string basePath) {
-        this.basePath = buildPath(basePath, "_audit");
-    }
+//     this(string basePath) {
+//         this.basePath = buildPath(basePath, "_audit");
+//     }
 
-    void append(AuditEntry entry) @trusted {
-        ensureDir(entry.tenantId);
-        auto line = toJson(entry).toString() ~ "\n";
-        std.file.append(logPath(entry.tenantId), line);
-    }
+//     void append(AuditEntry entry) @trusted {
+//         ensureDir(entry.tenantId);
+//         auto line = toJson(entry).toString() ~ "\n";
+//         std.file.append(logPath(entry.tenantId), line);
+//     }
 
-    AuditEntry[] findByTenant(TenantId tenantId) @trusted {
-        auto p = logPath(tenantId);
-        if (!p.exists) return [];
-        return parseLog(readText(p));
-    }
+//     AuditEntry[] findByTenant(TenantId tenantId) @trusted {
+//         auto p = logPath(tenantId);
+//         if (!p.exists) return [];
+//         return parseLog(readText(p));
+//     }
 
-    AuditEntry[] findByEntity(TenantId tenantId, string entityId) {
-        return findByTenant(tenantId).filter!(e => e.entityId == entityId).array;
-    }
+//     AuditEntry[] findByEntity(TenantId tenantId, string entityId) {
+//         return findByTenant(tenantId).filter!(e => e.entityId == entityId).array;
+//     }
 
-    AuditEntry[] findByTenantPaged(TenantId tenantId, size_t offset, size_t limit) {
-        auto all = findByTenant(tenantId);
-        if (offset >= all.length) return [];
-        auto end = offset + limit;
-        if (end > all.length) end = all.length;
-        return all[offset .. end];
-    }
+//     AuditEntry[] findByTenantPaged(TenantId tenantId, size_t offset, size_t limit) {
+//         auto all = findByTenant(tenantId);
+//         if (offset >= all.length) return [];
+//         auto end = offset + limit;
+//         if (end > all.length) end = all.length;
+//         return all[offset .. end];
+//     }
 
-    private:
+//     private:
 
-    void ensureDir(TenantId tenantId) @trusted {
-        auto dir = buildPath(basePath, tenantId);
-        if (!dir.exists) mkdirRecurse(dir);
-    }
+//     void ensureDir(TenantId tenantId) @trusted {
+//         auto dir = buildPath(basePath, tenantId);
+//         if (!dir.exists) mkdirRecurse(dir);
+//     }
 
-    string logPath(TenantId tenantId) const {
-        return buildPath(basePath, tenantId, "audit.ndjson");
-    }
+//     string logPath(TenantId tenantId) const {
+//         return buildPath(basePath, tenantId, "audit.ndjson");
+//     }
 
-    AuditEntry[] parseLog(string text) {
-        AuditEntry[] entries;
-        foreach (line; text.splitLines()) {
-            if (line.length == 0) continue;
-            try {
-                auto j = parseJsonString(line);
-                AuditEntry e;
-                e.id          = AuditEntryId(j["id"].get!string);
-                e.tenantId    = j["tenantId"].get!string;
+//     AuditEntry[] parseLog(string text) {
+//         AuditEntry[] entries;
+//         foreach (line; text.splitLines()) {
+//             if (line.length == 0) continue;
+//             try {
+//                 auto j = parseJsonString(line);
+//                 AuditEntry e;
+//                 e.id          = AuditEntryId(j["id"].get!string);
+//                 e.tenantId    = j["tenantId"].get!string;
                 
-                e.action_     = j["action"].get!string.to!AuditAction;
-                e.entityType  = j["entityType"].get!string;
-                e.entityId    = j["entityId"].get!string;
-                e.entityName  = j["entityName"].get!string;
-                e.performedBy = j["performedBy"].get!string;
-                e.performedAt = j["performedAt"].get!string;
-                entries ~= e;
-            } catch (Exception) {}
-        }
-        return entries;
-    }
-}
+//                 e.action_     = j["action"].get!string.to!AuditAction;
+//                 e.entityType  = j["entityType"].get!string;
+//                 e.entityId    = j["entityId"].get!string;
+//                 e.entityName  = j["entityName"].get!string;
+//                 e.performedBy = j["performedBy"].get!string;
+//                 e.performedAt = j["performedAt"].get!string;
+//                 entries ~= e;
+//             } catch (Exception) {}
+//         }
+//         return entries;
+//     }
+// }

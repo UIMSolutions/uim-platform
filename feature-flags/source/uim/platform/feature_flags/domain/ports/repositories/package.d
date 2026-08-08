@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.feature_flags.domain.ports.repositories;
 
-public {
+public:
+    import uim.platform.feature_flags.domain.ports.repositories.audit_entries;
     import uim.platform.feature_flags.domain.ports.repositories.feature_flags;
     import uim.platform.feature_flags.domain.ports.repositories.service_instances;
-    import uim.platform.feature_flags.domain.ports.repositories.audit_entries;
-}
+

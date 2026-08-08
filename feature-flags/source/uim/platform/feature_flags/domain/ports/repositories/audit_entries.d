@@ -12,9 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 /// Port for append-only audit log persistence.
-interface IAuditEntryRepository {
-    void      append(AuditEntry entry);
-    AuditEntry[] findByTenant(TenantId tenantId);
+interface IAuditEntryRepository : ITenantRepository!(AuditEntryId, AuditEntry) {
+//    void      append(AuditEntry entry);
     AuditEntry[] findByEntity(TenantId tenantId, string entityId);
     AuditEntry[] findByTenantPaged(TenantId tenantId, size_t offset, size_t limit);
 }

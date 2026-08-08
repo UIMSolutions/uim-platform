@@ -6,7 +6,7 @@
 module uim.platform.feature_flags.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.feature_flags.infrastructure.persistence.repositories.feature_flag_repo;
-    import uim.platform.feature_flags.infrastructure.persistence.repositories.service_instance_repo;
-    import uim.platform.feature_flags.infrastructure.persistence.repositories.audit_entry_repo;
+    import uim.platform.feature_flags.infrastructure.persistence.repositories.feature_flags;
+    import uim.platform.feature_flags.infrastructure.persistence.repositories.service_instances;
+    import uim.platform.feature_flags.infrastructure.persistence.repositories.audit_entries;
 }

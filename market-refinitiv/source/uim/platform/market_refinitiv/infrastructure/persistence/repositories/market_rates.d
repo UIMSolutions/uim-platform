@@ -12,21 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MarketRateRepository : MarketRateRepository {
-  private MarketRate[string] store;
-
-  // --- ITenantRepository ---
-  override MarketRate   findById(TenantId t, MarketRateId id) {
-    if (auto p = id.value in store) return *p;
-    MarketRate empty; return empty;
-  }
-  override MarketRate[] findByTenant(TenantId t) {
-    return store.values.filter!(r => r.tenantId == t).array;
-  }
-  override void save(MarketRate r)   { store[r.id.value] = r; }
-  override void saveAll(MarketRate[] rates) { foreach (r; rates) store[r.id.value] = r; }
-  override void update(MarketRate r) { store[r.id.value] = r; }
-  override void remove(MarketRate r) { store.remove(r.id.value); }
+class MarketRateRepository : TenantRepository!(MarketRate, MarketRateId), IMarketRateRepository {
 
   // --- Querying ---
   override MarketRate[] findByProvider(TenantId t, string code) {
@@ -82,9 +68,6 @@ class MarketRateRepository : MarketRateRepository {
   }
 
   // --- Counts ---
-  override size_t countByTenant(TenantId t) {
-    return store.values.filter!(r => r.tenantId == t).array.length;
-  }
   override size_t countByProvider(TenantId t, string code) {
     return findByProvider(t, code).length;
   }

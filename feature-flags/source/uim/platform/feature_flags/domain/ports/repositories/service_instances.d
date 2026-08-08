@@ -12,13 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 /// Port for service instance persistence.
-interface IServiceInstanceRepository {
-    void save(ServiceInstance instance_);
-    void update(ServiceInstance instance_);
-    void remove(ServiceInstance instance_);
+interface IServiceInstanceRepository : ITenantRepository!(ServiceInstanceId, ServiceInstance) {
 
-    ServiceInstance   findById(TenantId tenantId, ServiceInstanceId id);
     ServiceInstance   findByName(TenantId tenantId, string name);
-    ServiceInstance[] findByTenant(TenantId tenantId);
-    size_t            countByTenant(TenantId tenantId);
+
 }

@@ -11,22 +11,23 @@ mixin(ShowModule!());
 
 @safe:
 
-class MongoDbAuditEntryRepository : AuditEntryRepository {
-    private MemoryAuditEntryRepository fallback;
-    private string connectionUri;
-    private string dbName;
-
-    this(string connectionUri, string dbName) {
-        this.connectionUri = connectionUri;
-        this.dbName        = dbName;
-        this.fallback      = new AuditEntryRepository();
-        // TODO: connect and wire mongo collection
-    }
-
-    void append(AuditEntry entry)                              { fallback.append(entry);               }
-    AuditEntry[] findByTenant(TenantId tenantId)               { return fallback.findByTenant(tenantId); }
-    AuditEntry[] findByEntity(TenantId tenantId, string entityId) { return fallback.findByEntity(tenantId, entityId); }
-    AuditEntry[] findByTenantPaged(TenantId tenantId, size_t offset, size_t limit) {
-        return fallback.findByTenantPaged(tenantId, offset, limit);
-    }
-}
+//class MongoDbAuditEntryRepository : AuditEntryRepository {
+//    private MemoryAuditEntryRepository fallback;
+//    private string connectionUri;
+//    private string dbName;
+//
+//    this(string connectionUri, string dbName) {
+//        this.connectionUri = connectionUri;
+//        this.dbName        = dbName;
+//        this.fallback      = new AuditEntryRepository();
+//        // TODO: connect and wire mongo collection
+//    }
+//
+//    void append(AuditEntry entry)                              { fallback.append(entry);               }
+//    AuditEntry[] findByTenant(TenantId tenantId)               { return fallback.findByTenant(tenantId); }
+//    AuditEntry[] findByEntity(TenantId tenantId, string entityId) { return fallback.findByEntity(tenantId, entityId); }
+//    AuditEntry[] findByTenantPaged(TenantId tenantId, size_t offset, size_t limit) {
+//        return fallback.findByTenantPaged(tenantId, offset, limit);
+//    }
+//}
+//
