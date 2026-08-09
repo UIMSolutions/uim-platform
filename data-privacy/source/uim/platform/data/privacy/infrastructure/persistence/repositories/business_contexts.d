@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessContextRepository : TenantRepository!(BusinessContext, BusinessContextId), BusinessContextRepository {
+class BusinessContextRepository : TenantRepository!(BusinessContext, BusinessContextId), IBusinessContextRepository {
 
   // #region ByStatus
   size_t countByStatus(TenantId tenantId, BusinessContextStatus status) {

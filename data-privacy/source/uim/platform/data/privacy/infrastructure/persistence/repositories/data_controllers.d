@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataControllerRepository : TenantRepository!(DataController, DataControllerId), DataControllerRepository {
+class DataControllerRepository : TenantRepository!(DataController, DataControllerId), IDataControllerRepository {
 
   size_t countByCountry(TenantId tenantId, string country) {
     return findByCountry(tenantId, country).length;

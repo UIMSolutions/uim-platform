@@ -1,0 +1,22 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data.privacy.domain.ports.usescases.data_subjects;
+
+import uim.platform.data.privacy;
+
+mixin(ShowModule!());
+
+@safe:
+interface IManageDataSubjectsUseCase {
+
+  CommandResult createSubject(CreateDataSubjectRequest req);
+  DataSubject getSubject(TenantId tenantId, DataSubjectId id);
+  DataSubject[] listSubjects(TenantId tenantId);
+  DataSubject[] listByType(TenantId tenantId, DataSubjectType subjectType);
+  CommandResult updateSubject(UpdateDataSubjectRequest req);
+  CommandResult deleteSubject(TenantId tenantId, DataSubjectId id);
+  
+}

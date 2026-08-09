@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class LegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId), LegalGroundRepository {
+class LegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId), ILegalGroundRepository {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     return findByDataSubject(tenantId, dataSubjectId).length;

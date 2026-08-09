@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class AnonymizationConfigRepository : TenantRepository!(AnonymizationConfig, AnonymizationConfigId), AnonymizationConfigRepository {
+class AnonymizationConfigRepository : TenantRepository!(AnonymizationConfig, AnonymizationConfigId), IAnonymizationConfigRepository {
 
   size_t countByStatus(TenantId tenantId, AnonymizationConfigStatus status) {
     return findByStatus(tenantId, status).length;
