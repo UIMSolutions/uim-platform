@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 
 class ManageFeatureFlagsUseCase {
-    private FeatureFlagRepository repo;
-    private AuditEntryRepository  audit;
+    private IFeatureFlagRepository repo;
+    private IAuditEntryRepository  audit;
 
-    this(FeatureFlagRepository repo, AuditEntryRepository audit) {
+    this(IFeatureFlagRepository repo, IAuditEntryRepository audit) {
         this.repo  = repo;
         this.audit = audit;
     }

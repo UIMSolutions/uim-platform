@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class EvaluateFlagsUseCase {
-    private FeatureFlagRepository repo;
+    private IFeatureFlagRepository repo;
     private FlagEvaluator         evaluator;
 
-    this(FeatureFlagRepository repo) {
+    this(IFeatureFlagRepository repo) {
         this.repo      = repo;
         this.evaluator = new FlagEvaluator();
     }

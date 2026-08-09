@@ -16,12 +16,12 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
-  private DataRetrievalRequestRepository repo;
-  private DataSubjectRepository dataSubjects;
-  private PersonalDataModelRepository modelRepo;
+  private IDataRetrievalRequestRepository repo;
+  private IDataSubjectRepository dataSubjects;
+  private IPersonalDataModelRepository modelRepo;
 
-  this(DataRetrievalRequestRepository repo, DataSubjectRepository dataSubjects,
-    PersonalDataModelRepository modelRepo) {
+  this(IDataRetrievalRequestRepository repo, IDataSubjectRepository dataSubjects,
+    IPersonalDataModelRepository modelRepo) {
     this.repo = repo;
     this.dataSubjects = dataSubjects;
     this.modelRepo = modelRepo;

@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceInstancesUseCase {
-    private ServiceInstanceRepository repo;
-    private AuditEntryRepository      audit;
+    private IServiceInstanceRepository repo;
+    private IAuditEntryRepository      audit;
 
-    this(ServiceInstanceRepository repo, AuditEntryRepository audit) {
+    this(IServiceInstanceRepository repo, IAuditEntryRepository audit) {
         this.repo  = repo;
         this.audit = audit;
     }

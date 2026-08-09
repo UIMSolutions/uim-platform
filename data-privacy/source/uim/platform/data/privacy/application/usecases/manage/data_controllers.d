@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataControllersUseCase { // TODO: UIMUseCase {
-  private DataControllerRepository repo;
+  private IDataControllerRepository repo;
 
-  this(DataControllerRepository repo) {
+  this(IDataControllerRepository repo) {
     this.repo = repo;
   }
 

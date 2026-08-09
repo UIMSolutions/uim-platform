@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
-  private AnonymizationConfigRepository repo;
+  private IAnonymizationConfigRepository repo;
 
-  this(AnonymizationConfigRepository repo) {
+  this(IAnonymizationConfigRepository repo) {
     this.repo = repo;
   }
 

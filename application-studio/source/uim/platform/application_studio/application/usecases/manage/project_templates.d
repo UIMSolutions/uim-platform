@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
-    private ProjectTemplateRepository repo;
+    private IProjectTemplateRepository repo;
 
-    this(ProjectTemplateRepository repo) {
+    this(IProjectTemplateRepository repo) {
         this.repo = repo;
     }
 

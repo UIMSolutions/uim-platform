@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageWidgetsUseCase { // TODO: UIMUseCase {
-  private WidgetRepository repo;
+  private IWidgetRepository repo;
 
-  this(WidgetRepository repo) {
+  this(IWidgetRepository repo) {
     this.repo = repo;
   }
 

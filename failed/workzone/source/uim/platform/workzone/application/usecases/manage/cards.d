@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCardsUseCase { // TODO: UIMUseCase {
-  private CardRepository repo;
+  private ICardRepository repo;
 
-  this(CardRepository repo) {
+  this(ICardRepository repo) {
     this.repo = repo;
   }
 
