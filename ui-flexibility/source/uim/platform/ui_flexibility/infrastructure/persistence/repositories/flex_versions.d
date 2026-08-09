@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class FlexVersionRepository : TenantRepository!(FlexVersion, FlexVersionId), FlexVersionRepository {
+class FlexVersionRepository : TenantRepository!(FlexVersion, FlexVersionId), IFlexVersionRepository {
 
   bool existsById(TenantId tenantId, FlexVersionId id) {
     return !findById(tenantId, id).isNull;

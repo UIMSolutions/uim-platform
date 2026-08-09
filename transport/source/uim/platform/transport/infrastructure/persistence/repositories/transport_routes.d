@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TransportRouteRepository : TenantRepository!(TransportRoute, TransportRouteId), TransportRouteRepository {
+class TransportRouteRepository : TenantRepository!(TransportRoute, TransportRouteId), ITransportRouteRepository {
 
     TransportRoute[] findBySourceNode(TenantId tenantId, TransportNodeId sourceNodeId) {
         return findByTenant(tenantId).filter!(e => e.sourceNodeId.value == sourceNodeId.value).array;

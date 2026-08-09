@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CatalogRepository : TenantRepository!(Catalog, CatalogId), CatalogRepository {
+class CatalogRepository : TenantRepository!(Catalog, CatalogId), ICatalogRepository {
 
   size_t countByProvider(ProviderId providerId) {
     return findByProvider(providerId).length;

@@ -10,8 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 class ServiceInstanceRepository
-    : TenantRepository!(ServiceInstance, ServiceInstanceId),
-      IServiceInstanceRepository {
+    : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(i => i.name == name);

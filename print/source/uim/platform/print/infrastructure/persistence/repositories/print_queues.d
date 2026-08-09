@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class PrintQueueRepository
-    : TenantRepository!(PrintQueue, PrintQueueId), PrintQueueRepository {
+    : TenantRepository!(PrintQueue, PrintQueueId), IPrintQueueRepository {
 
     PrintQueue[] findByStatus(TenantId tenantId, PrintQueueStatus status) {
         return findByTenant(tenantId).filter!(q => q.status == status).array;

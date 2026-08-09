@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
+class TransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), ITransportRequestRepository {
 
     TransportRequest[] findByStatus(TenantId tenantId, RequestStatus status) {
         return findByTenant(tenantId).filter!(e => e.status == status).array;

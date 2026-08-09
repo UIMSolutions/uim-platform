@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class UsageReportRepository : TenantRepository!(UsageReport, UsageReportId), UsageReportRepository {
+class UsageReportRepository : TenantRepository!(UsageReport, UsageReportId), IUsageReportRepository {
   
   size_t countByMetricType(TenantId tenantId, MobileAppId appId, MetricType metricType) {
     return findByMetricType(tenantId, appId, metricType).length;

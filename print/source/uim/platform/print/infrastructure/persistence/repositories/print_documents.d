@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class PrintDocumentRepository
-    : TenantRepository!(PrintDocument, PrintDocumentId), PrintDocumentRepository {
+    : TenantRepository!(PrintDocument, PrintDocumentId), IPrintDocumentRepository {
 
     PrintDocument[] findByFormat(TenantId tenantId, DocumentFormat format) {
         return findByTenant(tenantId).filter!(d => d.format == format).array;

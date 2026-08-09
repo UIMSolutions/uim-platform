@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class PushRegistrationRepository : TenantRepository!(PushRegistration, PushRegistrationId), PushRegistrationRepository {
+class PushRegistrationRepository : TenantRepository!(PushRegistration, PushRegistrationId), IPushRegistrationRepository {
 
   bool existsByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId) {
     return findByDeviceAndApp(tenantId, deviceId, appId).id != PushRegistrationId.init;

@@ -13,7 +13,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class PageRepository : TenantRepository!(Page, PageId), PageRepository {
+class PageRepository : TenantRepository!(Page, PageId), IPageRepository {
 
   bool existsByAlias(TenantId tenantId, SiteId siteId, string alias_) {
     return findByTenant(tenantId).filter!(p => p.siteId == siteId && p.alias_ == alias_).length > 0;
