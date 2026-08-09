@@ -4,8 +4,8 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageSnowflakeRolesUseCase {
-  private SnowflakeRoleRepository repo;
-  this(SnowflakeRoleRepository repo) { this.repo = repo; }
+  private ISnowflakeRoleRepository repo;
+  this(ISnowflakeRoleRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateRoleRequest r) {
     SnowflakeRole role;

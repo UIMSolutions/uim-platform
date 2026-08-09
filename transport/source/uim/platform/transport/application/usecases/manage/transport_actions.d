@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTransportActionsUseCase {
-    private TransportActionRepository repo;
+    private ITransportActionRepository repo;
 
-    this(TransportActionRepository repo) {
+    this(ITransportActionRepository repo) {
         this.repo = repo;
     }
 

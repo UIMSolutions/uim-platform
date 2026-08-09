@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageResponsibilityDefinitionsUseCase {
-    private ResponsibilityDefinitionRepository repo;
+    private IResponsibilityDefinitionRepository repo;
 
-    this(ResponsibilityDefinitionRepository repo) { this.repo = repo; }
+    this(IResponsibilityDefinitionRepository repo) { this.repo = repo; }
 
     ResponsibilityDefinition getDefinition(TenantId tenantId, ResponsibilityDefinitionId id) {
         return repo.findById(tenantId, id);

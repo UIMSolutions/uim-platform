@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageCredentialsUseCase {
-    private CredentialRepository repo;
+    private ICredentialRepository repo;
 
-    this(CredentialRepository repo) {
+    this(ICredentialRepository repo) {
         this.repo = repo;
     }
 

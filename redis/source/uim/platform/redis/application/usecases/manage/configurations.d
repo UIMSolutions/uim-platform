@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageConfigurationsUseCase {
-    private ConfigurationRepository repo;
+    private IConfigurationRepository repo;
 
-    this(ConfigurationRepository repo) { this.repo = repo; }
+    this(IConfigurationRepository repo) { this.repo = repo; }
 
     Configuration getConfiguration(TenantId tenantId, ConfigurationId id) {
         return repo.findById(tenantId, id);

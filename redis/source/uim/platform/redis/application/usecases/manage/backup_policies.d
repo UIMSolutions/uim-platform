@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageBackupPoliciesUseCase {
-    private BackupPolicyRepository repo;
+    private IBackupPolicyRepository repo;
 
-    this(BackupPolicyRepository repo) { this.repo = repo; }
+    this(IBackupPolicyRepository repo) { this.repo = repo; }
 
     BackupPolicy getBackupPolicy(TenantId tenantId, BackupPolicyId id) {
         return repo.findById(tenantId, id);

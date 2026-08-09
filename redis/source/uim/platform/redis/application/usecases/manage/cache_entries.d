@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageCacheEntriesUseCase {
-    private CacheEntryRepository repo;
+    private ICacheEntryRepository repo;
 
-    this(CacheEntryRepository repo) { this.repo = repo; }
+    this(ICacheEntryRepository repo) { this.repo = repo; }
 
     CacheEntry getCacheEntry(TenantId tenantId, CacheEntryId id) {
         return repo.findById(tenantId, id);

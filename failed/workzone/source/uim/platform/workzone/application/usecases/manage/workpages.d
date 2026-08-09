@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageWorkpagesUseCase { // TODO: UIMUseCase {
-  private WorkpageRepository repo;
+  private IWorkpageRepository repo;
 
-  this(WorkpageRepository repo) {
+  this(IWorkpageRepository repo) {
     this.repo = repo;
   }
 

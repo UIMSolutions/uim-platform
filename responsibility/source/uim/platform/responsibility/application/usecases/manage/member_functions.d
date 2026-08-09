@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMemberFunctionsUseCase {
-    private MemberFunctionRepository repo;
+    private IMemberFunctionRepository repo;
 
-    this(MemberFunctionRepository repo) { this.repo = repo; }
+    this(IMemberFunctionRepository repo) { this.repo = repo; }
 
     MemberFunction getFunction(TenantId tenantId, MemberFunctionId id) {
         return repo.findById(tenantId, id);

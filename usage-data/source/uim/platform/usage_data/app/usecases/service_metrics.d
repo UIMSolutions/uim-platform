@@ -11,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service: service metric catalog use cases.
 class ServiceMetricUseCases {
-  private ServiceMetricRepository repo;
+  private IServiceMetricRepository repo;
 
-  this(ServiceMetricRepository repo) {
+  this(IServiceMetricRepository repo) {
     this.repo = repo;
   }
 

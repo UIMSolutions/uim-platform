@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTeamTypesUseCase {
-    private TeamTypeRepository repo;
+    private ITeamTypeRepository repo;
 
-    this(TeamTypeRepository repo) { this.repo = repo; }
+    this(ITeamTypeRepository repo) { this.repo = repo; }
 
     TeamType getType(TenantId tenantId, TeamTypeId id) {
         return repo.findById(tenantId, id);

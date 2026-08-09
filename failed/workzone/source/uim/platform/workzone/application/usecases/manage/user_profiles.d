@@ -16,9 +16,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageUserProfilesUseCase { // TODO: UIMUseCase {
-  private UserProfileRepository repo;
+  private IUserProfileRepository repo;
 
-  this(UserProfileRepository repo) {
+  this(IAppRepository
+  UserProfileRepository repo) {
     this.repo = repo;
   }
 

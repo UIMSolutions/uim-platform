@@ -11,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service: monthly cost report use cases.
 class MonthlyCostReportUseCases {
-  private MonthlyCostReportRepository repo;
+  private IMonthlyCostReportRepository repo;
 
-  this(MonthlyCostReportRepository repo) {
+  this(IMonthlyCostReportRepository repo) {
     this.repo = repo;
   }
 

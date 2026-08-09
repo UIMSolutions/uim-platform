@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTransportNodesUseCase {
-    private TransportNodeRepository repo;
+    private ITransportNodeRepository repo;
 
-    this(TransportNodeRepository repo) {
+    this(ITransportNodeRepository repo) {
         this.repo = repo;
     }
 

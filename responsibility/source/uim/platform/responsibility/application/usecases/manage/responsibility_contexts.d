@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageResponsibilityContextsUseCase {
-    private ResponsibilityContextRepository repo;
+    private IResponsibilityContextRepository repo;
 
-    this(ResponsibilityContextRepository repo) { this.repo = repo; }
+    this(IResponsibilityContextRepository repo) { this.repo = repo; }
 
     ResponsibilityContext getContext(TenantId tenantId, ResponsibilityContextId id) {
         return repo.findById(tenantId, id);

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageImportQueueEntriesUseCase {
-    private ImportQueueEntryRepository repo;
+    private IImportQueueEntryRepository repo;
 
-    this(ImportQueueEntryRepository repo) {
+    this(IImportQueueEntryRepository repo) {
         this.repo = repo;
     }
 

@@ -15,9 +15,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
-    private DeviceRegistrationRepository repo;
+    private IDeviceRegistrationRepository repo;
 
-    this(DeviceRegistrationRepository repo) {
+    this(IDeviceRegistrationRepository repo) {
         this.repo = repo;
     }
 

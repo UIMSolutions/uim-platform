@@ -11,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service: daily usage report use cases.
 class DailyUsageReportUseCases {
-  private DailyUsageReportRepository repo;
+  private IDailyUsageReportRepository repo;
 
-  this(DailyUsageReportRepository repo) {
+  this(IDailyUsageReportRepository repo) {
     this.repo = repo;
   }
 

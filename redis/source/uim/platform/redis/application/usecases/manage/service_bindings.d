@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceBindingsUseCase {
-    private ServiceBindingRepository repo;
+    private IServiceBindingRepository repo;
 
-    this(ServiceBindingRepository repo) { this.repo = repo; }
+    this(IServiceBindingRepository repo) { this.repo = repo; }
 
     ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
         return repo.findById(tenantId, id);

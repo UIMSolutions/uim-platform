@@ -1,4 +1,4 @@
-module uim.platform.analytics.presentation.web.model;
+module uim.platform.analytics.presentation.web.models.model;
 
 struct WebDashboardModel {
   string title;

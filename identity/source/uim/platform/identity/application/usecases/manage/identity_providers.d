@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageIdentityProvidersUseCase {
-    private IdentityProviderRepository repo;
+    private IIdentityProviderRepository repo;
 
-    this(IdentityProviderRepository repo) { this.repo = repo; }
+    this(IIdentityProviderRepository repo) { this.repo = repo; }
 
     IdentityProvider getIdentityProvider(TenantId tenantId, IdentityProviderId id) {
         return repo.findById(tenantId, id);

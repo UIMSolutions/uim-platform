@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageWorkspacesUseCase { // TODO: UIMUseCase {
-  private WorkspaceRepository repo;
+  private IWorkspaceRepository repo;
 
-  this(WorkspaceRepository repo) {
+  this(IWorkspaceRepository repo) {
     this.repo = repo;
   }
 

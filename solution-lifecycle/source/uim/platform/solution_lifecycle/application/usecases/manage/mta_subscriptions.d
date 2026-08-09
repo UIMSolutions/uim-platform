@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMtaSubscriptionsUseCase {
-    private MtaSubscriptionRepository repo;
-    private MtaOperationRepository     opRepo;
+    private IMtaSubscriptionRepository repo;
+    private IMtaOperationRepository     opRepo;
     private DeploymentEngine           engine;
 
     this(MtaSubscriptionRepository repo, MtaOperationRepository opRepo, DeploymentEngine engine) {

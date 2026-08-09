@@ -4,8 +4,8 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageSnowflakeDatabasesUseCase {
-  private SnowflakeDatabaseRepository repo;
-  this(SnowflakeDatabaseRepository repo) { this.repo = repo; }
+  private ISnowflakeDatabaseRepository repo;
+  this(ISnowflakeDatabaseRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateDatabaseRequest r) {
     SnowflakeDatabase db;

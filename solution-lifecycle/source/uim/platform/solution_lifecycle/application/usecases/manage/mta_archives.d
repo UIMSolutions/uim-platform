@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMtaArchivesUseCase {
-    private MtaArchiveRepository repo;
+    private IMtaArchiveRepository repo;
 
     this(MtaArchiveRepository repo) {
         this.repo = repo;

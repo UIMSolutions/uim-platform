@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageResponsibilityRulesUseCase {
-    private ResponsibilityRuleRepository repo;
+    private IResponsibilityRuleRepository repo;
 
-    this(ResponsibilityRuleRepository repo) {
+    this(IResponsibilityRuleRepository repo) {
         this.repo = repo;
     }
 

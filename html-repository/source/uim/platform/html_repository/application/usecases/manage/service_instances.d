@@ -17,9 +17,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
-    private ServiceInstanceRepository repo;
+    private IServiceInstanceRepository repo;
 
-    this(ServiceInstanceRepository repo) {
+    this(IServiceInstanceRepository repo) {
         this.repo = repo;
     }
 

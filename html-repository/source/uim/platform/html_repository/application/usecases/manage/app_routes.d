@@ -18,9 +18,9 @@ mixin(ShowModule!());
 
 
 class ManageAppRoutesUseCase { // TODO: UIMUseCase {
-    private AppRouteRepository repo;
+    private IAppRouteRepository repo;
 
-    this(AppRouteRepository repo) {
+    this(IAppRouteRepository repo) {
         this.repo = repo;
     }
 

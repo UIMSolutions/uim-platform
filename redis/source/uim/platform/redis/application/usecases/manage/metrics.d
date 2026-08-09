@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMetricsUseCase {
-    private MetricRepository repo;
+    private IMetricRepository repo;
 
-    this(MetricRepository repo) { this.repo = repo; }
+    this(IMetricRepository repo) { this.repo = repo; }
 
     Metric getMetric(TenantId tenantId, MetricId id) {
         return repo.findById(tenantId, id);

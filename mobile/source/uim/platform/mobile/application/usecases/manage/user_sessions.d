@@ -16,9 +16,9 @@ import uim.platform.mobile;
 @safe:
 
 class ManageUserSessionsUseCase { // TODO: UIMUseCase {
-    private UserSessionRepository repo;
+    private IUserSessionRepository repo;
 
-    this(UserSessionRepository repo) {
+    this(IUserSessionRepository repo) {
         this.repo = repo;
     }
 

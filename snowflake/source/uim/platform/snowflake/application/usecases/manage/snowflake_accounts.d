@@ -4,8 +4,8 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageSnowflakeAccountsUseCase {
-  private SnowflakeAccountRepository repo;
-  this(SnowflakeAccountRepository repo) { this.repo = repo; }
+  private ISnowflakeAccountRepository repo;
+  this(ISnowflakeAccountRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateAccountRequest r) {
     SnowflakeAccount a;

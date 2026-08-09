@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAccessControlsUseCase {
-    private AccessControlRepository repo;
+    private IAccessControlRepository repo;
 
-    this(AccessControlRepository repo) { this.repo = repo; }
+    this(IAccessControlRepository repo) { this.repo = repo; }
 
     AccessControl getAccessControl(TenantId tenantId, AccessControlId id) {
         return repo.findById(tenantId, id);

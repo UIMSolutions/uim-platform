@@ -18,9 +18,9 @@ mixin(ShowModule!());
 
 
 class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
-    private HtmlAppRepository repo;
+    private IHtmlAppRepository repo;
 
-    this(HtmlAppRepository repo) {
+    this(IHtmlAppRepository repo) {
         this.repo = repo;
     }
 

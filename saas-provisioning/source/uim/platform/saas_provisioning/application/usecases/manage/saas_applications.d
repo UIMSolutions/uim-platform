@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 /// Use case: full CRUD lifecycle for registered multitenant SaaS applications (provider side).
 class ManageSaasApplicationsUseCase {
-    private SaasApplicationRepository repo;
+    private ISaasApplicationRepository repo;
 
-    this(SaasApplicationRepository repo) {
+    this(ISaasApplicationRepository repo) {
         this.repo = repo;
     }
 

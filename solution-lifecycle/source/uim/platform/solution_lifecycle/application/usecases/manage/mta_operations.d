@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMtaOperationsUseCase {
-    private MtaOperationRepository repo;
+    private IMtaOperationRepository repo;
     private DeploymentEngine       engine;
 
     this(MtaOperationRepository repo, DeploymentEngine engine) {

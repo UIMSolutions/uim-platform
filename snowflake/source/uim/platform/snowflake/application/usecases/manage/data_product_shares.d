@@ -4,8 +4,8 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageDataProductSharesUseCase {
-  private DataProductShareRepository repo;
-  this(DataProductShareRepository repo) { this.repo = repo; }
+  private IDataProductShareRepository repo;
+  this(IDataProductShareRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateShareRequest r) {
     DataProductShare s;

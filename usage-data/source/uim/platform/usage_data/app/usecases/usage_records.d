@@ -11,9 +11,8 @@ mixin(ShowModule!());
 @safe:
 /// Application service: usage record use cases.
 class UsageRecordUseCases {
-  private UsageRecordRepository repo;
-
-  this(UsageRecordRepository repo) {
+  private IUsageRecordRepository repo;
+IUsageRecordRepository repo) {
     this.repo = repo;
   }
 

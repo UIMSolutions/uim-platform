@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 /// Use case: query subscription job status (poll endpoint for async operations).
 class ManageSubscriptionJobsUseCase {
-    private SubscriptionJobRepository repo;
+    private ISubscriptionJobRepository repo;
 
-    this(SubscriptionJobRepository repo) {
+    this(ISubscriptionJobRepository repo) {
         this.repo = repo;
     }
 

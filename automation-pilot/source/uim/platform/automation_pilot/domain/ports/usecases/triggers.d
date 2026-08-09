@@ -19,5 +19,5 @@ interface IManageTriggersUseCase {
     CommandResult createTrigger(TriggerDTO dto);
     CommandResult updateTrigger(TriggerDTO dto);
     CommandResult deleteTrigger(TenantId tenantId, TriggerId id);
-     
+
 }

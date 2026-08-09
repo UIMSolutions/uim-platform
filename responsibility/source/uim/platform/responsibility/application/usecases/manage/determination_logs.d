@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDeterminationLogsUseCase {
-    private DeterminationLogRepository repo;
+    private IDeterminationLogRepository repo;
 
-    this(DeterminationLogRepository repo) { this.repo = repo; }
+    this(IDeterminationLogRepository repo) { this.repo = repo; }
 
     DeterminationLog getLog(TenantId tenantId, DeterminationLogId id) {
         return repo.findById(tenantId, id);

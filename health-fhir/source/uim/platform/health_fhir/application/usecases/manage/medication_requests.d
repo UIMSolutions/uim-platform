@@ -11,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMedicationRequestsUseCase {
-  private MedicationRequestRepository repo;
+  private IMedicationRequestRepository repo;
 
-  this(MedicationRequestRepository repo) {
+  this(IMedicationRequestRepository repo) {
     this.repo = repo;
   }
 
