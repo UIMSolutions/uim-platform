@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class AppRepository : TenantRepository!(AppRegistration, AppId), AppRepository {
+class AppRepository : TenantRepository!(AppRegistration, AppId), IAppRepository {
 
   size_t countByStatus(TenantId tenantId, AppStatus status) {
     return findByStatus(tenantId, status).length;

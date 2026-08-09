@@ -6,10 +6,10 @@ mixin(ShowModule!());
 
 class ManageApiProductsUseCase {
 private:
-  ApiProductRepository _repo;
+  IApiProductRepository _repo;
 
 public:
-  this(ApiProductRepository repo) { _repo = repo; }
+  this(IApiProductRepository repo) { _repo = repo; }
 
   CommandResult create(CreateApiProductRequest req) {
     auto prod = ApiProduct(req.tenantId);

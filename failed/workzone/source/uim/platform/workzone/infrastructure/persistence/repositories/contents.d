@@ -15,7 +15,7 @@ mixin(ShowModule!());
 // import std.algorithm : canFind, filter;
  
 
-class ContentRepository : TenantRepository!(ContentItem, ContentId), ContentRepository {
+class ContentRepository : TenantRepository!(ContentItem, ContentId), IContentRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

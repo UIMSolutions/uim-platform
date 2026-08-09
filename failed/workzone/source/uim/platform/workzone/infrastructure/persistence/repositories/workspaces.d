@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class WorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
+class WorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), IWorkspaceRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
     return findByTenant(tenantId).any!(w => w.alias_ == alias_);

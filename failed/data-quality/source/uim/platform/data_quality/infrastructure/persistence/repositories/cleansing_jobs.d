@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CleansingJobRepository : TenantRepository!(CleansingJob, CleansingJobId), CleansingJobRepository {
+class CleansingJobRepository : TenantRepository!(CleansingJob, CleansingJobId), ICleansingJobRepository {
 
   // #region ByDataset
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {

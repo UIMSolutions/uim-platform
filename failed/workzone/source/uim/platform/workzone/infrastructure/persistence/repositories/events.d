@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class EventRepository : TenantRepository!(Event, EventId), EventRepository {
+class EventRepository : TenantRepository!(Event, EventId), IEventRepository {
 
   // #region ByWorkspace
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

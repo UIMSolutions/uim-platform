@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), MatchGroupRepository {
+class MatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), IMatchGroupRepository {
 
   // #region ByDataset
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class KnowledgeBaseArticleRepository : TenantRepository!(KnowledgeBaseArticle, KBArticleId), KnowledgeBaseArticleRepository {
+class KnowledgeBaseArticleRepository : TenantRepository!(KnowledgeBaseArticle, KBArticleId), IKnowledgeBaseArticleRepository {
   
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

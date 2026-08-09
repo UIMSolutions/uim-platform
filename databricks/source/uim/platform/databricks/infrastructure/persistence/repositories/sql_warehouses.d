@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehouseId), SqlWarehouseRepository {
+class SqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehouseId), ISqlWarehouseRepository {
   SqlWarehouse[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

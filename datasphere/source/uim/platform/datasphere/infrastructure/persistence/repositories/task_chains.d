@@ -13,7 +13,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class TaskChainRepository : TenantRepository!(TaskChain, TaskChainId), TaskChainRepository {
+class TaskChainRepository : TenantRepository!(TaskChain, TaskChainId), ITaskChainRepository {
   
   // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, TaskChainId id) {

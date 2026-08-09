@@ -14,7 +14,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class DataAccessControlRepository : TenantRepository!(DataAccessControl, DataAccessControlId), DataAccessControlRepository {
+class DataAccessControlRepository : TenantRepository!(DataAccessControl, DataAccessControlId), IDataAccessControlRepository {
   
   // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {

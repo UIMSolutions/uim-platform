@@ -13,7 +13,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!());
 @safe:
 
-class SpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository {
+class SpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepository {
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
   }

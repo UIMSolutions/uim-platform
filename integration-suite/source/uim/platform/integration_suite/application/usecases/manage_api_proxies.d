@@ -6,10 +6,10 @@ mixin(ShowModule!());
 
 class ManageApiProxiesUseCase {
 private:
-  ApiProxyRepository _repo;
+  IApiProxyRepository _repo;
 
 public:
-  this(ApiProxyRepository repo) { _repo = repo; }
+  this(IApiProxyRepository repo) { _repo = repo; }
 
   CommandResult create(CreateApiProxyRequest req) {
     auto proxy = ApiProxy(req.tenantId, req.proxyId);

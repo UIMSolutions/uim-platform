@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BuildRepository : TenantRepository!(Build, BuildId), BuildRepository {
+class BuildRepository : TenantRepository!(Build, BuildId), IBuildRepository {
     Build[] findByJob(TenantId tenantId, JobId jobId) {
         return findByTenant(tenantId).filter!(b => b.jobId == jobId).array;
     }

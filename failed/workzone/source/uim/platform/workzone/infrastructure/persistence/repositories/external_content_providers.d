@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class ExternalContentProviderRepository : TenantRepository!(ExternalContentProvider, ExternalContentProviderId), ExternalContentProviderRepository {
+class ExternalContentProviderRepository : TenantRepository!(ExternalContentProvider, ExternalContentProviderId), IExternalContentProviderRepository {
 
   size_t countByStatus(TenantId tenantId, ProviderStatus status) {
     return findByStatus(tenantId, status).length;

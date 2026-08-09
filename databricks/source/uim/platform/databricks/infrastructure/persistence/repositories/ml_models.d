@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MlModelRepository : TenantRepository!(MlModel, MlModelId), MlModelRepository {
+class MlModelRepository : TenantRepository!(MlModel, MlModelId), IMlModelRepository {
   MlModel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

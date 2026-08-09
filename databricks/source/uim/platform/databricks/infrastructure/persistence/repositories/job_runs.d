@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class JobRunRepository : TenantRepository!(JobRun, JobRunId), JobRunRepository {
+class JobRunRepository : TenantRepository!(JobRun, JobRunId), IJobRunRepository {
   JobRun[] findByJob(TenantId tenantId, JobId jobId) {
     import std.algorithm : filter;
     import std.array : array;

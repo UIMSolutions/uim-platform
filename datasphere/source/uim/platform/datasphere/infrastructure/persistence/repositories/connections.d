@@ -13,7 +13,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ConnectionRepository : TenantRepository!(Connection, ConnectionId), ConnectionRepository {
+class ConnectionRepository : TenantRepository!(Connection, ConnectionId), IConnectionRepository {
 
 // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, ConnectionId id) {

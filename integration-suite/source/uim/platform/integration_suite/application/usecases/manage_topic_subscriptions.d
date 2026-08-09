@@ -6,10 +6,10 @@ mixin(ShowModule!());
 
 class ManageTopicSubscriptionsUseCase {
 private:
-  TopicSubscriptionRepository _repo;
+  ITopicSubscriptionRepository _repo;
 
 public:
-  this(TopicSubscriptionRepository repo) { _repo = repo; }
+  this(ITopicSubscriptionRepository repo) { _repo = repo; }
 
   CommandResult create(CreateSubscriptionRequest req) {
     auto sub = TopicSubscription(req.tenantId, req.subscriptionId);

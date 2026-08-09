@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeploymentTargetRepository : TenantRepository!(DeploymentTarget, DeploymentTargetId), DeploymentTargetRepository {
+class DeploymentTargetRepository : TenantRepository!(DeploymentTarget, DeploymentTargetId), IDeploymentTargetRepository {
     DeploymentTarget[] findByStatus(TenantId tenantId, DeploymentTargetStatus status) {
         return findByTenant(tenantId).filter!(d => d.status == status).array;
     }

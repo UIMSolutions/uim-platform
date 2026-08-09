@@ -6,10 +6,10 @@ mixin(ShowModule!());
 
 class ManageMessageMappingsUseCase {
 private:
-  MessageMappingRepository _repo;
+  IMessageMappingRepository _repo;
 
 public:
-  this(MessageMappingRepository repo) { _repo = repo; }
+  this(IMessageMappingRepository repo) { _repo = repo; }
 
   CommandResult create(CreateMappingRequest req) {
     auto m = MessageMapping(req.tenantId, req.id);

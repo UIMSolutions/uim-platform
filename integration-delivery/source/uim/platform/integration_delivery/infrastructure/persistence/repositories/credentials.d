@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
+class CredentialRepository : TenantRepository!(Credential, CredentialId), ICredentialRepository {
     Credential[] findByStatus(TenantId tenantId, CredentialStatus status) {
         return findByTenant(tenantId).filter!(c => c.status == status).array;
     }

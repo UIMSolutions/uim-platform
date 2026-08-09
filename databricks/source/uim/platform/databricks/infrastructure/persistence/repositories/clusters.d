@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ClusterRepository : TenantRepository!(Cluster, ClusterId), ClusterRepository {
+class ClusterRepository : TenantRepository!(Cluster, ClusterId), IClusterRepository {
   Cluster[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

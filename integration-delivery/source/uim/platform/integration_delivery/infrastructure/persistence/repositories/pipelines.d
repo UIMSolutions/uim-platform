@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PipelineRepository : TenantRepository!(Pipeline, PipelineId), PipelineRepository {
+class PipelineRepository : TenantRepository!(Pipeline, PipelineId), IPipelineRepository {
     Pipeline[] findByStatus(TenantId tenantId, PipelineStatus status) {
         return findByTenant(tenantId).filter!(p => p.status == status).array;
     }

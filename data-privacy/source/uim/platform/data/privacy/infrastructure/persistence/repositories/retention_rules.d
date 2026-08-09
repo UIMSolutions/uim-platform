@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class RetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
+class RetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), IRetentionRuleRepository {
 
   // #region ByDefault 
   bool existsDefault(TenantId tenantId) {

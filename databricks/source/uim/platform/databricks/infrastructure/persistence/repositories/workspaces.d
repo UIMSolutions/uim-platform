@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class WorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
+class WorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), IWorkspaceRepository {
   Workspace[] findByStatus(TenantId tenantId, WorkspaceStatus status) {
     import std.algorithm : filter;
     import std.array : array;

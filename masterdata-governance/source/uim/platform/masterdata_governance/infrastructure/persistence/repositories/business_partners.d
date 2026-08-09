@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class BusinessPartnerRepository
-    : TenantRepository!(BusinessPartner, BusinessPartnerId), BusinessPartnerRepository {
+    : TenantRepository!(BusinessPartner, BusinessPartnerId), IBusinessPartnerRepository {
 
     BusinessPartner findByBpNumber(TenantId tenantId, string bpNumber) {
         auto all = findByTenant(tenantId);

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class DataQualityRuleRepository
-    : TenantRepository!(DataQualityRule, DataQualityRuleId), DataQualityRuleRepository {
+    : TenantRepository!(DataQualityRule, DataQualityRuleId), IDataQualityRuleRepository {
 
     DataQualityRule[] findByFieldName(TenantId tenantId, string fieldName) {
         return findByTenant(tenantId).filter!(e => e.fieldName == fieldName).array;

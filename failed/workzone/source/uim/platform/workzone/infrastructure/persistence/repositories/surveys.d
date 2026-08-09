@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class SurveyRepository : TenantRepository!(Survey, SurveyId), SurveyRepository {
+class SurveyRepository : TenantRepository!(Survey, SurveyId), ISurveyRepository {
 
   // #region ByWorkspace
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

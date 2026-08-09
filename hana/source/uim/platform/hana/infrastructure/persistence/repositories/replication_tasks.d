@@ -13,7 +13,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ReplicationTaskRepository : TenantRepository!(ReplicationTask, ReplicationTaskId), ReplicationTaskRepository {
+class ReplicationTaskRepository : TenantRepository!(ReplicationTask, ReplicationTaskId), IReplicationTaskRepository {
 
   size_t countByInstance(TenantId tenantId, DatabaseInstanceId instanceId) {
     return findByInstance(tenantId, instanceId).length;

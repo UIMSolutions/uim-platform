@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ChangeRequestRepository
-    : TenantRepository!(ChangeRequest, ChangeRequestId), ChangeRequestRepository {
+    : TenantRepository!(ChangeRequest, ChangeRequestId), IChangeRequestRepository {
 
     size_t countByStatus(TenantId tenantId, ChangeRequestStatus status) {
         return findByStatus(tenantId, status).length;

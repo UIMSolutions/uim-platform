@@ -6,10 +6,10 @@ mixin(ShowModule!());
 
 class ManageMessageQueuesUseCase {
 private:
-  MessageQueueRepository _repo;
+  IMessageQueueRepository _repo;
 
 public:
-  this(MessageQueueRepository repo) { _repo = repo; }
+  this(IMessageQueueRepository repo) { _repo = repo; }
 
   CommandResult create(CreateQueueRequest req) {
     auto q = MessageQueue(req.tenantId, req.id);

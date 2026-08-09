@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class TagRepository : TenantRepository!(Tag, TagId), TagRepository {
+class TagRepository : TenantRepository!(Tag, TagId), ITagRepository {
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {

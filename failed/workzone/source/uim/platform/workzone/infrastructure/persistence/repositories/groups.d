@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class GroupRepository : TenantRepository!(WZGroup, GroupId), GroupRepository {
+class GroupRepository : TenantRepository!(WZGroup, GroupId), IGroupRepository {
 
   size_t countByMember(TenantId tenantId, UserId userId) {
     return findByMember(tenantId, userId).length;

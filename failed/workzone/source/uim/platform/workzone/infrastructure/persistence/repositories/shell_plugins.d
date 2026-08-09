@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class ShellPluginRepository : TenantRepository!(ShellPlugin, ShellPluginId), ShellPluginRepository {
+class ShellPluginRepository : TenantRepository!(ShellPlugin, ShellPluginId), IShellPluginRepository {
 
   // #region BySite
   size_t countBySite(TenantId tenantId, SiteId siteId) {

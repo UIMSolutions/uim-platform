@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataProductRepository : TenantRepository!(DataProduct, DataProductId), DataProductRepository {
+class DataProductRepository : TenantRepository!(DataProduct, DataProductId), IDataProductRepository {
   DataProduct[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class PageTemplateRepository : TenantRepository!(PageTemplate, PageTemplateId), PageTemplateRepository {
+class PageTemplateRepository : TenantRepository!(PageTemplate, PageTemplateId), IPageTemplateRepository {
 
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(t => t.isDefault);

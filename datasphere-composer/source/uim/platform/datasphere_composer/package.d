@@ -6,6 +6,8 @@
 module uim.platform.datasphere_composer;
 
 public {
+  import uim.platform.service;
+  
   import uim.platform.datasphere_composer.domain;
   import uim.platform.datasphere_composer.application;
   import uim.platform.datasphere_composer.infrastructure;

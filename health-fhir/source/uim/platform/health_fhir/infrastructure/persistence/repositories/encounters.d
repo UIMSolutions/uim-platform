@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EncounterRepository : TenantRepository!(Encounter, EncounterId), EncounterRepository {
+class EncounterRepository : TenantRepository!(Encounter, EncounterId), IEncounterRepository {
 
   bool existsById(TenantId tenantId, EncounterId id) {
     return !findById(tenantId, id).isNull;

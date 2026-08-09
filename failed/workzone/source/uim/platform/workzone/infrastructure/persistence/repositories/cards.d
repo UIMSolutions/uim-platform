@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class CardRepository : TenantRepository!(Card, CardId), CardRepository {
+class CardRepository : TenantRepository!(Card, CardId), ICardRepository {
 
   size_t countByType(TenantId tenantId, CardType cardType) {
     return findByType(tenantId, cardType).length;

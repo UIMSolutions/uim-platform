@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 class TenantUserRepository
     : TenantRepository!(TenantUser, TenantUserId),
-      TenantUserRepository {
+      ITenantUserRepository {
 
   TenantUser[] findByRole(TenantId tenantId, TenantUserRole role) {
     TenantUser[] result;

@@ -6,10 +6,10 @@ mixin(ShowModule!());
 
 class ManageIntegrationFlowsUseCase {
 private:
-  IntegrationFlowRepository _repo;
+  IIntegrationFlowRepository _repo;
 
 public:
-  this(IntegrationFlowRepository repo) { _repo = repo; }
+  this(IIntegrationFlowRepository repo) { _repo = repo; }
 
   CommandResult create(CreateFlowRequest req) {
     auto flow = IntegrationFlow(req.tenantId, req.flowId);

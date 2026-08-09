@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class NotificationRepository : TenantRepository!(Notification, NotificationId), NotificationRepository {
+class NotificationRepository : TenantRepository!(Notification, NotificationId), INotificationRepository {
 
   size_t countByRecipient(TenantId tenantId, UserId recipientId) {
     return findByRecipient(tenantId, recipientId).length;

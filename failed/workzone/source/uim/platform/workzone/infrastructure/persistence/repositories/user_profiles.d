@@ -13,7 +13,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class UserProfileRepository : TenantRepository!(UserProfile, UserProfileId), UserProfileRepository {
+class UserProfileRepository : TenantRepository!(UserProfile, UserProfileId), IUserProfileRepository {
 
   // #region ByUserId
   bool existsByUser(TenantId tenantId, UserId userId) {

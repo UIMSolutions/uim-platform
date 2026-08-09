@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId), DeltaTableRepository {
+class DeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId), IDeltaTableRepository {
   DeltaTable[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class NotebookRepository : TenantRepository!(Notebook, NotebookId), NotebookRepository {
+class NotebookRepository : TenantRepository!(Notebook, NotebookId), INotebookRepository {
   Notebook[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

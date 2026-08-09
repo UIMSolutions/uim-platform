@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CleansingRuleRepository : TenantRepository!(CleansingRule, CleansingRuleId), CleansingRuleRepository {
+class CleansingRuleRepository : TenantRepository!(CleansingRule, CleansingRuleId), ICleansingRuleRepository {
 
   size_t countByDataset(TenantId tenantId, string datasetPattern) {
     return findByDataset(tenantId, datasetPattern).length;

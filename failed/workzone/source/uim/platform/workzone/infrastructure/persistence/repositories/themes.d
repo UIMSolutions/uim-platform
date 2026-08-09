@@ -13,7 +13,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ThemeRepository : TenantRepository!(Theme, ThemeId), ThemeRepository {
+class ThemeRepository : TenantRepository!(Theme, ThemeId), IThemeRepository {
 
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(t => t.isDefault);

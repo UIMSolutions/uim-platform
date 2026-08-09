@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MlExperimentRepository : TenantRepository!(MlExperiment, MlExperimentId), MlExperimentRepository {
+class MlExperimentRepository : TenantRepository!(MlExperiment, MlExperimentId), IMlExperimentRepository {
   MlExperiment[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
