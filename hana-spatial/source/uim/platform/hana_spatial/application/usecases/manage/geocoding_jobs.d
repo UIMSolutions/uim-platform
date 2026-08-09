@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageGeocodingJobsUseCase {
-  private GeocodingJobRepository repo;
+  private IGeocodingJobRepository repo;
 
-  this(GeocodingJobRepository repo) {
+  this(IGeocodingJobRepository repo) {
     this.repo = repo;
   }
 

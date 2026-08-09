@@ -13,9 +13,9 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 class DatasetUseCases {
-  private DatasetRepository repo;
+  private IDatasetRepository repo;
 
-  this(DatasetRepository repo) {
+  this(IDatasetRepository repo) {
     this.repo = repo;
   }
 

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMaintenanceWindowsUseCase {
-    private MaintenanceWindowRepository repo;
+    private IMaintenanceWindowRepository repo;
 
-    this(MaintenanceWindowRepository repo) { this.repo = repo; }
+    this(IMaintenanceWindowRepository repo) { this.repo = repo; }
 
     MaintenanceWindow getMaintenanceWindow(TenantId tenantId, MaintenanceWindowId id) {
         return repo.findById(tenantId, id);

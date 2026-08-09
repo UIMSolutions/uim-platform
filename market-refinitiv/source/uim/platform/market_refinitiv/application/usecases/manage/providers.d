@@ -11,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageProvidersUseCase {
-  private ProviderRepository repo;
+  private IProviderRepository repo;
 
-  this(ProviderRepository repo) {
+  this(IProviderRepository repo) {
     this.repo = repo;
   }
 

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDocumentVersionsUseCase {
-    private DocumentVersionRepository repo;
+    private IDocumentVersionRepository repo;
 
-    this(DocumentVersionRepository repo) {
+    this(IDocumentVersionRepository repo) {
         this.repo = repo;
     }
 

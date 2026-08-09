@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDataQualityScoresUseCase {
-    private DataQualityScoreRepository repo;
+    private IDataQualityScoreRepository repo;
 
-    this(DataQualityScoreRepository repo) {
+    this(IDataQualityScoreRepository repo) {
         this.repo = repo;
     }
 

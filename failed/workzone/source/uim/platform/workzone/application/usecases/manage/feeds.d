@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageFeedsUseCase { // TODO: UIMUseCase {
-  private FeedRepository repo;
+  private IFeedRepository repo;
 
-  this(FeedRepository repo) {
+  this(IFeedRepository repo) {
     this.repo = repo;
   }
 

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageEventChannelsUseCase {
-    private EventChannelRepository repo;
+    private IEventChannelRepository repo;
 
-    this(EventChannelRepository repo) { this.repo = repo; }
+    this(IEventChannelRepository repo) { this.repo = repo; }
 
     EventChannel getChannel(TenantId tenantId, EventChannelId id) { return repo.findById(tenantId, id); }
     EventChannel[] listChannels(TenantId tenantId) { return repo.findByTenant(tenantId); }

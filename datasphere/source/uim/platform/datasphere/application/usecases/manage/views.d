@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageViewsUseCase { // TODO: UIMUseCase {
-  private ViewRepository repo;
+  private IViewRepository repo;
 
-  this(ViewRepository repo) {
+  this(IViewRepository repo) {
     this.repo = repo;
   }
 

@@ -11,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageConditionsUseCase {
-  private ConditionRepository repo;
+  private IConditionRepository repo;
 
-  this(ConditionRepository repo) {
+  this(IConditionRepository repo) {
     this.repo = repo;
   }
 

@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.domain.valueobjects;
 
-import uim.platform.service;
+import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

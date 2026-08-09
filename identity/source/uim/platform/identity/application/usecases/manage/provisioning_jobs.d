@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageProvisioningJobsUseCase {
-    private ProvisioningJobRepository repo;
+    private IProvisioningJobRepository repo;
 
-    this(ProvisioningJobRepository repo) { this.repo = repo; }
+    this(IProvisioningJobRepository repo) { this.repo = repo; }
 
     ProvisioningJob getJob(TenantId tenantId, ProvisioningJobId id) { return repo.findById(tenantId, id); }
     ProvisioningJob[] listJobs(TenantId tenantId) { return repo.findByTenant(tenantId); }

@@ -1,4 +1,4 @@
-module uim.platform.analytics.presentation.web.controller;
+module uim.platform.analytics.presentation.web.controllers.controller;
 
 import vibe.http.router : URLRouter;
 import vibe.http.server : HTTPServerRequest, HTTPServerResponse;

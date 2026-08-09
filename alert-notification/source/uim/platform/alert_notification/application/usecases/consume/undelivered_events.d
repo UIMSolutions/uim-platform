@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ConsumeUndeliveredEventsUseCase {
-    private UndeliveredEventRepository repo;
+    private IUndeliveredEventRepository repo;
 
-    this(UndeliveredEventRepository repo) { this.repo = repo; }
+    this(IUndeliveredEventRepository repo) { this.repo = repo; }
 
     QueryResult listUndeliveredEvents(TenantId tenantId) {
         auto items = repo.findByTenant(tenantId);

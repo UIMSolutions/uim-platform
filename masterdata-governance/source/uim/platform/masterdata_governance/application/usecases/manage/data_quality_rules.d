@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDataQualityRulesUseCase {
-    private DataQualityRuleRepository repo;
+    private IDataQualityRuleRepository repo;
 
-    this(DataQualityRuleRepository repo) {
+    this(IDataQualityRuleRepository repo) {
         this.repo = repo;
     }
 

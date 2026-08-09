@@ -16,9 +16,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManageAppVersionsUseCase { // TODO: UIMUseCase {
-    private AppVersionRepository repo;
+    private IAppVersionRepository repo;
 
-    this(AppVersionRepository repo) {
+    this(IAppVersionRepository repo) {
         this.repo = repo;
     }
 

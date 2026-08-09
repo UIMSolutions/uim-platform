@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
-  private ExternalContentProviderRepository repo;
+  private IExternalContentProviderRepository repo;
 
-  this(ExternalContentProviderRepository repo) {
+  this(IExternalContentProviderRepository repo) {
     this.repo = repo;
   }
 

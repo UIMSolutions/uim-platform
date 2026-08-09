@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
-  private BusinessProcessRepository repo;
+  private IBusinessProcessRepository repo;
 
-  this(BusinessProcessRepository repo) {
+  this(IBusinessProcessRepository repo) {
     this.repo = repo;
   }
 

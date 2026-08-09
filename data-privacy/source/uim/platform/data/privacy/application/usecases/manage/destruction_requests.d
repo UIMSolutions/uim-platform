@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
-  private DestructionRequestRepository repo;
-  private DataSubjectRepository dataSubjects;
+  private IDestructionRequestRepository repo;
+  private IDataSubjectRepository dataSubjects;
 
-  this(DestructionRequestRepository repo, DataSubjectRepository dataSubjects) {
+  this(IDestructionRequestRepository repo, IDataSubjectRepository dataSubjects) {
     this.repo = repo;
     this.dataSubjects = dataSubjects;
   }

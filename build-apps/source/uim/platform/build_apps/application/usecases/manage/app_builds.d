@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAppBuildsUseCase { // TODO: UIMUseCase {
-    private AppBuildRepository repo;
+    private IAppBuildRepository repo;
 
-    this(AppBuildRepository repo) {
+    this(IAppBuildRepository repo) {
         this.repo = repo;
     }
 

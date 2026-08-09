@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataFlowsUseCase { // TODO: UIMUseCase {
-  private DataFlowRepository repo;
+  private IDataFlowRepository repo;
 
-  this(DataFlowRepository repo) {
+  this(IDataFlowRepository repo) {
     this.repo = repo;
   }
 

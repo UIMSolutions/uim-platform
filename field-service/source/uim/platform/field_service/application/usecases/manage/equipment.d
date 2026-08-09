@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageEquipmentUseCase { // TODO: UIMUseCase {
-    private EquipmentRepository repo;
+    private IEquipmentRepository repo;
 
-    this(EquipmentRepository repo) {
+    this(IEquipmentRepository repo) {
         this.repo = repo;
     }
 

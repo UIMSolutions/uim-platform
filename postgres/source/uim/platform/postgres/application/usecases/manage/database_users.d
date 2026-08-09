@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDatabaseUsersUseCase {
-    private DatabaseUserRepository repo;
+    private IDatabaseUserRepository repo;
 
-    this(DatabaseUserRepository repo) { this.repo = repo; }
+    this(IDatabaseUserRepository repo) { this.repo = repo; }
 
     DatabaseUser getDatabaseUser(TenantId tenantId, DatabaseUserId id) {
         return repo.findById(tenantId, id);

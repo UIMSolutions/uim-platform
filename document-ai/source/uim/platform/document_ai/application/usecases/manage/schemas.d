@@ -16,9 +16,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageSchemasUseCase { // TODO: UIMUseCase {
-  private SchemaRepository repo;
+  private ISchemaRepository repo;
 
-  this(SchemaRepository repo) {
+  this(ISchemaRepository repo) {
     this.repo = repo;
   }
 

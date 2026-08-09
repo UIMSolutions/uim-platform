@@ -16,9 +16,9 @@ import uim.platform.mobile;
 @safe:
 
 class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
-    private AppConfigurationRepository repo;
+    private IAppConfigurationRepository repo;
 
-    this(AppConfigurationRepository repo) {
+    this(IAppConfigurationRepository repo) {
         this.repo = repo;
     }
 

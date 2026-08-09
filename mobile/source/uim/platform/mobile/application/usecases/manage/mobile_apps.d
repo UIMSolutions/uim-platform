@@ -16,9 +16,9 @@ import uim.platform.mobile;
 @safe:
 
 class ManageMobileAppsUseCase { // TODO: UIMUseCase {
-    private MobileAppRepository repo;
+    private IMobileAppRepository repo;
 
-    this(MobileAppRepository repo) {
+    this(IMobileAppRepository repo) {
         this.repo = repo;
     }
 

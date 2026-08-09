@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataProductsUseCase {
-  private DataProductRepository repo;
+  private IDataProductRepository repo;
 
-  this(DataProductRepository repo) { this.repo = repo; }
+  this(IDataProductRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateDataProductRequest r) {
     DataProduct p;

@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.domain.ports;
 
-public {
+public:
     import uim.platform.abap_environment.domain.ports.repositories;
-}
+    import uim.platform.abap_environment.domain.ports.usecases;
+

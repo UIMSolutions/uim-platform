@@ -16,10 +16,10 @@ mixin(ShowModule!());
 
 @safe:
 class CleanseAddressesUseCase { // TODO: UIMUseCase {
-  private AddressRepository repo;
+  private IAddressRepository repo;
   private AddressCleanser cleanser;
 
-  this(AddressRepository repo, AddressCleanser cleanser) {
+  this(IAddressRepository repo, AddressCleanser cleanser) {
     this.repo = repo;
     this.cleanser = cleanser;
   }

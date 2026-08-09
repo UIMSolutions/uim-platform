@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageStagesUseCase {
-    private StageRepository repo;
+    private IStageRepository repo;
 
-    this(StageRepository repo) {
+    this(IStageRepository repo) {
         this.repo = repo;
     }
 

@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageTenantUsersUseCase {
-  private TenantUserRepository repo;
+  private ITenantUserRepository repo;
 
-  this(TenantUserRepository repo) { this.repo = repo; }
+  this(ITenantUserRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateTenantUserRequest r) {
     TenantUser u;

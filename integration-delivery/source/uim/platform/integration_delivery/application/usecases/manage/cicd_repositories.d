@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageCicdRepositoriesUseCase {
-    private CicdRepositoryRepository repo;
+    private ICicdRepositoryRepository repo;
 
-    this(CicdRepositoryRepository repo) {
+    this(ICicdRepositoryRepository repo) {
         this.repo = repo;
     }
 

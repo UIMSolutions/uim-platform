@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
-  private NavigationItemRepository repo;
+  private INavigationItemRepository repo;
 
-  this(NavigationItemRepository repo) {
+  this(INavigationItemRepository repo) {
     this.repo = repo;
   }
 

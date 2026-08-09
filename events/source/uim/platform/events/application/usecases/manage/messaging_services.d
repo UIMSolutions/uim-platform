@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMessagingServicesUseCase {
-    private MessagingServiceRepository repo;
+    private IMessagingServiceRepository repo;
 
-    this(MessagingServiceRepository repo) { this.repo = repo; }
+    this(IMessagingServiceRepository repo) { this.repo = repo; }
 
     MessagingService getService(TenantId tenantId, MessagingServiceId id) {
         return repo.findById(tenantId, id);

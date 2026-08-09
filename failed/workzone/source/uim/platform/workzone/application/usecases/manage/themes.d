@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageThemesUseCase { // TODO: UIMUseCase {
-  private ThemeRepository repo;
+  private IThemeRepository repo;
 
-  this(ThemeRepository repo) {
+  this(IThemeRepository repo) {
     this.repo = repo;
   }
 

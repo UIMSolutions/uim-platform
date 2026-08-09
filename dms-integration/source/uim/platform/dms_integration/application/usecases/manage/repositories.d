@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageRepositoriesUseCase {
-    private RepositoryRepository repo;
+    private IRepositoryRepository repo;
 
-    this(RepositoryRepository repo) {
+    this(IRepositoryRepository repo) {
         this.repo = repo;
     }
 

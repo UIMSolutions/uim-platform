@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageTagsUseCase { // TODO: UIMUseCase {
-  private TagRepository repo;
+  private ITagRepository repo;
 
-  this(TagRepository repo) {
+  this(ITagRepository repo) {
     this.repo = repo;
   }
 

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceInstancesUseCase {
-    private ServiceInstanceRepository repo;
+    private IServiceInstanceRepository repo;
 
-    this(ServiceInstanceRepository repo) { this.repo = repo; }
+    this(IServiceInstanceRepository repo) { this.repo = repo; }
 
     ServiceInstance getServiceInstance(TenantId tenantId, ServiceInstanceId id) {
         return repo.findById(tenantId, id);

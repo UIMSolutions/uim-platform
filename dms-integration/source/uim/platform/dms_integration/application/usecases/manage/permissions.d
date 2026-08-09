@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManagePermissionsUseCase {
-    private PermissionRepository repo;
+    private IPermissionRepository repo;
 
-    this(PermissionRepository repo) {
+    this(IPermissionRepository repo) {
         this.repo = repo;
     }
 

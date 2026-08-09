@@ -11,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageObservationsUseCase {
-  private ObservationRepository repo;
+  private IObservationRepository repo;
 
-  this(ObservationRepository repo) {
+  this(IObservationRepository repo) {
     this.repo = repo;
   }
 

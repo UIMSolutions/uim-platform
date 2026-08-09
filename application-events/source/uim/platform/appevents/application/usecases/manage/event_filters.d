@@ -14,9 +14,9 @@ import uim.platform.appevents.application.dto;
 @safe:
 
 class ManageEventFiltersUseCase {
-    private EventFilterRepository repo;
+    private IEventFilterRepository repo;
 
-    this(EventFilterRepository repo) { this.repo = repo; }
+    this(IEventFilterRepository repo) { this.repo = repo; }
 
     EventFilter getEventFilter(TenantId tenantId, EventFilterId id) {
         return repo.findById(tenantId, id);

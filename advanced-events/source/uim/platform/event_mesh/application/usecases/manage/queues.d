@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageQueuesUseCase { // TODO: UIMUseCase {
-    private QueueRepository repo;
+    private IQueueRepository repo;
 
-    this(QueueRepository repo) {
+    this(IQueueRepository repo) {
         this.repo = repo;
     }
 

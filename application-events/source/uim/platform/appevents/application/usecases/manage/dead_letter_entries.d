@@ -16,9 +16,9 @@ import std.datetime.systime : Clock;
 @safe:
 
 class ManageDeadLetterEntriesUseCase {
-    private DeadLetterEntryRepository repo;
+    private IDeadLetterEntryRepository repo;
 
-    this(DeadLetterEntryRepository repo) { this.repo = repo; }
+    this(IDeadLetterEntryRepository repo) { this.repo = repo; }
 
     DeadLetterEntry getDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id) {
         return repo.findById(tenantId, id);

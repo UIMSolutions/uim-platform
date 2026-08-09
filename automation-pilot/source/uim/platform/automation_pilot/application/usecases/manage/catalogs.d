@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageCatalogsUseCase { // TODO: UIMUseCase {
-    private CatalogRepository repo;
+    private ICatalogRepository repo;
 
-    this(CatalogRepository repo) {
+    this(ICatalogRepository repo) {
         this.repo = repo;
     }
 

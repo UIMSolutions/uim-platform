@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageForumTopicsUseCase { // TODO: UIMUseCase {
-  private ForumTopicRepository repo;
+  private IForumTopicRepository repo;
 
-  this(ForumTopicRepository repo) {
+  this(IForumTopicRepository repo) {
     this.repo = repo;
   }
 

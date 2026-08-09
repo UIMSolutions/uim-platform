@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageValidationRulesUseCase { // TODO: UIMUseCase {
-  private ValidationRuleRepository repo;
+  private IValidationRuleRepository repo;
 
-  this(ValidationRuleRepository repo) {
+  this(IValidationRuleRepository repo) {
     this.repo = repo;
   }
 

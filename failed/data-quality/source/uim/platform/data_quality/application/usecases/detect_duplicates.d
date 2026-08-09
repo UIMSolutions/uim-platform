@@ -17,10 +17,10 @@ mixin(ShowModule!());
 
 
 class DetectDuplicatesUseCase { // TODO: UIMUseCase {
-  private MatchGroupRepository repo;
+  private IMatchGroupRepository repo;
   private DuplicateDetector detector;
 
-  this(MatchGroupRepository repo, DuplicateDetector detector) {
+  this(IMatchGroupRepository repo, DuplicateDetector detector) {
     this.repo = repo;
     this.detector = detector;
   }

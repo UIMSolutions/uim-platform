@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageShellPluginsUseCase { // TODO: UIMUseCase {
-  private ShellPluginRepository repo;
+  private IShellPluginRepository repo;
 
-  this(ShellPluginRepository repo) {
+  this(IShellPluginRepository repo) {
     this.repo = repo;
   }
 

@@ -15,9 +15,9 @@ import uim.platform.appevents.application.dto;
 @safe:
 
 class ManageEventSubscriptionsUseCase {
-    private EventSubscriptionRepository repo;
+    private IEventSubscriptionRepository repo;
 
-    this(EventSubscriptionRepository repo) { this.repo = repo; }
+    this(IEventSubscriptionRepository repo) { this.repo = repo; }
 
     EventSubscription getEventSubscription(TenantId tenantId, EventSubscriptionId id) {
         return repo.findById(tenantId, id);

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTechniciansUseCase { // TODO: UIMUseCase {
-    private TechnicianRepository repo;
+    private ITechnicianRepository repo;
 
-    this(TechnicianRepository repo) {
+    this(ITechnicianRepository repo) {
         this.repo = repo;
     }
 

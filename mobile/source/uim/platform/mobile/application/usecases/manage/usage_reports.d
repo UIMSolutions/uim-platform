@@ -6,7 +6,6 @@
 module uim.platform.mobile.application.usecases.manage.usage_reports;
 // import uim.platform.mobile.domain.ports.repositories.usage_reports;
 // import uim.platform.mobile.domain.entities.usage_report;
-
 // import uim.platform.mobile.application.dto;
 
 
@@ -16,9 +15,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManageUsageReportsUseCase { // TODO: UIMUseCase {
-    private UsageReportRepository repo;
+    private IUsageReportRepository repo;
 
-    this(UsageReportRepository repo) {
+    this(IUsageReportRepository repo) {
         this.repo = repo;
     }
 

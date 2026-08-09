@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageHDIContainersUseCase { // TODO: UIMUseCase {
-  private HDIContainerRepository repo;
+  private IHDIContainerRepository repo;
 
-  this(HDIContainerRepository repo) {
+  this(IHDIContainerRepository repo) {
     this.repo = repo;
   }
 

@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageAttributeMappingsUseCase {
-  private AttributeMappingRepository repo;
+  private IAttributeMappingRepository repo;
 
-  this(AttributeMappingRepository repo) { this.repo = repo; }
+  this(IAttributeMappingRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateAttributeMappingRequest r) {
     AttributeMapping m;

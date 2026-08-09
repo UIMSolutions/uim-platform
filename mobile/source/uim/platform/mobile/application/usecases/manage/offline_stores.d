@@ -17,9 +17,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
-    private OfflineStoreRepository repo;
+    private IOfflineStoreRepository repo;
 
-    this(OfflineStoreRepository repo) {
+    this(IOfflineStoreRepository repo) {
         this.repo = repo;
     }
 

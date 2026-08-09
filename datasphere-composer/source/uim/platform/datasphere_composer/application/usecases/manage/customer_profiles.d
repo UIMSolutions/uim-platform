@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCustomerProfilesUseCase {
-  private CustomerProfileRepository repo;
+  private ICustomerProfileRepository repo;
 
-  this(CustomerProfileRepository repo) { this.repo = repo; }
+  this(ICustomerProfileRepository repo) { this.repo = repo; }
 
   CustomerProfile[] list(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));

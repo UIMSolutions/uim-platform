@@ -15,9 +15,9 @@ import std.datetime.systime : Clock;
 @safe:
 
 class ManageSystemRegistrationsUseCase {
-    private SystemRegistrationRepository repo;
+    private ISystemRegistrationRepository repo;
 
-    this(SystemRegistrationRepository repo) { this.repo = repo; }
+    this(ISystemRegistrationRepository repo) { this.repo = repo; }
 
     SystemRegistration getSystemRegistration(TenantId tenantId, SystemRegistrationId id) {
         return repo.findById(tenantId, id);

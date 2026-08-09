@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
-    private LogicFlowRepository repo;
+    private ILogicFlowRepository repo;
 
-    this(LogicFlowRepository repo) {
+    this(ILogicFlowRepository repo) {
         this.repo = repo;
     }
 

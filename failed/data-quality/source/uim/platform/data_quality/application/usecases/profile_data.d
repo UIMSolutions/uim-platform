@@ -14,9 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 class ProfileDataUseCase { // TODO: UIMUseCase {
-  private DataProfileRepository repo;
+  private IDataProfileRepository repo;
 
-  this(DataProfileRepository repo) {
+  this(IDataProfileRepository repo) {
     this.repo = repo;
   }
 

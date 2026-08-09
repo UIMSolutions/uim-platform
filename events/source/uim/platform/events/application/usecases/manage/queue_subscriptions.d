@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageQueueSubscriptionsUseCase {
-    private QueueSubscriptionRepository repo;
+    private IQueueSubscriptionRepository repo;
 
-    this(QueueSubscriptionRepository repo) { this.repo = repo; }
+    this(IQueueSubscriptionRepository repo) { this.repo = repo; }
 
     QueueSubscription getSubscription(TenantId tenantId, QueueSubscriptionId id) { return repo.findById(tenantId, id); }
     QueueSubscription[] listSubscriptions(TenantId tenantId) { return repo.findByTenant(tenantId); }

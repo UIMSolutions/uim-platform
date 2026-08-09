@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServicePlansUseCase {
-    private ServicePlanRepository repo;
+    private IServicePlanRepository repo;
 
-    this(ServicePlanRepository repo) { this.repo = repo; }
+    this(IServicePlanRepository repo) { this.repo = repo; }
 
     ServicePlan getServicePlan(TenantId tenantId, ServicePlanId id) {
         return repo.findById(tenantId, id);

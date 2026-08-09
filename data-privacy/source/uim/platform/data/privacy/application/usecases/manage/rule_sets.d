@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageRuleSetsUseCase { // TODO: UIMUseCase {
-  private RuleSetRepository repo;
+  private IRuleSetRepository repo;
 
-  this(RuleSetRepository repo) {
+  this(IRuleSetRepository repo) {
     this.repo = repo;
   }
 

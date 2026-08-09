@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMessageBindingsUseCase {
-    private MessageBindingRepository repo;
+    private IMessageBindingRepository repo;
 
-    this(MessageBindingRepository repo) { this.repo = repo; }
+    this(IMessageBindingRepository repo) { this.repo = repo; }
 
     MessageBinding getBinding(TenantId tenantId, MessageBindingId id) { return repo.findById(tenantId, id); }
     MessageBinding[] listBindings(TenantId tenantId) { return repo.findByTenant(tenantId); }

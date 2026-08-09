@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataProvidersUseCase {
-  private DataProviderRepository repo;
+  private IDataProviderRepository repo;
 
-  this(DataProviderRepository repo) { this.repo = repo; }
+  this(IDataProviderRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateDataProviderRequest r) {
     auto err = ComposerValidator.validateDataProvider(DataProvider(  DataProviderId(r.id), TenantId(r.tenantId), r.name, r.description));

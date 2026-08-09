@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSpatialFeaturesUseCase {
-  private SpatialFeatureRepository repo;
+  private ISpatialFeatureRepository repo;
 
-  this(SpatialFeatureRepository repo) {
+  this(ISpatialFeatureRepository repo) {
     this.repo = repo;
   }
 

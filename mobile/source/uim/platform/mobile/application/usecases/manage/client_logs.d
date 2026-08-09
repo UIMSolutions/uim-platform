@@ -15,9 +15,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManageClientLogsUseCase { // TODO: UIMUseCase {
-    private ClientLogRepository repo;
+    private IClientLogRepository repo;
 
-    this(ClientLogRepository repo) {
+    this(IClientLogRepository repo) {
         this.repo = repo;
     }
 

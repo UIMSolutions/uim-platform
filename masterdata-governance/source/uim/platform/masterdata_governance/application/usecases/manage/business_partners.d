@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageBusinessPartnersUseCase {
-    private BusinessPartnerRepository repo;
+    private IBusinessPartnerRepository repo;
 
-    this(BusinessPartnerRepository repo) {
+    this(IBusinessPartnerRepository repo) {
         this.repo = repo;
     }
 

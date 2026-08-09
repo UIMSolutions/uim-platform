@@ -16,9 +16,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
-    private PushNotificationRepository repo;
+    private IPushNotificationRepository repo;
 
-    this(PushNotificationRepository repo) {
+    this(IPushNotificationRepository repo) {
         this.repo = repo;
     }
 

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageChangeRequestsUseCase {
-    private ChangeRequestRepository repo;
+    private IChangeRequestRepository repo;
 
-    this(ChangeRequestRepository repo) {
+    this(IChangeRequestRepository repo) {
         this.repo = repo;
     }
 

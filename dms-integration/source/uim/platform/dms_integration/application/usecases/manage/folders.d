@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageFoldersUseCase {
-    private FolderRepository repo;
+    private IFolderRepository repo;
 
-    this(FolderRepository repo) {
+    this(IFolderRepository repo) {
         this.repo = repo;
     }
 

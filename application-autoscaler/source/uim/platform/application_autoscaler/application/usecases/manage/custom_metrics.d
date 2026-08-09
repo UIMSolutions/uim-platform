@@ -12,15 +12,13 @@ mixin(ShowModule!());
 @safe:
 
 class ManageCustomMetricsUseCase {
-  private CustomMetricRepository repo;
+  private ICustomMetricRepository repo;
 
-  this(CustomMetricRepository repo) {
+  this(ICustomMetricRepository repo) {
     this.repo = repo;
   }
 
   CommandResult submit(SubmitCustomMetricRequest r) {
-    
-    
     import std.random : uniform;
 
     if (r.metricname.isEmpty)

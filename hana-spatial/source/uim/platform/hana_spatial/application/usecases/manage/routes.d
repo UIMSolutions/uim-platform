@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageRoutesUseCase {
-  private RouteRepository repo;
+  private IRouteRepository repo;
 
-  this(RouteRepository repo) {
+  this(IRouteRepository repo) {
     this.repo = repo;
   }
 

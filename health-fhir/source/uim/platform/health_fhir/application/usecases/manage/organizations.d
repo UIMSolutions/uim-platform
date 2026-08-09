@@ -11,9 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageOrganizationsUseCase {
-  private OrganizationRepository repo;
+  private IOrganizationRepository repo;
 
-  this(OrganizationRepository repo) {
+  this(IOrganizationRepository repo) {
     this.repo = repo;
   }
 

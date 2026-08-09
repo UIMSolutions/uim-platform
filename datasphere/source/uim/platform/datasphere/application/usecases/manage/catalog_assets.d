@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
-  private CatalogAssetRepository repo;
+  private ICatalogAssetRepository repo;
 
-  this(CatalogAssetRepository repo) {
+  this(ICatalogAssetRepository repo) {
     this.repo = repo;
   }
 

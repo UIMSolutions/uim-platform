@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePointsOfInterestUseCase {
-  private PointOfInterestRepository repo;
+  private IPointOfInterestRepository repo;
 
-  this(PointOfInterestRepository repo) {
+  this(IPointOfInterestRepository repo) {
     this.repo = repo;
   }
 

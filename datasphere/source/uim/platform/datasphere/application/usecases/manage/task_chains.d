@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageTaskChainsUseCase { // TODO: UIMUseCase {
-  private TaskChainRepository repo;
+  private ITaskChainRepository repo;
 
-  this(TaskChainRepository repo) {
+  this(ITaskChainRepository repo) {
     this.repo = repo;
   }
 

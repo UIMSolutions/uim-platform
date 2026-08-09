@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
-  private PurposeRecordRepository repo;
+  private IPurposeRecordRepository repo;
 
-  this(PurposeRecordRepository repo) {
+  this(IPurposeRecordRepository repo) {
     this.repo = repo;
   }
 

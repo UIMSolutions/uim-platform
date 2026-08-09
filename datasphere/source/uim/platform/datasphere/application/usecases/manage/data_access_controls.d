@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
-  private DataAccessControlRepository repo;
+  private IDataAccessControlRepository repo;
 
-  this(DataAccessControlRepository repo) {
+  this(IDataAccessControlRepository repo) {
     this.repo = repo;
   }
 

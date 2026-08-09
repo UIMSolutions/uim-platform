@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
-  private EnrichmentDataRepository repo;
+  private IEnrichmentDataRepository repo;
 
-  this(EnrichmentDataRepository repo) {
+  this(IEnrichmentDataRepository repo) {
     this.repo = repo;
   }
 

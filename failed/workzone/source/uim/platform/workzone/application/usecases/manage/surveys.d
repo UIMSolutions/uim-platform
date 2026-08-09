@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSurveysUseCase { // TODO: UIMUseCase {
-  private SurveyRepository repo;
+  private ISurveyRepository repo;
 
-  this(SurveyRepository repo) {
+  this(ISurveyRepository repo) {
     this.repo = repo;
   }
 

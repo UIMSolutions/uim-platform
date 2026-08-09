@@ -14,9 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
-  private CleansingRuleRepository repo;
+  private ICleansingRuleRepository repo;
 
-  this(CleansingRuleRepository repo) {
+  this(ICleansingRuleRepository repo) {
     this.repo = repo;
   }
 

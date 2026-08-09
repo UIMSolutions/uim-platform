@@ -17,9 +17,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
-    private FeatureRestrictionRepository repo;
+    private IFeatureRestrictionRepository repo;
 
-    this(FeatureRestrictionRepository repo) {
+    this(IFeatureRestrictionRepository repo) {
         this.repo = repo;
     }
 

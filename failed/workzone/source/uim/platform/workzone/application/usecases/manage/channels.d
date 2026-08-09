@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageChannelsUseCase { // TODO: UIMUseCase {
-  private ChannelRepository repo;
+  private IChannelRepository repo;
 
-  this(ChannelRepository repo) {
+  this(IChannelRepository repo) {
     this.repo = repo;
   }
 

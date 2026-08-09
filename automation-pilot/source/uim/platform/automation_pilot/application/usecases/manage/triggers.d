@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTriggersUseCase { // TODO: UIMUseCase {
-    private TriggerRepository repo;
+    private ITriggerRepository repo;
 
-    this(TriggerRepository repo) {
+    this(ITriggerRepository repo) {
         this.repo = repo;
     }
 

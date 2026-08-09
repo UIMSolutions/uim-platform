@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageGroupsUseCase { // TODO: UIMUseCase {
-  private GroupRepository repo;
+  private IGroupRepository repo;
 
-  this(GroupRepository repo) {
+  this(IGroupRepository repo) {
     this.repo = repo;
   }
 

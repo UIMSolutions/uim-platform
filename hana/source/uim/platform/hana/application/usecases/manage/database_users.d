@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
-  private DatabaseUserRepository repo;
+  private IDatabaseUserRepository repo;
 
-  this(DatabaseUserRepository repo) {
+  this(IDatabaseUserRepository repo) {
     this.repo = repo;
   }
 

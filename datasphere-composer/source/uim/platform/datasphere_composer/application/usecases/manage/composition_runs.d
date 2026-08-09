@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCompositionRunsUseCase {
-  private CompositionRunRepository repo;
+  private ICompositionRunRepository repo;
 
-  this(CompositionRunRepository repo) { this.repo = repo; }
+  this(ICompositionRunRepository repo) { this.repo = repo; }
 
   CommandResult start(StartCompositionRunRequest r) {
     CompositionRun run;

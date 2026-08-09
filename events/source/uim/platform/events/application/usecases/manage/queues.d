@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageQueuesUseCase {
-    private QueueRepository repo;
+    private IQueueRepository repo;
 
-    this(QueueRepository repo) { this.repo = repo; }
+    this(IQueueRepository repo) { this.repo = repo; }
 
     Queue getQueue(TenantId tenantId, QueueId id) { return repo.findById(tenantId, id); }
     Queue[] listQueues(TenantId tenantId) { return repo.findByTenant(tenantId); }

@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageApplicationsUseCase {
-    private ApplicationRepository repo;
+    private IApplicationRepository repo;
 
-    this(ApplicationRepository repo) { this.repo = repo; }
+    this(IApplicationRepository repo) { this.repo = repo; }
 
     Application getApplication(TenantId tenantId, ApplicationId id) { return repo.findById(tenantId, id); }
     Application[] listApplications(TenantId tenantId) { return repo.findByTenant(tenantId); }

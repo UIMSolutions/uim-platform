@@ -15,9 +15,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
-    private PushRegistrationRepository repo;
+    private IPushRegistrationRepository repo;
 
-    this(PushRegistrationRepository repo) {
+    this(IPushRegistrationRepository repo) {
         this.repo = repo;
     }
 

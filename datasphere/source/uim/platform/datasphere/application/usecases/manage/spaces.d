@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSpacesUseCase { // TODO: UIMUseCase {
-  private SpaceRepository repo;
+  private ISpaceRepository repo;
 
-  this(SpaceRepository repo) {
+  this(ISpaceRepository repo) {
     this.repo = repo;
   }
 

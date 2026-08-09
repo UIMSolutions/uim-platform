@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataSourceConfigsUseCase {
-  private DataSourceConfigRepository repo;
+  private IDataSourceConfigRepository repo;
 
-  this(DataSourceConfigRepository repo) { this.repo = repo; }
+  this(IDataSourceConfigRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateDataSourceConfigRequest r) {
     auto cfg = DataSourceConfig.init(r.tenantId);

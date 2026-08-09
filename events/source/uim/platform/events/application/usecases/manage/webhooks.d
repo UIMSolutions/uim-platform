@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageWebhooksUseCase {
-    private WebhookRepository repo;
+    private IWebhookRepository repo;
 
-    this(WebhookRepository repo) { this.repo = repo; }
+    this(IWebhookRepository repo) { this.repo = repo; }
 
     Webhook getWebhook(TenantId tenantId, WebhookId id) { return repo.findById(tenantId, id); }
     Webhook[] listWebhooks(TenantId tenantId) { return repo.findByTenant(tenantId); }

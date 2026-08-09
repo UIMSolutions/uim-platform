@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageConditionsUseCase {
-    private ConditionRepository repo;
+    private IConditionRepository repo;
 
-    this(ConditionRepository repo) { this.repo = repo; }
+    this(IConditionRepository repo) { this.repo = repo; }
 
     CommandResult createCondition(TenantId tenantId, CreateConditionRequest req) {
         if (repo.existsByName(tenantId, req.name))

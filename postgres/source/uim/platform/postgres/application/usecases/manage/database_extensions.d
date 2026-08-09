@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDatabaseExtensionsUseCase {
-    private DatabaseExtensionRepository repo;
+    private IDatabaseExtensionRepository repo;
 
-    this(DatabaseExtensionRepository repo) { this.repo = repo; }
+    this(IDatabaseExtensionRepository repo) { this.repo = repo; }
 
     DatabaseExtension getDatabaseExtension(TenantId tenantId, DatabaseExtensionId id) {
         return repo.findById(tenantId, id);

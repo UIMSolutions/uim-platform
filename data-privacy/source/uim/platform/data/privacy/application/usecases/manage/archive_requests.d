@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
-  private ArchiveRequestRepository repo;
-  private DataSubjectRepository subjectRepo;
+  private IArchiveRequestRepository repo;
+  private IDataSubjectRepository subjectRepo;
 
-  this(ArchiveRequestRepository repo, DataSubjectRepository subjectRepo) {
+  this(IArchiveRequestRepository repo, IDataSubjectRepository subjectRepo) {
     this.repo = repo;
     this.subjectRepo = subjectRepo;
   }

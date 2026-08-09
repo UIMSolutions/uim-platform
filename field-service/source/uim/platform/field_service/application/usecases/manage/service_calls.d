@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceCallsUseCase { // TODO: UIMUseCase {
-    private ServiceCallRepository repo;
+    private IServiceCallRepository repo;
 
-    this(ServiceCallRepository repo) {
+    this(IServiceCallRepository repo) {
         this.repo = repo;
     }
 

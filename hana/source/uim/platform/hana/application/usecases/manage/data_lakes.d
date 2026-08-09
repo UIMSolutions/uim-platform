@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataLakesUseCase { // TODO: UIMUseCase {
-  private DataLakeRepository repo;
+  private IDataLakeRepository repo;
 
-  this(DataLakeRepository repo) {
+  this(IDataLakeRepository repo) {
     this.repo = repo;
   }
 

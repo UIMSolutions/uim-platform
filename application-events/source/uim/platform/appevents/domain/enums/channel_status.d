@@ -4,5 +4,11 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.appevents.domain.enums.channel_status;
+
+import uim.platform.appevents;
+
+mixin(ShowModule!());
+
 @safe:
+
 enum ChannelStatus { active, inactive, draining }

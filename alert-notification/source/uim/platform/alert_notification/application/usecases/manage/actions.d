@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageActionsUseCase {
-    private ActionRepository repo;
+    private IActionRepository repo;
 
-    this(ActionRepository repo) { this.repo = repo; }
+    this(IActionRepository repo) { this.repo = repo; }
 
     CommandResult createAction(TenantId tenantId, CreateActionRequest req) {
         if (repo.existsByName(tenantId, req.name))

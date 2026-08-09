@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageGroupsUseCase {
-    private GroupRepository repo;
+    private IGroupRepository repo;
 
-    this(GroupRepository repo) { this.repo = repo; }
+    this(IGroupRepository repo) { this.repo = repo; }
 
     IDMGroup getGroup(TenantId tenantId, IDMGroupId id) { return repo.findById(tenantId, id); }
     IDMGroup[] listGroups(TenantId tenantId) { return repo.findByTenant(tenantId); }

@@ -16,9 +16,9 @@ import uim.platform.mobile;
 
 @safe:
 class ManageClientResourcesUseCase { // TODO: UIMUseCase {
-    private ClientResourceRepository repo;
+    private IClientResourceRepository repo;
 
-    this(ClientResourceRepository repo) {
+    this(IClientResourceRepository repo) {
         this.repo = repo;
     }
 

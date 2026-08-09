@@ -14,9 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCleansingJobsUseCase { // TODO: UIMUseCase {
-  private CleansingJobRepository repo;
+  private ICleansingJobRepository repo;
 
-  this(CleansingJobRepository repo) {
+  this(ICleansingJobRepository repo) {
     this.repo = repo;
   }
 

@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageIsolinesUseCase {
-  private IsolineRepository repo;
+  private IIsolineRepository repo;
 
-  this(IsolineRepository repo) {
+  this(IIsolineRepository repo) {
     this.repo = repo;
   }
 

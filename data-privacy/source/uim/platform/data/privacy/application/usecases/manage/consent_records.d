@@ -15,10 +15,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
-  private ConsentRecordRepository repo;
-  private DataSubjectRepository subjectRepo;
+  private IConsentRecordRepository repo;
+  private IDataSubjectRepository subjectRepo;
 
-  this(ConsentRecordRepository repo, DataSubjectRepository subjectRepo) {
+  this(IConsentRecordRepository repo, IDataSubjectRepository subjectRepo) {
     this.repo = repo;
     this.subjectRepo = subjectRepo;
   }

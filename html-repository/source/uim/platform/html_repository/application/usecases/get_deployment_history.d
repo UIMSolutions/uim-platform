@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 @safe:
 class GetDeploymentHistoryUseCase { // TODO: UIMUseCase {
-    private DeploymentRecordRepository repo;
+    private IDeploymentRecordRepository repo;
 
-    this(DeploymentRecordRepository repo) {
+    this(IDeploymentRecordRepository repo) {
         this.repo = repo;
     }
 

@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
-  private KnowledgeBaseArticleRepository repo;
+  private IKnowledgeBaseArticleRepository repo;
 
-  this(KnowledgeBaseArticleRepository repo) {
+  this(IKnowledgeBaseArticleRepository repo) {
     this.repo = repo;
   }
 

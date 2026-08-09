@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManagePrintDocumentsUseCase {
-    private PrintDocumentRepository repo;
+    private IPrintDocumentRepository repo;
 
-    this(PrintDocumentRepository repo) {
+    this(IPrintDocumentRepository repo) {
         this.repo = repo;
     }
 
