@@ -79,35 +79,37 @@ struct UpdateAppVersionRequest {
 // AppFile DTOs
 struct UploadAppFileRequest {
   TenantId tenantId;
+  string appId;
   string versionId;
   string filePath; // relative path within app e.g. "index.html"
   string contentType; // MIME type
-  string data; // base64-encoded file content
+  string content; // base64-encoded file content
   string encoding; // e.g. "gzip", "br", "" for none
   UserId createdBy;
 
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
+      .set("appId", appId)
       .set("versionId", versionId)
       .set("filePath", filePath)
       .set("contentType", contentType)
-      .set("data", data)
+      .set("content", content)
       .set("encoding", encoding)
       .set("createdBy", createdBy);
   }
 }
 
 struct UpdateAppFileRequest {
-  string data;
+  string content;
   string contentType;
   string encoding;
 
   Json toJson() const {
     return Json.emptyObject
-      .set("data", data)
       .set("contentType", contentType)
-      .set("encoding", encoding);
+      .set("encoding", encoding)
+      .set("content", content);
   }
 }
 // ServiceInstance DTOs
@@ -123,7 +125,7 @@ struct CreateServiceInstanceRequest {
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
-      .set("spaceId", spaceId)
+      .set("spaceId", spaceId.value)
       .set("name", name)
       .set("plan", plan)
       .set("description", description)
@@ -147,18 +149,18 @@ struct UpdateServiceInstanceRequest {
 // DeploymentRecord DTOs
 struct CreateDeploymentRequest {
   TenantId tenantId;
-  string appId;
-  string versionId;
-  string serviceInstanceId;
+  ServiceInstanceId instanceId;
+  HtmlAppId appId;
+  AppVersionId versionId;
   string operation; // "deploy", "undeploy", "redeploy"
   UserId deployedBy;
 
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
-      .set("appId", appId)
+      .set("appId", appId.value)
       .set("versionId", versionId)
-      .set("serviceInstanceId", serviceInstanceId)
+      .set("serviceInstanceId", instanceId.value)
       .set("operation", operation)
       .set("deployedBy", deployedBy);
   }
@@ -166,7 +168,8 @@ struct CreateDeploymentRequest {
 // AppRoute DTOs
 struct CreateAppRouteRequest {
   TenantId tenantId;
-  string appId;
+  AppRouteId routeId;
+  HtmlAppId appId;
   string pathPrefix;
   string targetUrl;
   string description;
@@ -175,7 +178,8 @@ struct CreateAppRouteRequest {
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
-      .set("appId", appId)
+      .set("routeId", routeId.value)
+      .set("appId", appId.value)
       .set("pathPrefix", pathPrefix)
       .set("targetUrl", targetUrl)
       .set("description", description)
@@ -203,7 +207,7 @@ struct CacheContentRequest {
   string fileId;
   string filePath;
   string contentType;
-  string data;
+  string content; // base64-encoded content
   long ttlSeconds;
 
   Json toJson() const {
@@ -212,7 +216,7 @@ struct CacheContentRequest {
       .set("fileId", fileId)
       .set("filePath", filePath)
       .set("contentType", contentType)
-      .set("data", data)
+      .set("content", content)
       .set("ttlSeconds", ttlSeconds);
   }
 }

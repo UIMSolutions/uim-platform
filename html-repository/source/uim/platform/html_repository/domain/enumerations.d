@@ -239,13 +239,19 @@ unittest {
 }
 
 // Service plan type
-enum ServicePlan {
-  appHost, // for deploying HTML5 apps
-  appRuntime, // for accessing HTML5 apps at runtime
+enum ServicePlan : string{
+  appHost = "app-host", // for deploying HTML5 apps
+  appRuntime = "app-runtime", // for accessing HTML5 apps at runtime
+  free = "free", // for free-tier service instances
 }
 
 ServicePlan toServicePlan(string value) {
-  mixin(EnumSwitch("ServicePlan", "appHost"));
+  switch(value.toLower) {
+    case "app-host": return ServicePlan.appHost;
+    case "app-runtime": return ServicePlan.appRuntime;
+    case "free": return ServicePlan.free;
+    default: return ServicePlan.appHost; // Default value for unknown strings is "app-host"
+  }
 }
 
 ServicePlan[] toServicePlans(string[] values) {
@@ -253,7 +259,7 @@ ServicePlan[] toServicePlans(string[] values) {
 }
 
 string toString(ServicePlan value) {
-  return value.to!string;
+  return cast(string)value;
 }
 
 string[] toStrings(ServicePlan[] values) {
@@ -263,18 +269,18 @@ string[] toStrings(ServicePlan[] values) {
 unittest {
   mixin(ShowTest!("ServicePlan"));
 
-  assert(toServicePlan("appHost") == ServicePlan.appHost);
-  assert(toServicePlan("appRuntime") == ServicePlan.appRuntime);
+  assert(toServicePlan("app-host") == ServicePlan.appHost);
+  assert(toServicePlan("app-runtime") == ServicePlan.appRuntime);
 
   assert(toServicePlan("") == ServicePlan.appHost);
   assert(toServicePlan("unknown") == ServicePlan.appHost);
 
-  assert(toString(ServicePlan.appHost) == "appHost");
-  assert(toString(ServicePlan.appRuntime) == "appRuntime");
+  assert(toString(ServicePlan.appHost) == "app-host");
+  assert(toString(ServicePlan.appRuntime) == "app-runtime");
 
-  assert(toStrings([ServicePlan.appHost, ServicePlan.appRuntime]) == ["appHost", "appRuntime"
+  assert(toStrings([ServicePlan.appHost, ServicePlan.appRuntime]) == ["app-host", "app-runtime"
     ]);
-  assert(toServicePlans(["appHost", "appRuntime"]) == [ServicePlan.appHost, ServicePlan.appRuntime
+  assert(toServicePlans(["app-host", "app-runtime"]) == [ServicePlan.appHost, ServicePlan.appRuntime
     ]);
 }
 

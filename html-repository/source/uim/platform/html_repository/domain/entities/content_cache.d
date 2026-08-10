@@ -16,7 +16,7 @@ struct ContentCache {
   AppFileId appFileId;
   string filePath;
   string contentType;
-  string data;              // cached base64-encoded content
+  string content;              // cached base64-encoded content
   string etag;
   CacheStatus status;
   long sizeBytes;
@@ -31,7 +31,7 @@ struct ContentCache {
       .set("appFileId", appFileId)
       .set("filePath", filePath)
       .set("contentType", contentType)
-      .set("data", data)
+      .set("content", content)
       .set("etag", etag)
       .set("status", status.to!string)
       .set("sizeBytes", sizeBytes)

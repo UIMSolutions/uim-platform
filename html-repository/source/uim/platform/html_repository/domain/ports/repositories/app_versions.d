@@ -13,16 +13,16 @@ mixin(ShowModule!());
 @safe:
 interface IAppVersionRepository : ITenantRepository!(AppVersion, AppVersionId) {
   
-  bool existsLatest(HtmlAppId appId);
-  AppVersion findLatest(HtmlAppId appId);
-  void removeLatest(HtmlAppId appId);
+  // bool existsLatest(TenantId tenantId, HtmlAppId appId);
+  AppVersion findLatest(TenantId tenantId, HtmlAppId appId);
+  void removeLatest(TenantId tenantId, HtmlAppId appId);
   
-  size_t countByApp(HtmlAppId appId);
-  AppVersion[] findByApp(HtmlAppId appId);
-  void removeByApp(HtmlAppId appId);
+  size_t countByApp(TenantId tenantId, HtmlAppId appId);
+  AppVersion[] findByApp(TenantId tenantId, HtmlAppId appId);
+  void removeByApp(TenantId tenantId, HtmlAppId appId);
 
-  size_t countByStatus(HtmlAppId appId, VersionStatus status);
-  AppVersion[] findByStatus(HtmlAppId appId, VersionStatus status);
-  void removeByStatus(HtmlAppId appId, VersionStatus status);
+  size_t countByStatus(TenantId tenantId, HtmlAppId appId, VersionStatus status);
+  AppVersion[] findByStatus(TenantId tenantId, HtmlAppId appId, VersionStatus status);
+  void removeByStatus(TenantId tenantId, HtmlAppId appId, VersionStatus status);
   
 }

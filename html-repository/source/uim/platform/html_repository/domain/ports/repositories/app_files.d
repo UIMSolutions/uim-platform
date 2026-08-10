@@ -13,17 +13,17 @@ mixin(ShowModule!());
 @safe:
 interface IAppFileRepository : ITenantRepository!(AppFile, AppFileId) {
   
-  bool existsByPath(AppVersionId versionId, string filePath);
-  AppFile findByPath(AppVersionId versionId, string filePath);
-  void removeByPath(AppVersionId versionId, string filePath);
+  bool existsByPath(TenantId tenantId, AppVersionId versionId, string filePath);
+  AppFile findByPath(TenantId tenantId, AppVersionId versionId, string filePath);
+  void removeByPath(TenantId tenantId, AppVersionId versionId, string filePath);
 
-  size_t countByVersion(AppVersionId versionId);
-  AppFile[] findByVersion(AppVersionId versionId);
-  void removeByVersion(AppVersionId versionId);
+  size_t countByVersion(TenantId tenantId, AppVersionId versionId);
+  AppFile[] findByVersion(TenantId tenantId, AppVersionId versionId);
+  void removeByVersion(TenantId tenantId, AppVersionId versionId);
 
-  size_t countByCategory(AppVersionId versionId, FileCategory category);
-  AppFile[] findByCategory(AppVersionId versionId, FileCategory category);
-  void removeByCategory(AppVersionId versionId, FileCategory category);
+  size_t countByCategory(TenantId tenantId, AppVersionId versionId, FileCategory category);
+  AppFile[] findByCategory(TenantId tenantId, AppVersionId versionId, FileCategory category);
+  void removeByCategory(TenantId tenantId, AppVersionId versionId, FileCategory category);
   
-  long totalSizeByVersion(AppVersionId versionId);
+  long totalSizeByVersion(TenantId tenantId, AppVersionId versionId);
 }

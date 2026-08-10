@@ -19,19 +19,19 @@ class GetDeploymentHistoryUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    DeploymentRecord[] getByApp(HtmlAppId appId) {
-        return repo.findByApp(appId);
+    DeploymentRecord[] getByApp(TenantId tenantId, HtmlAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
-    DeploymentRecord[] getByVersion(AppVersionId versionId) {
-        return repo.findByVersion(versionId);
+    DeploymentRecord[] getByVersion(TenantId tenantId, AppVersionId versionId) {
+        return repo.findByVersion(tenantId, versionId);
     }
 
     DeploymentRecord[] getByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DeploymentRecord getById(DeploymentRecordId id) {
+    DeploymentRecord getById(TenantId tenantId, DeploymentRecordId id) {
         return repo.findById(tenantId, id);
     }
 }

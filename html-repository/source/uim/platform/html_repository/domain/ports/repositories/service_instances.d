@@ -17,9 +17,9 @@ interface IServiceInstanceRepository : ITenantRepository!(ServiceInstance, Servi
   ServiceInstance findByName(TenantId tenantId, string name);  
   void removeByName(TenantId tenantId, string name);
 
-  size_t countBySpace(SpaceId spaceId);
-  ServiceInstance[] findBySpace(SpaceId spaceId);
-  void removeBySpace(SpaceId spaceId);
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  ServiceInstance[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  void removeBySpace(TenantId tenantId, SpaceId spaceId);
 
   size_t countByPlan(TenantId tenantId, ServicePlan plan);
   ServiceInstance[] findByPlan(TenantId tenantId, ServicePlan plan);

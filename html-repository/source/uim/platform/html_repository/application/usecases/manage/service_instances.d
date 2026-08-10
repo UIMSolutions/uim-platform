@@ -4,11 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.service_instances;
-// import uim.platform.html_repository.domain.ports.repositories.service_instances;
-// import uim.platform.html_repository.domain.entities.service_instance;
-// import uim.platform.html_repository.domain.services.deployment_validator;
-// import uim.platform.html_repository.domain.types;
-// import uim.platform.html_repository.application.dto;
 
 import uim.platform.html_repository;
 
@@ -39,7 +34,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, inst.id.value, "");
     }
 
-    CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest r) {
+    CommandResult updateServiceInstance(TenantId tenantId, ServiceInstanceId id, UpdateServiceInstanceRequest r) {
         auto inst = repo.findById(tenantId, id);
         if (inst.isNull)
             return CommandResult(false, "", "Service instance not found");
@@ -54,7 +49,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, inst.id.value, "");
     }
 
-    ServiceInstance getServiceInstance(ServiceInstanceId id) {
+    ServiceInstance getServiceInstance(TenantId tenantId, ServiceInstanceId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -62,7 +57,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deleteServiceInstance(ServiceInstanceId id) {
+    CommandResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
         auto inst = repo.findById(tenantId, id);
         if (inst.isNull)
             return CommandResult(false, "", "Service instance not found");

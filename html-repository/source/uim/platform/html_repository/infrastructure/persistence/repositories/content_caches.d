@@ -38,20 +38,20 @@ class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCach
     return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, CacheStatus status) {
-    findByStatus(tenantId, status).each!(c => remove(c.id));
+    findByStatus(tenantId, status).each!(c => remove(c));
   }
 
-  size_t countByExpiration(TenantId tenantId, long currentTime) {
+  size_t countExpired(TenantId tenantId, long currentTime) {
     return findExpired(tenantId, currentTime).length;
   }
-  ContentCache[] filterByExpiration(ContentCache[] caches, long currentTime) {
+  ContentCache[] filterExpired(ContentCache[] caches, long currentTime) {
     return caches.filter!(c => c.expiresAt < currentTime).array;
   }
   ContentCache[] findExpired(TenantId tenantId, long currentTime) {
     return filterByExpiration(findByTenant(tenantId), currentTime);
   }
-  void removeByExpiration(TenantId tenantId, long currentTime) {
-    findExpired(tenantId, currentTime).each!(c => remove(c.id));
+  void removeExpired(TenantId tenantId, long currentTime) {
+    findExpired(tenantId, currentTime).each!(c => remove(c));
   }
 
   long totalSizeByTenant(TenantId tenantId) {

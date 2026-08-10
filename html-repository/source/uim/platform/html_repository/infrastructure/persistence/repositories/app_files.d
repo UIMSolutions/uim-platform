@@ -14,77 +14,58 @@ mixin(ShowModule!());
 @safe:
 class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), IAppFileRepository {
 
-  bool existsByPath(AppVersionId versionId, string filePath) {
-    foreach (e; findByTenant(tenantId)) {
-      if (e.versionId == versionId && e.filePath == filePath) return true;
-    }
-    return false;
+  bool existsByPath(TenantId tenantId, AppVersionId versionId, string filePath) {
+    return findByTenant(tenantId).any!(e => e.versionId == versionId && e.filePath == filePath);
   }
 
-  AppFile findByPath(AppVersionId versionId, string filePath) {
+  AppFile findByPath(TenantId tenantId, AppVersionId versionId, string filePath) {
     foreach (e; findByTenant(tenantId)) {
       if (e.versionId == versionId && e.filePath == filePath) return e;
     }
+
     return AppFile.init;
   }
 
-
-  size_t countByVersion(AppVersionId versionId) {
-    size_t count = 0;
-    foreach (e; findByTenant(tenantId)) {
-      if (e.versionId == versionId) count++;
+  void removeByPath(TenantId tenantId, AppVersionId versionId, string filePath) {
+    AppFile file = findByPath(tenantId, versionId, filePath);
+    if (file.id != AppFileId.init) {
+      remove(file);
     }
-    return count;
   }
+
+  size_t countByVersion(TenantId tenantId, AppVersionId versionId) {
+    return findByVersion(tenantId, versionId).length;
+  }
+
   AppFile[] filterByVersion(AppFile[] files, AppVersionId versionId) {
     return files.filter!(f => f.versionId == versionId).array;
   }
-  AppFile[] findByVersion(AppVersionId versionId) {
-    AppFile[] result;
-    foreach (e; findByTenant(tenantId)) {
-      if (e.versionId == versionId) result ~= e;
-    }
-    return result;
-  }
-  void removeByVersion(AppVersionId versionId) {
-    AppFile[] result;
-    foreach (e; findByTenant(tenantId)) {
-      if (e.versionId != versionId) result ~= e;
-    }
-    store = result;
+
+  AppFile[] findByVersion(TenantId tenantId, AppVersionId versionId) {
+    return filterByVersion(findByTenant(tenantId), versionId);
   }
 
-  size_t countByCategory(AppVersionId versionId, FileCategory category) {
-    size_t count = 0;
-    foreach (e; findByTenant(tenantId)) {
-      if (e.versionId == versionId && e.category == category) count++;
-    }
-    return count;
+  void removeByVersion(TenantId tenantId, AppVersionId versionId) {
+    findByVersion(tenantId, versionId).each!(e => remove(e));
+  }
+
+  size_t countByCategory(TenantId tenantId, AppVersionId versionId, FileCategory category) {
+    return findByCategory(tenantId, versionId, category).length;
   }
   AppFile[] filterByCategory(AppFile[] files, AppVersionId versionId, FileCategory category) {
     return files.filter!(f => f.versionId == versionId && f.category == category).array;
   }
-  AppFile[] findByCategory(AppVersionId versionId, FileCategory category) {
-    AppFile[] result;
-    foreach (e; findByTenant(tenantId)) {
-      if (e.versionId == versionId && e.category == category) result ~= e;
-    }
-    return result;
-  }
-  void removeByCategory(AppVersionId versionId, FileCategory category) {
-    AppFile[] result;
-    foreach (e; findByTenant(tenantId)) {
-      if (e.versionId != versionId || e.category != category) result ~= e;
-    }
-    store = result;
+  
+  AppFile[] findByCategory(TenantId tenantId, AppVersionId versionId, FileCategory category) {
+    return filterByCategory(findByTenant(tenantId), versionId, category);
   }
 
-  long totalSizeByVersion(AppVersionId versionId) {
-    long total = 0;
-    foreach (e; findByTenant(tenantId)) {
-      if (e.versionId == versionId) total += e.sizeBytes;
-    }
-    return total;
+  void removeByCategory(TenantId tenantId, AppVersionId versionId, FileCategory category) {
+    findByCategory(tenantId, versionId, category).each!(e => remove(e));
+  }
+
+  long totalSizeByVersion(TenantId tenantId, AppVersionId versionId) {
+    return findByTenant(tenantId).filter!(e => e.versionId == versionId).map!(e => e.sizeBytes).sum;
   }
 
 }

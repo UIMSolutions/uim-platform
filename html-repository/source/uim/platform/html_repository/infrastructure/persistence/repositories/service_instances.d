@@ -29,18 +29,24 @@ class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, Servi
     return ServiceInstance.init;
   }
 
+  void removeByName(TenantId tenantId, string name) {
+    ServiceInstance instance = findByName(tenantId, name);
+    if (instance.id != ServiceInstanceId.init) {
+      remove(instance);
+    }
+  }
 
-  size_t countBySpace(SpaceId spaceId) {
-    return findBySpace(spaceId).length;
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
+    return findBySpace(tenantId, spaceId).length;
   }
   ServiceInstance[] filterBySpace(ServiceInstance[] instances, SpaceId spaceId) {
     return instances.filter!(i => i.spaceId == spaceId).array;
   }
-  ServiceInstance[] findBySpace(SpaceId spaceId) {
+  ServiceInstance[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return filterBySpace(findByTenant(tenantId), spaceId);
   }
-  void removeBySpace(SpaceId spaceId) {
-    findBySpace(spaceId).each!(i => remove(i.id));
+  void removeBySpace(TenantId tenantId, SpaceId spaceId) {
+    findBySpace(tenantId, spaceId).each!(i => remove(i));
   }
 
   size_t countByPlan(TenantId tenantId, ServicePlan plan) {
@@ -53,7 +59,7 @@ class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, Servi
     return filterByPlan(findByTenant(tenantId), plan);
   }
   void removeByPlan(TenantId tenantId, ServicePlan plan) {
-    findByPlan(tenantId, plan).each!(i => remove(i.id));
+    findByPlan(tenantId, plan).each!(i => remove(i));
   }
 
 }

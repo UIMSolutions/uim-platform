@@ -28,7 +28,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         if (!DeploymentValidator.validatePathPrefix(request.pathPrefix))
             return CommandResult(false, "", "Invalid path prefix");
 
-        auto route = AppRoute(request.tenantId, request.createdBy);
+        auto route = AppRoute(request.tenantId); //, request.createdBy);
         with (route) {
             appId = request.appId;
             pathPrefix = request.pathPrefix;
@@ -48,17 +48,17 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, route.id.value, "");
     }
 
-    CommandResult updateAppRoute(AppRouteId id, UpdateAppRouteRequest request) {
-        auto route = repo.findById(tenantId, id);
+    CommandResult updateAppRoute(UpdateAppRouteRequest request) {
+        auto route = repo.findById(request.tenantId, request.routeId);
         if (route.isNull)
             return CommandResult(false, "", "Route not found");
 
         if (request.pathPrefix.length > 0)
             route.pathPrefix = request.pathPrefix;
-        if (request.targetPath.length > 0)
-            route.targetPath = request.targetPath;
-        route.authRequired = request.authRequired;
-        route.cacheEnabled = request.cacheEnabled;
+        // if (request.targetPath.length > 0)
+        //     route.targetPath = request.targetPath;
+        // route.authRequired = request.authRequired;
+        // route.cacheEnabled = request.cacheEnabled;
         route.updatedAt = currentTimestamp();
         route.updatedBy = request.updatedBy;
 
@@ -66,20 +66,20 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, route.id.value, "");
     }
 
-    AppRoute getAppRoute(AppRouteId id) {
-        return repo.findById(tenantId, id);
+    AppRoute getAppRoute(TenantId tenantId, AppRouteId routeId) {
+        return repo.findById(tenantId, routeId);
     }
 
-    AppRoute[] listAppRoutes(HtmlAppId appId) {
-        return repo.findByApp(appId);
+    AppRoute[] listAppRoutes(TenantId tenantId, HtmlAppId appId) {
+        return repo.findByApp(tenantId, appId);
     }
 
     AppRoute[] listAppRoutes(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deleteAppRoute(AppRouteId id) {
-        auto route = repo.findById(tenantId, id);
+    CommandResult deleteAppRoute(TenantId tenantId, AppRouteId routeId) {
+        auto route = repo.findById(tenantId, routeId);
         if (route.isNull)          
             return CommandResult(false, "", "Route not found");
 
@@ -87,8 +87,8 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, route.id.value, "");
     }
 
-    size_t countAppRoutesByApp(HtmlAppId appId) {
-        return repo.countByApp(appId);
+    size_t countAppRoutes(TenantId tenantId, HtmlAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
 }

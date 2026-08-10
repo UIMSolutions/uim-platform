@@ -43,9 +43,9 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Version not found");
 
         if (r.description.length > 0) ver.description = r.description;
-        if (r.status.length > 0) ver.status = parseVersionStatus(r.status);
+        if (r.status.length > 0) ver.status = r.status.toVersionStatus;
         ver.updatedAt = currentTimestamp();
-        ver.updatedBy = r.updatedBy;
+        // ver.updatedBy = r.updatedBy;
 
         repo.update(ver);
         return CommandResult(true, ver.id.value, "");
@@ -72,17 +72,8 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 
-    size_t countByApp(HtmlAppId appId) {
-        return repo.countByApp(appId);
-    }
-
-    private static VersionStatus parseVersionStatus(string s) {
-        switch (s) {
-            case "draft": return VersionStatus.draft;
-            case "active": return VersionStatus.active;
-            case "inactive": return VersionStatus.inactive;
-            default: return VersionStatus.draft;
-        }
+    size_t countByApp(TenantId tenantId, HtmlAppId appId) {
+        return repo.countByApp(tenantId, appId);
     }
 
 }

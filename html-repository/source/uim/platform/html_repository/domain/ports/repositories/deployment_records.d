@@ -13,13 +13,13 @@ mixin(ShowModule!());
 @safe:
 interface IDeploymentRecordRepository : ITenantRepository!(DeploymentRecord, DeploymentRecordId) {
 
-  size_t countByApp(HtmlAppId appId);
-  DeploymentRecord[] findByApp(HtmlAppId appId);
-  void removeByApp(HtmlAppId appId);
+  size_t countByApp(TenantId tenantId, HtmlAppId appId);
+  DeploymentRecord[] findByApp(TenantId tenantId, HtmlAppId appId);
+  void removeByApp(TenantId tenantId, HtmlAppId appId);
 
-  size_t countByVersion(AppVersionId versionId);
-  DeploymentRecord[] findByVersion(AppVersionId versionId);
-  void removeByVersion(AppVersionId versionId);
+  size_t countByVersion(TenantId tenantId, AppVersionId versionId);
+  DeploymentRecord[] findByVersion(TenantId tenantId, AppVersionId versionId);
+  void removeByVersion(TenantId tenantId, AppVersionId versionId);
 
   size_t countByStatus(TenantId tenantId, DeploymentStatus status);
   DeploymentRecord[] findByStatus(TenantId tenantId, DeploymentStatus status);

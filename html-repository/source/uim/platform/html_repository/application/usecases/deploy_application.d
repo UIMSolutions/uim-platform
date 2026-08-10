@@ -33,19 +33,19 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deploy(CreateDeploymentRequest r) {
-        auto app = appRepo.findById(r.appId);
+        auto app = appRepo.findById(r.tenantId, r.appId);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
 
-        auto version_ = versionRepo.findById(r.versionId);
+        auto version_ = versionRepo.findById(r.tenantId, r.versionId);
         if (version_.isNull)
             return CommandResult(false, "", "Version not found");
 
         auto record = DeploymentRecord(r.tenantId);
         record.appId = r.appId;
         record.versionId = r.versionId;
-        record.serviceInstanceId = r.serviceInstanceId;
-        record.operation = parseOperation(r.operation);
+        record.serviceInstanceId = r.instanceId;
+        record.operation = r.operation.toDeploymentOperation;
         record.status = DeploymentStatus.completed;
         record.startedAt = record.createdAt;
         record.completedAt = record.createdAt;
@@ -66,29 +66,20 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
         return CommandResult(true, record.id.value, "");
     }
 
-    DeploymentRecord getById(DeploymentRecordId id) {
+    DeploymentRecord getRecord(TenantId tenantId, DeploymentRecordId id) {
         return deploymentRepo.findById(tenantId, id);
     }
 
-    DeploymentRecord[] listByApp(HtmlAppId appId) {
-        return deploymentRepo.findByApp(appId);
+    DeploymentRecord[] listRecords(TenantId tenantId, HtmlAppId appId) {
+        return deploymentRepo.findByApp(tenantId, appId);
     }
 
-    DeploymentRecord[] listByTenant(TenantId tenantId) {
+    DeploymentRecord[] listRecords(TenantId tenantId) {
         return deploymentRepo.findByTenant(tenantId);
     }
 
-    size_t countByTenant(TenantId tenantId) {
+    size_t countRecords(TenantId tenantId) {
         return deploymentRepo.countByTenant(tenantId);
-    }
-
-    private static DeploymentOperation parseOperation(string op) {
-        switch (op) {
-            case "deploy": return DeploymentOperation.deploy;
-            case "undeploy": return DeploymentOperation.undeploy;
-            case "redeploy": return DeploymentOperation.redeploy;
-            default: return DeploymentOperation.deploy;
-        }
     }
 
 }

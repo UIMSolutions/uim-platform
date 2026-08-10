@@ -26,7 +26,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         file.appId = r.appId;
         file.versionId = r.versionId;
         file.filePath = r.filePath;
-        file.fileName = r.fileName;
+        // file.fileName = r.fileName;
         file.contentType = r.contentType;
         file.sizeBytes = r.sizeBytes;
         file.etag = ContentDeliveryService.generateEtag(r.content);
@@ -37,8 +37,8 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, file.id.value, "");
     }
 
-    CommandResult update(AppFileId id, UpdateAppFileRequest r) {
-        auto file = repo.findById(tenantId, id);
+    CommandResult update(UpdateAppFileRequest r) {
+        auto file = repo.findById(r.tenantId, r.fileId);
         if (file.isNull)
             return CommandResult(false, "", "File not found");
 
@@ -93,11 +93,12 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         if (filePath.endsWith(".js"))
             return FileCategory.javascript;
         if (filePath.endsWith(".css"))
-            return FileCategory.stylesheet;
+            return FileCategory.css;
         if (filePath.endsWith(".png") || filePath.endsWith(".jpg") || filePath.endsWith(".gif") || filePath.endsWith(            ".svg"))
             return FileCategory.image;
         if (filePath.endsWith(".json"))
-            return FileCategory.configuration;
+            return FileCategory.json;
+
         return FileCategory.other;
     }
 

@@ -29,6 +29,13 @@ class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), 
     return latest;
   }
 
+  void removeLatest(TenantId tenantId, HtmlAppId appId) {
+    AppVersion latest = findLatest(tenantId, appId);
+    if (latest.id != AppVersionId.init) {
+      remove(latest);
+    }
+  }
+
   size_t countByApp(TenantId tenantId, HtmlAppId appId) {
     return findByApp(tenantId, appId).length;
   }

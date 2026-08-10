@@ -13,13 +13,13 @@ mixin(ShowModule!());
 @safe:
 interface IContentCacheRepository : ITenantRepository!(ContentCache, ContentCacheId) {
 
-  size_t countByStatus(CacheStatus status);
-  ContentCache[] findByStatus(CacheStatus status);
-  void removeByStatus(CacheStatus status);
+  size_t countByStatus(TenantId tenantId, CacheStatus status);
+  ContentCache[] findByStatus(TenantId tenantId, CacheStatus status);
+  void removeByStatus(TenantId tenantId, CacheStatus status);
   
-  size_t countExpired(long currentTime);
-  ContentCache[] findExpired(long currentTime);
-  void removeExpired(long currentTime);
+  size_t countExpired(TenantId tenantId, long currentTime);
+  ContentCache[] findExpired(TenantId tenantId, long currentTime);
+  void removeExpired(TenantId tenantId, long currentTime);
   
   long totalSizeByTenant(TenantId tenantId);
 }

@@ -17,7 +17,7 @@ struct AppFile {
   string filePath;          // relative path e.g. "webapp/index.html"
   string contentType;       // MIME type e.g. "text/html"
   FileCategory category;
-  string data;              // base64-encoded content
+  string content;              // base64-encoded content
   string encoding;          // compression e.g. "gzip", "br", ""
   string etag;              // content hash for caching
   long sizeBytes;
@@ -28,7 +28,7 @@ struct AppFile {
       .set("filePath", filePath)
       .set("contentType", contentType)
       .set("category", category.to!string)
-      .set("data", data)
+      .set("content", content)
       .set("encoding", encoding)
       .set("etag", etag)
       .set("sizeBytes", sizeBytes);

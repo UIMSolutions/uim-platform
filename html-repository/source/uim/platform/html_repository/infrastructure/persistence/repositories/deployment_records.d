@@ -15,36 +15,36 @@ mixin(ShowModule!());
 @safe:
 class DeploymentRecordMemoryRepository : TenantRepository!(DeploymentRecord, DeploymentRecordId), IDeploymentRecordRepository {
 
-  size_t countByApp(HtmlAppId appId) {
-    return findByApp(appId).length;
+  size_t countByApp(TenantId tenantId, HtmlAppId appId) {
+    return findByApp(tenantId, appId).length;
   }
 
   DeploymentRecord[] filterByApp(DeploymentRecord[] records, HtmlAppId appId) {
     return records.filter!(r => r.appId == appId).array;
   }
 
-  DeploymentRecord[] findByApp(HtmlAppId appId) {
+  DeploymentRecord[] findByApp(TenantId tenantId, HtmlAppId appId) {
     return filterByApp(findByTenant(tenantId), appId);
   }
 
-  void removeByApp(HtmlAppId appId) {
-    findByApp(appId).each!(r => remove(r.id));
+  void removeByApp(TenantId tenantId, HtmlAppId appId) {
+    findByApp(tenantId, appId).each!(r => remove(r));
   }
 
-  size_t countByVersion(AppVersionId versionId) {
-    return findByVersion(versionId).length;
+  size_t countByVersion(TenantId tenantId, AppVersionId versionId) {
+    return findByVersion(tenantId, versionId).length;
   }
 
   DeploymentRecord[] filterByVersion(DeploymentRecord[] records, AppVersionId versionId) {
     return records.filter!(r => r.versionId == versionId).array;
   }
 
-  DeploymentRecord[] findByVersion(AppVersionId versionId) {
+  DeploymentRecord[] findByVersion(TenantId tenantId, AppVersionId versionId) {
     return filterByVersion(findByTenant(tenantId), versionId);
   }
 
-  void removeByVersion(AppVersionId versionId) {
-    findByVersion(versionId).each!(r => remove(r.id));
+  void removeByVersion(TenantId tenantId, AppVersionId versionId) {
+    findByVersion(tenantId, versionId).each!(r => remove(r));
   }
 
   size_t countByStatus(TenantId tenantId, DeploymentStatus status) {
@@ -60,6 +60,6 @@ class DeploymentRecordMemoryRepository : TenantRepository!(DeploymentRecord, Dep
   }
 
   void removeByStatus(TenantId tenantId, DeploymentStatus status) {
-    findByStatus(tenantId, status).each!(r => remove(r.id));
+    findByStatus(tenantId, status).each!(r => remove(r));
   }
 }

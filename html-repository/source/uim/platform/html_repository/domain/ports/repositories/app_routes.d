@@ -17,8 +17,8 @@ interface IAppRouteRepository : ITenantRepository!(AppRoute, AppRouteId) {
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix);
   void removeByPathPrefix(TenantId tenantId, string pathPrefix);
 
-  size_t countByApp(HtmlAppId appId);
-  AppRoute[] findByApp(HtmlAppId appId);
-  void removeByApp(HtmlAppId appId);
+  size_t countByApp(TenantId tenantId, HtmlAppId appId);
+  AppRoute[] findByApp(TenantId tenantId, HtmlAppId appId);
+  void removeByApp(TenantId tenantId, HtmlAppId appId);
   
 }
