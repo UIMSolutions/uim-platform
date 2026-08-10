@@ -13,52 +13,50 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCacheId), ContentCacheRepository {
+class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCacheId), IContentCacheRepository {
 
-  bool existsByFileId(AppFileId fileId) {
+  bool existsByFile(TenantId tenantId, AppFileId fileId) {
     foreach (e; findByTenant(tenantId)) {
       if (e.fileId == fileId) return true;
     }
     return false;
   }
-  ContentCache findByFileId(AppFileId fileId) {
-    foreach (e; findByTenant(tenantId)) {
+  ContentCache findByFile(TenantId tenantId, AppFileId fileId) {
+    foreach (e; findByTenant(tenantId))
       if (e.fileId == fileId) return e;
-    }
+    
     return ContentCache.init;
   }
 
-  size_t countByStatus(CacheStatus status) {
-    return findByStatus(status).length;
+  size_t countByStatus(TenantId tenantId, CacheStatus status) {
+    return findByStatus(tenantId, status).length;
   }
   ContentCache[] filterByStatus(ContentCache[] caches, CacheStatus status) {
     return caches.filter!(c => c.status == status).array;
   }
-  ContentCache[] findByStatus(CacheStatus status) {
+  ContentCache[] findByStatus(TenantId tenantId, CacheStatus status) {
     return filterByStatus(findByTenant(tenantId), status);
   }
-  void removeByStatus(CacheStatus status) {
-    findByStatus(status).each!(c => remove(c.id));
+  void removeByStatus(TenantId tenantId, CacheStatus status) {
+    findByStatus(tenantId, status).each!(c => remove(c.id));
   }
 
-  size_t countByExpiration(long currentTime) {
-    return findExpired(currentTime).length;
+  size_t countByExpiration(TenantId tenantId, long currentTime) {
+    return findExpired(tenantId, currentTime).length;
   }
   ContentCache[] filterByExpiration(ContentCache[] caches, long currentTime) {
     return caches.filter!(c => c.expiresAt < currentTime).array;
   }
-  ContentCache[] findExpired(long currentTime) {
+  ContentCache[] findExpired(TenantId tenantId, long currentTime) {
     return filterByExpiration(findByTenant(tenantId), currentTime);
   }
-  void removeByExpiration(long currentTime) {
-    findExpired(currentTime).each!(c => remove(c.id));
+  void removeByExpiration(TenantId tenantId, long currentTime) {
+    findExpired(tenantId, currentTime).each!(c => remove(c.id));
   }
 
   long totalSizeByTenant(TenantId tenantId) {
-    long total = 0;
-    foreach (e; findByTenant(tenantId)) {
-      if (e.tenantId == tenantId) total += e.sizeBytes;
-    }
-    return total;
+    return findByTenant(tenantId)
+      .filter!(e => e.tenantId == tenantId)
+      .map!(e => e.sizeBytes).sum;
   }
 }

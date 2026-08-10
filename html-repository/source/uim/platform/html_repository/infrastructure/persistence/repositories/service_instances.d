@@ -13,7 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), ServiceInstanceRepository {
+class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId)) {

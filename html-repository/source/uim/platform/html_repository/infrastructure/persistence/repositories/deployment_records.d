@@ -13,7 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class DeploymentRecordMemoryRepository : TenantRepository!(DeploymentRecord, DeploymentRecordId), DeploymentRecordRepository {
+class DeploymentRecordMemoryRepository : TenantRepository!(DeploymentRecord, DeploymentRecordId), IDeploymentRecordRepository {
 
   size_t countByApp(HtmlAppId appId) {
     return findByApp(appId).length;

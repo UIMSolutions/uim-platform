@@ -22,11 +22,11 @@ mixin(ShowModule!());
 @safe:
 
 class DeployApplicationUseCase { // TODO: UIMUseCase {
-    private DeploymentRecordRepository deploymentRepo;
-    private HtmlAppRepository appRepo;
-    private AppVersionRepository versionRepo;
+    private IDeploymentRecordRepository deploymentRepo;
+    private IHtmlAppRepository appRepo;
+    private IAppVersionRepository versionRepo;
 
-    this(DeploymentRecordRepository deploymentRepo, HtmlAppRepository appRepo, AppVersionRepository versionRepo) {
+    this(IDeploymentRecordRepository deploymentRepo, IHtmlAppRepository appRepo, IAppVersionRepository versionRepo) {
         this.deploymentRepo = deploymentRepo;
         this.appRepo = appRepo;
         this.versionRepo = versionRepo;

@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.persistence.repositories.html_apps;
 
-// import uim.platform.html_repository.domain.ports.repositories.html_apps;
-// import uim.platform.html_repository.domain.entities.html_app;
-// import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;
 
 mixin(ShowModule!());
@@ -15,34 +12,49 @@ mixin(ShowModule!());
 @safe:
 class HtmlAppRepository : TenantRepository!(HtmlApp, HtmlAppId), IHtmlAppRepository {
 
+  size_t countByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name);
+  }
 
-  size_t countBySpace(SpaceId spaceId) {
-    return findBySpace(spaceId).length;
+  HtmlApp[] filterByName(HtmlApp[] apps, string name) {
+    return apps.filter!(a => a.name == name).array;
+  }
+
+  HtmlApp[] findByName(TenantId tenantId, string name) {
+    return filterByName(findByTenant(tenantId), name);
+  }
+
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).each!(e => remove(e));
+  }
+
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
+    return findBySpace(tenantId, spaceId).length;
   }
   HtmlApp[] filterBySpace(HtmlApp[] apps, SpaceId spaceId) {
     return apps.filter!(a => a.spaceId == spaceId).array;
   }
-  HtmlApp[] findBySpace(SpaceId spaceId) {
+  HtmlApp[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return filterBySpace(findByTenant(tenantId), spaceId);
   }
-  void removeBySpace(SpaceId spaceId) {
-    findBySpace(spaceId).each!(a => remove(a));
+  void removeBySpace(TenantId tenantId, SpaceId spaceId) {
+    findBySpace(tenantId, spaceId).each!(a => remove(a));
   }
 
-  size_t countByServiceInstance(ServiceInstanceId instanceId) {
-    return findByServiceInstance(instanceId).length;
+  size_t countByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+    return findByServiceInstance(tenantId, instanceId).length;
   }
   HtmlApp[] filterByServiceInstance(HtmlApp[] apps, ServiceInstanceId instanceId) {
     return apps.filter!(a => a.serviceInstanceId == instanceId).array;
   }
-  HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId) {
+  HtmlApp[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
     return filterByServiceInstance(findByTenant(tenantId), instanceId);
   }
-  void removeByServiceInstance(ServiceInstanceId instanceId) {
-    findByServiceInstance(instanceId).each!(a => remove(a));
+  void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+    findByServiceInstance(tenantId, instanceId).each!(a => remove(a));
   }
 
-  size_t countPublicByTenant(TenantId tenantId) {
+  size_t countPublic(TenantId tenantId) {
     return findPublic(tenantId).length;
   }
   HtmlApp[] filterPublic(HtmlApp[] apps) {

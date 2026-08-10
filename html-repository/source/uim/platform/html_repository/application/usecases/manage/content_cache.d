@@ -46,8 +46,8 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    ContentCache getByFileId(AppFileId fileId) {
-        return repo.findByFileId(fileId);
+    ContentCache getByFile(AppFileId fileId) {
+        return repo.findByFile(fileId);
     }
 
     void invalidate(ContentCacheId id) {

@@ -17,13 +17,13 @@ interface IHtmlAppRepository : ITenantRepository!(HtmlApp, HtmlAppId) {
   HtmlApp[] findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
   
-  size_t countByServiceInstance(ServiceInstanceId instanceId);
-  HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId);
-  void removeByServiceInstance(ServiceInstanceId instanceId);
+  size_t countByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
+  HtmlApp[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
+  void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
 
-  size_t countBySpace(SpaceId spaceId);
-  HtmlApp[] findBySpace(SpaceId spaceId);
-  void removeBySpace(SpaceId spaceId);
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  HtmlApp[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  void removeBySpace(TenantId tenantId, SpaceId spaceId);
 
   size_t countPublic(TenantId tenantId);
   HtmlApp[] findPublic(TenantId tenantId);
