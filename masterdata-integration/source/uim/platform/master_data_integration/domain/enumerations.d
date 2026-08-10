@@ -31,8 +31,9 @@ MasterDataCategory toMasterDataCategory(string value) {
   mixin(EnumSwitch("MasterDataCategory", "custom"));
 }
 
-MasterDataCategory[] toMasterDataCategories(string[] cats)
-  => cats.map!toMasterDataCategory.array;
+MasterDataCategory[] toMasterDataCategory(string[] cats) {
+  return cats.map!toMasterDataCategory.array;
+}
 
 string toString(MasterDataCategory cat)
   => cat.to!string;
@@ -57,7 +58,20 @@ unittest {
   assert("supplierMaterial".toMasterDataCategory == MasterDataCategory.supplierMaterial);
   assert("custom".toMasterDataCategory == MasterDataCategory.custom);
 
-  assert(["businessPartner", "plant"].toMasterDataCategories == [MasterDataCategory.businessPartner, MasterDataCategory.plant
+  assert(MasterDataCategory.businessPartner.toString == "");
+  assert(MasterDataCategory.costCenter.toString == "");
+  assert(MasterDataCategory.profitCenter.toString == "");
+  assert(MasterDataCategory.companyCode.toString == "");
+  assert(MasterDataCategory.workforcePerson.toString == "");
+  assert(MasterDataCategory.bankAccount.toString == "");
+  assert(MasterDataCategory.plant.toString == "");
+  assert(MasterDataCategory.purchasingOrganization.toString == "");
+  assert(MasterDataCategory.salesOrganization.toString == "");
+  assert(MasterDataCategory.customerMaterial.toString == "");
+  assert(MasterDataCategory.supplierMaterial.toString == "");
+  assert(MasterDataCategory.custom.toString == "");
+
+  assert(["businessPartner", "plant"].toMasterDataCategory == [MasterDataCategory.businessPartner, MasterDataCategory.plant
     ]);
 }
 

@@ -23,6 +23,6 @@ interface IMarketRateRepository : ITenantRepository!(MarketRate, MarketRateId) {
   void removeByCategory(TenantId tenantId, MarketDataCategory category);
   void removeByDateRange(TenantId tenantId, string fromDate, string toDate);
 
-  size_t countByTenant(TenantId tenantId);
   size_t countByProvider(TenantId tenantId, string providerCode);
+
 }

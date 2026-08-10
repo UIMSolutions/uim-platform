@@ -10,10 +10,11 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 @safe:
 
-class ServiceBindingWebController : ManageHttpController {
-  private ManageServiceBindingsUseCase usecase;
+// class ServiceBindingWebController : ManageHttpController {
+//   private ManageServiceBindingsUseCase usecase;
 
-  this(ManageServiceBindingsUseCase usecase) {
-    this.usecase = usecase;
-  }
-}
+//   this(ManageServiceBindingsUseCase usecase) {
+//     this.usecase = usecase;
+//   }
+
+// }

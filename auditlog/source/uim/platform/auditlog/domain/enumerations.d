@@ -113,7 +113,7 @@ unittest {
   assert(AuditSeverity.error.toString == "error");
   assert(AuditSeverity.critical.toString == "critical");
 
-  assert(toAuditSeverity(["info", "error"]) == [AuditSeverity.info, AuditSeverity.error
+  assert(["info", "error"].toAuditSeverity == [AuditSeverity.info, AuditSeverity.error
     ]);
   assert([AuditSeverity.info, AuditSeverity.error].toStrings == ["info", "error"
     ]);

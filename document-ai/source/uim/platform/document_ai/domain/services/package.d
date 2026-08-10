@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.services;
 
-public {
+public:
   import uim.platform.document_ai.domain.services.document_validator;
   import uim.platform.document_ai.domain.services.enrichment_matcher;
-}

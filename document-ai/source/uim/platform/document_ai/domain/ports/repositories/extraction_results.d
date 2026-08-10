@@ -5,25 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.ports.repositories.extraction_results;
 
-// import uim.platform.document_ai.domain.entities.extraction_result;
 import uim.platform.document_ai;
 
 mixin(ShowModule!());
 
 @safe:
-interface IExtractionResultRepository {
-  bool existsById(ExtractionResultId id, ClientId clientId);
-  ExtractionResult findById(ExtractionResultId id, ClientId clientId);
+interface IExtractionResultRepository : ITenantRepository!(ExtractionResult, ExtractionResultId) {
 
-  bool existsByDocument(DocumentId docId, ClientId clientId);
-  ExtractionResult findByDocument(DocumentId docId, ClientId clientId);
+  bool existsByDocument(TenantId tenantId, DocumentId docId, ClientId clientId);
+  ExtractionResult findByDocument(TenantId tenantId, DocumentId docId, ClientId clientId);
 
-  size_t countByClient(ClientId clientId);  
-  ExtractionResult[] findByClient(ClientId clientId);
+  size_t countByClient(TenantId tenantId, ClientId clientId);  
+  ExtractionResult[] findByClient(TenantId tenantId, ClientId clientId);
   
-  ExtractionResult[] findBySchema(SchemaId schemaId, ClientId clientId);
+  ExtractionResult[] findBySchema(TenantId tenantId, SchemaId schemaId, ClientId clientId);
 
-  void save(ExtractionResult r);
-  void update(ExtractionResult r);
-  void remove(ExtractionResultId id, ClientId clientId);
 }

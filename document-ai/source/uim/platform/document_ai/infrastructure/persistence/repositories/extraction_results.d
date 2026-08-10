@@ -57,10 +57,6 @@ class ExtractionResultRepository : TenantRepository!(ExtractionResult, Extractio
     return ExtractionResult.init;
   }
 
-  ExtractionResult[] findByClient(TenantId tenantId, ClientId clientId) {
-    return clientId in findByTenant(tenantId) ? findByTenant(tenantId)[clientId] : null;
-  }
-
   ExtractionResult[] findBySchema(TenantId tenantId, SchemaId schemaId, ClientId clientId) {
     return clientId in findByTenant(tenantId) ? findByTenant(tenantId)[clientId].filter!(r => r.schemaId == schemaId).array : null;
   }

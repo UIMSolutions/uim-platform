@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Application service for ABAP system instance lifecycle management.
-interface ManageSystemInstancesUseCase { 
+interface IManageSystemInstancesUseCase { 
 
   CommandResult createInstance(CreateSystemInstanceRequest req);
   CommandResult updateInstance(UpdateSystemInstanceRequest req);;

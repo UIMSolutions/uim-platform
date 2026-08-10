@@ -10,10 +10,11 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 @safe:
 
-class TransportRequestWebController : ManageHttpController {
-  private ManageTransportRequestsUseCase usecase;
-
-  this(ManageTransportRequestsUseCase usecase) {
-    this.usecase = usecase;
-  }
-}
+// class TransportRequestWebController : ManageHttpController {
+  // private ManageTransportRequestsUseCase usecase;
+// 
+  // this(ManageTransportRequestsUseCase usecase) {
+    // this.usecase = usecase;
+  // }
+// }
+// 

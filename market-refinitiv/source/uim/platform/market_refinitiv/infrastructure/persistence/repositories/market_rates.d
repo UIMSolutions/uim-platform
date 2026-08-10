@@ -4,9 +4,8 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.market_refinitiv.infrastructure.persistence.repositories.market_rates;
+
 import uim.platform.market_refinitiv;
-import std.algorithm : filter, map;
-import std.array     : array;
 
 mixin(ShowModule!());
 
@@ -14,13 +13,51 @@ mixin(ShowModule!());
 
 class MarketRateRepository : TenantRepository!(MarketRate, MarketRateId), IMarketRateRepository {
 
-  // --- Querying ---
-  override MarketRate[] findByProvider(TenantId t, string code) {
-    return store.values.filter!(r => r.tenantId == t && r.providerCode == code).array;
+  size_t countByProvider(TenantId tenandId, string code) {
+    return findByProvider(tenantId, code).length;
   }
-  override MarketRate[] findByCategory(TenantId t, MarketDataCategory cat) {
+
+  MarketRate[] filterByProvider(MarketRate[] rates, string code) {
+    return rates.filter!(r => r.providerCode == code).array;
+  }
+
+  MarketRate[] findByProvider(TenantId tenandId, string code) {
+    return filterByProvider(findByTenant(tenandId), code);
+  }
+
+  void removeByProvider(TenantId tenandId, string code) {
+    findByProvider(tenantId, code).each!(e => remove(e));
+  }
+
+  size_t countByCategory(TenantId tenantId, MarketDataCategory cat) {
+    return findByCategory(tenantId, cat).length;
+  }
+
+  MarketRate[] filterByCategory(MarketRate[] rates, MarketDataCategory cat) {
+    return rates.filter!(r => r.category == cat).array;
+  }
+
+  MarketRate[] findByCategory(TenantId t, MarketDataCategory cat) {
     return store.values.filter!(r => r.tenantId == t && r.category == cat).array;
   }
+
+  void removeByCategory(TenantId t, MarketDataCategory cat) {
+    findByCategory(tenantId, cat).each!(e => remove(e));
+  }
+
+  MarketRate[] filterByDateRange(MarketRate[] rates, string from_, string to_) {
+    return rates.filter!(r => r.effectiveDate >= from_ && (to_.length == 0 || r.effectiveDate <= to_)).array;
+  }
+  MarketRate[] filterByProviderAndCategory(MarketRate[] rates, string code, MarketDataCategory cat) {
+    return rates.filter!(r => r.providerCode == code && r.category == cat).array;
+  }
+  MarketRate[] filterByKey(MarketRate[] rates, string key1, string key2, MarketDataCategory cat) {
+    return rates.filter!(r => r.key1 == key1 && r.key2 == key2 && r.category == cat).array;
+  }
+  MarketRate[] filterLatest(MarketRate[] rates, string code, MarketDataCategory cat) {
+    return rates.filter!(r => r.providerCode == code && r.category == cat).array;
+  }
+
   override MarketRate[] findByDateRange(TenantId t, string from_, string to_) {
     return store.values.filter!(r =>
       r.tenantId == t &&
@@ -28,10 +65,12 @@ class MarketRateRepository : TenantRepository!(MarketRate, MarketRateId), IMarke
       (to_.length == 0 || r.effectiveDate <= to_)
     ).array;
   }
-  override MarketRate[] findByProviderAndCategory(TenantId t, string code, MarketDataCategory cat) {
+  
+  MarketRate[] findByProviderAndCategory(TenantId t, string code, MarketDataCategory cat) {
     return store.values.filter!(r => r.tenantId == t && r.providerCode == code && r.category == cat).array;
   }
-  override MarketRate[] findByKey(TenantId t, string key1, string key2, MarketDataCategory cat) {
+  
+  MarketRate[] findByKey(TenantId t, string key1, string key2, MarketDataCategory cat) {
     return store.values.filter!(r =>
       r.tenantId == t &&
       r.key1 == key1 &&
@@ -39,7 +78,7 @@ class MarketRateRepository : TenantRepository!(MarketRate, MarketRateId), IMarke
       r.category == cat
     ).array;
   }
-  override MarketRate[] findLatest(TenantId t, string code, MarketDataCategory cat) {
+  MarketRate[] findLatest(TenantId t, string code, MarketDataCategory cat) {
     import std.algorithm : sort, uniq;
     auto all = findByProviderAndCategory(t, code, cat);
     if (all.length == 0) return all;
@@ -49,26 +88,11 @@ class MarketRateRepository : TenantRepository!(MarketRate, MarketRateId), IMarke
     return all.filter!(r => r.effectiveDate == latestDate).array;
   }
 
-  // --- Bulk removal ---
-  override void removeByProvider(TenantId t, string code) {
-    foreach (key, r; store)
-      if (r.tenantId == t && r.providerCode == code)
-        store.remove(key);
-  }
-  override void removeByCategory(TenantId t, MarketDataCategory cat) {
-    foreach (key, r; store)
-      if (r.tenantId == t && r.category == cat)
-        store.remove(key);
-  }
-  override void removeByDateRange(TenantId t, string from_, string to_) {
+  void removeByDateRange(TenantId t, string from_, string to_) {
     foreach (key, r; store)
       if (r.tenantId == t && r.effectiveDate >= from_ &&
           (to_.length == 0 || r.effectiveDate <= to_))
         store.remove(key);
   }
 
-  // --- Counts ---
-  override size_t countByProvider(TenantId t, string code) {
-    return findByProvider(t, code).length;
-  }
 }

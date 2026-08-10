@@ -12,31 +12,35 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProviderRepository : ProviderRepository {
-  private Provider[string] store;
+class ProviderRepository : TenantRepository!(Provider, ProviderId), IProviderRepository {
 
-  override Provider   findById(TenantId t, ProviderId id) {
-    if (auto p = id.value in store) return *p;
-    Provider empty; return empty;
-  }
-  override Provider[] findByTenant(TenantId t) {
-    return store.values.filter!(p => p.tenantId == t).array;
-  }
-  override void save(Provider p)   { store[p.id.value] = p; }
-  override void update(Provider p) { store[p.id.value] = p; }
-  override void remove(Provider p) { store.remove(p.id.value); }
-
-  override Provider findByCode(TenantId t, string code) {
-    foreach (p; store.values)
-      if (p.tenantId == t && p.code == code) return p;
-    Provider empty; return empty;
-  }
-  override Provider[] findActive(TenantId t) {
-    return store.values.filter!(p => p.tenantId == t && p.isActive).array;
-  }
-  override bool codeExists(TenantId t, string code) {
+  bool codeExists(TenantId tenantId, string code) {
     foreach (p; store.values)
       if (p.tenantId == t && p.code == code) return true;
     return false;
   }
+
+  Provider findByCode(TenantId tenantId, string code) {
+    foreach (p; findByTenant(tenantId))
+      if (p.code == code) return p;
+    return Provider.init;
+  }
+  
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length; 
+  }
+
+  Provider[] filterActive(Provider[] providers) {
+    return providers.filter!(p => p.isActive).array;
+  }
+
+  Provider[] findActive(TenantId tenantId) {
+    return filterActive(findByTenant(tenantId));
+  }
+
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).eacH!(e => remove(e));
+  }
+  
+
 }

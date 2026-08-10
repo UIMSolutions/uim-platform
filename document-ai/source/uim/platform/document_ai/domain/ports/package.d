@@ -5,6 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.ports;
 
-public {
+public:
   import uim.platform.document_ai.domain.ports.repositories;
-}
+  import uim.platform.document_ai.domain.ports.usecases;

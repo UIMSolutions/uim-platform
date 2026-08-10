@@ -5,4 +5,5 @@ public {
   import uim.platform.market_refinitiv.domain.entities;
   import uim.platform.market_refinitiv.domain.ports;
   import uim.platform.market_refinitiv.domain.services;
+  import uim.platform.market_refinitiv.domain.enumerations;
 }

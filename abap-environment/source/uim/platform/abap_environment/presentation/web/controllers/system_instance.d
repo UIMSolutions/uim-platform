@@ -10,10 +10,10 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 @safe:
 
-class SystemInstanceWebController : ManageHttpController {
-  private ManageSystemInstancesUseCase usecase;
-
-  this(ManageSystemInstancesUseCase usecase) {
-    this.usecase = usecase;
-  }
-}
+// class SystemInstanceWebController : ManageHttpController {
+  // private ManageSystemInstancesUseCase usecase;
+// 
+  // this(ManageSystemInstancesUseCase usecase) {
+    // this.usecase = usecase;
+  // }
+// }

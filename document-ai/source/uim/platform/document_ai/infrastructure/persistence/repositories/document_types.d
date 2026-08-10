@@ -13,32 +13,16 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class DocumentTypeRepository : DocumentTypeRepository {
-  private DocumentType[][string] store;
+class DocumentTypeRepository : TenantRepository!(DocumentType, DocumentTypeId), IDocumentTypeRepository {
 
-  bool existsById(DocumentTypeId id, ClientId clientId) {
-    if (clientId !in store)
-      return false;
+  size_t countByClient(TenantId tenentId, ClientId clientId) {
+    return findByClient()
 
-    return store[clientId].any!(dt => dt.id == id);
-  }
-
-  DocumentType findById(DocumentTypeId id, ClientId clientId) {
-    if (clientId !in store)
-      return DocumentType.init;
-
-    foreach (dt; store[clientId]) {
-      if (dt.id == id)
-        return dt;
-    }
-    return DocumentType.init;
-  }
-
-  DocumentType[] findByClient(ClientId clientId) {
+  DocumentType[] findByClient(TenantId tenentId, ClientId clientId) {
     return clientId in store ? store[clientId] : null;
   }
 
-  DocumentType[] findByCategory(DocumentCategory category, ClientId clientId) {
+  DocumentType[] findByCategory(TenantId tenentId, DocumentCategory category, ClientId clientId) {
     return clientId in store ? store[clientId].filter!(dt => dt.category == category).array : null;
   }
 

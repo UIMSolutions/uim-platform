@@ -12,34 +12,46 @@ mixin(ShowModule!());
 
 @safe:
 
-class AuditLogRepository : AuditLogRepository {
-  private AuditLog[string] store;
+class AuditLogRepository : TenantRepository!(AuditLog, AuditLogId), IAuditLogRepository {
 
-  override AuditLog   findById(TenantId t, AuditLogId id) {
-    if (auto p = id.value in store) return *p;
-    AuditLog empty; return empty;
+  size_t countByOperation(TenantId tenantId, AuditOperation op) {
+    return findByTenant(tenantId).filter!(l => l.operation == op).length;
   }
-  override AuditLog[] findByTenant(TenantId t) {
-    return store.values.filter!(l => l.tenantId == t).array;
-  }
-  override void save(AuditLog l)   { store[l.id.value] = l; }
-  override void update(AuditLog l) { store[l.id.value] = l; }
-  override void remove(AuditLog l) { store.remove(l.id.value); }
 
-  override AuditLog[] findByOperation(TenantId t, AuditOperation op) {
-    return store.values.filter!(l => l.tenantId == t && l.operation == op).array;
+  AuditLog[] filterByOperation(AuditLog[] logs, AuditOperation op) {
+    return logs.filter!(l => l.operation == op).array;
   }
-  override AuditLog[] findByProvider(TenantId t, string code) {
-    return store.values.filter!(l => l.tenantId == t && l.providerCode == code).array;
+
+  AuditLog[] findByOperation(TenantId tenantId, AuditOperation op) {
+    return filterfindByTenant(tenantId).filter!(l => l.operation == op).array;
   }
-  override AuditLog[] findByStatus(TenantId t, OperationStatus s) {
-    return store.values.filter!(l => l.tenantId == t && l.status == s).array;
+
+  size_t countByProvider(TenantId tenantId, string code) {
+    return findByTenant(tenantId).filter!(l => l.providerCode == code).length;
   }
-  override AuditLog[] findByDateRange(TenantId t, string from_, string to_) {
-    return store.values.filter!(l =>
-      l.tenantId == t &&
+
+  AuditLog[] findByProvider(TenantId tenantId, string code) {
+    return findByTenant(tenantId).filter!(l => l.providerCode == code).array;
+  }
+  
+  size_t countByStatus(TenantId tenantId, OperationStatus s) {
+    return findByTenant(tenantId).filter!(l => l.status == s).length;
+  }
+
+  AuditLog[] findByStatus(TenantId tenantId, OperationStatus s) {
+    return findByTenant(tenantId).filter!(l => l.status == s).array;
+  }
+  
+  size_t countByDateRange(TenantId tenantId, string from_, string to_) {
+    return findByTenant(tenantId).filter!(l =>
+      l.fromDate >= from_ &&
+      (to_.length == 0 || l.toDate <= to_)
+    ).length;
+  }
+
+  AuditLog[] findByDateRange(TenantId tenantId, string from_, string to_) {
+    return findByTenant(tenantId).filter!(l =>
       l.fromDate >= from_ &&
       (to_.length == 0 || l.toDate <= to_)
     ).array;
-  }
 }

@@ -13,10 +13,6 @@ mixin(ShowModule!());
 @safe:
 interface ITrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId) {
   
-  bool existsById(TenantId tenantId, TrainingJobId id, ClientId clientId);
-  TrainingJob findById(TenantId tenantId, TrainingJobId id, ClientId clientId);
-  void removeById(TenantId tenantId, TrainingJobId id, ClientId clientId);
-
   size_t countByClient(TenantId tenantId, ClientId clientId);
   TrainingJob[] findByClient(TenantId tenantId, ClientId clientId);
   void removeByClient(TenantId tenantId, ClientId clientId);

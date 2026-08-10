@@ -14,4 +14,5 @@ interface IProviderRepository : ITenantRepository!(Provider, ProviderId) {
   Provider   findByCode(TenantId tenantId, string code);
   Provider[] findActive(TenantId tenantId);
   bool       codeExists(TenantId tenantId, string code);
+  
 }

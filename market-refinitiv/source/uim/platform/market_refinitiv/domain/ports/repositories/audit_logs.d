@@ -15,4 +15,5 @@ interface IAuditLogRepository : ITenantRepository!(AuditLog, AuditLogId) {
   AuditLog[] findByProvider(TenantId tenantId, string providerCode);
   AuditLog[] findByStatus(TenantId tenantId, OperationStatus status);
   AuditLog[] findByDateRange(TenantId tenantId, string fromDate, string toDate);
+  
 }

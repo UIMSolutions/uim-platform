@@ -5,23 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.ports.repositories.schemas;
 
-// import uim.platform.document_ai.domain.entities.schema;
 import uim.platform.document_ai;
 
 mixin(ShowModule!());
 
 @safe:
-interface ISchemaRepository {
-  bool existsById(SchemaId id, ClientId clientId);
-  Schema findById(SchemaId id, ClientId clientId);
+interface ISchemaRepository : ITenantRepository!(Schema, SchemaId) {
 
-  size_t countByClient(ClientId clientId);
-  Schema[] findByClient(ClientId clientId);
+  size_t countByClient(TenantId tenantId, ClientId clientId);
+  Schema[] findByClient(TenantId tenantId, ClientId clientId);
 
-  Schema[] findByDocumentType(DocumentTypeId typeId, ClientId clientId);
-  Schema[] findByStatus(SchemaStatus status, ClientId clientId);
+  Schema[] findByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
+  Schema[] findByStatus(TenantId tenantId, SchemaStatus status, ClientId clientId);
 
-  void save(Schema s);
-  void update(Schema s);
-  void remove(SchemaId id, ClientId clientId);
 }

@@ -34,7 +34,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.systemUrl = req.systemUrl;
     client.destinationName = req.destinationName;
     client.communicationArrangement = req.communicationArrangement;
-    client.supportedCategories = toMasterDataCategories(req.supportedCategories);
+    client.supportedCategories = toMasterDataCategory(req.supportedCategories);
     client.supportsInitialLoad = req.supportsInitialLoad;
     client.supportsDeltaReplication = req.supportsDeltaReplication;
     client.supportsKeyMapping = req.supportsKeyMapping;
@@ -64,7 +64,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     if (req.communicationArrangement.length > 0)
       client.communicationArrangement = req.communicationArrangement;
     if (req.supportedCategories.length > 0)
-      client.supportedCategories = toMasterDataCategories(req.supportedCategories);
+      client.supportedCategories = toMasterDataCategory(req.supportedCategories);
     if (req.authType.length > 0)
       client.authType = req.authType;
     if (req.clientIdRef.length > 0)

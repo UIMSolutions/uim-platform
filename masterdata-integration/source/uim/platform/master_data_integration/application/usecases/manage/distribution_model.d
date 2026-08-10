@@ -35,7 +35,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     model.direction = toDistributionDirection(req.direction);
     model.sourceClientId = req.sourceClientId;
     model.targetClientIds = req.targetClientIds;
-    model.categories = toMasterDataCategories(req.categories);
+    model.categories = toMasterDataCategory(req.categories);
     model.dataModelIds = req.dataModelIds;
     model.filterRuleIds = req.filterRuleIds;
     model.autoReplicate = req.autoReplicate;

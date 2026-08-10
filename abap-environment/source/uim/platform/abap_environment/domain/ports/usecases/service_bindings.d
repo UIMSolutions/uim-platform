@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Application service for service binding CRUD.
-interface ManageServiceBindingsUseCase { 
+interface IManageServiceBindingsUseCase { 
 
   CommandResult createServiceBinding(CreateServiceBindingRequest req);
   CommandResult updateServiceBinding(UpdateServiceBindingRequest req);

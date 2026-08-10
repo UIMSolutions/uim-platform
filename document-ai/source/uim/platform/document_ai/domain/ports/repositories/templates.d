@@ -11,17 +11,10 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface ITemplateRepository {
-  bool existsById(TemplateId id, ClientId clientId);
-  Template findById(TemplateId id, ClientId clientId);
+interface ITemplateRepository : ITenantRepository!(Template, TemplateId) {
 
-  size_t countByClient(ClientId clientId);
-  Template[] findByClient(ClientId clientId);
-  Template[] findBySchema(SchemaId schemaId, ClientId clientId);
-  Template[] findByDocumentType(DocumentTypeId typeId, ClientId clientId);
-  Template[] findByStatus(TemplateStatus status, ClientId clientId);
-
-  void save(Template t);
-  void update(Template t);
-  void remove(TemplateId id, ClientId clientId);
+  size_t countByClient(TenantId tenantId, ClientId clientId);
+  Template[] findByClient(TenantId tenantId, ClientId clientId);
+  Template[] findBySchema(TenantId tenantId, SchemaId schemaId, ClientId clientId);
+  
 }
