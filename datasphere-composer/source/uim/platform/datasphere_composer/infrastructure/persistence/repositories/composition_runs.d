@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 class CompositionRunRepository
     : TenantRepository!(CompositionRun, CompositionRunId),
-      CompositionRunRepository {
+      ICompositionRunRepository {
 
   CompositionRun[] findByStatus(TenantId tenantId, CompositionRunStatus status) {
     CompositionRun[] result;

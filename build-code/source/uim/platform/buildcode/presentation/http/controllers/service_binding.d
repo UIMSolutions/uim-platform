@@ -17,6 +17,8 @@ class ServiceBindingController : SAPController {
   this(ManageServiceBindingsUseCase uc) { _uc = uc; }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.get   ("/api/v1/buildcode/servicebindings",   &listBindings);
     router.post  ("/api/v1/buildcode/servicebindings",   &createBinding);
     router.get   ("/api/v1/buildcode/servicebindings/*", &getBinding);
@@ -26,11 +28,8 @@ class ServiceBindingController : SAPController {
   private void listBindings(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId  = req.headers.get("X-Tenant-Id", "default");
     auto projectId = req.query.get("projectId", "");
-    ServiceBinding[] items;
-    if (projectId.length > 0)
-      items = _uc.listByProject(tenantId, projectId);
-    else
-      items = _uc.list(tenantId);
+    ServiceBinding[] items = projectId.length > 0 ? _uc.listByProject(tenantId, projectId) : _uc.list(tenantId);
+    
     auto arr = Json.emptyArray;
     foreach (sb; items) arr ~= sb.toJson();
     res.writeJsonBody(arr, cast(int) HTTPStatus.ok);

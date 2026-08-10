@@ -9,6 +9,7 @@ import uim.platform.datasphere_composer;
 
 @safe:
 interface ITenantUserRepository : ITenantRepository!(TenantUser, TenantUserId) {
-  TenantUser[] findByRole(TenantId tenantId, TenantUserRole role);
   TenantUser findByEmail(TenantId tenantId, string email);
+
+  TenantUser[] findByRole(TenantId tenantId, TenantUserRole role);
 }

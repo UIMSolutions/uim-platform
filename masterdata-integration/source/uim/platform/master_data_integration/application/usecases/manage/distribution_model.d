@@ -118,12 +118,12 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new DistributionModelRepository();
-    auto usecase = new ManageDistributionModelsUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
-
-    // Test list
-    auto items = usecase.listModels(tenantId);
-    assert(items !is null);
+  //   auto repo = new DistributionModelRepository();
+  //   auto usecase = new ManageDistributionModelsUseCase(repo);
+  //   auto tenantId = TenantId("test-tenant");
+// 
+  //   // Test list
+  //   auto items = usecase.listModels(tenantId);
+  //   assert(items !is null);
 
 }

@@ -17,7 +17,7 @@ class ManageDataProductsUseCase {
 
   CommandResult create(CreateDataProductRequest r) {
     DataProduct p;
-    p.id = DataProductId(r.id.length > 0 ? r.id : currentTimestamp());
+    p.id = DataProductId(r.id.length > 0 ? r.id.value : generateId);
     p.tenantId = TenantId(r.tenantId);
     p.providerId = DataProviderId(r.providerId);
     p.name = r.name;

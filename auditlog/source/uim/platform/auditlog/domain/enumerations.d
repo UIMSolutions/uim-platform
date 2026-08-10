@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.enumerations;
+
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
@@ -34,7 +35,7 @@ AuditCategory toAuditCategory(string value) {
   }
 }
 
-AuditCategory[] toAuditCategories(string[] values) {
+AuditCategory[] toAuditCategory(string[] values) {
   return values.map!toAuditCategory.array;
 }
 
@@ -68,7 +69,7 @@ unittest {
   assert(AuditCategory.dataAccess.toString == "audit.data-access");
   assert(AuditCategory.dataModification.toString == "audit.data-modification");
 
-  assert(["audit.security-events", "audit.data-access"].toAuditCategories == [AuditCategory.securityEvents, AuditCategory.dataAccess
+  assert(["audit.security-events", "audit.data-access"].toAuditCategory == [AuditCategory.securityEvents, AuditCategory.dataAccess
     ]);
   assert([AuditCategory.securityEvents, AuditCategory.dataAccess].toStrings == ["audit.security-events", "audit.data-access"
     ]);
@@ -87,7 +88,7 @@ AuditSeverity toAuditSeverity(string value) {
   mixin(EnumSwitch("AuditSeverity", "info"));
 }
 
-AuditSeverity[] toAuditSeverities(string[] values) {
+AuditSeverity[] toAuditSeverity(string[] values) {
   return values.map!toAuditSeverity.array;
 }
 
@@ -112,7 +113,7 @@ unittest {
   assert(AuditSeverity.error.toString == "error");
   assert(AuditSeverity.critical.toString == "critical");
 
-  assert(toAuditSeverities(["info", "error"]) == [AuditSeverity.info, AuditSeverity.error
+  assert(toAuditSeverity(["info", "error"]) == [AuditSeverity.info, AuditSeverity.error
     ]);
   assert([AuditSeverity.info, AuditSeverity.error].toStrings == ["info", "error"
     ]);
@@ -186,7 +187,7 @@ AuditAction toAuditAction(string value) {
   }
 }
 
-AuditAction[] toAuditActions(string[] values) {
+AuditAction[] toAuditAction(string[] values) {
   return values.map!toAuditAction.array;
 }
 
@@ -242,7 +243,7 @@ unittest {
   assert(AuditAction.mfaEnroll.toString == "mfaEnroll");
   assert(AuditAction.mfaVerify.toString == "mfaVerify");
 
-  assert(["create", "login"].toAuditActions == [AuditAction.create, AuditAction.login
+  assert(["create", "login"].toAuditAction == [AuditAction.create, AuditAction.login
     ]);
   assert([AuditAction.create, AuditAction.login].toStrings == ["create", "login"
     ]);
@@ -260,7 +261,7 @@ AuditOutcome toAuditOutcome(string value) {
   mixin(EnumSwitch("AuditOutcome", "success"));
 }
 
-AuditOutcome[] toAuditOutcomes(string[] values) {
+AuditOutcome[] toAuditOutcome(string[] values) {
   return values.map!toAuditOutcome.array;
 }
 
@@ -285,7 +286,7 @@ unittest {
   assert(AuditOutcome.denied.toString == "denied");
   assert(AuditOutcome.error.toString == "error");
 
-  assert(["success", "failure"].toAuditOutcomes == [AuditOutcome.success, AuditOutcome.failure
+  assert(["success", "failure"].toAuditOutcome == [AuditOutcome.success, AuditOutcome.failure
     ]);
   assert([AuditOutcome.success, AuditOutcome.failure].toStrings == ["success", "failure"
     ]);
@@ -302,7 +303,7 @@ RetentionStatus toRetentionStatus(string value) {
   mixin(EnumSwitch("RetentionStatus", "active"));
 }
 
-RetentionStatus[] toRetentionStatuses(string[] values) {
+RetentionStatus[] toRetentionStatus(string[] values) {
   return values.map!toRetentionStatus.array;
 }
 
@@ -325,7 +326,7 @@ unittest {
   assert(RetentionStatus.inactive.toString == "inactive");
   assert(RetentionStatus.expired.toString == "expired");
 
-  assert(["active", "expired"].toRetentionStatuses == [RetentionStatus.active, RetentionStatus.expired
+  assert(["active", "expired"].toRetentionStatus == [RetentionStatus.active, RetentionStatus.expired
     ]);
   assert([RetentionStatus.active, RetentionStatus.expired].toStrings == ["active", "expired"
     ]);
@@ -343,7 +344,7 @@ ExportStatus toExportStatus(string value) {
   mixin(EnumSwitch("ExportStatus", "pending"));
 }
 
-ExportStatus[] toExportStatuses(string[] values) {
+ExportStatus[] toExportStatus(string[] values) {
   return values.map!toExportStatus.array;
 }
 
@@ -368,7 +369,7 @@ unittest {
   assert(ExportStatus.completed.toString == "completed");
   assert(ExportStatus.failed.toString == "failed");
 
-  assert(["pending", "completed"].toExportStatuses == [ExportStatus.pending, ExportStatus.completed
+  assert(["pending", "completed"].toExportStatus == [ExportStatus.pending, ExportStatus.completed
     ]);
   assert([ExportStatus.pending, ExportStatus.completed].toStrings == ["pending", "completed"
     ]);
@@ -384,7 +385,7 @@ ExportFormat toExportFormat(string value) {
   mixin(EnumSwitch("ExportFormat", "json"));
 }
 
-ExportFormat[] toExportFormats(string[] values) {
+ExportFormat[] toExportFormat(string[] values) {
   return values.map!toExportFormat.array;
 }
 
@@ -405,7 +406,7 @@ unittest {
   assert(ExportFormat.json.toString == "json");
   assert(ExportFormat.csv.toString == "csv");
 
-  assert(["json", "csv"].toExportFormats == [ExportFormat.json, ExportFormat.csv
+  assert(["json", "csv"].toExportFormat == [ExportFormat.json, ExportFormat.csv
     ]);
   assert([ExportFormat.json, ExportFormat.csv].toStrings == ["json", "csv"]);
 }
@@ -420,7 +421,7 @@ ConfigStatus toConfigStatus(string value) {
   mixin(EnumSwitch("ConfigStatus", "enabled"));
 }
 
-ConfigStatus[] toConfigStatuses(string[] values) {
+ConfigStatus[] toConfigStatus(string[] values) {
   return values.map!toConfigStatus.array;
 }
 
@@ -441,7 +442,7 @@ unittest {
   assert(ConfigStatus.enabled.toString == "enabled");
   assert(ConfigStatus.disabled.toString == "disabled");
 
-  assert(["enabled", "disabled"].toConfigStatuses == [ConfigStatus.enabled, ConfigStatus.disabled
+  assert(["enabled", "disabled"].toConfigStatus == [ConfigStatus.enabled, ConfigStatus.disabled
     ]);
   assert([ConfigStatus.enabled, ConfigStatus.disabled].toStrings == ["enabled", "disabled"
     ]);

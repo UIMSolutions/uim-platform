@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 class DataProviderRepository
     : TenantRepository!(DataProvider, DataProviderId),
-      DataProviderRepository {
+      IDataProviderRepository {
 
   DataProvider[] findByStatus(TenantId tenantId, DataProviderStatus status) {
     DataProvider[] result;

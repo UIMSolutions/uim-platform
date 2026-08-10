@@ -298,7 +298,7 @@ ExportStatus toExportStatus(string value) {
   mixin(EnumSwitch("ExportStatus", "pending"));
 }
 
-ExportStatus[] toExportStatuses(string[] statuses)
+ExportStatus[] toExportStatus(string[] statuses)
   => statuses.map!toExportStatus.array;
 
 string toString(ExportStatus status)
@@ -330,7 +330,7 @@ unittest {
   assert(ExportStatus.failed.toString == "failed");
   assert(ExportStatus.cancelled.toString == "cancelled");
 
-  assert(["pending", "completed"].toExportStatuses == [ExportStatus.pending, ExportStatus.completed
+  assert(["pending", "completed"].toExportStatus == [ExportStatus.pending, ExportStatus.completed
     ]);
   assert([ExportStatus.pending, ExportStatus.completed].toStrings == ["pending", "completed"]);
 }

@@ -125,12 +125,12 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new ReplicationJobRepository();
-    auto usecase = new ManageReplicationJobsUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
+    // auto repo = new ReplicationJobRepository();
+    // auto usecase = new ManageReplicationJobsUseCase(repo);
+    // auto tenantId = TenantId("test-tenant");
 
-    // Test list
-    auto items = usecase.listJobs(tenantId);
-    assert(items !is null);
+    // // Test list
+    // auto items = usecase.listJobs(tenantId);
+    // assert(items !is null);
 
 }

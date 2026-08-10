@@ -18,7 +18,7 @@ class AIRequestRepository : TenantRepository!(AIRequest, AIRequestId), IAIReques
   }
 
   AIRequest[] filterByProject(AIRequest[] requests, string projectId) {
-    return requests.filter!(r => r.projectId.value == projectId).array
+    return requests.filter!(r => r.projectId.value == projectId).array;
   }
 
   AIRequest[] findByProject(TenantId tenantId, string projectId) {

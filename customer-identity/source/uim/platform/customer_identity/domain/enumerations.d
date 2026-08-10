@@ -335,7 +335,7 @@ enum AuditAction {
 AuditAction toAuditAction(string value) {
     mixin(EnumSwitch("AuditAction", "register"));
 }
-AuditAction[] toAuditActions(string[] values) {
+AuditAction[] toAuditAction(string[] values) {
     return values.map!(toAuditAction).array;
 }
 string toString(AuditAction action) {
@@ -367,7 +367,7 @@ unittest {
     assert("".toAuditAction == AuditAction.register);
     assert("unknown".toAuditAction == AuditAction.register);
 
-    assert(["register", "login"].toAuditActions == [AuditAction.register, AuditAction.login]);
+    assert(["register", "login"].toAuditAction == [AuditAction.register, AuditAction.login]);
 
     assert(AuditAction.register.toString == "register");
     assert(AuditAction.login.toString == "login");

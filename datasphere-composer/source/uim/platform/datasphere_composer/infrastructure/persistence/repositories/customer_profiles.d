@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 class CustomerProfileRepository
     : TenantRepository!(CustomerProfile, CustomerProfileId),
-      CustomerProfileRepository {
+      ICustomerProfileRepository {
 
   CustomerProfile[] findByEmail(TenantId tenantId, string email) {
     CustomerProfile[] result;

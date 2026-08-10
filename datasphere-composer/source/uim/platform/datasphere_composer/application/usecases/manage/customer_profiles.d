@@ -20,15 +20,15 @@ class ManageCustomerProfilesUseCase {
   }
 
   CustomerProfile getById(TenantId tenantId, string id) {
-    return repo.findById(TenantId(tenantId), CustomerProfileId(id));
+    return repo.findById(tenantId, CustomerProfileId(id));
   }
 
   CustomerProfile[] searchByEmail(TenantId tenantId, string email) {
-    return repo.findByEmail(TenantId(tenantId), email);
+    return repo.findByEmail(tenantId, email);
   }
 
   CustomerProfile[] searchByExternalId(TenantId tenantId, string externalId) {
-    return repo.findByExternalId(TenantId(tenantId), externalId);
+    return repo.findByExternalId(tenantId, externalId);
   }
 
   /// Used internally by composition runs to persist a unified profile.

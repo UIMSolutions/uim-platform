@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 class UnificationRuleRepository
     : TenantRepository!(UnificationRule, UnificationRuleId),
-      UnificationRuleRepository {
+      IUnificationRuleRepository {
 
   UnificationRule[] findByPriority(TenantId tenantId) {
     import std.algorithm : sort;

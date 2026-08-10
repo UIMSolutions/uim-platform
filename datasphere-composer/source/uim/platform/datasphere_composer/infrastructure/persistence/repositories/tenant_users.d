@@ -9,24 +9,41 @@ import uim.platform.datasphere_composer;
 
 mixin(ShowModule!());
 
+
 @safe:
 class TenantUserRepository
     : TenantRepository!(TenantUser, TenantUserId),
       ITenantUserRepository {
 
-  TenantUser[] findByRole(TenantId tenantId, TenantUserRole role) {
-    TenantUser[] result;
-    foreach (item; findByTenant(tenantId)) {
-      if (item.role == role) result ~= item;
-    }
-    return result;
+  bool existsByEmail(TenantId tenantId, string email) {
+    return findByTenant(tenantId).any!(user => user.email == email);
   }
 
-  TenantUser[] findByEmail(TenantId tenantId, string email) {
-    TenantUser[] result;
-    foreach (item; findByTenant(tenantId)) {
-      if (item.email == email) result ~= item;
-    }
-    return result;
+  TenantUser findByEmail(TenantId tenantId, string email) {
+    foreach(user; findByTenant(tenantId))
+      if (user.email == email) return user;
+
+    return TenantUser.init;
   }
+
+  void removeByEmail(TenantId tenantId, string email) {
+    findByEmail(tenantId, email).each!(e => remove(e));
+  }
+
+  size_t countByRule(TenantId tenantId, TenantUserRole role) {
+    return findByRule(tenantId, role).length;
+  }
+
+  TenantUser[] filterByRole(TenantUser[] users, TenantUserRole role) {
+    return users.filter!(user => user.role == role).array;
+  }
+
+  TenantUser[] findByRole(TenantId tenantId, TenantUserRole role) {
+    return filterByRole(findByTenant(tenantId), role);
+  }
+
+  void removeByRole(TenantId tenantId, TenantUserRole role) {
+    findByRule(tenantId, role).each!(e => remove(e));
+  }
+
 }

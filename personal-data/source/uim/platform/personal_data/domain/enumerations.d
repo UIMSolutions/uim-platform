@@ -778,7 +778,7 @@ ExportFormat toExportFormat(string value) {
     mixin(EnumSwitch("ExportFormat", "json"));
 }
 
-ExportFormat[] toExportFormats(string[] arr) {
+ExportFormat[] toExportFormat(string[] arr) {
     return arr.map!toExportFormat.array;
 }
 
@@ -808,5 +808,5 @@ unittest {
     assert(ExportFormat.pdf.toString == "pdf");
 
     assert([ExportFormat.json, ExportFormat.pdf].toStrings == ["json", "pdf"]);
-    assert(["json", "pdf"].toExportFormats == [ExportFormat.json, ExportFormat.pdf]);
+    assert(["json", "pdf"].toExportFormat == [ExportFormat.json, ExportFormat.pdf]);
 }

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 class AttributeMappingRepository
     : TenantRepository!(AttributeMapping, AttributeMappingId),
-      AttributeMappingRepository {
+      IAttributeMappingRepository {
 
   AttributeMapping[] findByConfig(TenantId tenantId, DataSourceConfigId configId) {
     AttributeMapping[] result;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 class DataSourceConfigRepository
     : TenantRepository!(DataSourceConfig, DataSourceConfigId),
-      DataSourceConfigRepository {
+      IDataSourceConfigRepository {
 
   DataSourceConfig[] findByProduct(TenantId tenantId, DataProductId productId) {
     DataSourceConfig[] result;
