@@ -6,9 +6,9 @@ mixin(ShowModule!());
 
 @safe:
 class DirectoryApi : IDirectoryApi {
-    private IManageDirectoriesUseCase usecase;
+    private ManageDirectoriesUseCase usecase;
 
-    this(IManageDirectoriesUseCase usecase) {
+    this(ManageDirectoriesUseCase usecase) {
         this.usecase = usecase;
     }
 
