@@ -11,12 +11,12 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface IConnectionRepository {
-  Connection findById(SpaceId spaceId, ConnectionId id);
-  Connection[] findBySpace(SpaceId spaceId);
-  Connection[] findByType(SpaceId spaceId, ConnectionType type);
-  void save(Connection c);
-  void update(Connection c);
-  void remove(SpaceId spaceId, ConnectionId id);
-  size_t countBySpace(SpaceId spaceId);
+interface IConnectionRepository : ITenantRepository!(Connection, ConnectionId) {
+
+  Connection findById(TenantId tenantId, SpaceId spaceId, ConnectionId id);
+  Connection[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  Connection[] findByType(TenantId tenantId, SpaceId spaceId, ConnectionType type);
+
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+
 }

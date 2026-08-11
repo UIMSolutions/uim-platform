@@ -19,7 +19,7 @@ struct FlowSource {
     return Json.emptyObject
       .set("objectId", objectId)
       .set("objectType", objectType)
-      .set("columns", columns);
+      .set("columns", columns.toJson);
   }
 }
 

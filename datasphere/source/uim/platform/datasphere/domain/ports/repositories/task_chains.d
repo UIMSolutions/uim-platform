@@ -11,12 +11,9 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface ITaskChainRepository {
-  TaskChain findById(SpaceId spaceId, TaskChainId id);
-  TaskChain[] findBySpace(SpaceId spaceId);
-  TaskChain[] findByStatus(SpaceId spaceId, TaskStatus status);
-  void save(TaskChain tc);
-  void update(TaskChain tc);
-  void remove(SpaceId spaceId, TaskChainId id);
-  size_t countBySpace(SpaceId spaceId);
+interface ITaskChainRepository : ITenantRepository!(TaskChain, TaskChainId) {
+  TaskChain findById(TenantId tenantId, SpaceId spaceId, TaskChainId id);
+  TaskChain[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  TaskChain[] findByStatus(TenantId tenantId, SpaceId spaceId, TaskStatus status);
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
 }

@@ -41,16 +41,16 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, c.id.value, "");
   }
 
-  Connection getConnection(ConnectionId id, SpaceId spaceId) {
-    return repo.findById(spaceId, id);
+  Connection getConnection(TenantId tenantId, SpaceId spaceId, ConnectionId id) {
+    return repo.findById(tenantId, spaceId, id);
   }
 
-  Connection[] listConnections(SpaceId spaceId) {
-    return repo.findBySpace(spaceId);
+  Connection[] listConnections(TenantId tenantId, SpaceId spaceId) {
+    return repo.findBySpace(tenantId, spaceId);
   }
 
   CommandResult updateConnection(UpdateConnectionRequest r) {
-    auto connection = repo.findById(r.spaceId, r.connectionId);
+    auto connection = repo.findById(r.tenantId, r.spaceId, r.connectionId);
     if (connection.isNull)
       return CommandResult(false, "", "Connection not found");
 
@@ -60,16 +60,14 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     connection.port = r.port;
     connection.database = r.database;
     connection.user = r.user;
-
-    
     connection.updatedAt = currentTimestamp;
 
     repo.update(connection);
     return CommandResult(true, connection.id.value, "");
   }
 
-  CommandResult deleteConnection(ConnectionId id, SpaceId spaceId) {
-    auto connection = repo.findById(spaceId, id);
+  CommandResult deleteConnection(TenantId tenantId, SpaceId spaceId, ConnectionId id) {
+    auto connection = repo.findById(tenantId, spaceId, id);
     if (connection.isNull)
       return CommandResult(false, "", "Connection not found");
 

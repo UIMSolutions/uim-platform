@@ -22,6 +22,7 @@ class ViewController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/datasphere/views", &handleList);
     router.get("/api/v1/datasphere/views/*", &handleGet);
     router.post("/api/v1/datasphere/views", &handleCreate);
@@ -52,11 +53,11 @@ class ViewController : ManageHttpController {
     // r.createdAt = now;
     // r.updatedAt = now;
 
-    auto result = usecase.create(r);
+    auto result = usecase.createView(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto resp = Json.emptyObject.set("id", result.id);
-
     return successResponse("View created successfully", "Created", 201, resp);
   }
 
@@ -67,7 +68,7 @@ class ViewController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-    auto views = usecase.list(spaceId);
+    auto views = usecase.listViews(tenantId, spaceId);
 
     auto list = Json.emptyArray;
     foreach (v; views) {
@@ -81,8 +82,6 @@ class ViewController : ManageHttpController {
         .set("rowCount", v.rowCount)
         .set("createdAt", v.createdAt);
     }
-
-    auto list = items.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
@@ -101,7 +100,7 @@ class ViewController : ManageHttpController {
       return errorResponse("Invalid view ID", 400);
 
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-    auto v = usecase.getById(spaceId, id);
+    auto v = usecase.getView(tenantId, spaceId, id);
     if (v.isNull)
       return errorResponse("View not found", 404);
 
@@ -139,9 +138,9 @@ class ViewController : ManageHttpController {
     r
       .isExposed = data.getBoolean("isExposed", false);
     r.isPersisted = data.getBoolean(  "isPersisted", false);
-    auto result = usecase.update(r);
+    auto result = usecase.updateView(r);
     if (result.hasError)
-      return errorResponse(    result.message, 400);
+      return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("View updated successfully", 200, resp);
@@ -153,16 +152,16 @@ class ViewController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto spaceId = SpaceId(  req.headers.get("X-Space-Id", ""));
+    auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
     auto id = ViewId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid view ID", 400);
 
-    auto result = usecase.deleteView(spaceId, id);
+    auto result = usecase.deleteView(tenantId, spaceId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("View deleted successfully", 204, responseData);
   }
 }

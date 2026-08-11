@@ -16,10 +16,10 @@ struct CriteriaCondition {
   string[] values;
 
   Json toJson() const {
-    return Json(["column": column,
-      "operator": operator,
-      "values": values
-    ]);
+    return Json.emptyObject
+      .set("column", column)
+      .set("operator", operator)
+      .set("values", values.toJson);
   }
 }
 
@@ -42,8 +42,8 @@ struct DataAccessControl {
       .set("description", description)
       .set("criteriaType", criteriaType.to!string)
       .set("conditions", conditions.map!(c => c.toJson()).array.toJson)
-      .set("targetViewIds", targetViewIds)
-      .set("assignedUserIds", assignedUserIds)
+      .set("targetViewIds", targetViewIds.map!(id => id.value).array.toJson)
+      .set("assignedUserIds", assignedUserIds.map!(id => id.value).array.toJson)
       .set("isEnabled", isEnabled);
   }
 }

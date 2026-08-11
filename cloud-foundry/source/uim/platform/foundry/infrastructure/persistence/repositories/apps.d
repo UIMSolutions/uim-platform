@@ -35,10 +35,6 @@ class AppRepository : TenantRepository!(Application, AppId), IAppRepository {
     return findBySpace(tenantId, spaceId).length;
   }
 
-  Application[] filterBySpace(Application[] apps, SpaceId spaceId) {
-    return apps.filter!(e => e.spaceId == spaceId).array;
-  }
-
   Application[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return filterBySpace(findByTenant(tenantId), spaceId);
   }

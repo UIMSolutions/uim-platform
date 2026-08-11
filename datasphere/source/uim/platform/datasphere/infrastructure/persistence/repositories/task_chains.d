@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.datasphere.infrastructure.persistence.repositories.task_chain;
+module uim.platform.datasphere.infrastructure.persistence.repositories.task_chains;
 
 // import uim.platform.datasphere.domain.entities.task_chain;
 // import uim.platform.datasphere.domain.ports.repositories.task_chains;
@@ -45,9 +45,20 @@ class TaskChainRepository : TenantRepository!(TaskChain, TaskChainId), ITaskChai
   }
   // #endregion BySpace
 
-  TaskChain[] findByStatus(SpaceId spaceId, TaskStatus status) {
-    if (spaceId in store)
-      return store[spaceId].filter!(tc => tc.status == status).array;
-    return null;
+  size_t countByStatus(TenantId tenantId, SpaceId spaceId, TaskStatus status) {
+    return findByStatus(tenantId, spaceId, status).length;
   }
+
+  TaskChain[] filterByStatus(TaskChain[] chains, TaskStatus status) {
+    return chains.filter!(tc => tc.status == status).array;
+  }
+
+  TaskChain[] findByStatus(TenantId tenantId, SpaceId spaceId, TaskStatus status) {
+    return filterByStatus(findBySpace(tenantId, spaceId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, SpaceId spaceId, TaskStatus status) {
+    findByStatus(tenantId, spaceId, status).each!(tc => remove(tc));
+  }
+
 }

@@ -62,7 +62,7 @@ class TaskChainController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-    auto chains = usecase.listTaskChains(spaceId);
+    auto chains = usecase.listTaskChains(tenantId, spaceId);
     auto list = Json.emptyArray;
     foreach (tc; chains) {
       list ~= Json.emptyObject
@@ -92,7 +92,7 @@ class TaskChainController : ManageHttpController {
 
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-    auto tc = usecase.getTaskChain(spaceId, id);
+    auto tc = usecase.getTaskChain(tenantId, spaceId, id);
     if (tc.isNull)
       return errorResponse("Task chain not found", 404);
 

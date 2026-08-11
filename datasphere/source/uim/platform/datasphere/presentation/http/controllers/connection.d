@@ -78,8 +78,6 @@ class ConnectionController : ManageHttpController {
         .set("updatedAt", c.updatedAt);
     }
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
-
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
@@ -93,6 +91,9 @@ class ConnectionController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ConnectionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid connection ID", 400);
+      
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
     auto c = usecase.getConnection(tenantId, spaceId, id);
@@ -131,6 +132,6 @@ class ConnectionController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Connection deleted successfully", 204, Json.emptyObject);
+    return successResponse("Connection deleted successfully", 204, responseData);
   }
 }

@@ -17,9 +17,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTasksUseCase { // TODO: UIMUseCase {
-  private TaskRepository tasks;
+  private ITaskRepository tasks;
 
-  this(TaskRepository tasks) {
+  this(ITaskRepository tasks) {
     this.tasks = tasks;
   }
 
@@ -43,16 +43,16 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, t.id.value, "");
   }
 
-  DSTask getTask(SpaceId spaceId, TaskId id) {
-    return tasks.findById(spaceId, id);
+  DSTask getTask(TenantId tenantId, SpaceId spaceId, TaskId id) {
+    return tasks.findById(tenantId, spaceId, id);
   }
 
-  DSTask[] listTasks(SpaceId spaceId) {
-    return tasks.findBySpace(spaceId);
+  DSTask[] listTasks(TenantId tenantId, SpaceId spaceId) {
+    return tasks.findBySpace(tenantId, spaceId);
   }
 
   CommandResult patchTask(PatchTaskRequest r) {
-    auto task = tasks.findById(r.spaceId, r.taskId);
+    auto task = tasks.findById(r.tenantId, r.spaceId, r.taskId);
     if (task.isNull)
       return CommandResult(false, "", "Task not found");
 
@@ -63,8 +63,8 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, task.id.value, "");
   }
 
-  CommandResult deleteTask(SpaceId spaceId, TaskId id) {
-    auto task = tasks.findById(spaceId, id);
+  CommandResult deleteTask(TenantId tenantId, SpaceId spaceId, TaskId id) {
+    auto task = tasks.findById(tenantId, spaceId, id);
     if (task.isNull)
       return CommandResult(false, "", "Task not found");
 

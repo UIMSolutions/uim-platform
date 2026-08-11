@@ -19,13 +19,13 @@ struct ViewColumn {
   bool isMeasure;
 
   Json toJson() const {
-    return Json(["name": name,
-      "dataType": dataType,
-      "semanticType": semanticType,
-      "description": description,
-      "isKey": isKey,
-      "isMeasure": isMeasure
-    ]);
+    return Json.emptyObject
+    .set("name", name)
+    .set("dataType", dataType)
+    .set("semanticType", semanticType)
+    .set("description", description)
+    .set("isKey", isKey)
+    .set("isMeasure", isMeasure);
   }
 }
 
@@ -35,10 +35,10 @@ struct ViewAssociation {
   string[] onColumns;
 
   Json toJson() const {
-    return Json(["targetViewId": targetViewId,
-      "joinType": joinType,
-      "onColumns": onColumns
-    ]);
+    return Json.emptyObject
+      .set("targetViewId", targetViewId)
+      .set("joinType", joinType)
+      .set("onColumns", onColumns.toJson);
   }
 }
 

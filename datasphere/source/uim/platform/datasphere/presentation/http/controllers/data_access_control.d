@@ -44,9 +44,8 @@ class DataAccessControlController : ManageHttpController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.criteriaType = data.getString("criteriaType");
-    r.targetViewIds = data.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array.toJson;
-    r.assignedUserIds = data.getArray("assignedUserIds")
-      .map!(v => UserId(v.to!string)).array.toJson;
+    r.targetViewIds = data.getArray("targetViewIds").map!(v => ViewId(v.toString)).array;
+    r.assignedUserIds = data.getArray("assignedUserIds").map!(v => UserId(v.to!string)).array;
 
     auto result = usecase.createDataAccessControl(r);
     if (result.hasError)
@@ -75,8 +74,6 @@ class DataAccessControlController : ManageHttpController {
         .set("createdAt", dac.createdAt);
     }
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
-
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
@@ -96,10 +93,9 @@ class DataAccessControlController : ManageHttpController {
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
     auto dac = usecase
       .getDataAccessControl(tenantId, spaceId, id);
-    if (dac.isNull) {
-      writeError(res, 404, "Data access control not found");
-      return;
-    }
+    if (dac.isNull) 
+      return errorResponse("Data access control not found", 404);
+    
 
     auto resp = Json.emptyObject
       .set("id", dac.id)

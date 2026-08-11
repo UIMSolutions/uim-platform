@@ -15,9 +15,9 @@ struct CatalogTag {
   string value;
 
   Json toJson() const {
-    return Json(["key": key,
-      "value": value
-    ]);
+    return Json.emptyObject
+      .set("key", key)
+      .set("value", value);
   }
 }
 
@@ -46,7 +46,7 @@ struct CatalogAsset {
       .set("qualityStatus", qualityStatus.to!string)
       .set("sourceObjectId", sourceObjectId)
       .set("tags", tags.map!(t => t.toJson()).array.toJson)
-      .set("glossaryTerms", glossaryTerms)
+      .set("glossaryTerms", glossaryTerms.toJson)
       .set("owner", owner)
       .set("accessCount", accessCount);
   }

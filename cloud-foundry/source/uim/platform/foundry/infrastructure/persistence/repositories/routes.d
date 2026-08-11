@@ -77,10 +77,6 @@ class RouteRepository : TenantRepository!(Route, RouteId), IRouteRepository {
     return findBySpace(tenantId, spaceId).length;
   }
 
-  Route[] filterBySpace(Route[] routes, SpaceId spaceId) {
-    return routes.filter!(e => e.spaceId == spaceId).array;
-  }
-
   Route[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return filterBySpace(findByTenant(tenantId), spaceId);
   }

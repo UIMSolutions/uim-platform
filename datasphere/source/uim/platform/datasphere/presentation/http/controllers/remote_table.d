@@ -79,8 +79,6 @@ class RemoteTableController : ManageHttpController {
         .set("createdAt", rt.createdAt);
     }
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
-
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
@@ -99,7 +97,7 @@ class RemoteTableController : ManageHttpController {
 
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-    auto rt = usecase.getRemoteTableById(tenantId, spaceId, id);
+    auto rt = usecase.getRemoteTable(tenantId, spaceId, id);
     if (rt.isNull)
       return errorResponse("Remote table not found", 404);
 

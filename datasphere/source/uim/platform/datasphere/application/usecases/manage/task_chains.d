@@ -5,10 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere.application.usecases.manage.task_chains;
 
-// import uim.platform.datasphere.domain.entities.task_chain;
-// import uim.platform.datasphere.domain.ports.repositories.task_chains;
-// import uim.platform.datasphere.application.dto;
-
 import uim.platform.datasphere;
 
 mixin(ShowModule!()); 
@@ -38,28 +34,27 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, tc.id.value, "");
   }
 
-  TaskChain getTaskChain(SpaceId spaceId, TaskChainId id) {
-    return repo.findById(spaceId, id);
+  TaskChain getTaskChain(TenantId tenantId, SpaceId spaceId, TaskChainId id) {
+    return repo.findById(tenantId, spaceId, id);
   }
 
-  TaskChain[] listTaskChains(SpaceId spaceId) {
-    return repo.findBySpace(spaceId);
+  TaskChain[] listTaskChains(TenantId tenantId, SpaceId spaceId) {
+    return repo.findBySpace(tenantId, spaceId);
   }
 
   CommandResult patchTaskChain(PatchTaskChainRequest r) {
-    auto chain = repo.findById(r.spaceId, r.taskChainId);
+    auto chain = repo.findById(r.tenantId, r.spaceId, r.taskChainId);
     if (chain.isNull)
       return CommandResult(false, "", "Task chain not found");
 
-    
     chain.updatedAt = currentTimestamp;
 
     repo.update(chain);
     return CommandResult(true, chain.id.value, "");
   }
 
-  CommandResult deleteTaskChain(SpaceId spaceId, TaskChainId id) {
-    auto chain = repo.findById(spaceId, id);
+  CommandResult deleteTaskChain(TenantId tenantId, SpaceId spaceId, TaskChainId id) {
+    auto chain = repo.findById(tenantId, spaceId, id);
     if (chain.isNull)
       return CommandResult(false, "", "Task chain not found");
 

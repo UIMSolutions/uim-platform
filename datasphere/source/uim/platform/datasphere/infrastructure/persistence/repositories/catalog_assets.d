@@ -10,7 +10,7 @@ module uim.platform.datasphere.infrastructure.persistence.repositories.catalog_a
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 
@@ -38,46 +38,39 @@ class CatalogAssetRepository : TenantRepository!(CatalogAsset, CatalogAssetId), 
   size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
     return findBySpace(tenantId, spaceId).length;
   }
+
   CatalogAsset[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return filterBySpace(findByTenant(tenantId), spaceId);
   }
+
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(ca => remove(ca));
   }
   // #endregion BySpace
 
+  size_t countByType(TenantId tenantId, SpaceId spaceId, AssetType type) {
+    return findByType(tenantId, spaceId, type).length;
+  }
+
+  CatalogAsset[] filterByType(CatalogAsset[] assets, AssetType type) {
+    return assets.filter!(ca => ca.assetType == type).array;
+  }
 
   CatalogAsset[] findByType(TenantId tenantId, SpaceId spaceId, AssetType type) {
-    if (spaceId in store)
-      return store[spaceId].filter!(ca => ca.assetType == type).array;
-    return null;
+    return filterByType(findBySpace(tenantId, spaceId), type);
+  }
+
+  void removeByType(TenantId tenantId, SpaceId spaceId, AssetType type) {
+    findByType(tenantId, spaceId, type).each!(ca => remove(ca));
   }
 
   CatalogAsset[] search(TenantId tenantId, SpaceId spaceId, string query) {
-    if (spaceId in store) {
-      auto q = query.toLower;
-      return store[spaceId].filter!(ca =>
+    auto q = query.toLower;
+    return findBySpace(tenantId, spaceId).filter!(ca =>
         ca.name.toLower.canFind(q) ||
         ca.description.toLower.canFind(q) ||
         ca.businessName.toLower.canFind(q)
-      ).array;
-    }
-    return null;
-  }
-
-  void save(TenantId tenantId, CatalogAsset ca) {
-    store[ca.spaceId] ~= ca;
-  }
-
-  void update(TenantId tenantId, CatalogAsset ca) {
-    if (ca.spaceId in store) {
-      foreach (existing; store[ca.spaceId]) {
-        if (existing.id == ca.id) {
-          existing = ca;
-          return;
-        }
-      }
-    }
+    ).array;
   }
 
 }

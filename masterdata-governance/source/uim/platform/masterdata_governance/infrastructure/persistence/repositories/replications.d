@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ReplicationRepository
-    : TenantRepository!(Replication, ReplicationId), ReplicationRepository {
+    : TenantRepository!(Replication, ReplicationId), IReplicationRepository {
 
     size_t countByStatus(TenantId tenantId, ReplicationStatus status) {
         return findByStatus(tenantId, status).length;

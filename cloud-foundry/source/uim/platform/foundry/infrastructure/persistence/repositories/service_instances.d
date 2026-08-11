@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.repositories.service_instances;
 
-
 // import uim.platform.foundry.domain.entities.service_instance;
 // import uim.platform.foundry.domain.ports.repositories.service_instance;
 
@@ -37,10 +36,6 @@ class ServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInst
     return findBySpace(tenantId, spaceId).length;
   }
 
-  ServiceInstance[] filterBySpace(ServiceInstance[] instances, SpaceId spaceId) {
-    return instances.filter!(e => e.spaceId == spaceId).array;
-  }
-
   ServiceInstance[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return filterBySpace(findByTenant(tenantId), spaceId);
   }
@@ -69,5 +64,5 @@ class ServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInst
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new ServiceInstanceRepository()));
+  assert(tenantRepositoryTest(new ServiceInstanceRepository()));
 }

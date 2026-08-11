@@ -37,17 +37,30 @@ class RemoteTableRepository : TenantRepository!(RemoteTable, RemoteTableId), IRe
   size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
     return findBySpace(tenantId, spaceId).length;
   }
+
   RemoteTable[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return filterBySpace(findByTenant(tenantId), spaceId);
   }
+  
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(rt => remove(rt));
   }
   // #endregion BySpace
 
+  size_t countByConnection(TenantId tenantId, SpaceId spaceId, ConnectionId connId) {
+    return findByConnection(tenantId, spaceId, connId).length;
+  }
+
+  RemoteTable[] filterByConnection(RemoteTable[] remoteTables, ConnectionId connId) {
+    return remoteTables.filter!(rt => rt.connectionId == connId).array;
+  }
+
   RemoteTable[] findByConnection(TenantId tenantId, SpaceId spaceId, ConnectionId connId) {
-    return findByTenant(tenantId).filter!(rt => rt.spaceId == spaceId && rt.connectionId == connId)
-      .array;
+    return filterByConnection(findBySpace(tenantId, spaceId), connId);
+  }
+
+  void removeByConnection(TenantId tenantId, SpaceId spaceId, ConnectionId connId) {
+    findByConnection(tenantId, spaceId, connId).each!(rt => remove(rt));
   }
 
 }

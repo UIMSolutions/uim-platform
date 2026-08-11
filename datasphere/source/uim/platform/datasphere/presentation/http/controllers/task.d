@@ -80,8 +80,6 @@ class TaskController : ManageHttpController {
         .set("createdAt", t.createdAt);
     }
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
-
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
@@ -98,7 +96,7 @@ class TaskController : ManageHttpController {
     auto id = TaskId(precheck.id);
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
-    auto t = usecase.getTaskById(tenantId, spaceId, id);
+    auto t = usecase.getTask(tenantId, spaceId, id);
     if (t.isNull) {
       return errorResponse("Task not found", 404);
     }

@@ -13,6 +13,8 @@ mixin(ShowModule!());
 @safe:
 interface ITaskRepository : ITenantRepository!(DSTask, TaskId) {
 
+  DSTask findById(TenantId tenantId, SpaceId spaceId, TaskId taskId);
+
   size_t countBySpace(TenantId tenantId, SpaceId spaceId);
   DSTask[] findBySpace(TenantId tenantId, SpaceId spaceId);
 

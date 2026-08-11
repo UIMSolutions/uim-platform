@@ -42,20 +42,20 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, ca.id.value, "");
   }
 
-  CatalogAsset getCatalogAssetById(SpaceId spaceId, CatalogAssetId id) {
-    return repo.findById(spaceId, id);
+  CatalogAsset getCatalogAsset(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
+    return repo.findById(tenantId, spaceId, id);
   }
 
-  CatalogAsset[] listCatalogAssets(SpaceId spaceId) {
-    return repo.findBySpace(spaceId);
+  CatalogAsset[] listCatalogAssets(TenantId tenantId, SpaceId spaceId) {
+    return repo.findBySpace(tenantId, spaceId);
   }
 
-  CatalogAsset[] searchCatalogAssets(SpaceId spaceId, string query) {
-    return repo.search(spaceId, query);
+  CatalogAsset[] searchCatalogAssets(TenantId tenantId, SpaceId spaceId, string query) {
+    return repo.search(tenantId, spaceId, query);
   }
 
   CommandResult updateCatalogAsset(UpdateCatalogAssetRequest r) {
-    auto asset = repo.findById(r.spaceId, r.assetId);
+    auto asset = repo.findById(r.tenantId, r.spaceId, r.assetId);
     if (asset.isNull)
       return CommandResult(false, "", "Catalog asset not found");
 
@@ -72,8 +72,8 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, asset.id.value, "");
   }
 
-  CommandResult deleteCatalogAsset(SpaceId spaceId, CatalogAssetId id) {
-    auto asset = repo.findById(spaceId, id);
+  CommandResult deleteCatalogAsset(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
+    auto asset = repo.findById(tenantId, spaceId, id);
     if (asset.isNull)
       return CommandResult(false, "", "Catalog asset not found");
 

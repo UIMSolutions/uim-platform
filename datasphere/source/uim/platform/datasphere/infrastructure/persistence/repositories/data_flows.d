@@ -3,10 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.datasphere.infrastructure.persistence.repositories.data_flow;
-
-// import uim.platform.datasphere.domain.entities.data_flow;
-// import uim.platform.datasphere.domain.ports.repositories.data_flows;
+module uim.platform.datasphere.infrastructure.persistence.repositories.data_flows;
 
 import uim.platform.datasphere;
 
@@ -16,19 +13,19 @@ mixin(ShowModule!());
 class DataFlowRepository : TenantRepository!(DataFlow, DataFlowId), IDataFlowRepository {
   
   // #region ById
-  bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
-    return findBySpace(tenantId, spaceId).any!(ca => ca.id == id);
+  bool existsById(TenantId tenantId, SpaceId spaceId, DataFlowId id) {
+    return findBySpace(tenantId, spaceId).any!(df => df.id == id);
   }
 
-  CatalogAsset findById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
-    foreach (ca; findBySpace(tenantId, spaceId)) {
-      if (ca.id == id)
-        return ca;
+  DataFlow findById(TenantId tenantId, SpaceId spaceId, DataFlowId id) {
+    foreach (df; findBySpace(tenantId, spaceId)) {
+      if (df.id == id)
+        return df;
     }
-    return CatalogAsset.init;
+    return DataFlow.init;
   }
 
-  void removeById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
+  void removeById(TenantId tenantId, SpaceId spaceId, DataFlowId id) {
     remove(findById(tenantId, spaceId, id));
   }
   // #endregion ById
@@ -45,9 +42,19 @@ class DataFlowRepository : TenantRepository!(DataFlow, DataFlowId), IDataFlowRep
   }
   // #endregion BySpace
 
-  DataFlow[] findByStatus(SpaceId spaceId, FlowStatus status) {
-    if (spaceId in store)
-      return store[spaceId].filter!(df => df.status == status).array;
-    return null;
+  size_t countByStatus(TenantId tenantId, SpaceId spaceId, FlowStatus status) {
+    return findByStatus(tenantId, spaceId, status).length;
+  }
+
+  DataFlow[] filterByStatus(DataFlow[] flows, FlowStatus status) {
+    return flows.filter!(df => df.status == status).array;
+  }
+
+  DataFlow[] findByStatus(TenantId tenantId, SpaceId spaceId, FlowStatus status) {
+    return filterByStatus(findBySpace(tenantId, spaceId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, SpaceId spaceId, FlowStatus status) {
+    findByStatus(tenantId, spaceId, status).each!(df => remove(df));
   }
 }

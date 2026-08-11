@@ -30,9 +30,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
 
     import std.uuid : randomUUID;
 
-    DataFlow df;
-    df,initEntity(r.tenantId, r.createdBy);
-
+    DataFlow df = DataFlow(r.tenantId); // r.createdBy);
     df.spaceId = r.spaceId;
     df.name = r.name;
     df.description = r.description;
@@ -43,16 +41,16 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, df.id.value, "");
   }
 
-  DataFlow getDataFlow(SpaceId spaceId, DataFlowId id) {
-    return repo.findById(spaceId, id);
+  DataFlow getDataFlow(TenantId tenantId, SpaceId spaceId, DataFlowId id) {
+    return repo.findById(tenantId, spaceId, id);
   }
 
-  DataFlow[] listDataFlows(SpaceId spaceId) {
-    return repo.findBySpace(spaceId);
+  DataFlow[] listDataFlows(TenantId tenantId, SpaceId spaceId) {
+    return repo.findBySpace(tenantId, spaceId);
   }
 
   CommandResult patchDataFlow(PatchDataFlowRequest r) {
-    auto flow = repo.findById(r.spaceId, r.dataFlowId);
+    auto flow = repo.findById(r.tenantId, r.spaceId, r.dataFlowId);
     if (flow.isNull)
       return CommandResult(false, "", "Data flow not found");
 
@@ -63,8 +61,8 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, flow.id.value, "");
   }
 
-  CommandResult deleteDataFlow(SpaceId spaceId, DataFlowId id) {
-    auto flow = repo.findById(spaceId, id);
+  CommandResult deleteDataFlow(TenantId tenantId, SpaceId spaceId, DataFlowId id) {
+    auto flow = repo.findById(tenantId, spaceId, id);
     if (flow.isNull)
       return CommandResult(false, "", "Data flow not found");
 

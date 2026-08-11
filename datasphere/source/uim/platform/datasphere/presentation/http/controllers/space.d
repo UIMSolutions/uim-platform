@@ -75,8 +75,6 @@ class SpaceController : ManageHttpController {
         .set("updatedAt", s.updatedAt);
     }
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
-
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
@@ -116,6 +114,8 @@ class SpaceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
     UpdateSpaceRequest r;
     r.tenantId = tenantId;
     r.spaceId = SpaceId(precheck.id);
@@ -146,6 +146,6 @@ class SpaceController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    res.writeJsonBody(Json.emptyObject, 204);
+    return successResponse("Space deleted successfully", 204, Json.emptyObject);
   }
 }

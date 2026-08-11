@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class DataQualityScoreRepository
-    : TenantRepository!(DataQualityScore, DataQualityScoreId), DataQualityScoreRepository {
+    : TenantRepository!(DataQualityScore, DataQualityScoreId), IDataQualityScoreRepository {
 
     DataQualityScore findByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId) {
         auto all = findByTenant(tenantId);

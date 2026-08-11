@@ -79,8 +79,6 @@ class CatalogAssetController : ManageHttpController {
         .set("createdAt", ca.createdAt);
     }
 
-    auto list = list.map!(item => item.toJson()).array.toJson;
-
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);

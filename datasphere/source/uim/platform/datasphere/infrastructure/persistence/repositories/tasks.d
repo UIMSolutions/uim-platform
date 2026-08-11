@@ -3,32 +3,29 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.datasphere.infrastructure.persistence.repositories.task;
-
-// import uim.platform.datasphere.domain.entities.task;
-// import uim.platform.datasphere.domain.ports.repositories.tasks;
+module uim.platform.datasphere.infrastructure.persistence.repositories.tasks;
 
 import uim.platform.datasphere;
 
 mixin(ShowModule!()); 
 
 @safe:
-class TaskRepository : TenantRepository!(Task, TaskId), ITaskRepository {
+class TaskRepository : TenantRepository!(DSTask, TaskId), ITaskRepository {
   
   // #region ById
-  bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
+  bool existsById(TenantId tenantId, SpaceId spaceId, TaskId id) {
     return findBySpace(tenantId, spaceId).any!(ca => ca.id == id);
   }
 
-  CatalogAsset findById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
-    foreach (ca; findBySpace(tenantId, spaceId)) {
-      if (ca.id == id)
-        return ca;
+  DSTask findById(TenantId tenantId, SpaceId spaceId, TaskId id) {
+    foreach (t; findBySpace(tenantId, spaceId)) {
+      if (t.id == id)
+        return t;
     }
-    return CatalogAsset.init;
+    return DSTask.init;
   }
 
-  void removeById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
+  void removeById(TenantId tenantId, SpaceId spaceId, TaskId id) {
     remove(findById(tenantId, spaceId, id));
   }
   // #endregion ById
@@ -45,42 +42,36 @@ class TaskRepository : TenantRepository!(Task, TaskId), ITaskRepository {
   }
   // #endregion BySpace
 
-  DSTask[] findByStatus(SpaceId spaceId, TaskStatus status) {
-    if (spaceId in store)
-      return store[spaceId].filter!(t => t.status == status).array;
-    return null;
+  size_t countByStatus(TenantId tenantId,  SpaceId spaceId, TaskStatus status) {
+    return findByStatus(tenantId, spaceId, status).length;
   }
 
-  DSTask[] findByType(SpaceId spaceId, TaskType type) {
-    if (spaceId in store)
-      return store[spaceId].filter!(t => t.type == type).array;
-    return null;
+  DSTask[] filterByStatus(DSTask[] tasks, TaskStatus status) {
+    return tasks.filter!(t => t.status == status).array;
   }
 
-  void save(DSTask t) {
-    store[t.spaceId] ~= t;
+  DSTask[] findByStatus(TenantId tenantId, SpaceId spaceId, TaskStatus status) {
+    return filterByStatus(findBySpace(tenantId, spaceId), status);
   }
 
-  void update(DSTask t) {
-    if (t.spaceId in store) {
-      foreach (existing; store[t.spaceId]) {
-        if (existing.id == t.id) {
-          existing = t;
-          return;
-        }
-      }
-    }
+  void removeByStatus(TenantId tenantId, SpaceId spaceId, TaskStatus status) {
+    findByStatus(tenantId, spaceId, status).each!(t => remove(t));
   }
 
-  void remove(SpaceId spaceId, TaskId id) {
-    if (spaceId in store) {
-      store[spaceId] = store[spaceId].filter!(t => t.id != id).array;
-    }
+  size_t countByType(TenantId tenantId, SpaceId spaceId, TaskType type) {
+    return findByType(tenantId, spaceId, type).length;
   }
 
-  size_t countBySpace(SpaceId spaceId) {
-    if (spaceId in store)
-      return store[spaceId].length;
-    return 0;
+  DSTask[] filterByType(DSTask[] tasks, TaskType type) {
+    return tasks.filter!(t => t.type == type).array;
   }
+
+  DSTask[] findByType(TenantId tenantId, SpaceId spaceId, TaskType type) {
+    return filterByType(findBySpace(tenantId, spaceId), type);
+  }
+
+  void removeByType(TenantId tenantId, SpaceId spaceId, TaskType type) {
+    findByType(tenantId, spaceId, type).each!(t => remove(t));
+  }
+
 }

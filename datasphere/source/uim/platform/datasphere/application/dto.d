@@ -101,6 +101,8 @@ struct PatchDataFlowRequest {
 struct CreateViewRequest {
   TenantId tenantId;
   SpaceId spaceId;
+  ViewId viewId;
+
   string name;
   string description;
   string businessName;
@@ -163,6 +165,8 @@ struct PatchTaskChainRequest {
 struct CreateDataAccessControlRequest {
   TenantId tenantId;
   SpaceId spaceId;
+  DataAccessControlId controlId;
+
   string name;
   string description;
   string criteriaType;
@@ -185,6 +189,8 @@ struct UpdateDataAccessControlRequest {
 struct CreateCatalogAssetRequest {
   TenantId tenantId;
   SpaceId spaceId;
+  CatalogAssetId assetId;
+
   string name;
   string description;
   string businessName;
@@ -198,7 +204,8 @@ struct CreateCatalogAssetRequest {
 struct UpdateCatalogAssetRequest {
   TenantId tenantId;
   SpaceId spaceId;
-  string assetId;
+  CatalogAssetId assetId;
+
   string name;
   string description;
   string businessName;

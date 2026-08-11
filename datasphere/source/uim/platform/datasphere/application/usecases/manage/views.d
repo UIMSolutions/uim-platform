@@ -39,20 +39,20 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, v.id.value, "");
   }
 
-  View getById(SpaceId spaceId, ViewId id) {
-    return repo.findById(spaceId, id);
+  View getView(TenantId tenantId, SpaceId spaceId, ViewId id) {
+    return repo.findById(tenantId, spaceId, id);
   }
 
-  View[] list(SpaceId spaceId) {
-    return repo.findBySpace(spaceId);
+  View[] listViews(TenantId tenantId, SpaceId spaceId) {
+    return repo.findBySpace(tenantId, spaceId);
   }
 
-  View[] listExposed(SpaceId spaceId) {
-    return repo.findExposed(spaceId);
+  View[] listExposedViews(TenantId tenantId, SpaceId spaceId) {
+    return repo.findExposed(tenantId, spaceId);
   }
 
   CommandResult updateView(UpdateViewRequest r) {
-    auto view = repo.findById(r.spaceId, r.viewId);
+    auto view = repo.findById(r.tenantId, r.spaceId, r.viewId);
     if (view.isNull)
       return CommandResult(false, "", "View not found");
 
@@ -70,8 +70,8 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, view.id.value, "");
   }
 
-  CommandResult deleteView(SpaceId spaceId, ViewId id) {
-    auto view = repo.findById(spaceId, id);
+  CommandResult deleteView(TenantId tenantId, SpaceId spaceId, ViewId id) {
+    auto view = repo.findById(tenantId, spaceId, id);
     if (view.isNull)
       return CommandResult(false, "", "View not found");
 

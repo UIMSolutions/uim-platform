@@ -45,7 +45,7 @@ class DataFlowController : ManageHttpController {
     r.scheduleExpression = data.getString("scheduleExpression");
     r.scheduleFrequency = data.getString("scheduleFrequency");
 
-    auto result = usecase.create(r);
+    auto result = usecase.createDataFlow(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -60,7 +60,7 @@ class DataFlowController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-    auto flows = usecase.list(spaceId);
+    auto flows = usecase.listDataFlows(tenantId, spaceId);
 
     auto list = Json.emptyArray;
     foreach (df; flows) {
@@ -72,8 +72,6 @@ class DataFlowController : ManageHttpController {
         .set("lastRunDurationMs", df.lastRunDurationMs)
         .set("createdAt", df.createdAt);
     }
-
-    auto list = items.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)

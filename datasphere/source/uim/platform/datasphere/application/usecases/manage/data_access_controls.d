@@ -39,16 +39,16 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, dac.id.value, "");
   }
 
-  DataAccessControl getDataAccessControl(SpaceId spaceId, DataAccessControlId id) {
-    return repo.findById(spaceId, id);
+  DataAccessControl getDataAccessControl(TenantId tenantId, SpaceId spaceId, DataAccessControlId id) {
+    return repo.findById(tenantId, spaceId, id);
   }
 
-  DataAccessControl[] listDataAccessControls(SpaceId spaceId) {
-    return repo.findBySpace(spaceId);
+  DataAccessControl[] listDataAccessControls(TenantId tenantId, SpaceId spaceId) {
+    return repo.findBySpace(tenantId, spaceId);
   }
 
   CommandResult updateDataAccessControl(UpdateDataAccessControlRequest r) {
-    auto control = repo.findById(r.spaceId, r.controlId);
+    auto control = repo.findById(r.tenantId, r.spaceId, r.controlId);
     if (control.isNull)
       return CommandResult(false, "", "Data access control not found");
 
@@ -65,8 +65,8 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, control.id.value, "");
   }
 
-  CommandResult deleteDataAccessControl(SpaceId spaceId, DataAccessControlId id) {
-    auto control = repo.findById(spaceId, id);
+  CommandResult deleteDataAccessControl(TenantId tenantId, SpaceId spaceId, DataAccessControlId id) {
+    auto control = repo.findById(tenantId, spaceId, id);
     if (control.isNull)
       return CommandResult(false, "", "Data access control not found");
 
