@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for access rule CRUD.
 class ManageAccessRulesUseCase { // TODO: UIMUseCase {
-  private AccessRuleRepository rules;
-  private ConnectorRepository connectors;
+  private IAccessRuleRepository rules;
+  private IConnectorRepository connectors;
 
-  this(AccessRuleRepository rules, ConnectorRepository connectors) {
+  this(IAccessRuleRepository rules, IConnectorRepository connectors) {
     this.rules = rules;
     this.connectors = connectors;
   }

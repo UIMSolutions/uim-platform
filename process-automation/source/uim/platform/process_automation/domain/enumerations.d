@@ -13,78 +13,109 @@ mixin(ShowModule!());
 
 // --- Process (Workflow Definition) ---
 
-enum ProcessStatus {
+enum ProcessStatus : string {
     // Draft: being designed, not yet active
-    draft,
+    draft = "draft",
     // Active: published and can be instantiated
-    active,
+    active = "active",
     // Inactive: temporarily disabled, cannot be instantiated
-    inactive,
+    inactive = "inactive",
     // Deprecated: should not be used for new instances, but existing ones can continue
-    deprecated_,
+    deprecated_ = "deprecated",
     // Error: has issues that need to be resolved
-    error,
+    error = "error",
     // Archived: no longer active, kept for historical reference
-    archived,
+    archived = "archived",
     // Unknown: status is not recognized
-    unknown,
+    unknown = "unknown",
     // Deleted: removed from the system (soft delete)
-    deleted,
+    deleted = "deleted",
     // Suspended: temporarily paused, can be resumed
-    suspended,
+    suspended = "suspended",
     // Completed: process has finished successfully
-    completed,
+    completed = "completed",
     // Failed: process has finished with errors
-    failed,
+    failed = "failed",
     // Cancelled: process was cancelled before completion
-    cancelled,
+    cancelled = "cancelled",
     // Waiting: process is waiting for an external event or trigger
-    waiting,
+    waiting = "waiting",
     // Terminated: process was forcefully stopped
-    terminated,
+    terminated = "terminated",
     // Resumed: process was resumed after being suspended
-    resumed,
+    resumed = "resumed",
     // RollingBack: process is rolling back after a failure
-    rollingBack,
+    rollingBack = "rollingBack",
     // RolledBack: process has completed rolling back
-    rolledBack,
+    rolledBack = "rolledBack",
     // Migrating: process is being migrated to a new version
-    migrating,
+    migrating = "migrating",
     // Migrated: process has been migrated to a new version
-    migrated,
+    migrated = "migrated",
     // Versioning: process is being versioned
-    versioning,
+    versioning = "versioning",
     // Versioned: process has been versioned
-    versioned,
+    versioned = "versioned",
     // Cloning: process is being cloned
-    cloning,
+    cloning = "cloning",
     // Cloned: process has been cloned
-    cloned,
+    cloned = "cloned",
     // Testing: process is being tested
-    testing,
+    testing = "testing",
     // Tested: process has been tested
-    tested,
+    tested = "tested",
     // Validating: process is being validated
-    validating,
+    validating = "validating",
     // Validated: process has been validated
-    validated,
+    validated = "validated",
     // Releasing: process is being released to production
-    releasing,
+    releasing = "releasing",
     // Released: process has been released to production
-    released,
+    released = "released",
 }
 
 ProcessStatus toProcessStatus(string value) {
-    mixin(EnumSwitch("ProcessStatus", "unknown"));
+    switch(value.toLower) {
+        case "draft": return ProcessStatus.draft;
+        case "active": return ProcessStatus.active;
+        case "inactive": return ProcessStatus.inactive;
+        case "deprecated": return ProcessStatus.deprecated_;
+        case "error": return ProcessStatus.error;
+        case "archived": return ProcessStatus.archived;
+        case "unknown": return ProcessStatus.unknown;
+        case "deleted": return ProcessStatus.deleted;
+        case "suspended": return ProcessStatus.suspended;
+        case "completed": return ProcessStatus.completed;
+        case "failed": return ProcessStatus.failed;
+        case "cancelled": return ProcessStatus.cancelled;
+        case "waiting": return ProcessStatus.waiting;
+        case "terminated": return ProcessStatus.terminated;
+        case "resumed": return ProcessStatus.resumed;
+        case "rollingback": return ProcessStatus.rollingBack;
+        case "rolledback": return ProcessStatus.rolledBack;
+        case "migrating": return ProcessStatus.migrating;
+        case "migrated": return ProcessStatus.migrated;
+        case "versioning": return ProcessStatus.versioning;
+        case "versioned": return ProcessStatus.versioned;
+        case "cloning": return ProcessStatus.cloning;
+        case "cloned": return ProcessStatus.cloned;
+        case "testing": return ProcessStatus.testing;
+        case "tested": return ProcessStatus.tested;
+        case "validating": return ProcessStatus.validating;
+        case "validated": return ProcessStatus.validated;
+        case "releasing": return ProcessStatus.releasing;
+        case "released": return ProcessStatus.released;
+        default: return ProcessStatus.unknown;
+    }
 }
 
 ProcessStatus[] toProcessStatuses(string[] statuses)
     => statuses.map!toProcessStatus.array;
 
 string toString(ProcessStatus status)
-    => status.to!string;
+    => cast(string)status;
 
-string[] toStrings(ProcessStatus[] statuses)
+string[] toString(ProcessStatus[] statuses)
     => statuses.map!toString.array;
 ///
 unittest {
@@ -157,7 +188,7 @@ unittest {
         ]);
     assert([
         ProcessStatus.active, ProcessStatus.inactive, ProcessStatus.deprecated_
-    ].toStrings == ["active", "inactive", "deprecated"]);
+    ].toString == ["active", "inactive", "deprecated"]);
 }
 
 enum ProcessCategory {
@@ -185,7 +216,7 @@ ProcessCategory[] toProcessCategories(string[] categories)
 string toString(ProcessCategory category)
     => category.to!string;
 
-string[] toStrings(ProcessCategory[] categories)
+string[] toString(ProcessCategory[] categories)
     => categories.map!toString.array;
 ///
 unittest {
@@ -215,7 +246,7 @@ unittest {
     assert([
         ProcessCategory.workflow, ProcessCategory.approval,
         ProcessCategory.notification
-    ].toStrings == ["workflow", "approval", "notification"]);
+    ].toString == ["workflow", "approval", "notification"]);
 }
 
 enum StepType {
@@ -271,7 +302,7 @@ StepType[] toStepTypes(string[] types)
 string toString(StepType type)
     => type.to!string;
 
-string[] toStrings(StepType[] types)
+string[] toString(StepType[] types)
     => types.map!toString.array;
 
 ///
@@ -326,7 +357,7 @@ unittest {
     assert(["startEvent", "endEvent", "userTask"].toStepTypes == [
             StepType.startEvent, StepType.endEvent, StepType.userTask
         ]);
-    assert([StepType.startEvent, StepType.endEvent, StepType.userTask].toStrings == [
+    assert([StepType.startEvent, StepType.endEvent, StepType.userTask].toString == [
             "startEvent", "endEvent", "userTask"
         ]);
 }
@@ -361,7 +392,7 @@ InstanceStatus[] toInstanceStatuses(string[] statuses)
 string toString(InstanceStatus status)
     => status.to!string;
 
-string[] toStrings(InstanceStatus[] statuses)
+string[] toString(InstanceStatus[] statuses)
     => statuses.map!toString.array;
 ///
 unittest {
@@ -395,7 +426,7 @@ unittest {
 
     assert([
         InstanceStatus.running, InstanceStatus.completed, InstanceStatus.failed
-    ].toStrings == ["running", "completed", "failed"]);
+    ].toString == ["running", "completed", "failed"]);
 }
 
 enum InstancePriority {
@@ -419,7 +450,7 @@ InstancePriority[] toInstancePriorities(string[] priorities)
 string toString(InstancePriority priority)
     => priority.to!string;
 
-string[] toStrings(InstancePriority[] priorities)
+string[] toString(InstancePriority[] priorities)
     => priorities.map!toString.array;
 
 /// 
@@ -445,7 +476,7 @@ unittest {
 
     assert([
         InstancePriority.low, InstancePriority.medium, InstancePriority.high
-    ].toStrings == ["low", "medium", "high"]);
+    ].toString == ["low", "medium", "high"]);
 }
 
 // --- Event (for Alerting and Monitoring) ---
@@ -481,7 +512,7 @@ EventCategory[] toEventCategories(string[] categories)
 string toString(EventCategory category)
     => cast(string)category;
 
-string[] toStrings(EventCategory[] categories)
+string[] toString(EventCategory[] categories)
     => categories.map!toString.array;
 
 ///
@@ -496,10 +527,10 @@ unittest {
     assert("".toEventCategory == EventCategory.notification);
     assert("some_unknown_category".toEventCategory == EventCategory.notification);
 
-    assert(EventCategory.notification.toString == "notification");
-    assert(EventCategory.alert.toString == "alert");
-    assert(EventCategory.exception_.toString == "exception_");
-    assert(EventCategory.custom.toString == "custom");
+    assert(EventCategory.notification.toString == "NOTIFICATION");
+    assert(EventCategory.alert.toString == "ALERT");
+    assert(EventCategory.exception_.toString == "EXCEPTION");
+    assert(EventCategory.custom.toString == "CUSTOM");
 
     assert(["NOTIFICATION", "ALERT", "EXCEPTION"].toEventCategories == [
             EventCategory.notification, EventCategory.alert,
@@ -508,7 +539,7 @@ unittest {
 
     assert([
         EventCategory.notification, EventCategory.alert, EventCategory.exception_
-    ].toStrings == ["notification", "alert", "exception_"]);
+    ].toString == ["NOTIFICATION", "ALERT", "EXCEPTION"]);
 }
 
 // --- PATask ---
@@ -542,7 +573,7 @@ TaskStatus[] toTaskStatuses(string[] statuses)
 string toString(TaskStatus status)
     => status.to!string;
 
-string[] toStrings(TaskStatus[] statuses)
+string[] toString(TaskStatus[] statuses)
     => statuses.map!toString.array;
 
 /// 
@@ -574,7 +605,7 @@ unittest {
             TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress
         ]);
 
-    assert([TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress].toStrings == [
+    assert([TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress].toString == [
             "ready", "reserved", "inProgress"
         ]);
 }
@@ -602,7 +633,7 @@ TaskPriority[] toTaskPriorities(string[] priorities)
 string toString(TaskPriority priority)
     => priority.to!string;
 
-string[] toStrings(TaskPriority[] priorities)
+string[] toString(TaskPriority[] priorities)
     => priorities.map!toString.array;
 /// 
 unittest {
@@ -610,9 +641,9 @@ unittest {
     assert(toTaskPriority("medium") == TaskPriority.medium);
     assert(toTaskPriority("high") == TaskPriority.high);
     assert(toTaskPriority("veryhigh") == TaskPriority.veryHigh);
-    assert(toTaskPriority("unknown") == TaskPriority.unknown);
 
-    assert(toTaskPriority("default") == TaskPriority.medium);
+    assert(toTaskPriority("") == TaskPriority.unknown);
+    assert(toTaskPriority("unknown") == TaskPriority.unknown);
 
     assert(TaskPriority.low.to!string == "low");
     assert(TaskPriority.medium.to!string == "medium");
@@ -646,7 +677,7 @@ TaskType[] toTaskTypes(string[] types)
 string toString(TaskType type)
     => type.to!string;
 
-string[] toStrings(TaskType[] types)
+string[] toString(TaskType[] types)
     => types.map!toString.array;
 
 ///
@@ -693,7 +724,7 @@ DecisionStatus[] toDecisionStatuses(string[] values)
 string toString(DecisionStatus status)
     => cast(string)status;
 
-string[] toStrings(DecisionStatus[] statuses)
+string[] toString(DecisionStatus[] statuses)
     => statuses.map!toString.array;
 
 /// 
@@ -720,7 +751,7 @@ unittest {
 
     assert([
         DecisionStatus.draft, DecisionStatus.active, DecisionStatus.inactive
-    ].toStrings == ["draft", "active", "inactive"]);
+    ].toString == ["draft", "active", "inactive"]);
 }
 
 enum DecisionType {
@@ -744,7 +775,7 @@ DecisionType[] toDecisionTypes(string[] values)
 string toString(DecisionType type)
     => type.to!string;
 
-string[] toStrings(DecisionType[] types)
+string[] toString(DecisionType[] types)
     => types.map!toString.array;
 
 ///
@@ -779,7 +810,7 @@ HitPolicy[] toHitPolicies(string[] policies)
 string toString(HitPolicy policy)
     => policy.to!string;
 
-string[] toStrings(HitPolicy[] policies)
+string[] toString(HitPolicy[] policies)
     => policies.map!toString.array;
 
 /// 
@@ -815,7 +846,7 @@ unittest {
     assert([
         HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
         HitPolicy.collect, HitPolicy.ruleOrder, HitPolicy.outputOrder
-    ].toStrings == [
+    ].toString == [
         "first", "any", "priority", "unique", "collect", "ruleOrder",
         "outputOrder"
     ]);
@@ -885,7 +916,7 @@ ConditionType[] toConditionTypes(string[] values)
 string toString(ConditionType type)
     => cast(string)type;
 
-string[] toStrings(ConditionType[] types)
+string[] toString(ConditionType[] types)
     => types.map!toString.array;
 
 ///
@@ -923,7 +954,7 @@ unittest {
 
     assert([
         ConditionType.equals, ConditionType.notEquals, ConditionType.greaterThan
-    ].toStrings == ["equals", "not_equals", "greater_than"]);
+    ].toString == ["equals", "not_equals", "greater_than"]);
 
     assert(["equals", "not_equals", "greater_than"].toConditionTypes == [
             ConditionType.equals, ConditionType.notEquals,
@@ -966,13 +997,13 @@ FormStatus toFormStatus(string value) {
     }
 }
 
-FormStatus[] toFormStatuses(string[] values)
+FormStatus[] toFormStatus(string[] values)
     => values.map!(v => toFormStatus(v)).array;
 
 string toString(FormStatus status)
     => cast(string)status;
 
-string[] toStrings(FormStatus[] statuses)
+string[] toString(FormStatus[] statuses)
     => statuses.map!toString.array;
 
 ///
@@ -989,60 +1020,99 @@ unittest {
     assert("".toFormStatus == FormStatus.draft);
     assert("some_unknown_status".toFormStatus == FormStatus.draft);
 
-    assert(Formstatus.draft.toString == "draft");
+    assert(FormStatus.draft.toString == "draft");
     assert(FormStatus.published.toString == "published");
     assert(FormStatus.inactive.toString == "inactive");
     assert(FormStatus.deprecated_.toString == "deprecated");
     assert(FormStatus.archived.toString == "archived");
     assert(FormStatus.error.toString == "error");
 
-    assert(["draft", "published", "inactive"].toFormStatuses == [
+    assert(["draft", "published", "inactive"].toFormStatus == [
             FormStatus.draft, FormStatus.published, FormStatus.inactive
         ]);
-    assert([FormStatus.draft, FormStatus.published, FormStatus.inactive].toStrings == [
+    assert([FormStatus.draft, FormStatus.published, FormStatus.inactive].toString == [
             "draft", "published", "inactive"
         ]);
 }
 
-enum FieldType {
+enum FieldType : string {
     // Field that accepts alphanumeric input, which may include letters, numbers, and special characters based on the process flow and requirements
-    text,
+    text = "text",
     // Field that accepts numeric input, which may include integers, decimals, and negative numbers based on the process flow and requirements
-    number,
+    number = "number",
     // Field that accepts date input, which may include calendar-based selection or manual entry of date values based on the process flow and requirements
-    date,
+    date = "date",
     // Field that accepts date and time input, which may include calendar-based selection or manual entry of date and time values based on the process flow and requirements
-    datetime,
+    datetime = "datetime",
     // Field that accepts boolean input, which may include options for true/false, yes/no, or on/off based on the process flow and requirements
-    boolean_,
+    boolean_ = "boolean",
     // Field that allows users to select from a predefined list of options, which may include dropdown menus, combo boxes, or select lists based on the process flow and requirements
-    dropdown,
+    dropdown = "dropdown",
     // Field that allows users to select one option from a predefined list of options, which may include radio buttons based on the process flow and requirements
-    radio,
+    radio = "radio",
     // Field that allows users to select multiple options from a predefined list of options, which may include checkboxes based on the process flow and requirements
-    checkbox,
+    checkbox = "checkbox",
     // Field that allows users to enter multi-line text input, which may include text areas or rich text editors based on the process flow and requirements
-    textarea,
+    textarea = "textarea",
     // Field that allows users to upload files, which may include options for selecting files from their device or dragging and dropping files based on the process flow and requirements
-    fileUpload,
+    fileUpload = "fileUpload",
     // Field that allows users to input data in a tabular format, which may include options for adding rows and columns based on the process flow and requirements
-    table,
+    table = "table",
     // Field that allows users to input formatted text, which may include options for styling and structuring text based on the process flow and requirements
-    paragraph,
+    paragraph = "paragraph",
     // Field that allows users to input a heading or title, which may include options for different heading levels based on the process flow and requirements
-    headline,
+    headline = "headline",
     // Field that allows users to input a URL or hyperlink, which may include options for validating the URL format based on the process flow and requirements
-    link,
+    link = "link",
     // Field that allows users to upload or display images, which may include options for selecting images from their device or providing image URLs based on the process flow and requirements
-    image,
+    image = "image",
 }
 
 FieldType toFieldType(string value) {
-    mixin(EnumSwitch("FieldType", "text"));
+    switch(value.toLower) {
+    case "text":
+        return FieldType.text;
+    case "number":
+        return FieldType.number;
+    case "date":
+        return FieldType.date;
+    case "datetime":
+        return FieldType.datetime;
+    case "boolean":
+        return FieldType.boolean_;
+    case "dropdown":
+        return FieldType.dropdown;
+    case "radio":
+        return FieldType.radio;
+    case "checkbox":
+        return FieldType.checkbox;
+    case "textarea":
+        return FieldType.textarea;
+    case "fileupload":
+        return FieldType.fileUpload;
+    case "table":
+        return FieldType.table;
+    case "paragraph":
+        return FieldType.paragraph;
+    case "headline":
+        return FieldType.headline;
+    case "link":
+        return FieldType.link;
+    case "image":
+        return FieldType.image;
+    default:
+        return FieldType.text;
+    }
 }
 
 FieldType[] toFieldTypes(string[] types)
     => types.map!toFieldType.array;
+
+string toString(FieldType type)
+    => cast(string)type;
+
+string[] toString(FieldType[] types)
+    => types.map!toString.array;
 
 ///
 unittest {
@@ -1087,7 +1157,7 @@ unittest {
             FieldType.text, FieldType.number, FieldType.date
         ]);
 
-    assert([FieldType.text, FieldType.number, FieldType.date].toStrings == [
+    assert([FieldType.text, FieldType.number, FieldType.date].toString == [
             "text", "number", "date"
         ]);
 }
@@ -1114,7 +1184,7 @@ AutomationStatus[] toAutomationStatuses(string[] statuses)
 string toString(AutomationStatus status)
     => status.to!string;
 
-string[] toStrings(AutomationStatus[] statuses)
+string[] toString(AutomationStatus[] statuses)
     => statuses.map!toString.array;
 
 ///
@@ -1141,7 +1211,7 @@ unittest {
 
     assert([
         AutomationStatus.draft, AutomationStatus.active, AutomationStatus.inactive
-    ].toStrings == ["draft", "active", "inactive"]);
+    ].toString == ["draft", "active", "inactive"]);
 
 }
 
@@ -1160,13 +1230,13 @@ AutomationType toAutomationType(string value) {
     mixin(EnumSwitch("AutomationType", "attended"));
 }
 
-AutomationType[] toAutomationTypes(string[] types)
+AutomationType[] toAutomationType(string[] types)
     => types.map!toAutomationType.array;
 
 string toString(AutomationType type)
     => type.to!string;
 
-string[] toStrings(AutomationType[] types)
+string[] toString(AutomationType[] types)
     => types.map!toString.array;
 
 ///
@@ -1186,13 +1256,13 @@ unittest {
     assert(AutomationType.hybrid.toString == "hybrid");
     assert(AutomationType.api.toString == "api");
 
-    assert(["attended", "unattended", "hybrid"].toAutomationTypes == [
+    assert(["attended", "unattended", "hybrid"].toAutomationType == [
             AutomationType.attended, AutomationType.unattended,
             AutomationType.hybrid
         ]);
     assert([
         AutomationType.attended, AutomationType.unattended, AutomationType.hybrid
-    ].toStrings == ["attended", "unattended", "hybrid"]);
+    ].toString == ["attended", "unattended", "hybrid"]);
 }
 
 enum AutomationRunStatus {
@@ -1214,13 +1284,13 @@ AutomationRunStatus toAutomationRunStatus(string value) {
     mixin(EnumSwitch("AutomationRunStatus", "queued"));
 }
 
-AutomationRunStatus[] toAutomationRunStatuses(string[] statuses)
+AutomationRunStatus[] toAutomationRunStatus(string[] statuses)
     => statuses.map!toAutomationRunStatus.array;
 
 string toString(AutomationRunStatus status)
     => status.to!string;
 
-string[] toStrings(AutomationRunStatus[] statuses)
+string[] toString(AutomationRunStatus[] statuses)
     => statuses.map!toString.array;
 
 ///
@@ -1244,7 +1314,7 @@ unittest {
     assert(AutomationRunStatus.cancelled.toString == "cancelled");
     assert(AutomationRunStatus.timedOut.toString == "timedOut");
 
-    assert(["queued", "running", "completed"].toAutomationRunStatuses == [
+    assert(["queued", "running", "completed"].toAutomationRunStatus == [
             AutomationRunStatus.queued, AutomationRunStatus.running,
             AutomationRunStatus.completed
         ]);
@@ -1273,13 +1343,13 @@ TriggerType toTriggerType(string value) {
     mixin(EnumSwitch("TriggerType", "manual"));
 }
 
-TriggerType[] toTriggerTypes(string[] values)
+TriggerType[] toTriggerType(string[] values)
     => values.map!toTriggerType.array;
 
 string toString(TriggerType type)
     => type.to!string;
 
-string[] toStrings(TriggerType[] types)
+string[] toString(TriggerType[] types)
     => types.map!toString.array;
 
 ///
@@ -1308,7 +1378,7 @@ unittest {
     assert(["manual", "scheduled", "api"].toTriggerType == [
             TriggerType.manual, TriggerType.scheduled, TriggerType.api
         ]);
-    assert([TriggerType.manual, TriggerType.scheduled, TriggerType.api].toStrings == [
+    assert([TriggerType.manual, TriggerType.scheduled, TriggerType.api].toString == [
             "manual", "scheduled", "api"
         ]);
 }
@@ -1332,7 +1402,7 @@ TriggerStatus[] toTriggerStatuses(string[] statuses)
 string toString(TriggerStatus status)
     => status.to!string;
 
-string[] toStrings(TriggerStatus[] statuses)
+string[] toString(TriggerStatus[] statuses)
     => statuses.map!toString.array;
 
 ///
@@ -1353,7 +1423,7 @@ unittest {
     assert(["active", "inactive", "error"].toTriggerStatuses == [
             TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error
         ]);
-    assert([TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error].toStrings == [
+    assert([TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error].toString == [
             "active", "inactive", "error"
         ]);
 }
@@ -1387,7 +1457,7 @@ ScheduleFrequency[] toScheduleFrequencies(string[] freqs)
 string toString(ScheduleFrequency frequency)
     => frequency.to!string;
 
-string[] toStrings(ScheduleFrequency[] frequencies)
+string[] toString(ScheduleFrequency[] frequencies)
     => frequencies.map!toString.array;
 
 ///
@@ -1421,7 +1491,7 @@ unittest {
         ]);
     assert([
         ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily
-    ].toStrings
+    ].toString
         == ["once", "hourly", "daily"]);
 }
 
@@ -1442,18 +1512,18 @@ ActionStatus toActionStatus(string value) {
     mixin(EnumSwitch("ActionStatus", "draft"));
 }
 
-ActionStatus[] toActionStatuses(string[] statuses)
-    => statuses.map!toActionStatus.array;
+ActionStatus[] toActionStatus(string[] values)
+    => values.map!toActionStatus.array;
 
 string toString(ActionStatus status)
     => status.to!string;
 
-string[] toStrings(ActionStatus[] statuses)
+string[] toString(ActionStatus[] statuses)
     => statuses.map!toString.array;
 
 /// 
 unittest {
-    mixin(EnumSwitch("ActionStatus", "draft"));
+    mixin(ShowTest!("ActionStatus"));
 
     assert(ActionStatus.draft.toString == "draft");
     assert(ActionStatus.active.toString == "active");
@@ -1468,14 +1538,14 @@ unittest {
     assert("".toActionStatus == ActionStatus.draft);
     assert("unknown".toActionStatus == ActionStatus.draft);
 
-    assert(["draft", "active", "inactive", "error"].toActionStatuses == [
+    assert(["draft", "active", "inactive", "error"].toActionStatus == [
             ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
             ActionStatus.error
         ]);
     assert([
         ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
         ActionStatus.error
-    ].toStrings == ["draft", "active", "inactive", "error"]);
+    ].toString == ["draft", "active", "inactive", "error"]);
 }
 
 enum ActionType {
@@ -1497,13 +1567,13 @@ ActionType toActionType(string value) {
     mixin(EnumSwitch("ActionType", "custom"));
 }
 
-ActionType[] toActionTypes(string[] types)
+ActionType[] toActionType(string[] types)
     => types.map!toActionType.array;
 
 string toString(ActionType type)
     => type.to!string;
 
-string[] toStrings(ActionType[] types)
+string[] toString(ActionType[] types)
     => types.map!toString.array;
 
 ///
@@ -1515,7 +1585,7 @@ unittest {
     assert(ActionType.graphql.toString == "graphql");
     assert(ActionType.custom.toString == "custom");
 
-    assert("rest_api".toActionType == ActionType.restApi);
+    assert("restApi".toActionType == ActionType.restApi);
     assert("odata".toActionType == ActionType.odata);
     assert("rfc".toActionType == ActionType.rfc);
     assert("soap".toActionType == ActionType.soap);
@@ -1525,14 +1595,14 @@ unittest {
     assert("".toActionType == ActionType.custom);
     assert("unknown".toActionType == ActionType.custom);
 
-    assert(["rest_api", "odata", "rfc", "soap", "graphql", "custom"].toActionTypes == [
+    assert(["restApi", "odata", "rfc", "soap", "graphql", "custom"].toActionType == [
             ActionType.restApi, ActionType.odata, ActionType.rfc,
             ActionType.soap, ActionType.graphql, ActionType.custom
         ]);
     assert([
         ActionType.restApi, ActionType.odata, ActionType.rfc, ActionType.soap,
         ActionType.graphql, ActionType.custom
-    ].toStrings == ["restApi", "odata", "rfc", "soap", "graphql", "custom"]);
+    ].toString == ["restApi", "odata", "rfc", "soap", "graphql", "custom"]);
 
 }
 // --- Alerting and Monitoring ---
@@ -1558,7 +1628,7 @@ VisibilityStatus[] toVisibilityStatuses(string[] statuses)
 string toString(VisibilityStatus status)
     => status.to!string;
 
-string[] toStrings(VisibilityStatus[] statuses)
+string[] toString(VisibilityStatus[] statuses)
     => statuses.map!toString.array;
 
 ///
@@ -1609,7 +1679,7 @@ DashboardType[] toDashboardTypes(string[] types)
 string toString(DashboardType type)
     => type.to!string;
 
-string[] toStrings(DashboardType[] types)
+string[] toString(DashboardType[] types)
     => types.map!toString.array;
 
 enum MetricType {
@@ -1639,7 +1709,7 @@ MetricType[] toMetricTypes(string[] types)
 string toString(MetricType type)
     => type.to!string;
 
-string[] toStrings(MetricType[] types)
+string[] toString(MetricType[] types)
     => types.map!toString.array;
 // --- Artifact Store ---
 
@@ -1670,7 +1740,7 @@ ArtifactType[] toArtifactTypes(string[] values)
 string toString(ArtifactType type)
     => type.to!string;
 
-string[] toStrings(ArtifactType[] types)
+string[] toString(ArtifactType[] types)
     => types.map!toString.array;
 
 enum ArtifactStatus : string {
@@ -1700,5 +1770,5 @@ ArtifactStatus[] toArtifactStatuses(string[] statuses)
 string toString(ArtifactStatus status) 
     => cast(string)status;
 
-string[] toStrings(ArtifactStatus[] statuses)
+string[] toString(ArtifactStatus[] statuses)
     => statuses.map!toString.array;

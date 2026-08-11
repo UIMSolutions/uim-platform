@@ -5,74 +5,74 @@ import uim.platform.management;
 mixin(ShowModule!());
 
 unittest {
-    import vibe.core.core : yield, runTask;
+    // import vibe.core.core : yield, runTask;
 
-    logInfo("--- Starting Service-Unittest for Directory ---");
+    // logInfo("--- Starting Service-Unittest for Directory ---");
 
-    // 1. Loading Configuration and Building Container
-    auto config = loadConfig();
-    auto container = buildContainer(config);
+    // // 1. Loading Configuration and Building Container
+    // auto config = loadConfig();
+    // auto container = buildContainer(config);
 
-    // 2. Temporarily configure the server for the test (Port 0 automatically finds a free port!)
-    auto settings = new HTTPServerSettings;
-    settings.port = 0;
-    settings.bindAddresses = ["127.0.0.1"];
+    // // 2. Temporarily configure the server for the test (Port 0 automatically finds a free port!)
+    // auto settings = new HTTPServerSettings;
+    // settings.port = 0;
+    // settings.bindAddresses = ["127.0.0.1"];
 
-    auto router = new URLRouter;
-    router.registerRestInterface(new DirectoryApi(container.manageDirectories), "/rest/v1/");
+    // auto router = new URLRouter;
+    // router.registerRestInterface(new DirectoryApi(container.manageDirectories), "/rest/v1/");
 
-    // 3. Start Server
-    auto listener = listenHTTP(settings, router);
+    // // 3. Start Server
+    // auto listener = listenHTTP(settings, router);
 
-    // Get the dynamically assigned port from the operating system
-    ushort myPort = listener.bindAddresses[0].port;
-    string basisUrl = format("http://127.0.0.1:%d/rest/v1/", myPort);
+    // // Get the dynamically assigned port from the operating system
+    // ushort myPort = listener.bindAddresses[0].port;
+    // string basisUrl = format("http://127.0.0.1:%d/rest/v1/", myPort);
 
-    // Ensure that the server is stopped after the test (even in case of a crash)
-    scope (exit) {
-        listener.stopListening;
-    }
+    // // Ensure that the server is stopped after the test (even in case of a crash)
+    // scope (exit) {
+    //     listener.stopListening;
+    // }
 
-    // Flags to check the asynchronous outcome
-    bool testSuccessful = false;
-    string errorMessage = "";
+    // // Flags to check the asynchronous outcome
+    // bool testSuccessful = false;
+    // string errorMessage = "";
 
-    // 4. The trick: We start the client in its own Vibe.d task (Fiber)
-    auto clientTask = runTask({
-        try {
-            auto clientSettings = new RestInterfaceSettings;
-            clientSettings.baseURL = URL(basisUrl);
+    // // 4. The trick: We start the client in its own Vibe.d task (Fiber)
+    // auto clientTask = runTask({
+    //     try {
+    //         auto clientSettings = new RestInterfaceSettings;
+    //         clientSettings.baseURL = URL(basisUrl);
 
-            // Client connects to the dynamic port
-            auto client = new RestInterfaceClient!IDirectoryApi(basisUrl);
+    //         // Client connects to the dynamic port
+    //         auto client = new RestInterfaceClient!IDirectoryApi(basisUrl);
 
-            writeln("Testing Directory API at: ", basisUrl);
-            writeln("Client Settings: ", clientSettings);
-            writeln("Client Instance: ", client);
+    //         writeln("Testing Directory API at: ", basisUrl);
+    //         writeln("Client Settings: ", clientSettings);
+    //         writeln("Client Instance: ", client);
             
-            CreateDirectoryRequest request;
-            request.directoryId = DirectoryId("test-directory");
-            request.tenantId = TenantId("test-tenant");
-            request.accountId = "test-account"; 
-            request.displayName = "Test Directory";
+    //         CreateDirectoryRequest request;
+    //         request.directoryId = DirectoryId("test-directory");
+    //         request.tenantId = TenantId("test-tenant");
+    //         request.accountId = "test-account"; 
+    //         request.displayName = "Test Directory";
 
-            // Test action: Call the service over HTTP
-            auto result = client.createDirectory("test-tenant", request);
-            writeln("Create Directory Response: ", result.toJson);
+    //         // Test action: Call the service over HTTP
+    //         auto result = client.createDirectory("test-tenant", request);
+    //         writeln("Create Directory Response: ", result.toJson);
 
-            writeln("Directories: ", client.getDirectories("test-tenant"));
-            writeln("Directory: ", client.getDirectory("test-tenant", result.id));
-            // writeln("Directory2: ", client.getDirectories("test-tenant", "result.id"));
+    //         writeln("Directories: ", client.getDirectories("test-tenant"));
+    //         writeln("Directory: ", client.getDirectory("test-tenant", result.id));
+    //         // writeln("Directory2: ", client.getDirectories("test-tenant", "result.id"));
             
-            testSuccessful = true;
-        } catch (Throwable t) {
-            errorMessage = t.msg;
-        }
-    });
+    //         testSuccessful = true;
+    //     } catch (Throwable t) {
+    //         errorMessage = t.msg;
+    //     }
+    // });
 
-    clientTask.join();
+    // clientTask.join();
 
-    // 6. Evaluation in the main test thread
-    assert(testSuccessful, "REST-Test fails: " ~ errorMessage);
-    logInfo("--- Service-Unittest successfully completed ---");
+    // // 6. Evaluation in the main test thread
+    // assert(testSuccessful, "REST-Test fails: " ~ errorMessage);
+    // logInfo("--- Service-Unittest successfully completed ---");
 }

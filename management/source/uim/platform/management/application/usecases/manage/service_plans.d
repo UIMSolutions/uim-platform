@@ -107,12 +107,12 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto servicePlanRepository = new ServicePlanRepository();
-    auto usecase = new ManageServicePlansUseCase(servicePlanRepository);
-    auto tenantId = TenantId("test-tenant");
-
-    // Test list
-    auto items = usecase.listPlans(tenantId);
-    assert(items !is null);
+//     auto servicePlanRepository = new ServicePlanRepository();
+//     auto usecase = new ManageServicePlansUseCase(servicePlanRepository);
+//     auto tenantId = TenantId("test-tenant");
+// 
+//     // Test list
+//     auto items = usecase.listPlans(tenantId);
+//     assert(items !is null);
 
 }

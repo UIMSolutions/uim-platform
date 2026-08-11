@@ -23,9 +23,9 @@ struct ConnectivitySummary {
 }
 /// Application service for connectivity monitoring and log queries.
 class MonitorConnectivityUseCase { // TODO: UIMUseCase {
-  private ConnectivityLogRepository logRepo;
+  private IConnectivityLogRepository logRepo;
 
-  this(ConnectivityLogRepository logRepo) {
+  this(IConnectivityLogRepository logRepo) {
     this.logRepo = logRepo;
   }
 

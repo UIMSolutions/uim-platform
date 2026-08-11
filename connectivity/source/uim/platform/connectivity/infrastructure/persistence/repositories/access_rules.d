@@ -13,7 +13,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class AccessRuleRepository : TenantRepository!(AccessRule, RuleId), AccessRuleRepository {
+class AccessRuleRepository : TenantRepository!(AccessRule, RuleId), IAccessRuleRepository {
 
   size_t countByConnector(TenantId tenantId, ConnectorId connectorId) {
     return findByConnector(tenantId, connectorId).length;

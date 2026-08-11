@@ -19,10 +19,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for destination CRUD and lookup.
 class ManageDestinationsUseCase { // TODO: UIMUseCase {
-  private DestinationRepository destinations;
-  private ConnectivityLogRepository logs;
+  private IDestinationRepository destinations;
+  private IConnectivityLogRepository logs;
 
-  this(DestinationRepository destinations, ConnectivityLogRepository logs) {
+  this(IDestinationRepository destinations, IConnectivityLogRepository logs) {
     this.destinations = destinations;
     this.logs = logs;
   }

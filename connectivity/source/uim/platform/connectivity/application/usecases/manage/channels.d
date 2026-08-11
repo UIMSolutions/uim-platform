@@ -18,12 +18,12 @@ mixin(ShowModule!());
 @safe:
 /// Application service for service channel lifecycle.
 class ManageChannelsUseCase { // TODO: UIMUseCase {
-  private ChannelRepository channels;
-  private ConnectorRepository connectorRepo;
-  private ConnectivityLogRepository logRepo;
+  private IChannelRepository channels;
+  private IConnectorRepository connectorRepo;
+  private IConnectivityLogRepository logRepo;
 
-  this(ChannelRepository channels, ConnectorRepository connectorRepo,
-      ConnectivityLogRepository logRepo) {
+  this(IChannelRepository channels, IConnectorRepository connectorRepo,
+      IConnectivityLogRepository logRepo) {
     this.channels = channels;
     this.connectorRepo = connectorRepo;
     this.logRepo = logRepo;

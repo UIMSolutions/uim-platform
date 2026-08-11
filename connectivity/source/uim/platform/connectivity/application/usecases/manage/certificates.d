@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for certificate store management.
 class ManageCertificatesUseCase { // TODO: UIMUseCase {
-  private CertificateRepository certificates;
+  private ICertificateRepository certificates;
 
-  this(CertificateRepository certificates) {
+  this(ICertificateRepository certificates) {
     this.certificates = certificates;
   }
 

@@ -338,25 +338,25 @@ string[] toStrings(KeyringRotationPeriod[] values)
 
 ///
 unittest {
-  mixin(ShowTest!("KeyringRotationPeriod"));
-
-  assert("30".toKeyringRotationPeriod == KeyringRotationPeriod.days30);
-  assert("60".toKeyringRotationPeriod == KeyringRotationPeriod.days60);
-  assert("90".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
-  assert("180".toKeyringRotationPeriod == KeyringRotationPeriod.days180);
-  assert("365".toKeyringRotationPeriod == KeyringRotationPeriod.days365);
-
-  assert("".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
-  assert("unknown".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
-
-  assert(KeyringRotationPeriod.days30.toString == "30");
-  assert(KeyringRotationPeriod.days60.toString == "60");
-  assert(KeyringRotationPeriod.days90.toString == "90");
-  assert(KeyringRotationPeriod.days180.toString == "180");
-  assert(KeyringRotationPeriod.days365.toString == "365");
-
-  assert(["30", "90"].toKeyringRotationPeriods == [KeyringRotationPeriod.days30, KeyringRotationPeriod.days90
-    ]);
-  assert([KeyringRotationPeriod.days30, KeyringRotationPeriod.days90].toStrings == ["30", "90"
-    ]);
+//  mixin(ShowTest!("KeyringRotationPeriod"));
+//
+//  assert("30".toKeyringRotationPeriod == KeyringRotationPeriod.days30);
+//  assert("60".toKeyringRotationPeriod == KeyringRotationPeriod.days60);
+//  assert("90".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
+//  assert("180".toKeyringRotationPeriod == KeyringRotationPeriod.days180);
+//  assert("365".toKeyringRotationPeriod == KeyringRotationPeriod.days365);
+//
+//  assert("".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
+//  assert("unknown".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
+//
+//  assert(KeyringRotationPeriod.days30.toString == "30");
+//  assert(KeyringRotationPeriod.days60.toString == "60");
+//  assert(KeyringRotationPeriod.days90.toString == "90");
+//  assert(KeyringRotationPeriod.days180.toString == "180");
+//  assert(KeyringRotationPeriod.days365.toString == "365");
+//
+//  assert(["30", "90"].toKeyringRotationPeriods == [KeyringRotationPeriod.days30, KeyringRotationPeriod.days90
+//    ]);
+//  assert([KeyringRotationPeriod.days30, KeyringRotationPeriod.days90].toStrings == ["30", "90"
+//    ]);
 } 

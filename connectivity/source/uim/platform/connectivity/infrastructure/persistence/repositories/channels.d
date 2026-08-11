@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ChannelRepository : TenantRepository!(ServiceChannel, ChannelId), ChannelRepository {
+class ChannelRepository : TenantRepository!(ServiceChannel, ChannelId), IChannelRepository {
 
   size_t countByConnector(TenantId tenantId, ConnectorId connectorId) {
     return findByConnector(tenantId, connectorId).length;
