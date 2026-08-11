@@ -1,5 +1,6 @@
 module uim.platform.credential_store.domain.ports;
 
-public {
+public:
   import uim.platform.credential_store.domain.ports.repositories;
-}
+  import uim.platform.credential_store.domain.ports.usecases;
+
