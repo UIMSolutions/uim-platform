@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain;
 
-public
+public:
   import uim.platform.ai_launchpad.domain.enumerations;
   import uim.platform.ai_launchpad.domain.types;
   import uim.platform.ai_launchpad.domain.entities;

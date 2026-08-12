@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.dto;
+
 import uim.platform.ai_launchpad;
 
 mixin(ShowModule!());

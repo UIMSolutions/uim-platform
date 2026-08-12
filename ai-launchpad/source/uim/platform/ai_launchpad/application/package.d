@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application;
 
-public {
+public:
   import uim.platform.ai_launchpad.application.dto;
   import uim.platform.ai_launchpad.application.usecases;
-}
+

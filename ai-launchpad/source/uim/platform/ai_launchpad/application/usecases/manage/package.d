@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage;
 
-public {
+public:
   import uim.platform.ai_launchpad.application.usecases.manage.connections;
   import uim.platform.ai_launchpad.application.usecases.manage.workspaces;
   import uim.platform.ai_launchpad.application.usecases.manage.scenarios;
@@ -17,4 +17,4 @@ public {
   import uim.platform.ai_launchpad.application.usecases.manage.prompts;
   import uim.platform.ai_launchpad.application.usecases.manage.prompt_collections;
   import uim.platform.ai_launchpad.application.usecases.manage.resource_groups;
-}
+

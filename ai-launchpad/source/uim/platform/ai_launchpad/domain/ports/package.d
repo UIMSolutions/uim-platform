@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.domain.ports;
 
-public {
+public:
   import uim.platform.ai_launchpad.domain.ports.repositories;
-}
+  import uim.platform.ai_launchpad.domain.ports.usecases;
+

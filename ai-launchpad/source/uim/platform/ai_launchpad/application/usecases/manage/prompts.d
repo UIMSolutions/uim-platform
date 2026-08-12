@@ -4,12 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.prompts;
-// import uim.platform.ai_launchpad.domain.ports.repositories.prompts;
-// import uim.platform.ai_launchpad.domain.entities.prompt;
-// import uim.platform.ai_launchpad.domain.services.prompt_enricher;
-// import uim.platform.ai_launchpad.domain.types;
-// import uim.platform.ai_launchpad.application.dto;
-
 
 import uim.platform.ai_launchpad;
 
@@ -28,10 +22,10 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
   CommandResult createPrompt(CreatePromptRequest r) {
     if (r.name.isEmpty)
       return CommandResult(false, "", "Prompt name is required");
-    if (r.modelname.isEmpty)
+    if (r.modelName.isEmpty)
       return CommandResult(false, "", "Model name is required");
 
-    auto p = Prompt(r.tenantId, PromptId(""), r.createdBy);
+    auto p = Prompt(r.tenantId, PromptId("")); // , r.createdBy);
     // p.connectionId = r.connectionId;
     // TODO: p.collectionId = r.collectionId;
     p.name = r.name;
