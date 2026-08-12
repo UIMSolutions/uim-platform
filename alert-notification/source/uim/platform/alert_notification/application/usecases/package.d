@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.alert_notification.application.usecases;
 
-public {
+public:
     import uim.platform.alert_notification.application.usecases.consume;
     import uim.platform.alert_notification.application.usecases.manage;
     import uim.platform.alert_notification.application.usecases.produce;
-}
+

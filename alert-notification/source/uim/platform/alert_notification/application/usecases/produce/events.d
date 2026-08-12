@@ -14,19 +14,19 @@ mixin(ShowModule!());
 /// Receives an incoming alert event, evaluates all enabled subscriptions against
 /// it, and dispatches matching actions (or records undelivered events on failure).
 class ProduceEventsUseCase {
-    private SubscriptionRepository   subscriptions;
-    private ConditionRepository      conditions;
-    private ActionRepository         actions;
-    private MatchedEventRepository   matchedEvents;
-    private UndeliveredEventRepository undeliveredEvents;
+    private ISubscriptionRepository   subscriptions;
+    private IConditionRepository      conditions;
+    private IActionRepository         actions;
+    private IMatchedEventRepository   matchedEvents;
+    private IUndeliveredEventRepository undeliveredEvents;
     private EventMatcher             matcher;
     private EventDispatcher          dispatcher;
 
-    this(    SubscriptionRepository   subscriptions,
-        ConditionRepository      conditions,
-        ActionRepository         actions,
-        MatchedEventRepository   matchedEvents,
-        UndeliveredEventRepository undeliveredEvents,
+    this(    ISubscriptionRepository   subscriptions,
+        IConditionRepository      conditions,
+        IActionRepository         actions,
+        IMatchedEventRepository   matchedEvents,
+        IUndeliveredEventRepository undeliveredEvents,
         EventMatcher             matcher,
         EventDispatcher          dispatcher
     ) {
