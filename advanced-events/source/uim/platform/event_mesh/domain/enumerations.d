@@ -371,7 +371,6 @@ SubscriptionStatus toSubscriptionStatus(string value) {
 }
 
 SubscriptionStatus[] toSubscriptionStatuses(string[] values)
-
   => values.map!toSubscriptionStatus.array;
 
 string toString(SubscriptionStatus status)

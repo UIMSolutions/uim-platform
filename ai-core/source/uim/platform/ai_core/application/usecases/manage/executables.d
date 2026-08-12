@@ -4,9 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.ai_core.application.usecases.manage.executables;
-// import uim.platform.ai_core.domain.types;
-// import uim.platform.ai_core.domain.entities.executable;
-// import uim.platform.ai_core.domain.ports.repositories.executables;
 
 import uim.platform.ai_core;
 
