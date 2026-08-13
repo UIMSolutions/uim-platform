@@ -11,13 +11,13 @@ mixin(ShowModule!());
 @safe:
 
 struct CreateMonthlyUsageReportRequest {
-  string globalAccountId;
+  GlobalAccountId globalAccountId;
   int reportingYear;
   int reportingMonth;
 }
 
 struct MetricUsageItemResponse {
-  string subaccountId;
+  SubaccountId subaccountId;
   string serviceId;
   string serviceName;
   string planId;
@@ -31,7 +31,7 @@ struct MetricUsageItemResponse {
 struct MonthlyUsageReportResponse {
   MonthlyUsageReportId reportId;
   TenantId tenantId;
-  string globalAccountId;
+  GlobalAccountId globalAccountId;
   int reportingYear;
   int reportingMonth;
   string reportingPeriod;
@@ -49,6 +49,6 @@ struct MonthlyUsageReportResponse {
         i.planId, i.planName, i.metricName, i.value, i.unit, i.environment.to!string);
     return MonthlyUsageReportResponse(r.id, r.tenantId, r.globalAccountId,
       r.reportingYear, r.reportingMonth, r.reportingPeriod,
-      r.generatedAt.toISOExtString(), r.status.to!string, items);
+      r.generatedAt, r.status.to!string, items);
   }
 }

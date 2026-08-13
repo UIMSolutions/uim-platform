@@ -15,13 +15,13 @@ mixin(ShowModule!());
 struct DailyUsageReport {
   mixin TenantEntity!DailyUsageReportId;
 
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   string reportDate; /// YYYY-MM-DD
   int reportYear;
   int reportMonth;
   int reportDay;
-  SysTime generatedAt;
+  long generatedAt;
   ReportStatus status;
   MetricUsageItem[] usageItems;
 
@@ -35,12 +35,12 @@ struct DailyUsageReport {
       .set("reportYear", reportYear)
       .set("reportMonth", reportMonth)
       .set("reportDay", reportDay)
-      .set("generatedAt", generatedAt.toISOExtString())
+      .set("generatedAt", generatedAt)
       .set("status", status.to!string)
       .set("usageItems", jItems);
   }
 
-  static DailyUsageReport create(string globalAccountId, string subaccountId,
+  static DailyUsageReport create(GlobalAccountId globalAccountId, SubaccountId subaccountId,
       int year, int month, int day) {
     DailyUsageReport r;
     r.id = DailyUsageReportId(generateId);
@@ -51,7 +51,7 @@ struct DailyUsageReport {
     r.reportDay = day;
     import std.format : format;
     r.reportDate = format!"%04d-%02d-%02d"(year, month, day);
-    r.generatedAt = Clock.currTime();
+    r.generatedAt = currentTimestamp;
     r.status = ReportStatus.pending;
     return r;
   }

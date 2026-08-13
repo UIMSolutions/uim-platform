@@ -14,11 +14,11 @@ class MonthlyCostReportRepository
     : TenantRepository!(MonthlyCostReport, MonthlyCostReportId),
       IMonthlyCostReportRepository {
 
-  MonthlyCostReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
+  MonthlyCostReport[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
   }
 
-  MonthlyCostReport[] findBySubaccount(TenantId tenantId, string subaccountId) {
+  MonthlyCostReport[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findByTenant(tenantId).filter!(r => r.subaccountId == subaccountId).array;
   }
 
@@ -31,7 +31,7 @@ class MonthlyCostReportRepository
     return findByTenant(tenantId).filter!(r => r.status == status).array;
   }
 
-  size_t countBySubaccount(TenantId tenantId, string subaccountId) {
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findBySubaccount(tenantId, subaccountId).length;
   }
 

@@ -36,7 +36,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         reg.deviceModel = r.deviceModel;
         reg.osVersion = r.osVersion;
         reg.appVersion = r.appVersion;
-        reg.platform = parsePlatform(r.platform);
+        reg.platform = r.platform.toAppPlatform;
         reg.status = DeviceStatus.registered;
         reg.userId = r.userId;
         reg.deviceToken = r.deviceToken;
@@ -93,7 +93,6 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         return repo.countByApp(tenantId, appId);
     }
 
-    private static AppPlatform parsePlatform(string s) {
         switch (s) {
             case "ios": return AppPlatform.ios;
             case "android": return AppPlatform.android;

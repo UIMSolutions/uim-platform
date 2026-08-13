@@ -128,7 +128,7 @@ class MongoFormationRepository : FormationRepository {
         return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
-    override Formation[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
+    override Formation[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
         return findByTenant(tenantId).filter!(e => e.globalAccountId == globalAccountId).array;
     }
 

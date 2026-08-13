@@ -18,7 +18,7 @@ class MonthlyUsageReportUseCases {
   }
 
   MonthlyUsageReportResponse createReport(CreateMonthlyUsageReportRequest req) {
-    auto report = MonthlyUsageReport.create(req.accountId,
+    auto report = MonthlyUsageReport.create(req.globalAccountId,
       req.reportingYear, req.reportingMonth);
     repo.save(report);
     return MonthlyUsageReportResponse.fromEntity(report);
@@ -36,7 +36,7 @@ class MonthlyUsageReportUseCases {
     return result;
   }
 
-  MonthlyUsageReportResponse[] listByGlobalAccount(TenantId tenantId, string globalAccountId) {
+  MonthlyUsageReportResponse[] listByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     MonthlyUsageReportResponse[] result;
     foreach (r; repo.findByGlobalAccount(tenantId, globalAccountId))
       result ~= MonthlyUsageReportResponse.fromEntity(r);

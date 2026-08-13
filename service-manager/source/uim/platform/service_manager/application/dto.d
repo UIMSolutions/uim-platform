@@ -18,7 +18,7 @@ struct CreatePlatformRequest {
     string brokerUrl;
     string credentials;
     string region;
-    string subaccountId;
+    SubaccountId subaccountId;
 }
 
 struct UpdatePlatformRequest {

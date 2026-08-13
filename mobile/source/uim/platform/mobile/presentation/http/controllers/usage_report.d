@@ -33,6 +33,7 @@ class UsageReportController : ManageHttpController {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
+      
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
 
@@ -49,11 +50,11 @@ class UsageReportController : ManageHttpController {
     r.appVersion = data.getString("appVersion");
     r.timestamp = data.getLong("timestamp");
 
-    auto result = usecase.report(r);
+    auto result = usecase.createUsageReport(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject.set("id", result.id);
 
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Usage report created successfully", "Created", 201, resp);
   }
 
@@ -70,8 +71,8 @@ class UsageReportController : ManageHttpController {
     foreach (item; results) {
       items ~= Json.emptyObject
         .set("id", item.id)
-        .set("appId", item.appId)
-        .set("metricType", item.metricType)
+        .set("appId", item.appId.value)
+        .set("metricType", item.metricType.toString)
         .set("metricKey", item.metricKey)
         .set("metricValue", item.metricValue);
     }
@@ -89,6 +90,9 @@ class UsageReportController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = UsageReportId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Usage Report ID", 400);
+
     auto report = usecase.getUsageReport(tenantId, id);
     if (report.isNull)
       return errorResponse("Usage report not found", 400);
@@ -103,7 +107,7 @@ class UsageReportController : ManageHttpController {
       .set("metricKey", report.metricKey)
       .set("metricValue", report.metricValue)
       .set("sessionId", report.sessionId)
-      .set("platform", report.platform)
+      .set("platform", report.platform.toString)
       .set("appVersion", report.appVersion)
       .set("timestamp", report.timestamp);
 

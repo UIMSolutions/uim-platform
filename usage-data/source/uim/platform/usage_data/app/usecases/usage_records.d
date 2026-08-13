@@ -12,14 +12,15 @@ mixin(ShowModule!());
 /// Application service: usage record use cases.
 class UsageRecordUseCases {
   private IUsageRecordRepository repo;
-IUsageRecordRepository repo) {
+
+  this(IUsageRecordRepository repo) {
     this.repo = repo;
   }
 
   UsageRecordResponse submitRecord(CreateUsageRecordRequest req) {
     Environment env;
     try { env = req.environment.to!Environment; } catch (Exception) { env = Environment.other; }
-    auto record = UsageRecord.create(req.accountId, req.subaccountId,
+    auto record = UsageRecord.create(req.globalAccountId, req.subaccountId,
       req.serviceId, req.serviceName, req.metricName, req.metricValue, env, req.region);
     record.directoryId = req.directoryId;
     record.datacenter = req.datacenter;
@@ -42,14 +43,14 @@ IUsageRecordRepository repo) {
     return result;
   }
 
-  UsageRecordResponse[] listByGlobalAccount(TenantId tenantId, string globalAccountId) {
+  UsageRecordResponse[] listByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     UsageRecordResponse[] result;
     foreach (r; repo.findByGlobalAccount(tenantId, globalAccountId))
       result ~= UsageRecordResponse.fromEntity(r);
     return result;
   }
 
-  UsageRecordResponse[] listBySubaccount(TenantId tenantId, string subaccountId) {
+  UsageRecordResponse[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     UsageRecordResponse[] result;
     foreach (r; repo.findBySubaccount(tenantId, subaccountId))
       result ~= UsageRecordResponse.fromEntity(r);

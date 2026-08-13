@@ -17,7 +17,7 @@ struct Formation {
 
     string name;
     string description;
-    string globalAccountId;
+    GlobalAccountId globalAccountId;
     FormationStatus status;
     int systemCount = 0;
 

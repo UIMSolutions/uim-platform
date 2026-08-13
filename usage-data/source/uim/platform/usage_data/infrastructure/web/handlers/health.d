@@ -9,13 +9,14 @@ import uim.platform.usage_data;
 
 mixin(ShowModule!());
 @safe:
-
-class HealthHandler {
-  void check(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto j = Json.emptyObject
-      .set("status", "healthy")
-      .set("service", "usage-data")
-      .set("version", "1.0.0");
-    res.writeJsonBody(j);
-  }
-}
+//
+//class HealthHandler {
+//  void check(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+//    auto j = Json.emptyObject
+//      .set("status", "healthy")
+//      .set("service", "usage-data")
+//      .set("version", "1.0.0");
+//    res.writeJsonBody(j);
+//  }
+//}
+//

@@ -14,7 +14,7 @@ classDiagram
         +TenantId tenantId
         +string name
         +string resourceType
-        +string subaccountId
+        +SubaccountId subaccountId
         +string status
         +Json toJson()
     }

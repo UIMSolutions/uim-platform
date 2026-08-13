@@ -164,11 +164,11 @@ class FeatureRestrictionController : ManageHttpController {
     auto featureId = FeatureRestrictionId(data.getString("featureId"));
     auto userId = UserId(data.getString("userId"));
     auto deviceId = data.getString("deviceId");
-    auto result = usecase.evaluateRestriction(tenantId, featureId, userId, deviceId);
-    auto resp = Json.emptyObject
-      .set("enabled", result.enabled);
+    auto enabled = usecase.evaluateRestriction(tenantId, featureId, userId, deviceId);
+    if (!enabled)
+      return errorResponse("Feature restriction evaluation failed", 400);
 
-    return successResponse("Feature evaluation completed successfully", "Evaluated", 200, resp);
+    return successResponse("Feature evaluation completed successfully", "Evaluated", 200, Json.emptyObject.set("enabled", enabled));
   }
 
   protected void handleEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {

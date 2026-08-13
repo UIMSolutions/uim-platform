@@ -12,11 +12,11 @@ mixin(ShowModule!());
 /// Port: outgoing repository interface for UsageRecord persistence.
 interface IUsageRecordRepository : ITenantRepository!(UsageRecord, UsageRecordId) {
 
-  UsageRecord[] findByGlobalAccount(TenantId tenantId, string globalAccountId);
-  UsageRecord[] findBySubaccount(TenantId tenantId, string subaccountId);
+  UsageRecord[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
+  UsageRecord[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   UsageRecord[] findByService(TenantId tenantId, string serviceId);
   UsageRecord[] findByEnvironment(TenantId tenantId, Environment env);
   UsageRecord[] findByChargebackPeriod(TenantId tenantId, string chargebackPeriod);
-  size_t countByGlobalAccount(TenantId tenantId, string globalAccountId);
+  size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
   void removeByChargebackPeriod(TenantId tenantId, string chargebackPeriod);
 }

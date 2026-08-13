@@ -33,7 +33,7 @@ classDiagram
         +TenantId tenantId
         +DestinationId destinationId
         +string instanceName
-        +string subaccountId
+        +SubaccountId subaccountId
         +string status
         +long timestamp
         +Json toJson()

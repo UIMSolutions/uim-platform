@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class AppConfigurationRepository : TenantRepository!(AppConfiguration, AppConfigurationId), AppConfigurationRepository {
+class AppConfigurationRepository : TenantRepository!(AppConfiguration, AppConfigurationId), IAppConfigurationRepository {
   
   bool existsByKey(TenantId tenantId, MobileAppId appId, string key) {
     return findByApp(tenantId, appId).any!(c => c.key == key);

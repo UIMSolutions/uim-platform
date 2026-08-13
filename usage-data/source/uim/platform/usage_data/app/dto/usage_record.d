@@ -11,8 +11,8 @@ mixin(ShowModule!());
 @safe:
 
 struct CreateUsageRecordRequest {
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   string directoryId;
   string region;
   string datacenter;
@@ -29,8 +29,8 @@ struct CreateUsageRecordRequest {
 struct UsageRecordResponse {
   UsageRecordId recordId;
   TenantId tenantId;
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   string directoryId;
   string region;
   string datacenter;
@@ -51,6 +51,6 @@ struct UsageRecordResponse {
     return UsageRecordResponse(r.id, r.tenantId, r.globalAccountId,
       r.subaccountId, r.directoryId, r.region, r.datacenter, r.serviceId,
       r.serviceName, r.planId, r.planName, r.metricName, r.metricValue,
-      r.environment.to!string, r.reportedAt.toISOExtString(), r.chargebackPeriod);
+      r.environment.to!string, r.reportedAt, r.chargebackPeriod);
   }
 }

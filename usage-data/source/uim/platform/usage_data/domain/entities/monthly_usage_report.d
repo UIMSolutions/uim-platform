@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 /// One line item inside a MonthlyUsageReport — usage for a service/plan/metric combo.
 struct MetricUsageItem {
-  string subaccountId;
+  SubaccountId subaccountId;
   string serviceId;
   string serviceName;
   string planId;
@@ -41,11 +41,11 @@ struct MetricUsageItem {
 struct MonthlyUsageReport {
   mixin TenantEntity!MonthlyUsageReportId;
 
-  string globalAccountId;
+  GlobalAccountId globalAccountId;
   int reportingYear;
   int reportingMonth;
   string reportingPeriod; /// YYYY-MM
-  SysTime generatedAt;
+  long generatedAt;
   ReportStatus status;
   MetricUsageItem[] usageItems;
 
@@ -57,12 +57,12 @@ struct MonthlyUsageReport {
       .set("reportingYear", reportingYear)
       .set("reportingMonth", reportingMonth)
       .set("reportingPeriod", reportingPeriod)
-      .set("generatedAt", generatedAt.toISOExtString())
+      .set("generatedAt", generatedAt)
       .set("status", status.to!string)
       .set("usageItems", jItems);
   }
 
-  static MonthlyUsageReport create(string globalAccountId, int year, int month) {
+  static MonthlyUsageReport create(GlobalAccountId globalAccountId, int year, int month) {
     MonthlyUsageReport r;
     r.id = MonthlyUsageReportId(generateId);
     r.globalAccountId = globalAccountId;
@@ -70,7 +70,7 @@ struct MonthlyUsageReport {
     r.reportingMonth = month;
     import std.format : format;
     r.reportingPeriod = format!"%04d-%02d"(year, month);
-    r.generatedAt = Clock.currTime();
+    r.generatedAt = currentTimestamp;
     r.status = ReportStatus.pending;
     return r;
   }

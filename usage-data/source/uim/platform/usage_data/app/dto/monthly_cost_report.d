@@ -11,8 +11,8 @@ mixin(ShowModule!());
 @safe:
 
 struct CreateMonthlyCostReportRequest {
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   int reportingYear;
   int reportingMonth;
   string currency;
@@ -33,8 +33,8 @@ struct CostItemResponse {
 struct MonthlyCostReportResponse {
   MonthlyCostReportId reportId;
   TenantId tenantId;
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   int reportingYear;
   int reportingMonth;
   string reportingPeriod;
@@ -53,9 +53,21 @@ struct MonthlyCostReportResponse {
     foreach (i; r.costItems)
       items ~= CostItemResponse(i.serviceId, i.serviceName, i.planId, i.planName,
         i.metricName, i.amount, i.currency, i.unit, i.commercialModel.to!string);
-    return MonthlyCostReportResponse(r.id, r.tenantId, r.globalAccountId,
-      r.subaccountId, r.reportingYear, r.reportingMonth, r.reportingPeriod,
-      r.currency, r.totalCost, r.commercialModel.to!string, r.status.to!string,
-      r.generatedAt.toISOExtString(), items);
+
+    auto report = MonthlyCostReportResponse();
+    report.reportId = r.id;
+    report.tenantId = r.tenantId;
+    report.globalAccountId = r.globalAccountId;
+    report.subaccountId = r.subaccountId;
+    report.reportingYear = r.reportingYear;
+    report.reportingMonth = r.reportingMonth;
+    report.reportingPeriod = r.reportingPeriod;
+    report.currency = r.currency;
+    report.totalCost = r.totalCost;
+    report.commercialModel = r.commercialModel.to!string;
+    report.status = r.status.to!string;
+    report.generatedAt = r.generatedAt;
+    report.costItems = items;
+    return report;
   }
 }

@@ -18,7 +18,7 @@ class MonthlyCostReportUseCases {
   }
 
   MonthlyCostReportResponse createReport(CreateMonthlyCostReportRequest req) {
-    auto report = MonthlyCostReport.create(req.accountId, req.subaccountId,
+    auto report = MonthlyCostReport.create(req.globalAccountId, req.subaccountId,
       req.reportingYear, req.reportingMonth, req.currency);
     repo.save(report);
     return MonthlyCostReportResponse.fromEntity(report);
@@ -36,7 +36,7 @@ class MonthlyCostReportUseCases {
     return result;
   }
 
-  MonthlyCostReportResponse[] listBySubaccount(TenantId tenantId, string subaccountId) {
+  MonthlyCostReportResponse[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     MonthlyCostReportResponse[] result;
     foreach (r; repo.findBySubaccount(tenantId, subaccountId))
       result ~= MonthlyCostReportResponse.fromEntity(r);

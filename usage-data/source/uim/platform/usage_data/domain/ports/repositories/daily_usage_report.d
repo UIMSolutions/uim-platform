@@ -13,10 +13,10 @@ mixin(ShowModule!());
 interface IDailyUsageReportRepository
     : ITenantRepository!(DailyUsageReport, DailyUsageReportId) {
 
-  DailyUsageReport[] findBySubaccount(TenantId tenantId, string subaccountId);
+  DailyUsageReport[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   DailyUsageReport[] findByDate(TenantId tenantId, string reportDate);
   DailyUsageReport[] findByStatus(TenantId tenantId, ReportStatus status);
-  DailyUsageReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId);
-  size_t countBySubaccount(TenantId tenantId, string subaccountId);
+  DailyUsageReport[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   void removeByStatus(TenantId tenantId, ReportStatus status);
 }

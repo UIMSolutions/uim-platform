@@ -76,7 +76,7 @@ classDiagram
         +string category
         +AppUrls appUrls
         +string providerSubaccountId
-        +string globalAccountId
+        +GlobalAccountId globalAccountId
         +string xsuaaServiceInstanceId
         +AppPlan plan
         +AppRegistrationStatus status

@@ -23,6 +23,7 @@ class MobileAppController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/apps", &handleCreate);
     router.get("/api/v1/apps", &handleList);
     router.get("/api/v1/apps/*", &handleGet);
@@ -71,7 +72,7 @@ class MobileAppController : ManageHttpController {
         .set("id", item.id)
         .set("name", item.name)
         .set("bundleId", item.bundleId)
-        .set("platform", item.platform)
+        .set("platform", item.platform.toString)
         .set("status", item.status);
     }
     auto resp = Json.emptyObject
@@ -101,7 +102,7 @@ class MobileAppController : ManageHttpController {
       .set("name", app.name)
       .set("description", app.description)
       .set("bundleId", app.bundleId)
-      .set("platform", app.platform)
+      .set("platform", app.platform.toString)
       .set("securityConfig", app.securityConfig)
       .set("authProvider", app.authProvider)
       .set("pushEnabled", app.pushEnabled)
@@ -140,11 +141,9 @@ class MobileAppController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
-
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Mobile app updated successfully", "Updated", 200, resp);
-    }
+  }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

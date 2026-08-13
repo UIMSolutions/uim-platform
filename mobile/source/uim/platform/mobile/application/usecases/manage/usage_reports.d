@@ -21,7 +21,7 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult createUsageReport(ReportUsageRequest r) {
+    CommandResult createUsageReport(CreateUsageReportRequest r) {
         // Check if a report with the same sessionId and eventType already exists for the same app and device
         // auto existing = repo.findBySessionAndEvent(r.tenantId, r.appId, r.deviceId, r.sessionId, r.eventType);
         // if (!existing.isNull)
@@ -44,6 +44,10 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
 
     UsageReport getUsageReport(TenantId tenantId, UsageReportId id) {
         return repo.findById(tenantId, id);
+    }
+
+    UsageReport[] listUsageReports(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
     }
 
     UsageReport[] listUsageReports(TenantId tenantId, MobileAppId appId) {

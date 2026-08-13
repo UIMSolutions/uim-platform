@@ -16,7 +16,7 @@ struct Platform {
     string brokerUrl;
     string credentials;
     string region;
-    string subaccountId;
+    SubaccountId subaccountId;
     
     Json toJson() const {
         return entityToJson()

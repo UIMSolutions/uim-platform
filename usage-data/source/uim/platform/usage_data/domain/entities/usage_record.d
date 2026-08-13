@@ -15,8 +15,8 @@ mixin(ShowModule!());
 struct UsageRecord {
   mixin TenantEntity!UsageRecordId;
 
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   string directoryId;
   string region;
   string datacenter;
@@ -27,7 +27,7 @@ struct UsageRecord {
   string metricName;
   double metricValue;
   Environment environment;
-  SysTime reportedAt;
+  long reportedAt;
   string chargebackPeriod; /// YYYY-MM format
   int chargebackYear;
   int chargebackMonth;
@@ -46,13 +46,13 @@ struct UsageRecord {
       .set("metricName", metricName)
       .set("metricValue", metricValue)
       .set("environment", environment.to!string)
-      .set("reportedAt", reportedAt.toISOExtString())
+      .set("reportedAt", reportedAt)
       .set("chargebackPeriod", chargebackPeriod)
       .set("chargebackYear", chargebackYear)
       .set("chargebackMonth", chargebackMonth);
   }
 
-  static UsageRecord create(string globalAccountId, string subaccountId,
+  static UsageRecord create(GlobalAccountId globalAccountId, SubaccountId subaccountId,
       string serviceId, string serviceName, string metricName, double value,
       Environment env, string region) {
     UsageRecord r;
@@ -65,7 +65,7 @@ struct UsageRecord {
     r.metricValue = value;
     r.environment = env;
     r.region = region;
-    r.reportedAt = Clock.currTime();
+    r.reportedAt = currentTimestamp;
     return r;
   }
 }

@@ -41,8 +41,8 @@ struct CostItem {
 struct MonthlyCostReport {
   mixin TenantEntity!MonthlyCostReportId;
 
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   int reportingYear;
   int reportingMonth;
   string reportingPeriod; /// YYYY-MM
@@ -50,7 +50,7 @@ struct MonthlyCostReport {
   double totalCost;
   CommercialModel commercialModel;
   ReportStatus status;
-  SysTime generatedAt;
+  long generatedAt;
   CostItem[] costItems;
 
   Json toJson() {
@@ -66,11 +66,11 @@ struct MonthlyCostReport {
       .set("totalCost", totalCost)
       .set("commercialModel", commercialModel.to!string)
       .set("status", status.to!string)
-      .set("generatedAt", generatedAt.toISOExtString())
+      .set("generatedAt", generatedAt)
       .set("costItems", jItems);
   }
 
-  static MonthlyCostReport create(string globalAccountId, string subaccountId,
+  static MonthlyCostReport create(GlobalAccountId globalAccountId, SubaccountId subaccountId,
       int year, int month, string currency) {
     MonthlyCostReport r;
     r.id = MonthlyCostReportId(generateId);
@@ -84,7 +84,7 @@ struct MonthlyCostReport {
     r.totalCost = 0.0;
     r.commercialModel = CommercialModel.cpea;
     r.status = ReportStatus.pending;
-    r.generatedAt = Clock.currTime();
+    r.generatedAt = currentTimestamp;
     return r;
   }
 }

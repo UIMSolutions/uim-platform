@@ -52,9 +52,8 @@ class PushNotificationController : ManageHttpController {
     auto result = usecase.send(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
 
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Push notification sent successfully", "Created", 201, resp);
   }
 
@@ -76,10 +75,7 @@ class PushNotificationController : ManageHttpController {
         .set("provider", item.provider.toString)
         .set("status", item.status.toString);
     }
-    auto resp = Json.emptyObject
-      .set("items", items)
-      .set("totalCount", Json(results.length));
-
+    auto resp = Json.emptyObject.set("items", items).set("totalCount", results.length);
     return successResponse("Push notifications retrieved successfully", "Retrieved", 200, resp);
   }
 
@@ -90,6 +86,9 @@ class PushNotificationController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = PushNotificationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Push Notification ID", 400);
+
     auto notification = usecase.getNotification(tenantId, id);
     if (notification.isNull)
       return errorResponse("Push notification not found", 404);
@@ -101,7 +100,7 @@ class PushNotificationController : ManageHttpController {
       .set("title", notification.title)
       .set("body", notification.body_)
       .set("payload", notification.payload)
-      .set("provider", notification.provider)
+      .set("provider", notification.provider.toString)
       .set("priority", notification.priority.toString)
       .set("targetDevices", notification.targetDevices.toJson)
       .set("targetTopics", notification.targetTopics.toJson)
@@ -121,9 +120,13 @@ class PushNotificationController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = PushNotificationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Push Notification ID", 400);
+
     auto result = usecase.deleteNotification(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
     return successResponse("Push notification deleted successfully", "Deleted", 204, Json
         .emptyObject.set("id", result.id));
 

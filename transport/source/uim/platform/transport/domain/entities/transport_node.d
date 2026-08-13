@@ -23,7 +23,7 @@ struct TransportNode {
     string environment;
     string region;
     string globalAccount;
-    string subaccountId;
+    SubaccountId subaccountId;
     SpaceId spaceId;
     string serviceKey;
     bool isForwardEnabled = true;

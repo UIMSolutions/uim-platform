@@ -14,7 +14,7 @@ class DailyUsageReportRepository
     : TenantRepository!(DailyUsageReport, DailyUsageReportId),
       IDailyUsageReportRepository {
 
-  DailyUsageReport[] findBySubaccount(TenantId tenantId, string subaccountId) {
+  DailyUsageReport[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findByTenant(tenantId).filter!(r => r.subaccountId == subaccountId).array;
   }
 
@@ -26,11 +26,11 @@ class DailyUsageReportRepository
     return findByTenant(tenantId).filter!(r => r.status == status).array;
   }
 
-  DailyUsageReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
+  DailyUsageReport[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
   }
 
-  size_t countBySubaccount(TenantId tenantId, string subaccountId) {
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findBySubaccount(tenantId, subaccountId).length;
   }
 

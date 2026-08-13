@@ -98,7 +98,7 @@ package "Domain" {
     +TenantId tenantId
     +string name
     +string description
-    +string globalAccountId
+    +GlobalAccountId globalAccountId
     +FormationStatus status
     +int systemCount
     +Json toJson()

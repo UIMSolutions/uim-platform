@@ -41,7 +41,7 @@ package "domain.entities" {
     +IaasProvider iaasProvider
     +ServicePlan plan
     +string region
-    +string subaccountId
+    +SubaccountId subaccountId
     +InstanceStatus status
     +string statusMessage
     +PrivateEndpointId privateEndpointId

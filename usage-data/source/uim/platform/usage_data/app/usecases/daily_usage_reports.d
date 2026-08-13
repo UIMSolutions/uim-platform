@@ -18,7 +18,7 @@ class DailyUsageReportUseCases {
   }
 
   DailyUsageReportResponse createReport(CreateDailyUsageReportRequest req) {
-    auto report = DailyUsageReport.create(req.accountId, req.subaccountId,
+    auto report = DailyUsageReport.create(req.globalAccountId, req.subaccountId,
       req.reportYear, req.reportMonth, req.reportDay);
       
     repo.save(report);
@@ -37,7 +37,7 @@ class DailyUsageReportUseCases {
     return result;
   }
 
-  DailyUsageReportResponse[] listBySubaccount(TenantId tenantId, string subaccountId) {
+  DailyUsageReportResponse[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     DailyUsageReportResponse[] result;
     foreach (r; repo.findBySubaccount(tenantId, subaccountId))
       result ~= DailyUsageReportResponse.fromEntity(r);

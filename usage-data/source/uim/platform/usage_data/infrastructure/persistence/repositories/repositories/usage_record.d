@@ -13,11 +13,11 @@ mixin(ShowModule!());
 class UsageRecordRepository
     : TenantRepository!(UsageRecord, UsageRecordId), IUsageRecordRepository {
 
-  UsageRecord[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
+  UsageRecord[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
   }
 
-  UsageRecord[] findBySubaccount(TenantId tenantId, string subaccountId) {
+  UsageRecord[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findByTenant(tenantId).filter!(r => r.subaccountId == subaccountId).array;
   }
 
@@ -33,7 +33,7 @@ class UsageRecordRepository
     return findByTenant(tenantId).filter!(r => r.chargebackPeriod == chargebackPeriod).array;
   }
 
-  size_t countByGlobalAccount(TenantId tenantId, string globalAccountId) {
+  size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return findByGlobalAccount(tenantId, globalAccountId).length;
   }
 

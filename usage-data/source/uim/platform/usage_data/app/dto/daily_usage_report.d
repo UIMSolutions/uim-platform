@@ -11,8 +11,8 @@ mixin(ShowModule!());
 @safe:
 
 struct CreateDailyUsageReportRequest {
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   int reportYear;
   int reportMonth;
   int reportDay;
@@ -21,8 +21,8 @@ struct CreateDailyUsageReportRequest {
 struct DailyUsageReportResponse {
   DailyUsageReportId reportId;
   TenantId tenantId;
-  string globalAccountId;
-  string subaccountId;
+  GlobalAccountId globalAccountId;
+  SubaccountId subaccountId;
   string reportDate;
   long generatedAt;
   string status;
@@ -36,8 +36,16 @@ struct DailyUsageReportResponse {
     foreach (i; r.usageItems)
       items ~= MetricUsageItemResponse(i.subaccountId, i.serviceId, i.serviceName,
         i.planId, i.planName, i.metricName, i.value, i.unit, i.environment.to!string);
-    return DailyUsageReportResponse(r.id, r.tenantId, r.globalAccountId,
-      r.subaccountId, r.reportDate, r.generatedAt.toISOExtString(),
-      r.status.to!string, items);
+
+    auto report = DailyUsageReportResponse();
+    report.reportId = r.id;
+    report.tenantId = r.tenantId;
+    report.globalAccountId = r.globalAccountId;
+    report.subaccountId = r.subaccountId;
+    report.reportDate = r.reportDate;
+    report.generatedAt = r.generatedAt;
+    report.status = r.status.to!string;
+    report.usageItems = items;
+    return report;
   }
 }

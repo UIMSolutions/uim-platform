@@ -27,7 +27,7 @@ struct ServiceInstance {
   /// Cloud region where the resource is located.
   string region;
   /// BTP subaccount ID that owns this instance.
-  string subaccountId;
+  SubaccountId subaccountId;
   /// Current provisioning/lifecycle status.
   InstanceStatus status = InstanceStatus.pending;
   /// Human-readable status message or error detail.

@@ -70,7 +70,7 @@ class DeviceRegistrationController : ManageHttpController {
         .set("id", item.id)
         .set("appId", item.appId)
         .set("deviceModel", item.deviceModel)
-        .set("platform", item.platform);
+        .set("platform", item.platform.toString);
         // TODO: ? .set("status", item.status);
     }
     auto resp = Json.emptyObject
@@ -101,7 +101,7 @@ class DeviceRegistrationController : ManageHttpController {
       .set("deviceModel", result.deviceModel)
       .set("osVersion", result.osVersion)
       .set("appVersion", result.appVersion)
-      .set("platform", result.platform)
+      .set("platform", result.platform.toString)
       .set("userId", result.userId)
       .set("deviceToken", result.deviceToken)
       .set("status", result.status.toString);

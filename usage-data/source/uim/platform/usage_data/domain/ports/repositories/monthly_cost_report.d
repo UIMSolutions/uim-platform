@@ -13,10 +13,10 @@ mixin(ShowModule!());
 interface IMonthlyCostReportRepository
     : ITenantRepository!(MonthlyCostReport, MonthlyCostReportId) {
 
-  MonthlyCostReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId);
-  MonthlyCostReport[] findBySubaccount(TenantId tenantId, string subaccountId);
+  MonthlyCostReport[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
+  MonthlyCostReport[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   MonthlyCostReport[] findByPeriod(TenantId tenantId, int year, int month);
   MonthlyCostReport[] findByStatus(TenantId tenantId, ReportStatus status);
-  size_t countBySubaccount(TenantId tenantId, string subaccountId);
+  size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   void removeByStatus(TenantId tenantId, ReportStatus status);
 }

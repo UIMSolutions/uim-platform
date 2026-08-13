@@ -5,13 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.domain;
 
-public {
+public:
   import uim.platform.mobile.domain.enumerations;
   import uim.platform.mobile.domain.types;
-}
 
-public {
+public:
   import uim.platform.mobile.domain.entities;
   import uim.platform.mobile.domain.ports;
   import uim.platform.mobile.domain.services;
-}
+

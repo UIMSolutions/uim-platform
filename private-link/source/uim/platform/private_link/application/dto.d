@@ -19,7 +19,7 @@ struct CreateServiceInstanceRequest {
   string iaasProvider;
   string plan;
   string region;
-  string subaccountId;
+  SubaccountId subaccountId;
 }
 
 struct UpdateServiceInstanceRequest {

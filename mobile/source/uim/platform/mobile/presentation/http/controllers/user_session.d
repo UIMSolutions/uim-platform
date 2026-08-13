@@ -69,8 +69,8 @@ class UserSessionController : ManageHttpController {
         .set("id", item.id)
         .set("appId", item.appId)
         .set("userId", item.userId)
-        .set("platform", item.platform)
-        .set("status", item.status);
+        .set("platform", item.platform.toString);
+        // .set("status", item.status);
     }
 
     auto resp = Json.emptyObject
@@ -102,9 +102,9 @@ class UserSessionController : ManageHttpController {
       .set("userId", userSession.userId)
       .set("ipAddress", userSession.ipAddress)
       .set("userAgent", userSession.userAgent)
-      .set("platform", userSession.platform)
-      .set("appVersion", userSession.appVersion)
-      .set("status", userSession.status);
+      .set("platform", userSession.platform.toString)
+      .set("appVersion", userSession.appVersion);
+      // .set("status", userSession.status);
 
     return successResponse("User session retrieved successfully", "Retrieved", 200, resp);
   }

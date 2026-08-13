@@ -14,7 +14,7 @@ class MonthlyUsageReportRepository
     : TenantRepository!(MonthlyUsageReport, MonthlyUsageReportId),
       IMonthlyUsageReportRepository {
 
-  MonthlyUsageReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
+  MonthlyUsageReport[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
   }
 
@@ -27,7 +27,7 @@ class MonthlyUsageReportRepository
     return findByTenant(tenantId).filter!(r => r.status == status).array;
   }
 
-  size_t countByGlobalAccount(TenantId tenantId, string globalAccountId) {
+  size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return findByGlobalAccount(tenantId, globalAccountId).length;
   }
 

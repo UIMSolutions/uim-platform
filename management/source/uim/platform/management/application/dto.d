@@ -87,6 +87,7 @@ struct CreateSubaccountRequest {
 
 struct UpdateSubaccountRequest {
   TenantId tenantId;
+  GlobalAccountId globalAccountId;
   SubaccountId subaccountId;
 
   string displayName;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ImportQueueEntryRepository : ITenantRepository!(ImportQueueEntry, ImportQueueEntryId) {
+interface IImportQueueEntryRepository : ITenantRepository!(ImportQueueEntry, ImportQueueEntryId) {
     ImportQueueEntry[] findByNode(TenantId tenantId, TransportNodeId nodeId);
     ImportQueueEntry[] findByRequest(TenantId tenantId, TransportRequestId requestId);
     ImportQueueEntry[] findByStatus(TenantId tenantId, ImportStatus status);
