@@ -208,7 +208,7 @@ unittest {
     assert(toChannelType("unknown") == ChannelType.custom);
 }
 
-/// Application status (registered app lifecycle).
+/// Application Status(registered app lifecycle).
 enum AppStatus {
   active,
   inactive,

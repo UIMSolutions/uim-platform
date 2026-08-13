@@ -48,7 +48,7 @@ ProjectStatus[] toProjectStatuses(string[] values) {
 string toString(ProjectStatus value) {
     return value.to!string;
 }
-string[] toStrings(ProjectStatus[] values) {
+string[] toString(ProjectStatus[] values) {
     return values.map!toString.array;
 }
 /// 
@@ -71,7 +71,7 @@ unittest {
     assert(ProjectStatus.archived.toString == "archived");
 
     assert(["draft", "completed", "invalid"].toProjectStatuses == [ProjectStatus.draft, ProjectStatus.completed, ProjectStatus.draft]);
-    assert([ProjectStatus.draft, ProjectStatus.archived].toStrings == ["draft", "archived"]);
+    assert([ProjectStatus.draft, ProjectStatus.archived].toString == ["draft", "archived"]);
 }
 
 /// Translation engine / provider
@@ -94,7 +94,7 @@ TranslationProvider[] toTranslationProviders(string[] values) {
 string toString(TranslationProvider value) {
     return value.to!string;
 }
-string[] toStrings(TranslationProvider[] values) {
+string[] toString(TranslationProvider[] values) {
     return values.map!toString.array;
 }
 ///
@@ -115,7 +115,7 @@ unittest {
     assert(TranslationProvider.llm.toString == "llm");
 
     assert(toTranslationProviders(["mltr", "llm", "invalid"]) == [TranslationProvider.mltr, TranslationProvider.llm, TranslationProvider.mltr]);
-    assert(toStrings([TranslationProvider.mltr, TranslationProvider.companyMltr]) == ["mltr", "companyMltr"]);
+    assert(toString([TranslationProvider.mltr, TranslationProvider.companyMltr]) == ["mltr", "companyMltr"]);
 }
 
 /// Status of an async translation job
@@ -135,7 +135,7 @@ JobStatus[] toJobStatuses(string[] values) {
 string toString(JobStatus value) {
     return value.to!string;
 }
-string[] toStrings(JobStatus[] values) {
+string[] toString(JobStatus[] values) {
     return values.map!toString.array;
 }
 /// 
@@ -158,7 +158,7 @@ unittest {
     assert(JobStatus.cancelled.toString == "cancelled");
 
     assert(["pending", "completed", "invalid"].toJobStatuses == [JobStatus.pending, JobStatus.completed, JobStatus.pending]);
-    assert([JobStatus.pending, JobStatus.cancelled].toStrings == ["pending", "cancelled"]);
+    assert([JobStatus.pending, JobStatus.cancelled].toString == ["pending", "cancelled"]);
 }
 
 /// Kind of translation job
@@ -176,7 +176,7 @@ JobType[] toJobTypes(string[] values) {
 string toString(JobType value) {
     return value.to!string;
 }
-string[] toStrings(JobType[] values) {
+string[] toString(JobType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -195,7 +195,7 @@ unittest {
     assert(JobType.text.toString == "text");
 
     assert(["software", "text", "invalid"].toJobTypes == [JobType.software, JobType.text, JobType.software]);
-    assert([JobType.software, JobType.document].toStrings == ["software", "document"]);
+    assert([JobType.software, JobType.document].toString == ["software", "document"]);
 }
 
 /// Quality rating for a translation result
@@ -215,7 +215,7 @@ QualityLevel[] toQualityLevels(string[] values) {
 string toString(QualityLevel value) {
     return value.to!string;
 }
-string[] toStrings(QualityLevel[] values) {
+string[] toString(QualityLevel[] values) {
     return values.map!toString.array;
 }   
 ///
@@ -238,5 +238,5 @@ unittest {
     assert(QualityLevel.unknown.toString == "unknown");
 
     assert(["excellent", "poor", "invalid"].toQualityLevels == [QualityLevel.excellent, QualityLevel.poor, QualityLevel.unknown]);
-    assert([QualityLevel.excellent, QualityLevel.good].toStrings == ["excellent", "good"]);
+    assert([QualityLevel.excellent, QualityLevel.good].toString == ["excellent", "good"]);
 }

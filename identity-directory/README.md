@@ -17,7 +17,7 @@ Part of the [UIM Platform](https://www.....de/uim/sap) suite.
 
 | Capability | Description |
 |---|---|
-| **IDUser Management (SCIM 2.0)** | Full CRUD for users with SCIM-compliant structured names, multi-valued emails, phone numbers, addresses, lifecycle status (Active / Inactive / Locked / Staged), and custom schema extensions |
+| **IDUser Management (SCIM 2.0)** | Full CRUD for users with SCIM-compliant structured names, multi-valued emails, phone numbers, addresses, lifecycle Status(Active / Inactive / Locked / Staged), and custom schema extensions |
 | **IDGroup Management (SCIM 2.0)** | Standard and dynamic groups with nested membership (IDUser or IDGroup members), member add/remove operations, and tenant-scoped display name search |
 | **Custom Schemas** | SCIM 2.0 schema extensions with typed attributes (String, Integer, Boolean, DateTime, Reference, Complex, Binary), mutability rules, returned behavior, and uniqueness constraints |
 | **Password Policies** | Configurable password rules per tenant — min/max length, character class requirements (uppercase, lowercase, digit, special), unique character minimum, consecutive repeat limit, password history, failed-attempt lockout, and expiry days |

@@ -52,7 +52,7 @@ string toString(SystemPlan plan) {
   }
 }
 
-string[] toStrings(SystemPlan[] plans) {
+string[] toString(SystemPlan[] plans) {
   return plans.map!(p => toString(p)).array;
 }
 /// 
@@ -74,7 +74,7 @@ unittest {
 
   assert(toSystemPlans(["standard", "free", "unknown"]) == [SystemPlan.standard, SystemPlan.free_, SystemPlan.standard
     ]);
-  assert(toStrings([SystemPlan.standard, SystemPlan.free_]) == ["standard", "free"
+  assert(toString([SystemPlan.standard, SystemPlan.free_]) == ["standard", "free"
     ]);
 }
 
@@ -101,7 +101,7 @@ string toString(SystemStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(SystemStatus[] statuses) {
+string[] toString(SystemStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -127,7 +127,7 @@ unittest {
 
   assert(["active", "provisioning", "unknown"].toSystemStatuses == [SystemStatus.active, SystemStatus.provisioning, SystemStatus.active
     ]);
-  assert([SystemStatus.active, SystemStatus.error].toStrings == ["active", "error"
+  assert([SystemStatus.active, SystemStatus.error].toString == ["active", "error"
     ]);
 }
 
@@ -151,7 +151,7 @@ string toString(ComponentType type) {
   return type.to!string;
 }
 
-string[] toStrings(ComponentType[] types) {
+string[] toString(ComponentType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -172,7 +172,7 @@ unittest {
   assert(toComponentTypes(["developmentPackage", "extensibility", "unknown"]) == [ComponentType.developmentPackage, ComponentType.extensibility,
       ComponentType.developmentPackage
     ]);
-  assert(toStrings([ComponentType.businessConfiguration, ComponentType.customCode
+  assert(toString([ComponentType.businessConfiguration, ComponentType.customCode
     ]) == ["businessConfiguration", "customCode"]);
 }
 
@@ -197,7 +197,7 @@ string toString(ComponentStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(ComponentStatus[] statuses) {
+string[] toString(ComponentStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -220,7 +220,7 @@ unittest {
   assert(["notCloned", "cloning", "unknown"].toComponentStatuses == [ComponentStatus.notCloned, ComponentStatus.cloning,
       ComponentStatus.notCloned
     ]);
-  assert([ComponentStatus.cloned, ComponentStatus.error].toStrings == ["cloned", "error"
+  assert([ComponentStatus.cloned, ComponentStatus.error].toString == ["cloned", "error"
     ]);
 }
 
@@ -244,7 +244,7 @@ string toString(BranchStrategy strategy) {
   return strategy.to!string;
 }
 
-string[] toStrings(BranchStrategy[] strategies) {
+string[] toString(BranchStrategy[] strategies) {
   return strategies.map!toString.array;
 }
 ///
@@ -264,7 +264,7 @@ unittest {
 
   assert(["main", "feature", "unknown"].toBranchStrategies == [BranchStrategy.main, BranchStrategy.feature, BranchStrategy.main
     ]);
-  assert([BranchStrategy.release, BranchStrategy.correction].toStrings == ["release", "correction"
+  assert([BranchStrategy.release, BranchStrategy.correction].toString == ["release", "correction"
     ]);
 }
 
@@ -287,7 +287,7 @@ string toString(CommunicationDirection direction) {
   return direction.to!string;
 }
 
-string[] toStrings(CommunicationDirection[] directions) {
+string[] toString(CommunicationDirection[] directions) {
   return directions.map!(d => toString(d)).array;
 }
 ///
@@ -304,7 +304,7 @@ unittest {
   assert(["inbound", "outbound", "unknown"].toCommunicationDirections == [CommunicationDirection.inbound, CommunicationDirection.outbound,
       CommunicationDirection.inbound
     ]);
-  assert([CommunicationDirection.inbound, CommunicationDirection.outbound].toStrings == ["inbound", "outbound"]);
+  assert([CommunicationDirection.inbound, CommunicationDirection.outbound].toString == ["inbound", "outbound"]);
 }
 
 /// Communication protocol.
@@ -328,7 +328,7 @@ string toString(CommunicationProtocol protocol) {
   return protocol.to!string;
 }
 
-string[] toStrings(CommunicationProtocol[] protocols) {
+string[] toString(CommunicationProtocol[] protocols) {
   return protocols.map!(p => toString(p)).array;
 }
 ///
@@ -351,7 +351,7 @@ unittest {
   assert(["httpRest", "rfc", "unknown"].toCommunicationProtocols == [CommunicationProtocol.httpRest, CommunicationProtocol.rfc,
       CommunicationProtocol.httpRest
     ]);
-  assert([CommunicationProtocol.httpSoap, CommunicationProtocol.odataV2].toStrings == ["httpSoap", "odataV2"]);
+  assert([CommunicationProtocol.httpSoap, CommunicationProtocol.odataV2].toString == ["httpSoap", "odataV2"]);
 }
 
 /// Authentication method used in communication arrangements.
@@ -375,7 +375,7 @@ string toString(CommunicationAuthMethod method) {
   return method.to!string;
 }
 
-string[] toStrings(CommunicationAuthMethod[] methods) {
+string[] toString(CommunicationAuthMethod[] methods) {
   return methods.map!(m => toString(m)).array;
 }
 ///
@@ -401,7 +401,7 @@ unittest {
     CommunicationAuthMethod.basicAuthentication
   ]);
   assert([CommunicationAuthMethod.oauth2ClientCredentials,
-      CommunicationAuthMethod.noAuthentication].toStrings == ["oauth2ClientCredentials", "noAuthentication"]);
+      CommunicationAuthMethod.noAuthentication].toString == ["oauth2ClientCredentials", "noAuthentication"]);
 }
 
 /// Status of a communication arrangement.
@@ -423,7 +423,7 @@ string toString(ArrangementStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(ArrangementStatus[] statuses) {
+string[] toString(ArrangementStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -442,7 +442,7 @@ unittest {
   assert(["active", "inactive", "unknown"].toArrangementStatuses == [ArrangementStatus.active, ArrangementStatus.inactive,
       ArrangementStatus.active
     ]);
-  assert([ArrangementStatus.active, ArrangementStatus.error].toStrings == ["active", "error"
+  assert([ArrangementStatus.active, ArrangementStatus.error].toString == ["active", "error"
     ]);
 }
 
@@ -469,7 +469,7 @@ string toString(BindingType type) {
   return type.to!string;
 }
 
-string[] toStrings(BindingType[] types) {
+string[] toString(BindingType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -493,7 +493,7 @@ unittest {
 
   assert(["odataV4", "restHttp", "unknown"].toBindingTypes == [BindingType.odataV4, BindingType.restHttp, BindingType.odataV4
     ]);
-  assert([BindingType.soapHttp, BindingType.sql].toStrings == ["soapHttp", "sql"
+  assert([BindingType.soapHttp, BindingType.sql].toString == ["soapHttp", "sql"
     ]);
 }
 
@@ -525,7 +525,7 @@ string toString(BindingStatus status) {
   return cast(string)status;
 }
 
-string[] toStrings(BindingStatus[] statuses) {
+string[] toString(BindingStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -543,7 +543,7 @@ unittest {
 
   assert(["active", "deprecated", "unknown"].toBindingStatuses == [BindingStatus.active, BindingStatus.deprecated_, BindingStatus.active
     ]);
-  assert([BindingStatus.inactive, BindingStatus.deprecated_].toStrings == ["inactive", "deprecated"
+  assert([BindingStatus.inactive, BindingStatus.deprecated_].toString == ["inactive", "deprecated"
     ]);
 }
 // ─── Users and Roles ───
@@ -567,7 +567,7 @@ string toString(UserStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(UserStatus[] statuses) {
+string[] toString(UserStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -587,7 +587,7 @@ unittest {
 
   assert(["active", "locked", "unknown"].toUserStatuses == [UserStatus.active, UserStatus.locked, UserStatus.active
     ]);
-  assert([UserStatus.inactive, UserStatus.passwordLocked].toStrings == ["inactive", "passwordLocked"
+  assert([UserStatus.inactive, UserStatus.passwordLocked].toString == ["inactive", "passwordLocked"
     ]);
 }
 
@@ -610,7 +610,7 @@ string toString(RoleType type) {
   return type.to!string;
 }
 
-string[] toStrings(RoleType[] types) {
+string[] toString(RoleType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -628,7 +628,7 @@ unittest {
 
   assert(["unrestricted", "custom", "unknown"].toRoleTypes == [RoleType.unrestricted, RoleType.custom, RoleType.unrestricted
     ]);
-  assert([RoleType.restricted, RoleType.custom].toStrings == ["restricted", "custom"
+  assert([RoleType.restricted, RoleType.custom].toString == ["restricted", "custom"
     ]);
 }
 
@@ -652,7 +652,7 @@ string toString(TransportType type) {
   return type.to!string;
 }
 
-string[] toStrings(TransportType[] types) {
+string[] toString(TransportType[] types) {
   return types.map!toString.array;
 }
 /// 
@@ -671,7 +671,7 @@ unittest {
   assert(["workbench", "customizing", "unknown"].toTransportTypes == [TransportType.workbench, TransportType.customizing,
       TransportType.workbench
     ]);
-  assert([TransportType.workbench, TransportType.transportOfCopies].toStrings == ["workbench", "transportOfCopies"
+  assert([TransportType.workbench, TransportType.transportOfCopies].toString == ["workbench", "transportOfCopies"
     ]);
 }
 
@@ -695,7 +695,7 @@ string toString(TransportStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(TransportStatus[] statuses) {
+string[] toString(TransportStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -716,7 +716,7 @@ unittest {
   assert(["modifiable", "released", "unknown"].toTransportStatuses == [TransportStatus.modifiable, TransportStatus.released,
       TransportStatus.modifiable
     ]);
-  assert([TransportStatus.imported, TransportStatus.error].toStrings == ["imported", "error"
+  assert([TransportStatus.imported, TransportStatus.error].toString == ["imported", "error"
     ]);
 }
 
@@ -742,7 +742,7 @@ string toString(JobFrequency frequency) {
   return frequency.to!string;
 }
 
-string[] toStrings(JobFrequency[] frequencies) {
+string[] toString(JobFrequency[] frequencies) {
   return frequencies.map!(f => toString(f)).array;
 }
 ///
@@ -764,7 +764,7 @@ unittest {
 
   assert(["once", "daily", "unknown"].toJobFrequencies == [JobFrequency.once, JobFrequency.daily, JobFrequency.once
     ]);
-  assert(toStrings([JobFrequency.hourly, JobFrequency.weekly]) == ["hourly", "weekly"
+  assert(toString([JobFrequency.hourly, JobFrequency.weekly]) == ["hourly", "weekly"
     ]);
 }
 
@@ -789,7 +789,7 @@ string toString(JobStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(JobStatus[] statuses) {
+string[] toString(JobStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -811,6 +811,6 @@ unittest {
 
   assert(["scheduled", "running", "unknown"].toJobStatuses == [JobStatus.scheduled, JobStatus.running, JobStatus.scheduled
     ]);
-  assert([JobStatus.completed, JobStatus.failed].toStrings == ["completed", "failed"
+  assert([JobStatus.completed, JobStatus.failed].toString == ["completed", "failed"
     ]);
 }

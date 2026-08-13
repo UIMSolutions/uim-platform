@@ -68,7 +68,7 @@ DomainStatus[] toDomainStatuses(string[] statuses) {
 string toString(DomainStatus status) {
     return status.to!string;
 }
-string[] toStrings(DomainStatus[] statuses) {
+string[] toString(DomainStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -131,7 +131,7 @@ unittest {
         DomainStatus.archived, DomainStatus.suspended_nonpayment, DomainStatus.suspended_abuse, DomainStatus.suspended_legal,
         DomainStatus.suspended_security, DomainStatus.suspended_policy, DomainStatus.suspended_other, DomainStatus.deleting, DomainStatus.deleted_redemption,
         DomainStatus.deleted_expired, DomainStatus.restoring, DomainStatus.restored
-    ].toStrings ==
+    ].toString ==
         ["pending", "active", "inactive", "error", "deactivated", "revoked", "expired", "renewing", "suspended", "transferring", "locked", "unlocking", "archived", "suspended_nonpayment", "suspended_abuse", "suspended_legal", "suspended_security", "suspended_policy", "suspended_other", "deleting", "deleted_redemption", "deleted_expired", "restoring", "restored"]);  
         
     assert(["pending", "active", "inactive", "error", "deactivated", "revoked", "expired", "renewing", "suspended", "transferring", "locked", "unlocking", "archived", "suspended_nonpayment", "suspended_abuse", "suspended_legal", "suspended_security", "suspended_policy", "suspended_other", "deleting", "deleted_redemption", "deleted_expired", "restoring", "restored"].toDomainStatuses ==
@@ -152,7 +152,7 @@ DomainEnvironment[] toDomainEnvironments(string[] envs) {
 string toString(DomainEnvironment env) {
     return env.to!string;
 }
-string[] toStrings(DomainEnvironment[] envs) {
+string[] toString(DomainEnvironment[] envs) {
     return envs.map!toString.array;
 }
 ///
@@ -168,7 +168,7 @@ unittest {
     assert("neo".toDomainEnvironment == DomainEnvironment.neo);
 
     assert([DomainEnvironment.cloudFoundry, DomainEnvironment.kyma, DomainEnvironment.neo
-    ].toStrings ==
+    ].toString ==
         ["cloudFoundry", "kyma", "neo"]);
         
     assert(["cloudFoundry", "kyma", "neo"].toDomainEnvironments ==

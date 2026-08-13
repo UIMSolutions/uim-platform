@@ -33,7 +33,7 @@ string toString(DataSubjectType type) {
   return type.to!string;
 }
 
-string[] toStrings(DataSubjectType[] types) {
+string[] toString(DataSubjectType[] types) {
   return types.map!(t => t.to!string).array;
 }
 ///
@@ -57,7 +57,7 @@ unittest {
   assert(DataSubjectType.partner.toString == "partner");
   assert(DataSubjectType.applicant.toString == "applicant");
 
-  assert([DataSubjectType.naturalPerson, DataSubjectType.employee].toStrings == ["naturalPerson", "employee"
+  assert([DataSubjectType.naturalPerson, DataSubjectType.employee].toString == ["naturalPerson", "employee"
     ]);
   assert(["naturalPerson", "employee"].toDataSubjectTypes == [DataSubjectType.naturalPerson, DataSubjectType.employee
     ]);
@@ -92,7 +92,7 @@ string toString(PersonalDataCategory category) {
   return category.to!string;
 }
 
-string[] toStrings(PersonalDataCategory[] categories) {
+string[] toString(PersonalDataCategory[] categories) {
   return categories.map!(c => c.to!string).array;
 }
 ///
@@ -130,7 +130,7 @@ unittest {
   assert(PersonalDataCategory.location.toString == "location");
   assert(PersonalDataCategory.behavioral.toString == "behavioral");
 
-  assert([PersonalDataCategory.identification, PersonalDataCategory.contact].toStrings == ["identification", "contact"
+  assert([PersonalDataCategory.identification, PersonalDataCategory.contact].toString == ["identification", "contact"
     ]);
   assert(["identification", "contact"].toPersonalDataCategories == [PersonalDataCategory.identification, PersonalDataCategory.contact
     ]);
@@ -158,7 +158,7 @@ string toString(LegalBasis basis) {
   return basis.to!string;
 }
 
-string[] toStrings(LegalBasis[] bases) {
+string[] toString(LegalBasis[] bases) {
   return bases.map!toString.array;
 }
 ///
@@ -182,7 +182,7 @@ unittest {
   assert(LegalBasis.publicTask.toString == "publicTask");
   assert(LegalBasis.legitimateInterest.toString == "legitimateInterest");
 
-  assert([LegalBasis.consent, LegalBasis.contract].toStrings == ["consent", "contract"
+  assert([LegalBasis.consent, LegalBasis.contract].toString == ["consent", "contract"
     ]);
   assert(["consent", "contract"].toLegalBases == [LegalBasis.consent, LegalBasis.contract
     ]);
@@ -213,7 +213,7 @@ string toString(ProcessingPurpose purpose) {
   return purpose.to!string;
 }
 
-string[] toStrings(ProcessingPurpose[] purposes) {
+string[] toString(ProcessingPurpose[] purposes) {
   return purposes.map!toString.array;
 }
 /// 
@@ -243,7 +243,7 @@ unittest {
   assert(ProcessingPurpose.security.toString == "security");
   assert(ProcessingPurpose.research.toString == "research");
 
-  assert([ProcessingPurpose.serviceDelivery, ProcessingPurpose.marketing].toStrings == ["serviceDelivery", "marketing"
+  assert([ProcessingPurpose.serviceDelivery, ProcessingPurpose.marketing].toString == ["serviceDelivery", "marketing"
     ]);
   assert(["serviceDelivery", "marketing"].toProcessingPurposes == [ProcessingPurpose.serviceDelivery, ProcessingPurpose.marketing
     ]);
@@ -269,7 +269,7 @@ string toString(ConsentStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(ConsentStatus[] statuses) {
+string[] toString(ConsentStatus[] statuses) {
   return statuses.map!toString.array;
 }
 
@@ -289,7 +289,7 @@ unittest {
   assert(ConsentStatus.revoked.toString == "revoked");
   assert(ConsentStatus.expired.toString == "expired");
 
-  assert([ConsentStatus.pending, ConsentStatus.granted].toStrings == ["pending", "granted"
+  assert([ConsentStatus.pending, ConsentStatus.granted].toString == ["pending", "granted"
     ]);
   assert(["pending", "granted"].toConsentStatuses == [ConsentStatus.pending, ConsentStatus.granted
     ]);
@@ -316,7 +316,7 @@ string toString(DeletionStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(DeletionStatus[] statuses) {
+string[] toString(DeletionStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -338,7 +338,7 @@ unittest {
   assert(DeletionStatus.failed.toString == "failed");
   assert(DeletionStatus.blocked.toString == "blocked");
 
-  assert([DeletionStatus.requested, DeletionStatus.inProgress].toStrings == ["requested", "inProgress"
+  assert([DeletionStatus.requested, DeletionStatus.inProgress].toString == ["requested", "inProgress"
     ]);
   assert(["requested", "inProgress"].toDeletionStatuses == [DeletionStatus.requested, DeletionStatus.inProgress
     ]);
@@ -363,7 +363,7 @@ string toString(BlockingStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(BlockingStatus[] statuses) {
+string[] toString(BlockingStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -381,7 +381,7 @@ unittest {
   assert(BlockingStatus.active.toString == "active");
   assert(BlockingStatus.released.toString == "released");
 
-  assert([BlockingStatus.requested, BlockingStatus.active].toStrings == ["requested", "active"
+  assert([BlockingStatus.requested, BlockingStatus.active].toString == ["requested", "active"
     ]);
   assert(["requested", "active"].toBlockingStatuses == [BlockingStatus.requested, BlockingStatus.active
     ]);
@@ -407,7 +407,7 @@ string toString(RetrievalStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(RetrievalStatus[] statuses) {
+string[] toString(RetrievalStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -427,7 +427,7 @@ unittest {
   assert(RetrievalStatus.completed.toString == "completed");
   assert(RetrievalStatus.failed.toString == "failed");
 
-  assert([RetrievalStatus.requested, RetrievalStatus.inProgress].toStrings == ["requested", "inProgress"
+  assert([RetrievalStatus.requested, RetrievalStatus.inProgress].toString == ["requested", "inProgress"
     ]);
   assert(["requested", "inProgress"].toRetrievalStatuses == [RetrievalStatus.requested, RetrievalStatus.inProgress
     ]);
@@ -452,7 +452,7 @@ string toString(DataSensitivity sensitivity) {
   return sensitivity.to!string;
 }
 
-string[] toStrings(DataSensitivity[] sensitivities) {
+string[] toString(DataSensitivity[] sensitivities) {
   return sensitivities.map!toString.array;
 }
 ///
@@ -470,7 +470,7 @@ unittest {
   assert(DataSensitivity.sensitive.toString == "sensitive");
   assert(DataSensitivity.highlyConfidential.toString == "highlyConfidential");
 
-  assert([DataSensitivity.standard, DataSensitivity.sensitive].toStrings == ["standard", "sensitive"
+  assert([DataSensitivity.standard, DataSensitivity.sensitive].toString == ["standard", "sensitive"
     ]);
   assert(["standard", "sensitive"].toDataSensitivities == [DataSensitivity.standard, DataSensitivity.sensitive
     ]);
@@ -498,7 +498,7 @@ string toString(RequestType type) {
   return type.to!string;
 }
 
-string[] toStrings(RequestType[] types) {
+string[] toString(RequestType[] types) {
   return types.map!toString.array;
 }
 
@@ -624,7 +624,7 @@ string toString(PurposeRecordStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(PurposeRecordStatus[] statuses) {
+string[] toString(PurposeRecordStatus[] statuses) {
   return statuses.map!toString.array;
 }
 
@@ -645,7 +645,7 @@ unittest {
   assert(PurposeRecordStatus.expired.toString == "expired");
   assert(PurposeRecordStatus.deactivated.toString == "deactivated");
 
-  assert([PurposeRecordStatus.active, PurposeRecordStatus.expiring].toStrings == ["active", "expiring"
+  assert([PurposeRecordStatus.active, PurposeRecordStatus.expiring].toString == ["active", "expiring"
     ]);
   assert(["active", "expiring"].toPurposeRecordStatuses == [PurposeRecordStatus.active, PurposeRecordStatus.expiring
     ]);
@@ -680,7 +680,7 @@ string toString(ConsentPurposeStatus status) {
   return cast(string) status;
 }
 
-string[] toStrings(ConsentPurposeStatus[] statuses) {
+string[] toString(ConsentPurposeStatus[] statuses) {
   return statuses.map!toString.array;
 }
 
@@ -701,7 +701,7 @@ unittest {
   assert(ConsentPurposeStatus.inactive.toString == "inactive");
   assert(ConsentPurposeStatus.deprecated_.toString == "deprecated");
 
-  assert([ConsentPurposeStatus.draft, ConsentPurposeStatus.active].toStrings == ["draft", "active"
+  assert([ConsentPurposeStatus.draft, ConsentPurposeStatus.active].toString == ["draft", "active"
     ]);
   assert(["draft", "active"].toConsentPurposeStatuses == [ConsentPurposeStatus.draft, ConsentPurposeStatus.active
     ]);
@@ -726,7 +726,7 @@ string toString(RuleSetStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(RuleSetStatus[] statuses) {
+string[] toString(RuleSetStatus[] statuses) {
   return statuses.map!toString.array;
 }
 
@@ -745,7 +745,7 @@ unittest {
   assert(RuleSetStatus.active.toString == "active");
   assert(RuleSetStatus.inactive.toString == "inactive");
 
-  assert([RuleSetStatus.draft, RuleSetStatus.active].toStrings == ["draft", "active"
+  assert([RuleSetStatus.draft, RuleSetStatus.active].toString == ["draft", "active"
     ]);
   assert(["draft", "active"].toRuleSetStatuses == [RuleSetStatus.draft, RuleSetStatus.active
     ]);
@@ -771,7 +771,7 @@ string toString(InformationReportStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(InformationReportStatus[] statuses) {
+string[] toString(InformationReportStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -791,7 +791,7 @@ unittest {
   assert(InformationReportStatus.completed.toString == "completed");
   assert(InformationReportStatus.failed.toString == "failed");
 
-  assert([InformationReportStatus.requested, InformationReportStatus.generating].toStrings == ["requested", "generating"
+  assert([InformationReportStatus.requested, InformationReportStatus.generating].toString == ["requested", "generating"
     ]);
   assert(["requested", "generating"].toInformationReportStatuses == [InformationReportStatus.requested, InformationReportStatus.generating
     ]);
@@ -817,7 +817,7 @@ string toString(ExportFormat format) {
   return format.to!string;
 }
 
-string[] toStrings(ExportFormat[] formats) {
+string[] toString(ExportFormat[] formats) {
   return formats.map!toString.array;
 }
 
@@ -838,7 +838,7 @@ unittest {
   assert(ExportFormat.xml.toString == "xml");
   assert(ExportFormat.csv.toString == "csv");
 
-  assert([ExportFormat.pdf, ExportFormat.json].toStrings == ["pdf", "json"
+  assert([ExportFormat.pdf, ExportFormat.json].toString == ["pdf", "json"
     ]);
   assert(["pdf", "json"].toExportFormat == [ExportFormat.pdf, ExportFormat.json
     ]);
@@ -863,7 +863,7 @@ string toString(BusinessContextStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(BusinessContextStatus[] statuses) {
+string[] toString(BusinessContextStatus[] statuses) {
   return statuses.map!toString.array;
 }
 
@@ -882,7 +882,7 @@ unittest {
   assert(BusinessContextStatus.active.toString == "active");
   assert(BusinessContextStatus.inactive.toString == "inactive");
 
-  assert([BusinessContextStatus.draft, BusinessContextStatus.active].toStrings == ["draft", "active"
+  assert([BusinessContextStatus.draft, BusinessContextStatus.active].toString == ["draft", "active"
     ]);
   assert(["draft", "active"].toBusinessContextStatuses == [BusinessContextStatus.draft, BusinessContextStatus.active
     ]);
@@ -910,7 +910,7 @@ string toString(AnonymizationMethod method) {
   return method.to!string;
 }
 
-string[] toStrings(AnonymizationMethod[] methods) {
+string[] toString(AnonymizationMethod[] methods) {
   return methods.map!toString.array;
 }
 
@@ -935,7 +935,7 @@ unittest {
   assert(AnonymizationMethod.tokenization.toString == "tokenization");
   assert(AnonymizationMethod.noise.toString == "noise");
 
-  assert([AnonymizationMethod.masking, AnonymizationMethod.generalization].toStrings == ["masking", "generalization"
+  assert([AnonymizationMethod.masking, AnonymizationMethod.generalization].toString == ["masking", "generalization"
     ]);
   assert(["masking", "generalization"].toAnonymizationMethods == [AnonymizationMethod.masking, AnonymizationMethod.generalization
     ]);
@@ -961,7 +961,7 @@ string toString(AnonymizationConfigStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(AnonymizationConfigStatus[] statuses) {
+string[] toString(AnonymizationConfigStatus[] statuses) {
   return statuses.map!toString.array;
 }
 
@@ -980,7 +980,7 @@ unittest {
   assert(AnonymizationConfigStatus.active.toString == "active");
   assert(AnonymizationConfigStatus.inactive.toString == "inactive");
 
-  assert([AnonymizationConfigStatus.draft, AnonymizationConfigStatus.active].toStrings == ["draft", "active"
+  assert([AnonymizationConfigStatus.draft, AnonymizationConfigStatus.active].toString == ["draft", "active"
     ]);
   assert(["draft", "active"].toAnonymizationConfigStatuses == [AnonymizationConfigStatus.draft, AnonymizationConfigStatus.active
     ]);
@@ -1030,7 +1030,7 @@ string toString(RuleOperator op) {
   return cast(string) op;
 }
 
-string[] toStrings(RuleOperator[] ops) {
+string[] toString(RuleOperator[] ops) {
   return ops.map!toString.array;
 }
 
@@ -1061,7 +1061,7 @@ unittest {
   assert(RuleOperator.in_.toString == "in");
   assert(RuleOperator.notIn.toString == "notIn");
 
-  assert([RuleOperator.equals, RuleOperator.notEquals].toStrings == ["equals", "notEquals"
+  assert([RuleOperator.equals, RuleOperator.notEquals].toString == ["equals", "notEquals"
     ]);
   assert(["equals", "notEquals"].toRuleOperators == [RuleOperator.equals, RuleOperator.notEquals
     ]);

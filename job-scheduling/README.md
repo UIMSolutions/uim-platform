@@ -61,7 +61,7 @@ infrastructure/   - Configuration, DI container, in-memory persistence
 |--------|----------|-------------|
 | GET | `/api/v1/scheduler/jobs/{id}/runLogs` | Get run logs for a job |
 | GET | `/api/v1/scheduler/jobs/{id}/schedules/{sid}/runLogs` | Get run logs for a schedule |
-| PUT | `/api/v1/scheduler/jobs/{id}/runLogs/{rid}` | Update run log status (async callback) |
+| PUT | `/api/v1/scheduler/jobs/{id}/runLogs/{rid}` | Update run log Status(async callback) |
 
 ### Configuration
 | Method | Endpoint | Description |

@@ -25,7 +25,7 @@ string toString(DomainStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(DomainStatus[] values) {
+string[] toString(DomainStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -47,7 +47,7 @@ unittest {
 
     assert(["pending", "active", "inactive"].toDomainStatuses == [    DomainStatus.pending, DomainStatus.active, DomainStatus.inactive
         ]);
-    assert([DomainStatus.pending, DomainStatus.active, DomainStatus.inactive].toStrings == [    "pending", "active", "inactive"
+    assert([DomainStatus.pending, DomainStatus.active, DomainStatus.inactive].toString == [    "pending", "active", "inactive"
         ]);
 }
 
@@ -67,7 +67,7 @@ DomainEnvironment[] toDomainEnvironments(string[] values)
 string toString(DomainEnvironment value)
     => value.to!string;
 
-string[] toStrings(DomainEnvironment[] values)
+string[] toString(DomainEnvironment[] values)
     => values.map!toString.array;
 
 ///
@@ -85,7 +85,7 @@ unittest {
 
     assert(["cloudFoundry", "kyma"].toDomainEnvironments == [    DomainEnvironment.cloudFoundry, DomainEnvironment.kyma
         ]);
-    assert([DomainEnvironment.cloudFoundry, DomainEnvironment.kyma].toStrings == [    "cloudFoundry", "kyma"
+    assert([DomainEnvironment.cloudFoundry, DomainEnvironment.kyma].toString == [    "cloudFoundry", "kyma"
         ]);
 }
 
@@ -108,7 +108,7 @@ KeyAlgorithm[] toKeyAlgorithms(string[] values)
 string toString(KeyAlgorithm value)
     => value.to!string;
 
-string[] toStrings(KeyAlgorithm[] values)
+string[] toString(KeyAlgorithm[] values)
     => values.map!toString.array;
 
 ///
@@ -128,7 +128,7 @@ unittest {
 
     assert(["rsa2048", "ecdsaP256"].toKeyAlgorithms == [    KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256
         ]);
-    assert([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256].toStrings == [    "rsa2048", "ecdsaP256"
+    assert([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256].toString == [    "rsa2048", "ecdsaP256"
         ]);
 }
 
@@ -150,7 +150,7 @@ string toString(KeyStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(KeyStatus[] values)
+string[] toString(KeyStatus[] values)
     => values.map!toString.array;
 
 ///
@@ -168,7 +168,7 @@ unittest {
 
     assert(["active", "inactive"].toKeyStatuses == [    KeyStatus.active, KeyStatus.inactive
         ]);
-    assert([KeyStatus.active, KeyStatus.inactive].toStrings == [    "active", "inactive"
+    assert([KeyStatus.active, KeyStatus.inactive].toString == [    "active", "inactive"
         ]);
 }
 
@@ -194,7 +194,7 @@ string toString(CertificateStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(CertificateStatus[] values) {
+string[] toString(CertificateStatus[] values) {
     return values.map!toString.array;
 }
 /// 
@@ -216,7 +216,7 @@ unittest {
 
     assert(["pending", "active"].toCertificateStatuses == [    CertificateStatus.pending, CertificateStatus.active
         ]);
-    assert([CertificateStatus.pending, CertificateStatus.active].toStrings == [    "pending", "active"
+    assert([CertificateStatus.pending, CertificateStatus.active].toString == [    "pending", "active"
         ]);
 }
 
@@ -236,7 +236,7 @@ CertificateType[] toCertificateTypes(string[] values)
 string toString(CertificateType value)
     => value.to!string;
 
-string[] toStrings(CertificateType[] values)
+string[] toString(CertificateType[] values)
     => values.map!toString.array;
 
 ///
@@ -254,7 +254,7 @@ unittest {
 
     assert(["standard", "wildcard"].toCertificateTypes == [    CertificateType.standard, CertificateType.wildcard
         ]);
-    assert([CertificateType.standard, CertificateType.wildcard].toStrings == [    "standard", "wildcard"
+    assert([CertificateType.standard, CertificateType.wildcard].toString == [    "standard", "wildcard"
         ]);
 }
 
@@ -277,7 +277,7 @@ TlsProtocolVersion[] toTlsProtocolVersions(string[] values)
 string toString(TlsProtocolVersion value)
     => value.to!string;
 
-string[] toStrings(TlsProtocolVersion[] values)
+string[] toString(TlsProtocolVersion[] values)
     => values.map!toString.array;
 
 unittest {
@@ -296,7 +296,7 @@ unittest {
 
     assert(["tls1_0", "tls1_2"].toTlsProtocolVersions == [    TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2
         ]);
-    assert([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2].toStrings == [    "tls1_0", "tls1_2"
+    assert([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2].toString == [    "tls1_0", "tls1_2"
         ]);
 }
 
@@ -316,7 +316,7 @@ CipherSuiteStrength[] toCipherSuiteStrengths(string[] values)
 string toString(CipherSuiteStrength value)
     => value.to!string;
 
-string[] toStrings(CipherSuiteStrength[] values)
+string[] toString(CipherSuiteStrength[] values)
     => values.map!toString.array;
 
 unittest {
@@ -333,7 +333,7 @@ unittest {
 
     assert(["strong", "weak"].toCipherSuiteStrengths == [    CipherSuiteStrength.strong, CipherSuiteStrength.weak
         ]);
-    assert([CipherSuiteStrength.strong, CipherSuiteStrength.weak].toStrings == [    "strong", "weak"
+    assert([CipherSuiteStrength.strong, CipherSuiteStrength.weak].toString == [    "strong", "weak"
         ]);
 }
 
@@ -356,7 +356,7 @@ MappingStatus[] toMappingStatuses(string[] values)
 string toString(MappingStatus value)
     => value.to!string;
 
-string[] toStrings(MappingStatus[] values)
+string[] toString(MappingStatus[] values)
     => values.map!toString.array;
 ///
 unittest {
@@ -375,7 +375,7 @@ unittest {
 
     assert(["active", "pending"].toMappingStatuses == [    MappingStatus.active, MappingStatus.pending
         ]);
-    assert([MappingStatus.active, MappingStatus.pending].toStrings == [    "active", "pending"
+    assert([MappingStatus.active, MappingStatus.pending].toString == [    "active", "pending"
         ]);
 }
 
@@ -395,7 +395,7 @@ MappingType[] toMappingTypes(string[] values)
 string toString(MappingType value)
     => value.to!string;
 
-string[] toStrings(MappingType[] values)
+string[] toString(MappingType[] values)
     => values.map!toString.array;
 
 ///
@@ -413,7 +413,7 @@ unittest {
 
     assert(["applicationRoute", "staticRoute"].toMappingTypes == [    MappingType.applicationRoute, MappingType.staticRoute
         ]);
-    assert([MappingType.applicationRoute, MappingType.staticRoute].toStrings == [    "applicationRoute", "staticRoute"
+    assert([MappingType.applicationRoute, MappingType.staticRoute].toString == [    "applicationRoute", "staticRoute"
         ]);
 }
 
@@ -435,7 +435,7 @@ TrustedCertificateStatus[] toTrustedCertificateStatuses(string[] values)
 string toString(TrustedCertificateStatus value)
     => value.to!string;
 
-string[] toStrings(TrustedCertificateStatus[] values)
+string[] toString(TrustedCertificateStatus[] values)
     => values.map!toString.array;
 /// 
 unittest {
@@ -452,7 +452,7 @@ unittest {
 
     assert(["active", "expired"].toTrustedCertificateStatuses == [    TrustedCertificateStatus.active, TrustedCertificateStatus.expired
         ]);
-    assert([TrustedCertificateStatus.active, TrustedCertificateStatus.expired].toStrings == [    "active", "expired"
+    assert([TrustedCertificateStatus.active, TrustedCertificateStatus.expired].toString == [    "active", "expired"
         ]);
 }
 
@@ -472,7 +472,7 @@ ClientAuthMode[] toClientAuthModes(string[] values)
 string toString(ClientAuthMode value)
     => value.to!string;
 
-string[] toStrings(ClientAuthMode[] values)
+string[] toString(ClientAuthMode[] values)
     => values.map!toString.array;
 ///
 unittest {
@@ -489,7 +489,7 @@ unittest {
 
     assert(["required", "disabled"].toClientAuthModes == [    ClientAuthMode.required, ClientAuthMode.disabled
         ]);
-    assert([ClientAuthMode.required, ClientAuthMode.disabled].toStrings == [    "required", "disabled"
+    assert([ClientAuthMode.required, ClientAuthMode.disabled].toString == [    "required", "disabled"
         ]);
 }
 
@@ -513,7 +513,7 @@ DnsRecordType[] toDnsRecordTypes(string[] values)
 string toString(DnsRecordType value)
     => value.to!string;
 
-string[] toStrings(DnsRecordType[] values)
+string[] toString(DnsRecordType[] values)
     => values.map!toString.array;
 ///
 unittest {
@@ -534,7 +534,7 @@ unittest {
 
     assert(["aRecord", "txtRecord"].toDnsRecordTypes == [    DnsRecordType.aRecord, DnsRecordType.txtRecord
         ]);
-    assert([DnsRecordType.aRecord, DnsRecordType.txtRecord].toStrings == [    "aRecord", "txtRecord"
+    assert([DnsRecordType.aRecord, DnsRecordType.txtRecord].toString == [    "aRecord", "txtRecord"
         ]);
 }
 
@@ -557,7 +557,7 @@ DnsValidationStatus[] toDnsValidationStatuses(string[] values)
 string toString(DnsValidationStatus value)
     => value.to!string;
 
-string[] toStrings(DnsValidationStatus[] values)
+string[] toString(DnsValidationStatus[] values)
     => values.map!toString.array;
 
 ///
@@ -577,7 +577,7 @@ unittest {
 
     assert(["pending", "validated"].toDnsValidationStatuses == [    DnsValidationStatus.pending, DnsValidationStatus.validated
         ]);
-    assert([DnsValidationStatus.pending, DnsValidationStatus.validated].toStrings == [    "pending", "validated"
+    assert([DnsValidationStatus.pending, DnsValidationStatus.validated].toString == [    "pending", "validated"
         ]);
 }
 
@@ -604,7 +604,7 @@ DashboardMetricType[] toDashboardMetricTypes(string[] values)
 string toString(DashboardMetricType value)
     => value.to!string;
 
-string[] toStrings(DashboardMetricType[] values)
+string[] toString(DashboardMetricType[] values)
     => values.map!toString.array;
 
 ///
@@ -635,7 +635,7 @@ unittest {
         ]);
     assert([DashboardMetricType.certificateExpiration,
         DashboardMetricType.domainHealth
-    ].toStrings == ["certificateExpiration", "domainHealth"]);
+    ].toString == ["certificateExpiration", "domainHealth"]);
 }
 
 enum HealthStatus {
@@ -655,7 +655,7 @@ HealthStatus[] toHealthStatuses(string[] values)
 string toString(HealthStatus value)
     => value.to!string;
 
-string[] toStrings(HealthStatus[] values)
+string[] toString(HealthStatus[] values)
     => values.map!toString.array;
 
 ///
@@ -675,7 +675,7 @@ unittest {
 
     assert(["healthy", "critical"].toHealthStatuses == [    HealthStatus.healthy, HealthStatus.critical
         ]);
-    assert([HealthStatus.healthy, HealthStatus.critical].toStrings == [    "healthy", "critical"
+    assert([HealthStatus.healthy, HealthStatus.critical].toString == [    "healthy", "critical"
         ]);
 }
 
@@ -697,7 +697,7 @@ ExpirationSeverity[] toExpirationSeverities(string[] values)
 string toString(ExpirationSeverity value)
     => value.to!string;
 
-string[] toStrings(ExpirationSeverity[] values)
+string[] toString(ExpirationSeverity[] values)
     => values.map!toString.array;
 
 ///
@@ -719,6 +719,6 @@ unittest {
 
     assert(["none", "warning"].toExpirationSeverities == [    ExpirationSeverity.none, ExpirationSeverity.warning
         ]);
-    assert([ExpirationSeverity.none, ExpirationSeverity.warning].toStrings == [    "none", "warning"
+    assert([ExpirationSeverity.none, ExpirationSeverity.warning].toString == [    "none", "warning"
         ]);
 }

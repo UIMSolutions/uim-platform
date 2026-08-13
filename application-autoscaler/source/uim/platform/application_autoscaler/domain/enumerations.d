@@ -49,7 +49,7 @@ MetricType[] toMetricTypes(Json[] values) {
 string toString(MetricType metricType) {
   return metricType.to!string;
 }
-string[] toStrings(MetricType[] metricTypes) {
+string[] toString(MetricType[] metricTypes) {
   return metricTypes.map!toString.array;
 }
 Json toJson(MetricType metricType) {
@@ -87,7 +87,7 @@ unittest {
 
   assert(["memoryused", "memoryutil", "cpu", "cpuutil", "disk", "diskutil", "throughput", "responsetime", "custom"].toMetricTypes ==
          [MetricType.memoryused, MetricType.memoryutil, MetricType.cpu, MetricType.cpuutil, MetricType.disk, MetricType.diskutil, MetricType.throughput, MetricType.responsetime, MetricType.custom_]);
-  assert(toStrings([MetricType.memoryused, MetricType.memoryutil, MetricType.cpu, MetricType.cpuutil, MetricType.disk, MetricType.diskutil, MetricType.throughput, MetricType.responsetime, MetricType.custom_]) ==
+  assert(toString([MetricType.memoryused, MetricType.memoryutil, MetricType.cpu, MetricType.cpuutil, MetricType.disk, MetricType.diskutil, MetricType.throughput, MetricType.responsetime, MetricType.custom_]) ==
          ["memoryused", "memoryutil", "cpu", "cpuutil", "disk", "diskutil", "throughput", "responsetime", "custom"]); 
 }
 
@@ -119,7 +119,7 @@ ScalingOperator[] toScalingOperators(string[] s) {
 string toString(ScalingOperator op) {
   return op.to!string;
 }
-string[] toStrings(ScalingOperator[] ops) {
+string[] toString(ScalingOperator[] ops) {
   return ops.map!toString.array;
 }
 ///
@@ -145,7 +145,7 @@ unittest {
 
   assert(["<", ">", "<=", ">=", "lt", "gt", "lte", "gte"].toScalingOperators ==
          [ScalingOperator.lt, ScalingOperator.gt, ScalingOperator.lte, ScalingOperator.gte, ScalingOperator.lt, ScalingOperator.gt, ScalingOperator.lte, ScalingOperator.gte]);
-  assert(toStrings([ScalingOperator.lt, ScalingOperator.gt, ScalingOperator.lte, ScalingOperator.gte]) ==
+  assert(toString([ScalingOperator.lt, ScalingOperator.gt, ScalingOperator.lte, ScalingOperator.gte]) ==
          ["lt", "gt", "lte", "gte"]);
 }
 
@@ -169,7 +169,7 @@ ScalingDirection[] toScalingDirections(string[] s) {
 string toString(ScalingDirection direction) {
   return direction.to!string;
 }
-string[] toStrings(ScalingDirection[] directions) {
+string[] toString(ScalingDirection[] directions) {
   return directions.map!toString.array;
 } 
 /// 
@@ -189,7 +189,7 @@ unittest {
 
   assert(["scaleOut", "scaleIn", "none"].toScalingDirections ==
          [ScalingDirection.scaleOut, ScalingDirection.scaleIn, ScalingDirection.none]);
-  assert(toStrings([ScalingDirection.scaleOut, ScalingDirection.scaleIn, ScalingDirection.none]) ==
+  assert(toString([ScalingDirection.scaleOut, ScalingDirection.scaleIn, ScalingDirection.none]) ==
          ["scaleOut", "scaleIn", "none"]);
 }
 
@@ -213,7 +213,7 @@ ScalingStatus[] toScalingStatuses(string[] s) {
 string toString(ScalingStatus status) {
   return status.to!string;
 }
-string[] toStrings(ScalingStatus[] statuses) {
+string[] toString(ScalingStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -233,7 +233,7 @@ unittest {
 
   assert(["succeeded", "failed", "ignored"].toScalingStatuses ==
          [ScalingStatus.succeeded, ScalingStatus.failed, ScalingStatus.ignored]);
-  assert(toStrings([ScalingStatus.succeeded, ScalingStatus.failed, ScalingStatus.ignored]) ==
+  assert(toString([ScalingStatus.succeeded, ScalingStatus.failed, ScalingStatus.ignored]) ==
          ["succeeded", "failed", "ignored"]);
 }
 
@@ -262,7 +262,7 @@ PolicyStatus[] toPolicyStatuses(string[] s) {
 string toString(PolicyStatus status) {
   return status.to!string;
 }
-string[] toStrings(PolicyStatus[] statuses) {
+string[] toString(PolicyStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -281,7 +281,7 @@ unittest {
 
   assert(["active", "inactive", "deleted"].toPolicyStatuses ==
          [PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_]);
-  assert([PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_].toStrings ==
+  assert([PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_].toString ==
          ["active", "inactive", "deleted"]);
 }
 
@@ -303,7 +303,7 @@ MetricAllowFrom[] toMetricAllowFroms(string[] s) {
 string toString(MetricAllowFrom allowFrom) {
   return allowFrom.to!string;
 }
-string[] toStrings(MetricAllowFrom[] allowFroms) {
+string[] toString(MetricAllowFrom[] allowFroms) {
   return allowFroms.map!toString.array;
 }
 /// 
@@ -321,6 +321,6 @@ unittest {
 
   assert(["sameApp", "boundApp"].toMetricAllowFroms ==
          [MetricAllowFrom.sameApp, MetricAllowFrom.boundApp]);
-  assert([MetricAllowFrom.sameApp, MetricAllowFrom.boundApp].toStrings ==
+  assert([MetricAllowFrom.sameApp, MetricAllowFrom.boundApp].toString ==
          ["sameApp", "boundApp"]);
 }

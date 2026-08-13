@@ -27,7 +27,7 @@ ColumnRole[] toColumnRoles(string[] values) {
 string toString(ColumnRole role) {
   return role.to!string;
 }
-string[] toStrings(ColumnRole[] roles) {
+string[] toString(ColumnRole[] roles) {
   return roles.map!toString.array;
 }
 ///
@@ -52,7 +52,7 @@ unittest {
 
   assert(["dimension", "measure", "attribute"].toColumnRoles ==
          [ColumnRole.dimension, ColumnRole.measure, ColumnRole.attribute]);
-  assert(toStrings([ColumnRole.dimension, ColumnRole.measure, ColumnRole.attribute]) ==
+  assert(toString([ColumnRole.dimension, ColumnRole.measure, ColumnRole.attribute]) ==
          ["dimension", "measure", "attribute"]);
 }
 
@@ -86,7 +86,7 @@ string toString(ColumnDataType type) {
   return cast(string)type;
 }
 
-string[] toStrings(ColumnDataType[] types) {
+string[] toString(ColumnDataType[] types) {
   return types.map!toString.array;
 }
 
@@ -124,6 +124,6 @@ unittest {
 
   assert(["string", "integer", "decimal", "date", "datetime", "boolean"].toColumnDataTypes ==
          [ColumnDataType.string_, ColumnDataType.integer, ColumnDataType.decimal, ColumnDataType.date, ColumnDataType.datetime, ColumnDataType.boolean]);
-  assert(toStrings([ColumnDataType.string_, ColumnDataType.integer, ColumnDataType.decimal, ColumnDataType.date, ColumnDataType.datetime, ColumnDataType.boolean]) ==
+  assert(toString([ColumnDataType.string_, ColumnDataType.integer, ColumnDataType.decimal, ColumnDataType.date, ColumnDataType.datetime, ColumnDataType.boolean]) ==
          ["string", "integer", "decimal", "date", "datetime", "boolean"]);
 }

@@ -32,7 +32,7 @@ string toString(RepositoryType value) {
     return value.to!string;
 }
 
-string[] toStrings(RepositoryType[] values) {
+string[] toString(RepositoryType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -53,7 +53,7 @@ unittest {
     assert(toString(RepositoryType.gerrit) == "gerrit");
     assert(toString(RepositoryType.local) == "local");
 
-    assert(toStrings([RepositoryType.github, RepositoryType.gitlab]) == [    "github", "gitlab"
+    assert(toString([RepositoryType.github, RepositoryType.gitlab]) == [    "github", "gitlab"
         ]);
     assert(toRepositoryTypes(["github", "gitlab"]) == [    RepositoryType.github, RepositoryType.gitlab
         ]);
@@ -77,7 +77,7 @@ string toString(RepositoryStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(RepositoryStatus[] values) {
+string[] toString(RepositoryStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -95,7 +95,7 @@ unittest {
     assert(RepositoryStatus.inactive.toString == "inactive");
     assert(RepositoryStatus.error_.toString == "error_");
 
-    assert(toStrings([RepositoryStatus.active, RepositoryStatus.inactive]) == [    "active", "inactive"
+    assert(toString([RepositoryStatus.active, RepositoryStatus.inactive]) == [    "active", "inactive"
         ]);
     assert(toRepositoryStatuses(["active", "inactive"]) == [    RepositoryStatus.active, RepositoryStatus.inactive
         ]);
@@ -121,7 +121,7 @@ string toString(CredentialType value) {
     return value.to!string;
 }
 
-string[] toStrings(CredentialType[] values) {
+string[] toString(CredentialType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -143,7 +143,7 @@ unittest {
     assert(CredentialType.serviceKey.toString == "serviceKey");
     assert(CredentialType.oauth2.toString == "oauth2");
 
-    assert(toStrings([CredentialType.basicAuth, CredentialType.token]) == [    "basicAuth", "token"
+    assert(toString([CredentialType.basicAuth, CredentialType.token]) == [    "basicAuth", "token"
         ]);
     assert(toCredentialTypes(["basicAuth", "token"]) == [    CredentialType.basicAuth, CredentialType.token
         ]);
@@ -167,7 +167,7 @@ string toString(CredentialStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(CredentialStatus[] values) {
+string[] toString(CredentialStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -185,7 +185,7 @@ unittest {
     assert(CredentialStatus.inactive.toString == "inactive");
     assert(CredentialStatus.expired.toString == "expired");
 
-    assert(toStrings([CredentialStatus.active, CredentialStatus.inactive]) == [    "active", "inactive"
+    assert(toString([CredentialStatus.active, CredentialStatus.inactive]) == [    "active", "inactive"
         ]);
     assert(toCredentialStatuses(["active", "inactive"]) == [    CredentialStatus.active, CredentialStatus.inactive
         ]);
@@ -214,7 +214,7 @@ string toString(PipelineType value) {
     return value.to!string;
 }
 
-string[] toStrings(PipelineType[] values) {
+string[] toString(PipelineType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -242,7 +242,7 @@ unittest {
     assert(PipelineType.containerRegistry.toString == "containerRegistry");
     assert(PipelineType.custom.toString == "custom");
 
-    assert(toStrings([PipelineType.cap, PipelineType.fiori]) == ["cap", "fiori"]);
+    assert(toString([PipelineType.cap, PipelineType.fiori]) == ["cap", "fiori"]);
     assert(toPipelineTypes(["cap", "fiori"]) == [    PipelineType.cap, PipelineType.fiori
         ]);
 }
@@ -265,7 +265,7 @@ string toString(PipelineStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(PipelineStatus[] values) {
+string[] toString(PipelineStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -283,7 +283,7 @@ unittest {
     assert(PipelineStatus.inactive.toString == "inactive");
     assert(PipelineStatus.draft_.toString == "draft");
 
-    assert(toStrings([PipelineStatus.active, PipelineStatus.inactive]) == [    "active", "inactive"
+    assert(toString([PipelineStatus.active, PipelineStatus.inactive]) == [    "active", "inactive"
         ]);
     assert(toPipelineStatuses(["active", "inactive"]) == [    PipelineStatus.active, PipelineStatus.inactive
         ]);
@@ -307,7 +307,7 @@ string toString(JobStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(JobStatus[] values) {
+string[] toString(JobStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -325,7 +325,7 @@ unittest {
     assert(JobStatus.inactive.toString == "inactive");
     assert(JobStatus.paused.toString == "paused");
 
-    assert(toStrings([JobStatus.active, JobStatus.inactive]) == [    "active", "inactive"
+    assert(toString([JobStatus.active, JobStatus.inactive]) == [    "active", "inactive"
         ]);
     assert(toJobStatuses(["active", "inactive"]) == [    JobStatus.active, JobStatus.inactive
         ]);
@@ -351,7 +351,7 @@ string toString(TriggerMode value) {
     return value.to!string;
 }
 
-string[] toStrings(TriggerMode[] values) {
+string[] toString(TriggerMode[] values) {
     return values.map!toString.array;
 }
 ///
@@ -396,7 +396,7 @@ string toString(BuildStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(BuildStatus[] values) {
+string[] toString(BuildStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -422,7 +422,7 @@ unittest {
     assert(BuildStatus.aborted.toString == "aborted");
     assert(BuildStatus.initializing.toString == "initializing");
 
-    assert(toStrings([BuildStatus.pending, BuildStatus.running]) == [    "pending", "running"
+    assert(toString([BuildStatus.pending, BuildStatus.running]) == [    "pending", "running"
         ]);
     assert(toBuildStatuses(["pending", "running"]) == [    BuildStatus.pending, BuildStatus.running
         ]);
@@ -447,7 +447,7 @@ string toString(BuildTrigger value) {
     return value.to!string;
 }
 
-string[] toStrings(BuildTrigger[] values) {
+string[] toString(BuildTrigger[] values) {
     return values.map!toString.array;
 }
 ///
@@ -467,7 +467,7 @@ unittest {
     assert(BuildTrigger.scheduled.toString == "scheduled");
     assert(BuildTrigger.api_.toString == "api");
 
-    assert(toStrings([BuildTrigger.manual, BuildTrigger.webhook]) == [    "manual", "webhook"
+    assert(toString([BuildTrigger.manual, BuildTrigger.webhook]) == [    "manual", "webhook"
         ]);
     assert(toBuildTriggers(["manual", "webhook"]) == [    BuildTrigger.manual, BuildTrigger.webhook
         ]);
@@ -498,7 +498,7 @@ string toString(StageType value) {
     return value.to!string;
 }
 
-string[] toStrings(StageType[] values) {
+string[] toString(StageType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -530,7 +530,7 @@ unittest {
     assert(StageType.containerBuild.toString == "containerBuild");
     assert(StageType.containerPush.toString == "containerPush");
 
-    assert(toStrings([StageType.buildLint, StageType.unitTests]) == [    "buildLint", "unitTests"
+    assert(toString([StageType.buildLint, StageType.unitTests]) == [    "buildLint", "unitTests"
         ]);
     assert(toStageTypes(["buildLint", "unitTests"]) == [    StageType.buildLint, StageType.unitTests
         ]);
@@ -553,7 +553,7 @@ StageStatus[] toStageStatuses(string[] values) {
 string toString(StageStatus value) {
     return value.to!string;
 }
-string[] toStrings(StageStatus[] values) {
+string[] toString(StageStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -577,7 +577,7 @@ unittest {
     assert(StageStatus.skipped.toString == "skipped");
     assert(StageStatus.aborted.toString == "aborted");
 
-    assert(toStrings([StageStatus.pending, StageStatus.running]) == [    "pending", "running"
+    assert(toString([StageStatus.pending, StageStatus.running]) == [    "pending", "running"
         ]);
 
         assert(toStageStatuses(["pending", "running"]) == [    StageStatus.pending, StageStatus.running
@@ -599,7 +599,7 @@ WebhookStatus[] toWebhookStatuses(string[] values) {
 string toString(WebhookStatus value) {
     return value.to!string;
 }
-string[] toStrings(WebhookStatus[] values) {
+string[] toString(WebhookStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -617,7 +617,7 @@ unittest {
     assert(WebhookStatus.inactive.toString == "inactive");
     assert(WebhookStatus.error_.toString == "error");
 
-    assert(toStrings([WebhookStatus.active, WebhookStatus.inactive]) == [    "active", "inactive"
+    assert(toString([WebhookStatus.active, WebhookStatus.inactive]) == [    "active", "inactive"
         ]);
 
     assert(toWebhookStatuses(["active", "inactive"]) == [    WebhookStatus.active, WebhookStatus.inactive
@@ -639,7 +639,7 @@ WebhookEvent[] toWebhookEvents(string[] values) {
 string toString(WebhookEvent value) {
     return value.to!string;
 }
-string[] toStrings(WebhookEvent[] values) {
+string[] toString(WebhookEvent[] values) {
     return values.map!toString.array;
 }   
 /// 
@@ -659,7 +659,7 @@ unittest {
     assert(WebhookEvent.tag.toString == "tag");
     assert(WebhookEvent.release.toString == "release");
 
-    assert(toStrings([WebhookEvent.push, WebhookEvent.pullRequest]) == [    "push", "pullRequest"
+    assert(toString([WebhookEvent.push, WebhookEvent.pullRequest]) == [    "push", "pullRequest"
         ]);
     assert(toWebhookEvents(["push", "pullRequest"]) == [    WebhookEvent.push, WebhookEvent.pullRequest
         ]);
@@ -681,7 +681,7 @@ DeploymentTargetType[] toDeploymentTargetTypes(string[] values) {
 string toString(DeploymentTargetType value) {
     return value.to!string;
 }
-string[] toStrings(DeploymentTargetType[] values) {
+string[] toString(DeploymentTargetType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -703,7 +703,7 @@ unittest {
     assert(DeploymentTargetType.kubernetes.toString == "kubernetes");
     assert(DeploymentTargetType.containerRegistry.toString == "containerRegistry");
 
-    assert(toStrings([DeploymentTargetType.cloudFoundry, DeploymentTargetType.kyma]) == [    "cloudFoundry", "kyma"
+    assert(toString([DeploymentTargetType.cloudFoundry, DeploymentTargetType.kyma]) == [    "cloudFoundry", "kyma"
         ]);
     assert(toDeploymentTargetTypes(["cloudFoundry", "kyma"]) == [    DeploymentTargetType.cloudFoundry, DeploymentTargetType.kyma
         ]);
@@ -722,7 +722,7 @@ DeploymentTargetStatus[] toDeploymentTargetStatuses(string[] values)
 string toString(DeploymentTargetStatus value) {
     return value.to!string;
 }
-string[] toStrings(DeploymentTargetStatus[] values) {
+string[] toString(DeploymentTargetStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -740,7 +740,7 @@ unittest {
     assert(DeploymentTargetStatus.inactive.toString == "inactive");
     assert(DeploymentTargetStatus.error_.toString == "error");  
 
-    assert(toStrings([DeploymentTargetStatus.active, DeploymentTargetStatus.inactive]) == [    "active", "inactive"
+    assert(toString([DeploymentTargetStatus.active, DeploymentTargetStatus.inactive]) == [    "active", "inactive"
         ]);
 
     assert(toDeploymentTargetStatuses(["active", "inactive"]) == [    DeploymentTargetStatus.active, DeploymentTargetStatus.inactive

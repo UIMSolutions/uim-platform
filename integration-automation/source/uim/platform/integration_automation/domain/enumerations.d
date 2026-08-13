@@ -39,7 +39,7 @@ ScenarioStatus[] toScenarioStatuses(string[] values) {
 string toString(ScenarioStatus value) {
   return value.to!string;
 }
-string[] toStrings(ScenarioStatus[] values) {
+string[] toString(ScenarioStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -57,7 +57,7 @@ unittest {
   assert(ScenarioStatus.archived.toString == "archived");
 
   assert(["draft", "active"].toScenarioStatuses == [ScenarioStatus.draft, ScenarioStatus.active]);
-  assert([ScenarioStatus.draft, ScenarioStatus.active].toStrings == ["draft", "active"]);
+  assert([ScenarioStatus.draft, ScenarioStatus.active].toString == ["draft", "active"]);
 }
 
 /// Workflow instance execution status.
@@ -78,7 +78,7 @@ WorkflowStatus[] toWorkflowStatuses(string[] values) {
 string toString(WorkflowStatus value) {
   return value.to!string;
 }
-string[] toStrings(WorkflowStatus[] values) {
+string[] toString(WorkflowStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -100,7 +100,7 @@ unittest {
   assert(WorkflowStatus.suspended.toString == "suspended");
 
   assert(["planned", "completed"].toWorkflowStatuses == [WorkflowStatus.planned, WorkflowStatus.completed]);
-  assert([WorkflowStatus.planned, WorkflowStatus.completed].toStrings == ["planned", "completed"]);
+  assert([WorkflowStatus.planned, WorkflowStatus.completed].toString == ["planned", "completed"]);
 }
 
 /// Type of workflow step / task.
@@ -119,7 +119,7 @@ StepType[] toStepTypes(string[] values) {
 string toString(StepType value) {
   return value.to!string;
 }
-string[] toStrings(StepType[] values) {
+string[] toString(StepType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -138,7 +138,7 @@ unittest {
   assert(StepType.notification.toString == "notification");
 
   assert(["manual", "approval"].toStepTypes == [StepType.manual, StepType.approval]);
-  assert([StepType.manual, StepType.approval].toStrings == ["manual", "approval"]);
+  assert([StepType.manual, StepType.approval].toString == ["manual", "approval"]);
 } 
 
 /// Status of an individual workflow step.
@@ -159,7 +159,7 @@ StepStatus[] toStepStatuses(string[] values) {
 string toString(StepStatus value) {
   return value.to!string;
 }
-string[] toStrings(StepStatus[] values) {
+string[] toString(StepStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -182,7 +182,7 @@ unittest {
   assert(StepStatus.blocked.toString == "blocked");
 
   assert(["pending", "completed"].toStepStatuses == [StepStatus.pending, StepStatus.completed]);
-  assert([StepStatus.pending, StepStatus.completed].toStrings == ["pending", "completed"]);
+  assert([StepStatus.pending, StepStatus.completed].toString == ["pending", "completed"]);
 }
 
 /// Priority level for tasks.
@@ -201,7 +201,7 @@ StepPriority[] toStepPriorities(string[] values) {
 string toString(StepPriority value) {
   return value.to!string;
 }
-string[] toStrings(StepPriority[] values) {
+string[] toString(StepPriority[] values) {
   return values.map!toString.array;
 }
 ///
@@ -220,7 +220,7 @@ unittest {
   assert(StepPriority.critical.toString == "critical");
 
   assert(["low", "high"].toStepPriorities == [StepPriority.low, StepPriority.high]);
-  assert([StepPriority.low, StepPriority.high].toStrings == ["low", "high"]);
+  assert([StepPriority.low, StepPriority.high].toString == ["low", "high"]);
 }
 
 /// SAP system types supported in the landscape.
@@ -246,7 +246,7 @@ SystemType[] toSystemTypes(string[] values) {
 string toString(SystemType value) {
   return value.to!string;
 }
-string[] toStrings(SystemType[] values) {
+string[] toString(SystemType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -281,7 +281,7 @@ unittest {
   assert(SystemType.thirdParty.toString == "thirdParty");
 
   assert(["sapS4Hana", "sapBtp"].toSystemTypes == [SystemType.sapS4Hana, SystemType.sapBtp]);
-  assert([SystemType.sapS4Hana, SystemType.sapBtp].toStrings == ["sapS4Hana", "sapBtp"]);
+  assert([SystemType.sapS4Hana, SystemType.sapBtp].toString == ["sapS4Hana", "sapBtp"]);
 }
 
 /// Connection status of a system in the landscape.
@@ -300,7 +300,7 @@ ConnectionStatus[] toConnectionStatuses(string[] values) {
 string toString(ConnectionStatus value) {
   return value.to!string;
 }
-string[] toStrings(ConnectionStatus[] values) {
+string[] toString(ConnectionStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -319,7 +319,7 @@ unittest {
   assert(ConnectionStatus.testing.toString == "testing");
 
   assert(["active", "error"].toConnectionStatuses == [ConnectionStatus.active, ConnectionStatus.error]);
-  assert([ConnectionStatus.active, ConnectionStatus.error].toStrings == ["active", "error"]);
+  assert([ConnectionStatus.active, ConnectionStatus.error].toString == ["active", "error"]);
 }
 
 /// Destination / API protocol type.
@@ -339,7 +339,7 @@ DestinationType[] toDestinationTypes(string[] values) {
 string toString(DestinationType value) {
   return value.to!string;
 }
-string[] toStrings(DestinationType[] values) {
+string[] toString(DestinationType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -360,7 +360,7 @@ unittest {
   assert(DestinationType.restApi.toString == "restApi");
 
   assert(["http", "odata"].toDestinationTypes == [DestinationType.http, DestinationType.odata]);
-  assert([DestinationType.http, DestinationType.odata].toStrings == ["http", "odata"]);
+  assert([DestinationType.http, DestinationType.odata].toString == ["http", "odata"]);
 }
 
 /// Authentication method for destinations.
@@ -382,7 +382,7 @@ AuthenticationType[] toAuthenticationTypes(string[] values) {
 string toString(AuthenticationType value) {
   return value.to!string;
 }
-string[] toStrings(AuthenticationType[] values) {
+string[] toString(AuthenticationType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -407,7 +407,7 @@ unittest {
   assert(AuthenticationType.noAuthentication.toString == "noAuthentication");
 
   assert(["basic", "certificate"].toAuthenticationTypes == [AuthenticationType.basic, AuthenticationType.certificate]);
-  assert([AuthenticationType.basic, AuthenticationType.certificate].toStrings == ["basic", "certificate"]);
+  assert([AuthenticationType.basic, AuthenticationType.certificate].toString == ["basic", "certificate"]);
 }
 
 /// Proxy type for destination routing.
@@ -425,7 +425,7 @@ ProxyType[] toProxyTypes(string[] values) {
 string toString(ProxyType value) {
   return value.to!string;
 }
-string[] toStrings(ProxyType[] values) {
+string[] toString(ProxyType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -442,7 +442,7 @@ unittest {
   assert(ProxyType.privateLink.toString == "privateLink");
 
   assert(["internet", "onPremise"].toProxyTypes == [ProxyType.internet, ProxyType.onPremise]);
-  assert([ProxyType.internet, ProxyType.onPremise].toStrings == ["internet", "onPremise"]);
+  assert([ProxyType.internet, ProxyType.onPremise].toString == ["internet", "onPremise"]);
 }
 
 /// Outcome of executing a step or automation.
@@ -462,7 +462,7 @@ ExecutionOutcome[] toExecutionOutcomes(string[] values) {
 string toString(ExecutionOutcome value) {
   return value.to!string;
 }
-string[] toStrings(ExecutionOutcome[] values) {
+string[] toString(ExecutionOutcome[] values) {
   return values.map!toString.array;
 } 
 ///
@@ -483,7 +483,7 @@ unittest {
   assert(ExecutionOutcome.error.toString == "error");
 
   assert(["success", "skipped"].toExecutionOutcomes == [ExecutionOutcome.success, ExecutionOutcome.skipped]);
-  assert([ExecutionOutcome.success, ExecutionOutcome.skipped].toStrings == ["success", "skipped"]);
+  assert([ExecutionOutcome.success, ExecutionOutcome.skipped].toString == ["success", "skipped"]);
 }
 
 /// Category of an integration scenario.
@@ -506,7 +506,7 @@ ScenarioCategory[] toScenarioCategories(string[] values) {
 string toString(ScenarioCategory value) {
   return value.to!string;
 }
-string[] toStrings(ScenarioCategory[] values) {
+string[] toString(ScenarioCategory[] values) {
   return values.map!toString.array;
 }
 ///
@@ -535,7 +535,7 @@ unittest {
   assert(ScenarioCategory.custom.toString == "custom");
 
   assert(["leadToCash", "designToOperate"].toScenarioCategories == [ScenarioCategory.leadToCash, ScenarioCategory.designToOperate]);
-  assert([ScenarioCategory.leadToCash, ScenarioCategory.designToOperate].toStrings == ["leadToCash", "designToOperate"]);
+  assert([ScenarioCategory.leadToCash, ScenarioCategory.designToOperate].toString == ["leadToCash", "designToOperate"]);
 }
 
 enum ScenarioType {
@@ -550,7 +550,7 @@ ScenarioType[] toScenarioTypes(string[] values) {
 }
 string toString(ScenarioType value)
   => value.to!string;
-string[] toStrings(ScenarioType[] values)
+string[] toString(ScenarioType[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -566,5 +566,5 @@ unittest {
   assert(ScenarioType.custom.toString == "custom"); 
 
   assert(["standard", "custom"].toScenarioTypes == [ScenarioType.standard, ScenarioType.custom]);
-  assert([ScenarioType.standard, ScenarioType.custom].toStrings == ["standard", "custom"]);
+  assert([ScenarioType.standard, ScenarioType.custom].toString == ["standard", "custom"]);
 }

@@ -38,7 +38,7 @@ MasterDataCategory[] toMasterDataCategory(string[] cats) {
 string toString(MasterDataCategory cat)
   => cat.to!string;
 
-string[] toStrings(MasterDataCategory[] cats)
+string[] toString(MasterDataCategory[] cats)
   => cats.map!toString.array;
 
 ///
@@ -93,7 +93,7 @@ RecordStatus[] toRecordStatuses(string[] values)
 string toString(RecordStatus value)
   => value.to!string;
 
-string[] toStrings(RecordStatus[] values)
+string[] toString(RecordStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -107,7 +107,7 @@ unittest {
 
   assert(["active", "blocked"].toRecordStatuses == [RecordStatus.active, RecordStatus.blocked
     ]);
-  assert([RecordStatus.active, RecordStatus.blocked].toStrings == ["active", "blocked"
+  assert([RecordStatus.active, RecordStatus.blocked].toString == ["active", "blocked"
     ]);
 }
 
@@ -146,7 +146,7 @@ ChangeType[] toChangeTypes(string[] values)
 string toString(ChangeType value)
   => value.to!string;
 
-string[] toStrings(ChangeType[] values)
+string[] toString(ChangeType[] values)
   => values.map!toString.array;
 
 /// 
@@ -162,7 +162,7 @@ unittest {
 
   assert(["create", "delete"].toChangeTypes == [ChangeType.create_, ChangeType.delete_
     ]);
-  assert([ChangeType.create_, ChangeType.delete_].toStrings == ["create_", "delete_"
+  assert([ChangeType.create_, ChangeType.delete_].toString == ["create_", "delete_"
     ]);
 }
 
@@ -183,7 +183,7 @@ DistributionModelStatus[] toDistributionModelStatuses(string[] values)
 string toString(DistributionModelStatus value)
   => value.to!string;
 
-string[] toStrings(DistributionModelStatus[] values)
+string[] toString(DistributionModelStatus[] values)
   => values.map!toString.array;
 
 /// 
@@ -196,7 +196,7 @@ unittest {
 
   assert(["active", "draft"].toDistributionModelStatuses == [DistributionModelStatus.active, DistributionModelStatus.draft
     ]);
-  assert([DistributionModelStatus.active, DistributionModelStatus.draft].toStrings == ["active", "draft"
+  assert([DistributionModelStatus.active, DistributionModelStatus.draft].toString == ["active", "draft"
     ]);
 }
 
@@ -217,7 +217,7 @@ DistributionDirection[] toDistributionDirections(string[] values)
 string toString(DistributionDirection value)
   => value.to!string;
 
-string[] toStrings(DistributionDirection[] values)
+string[] toString(DistributionDirection[] values)
   => values.map!toString.array;
 
 ///
@@ -230,7 +230,7 @@ unittest {
 
   assert(["outbound", "inbound"].toDistributionDirections == [DistributionDirection.outbound, DistributionDirection.inbound
     ]);
-  assert([DistributionDirection.outbound, DistributionDirection.inbound].toStrings == ["outbound", "inbound"
+  assert([DistributionDirection.outbound, DistributionDirection.inbound].toString == ["outbound", "inbound"
     ]);
 }
 
@@ -252,7 +252,7 @@ ClientStatus[] toClientStatuses(string[] values)
 string toString(ClientStatus value)
   => value.to!string;
 
-string[] toStrings(ClientStatus[] values)
+string[] toString(ClientStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -266,7 +266,7 @@ unittest {
 
   assert(["connected", "error"].toClientStatuses == [ClientStatus.connected, ClientStatus.error
     ]);
-  assert([ClientStatus.connected, ClientStatus.error].toStrings == ["connected", "error"
+  assert([ClientStatus.connected, ClientStatus.error].toString == ["connected", "error"
     ]);
 }
 
@@ -292,7 +292,7 @@ ClientType[] toClientTypes(string[] values)
 string toString(ClientType value)
   => value.to!string;
 
-string[] toStrings(ClientType[] values) 
+string[] toString(ClientType[] values) 
   => values.map!toString.array;
 
 /// 
@@ -310,7 +310,7 @@ unittest {
 
   assert(["sapS4Hana", "thirdParty"].toClientTypes == [ClientType.sapS4Hana, ClientType.thirdParty
     ]);
-  assert([ClientType.sapS4Hana, ClientType.thirdParty].toStrings == ["sapS4Hana", "thirdParty"
+  assert([ClientType.sapS4Hana, ClientType.thirdParty].toString == ["sapS4Hana", "thirdParty"
     ]);
 }
 
@@ -334,7 +334,7 @@ ReplicationJobStatus[] toReplicationJobStatuses(string[] values)
   string toString(ReplicationJobStatus value)
   => value.to!string;
 
-string[] toStrings(ReplicationJobStatus[] values)
+string[] toString(ReplicationJobStatus[] values)
   => values.map!toString.array;
 
 unittest {
@@ -349,7 +349,7 @@ unittest {
 
   assert(["pending", "failed"].toReplicationJobStatuses == [ReplicationJobStatus.pending, ReplicationJobStatus.failed
     ]);
-  assert([ReplicationJobStatus.pending, ReplicationJobStatus.failed].toStrings == ["pending", "failed"
+  assert([ReplicationJobStatus.pending, ReplicationJobStatus.failed].toString == ["pending", "failed"
     ]);
 }
 
@@ -371,7 +371,7 @@ ReplicationTrigger[] toReplicationTriggers(string[] values)
 string toString(ReplicationTrigger value)
   => value.to!string;
 
-string[] toStrings(ReplicationTrigger[] values)
+string[] toString(ReplicationTrigger[] values)
   => values.map!toString.array;
 
 /// 
@@ -385,7 +385,7 @@ unittest {
 
   assert(["manual", "eventDriven"].toReplicationTriggers == [ReplicationTrigger.manual, ReplicationTrigger.eventDriven
     ]);
-  assert([ReplicationTrigger.manual, ReplicationTrigger.eventDriven].toStrings == ["manual", "eventDriven"
+  assert([ReplicationTrigger.manual, ReplicationTrigger.eventDriven].toString == ["manual", "eventDriven"
     ]);
 }
 
@@ -415,7 +415,7 @@ FilterOperator[] toFilterOperators(string[] values)
 string toString(FilterOperator value)
   => value.to!string;
 
-string[] toStrings(FilterOperator[] values)
+string[] toString(FilterOperator[] values)
   => values.map!toString.array;
 
 /// 
@@ -437,7 +437,7 @@ unittest {
 
   assert(["equals", "contains"].toFilterOperators == [FilterOperator.equals, FilterOperator.contains
     ]);
-  assert([FilterOperator.equals, FilterOperator.contains].toStrings == ["equals", "contains"
+  assert([FilterOperator.equals, FilterOperator.contains].toString == ["equals", "contains"
     ]);
 }
 
@@ -485,7 +485,7 @@ FieldType[] toFieldTypes(string[] values)
 string toString(FieldType value)
   => value.to!string;
 
-string[] toStrings(FieldType[] values)
+string[] toString(FieldType[] values)
   => values.map!toString.array;
 
 ///
@@ -504,7 +504,7 @@ unittest {
 
   assert(["string", "date"].toFieldTypes == [FieldType.string_, FieldType.date
     ]);
-  assert([FieldType.string_, FieldType.date].toStrings == ["string_", "date"
+  assert([FieldType.string_, FieldType.date].toString == ["string_", "date"
     ]);
 }
 
@@ -525,7 +525,7 @@ KeyMappingSourceType[] toKeyMappingSourceTypes(string[] values)
 string toString(KeyMappingSourceType value)
   => value.to!string;
 
-string[] toStrings(KeyMappingSourceType[] values)
+string[] toString(KeyMappingSourceType[] values)
   => values.map!toString.array;
 
 ///
@@ -538,6 +538,6 @@ unittest {
 
   assert(["local", "remote"].toKeyMappingSourceTypes == [KeyMappingSourceType.local, KeyMappingSourceType.remote
     ]);
-  assert([KeyMappingSourceType.local, KeyMappingSourceType.remote].toStrings == ["local", "remote"
+  assert([KeyMappingSourceType.local, KeyMappingSourceType.remote].toString == ["local", "remote"
     ]);
 }

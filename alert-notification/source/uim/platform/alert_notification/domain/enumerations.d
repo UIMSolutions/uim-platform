@@ -29,7 +29,7 @@ EventCategory[] toEventCategories(string[] categories) {
 string toString(EventCategory category) {
     return cast(string)category;
 }
-string[] toStrings(EventCategory[] categories) {
+string[] toString(EventCategory[] categories) {
     return categories.map!toString.array;
 }
 ///
@@ -47,7 +47,7 @@ unittest {
     assert(EventCategory.alert.toString == "alert");
     assert(EventCategory.exception_.toString == "exception");
 
-    assert([EventCategory.notification, EventCategory.alert].toStrings == ["notification", "alert"]);
+    assert([EventCategory.notification, EventCategory.alert].toString == ["notification", "alert"]);
     assert(["notification", "alert"].toEventCategories == [EventCategory.notification, EventCategory.alert]);
 }
 
@@ -77,7 +77,7 @@ EventSeverity[] toEventSeverities(string[] severities) {
 string toString(EventSeverity severity) {
     return cast(string)severity;
 }
-string[] toStrings(EventSeverity[] severities) {
+string[] toString(EventSeverity[] severities) {
     return severities.map!toString.array;
 }
 /// 
@@ -97,7 +97,7 @@ unittest {
     assert(EventSeverity.error_.toString == "error");
     assert(EventSeverity.fatal.toString == "fatal");
 
-    assert([EventSeverity.info, EventSeverity.warning].toStrings == ["info", "warning"]);
+    assert([EventSeverity.info, EventSeverity.warning].toString == ["info", "warning"]);
     assert(["info", "warning"].toEventSeverities == [EventSeverity.info, EventSeverity.warning]);
 }
 
@@ -117,7 +117,7 @@ EventStatus[] toEventStatuses(string[] values) {
 string toString(EventStatus status) {
     return status.to!string;
 }
-string[] toStrings(EventStatus[] statuses) {
+string[] toString(EventStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -137,7 +137,7 @@ unittest {
     assert(EventStatus.undelivered.toString == "undelivered");
     assert(EventStatus.matched.toString == "matched");
 
-    assert([EventStatus.sent, EventStatus.buffered].toStrings == ["sent", "buffered"]);
+    assert([EventStatus.sent, EventStatus.buffered].toString == ["sent", "buffered"]);
     assert(["sent", "buffered"].toEventStatuses == [EventStatus.sent, EventStatus.buffered]);
 }
 
@@ -160,7 +160,7 @@ PropertyKey[] toPropertyKeys(string[] values) {
 string toString(PropertyKey key) {
     return key.to!string;
 }
-string[] toStrings(PropertyKey[] keys) {
+string[] toString(PropertyKey[] keys) {
     return keys.map!toString.array;
 }
 ///
@@ -186,7 +186,7 @@ unittest {
     assert(PropertyKey.resourceInstance.toString == "resourceInstance");
     assert(PropertyKey.tags.toString == "tags");
 
-    assert([PropertyKey.eventType, PropertyKey.tags].toStrings == ["eventType", "tags"]);
+    assert([PropertyKey.eventType, PropertyKey.tags].toString == ["eventType", "tags"]);
     assert(["eventType", "tags"].toPropertyKeys == [PropertyKey.eventType, PropertyKey.tags]);
 }
 
@@ -214,7 +214,7 @@ Predicate[] toPredicate(string[] values) {
 string toString(Predicate predicate) {
     return cast(string)predicate;
 }
-string[] toStrings(Predicate[] predicates) {
+string[] toString(Predicate[] predicates) {
     return predicates.map!toString.array;
 }
 /// 
@@ -236,7 +236,7 @@ unittest {
     assert(Predicate.notEquals.toString == "notEquals");
     assert(Predicate.notContains.toString == "notContains");
 
-    assert([Predicate.any_, Predicate.equals].toStrings == ["any", "equals"]);
+    assert([Predicate.any_, Predicate.equals].toString == ["any", "equals"]);
     assert(["any", "equals"].toPredicate == [Predicate.any_, Predicate.equals]);
 }
 
@@ -260,7 +260,7 @@ ActionType[] toActionTypes(string[] values) {
 string toString(ActionType type) {
     return type.to!string;
 }
-string[] toStrings(ActionType[] types) {
+string[] toString(ActionType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -288,7 +288,7 @@ unittest {
     assert(ActionType.serviceNow.toString == "serviceNow");
     assert(ActionType.siem.toString == "siem");
 
-    assert([ActionType.email, ActionType.slack].toStrings == ["email", "slack"]);
+    assert([ActionType.email, ActionType.slack].toString == ["email", "slack"]);
     assert(["email", "slack"].toActionTypes == [ActionType.email, ActionType.slack]);
 }
 
@@ -306,7 +306,7 @@ ResourceState[] toResourceStates(string[] values) {
 string toString(ResourceState state) {
     return state.to!string;
 }
-string[] toStrings(ResourceState[] states) {
+string[] toString(ResourceState[] states) {
     return states.map!toString.array;
 }
 ///
@@ -322,6 +322,6 @@ unittest {
     assert(ResourceState.enabled.toString == "enabled");
     assert(ResourceState.disabled.toString == "disabled");
 
-    assert([ResourceState.enabled, ResourceState.disabled].toStrings == ["enabled", "disabled"]);
+    assert([ResourceState.enabled, ResourceState.disabled].toString == ["enabled", "disabled"]);
     assert(["enabled", "disabled"].toResourceStates == [ResourceState.enabled, ResourceState.disabled]);
 }

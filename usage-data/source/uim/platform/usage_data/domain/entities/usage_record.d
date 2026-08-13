@@ -55,6 +55,7 @@ struct UsageRecord {
   static UsageRecord create(GlobalAccountId globalAccountId, SubaccountId subaccountId,
       string serviceId, string serviceName, string metricName, double value,
       Environment env, string region) {
+
     UsageRecord r;
     r.id = UsageRecordId(generateId);
     r.globalAccountId = globalAccountId;
@@ -66,6 +67,7 @@ struct UsageRecord {
     r.environment = env;
     r.region = region;
     r.reportedAt = currentTimestamp;
+    // r.chargebackPeriod = format!"%04d-%02d"(r.chargebackYear, r.chargebackMonth);
     return r;
   }
 }

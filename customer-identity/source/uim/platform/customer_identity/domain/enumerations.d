@@ -18,16 +18,16 @@ enum CustomerStatus {
     disabled,
     deleted
 }
-CustomerStatus toCustomerStatus (string value) {
-    mixin(EnumSwitch!("CustomerStatus", "pending"));
+CustomerStatus toCustomerStatus(string value) {
+    mixin(EnumSwitch("CustomerStatus", "pending"));
 }
-CustomerStatus[] toCustomerStatusArray (string[] values) {
+CustomerStatus[] toCustomerStatus(string[] values) {
     return values.map!(toCustomerStatus).array;
 }
-string toString (CustomerStatus status) {
-    mixin(EnumToString!("CustomerStatus"));
+string toString(CustomerStatus status) {
+    return status.to!string;
 }
-string[] toStrings(CustomerStatus[] statuses) {
+string[] toString(CustomerStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -43,7 +43,7 @@ unittest {
     assert(toCustomerStatus("") == CustomerStatus.pending);
     assert(toCustomerStatus("unknown") == CustomerStatus.pending);
 
-    assert(toCustomerStatusArray(["pending", "locked"]) == [CustomerStatus.pending, CustomerStatus.locked]);
+    assert(["pending", "locked"].toCustomerStatus == [CustomerStatus.pending, CustomerStatus.locked]);
 
     assert(toString(CustomerStatus.pending) == "pending");
     assert(toString(CustomerStatus.active) == "active");
@@ -51,7 +51,7 @@ unittest {
     assert(toString(CustomerStatus.disabled) == "disabled");
     assert(toString(CustomerStatus.deleted) == "deleted");
 
-    assert(toStrings([CustomerStatus.pending, CustomerStatus.locked]) == ["pending", "locked"]);
+    assert(toString([CustomerStatus.pending, CustomerStatus.locked]) == ["pending", "locked"]);
 }
 
 enum CustomerGender {
@@ -61,15 +61,15 @@ enum CustomerGender {
     other
 }
 CustomerGender toCustomerGender (string value) {
-    mixin(EnumSwitch!("CustomerGender", "unspecified"));
+    mixin(EnumSwitch("CustomerGender", "unspecified"));
 }
-CustomerGender[] toCustomerGenders (string[] values) {
+CustomerGender[] toCustomerGender (string[] values) {
     return values.map!(toCustomerGender).array;
 }
-string toString (CustomerGender gender ) {
+string toString(CustomerGender gender ) {
     return gender.to!string;
 }
-string[] toStrings(CustomerGender[] genders) {
+string[] toString(CustomerGender[] genders) {
     return genders.map!toString.array;
 }
 /// 
@@ -84,14 +84,14 @@ unittest {
     assert("".toCustomerGender == CustomerGender.unspecified);
     assert("unknown".toCustomerGender == CustomerGender.unspecified);
 
-    assert(["unspecified", "female"].toCustomerGenders == [CustomerGender.unspecified, CustomerGender.female]);
+    assert(["unspecified", "female"].toCustomerGender == [CustomerGender.unspecified, CustomerGender.female]);
 
     assert(CustomerGender.unspecified.toString == "unspecified");
     assert(CustomerGender.male.toString == "male");
     assert(CustomerGender.female.toString == "female");
     assert(CustomerGender.other.toString == "other");  
 
-    assert([CustomerGender.unspecified, CustomerGender.female].toStrings == ["unspecified", "female"]);
+    assert([CustomerGender.unspecified, CustomerGender.female].toString == ["unspecified", "female"]);
 }
 
 enum LoginProvider {
@@ -105,15 +105,15 @@ enum LoginProvider {
     oidc
 }
 LoginProvider toLoginProvider (string value) {
-    mixin(EnumSwitch!("LoginProvider", "site"));
+    mixin(EnumSwitch("LoginProvider", "site"));
 }
 LoginProvider[] toLoginProviders (string[] values) {
     return values.map!(toLoginProvider).array;
 }
-string toString (LoginProvider provider) {
+string toString(LoginProvider provider) {
     return provider.to!string;
 }
-string[] toStrings(LoginProvider[] providers) {
+string[] toString(LoginProvider[] providers) {
     return providers.map!toString.array;
 }
 /// 
@@ -143,7 +143,7 @@ unittest {
     assert(toString(LoginProvider.saml) == "saml");
     assert(toString(LoginProvider.oidc) == "oidc");
 
-    assert(toStrings([LoginProvider.site, LoginProvider.google]) == ["site", "google"]);
+    assert(toString([LoginProvider.site, LoginProvider.google]) == ["site", "google"]);
 }
 
 enum SessionStatus {
@@ -152,7 +152,7 @@ enum SessionStatus {
     revoked
 }
 SessionStatus toSessionStatus(string value) {
-    mixin(EnumSwitch!("SessionStatus", "active"));
+    mixin(EnumSwitch("SessionStatus", "active"));
 }
 SessionStatus[] toSessionStatuses(string[] values) {
     return values.map!(toSessionStatus).array;
@@ -160,7 +160,7 @@ SessionStatus[] toSessionStatuses(string[] values) {
 string toString(SessionStatus status) {
     return status.to!string;
 }
-string[] toStrings(SessionStatus[] statuses) {
+string[] toString(SessionStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -180,7 +180,7 @@ unittest {
     assert(toString(SessionStatus.expired) == "expired");
     assert(toString(SessionStatus.revoked) == "revoked");
 
-    assert(toStrings([SessionStatus.active, SessionStatus.revoked]) == ["active", "revoked"]);
+    assert(toString([SessionStatus.active, SessionStatus.revoked]) == ["active", "revoked"]);
 }
 
 enum SocialIdentityStatus {
@@ -189,7 +189,7 @@ enum SocialIdentityStatus {
     error
 }
 SocialIdentityStatus toSocialIdentityStatus(string value) {
-    mixin(EnumSwitch!("SocialIdentityStatus", "linked"));
+    mixin(EnumSwitch("SocialIdentityStatus", "linked"));
 }
 SocialIdentityStatus[] toSocialIdentityStatuses(string[] values) {
     return values.map!(toSocialIdentityStatus).array;
@@ -197,7 +197,7 @@ SocialIdentityStatus[] toSocialIdentityStatuses(string[] values) {
 string toString(SocialIdentityStatus status) {
     return status.to!string;
 }
-string[] toStrings(SocialIdentityStatus[] statuses) {
+string[] toString(SocialIdentityStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -217,7 +217,7 @@ unittest {
     assert(toString(SocialIdentityStatus.unlinked) == "unlinked");
     assert(toString(SocialIdentityStatus.error) == "error");
 
-    assert(toStrings([SocialIdentityStatus.linked, SocialIdentityStatus.error]) == ["linked", "error"]);
+    assert(toString([SocialIdentityStatus.linked, SocialIdentityStatus.error]) == ["linked", "error"]);
 }
 
 enum ConsentType {
@@ -230,7 +230,7 @@ enum ConsentType {
     newsletter
 }
 ConsentType toConsentType(string value) {
-    mixin(EnumSwitch!("ConsentType", "marketing"));
+    mixin(EnumSwitch("ConsentType", "marketing"));
 }
 ConsentType[] toConsentTypes(string[] values) {
     return values.map!(toConsentType).array;
@@ -238,7 +238,7 @@ ConsentType[] toConsentTypes(string[] values) {
 string toString(ConsentType type) {
     return type.to!string;
 }
-string[] toStrings(ConsentType[] types) {
+string[] toString(ConsentType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -266,7 +266,7 @@ unittest {
     assert(toString(ConsentType.dataProcessing) == "dataProcessing");
     assert(toString(ConsentType.newsletter) == "newsletter");
 
-    assert(toStrings([ConsentType.marketing, ConsentType.functional]) == ["marketing", "functional"]);
+    assert(toString([ConsentType.marketing, ConsentType.functional]) == ["marketing", "functional"]);
 }
 
 enum LegalBasis {
@@ -286,7 +286,7 @@ LegalBasis[] toLegalBases(string[] values) {
 string toString(LegalBasis basis) { 
     return basis.to!string;
 }
-string[] toStrings(LegalBasis[] bases) {
+string[] toString(LegalBasis[] bases) {
     return bases.map!toString.array;
 }
 ///
@@ -312,7 +312,7 @@ unittest {
     assert(toString(LegalBasis.publicTask) == "publicTask");
     assert(toString(LegalBasis.legitimateInterests) == "legitimateInterests");
 
-    assert(toStrings([LegalBasis.consent, LegalBasis.contract]) == ["consent", "contract"]);
+    assert(toString([LegalBasis.consent, LegalBasis.contract]) == ["consent", "contract"]);
 }
 
 enum AuditAction {
@@ -341,7 +341,7 @@ AuditAction[] toAuditAction(string[] values) {
 string toString(AuditAction action) {
     return action.to!string;
 }
-string[] toStrings(AuditAction[] actions) {
+string[] toString(AuditAction[] actions) {
     return actions.map!toString.array;
 }
 ///
@@ -385,7 +385,7 @@ unittest {
     assert(AuditAction.policyUpdated.toString == "policyUpdated");
     assert(AuditAction.adminAction.toString == "adminAction");
 
-    assert([AuditAction.register, AuditAction.login].toStrings == ["register", "login"]);
+    assert([AuditAction.register, AuditAction.login].toString == ["register", "login"]);
 }
 
 enum ResourceType {
@@ -406,7 +406,7 @@ ResourceType[] toResourceTypes(string[] values) {
 string toString(ResourceType type) {
     return type.to!string;
 }
-string[] toStrings(ResourceType[] types) {
+string[] toString(ResourceType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -434,7 +434,7 @@ unittest {
     assert(ResourceType.screenSet.toString == "screenSet");
     assert(ResourceType.sitePolicy.toString == "sitePolicy");
 
-    assert([ResourceType.customer, ResourceType.session].toStrings == ["customer", "session"]);
+    assert([ResourceType.customer, ResourceType.session].toString == ["customer", "session"]);
 }
 
 enum IdentityProviderType {
@@ -452,7 +452,7 @@ IdentityProviderType[] toIdentityProviderTypes(string[] values) {
 string toString(IdentityProviderType type) {
     return type.to!string;
 }
-string[] toStrings(IdentityProviderType[] types) {
+string[] toString(IdentityProviderType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -474,7 +474,7 @@ unittest {
     assert(IdentityProviderType.oauth2.toString == "oauth2");
     assert(IdentityProviderType.ldap.toString == "ldap");
 
-    assert(toStrings([IdentityProviderType.saml, IdentityProviderType.oidc]) == ["saml", "oidc"]);
+    assert(toString([IdentityProviderType.saml, IdentityProviderType.oidc]) == ["saml", "oidc"]);
 }
 
 enum IdentityProviderStatus {
@@ -491,7 +491,7 @@ IdentityProviderStatus[] toIdentityProviderStatuses(string[] values) {
 string toString(IdentityProviderStatus status) {
     return status.to!string;
 }
-string[] toStrings(IdentityProviderStatus[] statuses) {
+string[] toString(IdentityProviderStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -511,7 +511,7 @@ unittest {
     assert(IdentityProviderStatus.inactive.toString == "inactive");
     assert(IdentityProviderStatus.testing.toString == "testing");
 
-    assert([IdentityProviderStatus.active, IdentityProviderStatus.testing].toStrings == ["active", "testing"]);
+    assert([IdentityProviderStatus.active, IdentityProviderStatus.testing].toString == ["active", "testing"]);
 }
 
 enum ScreenSetFlowType {
@@ -531,7 +531,7 @@ ScreenSetFlowType[] toScreenSetFlowTypes(string[] values) {
 string toString(ScreenSetFlowType type) {
     return type.to!string;
 }
-string[] toStrings(ScreenSetFlowType[] types) {  
+string[] toString(ScreenSetFlowType[] types) {  
     return types.map!toString.array;
 }   
 ///
@@ -557,7 +557,7 @@ unittest {
     assert(ScreenSetFlowType.linkAccount.toString == "linkAccount");
     assert(ScreenSetFlowType.liteRegistration.toString == "liteRegistration");
 
-    assert([ScreenSetFlowType.registrationLogin, ScreenSetFlowType.forgotPassword].toStrings == ["registrationLogin", "forgotPassword"]);
+    assert([ScreenSetFlowType.registrationLogin, ScreenSetFlowType.forgotPassword].toString == ["registrationLogin", "forgotPassword"]);
 }
 
 enum ScreenSetStatus {
@@ -574,7 +574,7 @@ ScreenSetStatus[] toScreenSetStatuses(string[] values) {
 string toString(ScreenSetStatus status) {
     return status.to!string;
 }
-string[] toStrings(ScreenSetStatus[] statuses) {
+string[] toString(ScreenSetStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -594,7 +594,7 @@ unittest {
     assert(toString(ScreenSetStatus.active) == "active");
     assert(toString(ScreenSetStatus.archived) == "archived");
 
-    assert(toStrings([ScreenSetStatus.draft, ScreenSetStatus.archived]) == ["draft", "archived"]);
+    assert(toString([ScreenSetStatus.draft, ScreenSetStatus.archived]) == ["draft", "archived"]);
 }
 
 enum PolicyType {
@@ -614,7 +614,7 @@ PolicyType[] toPolicyTypes(string[] values) {
 string toString(PolicyType type) {
     return type.to!string;
 }
-string[] toStrings(PolicyType[] types) {
+string[] toString(PolicyType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -640,7 +640,7 @@ unittest {
     assert(PolicyType.mfa.toString == "mfa");
     assert(PolicyType.consent.toString == "consent");
 
-    assert(toStrings([PolicyType.password, PolicyType.mfa]) == ["password", "mfa"]);
+    assert(toString([PolicyType.password, PolicyType.mfa]) == ["password", "mfa"]);
 }   
 
 enum MfaMethod {
@@ -660,7 +660,7 @@ MfaMethod[] toMfaMethods(string[] values) {
 string toString(MfaMethod method) {
     return method.to!string;
 }
-string[] toStrings(MfaMethod[] methods) {
+string[] toString(MfaMethod[] methods) {
     return methods.map!toString.array;
 }
 ///
@@ -684,7 +684,7 @@ unittest {
     assert(toString(MfaMethod.totp) == "totp");
     assert(toString(MfaMethod.push) == "push"); 
 
-    assert(toStrings([MfaMethod.none, MfaMethod.email]) == ["none", "email"]);
+    assert(toString([MfaMethod.none, MfaMethod.email]) == ["none", "email"]);
 }
 
 enum PasswordComplexity {
@@ -702,7 +702,7 @@ PasswordComplexity[] toPasswordComplexities(string[] values) {
 string toString(PasswordComplexity complexity) {
     return complexity.to!string;
 }
-string[] toStrings(PasswordComplexity[] complexities) {
+string[] toString(PasswordComplexity[] complexities) {
     return complexities.map!toString.array;
 }
 ///
@@ -724,5 +724,5 @@ unittest {
     assert(toString(PasswordComplexity.high) == "high");
     assert(toString(PasswordComplexity.custom) == "custom");
 
-    assert(toStrings([PasswordComplexity.low, PasswordComplexity.high]) == ["low", "high"]);
+    assert(toString([PasswordComplexity.low, PasswordComplexity.high]) == ["low", "high"]);
 }

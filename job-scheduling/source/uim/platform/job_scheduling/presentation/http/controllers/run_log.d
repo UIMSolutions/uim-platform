@@ -27,7 +27,7 @@ class RunLogController : ManageHttpController {
         router.get("/api/v1/scheduler/jobs/*/schedules/*/runLogs", &handleListBySchedule);
         // /api/v1/scheduler/jobs/{jobId}/runLogs
         router.get("/api/v1/scheduler/jobs/*/runLogs", &handleListByJob);
-        // Update run log status (async callback)
+        // Update run log Status(async callback)
         router.put("/api/v1/scheduler/jobs/*/runLogs/*", &handleUpdateStatus);
     }
 

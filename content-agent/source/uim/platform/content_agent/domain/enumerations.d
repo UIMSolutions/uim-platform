@@ -31,7 +31,7 @@ PackageStatus[] toPackageStatuses(string[] statuses)
 string toString(PackageStatus status)
   => status.to!string;
 
-string[] toStrings(PackageStatus[] statuses)
+string[] toString(PackageStatus[] statuses)
   => statuses.map!toString.array;
 
 ///
@@ -57,7 +57,7 @@ unittest {
 
   assert(["draft", "exported"].toPackageStatuses == [PackageStatus.draft, PackageStatus.exported
     ]);
-  assert([PackageStatus.draft, PackageStatus.exported].toStrings == ["draft", "exported"]);
+  assert([PackageStatus.draft, PackageStatus.exported].toString == ["draft", "exported"]);
 }
 
 /// Content format for package assembly.
@@ -75,7 +75,7 @@ ContentFormat[] toContentFormats(string[] formats)
 string toString(ContentFormat format)
   => format.to!string;
 
-string[] toStrings(ContentFormat[] formats)
+string[] toString(ContentFormat[] formats)
   => formats.map!toString.array;
 
 ///
@@ -95,7 +95,7 @@ unittest {
 
   assert(["mtar", "json"].toContentFormats == [ContentFormat.mtar, ContentFormat.json
     ]);
-  assert([ContentFormat.mtar, ContentFormat.json].toStrings == ["mtar", "json"]);
+  assert([ContentFormat.mtar, ContentFormat.json].toString == ["mtar", "json"]);
 }
 
 /// Status of a content provider.
@@ -114,7 +114,7 @@ ProviderStatus[] toProviderStatuses(string[] statuses)
 string toString(ProviderStatus status)
   => status.to!string;
 
-string[] toStrings(ProviderStatus[] statuses)
+string[] toString(ProviderStatus[] statuses)
   => statuses.map!toString.array;
 
 ///
@@ -136,7 +136,7 @@ unittest {
 
   assert(["active", "error"].toProviderStatuses == [ProviderStatus.active, ProviderStatus.error
     ]);
-  assert([ProviderStatus.active, ProviderStatus.error].toStrings == ["active", "error"]);
+  assert([ProviderStatus.active, ProviderStatus.error].toString == ["active", "error"]);
 }
 
 /// Content category provided by a content provider.
@@ -170,7 +170,7 @@ ContentCategory[] toContentCategories(string[] values)
 string toString(ContentCategory value)
   => value.to!string;
 
-string[] toStrings(ContentCategory[] values)
+string[] toString(ContentCategory[] values)
   => values.map!toString.array;
 
 ///
@@ -222,7 +222,7 @@ unittest {
 
   assert(["custom", "destination"].toContentCategories == [ContentCategory.custom, ContentCategory.destination
     ]);
-  assert([ContentCategory.custom, ContentCategory.destination].toStrings == ["custom", "destination"]);
+  assert([ContentCategory.custom, ContentCategory.destination].toString == ["custom", "destination"]);
 }
 
 /// Status of a transport request.
@@ -247,7 +247,7 @@ TransportStatus[] toTransportStatuses(string[] statuses)
 string toString(TransportStatus status)
   => status.to!string;
 
-string[] toStrings(TransportStatus[] statuses)
+string[] toString(TransportStatus[] statuses)
   => statuses.map!toString.array;
 
 ///
@@ -281,7 +281,7 @@ unittest {
 
   assert(["created", "exported"].toTransportStatuses == [TransportStatus.created, TransportStatus.exported
     ]);
-  assert([TransportStatus.created, TransportStatus.exported].toStrings == ["created", "exported"]);
+  assert([TransportStatus.created, TransportStatus.exported].toString == ["created", "exported"]);
 }
   
 /// Status of an export job.
@@ -304,7 +304,7 @@ ExportStatus[] toExportStatus(string[] statuses)
 string toString(ExportStatus status)
   => status.to!string;
 
-string[] toStrings(ExportStatus[] statuses)
+string[] toString(ExportStatus[] statuses)
   => statuses.map!toString.array;
 
 /// 
@@ -332,7 +332,7 @@ unittest {
 
   assert(["pending", "completed"].toExportStatus == [ExportStatus.pending, ExportStatus.completed
     ]);
-  assert([ExportStatus.pending, ExportStatus.completed].toStrings == ["pending", "completed"]);
+  assert([ExportStatus.pending, ExportStatus.completed].toString == ["pending", "completed"]);
 }
 
 /// Status of an import job.
@@ -356,7 +356,7 @@ ImportStatus[] toImportStatuses(string[] statuses)
 string toString(ImportStatus status)
   => status.to!string;
 
-string[] toStrings(ImportStatus[] statuses)
+string[] toString(ImportStatus[] statuses)
   => statuses.map!toString.array;
 
 ///
@@ -384,7 +384,7 @@ unittest {
 
   assert(["pending", "completed"].toImportStatuses == [ImportStatus.pending, ImportStatus.completed
     ]);
-  assert([ImportStatus.pending, ImportStatus.completed].toStrings == ["pending", "completed"]);
+  assert([ImportStatus.pending, ImportStatus.completed].toString == ["pending", "completed"]);
 }
 
 /// Transport mode.
@@ -404,7 +404,7 @@ TransportMode[] toTransportModes(string[] values)
 string toString(TransportMode value)
   => value.to!string;
 
-string[] toStrings(TransportMode[] values)
+string[] toString(TransportMode[] values)
   => values.map!toString.array;
 
 /// 
@@ -426,7 +426,7 @@ unittest {
 
   assert(["cloudTransportManagement", "fileDownload"].toTransportModes == [TransportMode.cloudTransportManagement, TransportMode.fileDownload
     ]);
-  assert([TransportMode.cloudTransportManagement, TransportMode.fileDownload].toStrings == ["cloudTransportManagement", "fileDownload"
+  assert([TransportMode.cloudTransportManagement, TransportMode.fileDownload].toString == ["cloudTransportManagement", "fileDownload"
     ]);
 }
 
@@ -446,7 +446,7 @@ QueueType[] toQueueTypes(string[] values)
 string toString(QueueType value)
   => value.to!string;
 
-string[] toStrings(QueueType[] values)
+string[] toString(QueueType[] values)
   => values.map!toString.array;
 
 ///
@@ -466,7 +466,7 @@ unittest {
 
   assert(["cloudTMS", "local"].toQueueTypes == [QueueType.cloudTMS, QueueType.local
     ]);
-  assert([QueueType.cloudTMS, QueueType.local].toStrings == ["cloudTMS", "local"
+  assert([QueueType.cloudTMS, QueueType.local].toString == ["cloudTMS", "local"
     ]);
 }
 
@@ -500,7 +500,7 @@ ActivityType[] toActivityTypes(string[] values)
 string toString(ActivityType value)
   => value.to!string;
 
-string[] toStrings(ActivityType[] values)
+string[] toString(ActivityType[] values)
   => values.map!toString.array;
 
 ///
@@ -549,7 +549,7 @@ unittest {
   assert(["packageCreated", "exportCompleted"].toActivityTypes == [ActivityType.packageCreated, ActivityType.exportCompleted
     ]);
 
-  assert([ActivityType.packageCreated, ActivityType.exportCompleted].toStrings == ["packageCreated", "exportCompleted"
+  assert([ActivityType.packageCreated, ActivityType.exportCompleted].toString == ["packageCreated", "exportCompleted"
     ]);
 }
 
@@ -569,7 +569,7 @@ ActivitySeverity[] toActivitySeverities(string[] values)
 string toString(ActivitySeverity value)
   => value.to!string;
 
-string[] toStrings(ActivitySeverity[] values)
+string[] toString(ActivitySeverity[] values)
   => values.map!toString.array;
 
 ///
@@ -589,5 +589,5 @@ unittest {
 
   assert(["info", "error"].toActivitySeverities == [ActivitySeverity.info, ActivitySeverity.error
     ]);
-  assert([ActivitySeverity.info, ActivitySeverity.error].toStrings == ["info", "error"]);
+  assert([ActivitySeverity.info, ActivitySeverity.error].toString == ["info", "error"]);
 }

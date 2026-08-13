@@ -109,8 +109,8 @@ class SitePolicyController : ManageHttpController {
 
         auto data = precheck.data;
         SitePolicyDTO dto;
-        dto.sitePolicyId = id;
         dto.tenantId = tenantId;
+        dto.policyId = id;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.passwordMinLength = data.getInteger("passwordMinLength");

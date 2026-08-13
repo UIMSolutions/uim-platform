@@ -24,7 +24,7 @@ MfaType[] toMfaTypes(string[] values)
 string toString(MfaType value)
   => value.to!string;
 
-string[] toStrings(MfaType[] values)
+string[] toString(MfaType[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -41,7 +41,7 @@ unittest {
   assert(MfaType.email.toString == "email");
 
   assert(["none", "totp"].toMfaTypes == [MfaType.none, MfaType.totp]);
-  assert([MfaType.none, MfaType.totp].toStrings == ["none", "totp"]);
+  assert([MfaType.none, MfaType.totp].toString == ["none", "totp"]);
 }
 
 /// IAUser status in the identity directory.
@@ -61,7 +61,7 @@ UserStatus[] toUserStatuseses(string[] values)
 string toString(UserStatus value)
     => value.to!string;
 
-string[] toStrings(UserStatus[] values)
+string[] toString(UserStatus[] values)
     => values.map!toString.array;
 
 ///
@@ -80,7 +80,7 @@ unittest {
   assert(UserStatus.pendingVerification.toString == "pendingVerification");
 
   assert(["active", "locked"].toUserStatuseses == [UserStatus.active, UserStatus.locked]);
-  assert([UserStatus.active, UserStatus.locked].toStrings == ["active", "locked"]);
+  assert([UserStatus.active, UserStatus.locked].toString == ["active", "locked"]);
 }
 
 /// Risk level determined by risk-based authentication.
@@ -105,7 +105,7 @@ RiskLevel[] toRiskLevels(string[] values)
 string toString(RiskLevel value)
     => value.to!string;
 
-string[] toStrings(RiskLevel[] values)
+string[] toString(RiskLevel[] values)
     => values.map!toString.array;
 ///
 unittest {
@@ -125,7 +125,7 @@ unittest {
   assert(RiskLevel.critical.toString == "critical");    
  
   assert(["low", "high"].toRiskLevels == [RiskLevel.low, RiskLevel.high]);
-  assert([RiskLevel.low, RiskLevel.high].toStrings == ["low", "high"]);
+  assert([RiskLevel.low, RiskLevel.high].toString == ["low", "high"]);
 }
 
 /// Token type.
@@ -142,7 +142,7 @@ TokenType[] toTokenTypes(string[] values)
   => values.map!toTokenType.array;
 string toString(TokenType value)
     => value.to!string;
-string[] toStrings(TokenType[] values)
+string[] toString(TokenType[] values)
     => values.map!toString.array;
 ///
 unittest {
@@ -160,7 +160,7 @@ unittest {
   assert(TokenType.samlAssertion.toString == "samlAssertion");
 
   assert(["access", "idToken"].toTokenTypes == [TokenType.access, TokenType.idToken]);
-  assert([TokenType.access, TokenType.idToken].toStrings == ["access", "idToken"]);
+  assert([TokenType.access, TokenType.idToken].toString == ["access", "idToken"]);
 }
 
 /// Provisioning job status.
@@ -178,7 +178,7 @@ JobStatus[] toJobStatuses(string[] values) {
 }
 string toString(JobStatus value)
     => value.to!string;
-string[] toStrings(JobStatus[] values)
+string[] toString(JobStatus[] values)
     => values.map!toString.array;
 ///
 unittest {
@@ -196,7 +196,7 @@ unittest {
   assert(JobStatus.failed.toString == "failed");
 
   assert(["pending", "completed"].toJobStatuses == [JobStatus.pending, JobStatus.completed]);
-  assert([JobStatus.pending, JobStatus.completed].toStrings == ["pending", "completed"]);
+  assert([JobStatus.pending, JobStatus.completed].toString == ["pending", "completed"]);
 }
 
 /// Identity provider type for delegation.
@@ -218,7 +218,7 @@ IdpType[] toIdpTypes(string[] values)
 string toString(IdpType value)
     => value.to!string;
 
-string[] toStrings(IdpType[] values)
+string[] toString(IdpType[] values)
     => values.map!toString.array;
 ///
 unittest {
@@ -238,5 +238,5 @@ unittest {
   assert(IdpType.corporate.toString == "corporate");    
 
   assert(["local", "saml"].toIdpTypes == [IdpType.local, IdpType.saml]);
-  assert([IdpType.local, IdpType.saml].toStrings == ["local", "saml"]);
+  assert([IdpType.local, IdpType.saml].toString == ["local", "saml"]);
 }

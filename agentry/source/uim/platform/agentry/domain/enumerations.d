@@ -37,7 +37,7 @@ string toString(AppPlatform value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "ios", "android", etc
 }
 
-string[] toStrings(AppPlatform[] values) {
+string[] toString(AppPlatform[] values) {
     return values.map!toString.array;
 }
 ///
@@ -63,7 +63,7 @@ unittest {
             ]);
     assert([AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
         AppPlatform.web, AppPlatform.cross
-    ].toStrings ==
+    ].toString ==
         ["ios", "android", "windows", "web", "cross"]);
 }
 
@@ -102,7 +102,7 @@ string toString(AppStatus value) {
     return cast(string)value; // This will return the enum member name as a string, e.g. "draft", "active", etc
 }
 
-string[] toStrings(AppStatus[] values) {
+string[] toString(AppStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -126,7 +126,7 @@ unittest {
             ]);
     assert([    AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
             AppStatus.archived
-        ].toStrings ==
+        ].toString ==
         ["draft", "active", "deprecated", "archived"]);
 }
 
@@ -152,7 +152,7 @@ string toString(DefinitionStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "draft", "published", etc
 }
 
-string[] toStrings(DefinitionStatus[] values) { 
+string[] toString(DefinitionStatus[] values) { 
     return values.map!toString.array;
 }
 ///
@@ -174,7 +174,7 @@ unittest {
             ]);
     assert([    DefinitionStatus.draft, DefinitionStatus.published,
             DefinitionStatus.archived
-        ].toStrings ==
+        ].toString ==
         ["draft", "published", "archived"]);
 }
 
@@ -211,7 +211,7 @@ AppVersionStatus[] toAppVersionStatuses(string[] statuses) {
 string toString(AppVersionStatus value) {
     return cast(string)value; // This will return the enum member name as a string, e.g. "pending", "published", etc
 }
-string[] toStrings(AppVersionStatus[] values) {
+string[] toString(AppVersionStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -236,7 +236,7 @@ unittest {
             ]);
     assert([    AppVersionStatus.pending, AppVersionStatus.published,
             AppVersionStatus.deprecated_, AppVersionStatus.withdrawn
-        ].toStrings ==
+        ].toString ==
         ["pending", "published", "deprecated", "withdrawn"]);
 }
 
@@ -262,7 +262,7 @@ DeviceStatus[] toDeviceStatuses(string[] values) {
 string toString(DeviceStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "enrolled", "active", etc
 }
-string[] toStrings(DeviceStatus[] values) {
+string[] toString(DeviceStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -284,7 +284,7 @@ unittest {
             [        DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
                 DeviceStatus.removed
             ]);
-    assert(toStrings([    DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
+    assert(toString([    DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
             DeviceStatus.removed
         ]) ==
         ["enrolled", "active", "suspended", "removed"]);
@@ -316,7 +316,7 @@ string toString(SyncStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "pending", "inProgress", etc
 }
 
-string[] toStrings(SyncStatus[] values) {
+string[] toString(SyncStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -340,7 +340,7 @@ unittest {
             [        SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
                 SyncStatus.failed, SyncStatus.cancelled
             ]);
-    assert(toStrings([    SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
+    assert(toString([    SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
             SyncStatus.failed, SyncStatus.cancelled
         ]) ==
         ["pending", "inProgress", "completed", "failed", "cancelled"]);
@@ -368,7 +368,7 @@ string toString(SyncDirection value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "upload", "download", etc
 }
 
-string[] toStrings(SyncDirection[] values) {
+string[] toString(SyncDirection[] values) {
     return values.map!toString.array;
 }
 ///
@@ -388,7 +388,7 @@ unittest {
             [        SyncDirection.upload, SyncDirection.download,
                 SyncDirection.bidirectional
             ]);
-    assert(toStrings([    SyncDirection.upload, SyncDirection.download,
+    assert(toString([    SyncDirection.upload, SyncDirection.download,
             SyncDirection.bidirectional
         ]) ==
         ["upload", "download", "bidirectional"]);
@@ -418,7 +418,7 @@ BackendType[] toBackendTypes(string[] values) {
 string toString(BackendType value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "s4hana", "ecc", etc
 }
-string[] toStrings(BackendType[] values) {
+string[] toString(BackendType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -443,7 +443,7 @@ unittest {
             ]);
     assert([BackendType.s4hana, BackendType.ecc, BackendType.btp, BackendType.crm,
         BackendType.custom
-    ].toStrings ==
+    ].toString ==
         ["s4hana", "ecc", "btp", "crm", "custom"]);
 }
 
@@ -469,7 +469,7 @@ ConnectionStatus[] toConnectionStatuses(string[] values) {
 string toString(ConnectionStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
 }
-string[] toStrings(ConnectionStatus[] values) {
+string[] toString(ConnectionStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -494,7 +494,7 @@ unittest {
             ]);
     assert([ConnectionStatus.active, ConnectionStatus.inactive, ConnectionStatus.error,
         ConnectionStatus.testing
-    ].toStrings ==
+    ].toString ==
         ["active", "inactive", "error", "testing"]);
 }
 
@@ -522,7 +522,7 @@ DeploymentStatus[] toDeploymentStatuses(string[] values) {
 string toString(DeploymentStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "pending", "deploying", etc
 }
-string[] toStrings(DeploymentStatus[] values) {
+string[] toString(DeploymentStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -551,7 +551,7 @@ unittest {
     assert([DeploymentStatus.pending, DeploymentStatus.deploying,
         DeploymentStatus.deployed, DeploymentStatus.failed,
         DeploymentStatus.rolledBack
-    ].toStrings ==
+    ].toString ==
         ["pending", "deploying", "deployed", "failed", "rolledBack"]);
 }
 
@@ -575,7 +575,7 @@ DeploymentScope[] toDeploymentScopes(string[] values) {
 string toString(DeploymentScope value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "device", "group", etc
 }
-string[] toStrings(DeploymentScope[] values) {
+string[] toString(DeploymentScope[] values) {
     return values.map!toString.array;
 }
 ///
@@ -595,6 +595,6 @@ unittest {
                 DeploymentScope.tenant, DeploymentScope.tenant
             ]);
     assert([DeploymentScope.device, DeploymentScope.group, DeploymentScope.tenant
-    ].toStrings ==
+    ].toString ==
         ["device", "group", "tenant"]);
 }

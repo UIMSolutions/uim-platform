@@ -28,7 +28,7 @@ string toString(CatalogType type) {
     return type.to!string;
 }
 
-string[] toStrings(CatalogType[] types) {
+string[] toString(CatalogType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -44,7 +44,7 @@ unittest {
     assert(toString(CatalogType.system) == "system");
     assert(toString(CatalogType.custom) == "custom");
 
-    assert(toStrings([CatalogType.system, CatalogType.custom]) == [    "system", "custom"
+    assert(toString([CatalogType.system, CatalogType.custom]) == [    "system", "custom"
         ]);
 }
 
@@ -66,7 +66,7 @@ string toString(CatalogStatus status) {
     return status.to!string;
 }
 
-string[] toStrings(CatalogStatus[] statuses) {
+string[] toString(CatalogStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -82,7 +82,7 @@ unittest {
     assert(toString(CatalogStatus.inactive) == "inactive");
     assert(toString(CatalogStatus.archived) == "archived");
 
-    assert(toStrings([    CatalogStatus.active, CatalogStatus.inactive, CatalogStatus.archived
+    assert(toString([    CatalogStatus.active, CatalogStatus.inactive, CatalogStatus.archived
         ]) == ["active", "inactive", "archived"]);
 }
 
@@ -116,7 +116,7 @@ string toString(CommandStatus status) {
     return cast(string)status;
 }
 
-string[] toStrings(CommandStatus[] statuses) {
+string[] toString(CommandStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -140,7 +140,7 @@ unittest {
 
     assert([    CommandStatus.active, CommandStatus.inactive,
             CommandStatus.deprecated_
-        ].toStrings == ["active", "inactive", "deprecated"]);
+        ].toString == ["active", "inactive", "deprecated"]);
 }
 
 enum CommandType {
@@ -162,7 +162,7 @@ string toString(CommandType type) {
     return type.to!string;
 }
 
-string[] toStrings(CommandType[] types) {
+string[] toString(CommandType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -187,7 +187,7 @@ unittest {
 
     assert([    CommandType.simple, CommandType.composite, CommandType.httpRequest,
             CommandType.script
-        ].toStrings == ["simple", "composite", "httpRequest", "script"]);
+        ].toString == ["simple", "composite", "httpRequest", "script"]);
 }
 
 enum ExecutionStatus {
@@ -211,7 +211,7 @@ string toString(ExecutionStatus status) {
     return status.to!string;
 }
 
-string[] toStrings(ExecutionStatus[] statuses) {
+string[] toString(ExecutionStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -244,7 +244,7 @@ unittest {
     assert([    ExecutionStatus.pending, ExecutionStatus.running,
             ExecutionStatus.completed, ExecutionStatus.failed,
             ExecutionStatus.cancelled, ExecutionStatus.timedOut
-        ].toStrings == ["pending", "running", "completed", "failed", "cancelled", "timedOut"
+        ].toString == ["pending", "running", "completed", "failed", "cancelled", "timedOut"
     ]);
 }
 
@@ -267,7 +267,7 @@ string toString(ExecutionPriority priority) {
     return priority.to!string;
 }
 
-string[] toStrings(ExecutionPriority[] priorities) {
+string[] toString(ExecutionPriority[] priorities) {
     return priorities.map!toString.array;
 }
 ///
@@ -292,7 +292,7 @@ unittest {
 
     assert([    ExecutionPriority.low, ExecutionPriority.medium,
             ExecutionPriority.high, ExecutionPriority.critical
-        ].toStrings == ["low", "medium", "high", "critical"]);
+        ].toString == ["low", "medium", "high", "critical"]);
 }
 
 enum ScheduleType {
@@ -313,7 +313,7 @@ string toString(ScheduleType type) {
     return type.to!string;
 }
 
-string[] toStrings(ScheduleType[] types) {
+string[] toString(ScheduleType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -334,7 +334,7 @@ unittest {
     assert(ScheduleType.cron.toString == "cron");
 
     assert([    ScheduleType.oneTime, ScheduleType.recurring, ScheduleType.cron
-        ].toStrings == ["oneTime", "recurring", "cron"]);
+        ].toString == ["oneTime", "recurring", "cron"]);
 }
 
 enum ScheduleStatus {
@@ -356,7 +356,7 @@ string toString(ScheduleStatus status) {
     return status.to!string;
 }
 
-string[] toStrings(ScheduleStatus[] statuses) {
+string[] toString(ScheduleStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -381,7 +381,7 @@ unittest {
 
     assert([    ScheduleStatus.active, ScheduleStatus.paused, ScheduleStatus.completed,
             ScheduleStatus.expired
-        ].toStrings == ["active", "paused", "completed", "expired"]);
+        ].toString == ["active", "paused", "completed", "expired"]);
 }
 
 enum TriggerType {
@@ -403,7 +403,7 @@ string toString(TriggerType type) {
     return type.to!string;
 }
 
-string[] toStrings(TriggerType[] types) {
+string[] toString(TriggerType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -427,7 +427,7 @@ unittest {
 
     assert([TriggerType.event, TriggerType.webhook, TriggerType.alertNotification,
         TriggerType.manual
-    ].toStrings == ["event", "webhook", "alertNotification", "manual"]);
+    ].toString == ["event", "webhook", "alertNotification", "manual"]);
 }
 
 enum TriggerStatus {
@@ -448,7 +448,7 @@ string toString(TriggerStatus status) {
     return status.to!string;
 }
 
-string[] toStrings(TriggerStatus[] statuses) {
+string[] toString(TriggerStatus[] statuses) {
     return statuses.map!toString.array;
 }
 
@@ -469,7 +469,7 @@ unittest {
     assert(TriggerStatus.disabled.toString == "disabled");
 
     assert([    TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.disabled
-        ].toStrings == ["active", "inactive", "disabled"]);
+        ].toString == ["active", "inactive", "disabled"]);
 }
 
 enum InputType : string {
@@ -505,7 +505,7 @@ string toString(InputType type) {
     return cast(string)type;
 }
 
-string[] toStrings(InputType[] types) {
+string[] toString(InputType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -528,7 +528,7 @@ unittest {
     assert(InputType.json.toString == "json");
     assert(InputType.secret.toString == "secret");
 
-    assert([InputType.string_, InputType.integer].toStrings == [    "string", "integer"
+    assert([InputType.string_, InputType.integer].toString == [    "string", "integer"
         ]);
 }
 
@@ -550,7 +550,7 @@ string toString(InputSensitivity sensitivity) {
     return sensitivity.to!string;
 }
 
-string[] toStrings(InputSensitivity[] sensitivities) {
+string[] toString(InputSensitivity[] sensitivities) {
     return sensitivities.map!toString.array;
 }
 ///
@@ -569,7 +569,7 @@ unittest {
     assert(InputSensitivity.sensitive.toString == "sensitive");
     assert(InputSensitivity.secret.toString == "secret");
 
-    assert([InputSensitivity.normal, InputSensitivity.secret].toStrings == [    "normal", "secret"
+    assert([InputSensitivity.normal, InputSensitivity.secret].toString == [    "normal", "secret"
         ]);
 }
 
@@ -591,7 +591,7 @@ string toString(ServiceAccountStatus status) {
     return status.to!string;
 }
 
-string[] toStrings(ServiceAccountStatus[] statuses) {
+string[] toString(ServiceAccountStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -610,7 +610,7 @@ unittest {
     assert(ServiceAccountStatus.inactive.toString == "inactive");
     assert(ServiceAccountStatus.revoked.toString == "revoked");
 
-    assert([ServiceAccountStatus.active, ServiceAccountStatus.revoked].toStrings == [    "active", "revoked"
+    assert([ServiceAccountStatus.active, ServiceAccountStatus.revoked].toString == [    "active", "revoked"
         ]);
 }
 
@@ -633,7 +633,7 @@ string toString(ConnectorType type) {
     return type.to!string;
 }
 
-string[] toStrings(ConnectorType[] types) {
+string[] toString(ConnectorType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -654,7 +654,7 @@ unittest {
     assert(ConnectorType.bitbucket.toString == "bitbucket");
     assert(ConnectorType.s3.toString == "s3");
 
-    assert([ConnectorType.github, ConnectorType.gitLab].toStrings == [    "github", "gitLab"
+    assert([ConnectorType.github, ConnectorType.gitLab].toString == [    "github", "gitLab"
         ]);
 }
 
@@ -676,7 +676,7 @@ string toString(ConnectorStatus status) {
     return status.to!string;
 }
 
-string[] toStrings(ConnectorStatus[] statuses) {
+string[] toString(ConnectorStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -695,7 +695,7 @@ unittest {
     assert(ConnectorStatus.disconnected.toString == "disconnected");
     assert(ConnectorStatus.error.toString == "error");
 
-    assert([ConnectorStatus.connected, ConnectorStatus.disconnected].toStrings == [    "connected", "disconnected"
+    assert([ConnectorStatus.connected, ConnectorStatus.disconnected].toString == [    "connected", "disconnected"
         ]);
 }
 
@@ -718,7 +718,7 @@ string toString(BackupStatus status) {
     return status.to!string;
 }
 
-string[] toStrings(BackupStatus[] statuses) {
+string[] toString(BackupStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -739,6 +739,6 @@ unittest {
     assert(BackupStatus.completed.toString == "completed");
     assert(BackupStatus.failed.toString == "failed");
 
-    assert([BackupStatus.pending, BackupStatus.inProgress].toStrings == [    "pending", "inProgress"
+    assert([BackupStatus.pending, BackupStatus.inProgress].toString == [    "pending", "inProgress"
         ]);
 }

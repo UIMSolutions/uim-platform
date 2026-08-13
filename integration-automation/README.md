@@ -300,7 +300,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 | `name` | `string` | Step name |
 | `description` | `string` | Step description |
 | `type_` | `StepType` | Step type |
-| `status` | `StepStatus` | Current status (default `pending`) |
+| `status` | `StepStatus` | Current Status(default `pending`) |
 | `priority` | `StepPriority` | Priority level (default `medium`) |
 | `sequenceNumber` | `int` | Execution order number |
 | `assignedTo` | `string` | Assigned user ID |
@@ -331,7 +331,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 | `port` | `ushort` | Port number |
 | `client` | `string` | SAP client number |
 | `protocol` | `string` | Protocol (default `"https"`) |
-| `status` | `ConnectionStatus` | Connection status (default `inactive`) |
+| `status` | `ConnectionStatus` | Connection Status(default `inactive`) |
 | `environment` | `string` | e.g. "production", "staging", "dev" |
 | `region` | `string` | e.g. "eu10", "us20" |
 | `systemId` | `string` | SAP System ID (SID) |

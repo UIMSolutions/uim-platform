@@ -24,7 +24,7 @@ LogisticsDirection[] toLogisticsDirections(string[] values) {
 string toString(LogisticsDirection value) {
   return value.to!string;
 }
-string[] toStrings(LogisticsDirection[] values) {
+string[] toString(LogisticsDirection[] values) {
   return values.map!toString.array;
 }
 ///
@@ -39,7 +39,7 @@ unittest {
   assert(LogisticsDirection.inbound.toString == "inbound");
 
   assert(["outbound", "inbound"].toLogisticsDirection == [LogisticsDirection.outbound, LogisticsDirection.inbound]);
-  assert([LogisticsDirection.outbound, LogisticsDirection.inbound].toStrings == ["outbound", "inbound"]);
+  assert([LogisticsDirection.outbound, LogisticsDirection.inbound].toString == ["outbound", "inbound"]);
 }
 
 /// Lifecycle status of a freight order.
@@ -59,7 +59,7 @@ FreightOrderStatus[] toFreightOrderStatuses(string[] values) {
 string toString(FreightOrderStatus value) {
   return value.to!string; 
 }
-string[] toStrings(FreightOrderStatus[] values) {
+string[] toString(FreightOrderStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -80,7 +80,7 @@ unittest {
   assert(FreightOrderStatus.cancelled.toString == "cancelled");
 
   assert(["draft", "planned"].toFreightOrderStatuses == [FreightOrderStatus.draft, FreightOrderStatus.planned]);
-  assert([FreightOrderStatus.draft, FreightOrderStatus.planned].toStrings == ["draft", "planned"]);
+  assert([FreightOrderStatus.draft, FreightOrderStatus.planned].toString == ["draft", "planned"]);
 }
 
 /// Lifecycle status of a shipment.
@@ -100,7 +100,7 @@ ShipmentStatus[] toShipmentStatuses(string[] values) {
 string toString(ShipmentStatus value) {
   return value.to!string;
 }
-string[] toStrings(ShipmentStatus[] values) {
+string[] toString(ShipmentStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -121,7 +121,7 @@ unittest {
   assert(ShipmentStatus.cancelled.toString == "cancelled");
 
   assert(["created", "shipped"].toShipmentStatuses == [ShipmentStatus.created, ShipmentStatus.shipped]);
-  assert([ShipmentStatus.created, ShipmentStatus.shipped].toStrings == ["created", "shipped"]);
+  assert([ShipmentStatus.created, ShipmentStatus.shipped].toString == ["created", "shipped"]);
 }
 
 /// Lifecycle status of a delivery document.
@@ -142,7 +142,7 @@ DeliveryStatus[] toDeliveryStatuses(string[] values) {
 string toString(DeliveryStatus value) {
   return value.to!string;
 }
-string[] toStrings(DeliveryStatus[] values) {
+string[] toString(DeliveryStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -165,7 +165,7 @@ unittest {
   assert(DeliveryStatus.cancelled.toString == "cancelled");
 
   assert(["created", "shipped"].toDeliveryStatuses == [DeliveryStatus.created, DeliveryStatus.shipped]);
-  assert([DeliveryStatus.created, DeliveryStatus.shipped].toStrings == ["created", "shipped"]);
+  assert([DeliveryStatus.created, DeliveryStatus.shipped].toString == ["created", "shipped"]);
 }
 
 /// Type and status of a warehouse task.
@@ -185,7 +185,7 @@ WarehouseTaskType[] toWarehouseTaskTypes(string[] values) {
 string toString(WarehouseTaskType value) {
   return value.to!string;
 }
-string[] toStrings(WarehouseTaskType[] values) {
+string[] toString(WarehouseTaskType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -206,7 +206,7 @@ unittest {
   assert(WarehouseTaskType.counting.toString == "counting");
 
   assert(["picking", "packing"].toWarehouseTaskTypes == [WarehouseTaskType.picking, WarehouseTaskType.packing]);
-  assert([WarehouseTaskType.picking, WarehouseTaskType.packing].toStrings == ["picking", "packing"]);
+  assert([WarehouseTaskType.picking, WarehouseTaskType.packing].toString == ["picking", "packing"]);
 }
 
 enum WarehouseTaskStatus {
@@ -225,7 +225,7 @@ WarehouseTaskStatus[] toWarehouseTaskStatuses(string[] values) {
 string toString(WarehouseTaskStatus value) {
   return value.to!string;
 }
-string[] toStrings(WarehouseTaskStatus[] values) {
+string[] toString(WarehouseTaskStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -246,7 +246,7 @@ unittest {
   assert(WarehouseTaskStatus.cancelled.toString == "cancelled");
 
   assert(["created", "inProgress"].toWarehouseTaskStatus == [WarehouseTaskStatus.created, WarehouseTaskStatus.inProgress]);
-  assert([WarehouseTaskStatus.created, WarehouseTaskStatus.inProgress].toStrings == ["created", "inProgress"]);
+  assert([WarehouseTaskStatus.created, WarehouseTaskStatus.inProgress].toString == ["created", "inProgress"]);
 }
 
 /// Status of a warehouse order.
@@ -266,7 +266,7 @@ WarehouseOrderStatus[] toWarehouseOrderStatuses(string[] values) {
 string toString(WarehouseOrderStatus value) {
   return value.to!string;
 }
-string[] toStrings(WarehouseOrderStatus[] values) {
+string[] toString(WarehouseOrderStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -287,7 +287,7 @@ unittest {
   assert(WarehouseOrderStatus.cancelled.toString == "cancelled");
 
   assert(["created", "inProgress"].toWarehouseOrderStatuses == [WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress]);
-  assert([WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress].toStrings == ["created", "inProgress"]);
+  assert([WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress].toString == ["created", "inProgress"]);
 }
 
 /// Carrier / transport service provider status.
@@ -305,7 +305,7 @@ CarrierStatus[] toCarrierStatuses(string[] values) {
 string toString(CarrierStatus value) {
   return value.to!string;
 }
-string[] toStrings(CarrierStatus[] values) {
+string[] toString(CarrierStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -322,7 +322,7 @@ unittest {
   assert(CarrierStatus.suspended.toString == "suspended");
 
   assert(["active", "inactive"].toCarrierStatuses == [CarrierStatus.active, CarrierStatus.inactive]);
-  assert([CarrierStatus.active, CarrierStatus.inactive].toStrings == ["active", "inactive"]);
+  assert([CarrierStatus.active, CarrierStatus.inactive].toString == ["active", "inactive"]);
 }
 
 /// Transportation mode.
@@ -342,7 +342,7 @@ TransportMode[] toTransportModes(string[] values) {
 string toString(TransportMode value) {
   return value.to!string;
 }
-string[] toStrings(TransportMode[] values) {
+string[] toString(TransportMode[] values) {
   return values.map!toString.array;
 }
 ///
@@ -363,7 +363,7 @@ unittest {
   assert(TransportMode.multimodal.toString == "multimodal");
 
   assert(["road", "sea"].toTransportModes == [TransportMode.road, TransportMode.sea]);
-  assert([TransportMode.road, TransportMode.sea].toStrings == ["road", "sea"]);
+  assert([TransportMode.road, TransportMode.sea].toString == ["road", "sea"]);
 }
 
 /// Handling unit type (packaging level).
@@ -383,7 +383,7 @@ HandlingUnitType[] toHandlingUnitTypes(string[] values) {
 string toString(HandlingUnitType value) {
   return value.to!string;
 }
-string[] toStrings(HandlingUnitType[] values) {
+string[] toString(HandlingUnitType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -404,5 +404,5 @@ unittest {
   assert(HandlingUnitType.drum.toString == "drum");
 
   assert(["pallet", "crate"].toHandlingUnitTypes == [HandlingUnitType.pallet, HandlingUnitType.crate]);
-  assert([HandlingUnitType.pallet, HandlingUnitType.crate].toStrings == ["pallet", "crate"]);
+  assert([HandlingUnitType.pallet, HandlingUnitType.crate].toString == ["pallet", "crate"]);
 }

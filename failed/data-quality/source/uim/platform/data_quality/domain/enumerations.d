@@ -47,7 +47,7 @@ string toString(RuleType type) {
   return type.to!string;
 }
 
-string[] toStrings(RuleType[] types) {
+string[] toString(RuleType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -72,7 +72,7 @@ unittest {
 
   assert(["required", "format", "range"].toRuleTypes ==
       [RuleType.required, RuleType.format_, RuleType.range]);
-  assert(toStrings([RuleType.required, RuleType.format_, RuleType.range]) ==
+  assert(toString([RuleType.required, RuleType.format_, RuleType.range]) ==
       ["required", "format_", "range"]);
 }
 
@@ -96,7 +96,7 @@ string toString(RuleSeverity severity) {
   return severity.to!string;
 }
 
-string[] toStrings(RuleSeverity[] severities) {
+string[] toString(RuleSeverity[] severities) {
   return severities.map!toString.array;
 }
 ///
@@ -118,7 +118,7 @@ unittest {
 
   assert(["info", "warning", "error"].toRuleSeverities ==
       [RuleSeverity.info, RuleSeverity.warning, RuleSeverity.error]);
-  assert(toStrings([RuleSeverity.info, RuleSeverity.warning, RuleSeverity.error]) ==
+  assert(toString([RuleSeverity.info, RuleSeverity.warning, RuleSeverity.error]) ==
       ["info", "warning", "error"]);
 }
 
@@ -138,7 +138,7 @@ RuleStatus[] toRuleStatuses(string[] values) {
 string toString(RuleStatus status) {
   return status.to!string;
 }
-string[] toStrings(RuleStatus[] statuses) {
+string[] toString(RuleStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -158,7 +158,7 @@ unittest {
 
   assert(["draft", "active", "inactive"].toRuleStatuses ==
       [RuleStatus.draft, RuleStatus.active, RuleStatus.inactive]);
-  assert(toStrings([RuleStatus.draft, RuleStatus.active, RuleStatus.inactive]) ==
+  assert(toString([RuleStatus.draft, RuleStatus.active, RuleStatus.inactive]) ==
       ["draft", "active", "inactive"]);
 }
 

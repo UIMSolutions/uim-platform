@@ -27,7 +27,7 @@ GlobalAccountStatus[] toGlobalAccountStatuses(string[] values)
 string toString(GlobalAccountStatus value)
   => value.to!string;
 
-string[] toStrings(GlobalAccountStatus[] values)
+string[] toString(GlobalAccountStatus[] values)
   => values.map!toString.array;
 /// 
 unittest {
@@ -45,7 +45,7 @@ unittest {
 
   assert(["active", "suspended"].toGlobalAccountStatuses == [GlobalAccountStatus.active, GlobalAccountStatus.suspended
     ]);
-  assert([GlobalAccountStatus.active, GlobalAccountStatus.suspended].toStrings == ["active", "suspended"
+  assert([GlobalAccountStatus.active, GlobalAccountStatus.suspended].toString == ["active", "suspended"
     ]);
 }
 
@@ -73,7 +73,7 @@ string toString(LicenseType value) {
   return value.to!string;
 }
 
-string[] toStrings(LicenseType[] values) {
+string[] toString(LicenseType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -92,7 +92,7 @@ unittest {
 
   assert(["enterprise", "trial"].toLicenseTypes == [LicenseType.enterprise, LicenseType.trial
     ]);
-  assert([LicenseType.enterprise, LicenseType.trial].toStrings == ["enterprise", "trial"
+  assert([LicenseType.enterprise, LicenseType.trial].toString == ["enterprise", "trial"
     ]);
 }
 
@@ -118,7 +118,7 @@ string toString(DirectoryStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(DirectoryStatus[] values) {
+string[] toString(DirectoryStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -136,7 +136,7 @@ unittest {
 
   assert(["active", "inactive"].toDirectoryStatuses == [DirectoryStatus.active, DirectoryStatus.inactive
     ]);
-  assert([DirectoryStatus.active, DirectoryStatus.inactive].toStrings == ["active", "inactive"
+  assert([DirectoryStatus.active, DirectoryStatus.inactive].toString == ["active", "inactive"
     ]);
 }
 
@@ -175,7 +175,7 @@ string toString(DirectoryType value) {
   return value.to!string;
 }
 
-string[] toStrings(DirectoryType[] values) {
+string[] toString(DirectoryType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -195,7 +195,7 @@ unittest {
 
   assert(["default", "ldap"].toDirectoryTypes == [DirectoryType.default_, DirectoryType.ldap
     ]);
-  assert([DirectoryType.default_, DirectoryType.ldap].toStrings == ["default_", "ldap"
+  assert([DirectoryType.default_, DirectoryType.ldap].toString == ["default_", "ldap"
     ]);
 }
 
@@ -230,7 +230,7 @@ string toString(DirectoryFeature value) {
   return value.to!string;
 }
 
-string[] toStrings(DirectoryFeature[] values) {
+string[] toString(DirectoryFeature[] values) {
   return values.map!toString.array;
 }
 ///
@@ -248,7 +248,7 @@ unittest {
 
   assert(["default", "entitlements"].toDirectoryFeatures == [DirectoryFeature.default_, DirectoryFeature.entitlements
     ]);
-  assert([DirectoryFeature.default_, DirectoryFeature.entitlements].toStrings == ["default_", "entitlements"
+  assert([DirectoryFeature.default_, DirectoryFeature.entitlements].toString == ["default_", "entitlements"
     ]);
 }
 
@@ -282,7 +282,7 @@ string toString(SubaccountStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(SubaccountStatus[] values) {
+string[] toString(SubaccountStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -310,7 +310,7 @@ unittest {
 
   assert(["active", "suspended"].toSubaccountStatuses == [SubaccountStatus.active, SubaccountStatus.suspended
     ]);
-  assert([SubaccountStatus.active, SubaccountStatus.suspended].toStrings == ["active", "suspended"
+  assert([SubaccountStatus.active, SubaccountStatus.suspended].toString == ["active", "suspended"
     ]);
 }
 
@@ -342,7 +342,7 @@ string toString(SubaccountUsage value) {
   return value.to!string;
 }
 
-string[] toStrings(SubaccountUsage[] values) {
+string[] toString(SubaccountUsage[] values) {
   return values.map!toString.array;
 }
 ///
@@ -366,7 +366,7 @@ unittest {
 
   assert(["unset", "production"].toSubaccountUsages == [SubaccountUsage.unset, SubaccountUsage.production
     ]);
-  assert([SubaccountUsage.unset, SubaccountUsage.production].toStrings == ["unset", "production"
+  assert([SubaccountUsage.unset, SubaccountUsage.production].toString == ["unset", "production"
     ]);
 }
 
@@ -390,7 +390,7 @@ string toString(EntitlementStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(EntitlementStatus[] values) {
+string[] toString(EntitlementStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -410,7 +410,7 @@ unittest {
 
   assert(["active", "pending"].toEntitlementStatuses == [EntitlementStatus.active, EntitlementStatus.pending
     ]);
-  assert([EntitlementStatus.active, EntitlementStatus.pending].toStrings == ["active", "pending"
+  assert([EntitlementStatus.active, EntitlementStatus.pending].toString == ["active", "pending"
     ]);
 }
 
@@ -438,7 +438,7 @@ string toString(ServicePlanCategory value) {
   return value.to!string;
 }
 
-string[] toStrings(ServicePlanCategory[] values) {
+string[] toString(ServicePlanCategory[] values) {
   return values.map!toString.array;
 }
 ///
@@ -458,7 +458,7 @@ unittest {
 
   assert(["service", "application"].toServicePlanCategories == [ServicePlanCategory.service, ServicePlanCategory.application
     ]);
-  assert([ServicePlanCategory.service, ServicePlanCategory.application].toStrings == ["service", "application"
+  assert([ServicePlanCategory.service, ServicePlanCategory.application].toString == ["service", "application"
     ]);
 }
 
@@ -493,7 +493,7 @@ string toString(ServicePlanStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(ServicePlanStatus[] values) {
+string[] toString(ServicePlanStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -511,7 +511,7 @@ unittest {
 
   assert(["active", "deprecated"].toServicePlanStatuses == [ServicePlanStatus.active, ServicePlanStatus.deprecated_
     ]);
-  assert([ServicePlanStatus.active, ServicePlanStatus.deprecated_].toStrings == ["active", "deprecated_"
+  assert([ServicePlanStatus.active, ServicePlanStatus.deprecated_].toString == ["active", "deprecated_"
     ]);
 }
 
@@ -539,7 +539,7 @@ string toString(PricingModel value) {
   return value.to!string;
 }
 
-string[] toStrings(PricingModel[] values) {
+string[] toString(PricingModel[] values) {
   return values.map!toString.array;
 }
 ///
@@ -559,7 +559,7 @@ unittest {
 
   assert(["free", "subscription"].toPricingModels == [PricingModel.free, PricingModel.subscription
     ]);
-  assert([PricingModel.free, PricingModel.subscription].toStrings == ["free", "subscription"
+  assert([PricingModel.free, PricingModel.subscription].toString == ["free", "subscription"
     ]);
 }
 
@@ -591,7 +591,7 @@ string toString(QuotaStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(QuotaStatus[] values) {
+string[] toString(QuotaStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -609,7 +609,7 @@ unittest {
 
   assert(["active", "deprecated"].toQuotaStatuses == [QuotaStatus.active, QuotaStatus.deprecated_
     ]);
-  assert([QuotaStatus.active, QuotaStatus.deprecated_].toStrings == ["active", "deprecated_"
+  assert([QuotaStatus.active, QuotaStatus.deprecated_].toString == ["active", "deprecated_"
     ]);
 }
 
@@ -660,7 +660,7 @@ string toString(SubscriptionStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(SubscriptionStatus[] values) {
+string[] toString(SubscriptionStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -684,7 +684,7 @@ unittest {
 
   assert(["subscribed", "subscribing"].toSubscriptionStatuses == [SubscriptionStatus.subscribed, SubscriptionStatus.subscribing
     ]);
-  assert([SubscriptionStatus.subscribed, SubscriptionStatus.subscribing].toStrings == ["subscribed", "subscribing"
+  assert([SubscriptionStatus.subscribed, SubscriptionStatus.subscribing].toString == ["subscribed", "subscribing"
     ]);
 }
 
@@ -709,7 +709,7 @@ string toString(ServiceInstanceStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(ServiceInstanceStatus[] values) {
+string[] toString(ServiceInstanceStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -731,7 +731,7 @@ unittest {
 
   assert(["creating", "ready"].toServiceInstanceStatuses == [ServiceInstanceStatus.creating, ServiceInstanceStatus.ready
     ]);
-  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready].toStrings == ["creating", "ready"
+  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready].toString == ["creating", "ready"
     ]);
 }
 
@@ -759,7 +759,7 @@ string toString(EnvironmentType value) {
   return value.to!string;
 }
 
-string[] toStrings(EnvironmentType[] values) {
+string[] toString(EnvironmentType[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -779,7 +779,7 @@ unittest {
 
   assert(["cloudFoundry", "kyma"].toEnvironmentTypes == [EnvironmentType.cloudFoundry, EnvironmentType.kyma
     ]);
-  assert([EnvironmentType.cloudFoundry, EnvironmentType.kyma].toStrings == ["cloudFoundry", "kyma"
+  assert([EnvironmentType.cloudFoundry, EnvironmentType.kyma].toString == ["cloudFoundry", "kyma"
     ]);
 }
 
@@ -815,7 +815,7 @@ string toString(EnvironmentEventCategory value) {
   return value.to!string;
 }
 
-string[] toStrings(EnvironmentEventCategory[] values) {
+string[] toString(EnvironmentEventCategory[] values) {
   return values.map!toString.array;
 }
 ///
@@ -851,7 +851,7 @@ unittest {
   assert([
     EnvironmentEventCategory.subaccountLifecycle,
     EnvironmentEventCategory.entitlementChange
-  ].toStrings == [
+  ].toString == [
     "subaccountLifecycle", "entitlementChange"
   ]);
 }
@@ -880,7 +880,7 @@ string toString(EnvironmentEventSeverity value) {
   return value.to!string;
 }
 
-string[] toStrings(EnvironmentEventSeverity[] values) {
+string[] toString(EnvironmentEventSeverity[] values) {
   return values.map!toString.array;
 }
 ///
@@ -900,7 +900,7 @@ unittest {
 
   assert(["info", "warning"].toEnvironmentEventSeverities == [EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning
     ]);
-  assert([EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning].toStrings == ["info", "warning"
+  assert([EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning].toString == ["info", "warning"
     ]);
 }
 
@@ -930,7 +930,7 @@ string toString(LabeledResourceType value) {
   return value.to!string;
 }
 
-string[] toStrings(LabeledResourceType[] values) {
+string[] toString(LabeledResourceType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -952,6 +952,6 @@ unittest {
 
   assert(["subaccount", "globalAccount"].toLabeledResourceTypes == [LabeledResourceType.subaccount, LabeledResourceType.globalAccount
     ]);
-  assert([LabeledResourceType.subaccount, LabeledResourceType.globalAccount].toStrings == ["subaccount", "globalAccount"
+  assert([LabeledResourceType.subaccount, LabeledResourceType.globalAccount].toString == ["subaccount", "globalAccount"
     ]);
 }

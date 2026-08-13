@@ -36,7 +36,7 @@ ProgramType[] toProgramTypes(string[] values)
 string toString(ProgramType type)
     => type.to!string;
 
-string[] toStrings(ProgramType[] types)
+string[] toString(ProgramType[] types)
     => types.map!toString.array;
 
 ///
@@ -65,7 +65,7 @@ unittest {
 
     assert(["report", "modulePool"].toProgramTypes == [    ProgramType.report, ProgramType.modulePool
         ]);
-    assert([ProgramType.functionGroup, ProgramType.classPool].toStrings == [    "functionGroup", "classPool"
+    assert([ProgramType.functionGroup, ProgramType.classPool].toString == [    "functionGroup", "classPool"
         ]);
 }
 
@@ -101,7 +101,7 @@ TokenType[] toTokenTypes(string[] values)
 string toString(TokenType type)
     => type.to!string;
 
-string[] toStrings(TokenType[] types)
+string[] toString(TokenType[] types)
     => types.map!toString.array;
 ///
 unittest {
@@ -144,7 +144,7 @@ unittest {
 
     assert(["keyword", "identifier"].toTokenTypes == [    TokenType.keyword, TokenType.identifier
         ]);
-    assert([TokenType.literal_string, TokenType.operator].toStrings == [    "literal_string", "operator"
+    assert([TokenType.literal_string, TokenType.operator].toString == [    "literal_string", "operator"
         ]);
 }
 
@@ -186,7 +186,7 @@ string toString(OOVisibility visibility) {
     }
 }
 
-string[] toStrings(OOVisibility[] visibilities)
+string[] toString(OOVisibility[] visibilities)
     => visibilities.map!toString.array;
 ///
 unittest {
@@ -200,7 +200,7 @@ unittest {
 
     assert(["public", "private"].toOOVisibilities == [    OOVisibility.public_, OOVisibility.private_
         ]);
-    assert([OOVisibility.protected_, OOVisibility.public_].toStrings == [    "protected", "public"
+    assert([OOVisibility.protected_, OOVisibility.public_].toString == [    "protected", "public"
         ]);
 }
 
@@ -224,7 +224,7 @@ ProcessingMode[] toProcessingModes(string[] values)
 string toString(ProcessingMode mode)
     => mode.to!string;
 
-string[] toStrings(ProcessingMode[] modes)
+string[] toString(ProcessingMode[] modes)
     => modes.map!toString.array;
 ///
 unittest {
@@ -243,7 +243,7 @@ unittest {
 
     assert(["normal", "batch"].toProcessingModes == [    ProcessingMode.normal, ProcessingMode.batch
         ]);
-    assert([ProcessingMode.dialog, ProcessingMode.rfc].toStrings == [    "dialog", "rfc"
+    assert([ProcessingMode.dialog, ProcessingMode.rfc].toString == [    "dialog", "rfc"
         ]);
 }
 
@@ -267,7 +267,7 @@ DiagnosticSeverity[] toDiagnosticSeverities(string[] values)
 string toString(DiagnosticSeverity severity)
     => severity.to!string;
 
-string[] toStrings(DiagnosticSeverity[] severities)
+string[] toString(DiagnosticSeverity[] severities)
     => severities.map!toString.array;
 ///
 unittest {
@@ -286,7 +286,7 @@ unittest {
 
     assert(["error", "info"].toDiagnosticSeverities == [    DiagnosticSeverity.error, DiagnosticSeverity.info
         ]);
-    assert([DiagnosticSeverity.warning, DiagnosticSeverity.hint].toStrings == [    "warning", "hint"
+    assert([DiagnosticSeverity.warning, DiagnosticSeverity.hint].toString == [    "warning", "hint"
         ]);
 }
 
@@ -311,7 +311,7 @@ CompilationStatus[] toCompilationStatuses(string[] values)
 string toString(CompilationStatus status)
     => status.to!string;
 
-string[] toStrings(CompilationStatus[] statuses)
+string[] toString(CompilationStatus[] statuses)
     => statuses.map!toString.array;
 ///
 unittest {
@@ -331,6 +331,6 @@ unittest {
 
     assert(["pending", "succeeded"].toCompilationStatuses == [    CompilationStatus.pending, CompilationStatus.succeeded
         ]);
-    assert([CompilationStatus.running, CompilationStatus.failed].toStrings == [    "running", "failed"
+    assert([CompilationStatus.running, CompilationStatus.failed].toString == [    "running", "failed"
         ]);
 }

@@ -27,7 +27,7 @@ DatasetStatus[] toDatasetStatuses(string[] values) {
 string toString(DatasetStatus status) {
   return status.to!string;
 }
-string[] toStrings(DatasetStatus[] statuses) {
+string[] toString(DatasetStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -63,7 +63,7 @@ unittest {
 
   assert(["draft", "ready", "processing", "completed", "failed"].toDatasetStatuses ==
          [DatasetStatus.draft, DatasetStatus.ready, DatasetStatus.processing, DatasetStatus.completed, DatasetStatus.failed]);
-  assert(toStrings([DatasetStatus.draft, DatasetStatus.ready, DatasetStatus.processing, DatasetStatus.completed, DatasetStatus.failed]) ==
+  assert(toString([DatasetStatus.draft, DatasetStatus.ready, DatasetStatus.processing, DatasetStatus.completed, DatasetStatus.failed]) ==
          ["draft", "ready", "processing", "completed", "failed"]);
 }
 
@@ -87,7 +87,7 @@ string toString(DataType dataType) {
   return dataType.to!string;
 }
 
-string[] toStrings(DataType[] dataTypes) {
+string[] toString(DataType[] dataTypes) {
   return dataTypes.map!toString.array;
 }
 
@@ -124,7 +124,7 @@ unittest {
 
   assert(["product", "material", "customer", "supplier", "custom"].toDataTypes ==
          [DataType.product, DataType.material, DataType.customer, DataType.supplier, DataType.custom]);
-  assert(toStrings([DataType.product, DataType.material, DataType.customer, DataType.supplier, DataType.custom]) ==
+  assert(toString([DataType.product, DataType.material, DataType.customer, DataType.supplier, DataType.custom]) ==
          ["product", "material", "customer", "supplier", "custom"]);
 }
 
@@ -144,7 +144,7 @@ RecordStatus[] toRecordStatuses(string[] values)
 string toString(RecordStatus status)
   => status.to!string;
 
-string[] toStrings(RecordStatus[] statuses)
+string[] toString(RecordStatus[] statuses)
   => statuses.map!toString.array;
 
 /// 
@@ -172,7 +172,7 @@ unittest {
 
   assert(["pending", "validated", "rejected"].toRecordStatuses ==
          [RecordStatus.pending, RecordStatus.validated, RecordStatus.rejected]);
-  assert(toStrings([RecordStatus.pending, RecordStatus.validated, RecordStatus.rejected]) ==
+  assert(toString([RecordStatus.pending, RecordStatus.validated, RecordStatus.rejected]) ==
          ["pending", "validated", "rejected"]);
 }
 
@@ -192,7 +192,7 @@ ModelType[] toModelTypes(string[] values)
 string toString(ModelType value)
   => value.to!string;
 
-string[] toStrings(ModelType[] values)
+string[] toString(ModelType[] values)
   => values.map!toString.array;
 
 ///
@@ -212,7 +212,7 @@ unittest {
 
   assert(["classification", "recommendation"].toModelTypes == [ModelType.classification, ModelType.recommendation
     ]);
-  assert([ModelType.classification, ModelType.recommendation].toStrings == ["classification", "recommendation"
+  assert([ModelType.classification, ModelType.recommendation].toString == ["classification", "recommendation"
     ]);
 }
 
@@ -233,7 +233,7 @@ ModelConfigStatus[] toModelConfigStatuses(string[] values)
 string toString(ModelConfigStatus value)
   => value.to!string;
 
-string[] toStrings(ModelConfigStatus[] values)
+string[] toString(ModelConfigStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -257,7 +257,7 @@ unittest {
 
   assert(["draft", "ready", "training", "trained", "failed"].toModelConfigStatuses ==
          [ModelConfigStatus.draft, ModelConfigStatus.ready, ModelConfigStatus.training, ModelConfigStatus.trained, ModelConfigStatus.failed]);
-  assert(toStrings([ModelConfigStatus.draft, ModelConfigStatus.ready, ModelConfigStatus.training, ModelConfigStatus.trained, ModelConfigStatus.failed]) ==
+  assert(toString([ModelConfigStatus.draft, ModelConfigStatus.ready, ModelConfigStatus.training, ModelConfigStatus.trained, ModelConfigStatus.failed]) ==
          ["draft", "ready", "training", "trained", "failed"]);
 }
 
@@ -279,7 +279,7 @@ JobStatus[] toJobStatuses(string[] values)
 string toString(JobStatus value)
   => value.to!string;
 
-string[] toStrings(JobStatus[] values)
+string[] toString(JobStatus[] values)
   => values.map!toString.array;
 
 /// 
@@ -315,7 +315,7 @@ unittest {
 
   assert(["queued", "running", "completed", "failed", "cancelled"].toJobStatuses ==
          [JobStatus.queued, JobStatus.running, JobStatus.completed, JobStatus.failed, JobStatus.cancelled]);
-  assert(toStrings([JobStatus.queued, JobStatus.running, JobStatus.completed, JobStatus.failed, JobStatus.cancelled]) ==
+  assert(toString([JobStatus.queued, JobStatus.running, JobStatus.completed, JobStatus.failed, JobStatus.cancelled]) ==
          ["queued", "running", "completed", "failed", "cancelled"]);
 }
 
@@ -336,7 +336,7 @@ DeploymentStatus[] toDeploymentStatuses(string[] values)
 string toString(DeploymentStatus value)
   => value.to!string;
 
-string[] toStrings(DeploymentStatus[] values)
+string[] toString(DeploymentStatus[] values)
   => values.map!toString.array;
 
 /// 
@@ -368,7 +368,7 @@ unittest {
 
   assert(["deploying", "active", "inactive", "failed"].toDeploymentStatuses ==
          [DeploymentStatus.deploying, DeploymentStatus.active, DeploymentStatus.inactive, DeploymentStatus.failed]);
-  assert(toStrings([DeploymentStatus.deploying, DeploymentStatus.active, DeploymentStatus.inactive, DeploymentStatus.failed]) ==
+  assert(toString([DeploymentStatus.deploying, DeploymentStatus.active, DeploymentStatus.inactive, DeploymentStatus.failed]) ==
          ["deploying", "active", "inactive", "failed"]);
 }
 
@@ -389,7 +389,7 @@ InferenceStatus[] toInferenceStatuses(string[] values)
 string toString(InferenceStatus value)
   => value.to!string;
 
-string[] toStrings(InferenceStatus[] values)
+string[] toString(InferenceStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -421,6 +421,6 @@ unittest {
 
   assert(["pending", "processing", "completed", "failed"].toInferenceStatuses ==
          [InferenceStatus.pending, InferenceStatus.processing, InferenceStatus.completed, InferenceStatus.failed]);
-  assert(toStrings([InferenceStatus.pending, InferenceStatus.processing, InferenceStatus.completed, InferenceStatus.failed]) ==
+  assert(toString([InferenceStatus.pending, InferenceStatus.processing, InferenceStatus.completed, InferenceStatus.failed]) ==
          ["pending", "processing", "completed", "failed"]);
 }

@@ -25,7 +25,7 @@ TlsProtocolVersion[] toTlsProtocolVersions(string[] values) {
 string toString(TlsProtocolVersion version_) {
     return version_.to!string;
 }
-string[] toStrings(TlsProtocolVersion[] versions) {
+string[] toString(TlsProtocolVersion[] versions) {
     return versions.map!toString.array;
 }
 ///
@@ -45,7 +45,7 @@ unittest {
     assert(TlsProtocolVersion.tls1_2.toString == "tls1_2");
     assert(TlsProtocolVersion.tls1_3.toString == "tls1_3");
 
-    assert(toStrings([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]) == ["tls1_0", "tls1_3"]);
+    assert(toString([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]) == ["tls1_0", "tls1_3"]);
     assert(toTlsProtocolVersions(["tls1_0", "tls1_3"]) == [TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]);
 }
 
@@ -64,7 +64,7 @@ CipherSuiteStrength[] toCipherSuiteStrengths(string[] values) {
 string toString(CipherSuiteStrength strength) {
     return strength.to!string;
 }
-string[] toStrings(CipherSuiteStrength[] strengths) {
+string[] toString(CipherSuiteStrength[] strengths) {
     return strengths.map!toString.array;
 }
 /// 
@@ -82,6 +82,6 @@ unittest {
     assert(CipherSuiteStrength.medium.toString == "medium");
     assert(CipherSuiteStrength.weak.toString == "weak");
 
-    assert(toStrings([CipherSuiteStrength.strong, CipherSuiteStrength.weak]) == ["strong", "weak"]);
+    assert(toString([CipherSuiteStrength.strong, CipherSuiteStrength.weak]) == ["strong", "weak"]);
     assert(toCipherSuiteStrengths(["strong", "weak"]) == [CipherSuiteStrength.strong, CipherSuiteStrength.weak]);
 }

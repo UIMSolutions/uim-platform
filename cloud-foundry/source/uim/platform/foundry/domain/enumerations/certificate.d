@@ -37,7 +37,7 @@ CertificateStatus[] toCertificateStatuses(string[] statuses)
 string toString(CertificateStatus status)
     => status.to!string;
 
-string[] toStrings(CertificateStatus[] statuses)
+string[] toString(CertificateStatus[] statuses)
     => statuses.map!toString.array;
 
 ///
@@ -68,7 +68,7 @@ unittest {
     assert([CertificateStatus.draft, CertificateStatus.approved, CertificateStatus.rejected,
         CertificateStatus.pending, CertificateStatus.active, CertificateStatus.expired,
         CertificateStatus.revoked, CertificateStatus.deactivated
-    ].toStrings ==
+    ].toString ==
         ["draft", "approved", "rejected", "pending", "active", "expired", "revoked", "deactivated"]);
 }
 
@@ -98,7 +98,7 @@ CertificateType[] toCertificateTypes(string[] values)
 string toString(CertificateType type)
     => type.to!string;
 
-string[] toStrings(CertificateType[] types)
+string[] toString(CertificateType[] types)
     => types.map!toString.array;
 ///
 unittest {
@@ -126,7 +126,7 @@ unittest {
     assert([CertificateType.standard, CertificateType.wildcard, CertificateType.multiDomain,
         CertificateType.client, CertificateType.codeSigning, CertificateType.emailSigning,
         CertificateType.documentSigning
-    ].toStrings ==
+    ].toString ==
         ["standard", "wildcard", "multiDomain", "client", "codeSigning", "emailSigning", "documentSigning"]);   
 }
 

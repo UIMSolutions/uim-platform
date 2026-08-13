@@ -47,7 +47,7 @@ string toString(GrantType g) @safe {
   return cast(string)g;
 }
 
-string[] toStrings(GrantType[] g) @safe {
+string[] toString(GrantType[] g) @safe {
   return g.map!toString.array;
 }
 /// 
@@ -69,7 +69,7 @@ unittest {
   assert(GrantType.implicit_.toString == "implicit");
   assert(GrantType.clientCredentials.toString == "client_credentials");
 
-  assert([GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials].toStrings == ["authorization_code", "password", "refresh_token", "implicit", "client_credentials"]);
+  assert([GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials].toString == ["authorization_code", "password", "refresh_token", "implicit", "client_credentials"]);
 }
 // ---------------------------------------------------------------------------
 // OAuth 2.0 client types
@@ -89,7 +89,7 @@ ClientType[] toClientTypes(string[] s) @safe {
 string toString(ClientType c) @safe {
   return (c == ClientType.confidential) ? "confidential" : "public";
 }
-string[] toStrings(ClientType[] c) @safe {
+string[] toString(ClientType[] c) @safe {
   return c.map!toString.array;
 }
 ///
@@ -105,7 +105,7 @@ unittest {
   assert(ClientType.confidential.toString == "confidential");
   assert(ClientType.public_.toString == "public");
 
-  assert([ClientType.confidential, ClientType.public_].toStrings == ["confidential", "public"]);
+  assert([ClientType.confidential, ClientType.public_].toString == ["confidential", "public"]);
 }
 // ---------------------------------------------------------------------------
 // Identity provider protocol types
@@ -123,7 +123,7 @@ IdpType[] toIdpTypes(string[] s) @safe {
 string toString(IdpType type) @safe {
   return type.to!string;
 }
-string[] toStrings(IdpType[] i) @safe {
+string[] toString(IdpType[] i) @safe {
   return i.map!toString.array;
 }
 ///
@@ -139,5 +139,5 @@ unittest {
   assert(IdpType.saml2.toString == "saml2");
   assert(IdpType.oidc.toString == "oidc");
 
-  assert([IdpType.saml2, IdpType.oidc].toStrings == ["saml2", "oidc"]);
+  assert([IdpType.saml2, IdpType.oidc].toString == ["saml2", "oidc"]);
 }

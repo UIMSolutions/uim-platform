@@ -30,7 +30,7 @@ DataSourceType[] toDataSourceTypes(string[] types) {
 string toString(DataSourceType type) {
   return type.to!string;
 }
-string[] toStrings(DataSourceType[] types) {
+string[] toString(DataSourceType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -59,7 +59,7 @@ unittest {
 
   assert(["database", "csv", "excel", "odata", "restApi", "hana", "s3", "googlesheets", "liveconnection"].toDataSourceTypes ==
          [DataSourceType.database, DataSourceType.csv, DataSourceType.excel, DataSourceType.odata, DataSourceType.restApi, DataSourceType.hana, DataSourceType.s3, DataSourceType.googlesheets, DataSourceType.liveconnection]);
-  assert(toStrings([DataSourceType.database, DataSourceType.csv, DataSourceType.excel, DataSourceType.odata, DataSourceType.restApi, DataSourceType.hana, DataSourceType.s3, DataSourceType.googlesheets, DataSourceType.liveconnection]) ==
+  assert(toString([DataSourceType.database, DataSourceType.csv, DataSourceType.excel, DataSourceType.odata, DataSourceType.restApi, DataSourceType.hana, DataSourceType.s3, DataSourceType.googlesheets, DataSourceType.liveconnection]) ==
          ["database", "csv", "excel", "odata", "restApi", "hana", "s3", "googlesheets", "liveconnection"]);
 }
 
@@ -79,7 +79,7 @@ DataSourceStatus[] toDataSourceStatuses(string[] statuses) {
 string toString(DataSourceStatus status) {
   return status.to!string;
 }
-string[] toStrings(DataSourceStatus[] statuses) {
+string[] toString(DataSourceStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -100,6 +100,6 @@ unittest {
 
   assert(["connected", "disconnected", "error", "importing"].toDataSourceStatuses ==
          [DataSourceStatus.connected, DataSourceStatus.disconnected, DataSourceStatus.error, DataSourceStatus.importing]);
-  assert(toStrings([DataSourceStatus.connected, DataSourceStatus.disconnected, DataSourceStatus.error, DataSourceStatus.importing]) ==
+  assert(toString([DataSourceStatus.connected, DataSourceStatus.disconnected, DataSourceStatus.error, DataSourceStatus.importing]) ==
          ["connected", "disconnected", "error", "importing"]);
 }

@@ -130,7 +130,7 @@ Tenant
         ├── id, title, language, programType
         ├── sourceCode (full ABAP text)
         └── CompilationJob (0..*)
-              ├── status (pending|running|succeeded|failed|aborted)
+              ├── Status(pending|running|succeeded|failed|aborted)
               ├── Diagnostic (0..*)
               │     └── severity, message, line, column, code
               └── generatedCode (IR lines, 0..*)

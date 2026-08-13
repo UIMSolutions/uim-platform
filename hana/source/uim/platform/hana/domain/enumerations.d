@@ -29,7 +29,7 @@ InstanceType[] toInstanceType(string[] values) {
 string toString(InstanceType value) {
   return value.to!string;
 }
-string[] toStrings(InstanceType[] values) {
+string[] toString(InstanceType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -68,7 +68,7 @@ InstanceStatus[] toInstanceStatuses(string[] values) {
 string toString(InstanceStatus value) {
   return value.to!string; 
 }
-string[] toStrings(InstanceStatus[] values) {
+string[] toString(InstanceStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -121,7 +121,7 @@ InstanceSize[] toInstanceSize(string[] values) {
 string toString(InstanceSize value) {
   return value.to!string;
 }
-string[] toStrings(InstanceSize[] values) {
+string[] toString(InstanceSize[] values) {
   return values.map!toString.array;
 }
 ///
@@ -166,7 +166,7 @@ StorageTier[] toStorageTier(string[] values) {
 string toString(StorageTier value) {
   return value.to!string;
 }
-string[] toStrings(StorageTier[] values) {
+string[] toString(StorageTier[] values) {
   return values.map!toString.array;
 }
 ///
@@ -205,7 +205,7 @@ DataLakeStatus[] toDataLakeStatuses(string[] values) {
 string toString(DataLakeStatus value) {
   return value.to!string;
 }
-string[] toStrings(DataLakeStatus[] values) {
+string[] toString(DataLakeStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -248,7 +248,7 @@ FileFormat[] toFileFormat(string[] values) {
 string toString(FileFormat value) {
   return value.to!string;
 }
-string[] toStrings(FileFormat[] values) {
+string[] toString(FileFormat[] values) {
   return values.map!toString.array;
 } 
 ///
@@ -291,7 +291,7 @@ SchemaType[] toSchemaType(string[] values) {
 string toString(SchemaType value) {
   return value.to!string;
 }
-string[] toStrings(SchemaType[] values) {
+string[] toString(SchemaType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -335,7 +335,7 @@ AuthType[] toAuthType(string[] values) {
 string toString(AuthType value) {
   return value.to!string;
 }
-string[] toStrings(AuthType[] values) {
+string[] toString(AuthType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -379,7 +379,7 @@ UserStatus[] toUserStatuses(string[] values) {
 string toString(UserStatus value) {
   return value.to!string;
 }
-string[] toStrings(UserStatus[] values) {
+string[] toString(UserStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -421,7 +421,7 @@ PrivilegeType[] toPrivilegeType(string[] values) {
 string toString(PrivilegeType value) {
   return value.to!string;
 }
-string[] toStrings(PrivilegeType[] values) {
+string[] toString(PrivilegeType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -466,7 +466,7 @@ BackupType[] toBackupType(string[] values) {
 string toString(BackupType value) {
   return value.to!string;
 }
-string[] toStrings(BackupType[] values) {
+string[] toString(BackupType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -509,7 +509,7 @@ BackupStatus[] toBackupStatuses(string[] values) {
 string toString(BackupStatus value) {
   return value.to!string;
 }
-string[] toStrings(BackupStatus[] values) {
+string[] toString(BackupStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -551,7 +551,7 @@ AlertStatus[] toAlertStatuses(string[] values) {
 string toString(AlertStatus value) {
   return value.to!string;
 }
-string[] toStrings(AlertStatus[] values) {
+string[] toString(AlertStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -596,7 +596,7 @@ AlertCategory[] toAlertCategories(string[] values)
 string toString(AlertCategory value)
   => value.to!string;
 
-string[] toStrings(AlertCategory[] values)
+string[] toString(AlertCategory[] values)
   => values.map!toString.array;
 
 ///
@@ -647,7 +647,7 @@ HDIContainerStatus[] toHDIContainerStatuses(string[] values) {
 string toString(HDIContainerStatus value) {
   return value.to!string;
 }
-string[] toStrings(HDIContainerStatus[] values) {
+string[] toString(HDIContainerStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -690,7 +690,7 @@ ReplicationMode[] toReplicationMode(string[] values) {
 string toString(ReplicationMode value) {
   return value.to!string;
 }
-string[] toStrings(ReplicationMode[] values) {
+string[] toString(ReplicationMode[] values) {
   return values.map!toString.array;
 }
 ///
@@ -778,7 +778,7 @@ ConfigScope[] toConfigScope(string[] values) {
 string toString(ConfigScope value) {
   return value.to!string;
 }
-string[] toStrings(ConfigScope[] values) {
+string[] toString(ConfigScope[] values) {
   return values.map!toString.array;
 }
 ///
@@ -819,7 +819,7 @@ ConfigDataType[] toConfigDataType(string[] values) {
 string toString(ConfigDataType value) {
   return value.to!string;
 }
-string[] toStrings(ConfigDataType[] values) {
+string[] toString(ConfigDataType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -865,7 +865,7 @@ ConnectionType[] toConnectionTypes(string[] values) {
 string toString(ConnectionType type) {
   return type.to!string;
 }
-string[] toStrings(ConnectionType[] types) {
+string[] toString(ConnectionType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -892,7 +892,7 @@ unittest {
   assert(ConnectionType.dotnet.toString == "dotnet");
 
   assert(["jdbc", "odbc", "java"].toConnectionTypes == [ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java]);
-  assert([ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java].toStrings == ["jdbc", "odbc", "java"]);
+  assert([ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java].toString == ["jdbc", "odbc", "java"]);
 }
 
 // Connection status

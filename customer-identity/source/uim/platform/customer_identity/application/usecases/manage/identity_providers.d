@@ -55,7 +55,7 @@ class ManageIdentityProvidersUseCase {
     }
 
     CommandResult updateIdentityProvider(IdentityProviderDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.identityProviderId);
+        auto existing = repo.findById(dto.tenantId, dto.providerId);
         if (existing.isNull)
             return CommandResult(false, "", "Identity provider not found");
 

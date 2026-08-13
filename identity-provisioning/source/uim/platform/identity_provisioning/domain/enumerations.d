@@ -33,7 +33,7 @@ SystemType[] toSystemTypes(string[] values)
 string toString(SystemType value)
   => value.to!string;
 
-string[] toStrings(SystemType[] values)
+string[] toString(SystemType[] values)
   => values.map!toString.array;
 
 ///
@@ -61,7 +61,7 @@ unittest {
 
   assert(["ias", "scim"].toSystemTypes == [SystemType.ias, SystemType.scim
     ]);
-  assert([SystemType.ias, SystemType.scim].toStrings == ["ias", "scim"]);
+  assert([SystemType.ias, SystemType.scim].toString == ["ias", "scim"]);
 }
 
 /// Operational status of a system connection.
@@ -82,7 +82,7 @@ SystemStatus[] toSystemStatuses(string[] values)
 string toString(SystemStatus value)
   => value.to!string;
 
-string[] toStrings(SystemStatus[] values)
+string[] toString(SystemStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -104,7 +104,7 @@ unittest {
 
   assert(["active", "error"].toSystemStatuses == [SystemStatus.active, SystemStatus.error
     ]);
-  assert([SystemStatus.active, SystemStatus.error].toStrings == ["active", "error"
+  assert([SystemStatus.active, SystemStatus.error].toString == ["active", "error"
     ]);
 }
 
@@ -125,7 +125,7 @@ SystemRole[] toSystemRoles(string[] values)
 string toString(SystemRole value)
   => value.to!string;
 
-string[] toStrings(SystemRole[] values)
+string[] toString(SystemRole[] values)
   => values.map!toString.array;
 
 ///
@@ -145,7 +145,7 @@ unittest {
 
   assert(["source", "proxy"].toSystemRoles == [SystemRole.source, SystemRole.proxy
     ]);
-  assert([SystemRole.source, SystemRole.proxy].toStrings == ["source", "proxy"]);
+  assert([SystemRole.source, SystemRole.proxy].toString == ["source", "proxy"]);
 }
 
 /// Type of provisioning job.
@@ -165,7 +165,7 @@ JobType[] toJobTypes(string[] values)
 string toString(JobType value)
   => value.to!string;
 
-string[] toStrings(JobType[] values)
+string[] toString(JobType[] values)
   => values.map!toString.array;
 
 ///
@@ -185,7 +185,7 @@ unittest {
 
   assert(["full", "simulate"].toJobTypes == [JobType.full, JobType.simulate
     ]);
-  assert([JobType.full, JobType.simulate].toStrings == ["full", "simulate"]);
+  assert([JobType.full, JobType.simulate].toString == ["full", "simulate"]);
 }
 
 /// Status of a provisioning job.
@@ -207,7 +207,7 @@ JobStatus[] toJobStatuses(string[] values)
 string toString(JobStatus value)
   => value.to!string;
 
-string[] toStrings(JobStatus[] values)
+string[] toString(JobStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -231,7 +231,7 @@ unittest {
 
   assert(["scheduled", "failed"].toJobStatuses == [JobStatus.scheduled, JobStatus.failed
     ]);
-  assert([JobStatus.scheduled, JobStatus.failed].toStrings == ["scheduled", "failed"
+  assert([JobStatus.scheduled, JobStatus.failed].toString == ["scheduled", "failed"
     ]);
 }
 
@@ -265,7 +265,7 @@ OperationType[] toOperationTypes(string[] values)
 string toString(OperationType value)
   => value.to!string;
 
-string[] toStrings(OperationType[] values)
+string[] toString(OperationType[] values)
   => values.map!toString.array;
 
 ///
@@ -288,7 +288,7 @@ unittest {
 
   assert(["create", "skip"].toOperationTypes == [OperationType.create, OperationType.skip
     ]);
-  assert([OperationType.create, OperationType.skip].toStrings == ["create", "skip"
+  assert([OperationType.create, OperationType.skip].toString == ["create", "skip"
     ]);
 }
 
@@ -309,7 +309,7 @@ LogStatus[] toLogStatuses(string[] values)
 string toString(LogStatus value)
   => value.to!string;
 
-string[] toStrings(LogStatus[] values)
+string[] toString(LogStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -329,7 +329,7 @@ unittest {
 
   assert(["success", "skipped"].toLogStatuses == [LogStatus.success, LogStatus.skipped
     ]);
-  assert([LogStatus.success, LogStatus.skipped].toStrings == ["success", "skipped"
+  assert([LogStatus.success, LogStatus.skipped].toString == ["success", "skipped"
     ]);
 }
 
@@ -349,7 +349,7 @@ EntityType[] toEntityTypes(string[] values)
 string toString(EntityType value)
   => value.to!string;
 
-string[] toStrings(EntityType[] values)
+string[] toString(EntityType[] values)
   => values.map!toString.array;
 
 ///
@@ -367,7 +367,7 @@ unittest {
 
   assert(["user", "group"].toEntityTypes == [EntityType.user, EntityType.group
     ]);
-  assert([EntityType.user, EntityType.group].toStrings == ["user", "group"]);
+  assert([EntityType.user, EntityType.group].toString == ["user", "group"]);
 }
 
 /// Status of a provisioned entity in a target system.
@@ -388,7 +388,7 @@ EntityStatus[] toEntityStatuses(string[] values)
 string toString(EntityStatus value)
   => value.to!string;
 
-string[] toStrings(EntityStatus[] values)
+string[] toString(EntityStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -410,6 +410,6 @@ unittest {
 
   assert(["active", "error"].toEntityStatuses == [EntityStatus.active, EntityStatus.error
     ]);
-  assert([EntityStatus.active, EntityStatus.error].toStrings == ["active", "error"
+  assert([EntityStatus.active, EntityStatus.error].toString == ["active", "error"
     ]);
 }

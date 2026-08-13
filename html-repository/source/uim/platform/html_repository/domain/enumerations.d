@@ -36,7 +36,7 @@ string toString(AppVisibility value) {
   return cast(string)value;
 }
 
-string[] toStrings(AppVisibility[] values) {
+string[] toString(AppVisibility[] values) {
   return values.map!toString.array;
 }
 ///
@@ -52,7 +52,7 @@ unittest {
   assert(toString(AppVisibility.private_) == "private");
   assert(toString(AppVisibility.public_) == "public");
 
-  assert(toStrings([AppVisibility.private_, AppVisibility.public_]) == ["private", "public"
+  assert(toString([AppVisibility.private_, AppVisibility.public_]) == ["private", "public"
     ]);
   assert(toAppVisibilities(["private", "public"]) == [AppVisibility.private_, AppVisibility.public_
     ]);
@@ -92,7 +92,7 @@ unittest {
   assert(toString(AppStatus.inactive) == "inactive");
   assert(toString(AppStatus.deleted_) == "deleted");
 
-  assert(toStrings([AppStatus.active, AppStatus.inactive, AppStatus.deleted_]) == ["active", "inactive", "deleted"
+  assert(toString([AppStatus.active, AppStatus.inactive, AppStatus.deleted_]) == ["active", "inactive", "deleted"
     ]);
   assert(toAppStatuses(["active", "inactive", "deleted"]) == [AppStatus.active, AppStatus.inactive, AppStatus.deleted_
     ]);
@@ -117,7 +117,7 @@ string toString(VersionStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(VersionStatus[] values) {
+string[] toString(VersionStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -132,7 +132,7 @@ unittest {
   assert(toString(VersionStatus.superseded) == "superseded");
   assert(toString(VersionStatus.archived) == "archived");
 
-  assert(toStrings([VersionStatus.active, VersionStatus.superseded, VersionStatus.archived
+  assert(toString([VersionStatus.active, VersionStatus.superseded, VersionStatus.archived
     ]) == ["active", "superseded", "archived"]);
   assert(toVersionStatuses(["active", "superseded", "archived"]) == [VersionStatus.active, VersionStatus.superseded, VersionStatus.archived
     ]);
@@ -159,7 +159,7 @@ string toString(DeploymentStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(DeploymentStatus[] values) {
+string[] toString(DeploymentStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -181,7 +181,7 @@ unittest {
   assert(toString(DeploymentStatus.failed) == "failed");
   assert(toString(DeploymentStatus.rolledBack) == "rolledBack");
 
-  assert(toStrings([DeploymentStatus.pending, DeploymentStatus.inProgress,
+  assert(toString([DeploymentStatus.pending, DeploymentStatus.inProgress,
       DeploymentStatus.completed, DeploymentStatus.failed,
       DeploymentStatus.rolledBack
     ]) == ["pending", "inProgress", "completed", "failed", "rolledBack"]);
@@ -212,7 +212,7 @@ string toString(DeploymentOperation value) {
   return value.to!string;
 }
 
-string[] toStrings(DeploymentOperation[] values) {
+string[] toString(DeploymentOperation[] values) {
   return values.map!toString.array;
 }
 ///
@@ -230,7 +230,7 @@ unittest {
   assert(toString(DeploymentOperation.undeploy) == "undeploy");
   assert(toString(DeploymentOperation.redeploy) == "redeploy");
 
-  assert(toStrings([DeploymentOperation.deploy, DeploymentOperation.undeploy,
+  assert(toString([DeploymentOperation.deploy, DeploymentOperation.undeploy,
       DeploymentOperation.redeploy
     ]) == ["deploy", "undeploy", "redeploy"]);
   assert(toDeploymentOperations(["deploy", "undeploy", "redeploy"]) == [DeploymentOperation.deploy, DeploymentOperation.undeploy,
@@ -262,7 +262,7 @@ string toString(ServicePlan value) {
   return cast(string)value;
 }
 
-string[] toStrings(ServicePlan[] values) {
+string[] toString(ServicePlan[] values) {
   return values.map!toString.array;
 }
 ///
@@ -278,7 +278,7 @@ unittest {
   assert(toString(ServicePlan.appHost) == "app-host");
   assert(toString(ServicePlan.appRuntime) == "app-runtime");
 
-  assert(toStrings([ServicePlan.appHost, ServicePlan.appRuntime]) == ["app-host", "app-runtime"
+  assert(toString([ServicePlan.appHost, ServicePlan.appRuntime]) == ["app-host", "app-runtime"
     ]);
   assert(toServicePlans(["app-host", "app-runtime"]) == [ServicePlan.appHost, ServicePlan.appRuntime
     ]);
@@ -312,7 +312,7 @@ string toString(InstanceStatus value) {
   return cast(string)value;
 }
 
-string[] toStrings(InstanceStatus[] values) {
+string[] toString(InstanceStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -330,7 +330,7 @@ unittest {
   assert(toString(InstanceStatus.suspended) == "suspended");
   assert(toString(InstanceStatus.deleted_) == "deleted");
 
-  assert(toStrings([InstanceStatus.active, InstanceStatus.suspended, InstanceStatus.deleted_
+  assert(toString([InstanceStatus.active, InstanceStatus.suspended, InstanceStatus.deleted_
     ]) == ["active", "suspended", "deleted"]);
   assert(toInstanceStatuses(["active", "suspended", "deleted"]) == [InstanceStatus.active, InstanceStatus.suspended, InstanceStatus.deleted_
     ]);
@@ -355,7 +355,7 @@ string toString(CacheStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(CacheStatus[] values) {
+string[] toString(CacheStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -373,7 +373,7 @@ unittest {
   assert(toString(CacheStatus.stale) == "stale");
   assert(toString(CacheStatus.expired) == "expired");
 
-  assert(toStrings([CacheStatus.valid, CacheStatus.stale, CacheStatus.expired]) == ["valid", "stale", "expired"
+  assert(toString([CacheStatus.valid, CacheStatus.stale, CacheStatus.expired]) == ["valid", "stale", "expired"
     ]);
   assert(toCacheStatuses(["valid", "stale", "expired"]) == [CacheStatus.valid, CacheStatus.stale, CacheStatus.expired
     ]);
@@ -403,7 +403,7 @@ string toString(FileCategory value) {
   return value.to!string;
 }
 
-string[] toStrings(FileCategory[] values) {
+string[] toString(FileCategory[] values) {
   return values.map!toString.array;
 }
 ///
@@ -431,7 +431,7 @@ unittest {
   assert(toString(FileCategory.xml) == "xml");
   assert(toString(FileCategory.other) == "other");
 
-  assert(toStrings([FileCategory.html, FileCategory.css, FileCategory.javascript,
+  assert(toString([FileCategory.html, FileCategory.css, FileCategory.javascript,
       FileCategory.image, FileCategory.font, FileCategory.json, FileCategory.xml,
       FileCategory.other
     ]) == ["html", "css", "javascript", "image", "font", "json", "xml", "other"]);
@@ -461,7 +461,7 @@ string toString(RouteStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(RouteStatus[] values) {
+string[] toString(RouteStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -477,7 +477,7 @@ unittest {
   assert(toString(RouteStatus.active) == "active");
   assert(toString(RouteStatus.inactive) == "inactive");
 
-  assert(toStrings([RouteStatus.active, RouteStatus.inactive]) == ["active", "inactive"
+  assert(toString([RouteStatus.active, RouteStatus.inactive]) == ["active", "inactive"
     ]);
   assert(toRouteStatuses(["active", "inactive"]) == [RouteStatus.active, RouteStatus.inactive
     ]);

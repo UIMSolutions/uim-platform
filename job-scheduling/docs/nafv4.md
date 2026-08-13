@@ -125,7 +125,7 @@ SVC-ROOT: Job Scheduling Platform Service
 ├── SVC-JS-03: Run Log Service
 │   ├── Retrieve Run Logs (by job)
 │   ├── Retrieve Run Logs (by schedule)
-│   └── Update Run Log Status (async callback)
+│   └── Update Run Log Status(async callback)
 ├── SVC-JS-04: Configuration Service
 │   ├── Retrieve Global Parameters
 │   └── Update Global Parameters

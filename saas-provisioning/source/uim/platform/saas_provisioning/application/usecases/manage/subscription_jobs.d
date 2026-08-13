@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-/// Use case: query subscription job status (poll endpoint for async operations).
+/// Use case: query subscription job Status(poll endpoint for async operations).
 class ManageSubscriptionJobsUseCase {
     private ISubscriptionJobRepository repo;
 

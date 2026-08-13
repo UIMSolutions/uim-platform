@@ -31,7 +31,7 @@ string toString(DataSubjectType t) {
     return t.to!string;
 }
 
-string[] toStrings(DataSubjectType[] arr) {
+string[] toString(DataSubjectType[] arr) {
     return arr.map!toString.array;
 }
 
@@ -54,7 +54,7 @@ unittest {
     assert(DataSubjectType.contractor.toString == "contractor");
     assert(DataSubjectType.minor.toString == "minor");
 
-    assert([DataSubjectType.privatePerson, DataSubjectType.employee].toStrings == ["privatePerson", "employee"]);
+    assert([DataSubjectType.privatePerson, DataSubjectType.employee].toString == ["privatePerson", "employee"]);
     assert(["privatePerson", "employee"].toDataSubjectTypes == [DataSubjectType.privatePerson, DataSubjectType.employee]);
 }
 
@@ -79,7 +79,7 @@ string toString(DataSubjectStatus s) {
     return s.to!string;
 }
 
-string[] toStrings(DataSubjectStatus[] arr) {
+string[] toString(DataSubjectStatus[] arr) {
     return arr.map!toString.array;
 }
 
@@ -102,7 +102,7 @@ unittest {
     assert(DataSubjectStatus.erased.toString == "erased");
     assert(DataSubjectStatus.anonymized.toString == "anonymized");
 
-    assert([DataSubjectStatus.active, DataSubjectStatus.blocked].toStrings == ["active", "blocked"]);
+    assert([DataSubjectStatus.active, DataSubjectStatus.blocked].toString == ["active", "blocked"]);
     assert(["active", "blocked"].toDataSubjectStatuses == [DataSubjectStatus.active, DataSubjectStatus.blocked]);
 }
 
@@ -129,7 +129,7 @@ string toString(RequestType t) {
     return t.to!string;
 }
 
-string[] toStrings(RequestType[] arr) {
+string[] toString(RequestType[] arr) {
     return arr.map!toString.array;
 }
 
@@ -156,7 +156,7 @@ unittest {
     assert(RequestType.objection.toString == "objection");
     assert(RequestType.consentWithdrawal.toString == "consentWithdrawal");
 
-    assert([RequestType.information, RequestType.erasure].toStrings == ["information", "erasure"]);
+    assert([RequestType.information, RequestType.erasure].toString == ["information", "erasure"]);
     assert(["information", "erasure"].toRequestTypes == [RequestType.information, RequestType.erasure]);
 }
 
@@ -183,7 +183,7 @@ string toString(RequestStatus s) {
     return s.to!string;
 }
 
-string[] toStrings(RequestStatus[] arr) {
+string[] toString(RequestStatus[] arr) {
     return arr.map!toString.array;
 }
 
@@ -210,7 +210,7 @@ unittest {
     assert(RequestStatus.rejected.toString == "rejected");
     assert(RequestStatus.cancelled.toString == "cancelled");
 
-    assert([RequestStatus.submitted, RequestStatus.processing].toStrings == ["submitted", "processing"]);
+    assert([RequestStatus.submitted, RequestStatus.processing].toString == ["submitted", "processing"]);
     assert(["submitted", "processing"].toRequestStatuses == [RequestStatus.submitted, RequestStatus.processing]);
 }
 
@@ -234,7 +234,7 @@ string toString(RequestPriority p) {
     return p.to!string;
 }
 
-string[] toStrings(RequestPriority[] arr) {
+string[] toString(RequestPriority[] arr) {
     return arr.map!toString.array;
 }
 
@@ -255,7 +255,7 @@ unittest {
     assert(RequestPriority.high.toString == "high");
     assert(RequestPriority.urgent.toString == "urgent");
 
-    assert([RequestPriority.low, RequestPriority.high].toStrings == ["low", "high"]);
+    assert([RequestPriority.low, RequestPriority.high].toString == ["low", "high"]);
     assert(["low", "high"].toRequestPriorities == [RequestPriority.low, RequestPriority.high]);
 }
 
@@ -278,7 +278,7 @@ string toString(DataSensitivity s) {
     return s.to!string;
 }
 
-string[] toStrings(DataSensitivity[] sensitivities) {
+string[] toString(DataSensitivity[] sensitivities) {
     return sensitivities.map!toString.array;
 }
 
@@ -297,7 +297,7 @@ unittest {
     assert(DataSensitivity.sensitive.toString == "sensitive");
     assert(DataSensitivity.highlyConfidential.toString == "highlyConfidential");
 
-    assert([DataSensitivity.standard, DataSensitivity.sensitive].toStrings == ["standard", "sensitive"]);
+    assert([DataSensitivity.standard, DataSensitivity.sensitive].toString == ["standard", "sensitive"]);
     assert(["standard", "sensitive"].toDataSensitivities == [DataSensitivity.standard, DataSensitivity.sensitive]);
 }
 
@@ -329,7 +329,7 @@ string toString(DataCategoryType c) {
     return c.to!string;
 }
 
-string[] toStrings(DataCategoryType[] categories) {
+string[] toString(DataCategoryType[] categories) {
     return categories.map!toString.array;
 }
 
@@ -366,7 +366,7 @@ unittest {
     assert(DataCategoryType.authentication.toString == "authentication");
     assert(DataCategoryType.other.toString == "other");
 
-    assert([DataCategoryType.identification, DataCategoryType.contact].toStrings == ["identification", "contact"]);
+    assert([DataCategoryType.identification, DataCategoryType.contact].toString == ["identification", "contact"]);
     assert(["identification", "contact"].toDataCategoryTypes == [DataCategoryType.identification, DataCategoryType.contact]);
 }
 
@@ -390,7 +390,7 @@ string toString(ApplicationStatus s) {
     return s.to!string;
 }
 
-string[] toStrings(ApplicationStatus[] statuses) {
+string[] toString(ApplicationStatus[] statuses) {
     return statuses.map!toString.array;
 }
 
@@ -411,7 +411,7 @@ unittest {
     assert(ApplicationStatus.suspended.toString == "suspended");
     assert(ApplicationStatus.deregistered.toString == "deregistered");
 
-    assert([ApplicationStatus.registered, ApplicationStatus.active].toStrings == ["registered", "active"]);
+    assert([ApplicationStatus.registered, ApplicationStatus.active].toString == ["registered", "active"]);
     assert(["registered", "active"].toApplicationStatuses == [ApplicationStatus.registered, ApplicationStatus.active]);
 }
 
@@ -437,7 +437,7 @@ string toString(LegalBasis b) {
     return b.to!string;
 }
 
-string[] toStrings(LegalBasis[] bases) {
+string[] toString(LegalBasis[] bases) {
     return bases.map!toString.array;
 }
 
@@ -462,7 +462,7 @@ unittest {
     assert(LegalBasis.publicInterest.toString == "publicInterest");
     assert(LegalBasis.legitimateInterest.toString == "legitimateInterest");
 
-    assert([LegalBasis.consent, LegalBasis.legalObligation].toStrings == ["consent", "legalObligation"]);
+    assert([LegalBasis.consent, LegalBasis.legalObligation].toString == ["consent", "legalObligation"]);
     assert(["consent", "legalObligation"].toLegalBases == [LegalBasis.consent, LegalBasis.legalObligation]);
 }
 
@@ -492,7 +492,7 @@ string toString(PurposeStatus s) {
     return cast(string)s;
 }   
 
-string[] toStrings(PurposeStatus[] statuses) {
+string[] toString(PurposeStatus[] statuses) {
     return statuses.map!toString.array;
 }
 
@@ -513,7 +513,7 @@ unittest {
     assert(PurposeStatus.deprecated_.toString == "deprecated");
     assert(PurposeStatus.archived.toString == "archived");
 
-    assert([PurposeStatus.active, PurposeStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([PurposeStatus.active, PurposeStatus.inactive].toString == ["active", "inactive"]);
     assert(["active", "inactive"].toPurposeStatuses == [PurposeStatus.active, PurposeStatus.inactive]);
 }
 
@@ -537,7 +537,7 @@ string toString(ConsentStatus s) {
     return s.to!string;
 }
 
-string[] toStrings(ConsentStatus[] statuses) {
+string[] toString(ConsentStatus[] statuses) {
     return statuses.map!toString.array;
 }
 
@@ -558,7 +558,7 @@ unittest {
     assert(ConsentStatus.expired.toString == "expired");
     assert(ConsentStatus.pending.toString == "pending");
 
-    assert([ConsentStatus.given, ConsentStatus.expired].toStrings == ["given", "expired"]);
+    assert([ConsentStatus.given, ConsentStatus.expired].toString == ["given", "expired"]);
     assert(["given", "expired"].toConsentStatuses == [ConsentStatus.given, ConsentStatus.expired]);
 }
 
@@ -581,7 +581,7 @@ string toString(RetentionPeriodUnit u) {
     return u.to!string;
 }
 
-string[] toStrings(RetentionPeriodUnit[] units) {
+string[] toString(RetentionPeriodUnit[] units) {
     return units.map!toString.array;
 }
 
@@ -600,7 +600,7 @@ unittest {
     assert(RetentionPeriodUnit.months.toString == "months");
     assert(RetentionPeriodUnit.years.toString == "years");
 
-    assert([RetentionPeriodUnit.days, RetentionPeriodUnit.years].toStrings == ["days", "years"]);
+    assert([RetentionPeriodUnit.days, RetentionPeriodUnit.years].toString == ["days", "years"]);
     assert(["days", "years"].toRetentionPeriodUnits == [RetentionPeriodUnit.days, RetentionPeriodUnit.years]);
 }
 
@@ -622,7 +622,7 @@ string toString(RetentionRuleStatus s) {
     return s.to!string;
 }
 
-string[] toStrings(RetentionRuleStatus[] statuses) {
+string[] toString(RetentionRuleStatus[] statuses) {
     return statuses.map!toString.array;
 }
 
@@ -641,7 +641,7 @@ unittest {
     assert(RetentionRuleStatus.inactive.toString == "inactive");
     assert(RetentionRuleStatus.expired.toString == "expired");
 
-    assert([RetentionRuleStatus.active, RetentionRuleStatus.expired].toStrings == ["active", "expired"]);
+    assert([RetentionRuleStatus.active, RetentionRuleStatus.expired].toString == ["active", "expired"]);
     assert(["active", "expired"].toRetentionRuleStatuses == [RetentionRuleStatus.active, RetentionRuleStatus.expired]);
 }
 
@@ -684,7 +684,7 @@ string toString(LogEntryType t) {
     return cast(string)t;
 }
 
-string[] toStrings(LogEntryType[] types) {
+string[] toString(LogEntryType[] types) {
     return types.map!toString.array;
 }
 
@@ -717,7 +717,7 @@ unittest {
     assert(LogEntryType.consentChange.toString == "consentChange");
     assert(LogEntryType.retentionEnforcement.toString == "retentionEnforcement");
 
-    assert([LogEntryType.access, LogEntryType.deletion].toStrings == ["access", "deletion"]);
+    assert([LogEntryType.access, LogEntryType.deletion].toString == ["access", "deletion"]);
     assert(["access", "deletion"].toLogEntryTypes == [LogEntryType.access, LogEntryType.deletion]);
 }   
 
@@ -741,7 +741,7 @@ string toString(LogSeverity s) {
     return s.to!string;
 }
 
-string[] toStrings(LogSeverity[] severities) {
+string[] toString(LogSeverity[] severities) {
     return severities.map!toString.array;
 }
 
@@ -762,7 +762,7 @@ unittest {
     assert(LogSeverity.error.toString == "error");
     assert(LogSeverity.critical.toString == "critical");
 
-    assert([LogSeverity.info, LogSeverity.error].toStrings == ["info", "error"]);
+    assert([LogSeverity.info, LogSeverity.error].toString == ["info", "error"]);
     assert(["info", "error"].toLogSeverities == [LogSeverity.info, LogSeverity.error]);
 }
 
@@ -786,7 +786,7 @@ string toString(ExportFormat f) {
     return f.to!string;
 }
 
-string[] toStrings(ExportFormat[] formats) {
+string[] toString(ExportFormat[] formats) {
     return formats.map!toString.array;
 }
 
@@ -807,6 +807,6 @@ unittest {
     assert(ExportFormat.xml.toString == "xml");
     assert(ExportFormat.pdf.toString == "pdf");
 
-    assert([ExportFormat.json, ExportFormat.pdf].toStrings == ["json", "pdf"]);
+    assert([ExportFormat.json, ExportFormat.pdf].toString == ["json", "pdf"]);
     assert(["json", "pdf"].toExportFormat == [ExportFormat.json, ExportFormat.pdf]);
 }

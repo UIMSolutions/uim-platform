@@ -34,7 +34,7 @@ ProjectType[] toProjectTypes(string[] values)
 string toString(ProjectType value)
   => value.to!string;
 
-string[] toStrings(ProjectType[] values)
+string[] toString(ProjectType[] values)
   => values.map!toString.array;
 
 /// 
@@ -59,7 +59,7 @@ unittest {
   assert(ProjectType.other.toString == "other");
 
   assert(["cap", "fiori"].toProjectType == [ProjectType.cap, ProjectType.fiori]);
-  assert([ProjectType.cap, ProjectType.fiori].toStrings == ["cap", "fiori"]);
+  assert([ProjectType.cap, ProjectType.fiori].toString == ["cap", "fiori"]);
 }
 
 /// Runtime framework within a project
@@ -84,7 +84,7 @@ TechStack[] toTechStacks(string[] values)
 string toString(TechStack value)
   => value.to!string; 
 
-string[] toStrings(TechStack[] values)
+string[] toString(TechStack[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -111,7 +111,7 @@ unittest {
 
   assert(["cap-java", "sapui5"].toTechStack == [TechStack.capJava, TechStack.sapui5
     ]);
-  assert([TechStack.capJava, TechStack.sapui5].toStrings == ["cap-java", "sapui5"
+  assert([TechStack.capJava, TechStack.sapui5].toString == ["cap-java", "sapui5"
     ]);
 }
 
@@ -134,7 +134,7 @@ string toString(ProjectStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(ProjectStatus[] values) {
+string[] toString(ProjectStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -152,7 +152,7 @@ unittest {
 
   assert(["active", "archived"].toProjectStatus == [ProjectStatus.active, ProjectStatus.archived
     ]);
-  assert([ProjectStatus.active, ProjectStatus.archived].toStrings == ["active", "archived"
+  assert([ProjectStatus.active, ProjectStatus.archived].toString == ["active", "archived"
     ]);
 }
 
@@ -177,7 +177,7 @@ string toString(DevSpaceStatus value) {
   return cast(string)value;
 }
 
-string[] toStrings(DevSpaceStatus[] values) {
+string[] toString(DevSpaceStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -199,7 +199,7 @@ unittest {
 
   assert(["starting", "stopped"].toDevSpaceStatus == [DevSpaceStatus.starting, DevSpaceStatus.stopped
     ]);
-  assert([DevSpaceStatus.starting, DevSpaceStatus.stopped].toStrings == ["starting", "stopped"
+  assert([DevSpaceStatus.starting, DevSpaceStatus.stopped].toString == ["starting", "stopped"
     ]);
 }
 
@@ -223,7 +223,7 @@ string toString(PipelineStage value) {
   return value.to!string;
 }
 
-string[] toStrings(PipelineStage[] values) {
+string[] toString(PipelineStage[] values) {
   return values.map!toString.array;
 }
 ///
@@ -243,7 +243,7 @@ unittest {
 
   assert(["build", "deploy"].toPipelineStage == [PipelineStage.build, PipelineStage.deploy
     ]);
-  assert([PipelineStage.build, PipelineStage.deploy].toStrings == ["build", "deploy"
+  assert([PipelineStage.build, PipelineStage.deploy].toString == ["build", "deploy"
     ]);
 }
 
@@ -268,7 +268,7 @@ string toString(JobStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(JobStatus[] values) {
+string[] toString(JobStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -290,7 +290,7 @@ unittest {
 
   assert(["queued", "failed"].toJobStatus == [JobStatus.queued, JobStatus.failed
     ]);
-  assert([JobStatus.queued, JobStatus.failed].toStrings == ["queued", "failed"]);
+  assert([JobStatus.queued, JobStatus.failed].toString == ["queued", "failed"]);
 }
 
 /// Target environment for deployments
@@ -314,7 +314,7 @@ string toString(DeploymentEnvironment value) {
   return value.to!string;
 }
 
-string[] toStrings(DeploymentEnvironment[] values) {
+string[] toString(DeploymentEnvironment[] values) {
   return values.map!toString.array;
 }
 ///
@@ -336,7 +336,7 @@ unittest {
 
   assert(["cloud-foundry", "kyma"].toDeploymentEnvironment == [DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma
     ]);
-  assert([DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma].toStrings == ["cloud-foundry", "kyma"
+  assert([DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma].toString == ["cloud-foundry", "kyma"
     ]);
 }
 
@@ -361,7 +361,7 @@ string toString(DeploymentStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(DeploymentStatus[] values) {
+string[] toString(DeploymentStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -383,7 +383,7 @@ unittest {
 
   assert(["pending", "succeeded"].toDeploymentStatus == [DeploymentStatus.pending, DeploymentStatus.succeeded
     ]);
-  assert([DeploymentStatus.pending, DeploymentStatus.succeeded].toStrings == ["pending", "succeeded"
+  assert([DeploymentStatus.pending, DeploymentStatus.succeeded].toString == ["pending", "succeeded"
     ]);
 }
 
@@ -407,7 +407,7 @@ string toString(AIRequestStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(AIRequestStatus[] values) {
+string[] toString(AIRequestStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -427,7 +427,7 @@ unittest {
 
   assert(["pending", "completed"].toAIRequestStatus == [AIRequestStatus.pending, AIRequestStatus.completed
     ]);
-  assert([AIRequestStatus.pending, AIRequestStatus.completed].toStrings == ["pending", "completed"
+  assert([AIRequestStatus.pending, AIRequestStatus.completed].toString == ["pending", "completed"
     ]);
 }
 
@@ -453,7 +453,7 @@ string toString(AIGenerationType value) {
   return value.to!string;
 }
 
-string[] toStrings(AIGenerationType[] values) {
+string[] toString(AIGenerationType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -477,7 +477,7 @@ unittest {
 
   assert(["data-model", "service"].toAIGenerationType == [AIGenerationType.dataModel, AIGenerationType.service
     ]);
-  assert([AIGenerationType.dataModel, AIGenerationType.service].toStrings == ["data-model", "service"
+  assert([AIGenerationType.dataModel, AIGenerationType.service].toString == ["data-model", "service"
     ]);
 }
 
@@ -500,7 +500,7 @@ string toString(BindingStatus value) {
   return value.to!string;
 }
 
-string[] toStrings(BindingStatus[] values) {
+string[] toString(BindingStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -518,6 +518,6 @@ unittest {
 
   assert(["active", "inactive"].toBindingStatus == [BindingStatus.active, BindingStatus.inactive_
     ]);
-  assert([BindingStatus.active, BindingStatus.inactive_].toStrings == ["active", "inactive"
+  assert([BindingStatus.active, BindingStatus.inactive_].toString == ["active", "inactive"
     ]);
 }

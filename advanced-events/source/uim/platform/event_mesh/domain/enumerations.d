@@ -38,7 +38,7 @@ BrokerServiceStatus[] toBrokerServiceStatuses(string[] values)
 string toString(BrokerServiceStatus status)
   => status.to!string;
 
-string[] toStrings(BrokerServiceStatus[] statuses)
+string[] toString(BrokerServiceStatus[] statuses)
   => statuses.map!toString.array;
 /// 
 unittest {
@@ -64,7 +64,7 @@ unittest {
   assert(["running", "unknown", "provisioning"].toBrokerServiceStatuses == [BrokerServiceStatus.running, BrokerServiceStatus.failed,
       BrokerServiceStatus.provisioning
     ]);
-  assert([BrokerServiceStatus.stopped, BrokerServiceStatus.degraded].toStrings == ["stopped", "degraded"
+  assert([BrokerServiceStatus.stopped, BrokerServiceStatus.degraded].toString == ["stopped", "degraded"
     ]);
 }
 
@@ -85,7 +85,7 @@ BrokerServiceType[] toBrokerServiceTypes(string[] values)
 string toString(BrokerServiceType type)
   => type.to!string;
 
-string[] toStrings(BrokerServiceType[] types)
+string[] toString(BrokerServiceType[] types)
   => types.map!toString.array;
 ///
 unittest {
@@ -105,7 +105,7 @@ unittest {
   assert(["developer", "unknown", "premium"].toBrokerServiceTypes == [BrokerServiceType.developer, BrokerServiceType.standard,
       BrokerServiceType.premium
     ]);
-  assert([BrokerServiceType.enterprise, BrokerServiceType.standard].toStrings == ["enterprise", "standard"
+  assert([BrokerServiceType.enterprise, BrokerServiceType.standard].toString == ["enterprise", "standard"
     ]);
 }
 
@@ -128,7 +128,7 @@ BrokerServiceClass[] toBrokerServiceClasses(string[] values)
 string toString(BrokerServiceClass serviceClass)
   => serviceClass.to!string;
 
-string[] toStrings(BrokerServiceClass[] serviceClasses)
+string[] toString(BrokerServiceClass[] serviceClasses)
   => serviceClasses.map!toString.array;
 ///
 unittest {
@@ -155,7 +155,7 @@ unittest {
       BrokerServiceClass.standardMega
     ]);
   assert([BrokerServiceClass.developerKilo, BrokerServiceClass.enterpriseGiga
-    ].toStrings == ["developerKilo", "enterpriseGiga"]);
+    ].toString == ["developerKilo", "enterpriseGiga"]);
 }
 
 enum CloudProvider {
@@ -176,7 +176,7 @@ CloudProvider[] toCloudProviders(string[] providers)
 string toString(CloudProvider provider)
   => provider.to!string;
 
-string[] toStrings(CloudProvider[] providers)
+string[] toString(CloudProvider[] providers)
   => providers.map!toString.array;
 ///
 unittest {
@@ -199,7 +199,7 @@ unittest {
 
   assert(["aws", "unknown", "gcp"].toCloudProviders == [CloudProvider.aws, CloudProvider.sap, CloudProvider.gcp
     ]);
-  assert([CloudProvider.azure, CloudProvider.onPremise].toStrings == ["azure", "onPremise"
+  assert([CloudProvider.azure, CloudProvider.onPremise].toString == ["azure", "onPremise"
     ]);
 }
 
@@ -218,7 +218,7 @@ QueueAccessType[] toQueueAccessTypes(string[] values)
 string toString(QueueAccessType accessType)
   => accessType.to!string;
 
-string[] toStrings(QueueAccessType[] accessTypes)
+string[] toString(QueueAccessType[] accessTypes)
   => accessTypes.map!toString.array;
 ///
 unittest {
@@ -240,7 +240,7 @@ unittest {
   assert(["exclusive", "unknown", "nonexclusive"].toQueueAccessTypes == [QueueAccessType.exclusive, QueueAccessType.exclusive,
       QueueAccessType.nonExclusive
     ]);
-  assert([QueueAccessType.exclusive, QueueAccessType.nonExclusive].toStrings == ["exclusive", "nonExclusive"
+  assert([QueueAccessType.exclusive, QueueAccessType.nonExclusive].toString == ["exclusive", "nonExclusive"
     ]);
 }
 
@@ -261,7 +261,7 @@ QueueStatus[] toQueueStatuses(string[] values)
 string toString(QueueStatus status)
   => status.to!string;
 
-string[] toStrings(QueueStatus[] statuses)
+string[] toString(QueueStatus[] statuses)
   => statuses.map!toString.array;
 ///
 unittest {
@@ -280,7 +280,7 @@ unittest {
 
   assert(["active", "unknown", "shuttingdown"].toQueueStatuses == [QueueStatus.active, QueueStatus.inactive, QueueStatus.shuttingDown
     ]);
-  assert([QueueStatus.inactive, QueueStatus.pendingDelete].toStrings == ["inactive", "pendingDelete"
+  assert([QueueStatus.inactive, QueueStatus.pendingDelete].toString == ["inactive", "pendingDelete"
     ]);
 }
 
@@ -300,7 +300,7 @@ QueueType[] toQueueTypes(string[] values)
 string toString(QueueType type)
   => type.to!string;
 
-string[] toStrings(QueueType[] types)
+string[] toString(QueueType[] types)
   => types.map!toString.array;
 ///
 unittest {
@@ -317,7 +317,7 @@ unittest {
 
   assert(["durable", "unknown", "temporary"].toQueueTypes == [QueueType.durable, QueueType.durable, QueueType.temporary
     ]);
-  assert([QueueType.nonDurable, QueueType.temporary].toStrings == ["nonDurable", "temporary"
+  assert([QueueType.nonDurable, QueueType.temporary].toString == ["nonDurable", "temporary"
     ]);
 }
 
@@ -338,7 +338,7 @@ TopicStatus[] toTopicStatuses(string[] values)
 string toString(TopicStatus status)
   => status.to!string;
 
-string[] toStrings(TopicStatus[] statuses)
+string[] toString(TopicStatus[] statuses)
   => statuses.map!toString.array;
 ///
 unittest {
@@ -356,7 +356,7 @@ unittest {
   assert(["active", "unknown", "pendingdelete"].toTopicStatuses == [TopicStatus.active, TopicStatus.inactive,
       TopicStatus.pendingDelete
     ]);
-  assert([TopicStatus.inactive, TopicStatus.pendingDelete].toStrings == ["inactive", "pendingDelete"
+  assert([TopicStatus.inactive, TopicStatus.pendingDelete].toString == ["inactive", "pendingDelete"
     ]);
 }
 
@@ -376,7 +376,7 @@ SubscriptionStatus[] toSubscriptionStatuses(string[] values)
 string toString(SubscriptionStatus status)
   => status.to!string;
 
-string[] toStrings(SubscriptionStatus[] statuses)
+string[] toString(SubscriptionStatus[] statuses)
   => statuses.map!toString.array;
 ///
 unittest {
@@ -395,7 +395,7 @@ unittest {
       SubscriptionStatus.pendingDelete
     ]);
   assert([SubscriptionStatus.suspended, SubscriptionStatus.pendingDelete
-    ].toStrings == ["suspended", "pendingDelete"]);
+    ].toString == ["suspended", "pendingDelete"]);
 }
 
 enum SubscriptionType {
@@ -414,7 +414,7 @@ SubscriptionType[] toSubscriptionTypes(string[] values)
 string toString(SubscriptionType type)
   => type.to!string;
 
-string[] toStrings(SubscriptionType[] types)
+string[] toString(SubscriptionType[] types)
   => types.map!toString.array;
 ///
 unittest {
@@ -433,7 +433,7 @@ unittest {
       SubscriptionType.queueBased
     ]);
   assert([SubscriptionType.queueBased, SubscriptionType.topicEndpoint
-    ].toStrings == ["queueBased", "topicEndpoint"]);
+    ].toString == ["queueBased", "topicEndpoint"]);
 }
 
 enum DeliveryMode {
@@ -452,7 +452,7 @@ DeliveryMode[] toDeliveryModes(string[] values)
 string toString(DeliveryMode mode)
   => mode.to!string;
 
-string[] toStrings(DeliveryMode[] modes)
+string[] toString(DeliveryMode[] modes)
   => modes.map!toString.array;
 ///
 unittest {
@@ -470,7 +470,7 @@ unittest {
   assert(["direct", "unknown", "persistent"].toDeliveryModes == [DeliveryMode.direct, DeliveryMode.direct,
       DeliveryMode.persistent
     ]);
-  assert([DeliveryMode.persistent, DeliveryMode.nonPersistent].toStrings == ["persistent", "nonPersistent"
+  assert([DeliveryMode.persistent, DeliveryMode.nonPersistent].toString == ["persistent", "nonPersistent"
     ]);
 }
 
@@ -493,7 +493,7 @@ MessageStatus[] toMessageStatuses(string[] values)
 string toString(MessageStatus status)
   => status.to!string;
 
-string[] toStrings(MessageStatus[] statuses)
+string[] toString(MessageStatus[] statuses)
   => statuses.map!toString.array;
 ///
 unittest {
@@ -517,7 +517,7 @@ unittest {
   assert(["pending", "unknown", "delivered"].toMessageStatuses == [MessageStatus.pending, MessageStatus.pending,
       MessageStatus.delivered
     ]);
-  assert([MessageStatus.acknowledged, MessageStatus.rejected].toStrings == ["acknowledged", "rejected"
+  assert([MessageStatus.acknowledged, MessageStatus.rejected].toString == ["acknowledged", "rejected"
     ]);
 }
 
@@ -538,7 +538,7 @@ MessagePriority[] toMessagePriorities(string[] values)
 string toString(MessagePriority priority)
   => priority.to!string;
 
-string[] toStrings(MessagePriority[] priorities)
+string[] toString(MessagePriority[] priorities)
   => priorities.map!toString.array;
 
 ///
@@ -559,7 +559,7 @@ unittest {
   assert(["low", "unknown", "high"].toMessagePriorities == [MessagePriority.low, MessagePriority.normal,
       MessagePriority.high
     ]);
-  assert([MessagePriority.normal, MessagePriority.urgent].toStrings == ["normal", "urgent"
+  assert([MessagePriority.normal, MessagePriority.urgent].toString == ["normal", "urgent"
     ]);
 }
 
@@ -583,7 +583,7 @@ string toString(SchemaFormat format) {
   return format.to!string;
 }
 
-string[] toStrings(SchemaFormat[] formats) {
+string[] toString(SchemaFormat[] formats) {
   return formats.map!toString.array;
 }
 ///
@@ -605,7 +605,7 @@ unittest {
 
   assert(["json", "unknown", "xml"].toSchemaFormats == [SchemaFormat.json, SchemaFormat.json, SchemaFormat.xml
     ]);
-  assert([SchemaFormat.avro, SchemaFormat.protobuf].toStrings == ["avro", "protobuf"
+  assert([SchemaFormat.avro, SchemaFormat.protobuf].toString == ["avro", "protobuf"
     ]);
 }
 
@@ -639,7 +639,7 @@ string toString(SchemaStatus status) {
   return cast(string)status;
 }
 
-string[] toStrings(SchemaStatus[] statuses) {
+string[] toString(SchemaStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -661,7 +661,7 @@ unittest {
 
   assert(["draft", "unknown", "active"].toSchemaStatuses == [SchemaStatus.draft, SchemaStatus.draft, SchemaStatus.active
     ]);
-  assert([SchemaStatus.deprecated_, SchemaStatus.retired].toStrings == ["deprecated", "retired"
+  assert([SchemaStatus.deprecated_, SchemaStatus.retired].toString == ["deprecated", "retired"
     ]);
 }
 
@@ -684,7 +684,7 @@ string toString(EventApplicationStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(EventApplicationStatus[] statuses) {
+string[] toString(EventApplicationStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -708,7 +708,7 @@ unittest {
     ]);
   assert([EventApplicationStatus.active,
       EventApplicationStatus.deregistered
-    ].toStrings == ["active", "deregistered"]);
+    ].toString == ["active", "deregistered"]);
 }
 
 enum EventApplicationType {
@@ -729,7 +729,7 @@ string toString(EventApplicationType type) {
   return type.to!string;
 }
 
-string[] toStrings(EventApplicationType[] types) {
+string[] toString(EventApplicationType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -751,7 +751,7 @@ unittest {
       EventApplicationType.subscriber
     ]);
   assert([EventApplicationType.subscriber, EventApplicationType.both
-    ].toStrings == ["subscriber", "both"
+    ].toString == ["subscriber", "both"
     ]);
 }
 
@@ -775,7 +775,7 @@ string toString(BridgeStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(BridgeStatus[] statuses) {
+string[] toString(BridgeStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -800,7 +800,7 @@ unittest {
   assert(["active", "unknown", "degraded"].toBridgeStatuses == [BridgeStatus.active, BridgeStatus.failed,
       BridgeStatus.degraded
     ]);
-  assert([BridgeStatus.inactive, BridgeStatus.failed].toStrings == ["inactive", "failed"
+  assert([BridgeStatus.inactive, BridgeStatus.failed].toString == ["inactive", "failed"
     ]);
 }
 
@@ -824,7 +824,7 @@ string toString(BridgeType type) {
   return type.to!string;
 }
 
-string[] toStrings(BridgeType[] types) {
+string[] toString(BridgeType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -846,7 +846,7 @@ unittest {
 
   assert(["vpn", "unknown", "rest"].toBridgeTypes == [BridgeType.vpn, BridgeType.mesh, BridgeType.rest
     ]);
-  assert([BridgeType.kafka, BridgeType.jms].toStrings == ["kafka", "jms"
+  assert([BridgeType.kafka, BridgeType.jms].toString == ["kafka", "jms"
     ]);
 }
 
@@ -871,7 +871,7 @@ string toString(ProtocolType type) {
   return type.to!string;
 }
 
-string[] toStrings(ProtocolType[] types) {
+string[] toString(ProtocolType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -897,6 +897,6 @@ unittest {
 
   assert(["mqtt", "unknown", "rest"].toProtocolTypes == [ProtocolType.mqtt, ProtocolType.mqtt, ProtocolType.rest
     ]);
-  assert([ProtocolType.amqp, ProtocolType.websocket].toStrings == ["amqp", "websocket"
+  assert([ProtocolType.amqp, ProtocolType.websocket].toString == ["amqp", "websocket"
     ]);
 }

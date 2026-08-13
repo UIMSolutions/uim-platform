@@ -59,7 +59,7 @@ SpaceStatus[] toSpaceStatuses(string[] values) {
 string toString(SpaceStatus value) {
   return value.to!string;
 }
-string[] toStrings(SpaceStatus[] values) {
+string[] toString(SpaceStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -75,7 +75,7 @@ unittest {
   assert(toString(SpaceStatus.active) == "active");
   assert(toString(SpaceStatus.suspended) == "suspended");
 
-  assert(toStrings([SpaceStatus.active, SpaceStatus.suspended]) == ["active", "suspended"]);
+  assert(toString([SpaceStatus.active, SpaceStatus.suspended]) == ["active", "suspended"]);
   assert(toSpaceStatuses(["active", "suspended"]) == [SpaceStatus.active, SpaceStatus.suspended]);
 }
 
@@ -95,7 +95,7 @@ AppState[] toAppStates(string[] values) {
 string toString(AppState value) {
   return value.to!string;
 }
-string[] toStrings(AppState[] values) { 
+string[] toString(AppState[] values) { 
   return values.map!toString.array;
 }
 ///
@@ -115,7 +115,7 @@ unittest {
   assert(AppState.staging.toString == "staging");
   assert(AppState.crashed.toString == "crashed");
 
-  assert([AppState.stopped, AppState.started, AppState.staging, AppState.crashed].toStrings == ["stopped", "started", "staging", "crashed"]);
+  assert([AppState.stopped, AppState.started, AppState.staging, AppState.crashed].toString == ["stopped", "started", "staging", "crashed"]);
   assert(["stopped", "started", "staging", "crashed"].toAppStates == [AppState.stopped, AppState.started, AppState.staging, AppState.crashed]);
 }
 
@@ -135,7 +135,7 @@ InstanceState[] toInstanceStates(string[] values) {
 string toString(InstanceState value) {
   return value.to!string;
 }
-string[] toStrings(InstanceState[] values) {
+string[] toString(InstanceState[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -155,7 +155,7 @@ unittest {
   assert(toString(InstanceState.starting) == "starting");
   assert(toString(InstanceState.down) == "down");
 
-  assert([InstanceState.running, InstanceState.crashed, InstanceState.starting, InstanceState.down].toStrings == ["running", "crashed", "starting", "down"]);
+  assert([InstanceState.running, InstanceState.crashed, InstanceState.starting, InstanceState.down].toString == ["running", "crashed", "starting", "down"]);
   assert(["running", "crashed", "starting", "down"].toInstanceStates == [InstanceState.running, InstanceState.crashed, InstanceState.starting, InstanceState.down]);
 } 
 
@@ -176,7 +176,7 @@ ServiceInstanceStatus[] toServiceInstanceStatuses(string[] values) {
 string toString(ServiceInstanceStatus value) {
   return value.to!string;
 }
-string[] toStrings(ServiceInstanceStatus[] values) {
+string[] toString(ServiceInstanceStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -198,7 +198,7 @@ unittest {
   assert(ServiceInstanceStatus.deleteInProgress.toString == "deleteInProgress");
   assert(ServiceInstanceStatus.failed.toString == "failed");
 
-  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.updateInProgress, ServiceInstanceStatus.deleteInProgress, ServiceInstanceStatus.failed].toStrings == ["creating", "active", "updateInProgress", "deleteInProgress", "failed"]);
+  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.updateInProgress, ServiceInstanceStatus.deleteInProgress, ServiceInstanceStatus.failed].toString == ["creating", "active", "updateInProgress", "deleteInProgress", "failed"]);
   assert(["creating", "active", "updateInProgress", "deleteInProgress", "failed"].toServiceInstanceStatuses == [ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.updateInProgress, ServiceInstanceStatus.deleteInProgress, ServiceInstanceStatus.failed]);
 }
 
@@ -218,7 +218,7 @@ BindingStatus[] toBindingStatuses(string[] values) {
 string toString(BindingStatus value) {
   return value.to!string;
 }
-string[] toStrings(BindingStatus[] values) {
+string[] toString(BindingStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -238,7 +238,7 @@ unittest {
   assert(BindingStatus.deleteInProgress.toString == "deleteInProgress");
   assert(BindingStatus.failed.toString == "failed");
 
-  assert([BindingStatus.creating, BindingStatus.active, BindingStatus.failed].toStrings == ["creating", "active", "failed"]);
+  assert([BindingStatus.creating, BindingStatus.active, BindingStatus.failed].toString == ["creating", "active", "failed"]);
   assert(["creating", "active", "failed"].toBindingStatuses == [BindingStatus.creating, BindingStatus.active, BindingStatus.failed]);
 }
 
@@ -256,7 +256,7 @@ RouteProtocol[] toRouteProtocols(string[] values) {
 string toString(RouteProtocol value) {
   return value.to!string;
 }
-string[] toStrings(RouteProtocol[] values) {
+string[] toString(RouteProtocol[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -272,7 +272,7 @@ unittest {
   assert(RouteProtocol.http.toString == "http");
   assert(RouteProtocol.tcp.toString == "tcp");
 
-  assert([RouteProtocol.http, RouteProtocol.tcp].toStrings == ["http", "tcp"]);
+  assert([RouteProtocol.http, RouteProtocol.tcp].toString == ["http", "tcp"]);
   assert(["http", "tcp"].toRouteProtocols == [RouteProtocol.http, RouteProtocol.tcp]);
 }
 
@@ -296,7 +296,7 @@ DomainScope[] toDomainScopes(string[] values) {
 string toString(DomainScope value) {
   return cast(string)value;
 }
-string[] toStrings(DomainScope[] values) {
+string[] toString(DomainScope[] values) {
   return values.map!toString.array;
 }
 ///
@@ -314,7 +314,7 @@ unittest {
   assert(DomainScope.private_.toString == "private"); 
   assert(DomainScope.internal_.toString == "internal");
 
-  assert([DomainScope.shared_, DomainScope.private_, DomainScope.internal_].toStrings == ["shared", "private", "internal"]);
+  assert([DomainScope.shared_, DomainScope.private_, DomainScope.internal_].toString == ["shared", "private", "internal"]);
   assert(["shared", "private", "internal"].toDomainScopes == [DomainScope.shared_, DomainScope.private_, DomainScope.internal_]);
 }
 
@@ -332,7 +332,7 @@ BuildpackType[] toBuildpackTypes(string[] values) {
 string toString(BuildpackType value) {
   return value.to!string;
 }
-string[] toStrings(BuildpackType[] values) {
+string[] toString(BuildpackType[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -348,7 +348,7 @@ unittest {
   assert(BuildpackType.system.toString == "system");
   assert(BuildpackType.custom.toString == "custom");
 
-  assert([BuildpackType.system, BuildpackType.custom].toStrings == ["system", "custom"]);
+  assert([BuildpackType.system, BuildpackType.custom].toString == ["system", "custom"]);
   assert(["system", "custom"].toBuildpackTypes == [BuildpackType.system, BuildpackType.custom]);
 }
 
@@ -367,7 +367,7 @@ HealthCheckType[] toHealthCheckTypes(string[] values) {
 string toString(HealthCheckType value) {
   return value.to!string;
 }
-string[] toStrings(HealthCheckType[] values) {
+string[] toString(HealthCheckType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -385,6 +385,6 @@ unittest {
   assert(HealthCheckType.port.toString == "port");
   assert(HealthCheckType.process.toString == "process");
 
-  assert([HealthCheckType.http, HealthCheckType.port, HealthCheckType.process].toStrings == ["http", "port", "process"]);
+  assert([HealthCheckType.http, HealthCheckType.port, HealthCheckType.process].toString == ["http", "port", "process"]);
   assert(["http", "port", "process"].toHealthCheckTypes == [HealthCheckType.http, HealthCheckType.port, HealthCheckType.process]);
 }

@@ -25,7 +25,7 @@ MappingStatus[] toMappingStatuses(string[] statuses) {
 string toString(MappingStatus status) {
     return status.to!string;
 }
-string[] toStrings(MappingStatus[] statuses) {
+string[] toString(MappingStatus[] statuses) {
     return statuses.map!toString.array;
 }
 /// 
@@ -42,7 +42,7 @@ unittest {
     assert("pending".toMappingStatus == MappingStatus.pending);
     assert("error".toMappingStatus == MappingStatus.error);
 
-    assert(toStrings([MappingStatus.active, MappingStatus.error]) == ["active", "error"]);
+    assert(toString([MappingStatus.active, MappingStatus.error]) == ["active", "error"]);
     assert(toMappingStatuses(["active", "error"]) == [MappingStatus.active, MappingStatus.error]);
 }
 
@@ -60,7 +60,7 @@ MappingType[] toMappingTypes(string[] types) {
 string toString(MappingType type) {
     return type.to!string;
 }
-string[] toStrings(MappingType[] types) {
+string[] toString(MappingType[] types) {
     return types.map!toString.array;
 }
 /// 
@@ -75,6 +75,6 @@ unittest {
     assert("saasRoute".toMappingType == MappingType.saasRoute);
     assert("staticRoute".toMappingType == MappingType.staticRoute);
 
-    assert(toStrings([MappingType.applicationRoute, MappingType.staticRoute]) == ["applicationRoute", "staticRoute"]);
+    assert(toString([MappingType.applicationRoute, MappingType.staticRoute]) == ["applicationRoute", "staticRoute"]);
     assert(toMappingTypes(["applicationRoute", "staticRoute"]) == [MappingType.applicationRoute, MappingType.staticRoute]);
 }

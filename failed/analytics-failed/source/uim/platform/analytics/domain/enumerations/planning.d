@@ -29,7 +29,7 @@ PlanningStatus[] toPlanningStatuses(string[] statuses) {
 string toString(PlanningStatus status) {
   return status.to!string;
 }
-string[] toStrings(PlanningStatus[] statuses) {
+string[] toString(PlanningStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -53,7 +53,7 @@ unittest {
 
   assert(["draft", "inProgress", "locked", "approved", "published"].toPlanningStatuses ==
          [PlanningStatus.draft, PlanningStatus.inProgress, PlanningStatus.locked, PlanningStatus.approved, PlanningStatus.published]);
-  assert(toStrings([PlanningStatus.draft, PlanningStatus.inProgress, PlanningStatus.locked, PlanningStatus.approved, PlanningStatus.published]) ==
+  assert(toString([PlanningStatus.draft, PlanningStatus.inProgress, PlanningStatus.locked, PlanningStatus.approved, PlanningStatus.published]) ==
          ["draft", "inProgress", "locked", "approved", "published"]);
 }
 
@@ -76,7 +76,7 @@ PlanningVersionType[] toPlanningVersionTypes(string[] types) {
 string toString(PlanningVersionType type) {
   return type.to!string;
 }
-string[] toStrings(PlanningVersionType[] types) {
+string[] toString(PlanningVersionType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -95,6 +95,6 @@ unittest {
 
   assert(["actual", "plan", "forecast", "whatIf"].toPlanningVersionTypes ==
          [PlanningVersionType.actual, PlanningVersionType.plan, PlanningVersionType.forecast, PlanningVersionType.whatIf]);
-  assert(toStrings([PlanningVersionType.actual, PlanningVersionType.plan, PlanningVersionType.forecast, PlanningVersionType.whatIf]) ==
+  assert(toString([PlanningVersionType.actual, PlanningVersionType.plan, PlanningVersionType.forecast, PlanningVersionType.whatIf]) ==
          ["actual", "plan", "forecast", "whatIf"]);
 }

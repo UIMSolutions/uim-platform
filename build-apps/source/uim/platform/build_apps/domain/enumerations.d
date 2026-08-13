@@ -29,7 +29,7 @@ string toString(ApplicationType type) {
   return type.to!string;
 }
 
-string[] toStrings(ApplicationType[] types) {
+string[] toString(ApplicationType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -58,7 +58,7 @@ unittest {
       [ApplicationType.web, ApplicationType.mobile,
         ApplicationType.webAndMobile
       ]);
-  assert(toStrings([ApplicationType.web, ApplicationType.mobile,
+  assert(toString([ApplicationType.web, ApplicationType.mobile,
       ApplicationType.webAndMobile
     ]) ==
     ["web", "mobile", "webAndMobile"]);
@@ -84,7 +84,7 @@ string toString(ApplicationStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(ApplicationStatus[] statuses) {
+string[] toString(ApplicationStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -127,7 +127,7 @@ unittest {
     ApplicationStatus.draft, ApplicationStatus.active,
     ApplicationStatus.published, ApplicationStatus.archived,
     ApplicationStatus.error
-  ].toStrings ==
+  ].toString ==
     ["draft", "active", "published", "archived", "error"]);
 }
 
@@ -154,7 +154,7 @@ string toString(PageType type) {
   return type.to!string;
 }
 
-string[] toStrings(PageType[] types) {
+string[] toString(PageType[] types) {
   return types.map!toString.array;
 }
 /// 
@@ -212,7 +212,7 @@ unittest {
   assert([PageType.blank, PageType.list, PageType.detail, PageType.form,
       PageType.dashboard, PageType.login, PageType.settings,
       PageType.custom
-    ].toStrings ==
+    ].toString ==
     ["blank", "list", "detail", "form", "dashboard", "login",
       "settings", "custom"
     ]);
@@ -238,7 +238,7 @@ string toString(PageStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(PageStatus[] statuses) {
+string[] toString(PageStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -279,7 +279,7 @@ unittest {
       ]);
   assert([PageStatus.draft, PageStatus.active, PageStatus.published,
       PageStatus.archived, PageStatus.error
-    ].toStrings ==
+    ].toString ==
     ["draft", "active", "published", "archived", "error"]);
 }
 
@@ -306,7 +306,7 @@ string toString(ComponentCategory category) {
   return category.to!string;
 }
 
-string[] toStrings(ComponentCategory[] categories) {
+string[] toString(ComponentCategory[] categories) {
   return categories.map!toString.array;
 }
 ///
@@ -365,7 +365,7 @@ unittest {
       ComponentCategory.input, ComponentCategory.display,
       ComponentCategory.navigation, ComponentCategory.media,
       ComponentCategory.chart, ComponentCategory.custom
-  ].toStrings ==
+  ].toString ==
     ["basic", "layout", "input", "display", "navigation", "media",
       "chart", "custom"
     ]);
@@ -398,7 +398,7 @@ string toString(ComponentStatus status) {
   return cast(string)status;
 }
 
-string[] toStrings(ComponentStatus[] statuses) {
+string[] toString(ComponentStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -421,7 +421,7 @@ unittest {
       ]);
   assert([ComponentStatus.active, ComponentStatus.deprecated_,
       ComponentStatus.experimental
-    ].toStrings ==
+    ].toString ==
     ["active", "deprecated", "experimental"]);
 }
 
@@ -473,7 +473,7 @@ string toString(FieldType type) {
   return cast(string)type;
 }
 
-string[] toStrings(FieldType[] types) {
+string[] toString(FieldType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -518,7 +518,7 @@ unittest {
       FieldType.date, FieldType.dateTime, FieldType.object_,
       FieldType.list, FieldType.image, FieldType.file,
       FieldType.reference
-    ].toStrings ==
+    ].toString ==
     ["text", "number", "boolean", "date", "dateTime", "object", "list",
       "image", "file", "reference"
     ]);
@@ -551,7 +551,7 @@ string toString(DataEntityStatus status) {
   return cast(string)status;
 }
 
-string[] toStrings(DataEntityStatus[] statuses) {
+string[] toString(DataEntityStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -573,7 +573,7 @@ unittest {
       [DataEntityStatus.draft, DataEntityStatus.active,
         DataEntityStatus.deprecated_
       ]);
-  assert(toStrings([DataEntityStatus.draft, DataEntityStatus.active,
+  assert(toString([DataEntityStatus.draft, DataEntityStatus.active,
       DataEntityStatus.deprecated_
     ]) ==
     ["draft", "active", "deprecated"]);
@@ -614,7 +614,7 @@ string toString(ConnectionStatus status) {
   return status.to!string;
 }
 
-string[] toStrings(ConnectionStatus[] statuses) {
+string[] toString(ConnectionStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -642,7 +642,7 @@ unittest {
   assert([
     ConnectionStatus.disconnected, ConnectionStatus.connected,
     ConnectionStatus.error, ConnectionStatus.pending
-  ].toStrings ==
+  ].toString ==
     ["disconnected", "connected", "error", "pending"]);
 }
 
@@ -667,7 +667,7 @@ string toString(AuthMethod method) {
   return method.to!string;
 }
 
-string[] toStrings(AuthMethod[] methods) {
+string[] toString(AuthMethod[] methods) {
   return methods.map!toString.array;
 }
 ///
@@ -706,7 +706,7 @@ unittest {
   assert([
     AuthMethod.none, AuthMethod.basicAuth, AuthMethod.oauth2,
     AuthMethod.apiKey, AuthMethod.sapBtpAuth, AuthMethod.certificate
-  ].toStrings ==
+  ].toString ==
     ["none", "basicAuth", "oauth2", "apiKey", "sapBtpAuth", "certificate"]);
 }
 
@@ -729,7 +729,7 @@ FlowTrigger[] toFlowTriggers(string[] values) {
 string toString(FlowTrigger trigger) {
   return trigger.to!string;
 }
-string[] toStrings(FlowTrigger[] triggers) {
+string[] toString(FlowTrigger[] triggers) {
   return triggers.map!toString.array;
 }
 ///
@@ -773,7 +773,7 @@ unittest {
     FlowTrigger.componentEvent, FlowTrigger.pageMount, FlowTrigger.pageUnmount,
     FlowTrigger.appLaunch, FlowTrigger.dataChange, FlowTrigger.timer,
     FlowTrigger.custom
-  ].toStrings ==
+  ].toString ==
     ["componentEvent", "pageMount", "pageUnmount", "appLaunch", "dataChange", "timer", "custom"]);
 }
 
@@ -792,7 +792,7 @@ FlowStatus[] toFlowStatuses(string[] values) {
 string toString(FlowStatus status) {
   return status.to!string;
 }
-string[] toStrings(FlowStatus[] statuses) {
+string[] toString(FlowStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -820,7 +820,7 @@ unittest {
 
   assert([
     FlowStatus.active, FlowStatus.inactive, FlowStatus.error
-  ].toStrings ==
+  ].toString ==
     ["active", "inactive", "error"]);
 }
 
@@ -840,7 +840,7 @@ BuildTarget[] toBuildTargets(string[] values) {
 string toString(BuildTarget target) {
   return target.to!string;
 }
-string[] toStrings(BuildTarget[] targets) {
+string[] toString(BuildTarget[] targets) {
   return targets.map!toString.array;
 }
 ///
@@ -872,7 +872,7 @@ unittest {
   assert([
     BuildTarget.web, BuildTarget.ios, BuildTarget.android,
     BuildTarget.webAndMobile
-  ].toStrings ==
+  ].toString ==
     ["web", "ios", "android", "webAndMobile"]);
 }
 
@@ -893,7 +893,7 @@ BuildStatus[] toBuildStatuses(string[] values) {
 string toString(BuildStatus status) {
   return status.to!string;
 }
-string[] toStrings(BuildStatus[] statuses) {
+string[] toString(BuildStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -928,7 +928,7 @@ unittest {
   assert([
     BuildStatus.pending, BuildStatus.building, BuildStatus.succeeded,
     BuildStatus.failed, BuildStatus.cancelled
-  ].toStrings ==
+  ].toString ==
     ["pending", "building", "succeeded", "failed", "cancelled"]);
 }
 
@@ -948,7 +948,7 @@ DeployStatus[] toDeployStatuses(string[] values) {
 string toString(DeployStatus status) {
   return status.to!string;
 }
-string[] toStrings(DeployStatus[] statuses) {
+string[] toString(DeployStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -980,7 +980,7 @@ unittest {
   assert([
     DeployStatus.notDeployed, DeployStatus.deploying,
     DeployStatus.deployed, DeployStatus.failed
-  ].toStrings ==
+  ].toString ==
     ["notDeployed", "deploying", "deployed", "failed"]);
 }
 
@@ -1000,7 +1000,7 @@ MemberRole[] toMemberRoles(string[] values) {
 string toString(MemberRole role) {
   return role.to!string;
 }
-string[] toStrings(MemberRole[] roles) {
+string[] toString(MemberRole[] roles) {
   return roles.map!toString.array;
 }
 ///
@@ -1032,7 +1032,7 @@ unittest {
   assert([
     MemberRole.owner, MemberRole.editor, MemberRole.viewer,
     MemberRole.tester
-  ].toStrings ==
+  ].toString ==
     ["owner", "editor", "viewer", "tester"]);
 }
 
@@ -1051,7 +1051,7 @@ MemberStatus[] toMemberStatuses(string[] values) {
 string toString(MemberStatus status) {
   return status.to!string;
 }
-string[] toStrings(MemberStatus[] statuses) {
+string[] toString(MemberStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -1078,6 +1078,6 @@ unittest {
       ]);
   assert([
     MemberStatus.active, MemberStatus.invited, MemberStatus.removed
-  ].toStrings ==
+  ].toString ==
     ["active", "invited", "removed"]);  
 }

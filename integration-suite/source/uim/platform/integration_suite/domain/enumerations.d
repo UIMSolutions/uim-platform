@@ -42,7 +42,7 @@ ArtifactStatus[] toArtifactStatuses(string[] values)
   => values.map!toArtifactStatus.array;
 string toString(ArtifactStatus value)
   => value.to!string;
-string[] toStrings(ArtifactStatus[] values)
+string[] toString(ArtifactStatus[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -64,7 +64,7 @@ unittest {
 
   assert(["draft", "deployed"].toArtifactStatuses == [ArtifactStatus.draft, ArtifactStatus.deployed
     ]);
-  assert([ArtifactStatus.draft, ArtifactStatus.deployed].toStrings == ["draft", "deployed"
+  assert([ArtifactStatus.draft, ArtifactStatus.deployed].toString == ["draft", "deployed"
     ]);
 }
 
@@ -83,7 +83,7 @@ FlowDirection[] toFlowDirections(string[] values)
   => values.map!toFlowDirection.array;
 string toString(FlowDirection value)
   => value.to!string;
-string[] toStrings(FlowDirection[] values)
+string[] toString(FlowDirection[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -99,7 +99,7 @@ unittest {
 
   assert(["inbound", "outbound"].toFlowDirections == [FlowDirection.inbound, FlowDirection.outbound
     ]);
-  assert([FlowDirection.inbound, FlowDirection.outbound].toStrings == ["inbound", "outbound"
+  assert([FlowDirection.inbound, FlowDirection.outbound].toString == ["inbound", "outbound"
     ]);
 }
 
@@ -160,7 +160,7 @@ AdapterType[] toAdapterTypes(string[] values)
   => values.map!toAdapterType.array;
 string toString(AdapterType value)
   => cast(string)value;
-string[] toStrings(AdapterType[] values)
+string[] toString(AdapterType[] values)
   => values.map!toString.array;
 /// 
 unittest {
@@ -198,7 +198,7 @@ unittest {
 
   assert(["http", "soap"].toAdapterTypes == [AdapterType.http_, AdapterType.soap
     ]);
-  assert([AdapterType.http_, AdapterType.soap].toStrings == ["http", "soap"]);
+  assert([AdapterType.http_, AdapterType.soap].toString == ["http", "soap"]);
 }
 
 /// API policy type for API Management
@@ -221,7 +221,7 @@ PolicyType[] toPolicyTypes(string[] values)
   => values.map!toPolicyType.array;
 string toString(PolicyType value)
   => value.to!string;
-string[] toStrings(PolicyType[] values)
+string[] toString(PolicyType[] values)
   => values.map!toString.array;
 /// 
 unittest {
@@ -247,7 +247,7 @@ unittest {
 
   assert(["security", "quota"].toPolicyTypes == [PolicyType.security, PolicyType.quota
     ]);
-  assert([PolicyType.security, PolicyType.quota].toStrings == ["security", "quota"
+  assert([PolicyType.security, PolicyType.quota].toString == ["security", "quota"
     ]);
 }
 
@@ -267,7 +267,7 @@ ApiProxyStatus[] toApiProxyStatuses(string[] values)
   => values.map!toApiProxyStatus.array;
 string toString(ApiProxyStatus value)
   => value.to!string;
-string[] toStrings(ApiProxyStatus[] values)
+string[] toString(ApiProxyStatus[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -285,7 +285,7 @@ unittest {
 
   assert(["draft", "published"].toApiProxyStatuses == [ApiProxyStatus.draft, ApiProxyStatus.published
     ]);
-  assert([ApiProxyStatus.draft, ApiProxyStatus.published].toStrings == ["draft", "published"
+  assert([ApiProxyStatus.draft, ApiProxyStatus.published].toString == ["draft", "published"
     ]);
 }
 
@@ -313,7 +313,7 @@ QueueStatus[] toQueueStatuses(string[] values)
   => values.map!toQueueStatus.array;
 string toString(QueueStatus value)
   => value.to!string;
-string[] toStrings(QueueStatus[] values)
+string[] toString(QueueStatus[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -332,7 +332,7 @@ unittest {
 
   assert(["active", "suspended"].toQueueStatuses == [QueueStatus.active, QueueStatus.suspended
     ]);
-  assert([QueueStatus.active, QueueStatus.suspended].toStrings == ["active", "suspended"
+  assert([QueueStatus.active, QueueStatus.suspended].toString == ["active", "suspended"
     ]);
 }
 
@@ -357,7 +357,7 @@ SubscriptionStatus[] toSubscriptionStatuses(string[] values)
   => values.map!toSubscriptionStatus.array;
 string toString(SubscriptionStatus value)
   => value.to!string;
-string[] toStrings(SubscriptionStatus[] values)
+string[] toString(SubscriptionStatus[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -376,7 +376,7 @@ unittest {
 
   assert(["active", "inactive"].toSubscriptionStatuses == [SubscriptionStatus.active, SubscriptionStatus.inactive
     ]);
-  assert([SubscriptionStatus.active, SubscriptionStatus.inactive].toStrings == ["active", "inactive"
+  assert([SubscriptionStatus.active, SubscriptionStatus.inactive].toString == ["active", "inactive"
     ]);
 }
 
@@ -398,7 +398,7 @@ B2bStandard[] toB2bStandards(string[] values)
   => values.map!toB2bStandard.array;
 string toString(B2bStandard value)
   => value.to!string;
-string[] toStrings(B2bStandard[] values)
+string[] toString(B2bStandard[] values)
   => values.map!toString.array;
   /// unittest {
   mixin(ShowTest!("B2bStandard"));
@@ -426,7 +426,7 @@ string[] toStrings(B2bStandard[] values)
 
   assert(["edifact", "x12"].toB2bStandards == [B2bStandard.edifact, B2bStandard.x12
     ]);
-  assert([B2bStandard.edifact, B2bStandard.x12].toStrings == ["EDIFACT", "X12"
+  assert([B2bStandard.edifact, B2bStandard.x12].toString == ["EDIFACT", "X12"
     ]);
 }
 
@@ -443,7 +443,7 @@ PartnerType[] toPartnerTypes(string[] values)
   => values.map!toPartnerType.array;
 string toString(PartnerType value)
   => value.to!string;
-string[] toStrings(PartnerType[] values)
+string[] toString(PartnerType[] values)
   => values.map!toString.array;
 /// 
 unittest {
@@ -462,7 +462,7 @@ unittest {
 
   assert(["company", "subsidiary"].toPartnerTypes == [PartnerType.company, PartnerType.subsidiary
     ]);
-  assert([PartnerType.company, PartnerType.subsidiary].toStrings == ["company", "subsidiary"
+  assert([PartnerType.company, PartnerType.subsidiary].toString == ["company", "subsidiary"
     ]);
 }
 
@@ -479,7 +479,7 @@ MappingStatus[] toMappingStatuses(string[] values)
   => values.map!toMappingStatus.array;
 string toString(MappingStatus value)
   => value.to!string;
-string[] toStrings(MappingStatus[] values)
+string[] toString(MappingStatus[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -498,7 +498,7 @@ unittest {
 
   assert(["draft", "active"].toMappingStatuses == [MappingStatus.draft, MappingStatus.active
     ]);
-  assert([MappingStatus.draft, MappingStatus.active].toStrings == ["draft", "active"
+  assert([MappingStatus.draft, MappingStatus.active].toString == ["draft", "active"
     ]);
 }
 
@@ -517,7 +517,7 @@ DeploymentStatus[] toDeploymentStatuses(string[] values)
   => values.map!toDeploymentStatus.array;
 string toString(DeploymentStatus value)
   => value.to!string;
-string[] toStrings(DeploymentStatus[] values)
+string[] toString(DeploymentStatus[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -540,7 +540,7 @@ unittest {
 
   assert(["pending", "running"].toDeploymentStatuses == [DeploymentStatus.pending, DeploymentStatus.running
     ]);
-  assert([DeploymentStatus.pending, DeploymentStatus.running].toStrings == ["pending", "running"
+  assert([DeploymentStatus.pending, DeploymentStatus.running].toString == ["pending", "running"
     ]);
 }
 
@@ -560,7 +560,7 @@ IntegrationUserRole[] toIntegrationUserRoles(string[] values)
   => values.map!toIntegrationUserRole.array;
 string toString(IntegrationUserRole value)
   => value.to!string;
-string[] toStrings(IntegrationUserRole[] values)  
+string[] toString(IntegrationUserRole[] values)  
   => values.map!toString.array;
 ///
 unittest {
@@ -585,6 +585,6 @@ unittest {
 
   assert(["admin", "developer"].toIntegrationUserRoles == [IntegrationUserRole.admin, IntegrationUserRole.developer
     ]);
-  assert([IntegrationUserRole.admin, IntegrationUserRole.developer].toStrings == ["admin", "developer"
+  assert([IntegrationUserRole.admin, IntegrationUserRole.developer].toString == ["admin", "developer"
     ]);
 }

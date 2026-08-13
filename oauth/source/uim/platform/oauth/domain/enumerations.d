@@ -28,7 +28,7 @@ ClientType[] toClientType(string[] values) {
 string toString(ClientType value) {
     return value.to!string;
 }
-string[] toStrings(ClientType[] values) {
+string[] toString(ClientType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -45,7 +45,7 @@ unittest {
     assert(ClientType.public_.toString == "public_");
 
     assert(["confidential", "public"].toClientType == [ClientType.confidential, ClientType.public_]);
-    assert([ClientType.confidential, ClientType.public_].toStrings == ["confidential", "public_"]);
+    assert([ClientType.confidential, ClientType.public_].toString == ["confidential", "public_"]);
 }
 
 /// OAuth client status
@@ -63,7 +63,7 @@ ClientStatus[] toClientStatuses(string[] values) {
 string toString(ClientStatus value) {
     return value.to!string;
 }
-string[] toStrings(ClientStatus[] values) {
+string[] toString(ClientStatus[] values) {
     return values.map!toString.array;
 }
 

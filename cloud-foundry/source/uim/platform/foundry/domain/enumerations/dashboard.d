@@ -32,7 +32,7 @@ string toString(DashboardMetricType t) {
     return t.to!string;
 }
 
-string[] toStrings(DashboardMetricType[] arr) {
+string[] toString(DashboardMetricType[] arr) {
     return arr.map!toString.array;
 }
 /// 
@@ -66,7 +66,7 @@ unittest {
         DashboardMetricType.certificateCount,
         DashboardMetricType.domainCount,
         DashboardMetricType.mappingCount
-    ].toStrings ==
+    ].toString ==
         [    "certificateExpiration",
             "domainHealth",
             "requestVolume",
@@ -116,7 +116,7 @@ string toString(HealthStatus t) {
     return t.to!string;
 }
 
-string[] toStrings(HealthStatus[] arr) {
+string[] toString(HealthStatus[] arr) {
     return arr.map!toString.array;
 }
 ///
@@ -137,7 +137,7 @@ unittest {
         HealthStatus.warning,
         HealthStatus.critical,
         HealthStatus.unknown
-    ].toStrings ==
+    ].toString ==
         ["healthy",
             "warning",
             "critical",
@@ -173,7 +173,7 @@ ExpirationSeverity[] toExpirationSeverities(string[] arr)
 string toString(ExpirationSeverity t)
     => t.to!string;
 
-string[] toStrings(ExpirationSeverity[] arr)
+string[] toString(ExpirationSeverity[] arr)
     => arr.map!toString.array;
 
 ///
@@ -200,7 +200,7 @@ unittest {
         ExpirationSeverity.warning,
         ExpirationSeverity.critical,
         ExpirationSeverity.expired
-    ].toStrings ==
+    ].toString ==
         ["none", "info",
             "warning",
             "critical",

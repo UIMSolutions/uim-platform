@@ -27,7 +27,7 @@ ConnectionStatus[] toConnectionStatuses(string[] values) {
 string toString(ConnectionStatus status) {
   return status.to!string;
 }
-string[] toStrings(ConnectionStatus[] statuses) {
+string[] toString(ConnectionStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -46,7 +46,7 @@ unittest {
   assert(ConnectionStatus.pending.toString == "pending");
 
   assert(["active", "error", "unknown"].toConnectionStatuses == [ConnectionStatus.active, ConnectionStatus.error, ConnectionStatus.inactive]);
-  assert([ConnectionStatus.active, ConnectionStatus.error].toStrings == ["active", "error"]);
+  assert([ConnectionStatus.active, ConnectionStatus.error].toString == ["active", "error"]);
 }
 
 enum ConnectionType {
@@ -62,7 +62,7 @@ ConnectionType[] toConnectionTypes(string[] types) {
 string toString(ConnectionType type) {
   return type.to!string;
 }
-string[] toStrings(ConnectionType[] types) {
+string[] toString(ConnectionType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -79,7 +79,7 @@ unittest {
   assert(ConnectionType.custom.toString == "custom");  
 
   assert(["ai_core", "custom", "unknown"].toConnectionTypes == [ConnectionType.ai_core, ConnectionType.custom, ConnectionType.custom]);
-  assert([ConnectionType.ai_core, ConnectionType.custom].toStrings == ["ai_core", "custom"]);
+  assert([ConnectionType.ai_core, ConnectionType.custom].toString == ["ai_core", "custom"]);
 }
 
 // Execution lifecycle
@@ -101,7 +101,7 @@ ExecutionStatus[] toExecutionStatuses(string[] values) {
 string toString(ExecutionStatus status) {
   return status.to!string;
 }
-string[] toStrings(ExecutionStatus[] statuses) {
+string[] toString(ExecutionStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -126,7 +126,7 @@ unittest {
   assert(ExecutionStatus.unknown.toString == "unknown");
 
   assert(["pending", "running", "unknown"].toExecutionStatuses == [ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.unknown]);
-  assert([ExecutionStatus.pending, ExecutionStatus.failed].toStrings == ["pending", "failed"]);
+  assert([ExecutionStatus.pending, ExecutionStatus.failed].toString == ["pending", "failed"]);
 }
 
 // Deployment lifecycle
@@ -146,7 +146,7 @@ DeploymentStatus[] toDeploymentStatuses(string[] values) {
 string toString(DeploymentStatus status) {
   return status.to!string;
 }
-string[] toStrings(DeploymentStatus[] statuses) {
+string[] toString(DeploymentStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -169,7 +169,7 @@ unittest {
   assert(DeploymentStatus.unknown.toString == "unknown");
 
   assert(["pending", "running", "unknown"].toDeploymentStatuses == [DeploymentStatus.pending, DeploymentStatus.running, DeploymentStatus.unknown]);
-  assert([DeploymentStatus.pending, DeploymentStatus.stopped].toStrings == ["pending", "stopped"]);
+  assert([DeploymentStatus.pending, DeploymentStatus.stopped].toString == ["pending", "stopped"]);
 }
 
 // Model tracking
@@ -192,7 +192,7 @@ ModelStatus[] toModelStatuses(string[] values) {
 string toString(ModelStatus status) {
   return cast(string) status;
 }
-string[] toStrings(ModelStatus[] statuses) {
+string[] toString(ModelStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -209,7 +209,7 @@ unittest {
   assert(ModelStatus.deprecated_.toString == "deprecated");
 
   assert(["available", "archived", "unknown"].toModelStatuses == [ModelStatus.available, ModelStatus.archived, ModelStatus.available]);
-  assert([ModelStatus.available, ModelStatus.deprecated_].toStrings == ["available", "deprecated"]);
+  assert([ModelStatus.available, ModelStatus.deprecated_].toString == ["available", "deprecated"]);
 }
 
 // Dataset tracking
@@ -228,7 +228,7 @@ DatasetStatus[] toDatasetStatuses(string[] values) {
 string toString(DatasetStatus status) {
   return status.to!string;
 }
-string[] toStrings(DatasetStatus[] statuses) {
+string[] toString(DatasetStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -247,7 +247,7 @@ unittest {
   assert(DatasetStatus.archived.toString == "archived");
 
   assert(["available", "error", "unknown"].toDatasetStatuses == [DatasetStatus.available, DatasetStatus.error, DatasetStatus.available]);
-  assert([DatasetStatus.available, DatasetStatus.archived].toStrings == ["available", "archived"]);
+  assert([DatasetStatus.available, DatasetStatus.archived].toString == ["available", "archived"]);
 }
 
 // Workspace
@@ -264,7 +264,7 @@ WorkspaceStatus[] toWorkspaceStatuses(string[] values) {
 string toString(WorkspaceStatus status) {
   return status.to!string;
 }
-string[] toStrings(WorkspaceStatus[] statuses) {
+string[] toString(WorkspaceStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -279,7 +279,7 @@ unittest {
   assert(WorkspaceStatus.inactive.toString == "inactive");
 
   assert(["active", "unknown"].toWorkspaceStatuses == [WorkspaceStatus.active, WorkspaceStatus.inactive]);
-  assert([WorkspaceStatus.active, WorkspaceStatus.inactive].toStrings == ["active", "inactive"]);
+  assert([WorkspaceStatus.active, WorkspaceStatus.inactive].toString == ["active", "inactive"]);
 }
 
 // GenAI Hub prompt management
@@ -296,7 +296,7 @@ PromptRole[] toPromptRoles(string[] roles) {
 }
 string toString(PromptRole role) {  return role.to!string;
 }
-string[] toStrings(PromptRole[] roles) {
+string[] toString(PromptRole[] roles) {
   return roles.map!toString.array;
 }
 ///
@@ -313,7 +313,7 @@ unittest {
   assert(PromptRole.assistant.toString == "assistant");  
 
   assert(["system", "assistant", "unknown"].toPromptRoles == [PromptRole.system, PromptRole.assistant, PromptRole.user]);
-  assert([PromptRole.system, PromptRole.assistant].toStrings == ["system", "assistant"]);
+  assert([PromptRole.system, PromptRole.assistant].toString == ["system", "assistant"]);
 }
 
 enum PromptStatus {
@@ -330,7 +330,7 @@ PromptStatus[] toPromptStatuses(string[] values) {
 string toString(PromptStatus status) {
   return status.to!string;
 }
-string[] toStrings(PromptStatus[] statuses) {
+string[] toString(PromptStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -347,7 +347,7 @@ unittest {
   assert(PromptStatus.archived.toString == "archived");  
 
   assert(["draft", "active", "unknown"].toPromptStatuses == [PromptStatus.draft, PromptStatus.active, PromptStatus.draft]);
-  assert([PromptStatus.draft, PromptStatus.archived].toStrings == ["draft", "archived"]);
+  assert([PromptStatus.draft, PromptStatus.archived].toString == ["draft", "archived"]);
 }
  
 // Artifact classification
@@ -366,7 +366,7 @@ ArtifactKind[] toArtifactKinds(string[] kinds) {
 string toString(ArtifactKind kind) {
   return kind.to!string;
 }
-string[] toStrings(ArtifactKind[] kinds) {
+string[] toString(ArtifactKind[] kinds) {
   return kinds.map!toString.array;
 }
 ///
@@ -384,7 +384,7 @@ unittest {
   assert(ArtifactKind.other.toString == "other");
 
   assert(["model", "resultset", "unknown"].toArtifactKinds == [ArtifactKind.model, ArtifactKind.resultset, ArtifactKind.other]);
-  assert([ArtifactKind.model, ArtifactKind.dataset].toStrings == ["model", "dataset"]);
+  assert([ArtifactKind.model, ArtifactKind.dataset].toString == ["model", "dataset"]);
 }
 
 // Target status for lifecycle operations
@@ -409,7 +409,7 @@ TargetStatus[] toTargetStatuses(string[] values) {
 string toString(TargetStatus status) {
   return status.to!string;
 }
-string[] toStrings(TargetStatus[] statuses) {
+string[] toString(TargetStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -428,7 +428,7 @@ unittest {
   assert(TargetStatus.completed.toString == "completed");
 
   assert(["running", "deleted", "unknown"].toTargetStatuses == [TargetStatus.running, TargetStatus.deleted, TargetStatus.stopped]);
-  assert([TargetStatus.running, TargetStatus.completed].toStrings == ["running", "completed"]);
+  assert([TargetStatus.running, TargetStatus.completed].toString == ["running", "completed"]);
 }
 
 // Metric value types
@@ -451,7 +451,7 @@ MetricValueType[] toMetricValueTypes(string[] values) {
 string toString(MetricValueType type) {
   return cast(string)type;
 }
-string[] toStrings(MetricValueType[] types) {
+string[] toString(MetricValueType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -470,7 +470,7 @@ unittest {
   assert(MetricValueType.string_.toString == "string");
 
   assert(["float", "int", "unknown"].toMetricValueTypes == [MetricValueType.float_, MetricValueType.int_, MetricValueType.string_]);
-  assert([MetricValueType.float_, MetricValueType.string_].toStrings == ["float", "string"]);
+  assert([MetricValueType.float_, MetricValueType.string_].toString == ["float", "string"]);
 }
 
 // Usage statistics
@@ -488,7 +488,7 @@ StatisticsPeriod[] toStatisticsPeriods(string[] values) {
 string toString(StatisticsPeriod period) {
   return period.to!string;
 }
-string[] toStrings(StatisticsPeriod[] periods) {
+string[] toString(StatisticsPeriod[] periods) {
   return periods.map!toString.array;
 }
 ///
@@ -505,7 +505,7 @@ unittest {
   assert(StatisticsPeriod.monthly.toString == "monthly");
 
   assert(["daily", "weekly", "unknown"].toStatisticsPeriods == [StatisticsPeriod.daily, StatisticsPeriod.weekly, StatisticsPeriod.daily]);
-  assert([StatisticsPeriod.daily, StatisticsPeriod.monthly].toStrings == ["daily", "monthly"]);
+  assert([StatisticsPeriod.daily, StatisticsPeriod.monthly].toString == ["daily", "monthly"]);
 }
 
 // Log severity levels
@@ -523,7 +523,7 @@ LogSeverity[] toLogSeverities(string[] values) {
 string toString(LogSeverity severity) {
   return severity.to!string;
 }
-string[] toStrings(LogSeverity[] severities) {
+string[] toString(LogSeverity[] severities) {
   return severities.map!toString.array;
 }
 ///
@@ -542,7 +542,7 @@ unittest {
   assert(LogSeverity.error.toString == "error");
 
   assert(["info", "error", "unknown"].toLogSeverities == [LogSeverity.info, LogSeverity.error, LogSeverity.info]);
-  assert([LogSeverity.info, LogSeverity.warn].toStrings == ["info", "warn"]);
+  assert([LogSeverity.info, LogSeverity.warn].toString == ["info", "warn"]);
 }
 
 // Schedule status
@@ -559,7 +559,7 @@ ScheduleStatus[] toScheduleStatuses(string[] values) {
 string toString(ScheduleStatus status) {
   return status.to!string;
 }
-string[] toStrings(ScheduleStatus[] statuses) {
+string[] toString(ScheduleStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -576,5 +576,5 @@ unittest {
   assert(ScheduleStatus.inactive.toString == "inactive");
 
   assert(["active", "unknown"].toScheduleStatuses == [ScheduleStatus.active, ScheduleStatus.inactive]);
-  assert([ScheduleStatus.active, ScheduleStatus.inactive].toStrings == ["active", "inactive"]);
+  assert([ScheduleStatus.active, ScheduleStatus.inactive].toString == ["active", "inactive"]);
 }

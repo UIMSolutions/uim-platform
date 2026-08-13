@@ -21,7 +21,7 @@ CredentialType[] toCredentialTypes(string[] values)
 string toString(CredentialType value)
   => value.to!string;
 
-string[] toStrings(CredentialType[] values)
+string[] toString(CredentialType[] values)
   => values.map!toString.array;
 
 ///
@@ -41,7 +41,7 @@ unittest {
 
   assert(["password", "key"].toCredentialTypes == [CredentialType.password, CredentialType.key
     ]);
-  assert([CredentialType.password, CredentialType.key].toStrings == ["password", "key"]);
+  assert([CredentialType.password, CredentialType.key].toString == ["password", "key"]);
 }
 
 enum CredentialStatus : string{
@@ -69,7 +69,7 @@ CredentialStatus[] toCredentialStatuses(string[] values)
 string toString(CredentialStatus value)
   => cast(string)value;
 
-string[] toStrings(CredentialStatus[] values)
+string[] toString(CredentialStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -89,7 +89,7 @@ unittest {
 
   assert(["active", "disabled"].toCredentialStatuses == [CredentialStatus.active, CredentialStatus.disabled
     ]);
-  assert([CredentialStatus.active, CredentialStatus.disabled].toStrings == ["active", "disabled"
+  assert([CredentialStatus.active, CredentialStatus.disabled].toString == ["active", "disabled"
     ]);
 
 }
@@ -137,7 +137,7 @@ OperationType[] toOperationTypes(string[] values)
 string toString(OperationType value)
   => value.to!string;
 
-string[] toStrings(OperationType[] values)  
+string[] toString(OperationType[] values)  
   => values.map!toString.array;
 
 /// 
@@ -169,7 +169,7 @@ unittest {
 
   assert(["create", "read"].toOperationTypes == [OperationType.create, OperationType.read
     ]);
-  assert([OperationType.create, OperationType.read].toStrings == ["create", "read"
+  assert([OperationType.create, OperationType.read].toString == ["create", "read"
     ]);
 }
 
@@ -193,7 +193,7 @@ ResourceType[] toResourceTypes(string[] values)
 string toString(ResourceType type)
   => type.to!string;
 
-string[] toStrings(ResourceType[] values)
+string[] toString(ResourceType[] values)
   => values.map!toString.array;
 
 ///
@@ -221,7 +221,7 @@ unittest {
 
   assert(["namespace", "key"].toResourceTypes == [ResourceType.namespace, ResourceType.key
     ]);
-  assert([ResourceType.namespace, ResourceType.key].toStrings == ["namespace", "key"
+  assert([ResourceType.namespace, ResourceType.key].toString == ["namespace", "key"
     ]);
 }
 
@@ -241,7 +241,7 @@ PermissionLevel[] toPermissionLevels(string[] values)
 string toString(PermissionLevel value)
   => value.to!string;
 
-string[] toStrings(PermissionLevel[] values)
+string[] toString(PermissionLevel[] values)
   => values.map!toString.array;
 
 ///
@@ -261,7 +261,7 @@ unittest {
 
   assert(["readWrite", "admin"].toPermissionLevels == [PermissionLevel.readWrite, PermissionLevel.admin
     ]);
-  assert([PermissionLevel.readWrite, PermissionLevel.admin].toStrings == ["readWrite", "admin"
+  assert([PermissionLevel.readWrite, PermissionLevel.admin].toString == ["readWrite", "admin"
     ]);
 }
 
@@ -280,7 +280,7 @@ BindingStatus[] toBindingStatuses(string[] values)
 string toString(BindingStatus value)
   => value.to!string;
 
-string[] toStrings(BindingStatus[] values)
+string[] toString(BindingStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -298,7 +298,7 @@ unittest {
 
   assert(["active", "revoked"].toBindingStatuses == [BindingStatus.active, BindingStatus.revoked
     ]);
-  assert([BindingStatus.active, BindingStatus.revoked].toStrings == ["active", "revoked"
+  assert([BindingStatus.active, BindingStatus.revoked].toString == ["active", "revoked"
     ]);
 }
 
@@ -333,7 +333,7 @@ KeyringRotationPeriod[] toKeyringRotationPeriods(string[] values)
 string toString(KeyringRotationPeriod value)
   => value.to!string;
 
-string[] toStrings(KeyringRotationPeriod[] values)
+string[] toString(KeyringRotationPeriod[] values)
   => values.map!toString.array;
 
 ///
@@ -357,6 +357,6 @@ unittest {
 //
 //  assert(["30", "90"].toKeyringRotationPeriods == [KeyringRotationPeriod.days30, KeyringRotationPeriod.days90
 //    ]);
-//  assert([KeyringRotationPeriod.days30, KeyringRotationPeriod.days90].toStrings == ["30", "90"
+//  assert([KeyringRotationPeriod.days30, KeyringRotationPeriod.days90].toString == ["30", "90"
 //    ]);
 } 

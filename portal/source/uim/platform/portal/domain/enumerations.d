@@ -28,7 +28,7 @@ SiteStatus[] toSiteStatuses(string[] values) {
 string toString(SiteStatus status) {
   return status.to!string;
 }
-string[] toStrings(SiteStatus[] statuses) {
+string[] toString(SiteStatus[] statuses) {
   return statuses.map!(s => toString(s));
 }
 ///
@@ -46,7 +46,7 @@ unittest {
 
   assert(toSiteStatus(["draft", "published", "unpublished", "archived", "unknown"]) ==
          [SiteStatus.draft, SiteStatus.published, SiteStatus.unpublished, SiteStatus.archived, SiteStatus.draft]);
-  assert(toStrings([SiteStatus.draft, SiteStatus.published, SiteStatus.unpublished, SiteStatus.archived]) ==
+  assert(toString([SiteStatus.draft, SiteStatus.published, SiteStatus.unpublished, SiteStatus.archived]) ==
          ["draft", "published", "unpublished", "archived"]);
 }
 
@@ -67,7 +67,7 @@ PageLayout[] toPageLayout(string[] values) {
 string toString(PageLayout layout) {
   return layout.to!string;
 }
-string[] toStrings(PageLayout[] layouts) {
+string[] toString(PageLayout[] layouts) {
   return layouts.map!(l => toString(l));
 }
 ///
@@ -87,7 +87,7 @@ unittest {
 
   assert(toPageLayout(["freeform", "anchored", "twoColumn", "threeColumn", "dashboard", "unknown"]) ==
          [PageLayout.freeform, PageLayout.anchored, PageLayout.twoColumn, PageLayout.threeColumn, PageLayout.dashboard, PageLayout.freeform]);
-  assert(toStrings([PageLayout.freeform, PageLayout.anchored, PageLayout.twoColumn, PageLayout.threeColumn, PageLayout.dashboard]) ==
+  assert(toString([PageLayout.freeform, PageLayout.anchored, PageLayout.twoColumn, PageLayout.threeColumn, PageLayout.dashboard]) ==
          ["freeform", "anchored", "twoColumn", "threeColumn", "dashboard"]);
 }
 
@@ -115,7 +115,7 @@ TileType[] toTileType(string[] values) {
 string toString(TileType type) {
   return cast(string)type;
 }
-string[] toStrings(TileType[] types) {
+string[] toString(TileType[] types) {
   return types.map!(t => toString(t));
 }
 ///
@@ -135,7 +135,7 @@ unittest {
 
   assert(toTileType(["static_", "dynamic", "custom", "news", "kpi", "unknown"]) ==
          [TileType.static_, TileType.dynamic, TileType.custom, TileType.news, TileType.kpi, TileType.static_]);
-  assert(toStrings([TileType.static_, TileType.dynamic, TileType.custom, TileType.news, TileType.kpi]) ==
+  assert(toString([TileType.static_, TileType.dynamic, TileType.custom, TileType.news, TileType.kpi]) ==
          ["static_", "dynamic", "custom", "news", "kpi"]);
 }
 
@@ -157,7 +157,7 @@ AppType[] toAppType(string[] values) {
 string toString(AppType type) {
   return type.to!string;
 }
-string[] toStrings(AppType[] types) {
+string[] toString(AppType[] types) {
   return types.map!(t => toString(t));
 }
 ///
@@ -179,7 +179,7 @@ unittest {
 
   assert(toAppType(["sapui5", "webDynpro", "sapGuiHtml", "url", "webComponent", "native", "unknown"]) ==
          [AppType.sapui5, AppType.webDynpro, AppType.sapGuiHtml, AppType.url, AppType.webComponent, AppType.native, AppType.sapui5]);
-  assert(toStrings([AppType.sapui5, AppType.webDynpro, AppType.sapGuiHtml, AppType.url, AppType.webComponent, AppType.native]) ==
+  assert(toString([AppType.sapui5, AppType.webDynpro, AppType.sapGuiHtml, AppType.url, AppType.webComponent, AppType.native]) ==
          ["sapui5", "webDynpro", "sapGuiHtml", "url", "webComponent", "native"]);
 }
 
@@ -198,7 +198,7 @@ ProviderType[] toProviderType(string[] values) {
 string toString(ProviderType type) {
   return type.to!string;
 }
-string[] toStrings(ProviderType[] types) {
+string[] toString(ProviderType[] types) {
   return types.map!(t => toString(t));
 }
 ///
@@ -214,7 +214,7 @@ unittest {
 
   assert(toProviderType(["local", "remote", "federated", "unknown"]) ==
          [ProviderType.local, ProviderType.remote, ProviderType.federated, ProviderType.local]);
-  assert(toStrings([ProviderType.local, ProviderType.remote, ProviderType.federated]) ==
+  assert(toString([ProviderType.local, ProviderType.remote, ProviderType.federated]) ==
          ["local", "remote", "federated"]);
 }
 
@@ -234,7 +234,7 @@ ThemeMode[] toThemeMode(string[] values) {
 string toString(ThemeMode mode) {
   return mode.to!string;
 }
-string[] toStrings(ThemeMode[] modes) {
+string[] toString(ThemeMode[] modes) {
   return modes.map!(m => toString(m));
 }
 ///
@@ -252,7 +252,7 @@ unittest {
 
   assert(toThemeMode(["light", "dark", "highContrast", "highContrastDark", "unknown"]) ==
          [ThemeMode.light, ThemeMode.dark, ThemeMode.highContrast, ThemeMode.highContrastDark, ThemeMode.light]);
-  assert(toStrings([ThemeMode.light, ThemeMode.dark, ThemeMode.highContrast, ThemeMode.highContrastDark]) ==
+  assert(toString([ThemeMode.light, ThemeMode.dark, ThemeMode.highContrast, ThemeMode.highContrastDark]) ==
          ["light", "dark", "highContrast", "highContrastDark"]);
 }
 
@@ -271,7 +271,7 @@ NavigationTarget[] toNavigationTarget(string[] values) {
 string toString(NavigationTarget target) {
   return target.to!string;
 }
-string[] toStrings(NavigationTarget[] targets) {
+string[] toString(NavigationTarget[] targets) {
   return targets.map!(t => toString(t));
 }
 ///
@@ -287,7 +287,7 @@ unittest {
 
   assert(toNavigationTarget(["inPlace", "newWindow", "embedded", "unknown"]) ==
          [NavigationTarget.inPlace, NavigationTarget.newWindow, NavigationTarget.embedded, NavigationTarget.inPlace]);
-  assert(toStrings([NavigationTarget.inPlace, NavigationTarget.newWindow, NavigationTarget.embedded]) ==
+  assert(toString([NavigationTarget.inPlace, NavigationTarget.newWindow, NavigationTarget.embedded]) ==
          ["inPlace", "newWindow", "embedded"]);
 }
 
@@ -307,7 +307,7 @@ TransportStatus[] toTransportStatuses(string[] values) {
 string toString(TransportStatus status) {
   return status.to!string;
 }
-string[] toStrings(TransportStatus[] statuses) {
+string[] toString(TransportStatus[] statuses) {
   return statuses.map!(s => toString(s));
 }
 ///
@@ -325,7 +325,7 @@ unittest {
 
   assert(toTransportStatus(["pending", "inProgress", "completed", "failed", "unknown"]) ==
          [TransportStatus.pending, TransportStatus.inProgress, TransportStatus.completed, TransportStatus.failed, TransportStatus.pending]);
-  assert(toStrings([TransportStatus.pending, TransportStatus.inProgress, TransportStatus.completed, TransportStatus.failed]) ==
+  assert(toString([TransportStatus.pending, TransportStatus.inProgress, TransportStatus.completed, TransportStatus.failed]) ==
          ["pending", "inProgress", "completed", "failed"]);
 }
 
@@ -345,7 +345,7 @@ RoleScope[] toRoleScope(string[] values) {
 string toString(RoleScope value) {
   return value.to!string;
 }
-string[] toStrings(RoleScope[] values) {
+string[] toString(RoleScope[] values) {
   return values.map!(v => toString(v));
 }
 ///
@@ -363,6 +363,6 @@ unittest {
 
   assert(toRoleScope(["site", "catalog", "group", "page", "unknown"]) ==
          [RoleScope.site, RoleScope.catalog, RoleScope.group, RoleScope.page, RoleScope.site]);
-  assert(toStrings([RoleScope.site, RoleScope.catalog, RoleScope.group, RoleScope.page]) ==
+  assert(toString([RoleScope.site, RoleScope.catalog, RoleScope.group, RoleScope.page]) ==
          ["site", "catalog", "group", "page"]);
 }

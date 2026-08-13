@@ -32,7 +32,7 @@ string toString(AppPlatform value) {
   return value.to!string;
 }
 
-string[] toStrings(AppPlatform[] values) {
+string[] toString(AppPlatform[] values) {
   return values.map!toString.array;
 }
 ///
@@ -85,7 +85,7 @@ string toString(AppStatus value) {
   return cast(string)value; // This will return the enum member name as a string, e.g., "active", "inactive", etc.
 }
 
-string[] toStrings(AppStatus[] values) {
+string[] toString(AppStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -108,12 +108,12 @@ unittest {
   assert(toString(AppStatus.inactive) == "inactive");
   assert(toString(AppStatus.suspended) == "suspended");
   assert(toString(AppStatus.deleted_) == "deleted");
-  assert(toStrings([AppStatus.active, AppStatus.inactive, AppStatus.suspended,
+  assert(toString([AppStatus.active, AppStatus.inactive, AppStatus.suspended,
       AppStatus.deleted_
     ]) == ["active", "inactive", "suspended", "deleted"]);
   assert([
     AppStatus.active, AppStatus.inactive, AppStatus.suspended, AppStatus.deleted_
-  ].toStrings == ["active", "inactive", "suspended", "deleted"]);
+  ].toString == ["active", "inactive", "suspended", "deleted"]);
 }
 
 // Device status
@@ -136,7 +136,7 @@ string toString(DeviceStatus value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "registered", "locked", etc.
 }
 
-string[] toStrings(DeviceStatus[] values) {
+string[] toString(DeviceStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -158,13 +158,13 @@ unittest {
   assert(toString(DeviceStatus.wiped) == "wiped");
   assert(toString(DeviceStatus.blocked) == "blocked");
 
-  assert(toStrings([DeviceStatus.registered, DeviceStatus.locked, DeviceStatus.wiped,
+  assert(toString([DeviceStatus.registered, DeviceStatus.locked, DeviceStatus.wiped,
       DeviceStatus.blocked
     ]) == ["registered", "locked", "wiped", "blocked"]);
   assert([
     DeviceStatus.registered, DeviceStatus.locked, DeviceStatus.wiped,
     DeviceStatus.blocked
-  ].toStrings == ["registered", "locked", "wiped", "blocked"]);
+  ].toString == ["registered", "locked", "wiped", "blocked"]);
 }
 
 // Push notification provider
@@ -187,7 +187,7 @@ string toString(PushProvider value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "fcm", "apns", etc.
 }
 
-string[] toStrings(PushProvider[] values) {
+string[] toString(PushProvider[] values) {
   return values.map!toString.array;
 }
 ///
@@ -211,11 +211,11 @@ unittest {
   assert(toString(PushProvider.wns) == "wns");
   assert(toString(PushProvider.w3c) == "w3c");
 
-  assert(toStrings([PushProvider.fcm, PushProvider.apns, PushProvider.wns, PushProvider.w3c
+  assert(toString([PushProvider.fcm, PushProvider.apns, PushProvider.wns, PushProvider.w3c
     ]) == ["fcm", "apns", "wns", "w3c"]);
   assert([
     PushProvider.fcm, PushProvider.apns, PushProvider.wns, PushProvider.w3c
-  ].toStrings == ["fcm", "apns", "wns", "w3c"]);
+  ].toString == ["fcm", "apns", "wns", "w3c"]);
 }
 
 // Notification status
@@ -239,7 +239,7 @@ string toString(NotificationStatus value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "pending", "sent", etc.
 }
 
-string[] toStrings(NotificationStatus[] values) {
+string[] toString(NotificationStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -269,7 +269,7 @@ unittest {
     NotificationStatus.pending, NotificationStatus.sent,
     NotificationStatus.delivered, NotificationStatus.failed,
     NotificationStatus.expired
-  ].toStrings == ["pending", "sent", "delivered", "failed", "expired"]);
+  ].toString == ["pending", "sent", "delivered", "failed", "expired"]);
 }
 
 // Notification priority
@@ -289,7 +289,7 @@ NotificationPriority[] toNotificationPriorities(string[] values)
 string toString(NotificationPriority value)
   => value.to!string; // This will return the enum member name as a string, e.g., "normal", "low", etc.
 
-string[] toStrings(NotificationPriority[] values)
+string[] toString(NotificationPriority[] values)
   => values.map!toString.array;
 
 ///
@@ -312,11 +312,11 @@ unittest {
   assert([
     NotificationPriority.normal, NotificationPriority.low,
     NotificationPriority.high
-  ].toStrings == ["normal", "low", "high"]);
+  ].toString == ["normal", "low", "high"]);
   assert([
     NotificationPriority.normal, NotificationPriority.low,
     NotificationPriority.high
-  ].toStrings == ["normal", "low", "high"]);
+  ].toString == ["normal", "low", "high"]);
 }
 
 // Push registration status
@@ -338,7 +338,7 @@ string toString(PushRegStatus value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "active", "expired", etc.
 }
 
-string[] toStrings(PushRegStatus[] values) {
+string[] toString(PushRegStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -358,7 +358,7 @@ unittest {
   assert(toString(PushRegStatus.expired) == "expired");
   assert(toString(PushRegStatus.revoked) == "revoked");
 
-  assert(toStrings([PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
+  assert(toString([PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
     ]) == ["active", "expired", "revoked"]);
   assert(["active", "expired", "revoked"].toPushRegStatuses == [PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
     ]);
@@ -390,7 +390,7 @@ RestrictionType[] toRestrictionTypes(string[] values)
 string toString(RestrictionType value)
   => cast(string)value; // This will return the enum member name as a string, e.g., "boolean_", "percentage", etc.
 
-string[] toStrings(RestrictionType[] values)
+string[] toString(RestrictionType[] values)
   => values.map!toString.array;
 
 /// 
@@ -412,13 +412,13 @@ unittest {
   assert(toString(RestrictionType.percentage) == "percentage");
   assert(toString(RestrictionType.whitelist) == "whitelist");
 
-  assert(toStrings([RestrictionType.boolean_, RestrictionType.percentage,
+  assert(toString([RestrictionType.boolean_, RestrictionType.percentage,
       RestrictionType.whitelist
     ]) == ["boolean", "percentage", "whitelist"]);
   assert([
     RestrictionType.boolean_, RestrictionType.percentage,
     RestrictionType.whitelist
-  ].toStrings == ["boolean", "percentage", "whitelist"]);
+  ].toString == ["boolean", "percentage", "whitelist"]);
 }
 
 // Resource type
@@ -439,7 +439,7 @@ ClientResourceType[] toClientResourceTypes(string[] values)
 string toString(ClientResourceType value)
   => value.to!string; // This will return the enum member name as a string, e.g., "bundle", "configuration", etc.
 
-string[] toStrings(ClientResourceType[] values)
+string[] toString(ClientResourceType[] values)
   => values.map!toString.array;
 
 ///
@@ -468,7 +468,7 @@ unittest {
   assert([
     ClientResourceType.bundle, ClientResourceType.configuration,
     ClientResourceType.certificate, ClientResourceType.translation
-  ].toStrings == ["bundle", "configuration", "certificate", "translation"]);
+  ].toString == ["bundle", "configuration", "certificate", "translation"]);
 }
 
 // Version status
@@ -505,7 +505,7 @@ string toString(VersionStatus value) {
   return cast(string)value; // This will return the enum member name as a string, e.g., "draft", "published", etc.
 }
 
-string[] toStrings(VersionStatus[] values) {
+string[] toString(VersionStatus[] values) {
   return values.map!toString.array;
 }
 ///
@@ -533,13 +533,13 @@ unittest {
   assert(VersionStatus.deprecated_.toString == "deprecated");
   assert(VersionStatus.archived.toString == "archived");
 
-  assert(toStrings([VersionStatus.draft, VersionStatus.published, VersionStatus.mandatory,
+  assert(toString([VersionStatus.draft, VersionStatus.published, VersionStatus.mandatory,
       VersionStatus.deprecated_, VersionStatus.archived
     ]) == ["draft", "published", "mandatory", "deprecated", "archived"]);
   assert([
     VersionStatus.draft, VersionStatus.published, VersionStatus.mandatory,
     VersionStatus.deprecated_, VersionStatus.archived
-  ].toStrings == ["draft", "published", "mandatory", "deprecated", "archived"]);
+  ].toString == ["draft", "published", "mandatory", "deprecated", "archived"]);
 }
 
 // Store type
@@ -560,7 +560,7 @@ string toString(OfflineStoreType value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "odata", "custom", etc.
 }
 
-string[] toStrings(OfflineStoreType[] values) {
+string[] toString(OfflineStoreType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -579,7 +579,7 @@ unittest {
 
   assert(["odata", "custom"].toOfflineStoreTypes == [OfflineStoreType.odata, OfflineStoreType.custom
     ]);
-  assert([OfflineStoreType.odata, OfflineStoreType.custom].toStrings == ["odata", "custom"
+  assert([OfflineStoreType.odata, OfflineStoreType.custom].toString == ["odata", "custom"
     ]);
 }
 
@@ -601,7 +601,7 @@ SyncStatus[] toSyncStatuses(string[] values)
 string toString(SyncStatus value)
   => value.to!string; // This will return the enum member name as a string, e.g., "idle", "syncing", etc.
 
-string[] toStrings(SyncStatus[] values)
+string[] toString(SyncStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -629,7 +629,7 @@ unittest {
 
   assert([
     SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
-  ].toStrings == ["idle", "syncing", "error", "completed"]);
+  ].toString == ["idle", "syncing", "error", "completed"]);
   assert(["idle", "syncing", "error", "completed"].toSyncStatuses == [SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
     ]);
 }
@@ -651,7 +651,7 @@ SessionStatus[] toSessionStatuses(string[] values)
 string toString(SessionStatus value)
   => value.to!string; // This will return the enum member name as a string, e.g., "active", "expired", etc.
 
-string[] toStrings(SessionStatus[] values)
+string[] toString(SessionStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -673,7 +673,7 @@ unittest {
 
   assert(["active", "expired", "terminated"].toSessionStatuses == [SessionStatus.active, SessionStatus.expired, SessionStatus.terminated
     ]);
-  assert([SessionStatus.active, SessionStatus.expired, SessionStatus.terminated].toStrings == ["active", "expired", "terminated"
+  assert([SessionStatus.active, SessionStatus.expired, SessionStatus.terminated].toString == ["active", "expired", "terminated"
     ]);
 }
 
@@ -695,7 +695,7 @@ LogSource[] toLogSources(string[] values)
 string toString(LogSource value)
   => value.to!string; // This will return the enum member name as a string, e.g., "client", "server", etc.
 
-string[] toStrings(LogSource[] values)
+string[] toString(LogSource[] values)
   => values.map!toString.array;
 
 ///
@@ -718,9 +718,9 @@ unittest {
   assert(LogSource.push.toString == "push");
   assert(LogSource.sync.toString == "sync");
 
-  assert(toStrings([LogSource.client, LogSource.server, LogSource.push, LogSource.sync
+  assert(toString([LogSource.client, LogSource.server, LogSource.push, LogSource.sync
     ]) == ["client", "server", "push", "sync"]);
-  assert([LogSource.client, LogSource.server, LogSource.push, LogSource.sync].toStrings == ["client", "server", "push", "sync"
+  assert([LogSource.client, LogSource.server, LogSource.push, LogSource.sync].toString == ["client", "server", "push", "sync"
     ]);
 }
 
@@ -747,7 +747,7 @@ string toString(MetricType value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "appLaunch", "screenView", etc.
 }
 
-string[] toStrings(MetricType[] values) {
+string[] toString(MetricType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -781,7 +781,7 @@ unittest {
   assert(MetricType.crash.toString == "crash");
   assert(MetricType.custom.toString == "custom");
 
-  assert(toStrings([MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
+  assert(toString([MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
       MetricType.pushReceived, MetricType.syncCompleted, MetricType.crash,
       MetricType.custom
     ]) == [
@@ -792,7 +792,7 @@ unittest {
     MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
     MetricType.pushReceived, MetricType.syncCompleted, MetricType.crash,
     MetricType.custom
-  ].toStrings == [
+  ].toString == [
     "appLaunch", "screenView", "apiCall", "pushReceived", "syncCompleted", "crash",
     "custom"
   ]);
@@ -841,7 +841,7 @@ DataType[] toDataTypes(string[] values)
 string toString(DataType value)
   => cast(string)value; // This will return the enum member name as a string, e.g., "string", "integer", etc.
 
-string[] toStrings(DataType[] values)
+string[] toString(DataType[] values)
   => values.map!toString.array;
 
 /// 
@@ -883,7 +883,7 @@ unittest {
     DataType.string_, DataType.integer, DataType.float_, DataType.boolean_,
     DataType.date, DataType.datetime, DataType.time, DataType.binary,
     DataType.json
-  ].toStrings == [
+  ].toString == [
     "string", "integer", "float", "boolean", "date", "datetime", "time", "binary",
     "json"
   ]);

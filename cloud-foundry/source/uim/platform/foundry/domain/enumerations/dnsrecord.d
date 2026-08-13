@@ -33,7 +33,7 @@ DnsRecordType[] toDnsRecordTypes(string[] values) {
 string toString(DnsRecordType type) {
     return type.to!string;
 }
-string[] toStrings(DnsRecordType[] types) {
+string[] toString(DnsRecordType[] types) {
     return types.map!toString.array;
 }
 /// 
@@ -57,7 +57,7 @@ unittest {
 
     assert([DnsRecordType.aRecord, DnsRecordType.aaaaRecord, DnsRecordType.cnameRecord,
         DnsRecordType.txtRecord, DnsRecordType.mxRecord
-    ].toStrings ==
+    ].toString ==
         ["aRecord", "aaaaRecord", "cnameRecord", "txtRecord", "mxRecord"]);
 
     assert(["aRecord", "aaaaRecord", "cnameRecord", "txtRecord", "mxRecord"
@@ -81,7 +81,7 @@ DnsValidationStatus[] toDnsValidationStatuses(string[] values) {
 string toString(DnsValidationStatus status) {
     return status.to!string;
 }
-string[] toStrings(DnsValidationStatus[] statuses) {
+string[] toString(DnsValidationStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -103,7 +103,7 @@ unittest {
 
     assert([DnsValidationStatus.pending, DnsValidationStatus.validated,
         DnsValidationStatus.failed, DnsValidationStatus.expired
-    ].toStrings ==
+    ].toString ==
         ["pending", "validated", "failed", "expired"]);
 
     assert(["pending", "validated", "failed", "expired"

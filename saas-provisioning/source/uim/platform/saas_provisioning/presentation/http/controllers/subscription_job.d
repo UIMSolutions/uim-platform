@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-/// REST controller — async subscription job status (polling).
+/// REST controller — async subscription job Status(polling).
 ///
 ///   GET /api/v1/saas-provisioning/jobs
 ///   GET /api/v1/saas-provisioning/jobs/*

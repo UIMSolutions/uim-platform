@@ -57,7 +57,7 @@ class ManageSitePoliciesUseCase {
     }
 
     CommandResult updateSitePolicy(SitePolicyDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.sitePolicyId);
+        auto existing = repo.findById(dto.tenantId, dto.policyId);
         if (existing.isNull)
             return CommandResult(false, "", "Site policy not found");
 

@@ -40,7 +40,7 @@ Gender[] toGenders(string[] values)
 string toString(Gender value)
   => cast(string)value;
 
-string[] toStrings(Gender[] values)
+string[] toString(Gender[] values)
   => values.map!toString.array;
 
 ///
@@ -63,7 +63,7 @@ unittest {
   assert(["male", "female"].toGenders == [Gender.male_, Gender.female_
     ]);
 
-  assert([Gender.male_, Gender.female_].toStrings == ["male", "female"]);
+  assert([Gender.male_, Gender.female_].toString == ["male", "female"]);
 }
 
 enum AdministrativeGender : string {
@@ -94,7 +94,7 @@ AdministrativeGender[] toAdministrativeGenders(string[] values)
 string toString(AdministrativeGender value)
   => cast(string)value;
 
-string[] toStrings(AdministrativeGender[] values)
+string[] toString(AdministrativeGender[] values)
   => values.map!toString.array;
 
 ///
@@ -117,7 +117,7 @@ unittest {
   assert(["male", "female"].toAdministrativeGenders == [AdministrativeGender.male_, AdministrativeGender.female_
     ]);
 
-  assert([AdministrativeGender.male_, AdministrativeGender.female_].toStrings == ["male", "female"
+  assert([AdministrativeGender.male_, AdministrativeGender.female_].toString == ["male", "female"
     ]);
 }
 
@@ -150,7 +150,7 @@ MaritalStatus[] toMaritalStatuses(string[] values)
 string toString(MaritalStatus value)
   => cast(string)value;
 
-string[] toStrings(MaritalStatus[] values)
+string[] toString(MaritalStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -173,7 +173,7 @@ unittest {
   assert(["unmarried", "married"].toMaritalStatuses == [MaritalStatus.unmarried_, MaritalStatus.married_
     ]);
 
-  assert([MaritalStatus.unmarried_, MaritalStatus.married_].toStrings == ["unmarried", "married"
+  assert([MaritalStatus.unmarried_, MaritalStatus.married_].toString == ["unmarried", "married"
     ]);
 }
 
@@ -215,7 +215,7 @@ ObservationStatus[] toObservationStatuses(string[] values)
 string toString(ObservationStatus value)
   => cast(string)value;
 
-string[] toStrings(ObservationStatus[] values)
+string[] toString(ObservationStatus[] values)
   => values.map!toString.array;
 
 /// 
@@ -244,7 +244,7 @@ unittest {
   assert(["registered", "preliminary"].toObservationStatuses == [ObservationStatus.registered_, ObservationStatus.preliminary_
     ]);
 
-  assert([ObservationStatus.registered_, ObservationStatus.preliminary_].toStrings == ["registered", "preliminary"
+  assert([ObservationStatus.registered_, ObservationStatus.preliminary_].toString == ["registered", "preliminary"
     ]);
 }
 
@@ -282,7 +282,7 @@ ConditionClinicalStatus[] toConditionClinicalStatuses(string[] values)
 string toString(ConditionClinicalStatus value)
   => cast(string)value;
 
-string[] toStrings(ConditionClinicalStatus[] values)
+string[] toString(ConditionClinicalStatus[] values)
   => values.map!toString.array;
 
 /// 
@@ -308,7 +308,7 @@ unittest {
 
   assert(["active", "recurrence"].toConditionClinicalStatuses == [ConditionClinicalStatus.active_, ConditionClinicalStatus.recurrence_
     ]);
-  assert([ConditionClinicalStatus.active_, ConditionClinicalStatus.recurrence_].toStrings == ["active", "recurrence"
+  assert([ConditionClinicalStatus.active_, ConditionClinicalStatus.recurrence_].toString == ["active", "recurrence"
     ]);
 }
 
@@ -353,7 +353,7 @@ EncounterStatus[] toEncounterStatuses(string[] values)
 string toString(EncounterStatus value)
   => cast(string)value;
 
-string[] toStrings(EncounterStatus[] values)
+string[] toString(EncounterStatus[] values)
   => values.map!toString.array;
 
 /// 
@@ -383,7 +383,7 @@ unittest {
 
   assert(["planned", "arrived"].toEncounterStatuses == [EncounterStatus.planned_, EncounterStatus.arrived_
     ]);
-  assert([EncounterStatus.planned_, EncounterStatus.arrived_].toStrings == ["planned", "arrived"
+  assert([EncounterStatus.planned_, EncounterStatus.arrived_].toString == ["planned", "arrived"
     ]);
 }
 
@@ -425,7 +425,7 @@ MedicationRequestStatus[] toMedicationRequestStatuses(string[] values)
 string toString(MedicationRequestStatus value)
   => cast(string)value;
 
-string[] toStrings(MedicationRequestStatus[] values)
+string[] toString(MedicationRequestStatus[] values)
   => values.map!toString.array;
 
 /// 
@@ -453,7 +453,7 @@ unittest {
 
   assert(["active", "on-hold"].toMedicationRequestStatuses == [MedicationRequestStatus.active_, MedicationRequestStatus.onHold_
     ]);
-  assert([MedicationRequestStatus.active_, MedicationRequestStatus.onHold_].toStrings == ["active", "on-hold"
+  assert([MedicationRequestStatus.active_, MedicationRequestStatus.onHold_].toString == ["active", "on-hold"
     ]);
 }
 
@@ -473,7 +473,7 @@ StorageBackend[] toStorageBackends(string[] values)
 string toString(StorageBackend value)
   => cast(string)value;
 
-string[] toStrings(StorageBackend[] values)
+string[] toString(StorageBackend[] values)
   => values.map!toString.array;
 
 ///
@@ -493,6 +493,6 @@ unittest {
 
   assert(["memory", "files"].toStorageBackends == [StorageBackend.memory_, StorageBackend.files_
     ]);
-  assert([StorageBackend.memory_, StorageBackend.files_].toStrings == ["memory", "files"
+  assert([StorageBackend.memory_, StorageBackend.files_].toString == ["memory", "files"
     ]);
 }

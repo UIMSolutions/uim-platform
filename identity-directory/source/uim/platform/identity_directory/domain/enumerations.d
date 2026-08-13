@@ -29,7 +29,7 @@ UserStatus[] toUserStatuses(string[] arr) {
 string toString(UserStatus status) {
   return status.to!string;
 }
-string[] toStrings(UserStatus[] statuses) {
+string[] toString(UserStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -69,7 +69,7 @@ GroupType[] toGroupTypes(string[] arr) {
 string toString(GroupType type) {
   return type.to!string;
 }
-string[] toStrings(GroupType[] types) {
+string[] toString(GroupType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -84,7 +84,7 @@ unittest {
   assert(toString(GroupType.dynamic) == "dynamic");
   assert(toString(GroupType.nested) == "nested");
 
-  assert([GroupType.standard, GroupType.dynamic, GroupType.nested].toStrings == ["standard", "dynamic", "nested"]);
+  assert([GroupType.standard, GroupType.dynamic, GroupType.nested].toString == ["standard", "dynamic", "nested"]);
   assert(["standard", "dynamic", "nested"].toGroupTypes == [GroupType.standard, GroupType.dynamic, GroupType.nested]);
 }
 
@@ -107,7 +107,7 @@ AttributeType[] toAttributeTypes(string[] arr)
 string toString(AttributeType type)
   => type.to!string;
 
-string[] toStrings(AttributeType[] types)
+string[] toString(AttributeType[] types)
   => types.map!toString.array;
 /// 
 unittest {
@@ -155,7 +155,7 @@ Mutability[] toMutabilities(string[] arr) {
 string toString(Mutability mut) {
   return cast(string)mut;
 }
-string[] toStrings(Mutability[] muts) {
+string[] toString(Mutability[] muts) {
   return muts.map!toString.array;
 }
 ///
@@ -172,7 +172,7 @@ unittest {
   assert(Mutability.writeOnly.toString == "writeOnly");
   assert(Mutability.immutable_.toString == "immutable");
 
-  assert([Mutability.readWrite, Mutability.readOnly, Mutability.writeOnly, Mutability.immutable_].toStrings == ["readWrite", "readOnly", "writeOnly", "immutable"]);
+  assert([Mutability.readWrite, Mutability.readOnly, Mutability.writeOnly, Mutability.immutable_].toString == ["readWrite", "readOnly", "writeOnly", "immutable"]);
   assert(["readWrite", "readOnly", "writeOnly", "immutable"].map!(s => toMutability(s)).array == [Mutability.readWrite, Mutability.readOnly, Mutability.writeOnly, Mutability.immutable_]);
 }
 
@@ -198,7 +198,7 @@ Returned[] toReturned(string[] arr) {
 string toString(Returned ret) {
   return cast(string)ret;
 }
-string[] toStrings(Returned[] rets) {
+string[] toString(Returned[] rets) {
   return rets.map!toString.array;
 } 
 ///
@@ -234,7 +234,7 @@ Uniqueness[] toUniqueness(string[] arr) {
 string toString(Uniqueness uniq) {
   return uniq.to!string;
 }
-string[] toStrings(Uniqueness[] uniqs) {
+string[] toString(Uniqueness[] uniqs) {
   return uniqs.map!toString.array;
 }
 ///
@@ -269,7 +269,7 @@ PasswordStrength[] toPasswordStrength(string[] arr) {
 string toString(PasswordStrength strength) {
   return strength.to!string;
 }
-string[] toStrings(PasswordStrength[] strengths) {
+string[] toString(PasswordStrength[] strengths) {
   return strengths.map!toString.array;
 }
 ///
@@ -344,7 +344,7 @@ AuditEventType[] toAuditEventType(string[] arr) {
 string toString(AuditEventType eventType) {
   return eventType.to!string;
 }
-string[] toStrings(AuditEventType[] eventTypes) {
+string[] toString(AuditEventType[] eventTypes) {
   return eventTypes.map!toString.array;
 }
 ///
@@ -412,7 +412,7 @@ SortOrder[] toSortOrder(string[] arr) {
 string toString(SortOrder order) {
   return order.to!string;
 }
-string[] toStrings(SortOrder[] orders) {
+string[] toString(SortOrder[] orders) {
   return orders.map!toString.array;
 }
 ///

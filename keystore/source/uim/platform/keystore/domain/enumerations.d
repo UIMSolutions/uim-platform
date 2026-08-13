@@ -29,7 +29,7 @@ KeystoreFormat[] toKeystoreFormats(string[] values)
 string toString(KeystoreFormat value)
   => value.to!string;
 
-string[] toStrings(KeystoreFormat[] values)
+string[] toString(KeystoreFormat[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -50,7 +50,7 @@ unittest {
 
   assert(["jks", "p12"].toKeystoreFormats == [KeystoreFormat.jks, KeystoreFormat.p12
     ]);
-  assert([KeystoreFormat.jks, KeystoreFormat.p12].toStrings == ["jks", "p12"]);
+  assert([KeystoreFormat.jks, KeystoreFormat.p12].toString == ["jks", "p12"]);
 }
 
 // Keystore scope level (search order: subscription > application > account)
@@ -70,7 +70,7 @@ KeystoreLevel[] toKeystoreLevels(string[] values)
 string toString(KeystoreLevel value)
   => value.to!string;
 
-string[] toStrings(KeystoreLevel[] values)
+string[] toString(KeystoreLevel[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -89,7 +89,7 @@ unittest {
 
   assert(["account", "subscription"].toKeystoreLevels == [KeystoreLevel.account, KeystoreLevel.subscription
     ]);
-  assert([KeystoreLevel.account, KeystoreLevel.subscription].toStrings == ["account", "subscription"
+  assert([KeystoreLevel.account, KeystoreLevel.subscription].toString == ["account", "subscription"
     ]);
 }
 
@@ -111,7 +111,7 @@ KeyEntryType[] toKeyEntryTypes(string[] values)
 string toString(KeyEntryType value)
   => value.to!string;
 
-string[] toStrings(KeyEntryType[] values)
+string[] toString(KeyEntryType[] values)
   => values.map!toString.array;
 ///
 unittest {
@@ -132,6 +132,6 @@ unittest {
 
   assert(["trustedCertificate", "privateKey"].toKeyEntryTypes == [KeyEntryType.trustedCertificate, KeyEntryType.privateKey
     ]);
-  assert([KeyEntryType.trustedCertificate, KeyEntryType.privateKey].toStrings == ["trustedCertificate", "privateKey"
+  assert([KeyEntryType.trustedCertificate, KeyEntryType.privateKey].toString == ["trustedCertificate", "privateKey"
     ]);
 }

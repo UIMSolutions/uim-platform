@@ -52,7 +52,7 @@ string toString(AuditCategory c) {
   }
 }
 
-string[] toStrings(AuditCategory[] categories) {
+string[] toString(AuditCategory[] categories) {
   return categories.map!toString.array;
 }
 /// 
@@ -71,7 +71,7 @@ unittest {
 
   assert(["audit.security-events", "audit.data-access"].toAuditCategory == [AuditCategory.securityEvents, AuditCategory.dataAccess
     ]);
-  assert([AuditCategory.securityEvents, AuditCategory.dataAccess].toStrings == ["audit.security-events", "audit.data-access"
+  assert([AuditCategory.securityEvents, AuditCategory.dataAccess].toString == ["audit.security-events", "audit.data-access"
     ]);
 }
 // #endregion AuditCategory
@@ -96,7 +96,7 @@ string toString(AuditSeverity s) {
   return s.to!string;
 }
 
-string[] toStrings(AuditSeverity[] severities) {
+string[] toString(AuditSeverity[] severities) {
   return severities.map!toString.array;
 }
 /// 
@@ -115,7 +115,7 @@ unittest {
 
   assert(["info", "error"].toAuditSeverity == [AuditSeverity.info, AuditSeverity.error
     ]);
-  assert([AuditSeverity.info, AuditSeverity.error].toStrings == ["info", "error"
+  assert([AuditSeverity.info, AuditSeverity.error].toString == ["info", "error"
     ]);
 }
 
@@ -195,7 +195,7 @@ string toString(AuditAction action) {
   return cast(string)action;
 }
 
-string[] toStrings(AuditAction[] actions) {
+string[] toString(AuditAction[] actions) {
   return actions.map!toString.array;
 }
 /// 
@@ -245,7 +245,7 @@ unittest {
 
   assert(["create", "login"].toAuditAction == [AuditAction.create, AuditAction.login
     ]);
-  assert([AuditAction.create, AuditAction.login].toStrings == ["create", "login"
+  assert([AuditAction.create, AuditAction.login].toString == ["create", "login"
     ]);
 }
 
@@ -269,7 +269,7 @@ string toString(AuditOutcome o) {
   return o.to!string;
 }
 
-string[] toStrings(AuditOutcome[] outcomes) {
+string[] toString(AuditOutcome[] outcomes) {
   return outcomes.map!toString.array;
 }
 /// 
@@ -288,7 +288,7 @@ unittest {
 
   assert(["success", "failure"].toAuditOutcome == [AuditOutcome.success, AuditOutcome.failure
     ]);
-  assert([AuditOutcome.success, AuditOutcome.failure].toStrings == ["success", "failure"
+  assert([AuditOutcome.success, AuditOutcome.failure].toString == ["success", "failure"
     ]);
 }
 
@@ -311,7 +311,7 @@ string toString(RetentionStatus s) {
   return s.to!string;
 }
 
-string[] toStrings(RetentionStatus[] statuses) {
+string[] toString(RetentionStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -328,7 +328,7 @@ unittest {
 
   assert(["active", "expired"].toRetentionStatus == [RetentionStatus.active, RetentionStatus.expired
     ]);
-  assert([RetentionStatus.active, RetentionStatus.expired].toStrings == ["active", "expired"
+  assert([RetentionStatus.active, RetentionStatus.expired].toString == ["active", "expired"
     ]);
 }
 
@@ -352,7 +352,7 @@ string toString(ExportStatus s) {
   return s.to!string;
 }
 
-string[] toStrings(ExportStatus[] statuses) {
+string[] toString(ExportStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -371,7 +371,7 @@ unittest {
 
   assert(["pending", "completed"].toExportStatus == [ExportStatus.pending, ExportStatus.completed
     ]);
-  assert([ExportStatus.pending, ExportStatus.completed].toStrings == ["pending", "completed"
+  assert([ExportStatus.pending, ExportStatus.completed].toString == ["pending", "completed"
     ]);
 }
 
@@ -393,7 +393,7 @@ string toString(ExportFormat f) {
   return f.to!string;
 }
 
-string[] toStrings(ExportFormat[] formats) {
+string[] toString(ExportFormat[] formats) {
   return formats.map!toString.array;
 }
 /// 
@@ -408,7 +408,7 @@ unittest {
 
   assert(["json", "csv"].toExportFormat == [ExportFormat.json, ExportFormat.csv
     ]);
-  assert([ExportFormat.json, ExportFormat.csv].toStrings == ["json", "csv"]);
+  assert([ExportFormat.json, ExportFormat.csv].toString == ["json", "csv"]);
 }
 
 /// Audit log configuration status.
@@ -429,7 +429,7 @@ string toString(ConfigStatus s) {
   return s.to!string;
 }
 
-string[] toStrings(ConfigStatus[] statuses) {
+string[] toString(ConfigStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -444,6 +444,6 @@ unittest {
 
   assert(["enabled", "disabled"].toConfigStatus == [ConfigStatus.enabled, ConfigStatus.disabled
     ]);
-  assert([ConfigStatus.enabled, ConfigStatus.disabled].toStrings == ["enabled", "disabled"
+  assert([ConfigStatus.enabled, ConfigStatus.disabled].toString == ["enabled", "disabled"
     ]);
 }

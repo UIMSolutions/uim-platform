@@ -23,7 +23,7 @@ MessagingServiceStatus[] toMessagingServiceStatuses(string[] values) {
 string toString(MessagingServiceStatus value) {
     return value.to!string;
 }
-string[] toStrings(MessagingServiceStatus[] values) {
+string[] toString(MessagingServiceStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -45,7 +45,7 @@ unittest {
     assert(MessagingServiceStatus.failed.toString == "failed");
 
     assert(["creating", "active"].toMessagingServiceStatuses == [MessagingServiceStatus.creating, MessagingServiceStatus.active]);
-    assert([MessagingServiceStatus.creating, MessagingServiceStatus.active].toStrings == ["creating", "active"]);
+    assert([MessagingServiceStatus.creating, MessagingServiceStatus.active].toString == ["creating", "active"]);
 }
 
 enum MessagingServicePlan {
@@ -62,7 +62,7 @@ MessagingServicePlan[] toMessagingServicePlans(string[] values) {
 string toString(MessagingServicePlan value) {
     return value.to!string;
 }
-string[] toStrings(MessagingServicePlan[] values) {
+string[] toString(MessagingServicePlan[] values) {
     return values.map!toString.array;
 }
 ///
@@ -79,7 +79,7 @@ unittest {
     assert(MessagingServicePlan.premium.toString == "premium");
 
     assert(["dev", "standard"].toMessagingServicePlans == [MessagingServicePlan.dev, MessagingServicePlan.standard]);
-    assert([MessagingServicePlan.dev, MessagingServicePlan.standard].toStrings == ["dev", "standard"]);
+    assert([MessagingServicePlan.dev, MessagingServicePlan.standard].toString == ["dev", "standard"]);
 }
 
 enum MessageClientStatus {
@@ -96,7 +96,7 @@ MessageClientStatus[] toMessageClientStatuses(string[] values) {
 string toString(MessageClientStatus value) {
     return value.to!string;
 }
-string[] toStrings(MessageClientStatus[] values) {
+string[] toString(MessageClientStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -113,7 +113,7 @@ unittest {
     assert(MessageClientStatus.suspended.toString == "suspended");  
 
     assert(["active", "inactive"].toMessageClientStatuses == [MessageClientStatus.active, MessageClientStatus.inactive]);
-    assert([MessageClientStatus.active, MessageClientStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([MessageClientStatus.active, MessageClientStatus.inactive].toString == ["active", "inactive"]);
 }
 
 enum MessageClientProtocol {
@@ -131,7 +131,7 @@ MessageClientProtocol[] toMessageClientProtocols(string[] values) {
 string toString(MessageClientProtocol value) {
     return value.to!string;
 }
-string[] toStrings(MessageClientProtocol[] values) {
+string[] toString(MessageClientProtocol[] values) {
     return values.map!toString.array;
 }
 ///
@@ -150,7 +150,7 @@ unittest {
     assert(MessageClientProtocol.httprest.toString == "httprest");
 
     assert(["amqp10", "mqtt311"].toMessageClientProtocols == [MessageClientProtocol.amqp10, MessageClientProtocol.mqtt311]);
-    assert([MessageClientProtocol.amqp10, MessageClientProtocol.mqtt311].toStrings == ["amqp10", "mqtt311"]);
+    assert([MessageClientProtocol.amqp10, MessageClientProtocol.mqtt311].toString == ["amqp10", "mqtt311"]);
 }
 
 enum QueueStatus {
@@ -167,7 +167,7 @@ QueueStatus[] toQueueStatuses(string[] values) {
 string toString(QueueStatus value) {
     return value.to!string;
 }
-string[] toStrings(QueueStatus[] values) {
+string[] toString(QueueStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -184,7 +184,7 @@ unittest {
     assert(QueueStatus.pendingDelete.toString == "pendingDelete");
 
     assert(["active", "inactive"].toQueueStatuses == [QueueStatus.active, QueueStatus.inactive]);
-    assert([QueueStatus.active, QueueStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([QueueStatus.active, QueueStatus.inactive].toString == ["active", "inactive"]);
 }
 
 enum QueueAccessType {
@@ -200,7 +200,7 @@ QueueAccessType[] toQueueAccessTypes(string[] values) {
 string toString(QueueAccessType value) {
     return value.to!string;
 }
-string[] toStrings(QueueAccessType[] values) {
+string[] toString(QueueAccessType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -215,7 +215,7 @@ unittest {
     assert(QueueAccessType.nonExclusive.toString == "nonExclusive");    
 
     assert(["exclusive", "nonExclusive"].toQueueAccessTypes == [QueueAccessType.exclusive, QueueAccessType.nonExclusive]);
-    assert([QueueAccessType.exclusive, QueueAccessType.nonExclusive].toStrings == ["exclusive", "nonExclusive"]);
+    assert([QueueAccessType.exclusive, QueueAccessType.nonExclusive].toString == ["exclusive", "nonExclusive"]);
 }
 
 enum QueueSubscriptionStatus {
@@ -232,7 +232,7 @@ QueueSubscriptionStatus[] toQueueSubscriptionStatuses(string[] values) {
 string toString(QueueSubscriptionStatus value) {
     return value.to!string;
 }
-string[] toStrings(QueueSubscriptionStatus[] values) {
+string[] toString(QueueSubscriptionStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -249,7 +249,7 @@ unittest {
     assert(QueueSubscriptionStatus.pendingDelete.toString == "pendingDelete");
 
     assert(["active", "inactive"].toQueueSubscriptionStatuses == [QueueSubscriptionStatus.active, QueueSubscriptionStatus.inactive]);
-    assert([QueueSubscriptionStatus.active, QueueSubscriptionStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([QueueSubscriptionStatus.active, QueueSubscriptionStatus.inactive].toString == ["active", "inactive"]);
 }
 
 enum WebhookStatus {
@@ -267,7 +267,7 @@ WebhookStatus[] toWebhookStatuses(string[] values) {
 string toString(WebhookStatus value) {
     return value.to!string;
 }
-string[] toStrings(WebhookStatus[] values) {
+string[] toString(WebhookStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -286,7 +286,7 @@ unittest {
     assert(WebhookStatus.failed.toString == "failed");
 
     assert(["active", "paused"].toWebhookStatuses == [WebhookStatus.active, WebhookStatus.paused]);
-    assert([WebhookStatus.active, WebhookStatus.paused].toStrings == ["active", "paused"]);  
+    assert([WebhookStatus.active, WebhookStatus.paused].toString == ["active", "paused"]);  
 }
 
 enum WebhookAuthType : string {
@@ -310,7 +310,7 @@ WebhookAuthType[] toWebhookAuthTypes(string[] values) {
 string toString(WebhookAuthType value) {
     return cast(string)value; // This will return the enum member name as a string, e.g., "none_", "oauth2", "basic", "apiKey"
 }
-string[] toStrings(WebhookAuthType[] values) {
+string[] toString(WebhookAuthType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -329,7 +329,7 @@ unittest {
     assert(WebhookAuthType.apiKey.toString == "apiKey");
 
     assert(["none", "oauth2"].toWebhookAuthTypes == [WebhookAuthType.none_, WebhookAuthType.oauth2]);
-    assert([WebhookAuthType.none_, WebhookAuthType.oauth2].toStrings == ["none", "oauth2"]);  
+    assert([WebhookAuthType.none_, WebhookAuthType.oauth2].toString == ["none", "oauth2"]);  
 }
 
 enum WebhookDeliveryMode {
@@ -345,7 +345,7 @@ WebhookDeliveryMode[] toWebhookDeliveryModes(string[] values) {
 string toString(WebhookDeliveryMode value) {
     return value.to!string;
 }
-string[] toStrings(WebhookDeliveryMode[] values) {
+string[] toString(WebhookDeliveryMode[] values) {
     return values.map!toString.array;
 }
 ///
@@ -360,7 +360,7 @@ unittest {
     assert(WebhookDeliveryMode.atMostOnce.toString == "atMostOnce");    
 
     assert(["atLeastOnce", "atMostOnce"].toWebhookDeliveryModes == [WebhookDeliveryMode.atLeastOnce, WebhookDeliveryMode.atMostOnce]);
-    assert([WebhookDeliveryMode.atLeastOnce, WebhookDeliveryMode.atMostOnce].toStrings == ["atLeastOnce", "atMostOnce"]);  
+    assert([WebhookDeliveryMode.atLeastOnce, WebhookDeliveryMode.atMostOnce].toString == ["atLeastOnce", "atMostOnce"]);  
 }
 
 enum EventChannelStatus : string{
@@ -382,7 +382,7 @@ EventChannelStatus[] toEventChannelStatuses(string[] values) {
 string toString(EventChannelStatus value) {
     return cast(string)value; // This will return the enum member name as a string, e.g., "active", "inactive", "deprecated_"
 }
-string[] toStrings(EventChannelStatus[] values) {
+string[] toString(EventChannelStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -399,7 +399,7 @@ unittest {
     assert(EventChannelStatus.deprecated_.toString == "deprecated");        
 
     assert(["active", "inactive"].toEventChannelStatuses == [EventChannelStatus.active, EventChannelStatus.inactive]);
-    assert([EventChannelStatus.active, EventChannelStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([EventChannelStatus.active, EventChannelStatus.inactive].toString == ["active", "inactive"]);
 }
 
 enum EventChannelType {
@@ -416,7 +416,7 @@ EventChannelType[] toEventChannelTypes(string[] values) {
 string toString(EventChannelType value) {
     return value.to!string;
 }
-string[] toStrings(EventChannelType[] values) {
+string[] toString(EventChannelType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -433,7 +433,7 @@ unittest {
     assert(EventChannelType.eventChannel.toString == "eventChannel");   
 
     assert(["queue", "topic", "eventChannel"].toEventChannelTypes == [EventChannelType.queue, EventChannelType.topic, EventChannelType.eventChannel]);
-    assert([EventChannelType.queue, EventChannelType.topic, EventChannelType.eventChannel].toStrings == ["queue", "topic", "eventChannel"]);
+    assert([EventChannelType.queue, EventChannelType.topic, EventChannelType.eventChannel].toString == ["queue", "topic", "eventChannel"]);
 }
 
 enum MessageBindingStatus {
@@ -449,7 +449,7 @@ MessageBindingStatus[] toMessageBindingStatuses(string[] values) {
 string toString(MessageBindingStatus value) {
     return value.to!string;
 }
-string[] toStrings(MessageBindingStatus[] values) {
+string[] toString(MessageBindingStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -464,7 +464,7 @@ unittest {
     assert(MessageBindingStatus.inactive.toString == "inactive");
 
     assert(["active", "inactive"].toMessageBindingStatuses == [MessageBindingStatus.active, MessageBindingStatus.inactive]);
-    assert([MessageBindingStatus.active, MessageBindingStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([MessageBindingStatus.active, MessageBindingStatus.inactive].toString == ["active", "inactive"]);
 }
 
 enum MessageBindingPermission {
@@ -482,7 +482,7 @@ MessageBindingPermission[] toMessageBindingPermissions(string[] values) {
 string toString(MessageBindingPermission value) {
     return value.to!string;
 }
-string[] toStrings(MessageBindingPermission[] values) {
+string[] toString(MessageBindingPermission[] values) {
     return values.map!toString.array;
 }
 ///
@@ -501,5 +501,5 @@ unittest {
     assert(MessageBindingPermission.publishSubscribe.toString == "publishSubscribe");   
 
     assert(["publish", "subscribe"].toMessageBindingPermissions == [MessageBindingPermission.publish, MessageBindingPermission.subscribe]);
-    assert([MessageBindingPermission.publish, MessageBindingPermission.subscribe].toStrings == ["publish", "subscribe"]);
+    assert([MessageBindingPermission.publish, MessageBindingPermission.subscribe].toString == ["publish", "subscribe"]);
 }

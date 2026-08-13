@@ -25,7 +25,7 @@ UnificationModel[] toUnificationModels(string[] models) {
 string toString(UnificationModel model) {
   return model.to!string;
 }
-string[] toStrings(UnificationModel[] models) {
+string[] toString(UnificationModel[] models) {
   return models.map!toString.array;
 }
 ///
@@ -41,7 +41,7 @@ unittest {
   assert(UnificationModel.deterministic.toString == "DETERMINISTIC");
   assert(UnificationModel.probabilistic.toString == "PROBABILISTIC");
 
-  assert([UnificationModel.deterministic, UnificationModel.probabilistic].toStrings == ["DETERMINISTIC", "PROBABILISTIC"]);
+  assert([UnificationModel.deterministic, UnificationModel.probabilistic].toString == ["DETERMINISTIC", "PROBABILISTIC"]);
   assert(["DETERMINISTIC", "PROBABILISTIC"].toUnificationModels == [UnificationModel.deterministic, UnificationModel.probabilistic]);
 }
 
@@ -61,7 +61,7 @@ DataProductStatus[] toDataProductStatuses(string[] statuses) {
 string toString(DataProductStatus status) {
   return status.to!string;
 }
-string[] toStrings(DataProductStatus[] statuses) {
+string[] toString(DataProductStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -102,7 +102,7 @@ DataProviderStatus[] toDataProviderStatuses(string[] statuses) {
 string toString(DataProviderStatus status) {
   return status.to!string;
 }
-string[] toStrings(DataProviderStatus[] statuses) {
+string[] toString(DataProviderStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -143,7 +143,7 @@ CompositionRunStatus[] toCompositionRunStatuses(string[] statuses) {
 string toString(CompositionRunStatus status) {
   return status.to!string;
 }
-string[] toStrings(CompositionRunStatus[] statuses) {
+string[] toString(CompositionRunStatus[] statuses) {
   return statuses.map!toString.array;
 }
 /// 
@@ -194,7 +194,7 @@ TransformationType[] toTransformationTypes(string[] types) {
 string toString(TransformationType type) {
   return type.to!string;
 }
-string[] toStrings(TransformationType[] types) {
+string[] toString(TransformationType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -251,7 +251,7 @@ TimestampFormat[] toTimestampFormats(string[] formats) {
 string toString(TimestampFormat format) {
   return format.to!string;
 }
-string[] toStrings(TimestampFormat[] formats) {
+string[] toString(TimestampFormat[] formats) {
   return formats.map!toString.array;
 }
 ///
@@ -298,7 +298,7 @@ DataQualityRank[] toDataQualityRanks(string[] ranks) {
 string toString(DataQualityRank rank) {
   return rank.to!string;
 }
-string[] toStrings(DataQualityRank[] ranks) {
+string[] toString(DataQualityRank[] ranks) {
   return ranks.map!toString.array;
 } 
 /// 
@@ -343,7 +343,7 @@ TenantUserRole[] toTenantUserRoles(string[] roles) {
 string toString(TenantUserRole role) {
   return role.to!string;
 }
-string[] toStrings(TenantUserRole[] roles) {
+string[] toString(TenantUserRole[] roles) {
   return roles.map!toString.array;
 }
 /// 
@@ -387,7 +387,7 @@ AttributeDataType[] toAttributeDataTypes(string[] types) {
 string toString(AttributeDataType type) {
   return type.to!string;
 }   
-string[] toStrings(AttributeDataType[] types) {
+string[] toString(AttributeDataType[] types) {
   return types.map!toString.array;
 }
 /// 
@@ -441,7 +441,7 @@ OutputProductStatus[] toOutputProductStatuses(string[] statuses) {
 string toString(OutputProductStatus status) {
   return status.to!string;
 }
-string[] toStrings(OutputProductStatus[] statuses) {
+string[] toString(OutputProductStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///

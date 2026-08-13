@@ -23,7 +23,7 @@ TrustedCertificateStatus[] toTrustedCertificateStatuses(string[] values) {
 string toString(TrustedCertificateStatus status) {
     return status.to!string;
 }
-string[] toStrings(TrustedCertificateStatus[] statuses) {
+string[] toString(TrustedCertificateStatus[] statuses) {
     return statuses.map!toString.array;
 }
 /// 
@@ -38,7 +38,7 @@ unittest {
     assert("inactive".toTrustedCertificateStatus == TrustedCertificateStatus.inactive);
     assert("expired".toTrustedCertificateStatus == TrustedCertificateStatus.expired);
 
-    assert(toStrings([TrustedCertificateStatus.active, TrustedCertificateStatus.expired]) == ["active", "expired"]);
+    assert(toString([TrustedCertificateStatus.active, TrustedCertificateStatus.expired]) == ["active", "expired"]);
     assert(toTrustedCertificateStatuses(["active", "expired"]) == [TrustedCertificateStatus.active, TrustedCertificateStatus.expired]);
 }
 
@@ -56,7 +56,7 @@ ClientAuthMode[] toClientAuthModes(string[] values) {
 string toString(ClientAuthMode mode) {
     return mode.to!string;
 }
-string[] toStrings(ClientAuthMode[] modes) {
+string[] toString(ClientAuthMode[] modes) {
     return modes.map!toString.array;
 }
 ///
@@ -74,6 +74,6 @@ unittest {
     assert("".toClientAuthMode == ClientAuthMode.required);
     assert("invalid".toClientAuthMode == ClientAuthMode.required);
 
-    assert(toStrings([ClientAuthMode.required, ClientAuthMode.disabled]) == ["required", "disabled"]);
+    assert(toString([ClientAuthMode.required, ClientAuthMode.disabled]) == ["required", "disabled"]);
     assert(toClientAuthModes(["required", "disabled"]) == [ClientAuthMode.required, ClientAuthMode.disabled]);
 }

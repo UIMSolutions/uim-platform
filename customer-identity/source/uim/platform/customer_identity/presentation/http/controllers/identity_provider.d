@@ -78,7 +78,6 @@ class IdentityProviderController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = IdentityProviderId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Identity Provider ID").set("status", "error").set("statusCode", 400);
@@ -96,14 +95,13 @@ class IdentityProviderController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = IdentityProviderId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Identity Provider ID").set("status", "error").set("statusCode", 400);
 
         auto data = precheck.data;
         IdentityProviderDTO dto;
-        dto.identityProviderId = id;
+        dto.providerId = id;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -128,7 +126,6 @@ class IdentityProviderController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = IdentityProviderId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid Identity Provider ID").set("status", "error").set("statusCode", 400);

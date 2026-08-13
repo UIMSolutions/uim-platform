@@ -23,7 +23,7 @@ EnvironmentStatus[] toEnvironmentStatuses(string[] values) {
 string toString(EnvironmentStatus value) {
     return value.to!string;
 }
-string[] toStrings(EnvironmentStatus[] values) {
+string[] toString(EnvironmentStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -49,7 +49,7 @@ unittest {
     assert(EnvironmentStatus.deprovisioning.toString == "deprovisioning");
     assert(EnvironmentStatus.error.toString == "error");   
 
-    assert(toStrings([EnvironmentStatus.provisioning, EnvironmentStatus.running, EnvironmentStatus.updating, EnvironmentStatus.stopping, EnvironmentStatus.stopped, EnvironmentStatus.deprovisioning, EnvironmentStatus.error]) == ["provisioning", "running", "updating", "stopping", "stopped", "deprovisioning", "error"]);
+    assert(toString([EnvironmentStatus.provisioning, EnvironmentStatus.running, EnvironmentStatus.updating, EnvironmentStatus.stopping, EnvironmentStatus.stopped, EnvironmentStatus.deprovisioning, EnvironmentStatus.error]) == ["provisioning", "running", "updating", "stopping", "stopped", "deprovisioning", "error"]);
     assert(toEnvironmentStatuses(["provisioning", "running", "updating", "stopping", "stopped", "deprovisioning", "error"]) == [EnvironmentStatus.provisioning, EnvironmentStatus.running, EnvironmentStatus.updating, EnvironmentStatus.stopping, EnvironmentStatus.stopped, EnvironmentStatus.deprovisioning, EnvironmentStatus.error]);
 }
 
@@ -71,7 +71,7 @@ KymaPlan[] toKymaPlans(string[] values) {
 string toString(KymaPlan value) {
     return value.to!string;
 }
-string[] toStrings(KymaPlan[] values) {
+string[] toString(KymaPlan[] values) {
     return values.map!toString.array;
 }
 ///
@@ -95,7 +95,7 @@ unittest {
     assert(KymaPlan.free_.toString == "free");
     assert(KymaPlan.trial.toString == "trial");   
 
-    assert(toStrings([KymaPlan.azure, KymaPlan.aws, KymaPlan.gcp, KymaPlan.sapConvergedCloud, KymaPlan.free_, KymaPlan.trial]) == ["azure", "aws", "gcp", "sapConvergedCloud", "free", "trial"]);
+    assert(toString([KymaPlan.azure, KymaPlan.aws, KymaPlan.gcp, KymaPlan.sapConvergedCloud, KymaPlan.free_, KymaPlan.trial]) == ["azure", "aws", "gcp", "sapConvergedCloud", "free", "trial"]);
     assert(toKymaPlans(["azure", "aws", "gcp", "sapConvergedCloud", "free", "trial"]) == [KymaPlan.azure, KymaPlan.aws, KymaPlan.gcp, KymaPlan.sapConvergedCloud, KymaPlan.free_, KymaPlan.trial]);
 }
 
@@ -113,7 +113,7 @@ NamespaceStatus[] toNamespaceStatuses(string[] values) {
 string toString(NamespaceStatus value) {
     return value.to!string;
 }
-string[] toStrings(NamespaceStatus[] values) {   
+string[] toString(NamespaceStatus[] values) {   
     return values.map!toString.array;
 }
 ///
@@ -129,7 +129,7 @@ unittest {
     assert(NamespaceStatus.active.toString == "active");
     assert(NamespaceStatus.terminating.toString == "terminating");
 
-    assert(toStrings([NamespaceStatus.active, NamespaceStatus.terminating]) == ["active", "terminating"]);
+    assert(toString([NamespaceStatus.active, NamespaceStatus.terminating]) == ["active", "terminating"]);
     assert(toNamespaceStatuses(["active", "terminating"]) == [NamespaceStatus.active, NamespaceStatus.terminating]);
 }
 
@@ -191,7 +191,7 @@ FunctionStatus[] toFunctionStatuses(string[] values) {
 string toString(FunctionStatus value) {
     return value.to!string;
 }
-string[] toStrings(FunctionStatus[] values) {
+string[] toString(FunctionStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -214,7 +214,7 @@ unittest {
     assert(toString(FunctionStatus.inactive) == "inactive");
 
     assert(toFunctionStatuses(["building", "running", "invalid"]) == [FunctionStatus.building, FunctionStatus.running, FunctionStatus.error]);
-    assert(toStrings([FunctionStatus.building, FunctionStatus.inactive]) == ["building", "inactive"]);
+    assert(toString([FunctionStatus.building, FunctionStatus.inactive]) == ["building", "inactive"]);
 }
 
 /// Scaling type for serverless functions.
@@ -235,7 +235,7 @@ ScalingType[] toScalingTypes(string[] values) {
 string toString(ScalingType value) {
     return value.to!string;
 }
-string[] toStrings(ScalingType[] values) {
+string[] toString(ScalingType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -252,7 +252,7 @@ unittest {
     assert(toString(ScalingType.fixed) == "fixed");
 
     assert(toScalingTypes(["auto", "fixed", "invalid"]) == [ScalingType.auto_, ScalingType.fixed, ScalingType.auto_]);
-    assert(toStrings([ScalingType.auto_, ScalingType.fixed]) == ["auto", "fixed"]);
+    assert(toString([ScalingType.auto_, ScalingType.fixed]) == ["auto", "fixed"]);
 }
 
 /// API rule access strategy.
@@ -289,7 +289,7 @@ unittest {
     assert(toString(AccessStrategy.allowAll) == "allowAll");
 
     assert(toAccessStrategies(["noauth", "jwt", "invalid"]) == [AccessStrategy.noAuth, AccessStrategy.jwt, AccessStrategy.noAuth]);
-    assert([AccessStrategy.noAuth, AccessStrategy.jwt, AccessStrategy.noAuth].toStrings == ["noAuth", "jwt", "noAuth"]);
+    assert([AccessStrategy.noAuth, AccessStrategy.jwt, AccessStrategy.noAuth].toString == ["noAuth", "jwt", "noAuth"]);
 }
 
 /// API rule status.
@@ -316,7 +316,7 @@ string toString(ApiRuleStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(ApiRuleStatus[] values) {
+string[] toString(ApiRuleStatus[] values) {
     return values.map!toString.array;
 }
 
@@ -336,7 +336,7 @@ unittest {
     assert(toString(ApiRuleStatus.notReady) == "notReady");
 
     assert(toApiRuleStatuses(["ok", "notready", "invalid"]) == [ApiRuleStatus.ok, ApiRuleStatus.notReady, ApiRuleStatus.error]);
-    assert([ApiRuleStatus.ok, ApiRuleStatus.notReady, ApiRuleStatus.error].toStrings == ["ok", "notReady", "error"]);
+    assert([ApiRuleStatus.ok, ApiRuleStatus.notReady, ApiRuleStatus.error].toString == ["ok", "notReady", "error"]);
 }
 
 /// HTTP methods for API rules.
@@ -371,7 +371,7 @@ string toString(ApiHttpMethod value) {
     return value.to!string;
 }
 
-string[] toStrings(ApiHttpMethod[] values) {
+string[] toString(ApiHttpMethod[] values) {
     return values.map!toString.array;
 }
 
@@ -399,7 +399,7 @@ unittest {
     assert(toString(ApiHttpMethod.options_) == "OPTIONS");
 
     assert(toApiHttpMethods(["GET", "POST", "INVALID"]) == [ApiHttpMethod.get_, ApiHttpMethod.post_, ApiHttpMethod.get_]);
-    assert([ApiHttpMethod.get_, ApiHttpMethod.post_, ApiHttpMethod.get_].toStrings == ["GET", "POST", "GET"]);
+    assert([ApiHttpMethod.get_, ApiHttpMethod.post_, ApiHttpMethod.get_].toString == ["GET", "POST", "GET"]);
 }
 
 /// Status of a service instance.
@@ -422,7 +422,7 @@ string toString(ServiceInstanceStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(ServiceInstanceStatus[] values) {
+string[] toString(ServiceInstanceStatus[] values) {
     return values.map!toString.array;
 }
 
@@ -446,7 +446,7 @@ unittest {
     assert(toString(ServiceInstanceStatus.updating) == "updating");
 
     assert(toServiceInstanceStatuses(["creating", "ready", "invalid"]) == [ServiceInstanceStatus.creating, ServiceInstanceStatus.ready, ServiceInstanceStatus.failed]);
-    assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready, ServiceInstanceStatus.failed].toStrings == ["creating", "ready", "failed"]);
+    assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready, ServiceInstanceStatus.failed].toString == ["creating", "ready", "failed"]);
 }
 
 /// Status of a service binding.
@@ -469,7 +469,7 @@ string toString(ServiceBindingStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(ServiceBindingStatus[] values) {
+string[] toString(ServiceBindingStatus[] values) {
     return values.map!toString.array;
 }
 
@@ -491,7 +491,7 @@ unittest {
     assert(toString(ServiceBindingStatus.deleting) == "deleting");
 
     assert(toServiceBindingStatuses(["creating", "ready", "invalid"]) == [ServiceBindingStatus.creating, ServiceBindingStatus.ready, ServiceBindingStatus.failed]);
-    assert([ServiceBindingStatus.creating, ServiceBindingStatus.ready, ServiceBindingStatus.failed].toStrings == ["creating", "ready", "failed"]);  
+    assert([ServiceBindingStatus.creating, ServiceBindingStatus.ready, ServiceBindingStatus.failed].toString == ["creating", "ready", "failed"]);  
 }
 
 /// Event type encoding.
@@ -512,7 +512,7 @@ string toString(EventTypeEncoding value) {
     return value.to!string;
 }
 
-string[] toStrings(EventTypeEncoding[] values) {
+string[] toString(EventTypeEncoding[] values) {
     return values.map!toString.array;
 }
 
@@ -530,7 +530,7 @@ unittest {
     assert(EventTypeEncoding.prefix.toString == "prefix");
 
     assert(toEventTypeEncodings(["exact", "prefix", "invalid"]) == [EventTypeEncoding.exact, EventTypeEncoding.prefix, EventTypeEncoding.exact]);
-    assert([EventTypeEncoding.exact, EventTypeEncoding.prefix].toStrings == ["exact", "prefix"]);
+    assert([EventTypeEncoding.exact, EventTypeEncoding.prefix].toString == ["exact", "prefix"]);
 }
 
 /// Status of an event subscription.

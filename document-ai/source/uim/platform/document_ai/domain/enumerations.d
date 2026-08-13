@@ -46,7 +46,7 @@ TrainingJobStatus[] toTrainingJobStatuses(string[] values) {
 string toString(TrainingJobStatus status) {
     return status.to!string;
 }
-string[] toStrings(TrainingJobStatus[] statuses) {
+string[] toString(TrainingJobStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -67,7 +67,7 @@ unittest {
     assert(DocumentStatus.confirmed.toString == "confirmed");
 
     assert(["pending", "completed"].toDocumentStatus == [DocumentStatus.pending, DocumentStatus.completed]);
-    assert([DocumentStatus.pending, DocumentStatus.completed].toStrings == ["pending", "completed"]);
+    assert([DocumentStatus.pending, DocumentStatus.completed].toString == ["pending", "completed"]);
 }
 
 // Extraction method used
@@ -86,7 +86,7 @@ ExtractionMethod[] toExtractionMethods(string[] values) {
 string toString(ExtractionMethod method) {
     return method.to!string;
 }
-string[] toStrings(ExtractionMethod[] methods) {
+string[] toString(ExtractionMethod[] methods) {
     return methods.map!toString.array;
 }
 ///
@@ -105,7 +105,7 @@ unittest {
     assert(ExtractionMethod.hybrid.toString == "hybrid");
 
     assert(["ml_model", "hybrid"].toExtractionMethods == [ExtractionMethod.ml_model, ExtractionMethod.hybrid]);
-    assert([ExtractionMethod.ml_model, ExtractionMethod.hybrid].toStrings == ["ml_model", "hybrid"]);
+    assert([ExtractionMethod.ml_model, ExtractionMethod.hybrid].toString == ["ml_model", "hybrid"]);
 }
 
 // Document categories
@@ -133,7 +133,7 @@ DocumentCategory[] toDocumentCategories(string[] values) {
 string toString(DocumentCategory category) {
     return category.to!string;
 }
-string[] toStrings(DocumentCategory[] categories) {
+string[] toString(DocumentCategory[] categories) {
     return categories.map!(c => toString(c)).array;
 }
 ///
@@ -168,7 +168,7 @@ unittest {
     assert(DocumentCategory.general.toString == "general");
 
     assert(["invoice", "receipt"].toDocumentCategories == [DocumentCategory.invoice, DocumentCategory.receipt]);
-    assert([DocumentCategory.invoice, DocumentCategory.receipt].toStrings == ["invoice", "receipt"]);
+    assert([DocumentCategory.invoice, DocumentCategory.receipt].toString == ["invoice", "receipt"]);
 }
 
 // Field value types in schemas
@@ -207,7 +207,7 @@ string toString(FieldValueType value) {
         case FieldValueType.line_items: return "line_items";
     }
 }
-string[] toStrings(FieldValueType[] values)
+string[] toString(FieldValueType[] values)
     => values.map!toString.array;
 
 ///
@@ -232,7 +232,7 @@ unittest {
     assert(FieldValueType.line_items.toString == "line_items");
 
     assert(["string", "date"].toFieldValueType == [FieldValueType.string_, FieldValueType.date_]);
-    assert([FieldValueType.string_, FieldValueType.date_].toStrings == ["string", "date"]);
+    assert([FieldValueType.string_, FieldValueType.date_].toString == ["string", "date"]);
 }
 
 // Confidence levels
@@ -251,7 +251,7 @@ ConfidenceLevel[] toConfidenceLevels(string[] values)
 string toString(ConfidenceLevel value)
     => value.to!string;
 
-string[] toStrings(ConfidenceLevel[] values)
+string[] toString(ConfidenceLevel[] values)
     => values.map!toString.array;
     
 ///
@@ -268,7 +268,7 @@ unittest {
     assert(ConfidenceLevel.low.toString == "low");  
 
     assert(["high", "low"].toConfidenceLevels == [ConfidenceLevel.high, ConfidenceLevel.low]);
-    assert([ConfidenceLevel.high, ConfidenceLevel.low].toStrings == ["high", "low"]);
+    assert([ConfidenceLevel.high, ConfidenceLevel.low].toString == ["high", "low"]);
 }
 
 // Enrichment match status
@@ -290,7 +290,7 @@ string toString(EnrichmentMatchStatus value) {
     return value.to!string;
 }
 
-string[] toStrings(EnrichmentMatchStatus[] values) {
+string[] toString(EnrichmentMatchStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -307,7 +307,7 @@ unittest {
     assert(EnrichmentMatchStatus.ambiguous.toString == "ambiguous");    
     
     assert(["matched", "ambiguous"].toEnrichmentMatchStatuses == [EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous]);
-    assert([EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous].toStrings == ["matched", "ambiguous"]);
+    assert([EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous].toString == ["matched", "ambiguous"]);
 }
 
 // File types supported
@@ -329,7 +329,7 @@ FileType[] toFileTypes(string[] values)
 string toString(FileType value) {
     return value.to!string;
 }
-string[] toStrings(FileType[] values)
+string[] toString(FileType[] values)
     => values.map!toString.array;
 
 ///
@@ -352,7 +352,7 @@ unittest {
     assert(FileType.docx.toString == "docx");   
 
     assert(["pdf", "docx"].toFileType == [FileType.pdf, FileType.docx]);
-    assert([FileType.pdf, FileType.docx].toStrings == ["pdf", "docx"]);
+    assert([FileType.pdf, FileType.docx].toString == ["pdf", "docx"]);
 }
 
 // Schema status
@@ -372,7 +372,7 @@ SchemaStatus[] toSchemaStatuses(string[] values)
 string toString(SchemaStatus value)
     => value.to!string;
 
-string[] toStrings(SchemaStatus[] values)
+string[] toString(SchemaStatus[] values)
     => values.map!toString.array;
 
 ///
@@ -389,7 +389,7 @@ unittest {
     assert(SchemaStatus.draft.toString == "draft");
 
     assert(["active", "draft"].toSchemaStatuses == [SchemaStatus.active, SchemaStatus.draft]);
-    assert([SchemaStatus.active, SchemaStatus.draft].toStrings == ["active", "draft"]);
+    assert([SchemaStatus.active, SchemaStatus.draft].toString == ["active", "draft"]);
 }
 
 // Template status
@@ -409,7 +409,7 @@ TemplateStatus[] toTemplateStatuses(string[] values)
 string toString(TemplateStatus value)
     => value.to!string;
 
-string[] toStrings(TemplateStatus[] values)
+string[] toString(TemplateStatus[] values)
     => values.map!toString.array;
 ///
 unittest {
@@ -425,5 +425,5 @@ unittest {
     assert(TemplateStatus.draft.toString == "draft");   
 
     assert(["active", "draft"].toTemplateStatuses == [TemplateStatus.active, TemplateStatus.draft]);
-    assert([TemplateStatus.active, TemplateStatus.draft].toStrings == ["active", "draft"]);
+    assert([TemplateStatus.active, TemplateStatus.draft].toString == ["active", "draft"]);
 }

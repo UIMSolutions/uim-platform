@@ -263,7 +263,7 @@ SaasApplication
   globalAccountId
   xsuaaServiceInstanceId
   plan (AppPlan)
-  status (AppRegistrationStatus)
+  Status(AppRegistrationStatus)
   dependencies[]
   autoSubscribeGlobalAccounts
 
@@ -288,7 +288,7 @@ SubscriptionJob
   appName → SaasApplication.appName
   subscriptionId → AppSubscription.id
   jobType (JobType)
-  jobStatus (JobStatus)
+  jobStatus(JobStatus)
   progress (0-100)
   message
   startedAt (ticks)

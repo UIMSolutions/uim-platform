@@ -35,7 +35,7 @@ AuthenticationType[] toAuthenticationTypes(string[] types) {
 string toString(AuthenticationType type) {
   return type.to!string;
 }
-string[] toStrings(AuthenticationType[] types) {
+string[] toString(AuthenticationType[] types) {
   return types.map!(t => t.to!string).array;
 }
 ///
@@ -73,7 +73,7 @@ unittest {
   assert(AuthenticationType.principalPropagation.toString == "principalPropagation");
   assert(AuthenticationType.oauth2MtlsClientCredentials.toString == "oauth2MtlsClientCredentials");
   
-  assert([AuthenticationType.noAuthentication, AuthenticationType.basicAuthentication].toStrings == ["noAuthentication", "basicAuthentication"]);
+  assert([AuthenticationType.noAuthentication, AuthenticationType.basicAuthentication].toString == ["noAuthentication", "basicAuthentication"]);
   assert(["noAuthentication", "basicAuthentication"].toAuthenticationTypes == [AuthenticationType.noAuthentication, AuthenticationType.basicAuthentication]);
 } 
 
@@ -93,7 +93,7 @@ ProxyType[] toProxyTypes(string[] types) {
 string toString(ProxyType type) {
   return type.to!string;
 }
-string[] toStrings(ProxyType[] types) {
+string[] toString(ProxyType[] types) {
   return types.map!toString.array;
 }
 /// 
@@ -113,7 +113,7 @@ unittest {
   assert(ProxyType.privateLink.toString == "privateLink");
   assert(ProxyType.privateNetwork.toString == "privateNetwork");
 
-  assert([ProxyType.internet, ProxyType.onPremise].toStrings == ["internet", "onPremise"]);
+  assert([ProxyType.internet, ProxyType.onPremise].toString == ["internet", "onPremise"]);
   assert(["internet", "onPremise"].toProxyTypes == [ProxyType.internet, ProxyType.onPremise]);
 }
 
@@ -131,7 +131,7 @@ DestinationLevel[] toDestinationLevels(string[] levels) {
 string toString(DestinationLevel level) {
   return level.to!string;
 }
-string[] toStrings(DestinationLevel[] levels) {
+string[] toString(DestinationLevel[] levels) {
   return levels.map!toString.array;
 } 
 ///
@@ -147,7 +147,7 @@ unittest {
   assert(DestinationLevel.subaccount.toString == "subaccount");
   assert(DestinationLevel.serviceInstance.toString == "serviceInstance");
 
-  assert([DestinationLevel.subaccount, DestinationLevel.serviceInstance].toStrings == ["subaccount", "serviceInstance"]);
+  assert([DestinationLevel.subaccount, DestinationLevel.serviceInstance].toString == ["subaccount", "serviceInstance"]);
   assert(["subaccount", "serviceInstance"].toDestinationLevels == [DestinationLevel.subaccount, DestinationLevel.serviceInstance]);
 }
 
@@ -165,7 +165,7 @@ CertificateType[] toCertificateTypes(string[] types) {
 string toString(CertificateType type) {
   return type.to!string;
 }
-string[] toStrings(CertificateType[] types) {
+string[] toString(CertificateType[] types) {
   return types.map!toString.array;
 }
 /// 
@@ -181,7 +181,7 @@ unittest {
   assert(CertificateType.keystore.toString == "keystore");
   assert(CertificateType.truststore.toString == "truststore");
 
-  assert([CertificateType.keystore, CertificateType.truststore].toStrings == ["keystore", "truststore"]);
+  assert([CertificateType.keystore, CertificateType.truststore].toString == ["keystore", "truststore"]);
   assert(["keystore", "truststore"].toCertificateTypes == [CertificateType.keystore, CertificateType.truststore]);
 }
 
@@ -201,7 +201,7 @@ CertificateFormat[] toCertificateFormats(string[] formats) {
 string toString(CertificateFormat format) {
   return format.to!string;
 }
-string[] toStrings(CertificateFormat[] formats) {
+string[] toString(CertificateFormat[] formats) {
   return formats.map!toString.array;
 }
 /// 
@@ -221,7 +221,7 @@ unittest {
   assert(CertificateFormat.pem.toString == "pem");
   assert(CertificateFormat.pfx.toString == "pfx");
 
-  assert([CertificateFormat.p12, CertificateFormat.jks].toStrings == ["p12", "jks"]);
+  assert([CertificateFormat.p12, CertificateFormat.jks].toString == ["p12", "jks"]);
   assert(["p12", "jks"].toCertificateFormats == [CertificateFormat.p12, CertificateFormat.jks]);
 }
 
@@ -247,7 +247,7 @@ CertificateStatus[] toCertificateStatuses(string[] statuses) {
 string toString(CertificateStatus status) {
  return cast(string)status;
 }
-string[] toStrings(CertificateStatus[] statuses) {
+string[] toString(CertificateStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -267,7 +267,7 @@ unittest {
   assert(CertificateStatus.expired.toString == "expired");
   assert(CertificateStatus.invalid_.toString == "invalid");
 
-  assert([CertificateStatus.valid, CertificateStatus.expiring].toStrings == ["valid", "expiring"]);
+  assert([CertificateStatus.valid, CertificateStatus.expiring].toString == ["valid", "expiring"]);
   assert(["valid", "expiring"].toCertificateStatuses == [CertificateStatus.valid, CertificateStatus.expiring]);
 }
 
@@ -286,7 +286,7 @@ DestinationStatus[] toDestinationStatuses(string[] statuses) {
 string toString(DestinationStatus status) {
   return status.to!string;
 }
-string[] toStrings(DestinationStatus[] statuses) {
+string[] toString(DestinationStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -304,7 +304,7 @@ unittest {
   assert(DestinationStatus.inactive.toString == "inactive");
   assert(DestinationStatus.error.toString == "error");
 
-  assert([DestinationStatus.active, DestinationStatus.inactive].toStrings == ["active", "inactive"]);
+  assert([DestinationStatus.active, DestinationStatus.inactive].toString == ["active", "inactive"]);
   assert(["active", "inactive"].toDestinationStatuses == [DestinationStatus.active, DestinationStatus.inactive]);
 }
 
@@ -323,7 +323,7 @@ TokenStatus[] toTokenStatuses(string[] statuses) {
 string toString(TokenStatus status) {
   return status.to!string;
 }
-string[] toStrings(TokenStatus[] statuses) {
+string[] toString(TokenStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -341,7 +341,7 @@ unittest {
   assert(TokenStatus.expired.toString == "expired");
   assert(TokenStatus.error.toString == "error");
 
-  assert([TokenStatus.valid, TokenStatus.expired].toStrings == ["valid", "expired"]);
+  assert([TokenStatus.valid, TokenStatus.expired].toString == ["valid", "expired"]);
   assert(["valid", "expired"].toTokenStatuses == [TokenStatus.valid, TokenStatus.expired]);
 }
 
@@ -361,7 +361,7 @@ DestinationType[] toDestinationTypes(string[] types) {
 string toString(DestinationType type) {
   return type.to!string;
 }
-string[] toStrings(DestinationType[] types) {
+string[] toString(DestinationType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -381,6 +381,6 @@ unittest {
   assert(DestinationType.mail.toString == "mail");
   assert(DestinationType.ldap.toString == "ldap");
 
-  assert([DestinationType.http, DestinationType.rfc].toStrings == ["http", "rfc"]);
+  assert([DestinationType.http, DestinationType.rfc].toString == ["http", "rfc"]);
   assert(["http", "rfc"].toDestinationTypes == [DestinationType.http, DestinationType.rfc]);
 }

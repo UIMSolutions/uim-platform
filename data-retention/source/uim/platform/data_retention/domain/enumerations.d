@@ -31,7 +31,7 @@ BusinessPurposeStatus[] toBusinessPurposeStatuses(string[] names) {
 string toString(BusinessPurposeStatus status) {
     return cast(string)status;
 }
-string[] toStrings(BusinessPurposeStatus[] statuses) {
+string[] toString(BusinessPurposeStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -49,7 +49,7 @@ unittest {
     assert(toString(BusinessPurposeStatus.active) == "active");
     assert(toString(BusinessPurposeStatus.deprecated_) == "deprecated");
 
-    assert(toStrings([BusinessPurposeStatus.inactive, BusinessPurposeStatus.active]) == ["inactive", "active"]);
+    assert(toString([BusinessPurposeStatus.inactive, BusinessPurposeStatus.active]) == ["inactive", "active"]);
     assert(toBusinessPurposeStatuses(["inactive", "active"]) == [BusinessPurposeStatus.inactive, BusinessPurposeStatus.active]);
 }   
 
@@ -72,7 +72,7 @@ LegalGroundType[] toLegalGroundTypes(string[] names) {
 string toString(LegalGroundType type) {
     return type.to!string;
 }
-string[] toStrings(LegalGroundType[] types) {
+string[] toString(LegalGroundType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -96,7 +96,7 @@ unittest {
     assert(toString(LegalGroundType.publicInterest) == "publicInterest");
     assert(toString(LegalGroundType.legitimateInterest) == "legitimateInterest");
 
-    assert(toStrings([LegalGroundType.consent, LegalGroundType.contract]) == ["consent", "contract"]);
+    assert(toString([LegalGroundType.consent, LegalGroundType.contract]) == ["consent", "contract"]);
     assert(toLegalGroundTypes(["consent", "contract"]) == [LegalGroundType.consent, LegalGroundType.contract]);
 }
 
@@ -117,7 +117,7 @@ PeriodUnit[] toPeriodUnits(string[] names) {
 string toString(PeriodUnit unit) {
     return unit.to!string;
 }
-string[] toStrings(PeriodUnit[] units) {
+string[] toString(PeriodUnit[] units) {
     return units.map!toString.array;
 }
 /// 
@@ -137,7 +137,7 @@ unittest {
     assert(toString(PeriodUnit.months) == "months");
     assert(toString(PeriodUnit.years) == "years");
 
-    assert(toStrings([PeriodUnit.days, PeriodUnit.weeks]) == ["days", "weeks"]);
+    assert(toString([PeriodUnit.days, PeriodUnit.weeks]) == ["days", "weeks"]);
     assert(toPeriodUnits(["days", "weeks"]) == [PeriodUnit.days, PeriodUnit.weeks]);
 }
 
@@ -159,7 +159,7 @@ DataLifecycleStatus[] toDataLifecycleStatuses(string[] names) {
 string toString(DataLifecycleStatus status) {
     return status.to!string;
 }
-string[] toStrings(DataLifecycleStatus[] statuses) {
+string[] toString(DataLifecycleStatus[] statuses) {
     return statuses.map!toString.array;
 }
 /// 
@@ -181,7 +181,7 @@ unittest {
     assert(toString(DataLifecycleStatus.deleted) == "deleted");
     assert(toString(DataLifecycleStatus.archived) == "archived");
 
-    assert(toStrings([DataLifecycleStatus.active, DataLifecycleStatus.blocked]) == ["active", "blocked"]);
+    assert(toString([DataLifecycleStatus.active, DataLifecycleStatus.blocked]) == ["active", "blocked"]);
     assert(toDataLifecycleStatuses(["active", "blocked"]) == [DataLifecycleStatus.active, DataLifecycleStatus.blocked]);
 }
 
@@ -203,7 +203,7 @@ DeletionRequestStatus[] toDeletionRequestStatuses(string[] names) {
 string toString(DeletionRequestStatus status) {
     return status.to!string;
 }
-string[] toStrings(DeletionRequestStatus[] statuses) {
+string[] toString(DeletionRequestStatus[] statuses) {
     return statuses.map!toString.array;
 }
 /// 
@@ -225,7 +225,7 @@ unittest {
     assert(toString(DeletionRequestStatus.failed) == "failed");
     assert(toString(DeletionRequestStatus.cancelled) == "cancelled");
 
-    assert(toStrings([DeletionRequestStatus.pending, DeletionRequestStatus.inProgress]) == ["pending", "inProgress"]);
+    assert(toString([DeletionRequestStatus.pending, DeletionRequestStatus.inProgress]) == ["pending", "inProgress"]);
     assert(toDeletionRequestStatuses(["pending", "inProgress"]) == [DeletionRequestStatus.pending, DeletionRequestStatus.inProgress]);
 }
 
@@ -249,7 +249,7 @@ DeletionActionType[] toDeletionActionTypes(string[] names) {
 string toString(DeletionActionType type) {
     return cast(string)type;
 }
-string[] toStrings(DeletionActionType[] types) {
+string[] toString(DeletionActionType[] types) {
     return types.map!toString.array;
 }
 ///
@@ -267,7 +267,7 @@ unittest {
     assert(DeletionActionType.delete_.toString == "delete");
     assert(DeletionActionType.anonymize.toString == "anonymize");
 
-    assert([DeletionActionType.block, DeletionActionType.delete_].toStrings == ["block", "delete"]);
+    assert([DeletionActionType.block, DeletionActionType.delete_].toString == ["block", "delete"]);
     assert(["block", "delete"].toDeletionActionTypes == [DeletionActionType.block, DeletionActionType.delete_]);
 }
 
@@ -289,7 +289,7 @@ ArchivingJobStatus[] toArchivingJobStatuses(string[] names) {
 string toString(ArchivingJobStatus status) {
     return status.to!string;
 }
-string[] toStrings(ArchivingJobStatus[] statuses) {
+string[] toString(ArchivingJobStatus[] statuses) {
     return statuses.map!toString.array;
 }
 /// 
@@ -311,7 +311,7 @@ unittest {
     assert(toString(ArchivingJobStatus.failed) == "failed");
     assert(toString(ArchivingJobStatus.cancelled) == "cancelled");
 
-    assert(toStrings([ArchivingJobStatus.scheduled, ArchivingJobStatus.running]) == ["scheduled", "running"]);
+    assert(toString([ArchivingJobStatus.scheduled, ArchivingJobStatus.running]) == ["scheduled", "running"]);
     assert(toArchivingJobStatuses(["scheduled", "running"]) == [ArchivingJobStatus.scheduled, ArchivingJobStatus.running]);     
 }
 
@@ -330,7 +330,7 @@ ArchivingOperationType[] toArchivingOperationTypes(string[] names) {
 string toString(ArchivingOperationType type) {
     return type.to!string;
 }
-string[] toStrings(ArchivingOperationType[] types) {
+string[] toString(ArchivingOperationType[] types) {
     return types.map!toString.array;
 }
 /// 
@@ -348,7 +348,7 @@ unittest {
     assert(ArchivingOperationType.destruct.toString == "destruct");
     assert(ArchivingOperationType.archiveAndDestruct.toString == "archiveAndDestruct");
 
-    assert([ArchivingOperationType.archive, ArchivingOperationType.destruct].toStrings == ["archive", "destruct"]);
+    assert([ArchivingOperationType.archive, ArchivingOperationType.destruct].toString == ["archive", "destruct"]);
     assert(["archive", "destruct"].toArchivingOperationTypes == [ArchivingOperationType.archive, ArchivingOperationType.destruct]);
 }
 
@@ -368,7 +368,7 @@ ApplicationGroupScope[] toApplicationGroupScopes(string[] names) {
 string toString(ApplicationGroupScope scope_) {
     return scope_.to!string;
 }
-string[] toStrings(ApplicationGroupScope[] scopes) {
+string[] toString(ApplicationGroupScope[] scopes) {
     return scopes.map!toString.array;
 }
 /// 
@@ -386,7 +386,7 @@ unittest {
     assert(ApplicationGroupScope.regional.toString == "regional");
     assert(ApplicationGroupScope.local.toString == "local");
 
-    assert([ApplicationGroupScope.global, ApplicationGroupScope.regional].toStrings == ["global", "regional"]);
+    assert([ApplicationGroupScope.global, ApplicationGroupScope.regional].toString == ["global", "regional"]);
     assert(["global", "regional"].toApplicationGroupScopes == [ApplicationGroupScope.global, ApplicationGroupScope.regional]);
 }
 
@@ -408,7 +408,7 @@ PurposeCheckResult[] toPurposeCheckResults(string[] names) {
 string toString(PurposeCheckResult result) {
     return result.to!string;
 }
-string[] toStrings(PurposeCheckResult[] results) {
+string[] toString(PurposeCheckResult[] results) {
     return results.map!toString.array;
 }
 ///
@@ -430,6 +430,6 @@ unittest {
     assert(PurposeCheckResult.endOfRetention.toString == "endOfRetention");
     assert(PurposeCheckResult.noRuleFound.toString == "noRuleFound");
 
-    assert([PurposeCheckResult.withinResidence, PurposeCheckResult.withinRetention].toStrings == ["withinResidence", "withinRetention"]);
+    assert([PurposeCheckResult.withinResidence, PurposeCheckResult.withinRetention].toString == ["withinResidence", "withinRetention"]);
     assert(["withinResidence", "withinRetention"].toPurposeCheckResults == [PurposeCheckResult.withinResidence, PurposeCheckResult.withinRetention]);
 }   

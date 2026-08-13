@@ -52,7 +52,7 @@ FilterOperator[] toFilterOperator(string[] operators) {
 string toString(FilterOperator operator) {
   return cast(string)operator; // This will return the enum member name as a string,
 }
-string[] toStrings(FilterOperator[] operators) {
+string[] toString(FilterOperator[] operators) {
   return operators.map!toString.array;
 }
 ///
@@ -80,5 +80,5 @@ unittest {
   assert(FilterOperator.isNotNull.toString == "isNotNull");
 
   assert(toFilterOperator(["equals", "notEquals", "greaterThan", "lessThan"]) == [FilterOperator.equals, FilterOperator.notEquals, FilterOperator.greaterThan, FilterOperator.lessThan]);
-  assert(toStrings([FilterOperator.equals, FilterOperator.notEquals, FilterOperator.greaterThan, FilterOperator.lessThan]) == ["equals", "notEquals", "greaterThan", "lessThan"]);
+  assert(toString([FilterOperator.equals, FilterOperator.notEquals, FilterOperator.greaterThan, FilterOperator.lessThan]) == ["equals", "notEquals", "greaterThan", "lessThan"]);
 }

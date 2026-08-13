@@ -26,7 +26,7 @@ RuleType[] toRuleTypes(string[] types) {
 string toString(RuleType type) {
     return type.to!string;
 }
-string[] toStrings(RuleType[] types) {
+string[] toString(RuleType[] types) {
     return types.map!(t => t.to!string).array;
 }
 ///
@@ -46,7 +46,7 @@ unittest {
     assert(toString(RuleType.teamBased) == "teamBased");
     assert(toString(RuleType.hierarchical) == "hierarchical");
 
-    assert(toStrings([RuleType.directAssignment, RuleType.businessRule]) == ["directAssignment", "businessRule"]);
+    assert(toString([RuleType.directAssignment, RuleType.businessRule]) == ["directAssignment", "businessRule"]);
     assert(toRuleTypes(["directAssignment", "businessRule"]) == [RuleType.directAssignment, RuleType.businessRule]);
 }
 
@@ -64,7 +64,7 @@ RuleStatus[] toRuleStatuses(string[] statuses) {
 string toString(RuleStatus status) {
     return status.to!string;
 }
-string[] toStrings(RuleStatus[] statuses) {
+string[] toString(RuleStatus[] statuses) {
     return statuses.map!(s => s.to!string).array;
 }
 ///
@@ -82,7 +82,7 @@ unittest {
     assert(toString(RuleStatus.inactive) == "inactive");
     assert(toString(RuleStatus.draft) == "draft");
 
-    assert(toStrings([RuleStatus.active, RuleStatus.inactive]) == ["active", "inactive"]);
+    assert(toString([RuleStatus.active, RuleStatus.inactive]) == ["active", "inactive"]);
     assert(toRuleStatuses(["active", "inactive"]) == [RuleStatus.active, RuleStatus.inactive]);
 }
 
@@ -100,7 +100,7 @@ TeamStatus[] toTeamStatuses(string[] statuses) {
 string toString(TeamStatus status) {
     return status.to!string;
 }
-string[] toStrings(TeamStatus[] statuses) {
+string[] toString(TeamStatus[] statuses) {
     return statuses.map!(s => s.to!string).array;
 }
 ///
@@ -118,7 +118,7 @@ unittest {
     assert(toString(TeamStatus.inactive) == "inactive");
     assert(toString(TeamStatus.archived) == "archived");
 
-    assert(toStrings([TeamStatus.active, TeamStatus.inactive]) == ["active", "inactive"]);
+    assert(toString([TeamStatus.active, TeamStatus.inactive]) == ["active", "inactive"]);
     assert(toTeamStatuses(["active", "inactive"]) == [TeamStatus.active, TeamStatus.inactive]);
 } 
 
@@ -137,7 +137,7 @@ MemberRole[] toMemberRoles(string[] roles) {
 string toString(MemberRole role) {
     return role.to!string;
 }
-string[] toStrings(MemberRole[] roles) {
+string[] toString(MemberRole[] roles) {
     return roles.map!(r => r.to!string).array;
 }
 ///
@@ -157,7 +157,7 @@ unittest {
     assert(toString(MemberRole.consulted) == "consulted");
     assert(toString(MemberRole.informed) == "informed");
 
-    assert(toStrings([MemberRole.responsible, MemberRole.accountable]) == ["responsible", "accountable"]);
+    assert(toString([MemberRole.responsible, MemberRole.accountable]) == ["responsible", "accountable"]);
     assert(toMemberRoles(["responsible", "accountable"]) == [MemberRole.responsible, MemberRole.accountable]);
 }
 
@@ -174,7 +174,7 @@ FunctionStatus[] toFunctionStatuses(string[] statuses) {
 string toString(FunctionStatus status) {
     return status.to!string;
 }
-string[] toStrings(FunctionStatus[] statuses) {
+string[] toString(FunctionStatus[] statuses) {
     return statuses.map!(s => s.to!string).array;
 }
 ///
@@ -190,7 +190,7 @@ unittest {
     assert(toString(FunctionStatus.active) == "active");
     assert(toString(FunctionStatus.inactive) == "inactive");
 
-    assert(toStrings([FunctionStatus.active, FunctionStatus.inactive]) == ["active", "inactive"]);
+    assert(toString([FunctionStatus.active, FunctionStatus.inactive]) == ["active", "inactive"]);
     assert(toFunctionStatuses(["active", "inactive"]) == [FunctionStatus.active, FunctionStatus.inactive]);
 }
 
@@ -207,7 +207,7 @@ ContextStatus[] toContextStatuses(string[] statuses) {
 string toString(ContextStatus status) {
     return status.to!string;
 }
-string[] toStrings(ContextStatus[] statuses) {
+string[] toString(ContextStatus[] statuses) {
     return statuses.map!(s => s.to!string).array;
 }
 ///

@@ -26,7 +26,7 @@ SsoProtocol[] toSsoProtocol(string[] values) {
 string toString(SsoProtocol protocol) {
   return protocol.to!string;
 }
-string[] toStrings(SsoProtocol[] protocols) {
+string[] toString(SsoProtocol[] protocols) {
   return protocols.map!toString.array;
 }
 /// 
@@ -46,7 +46,7 @@ unittest {
   assert(toString(SsoProtocol.oidc) == "oidc");
 
   assert(["saml", "oidc"].toSsoProtocol == [SsoProtocol.saml, SsoProtocol.oidc]);
-  assert([SsoProtocol.saml, SsoProtocol.oidc].toStrings == ["saml", "oidc"]);
+  assert([SsoProtocol.saml, SsoProtocol.oidc].toString == ["saml", "oidc"]);
 }
 
 /// Authentication method supported by the platform.
@@ -69,7 +69,7 @@ AuthMethod[] toAuthMethod(string[] values) {
 string toString(AuthMethod method) {
   return method.to!string;
 }
-string[] toStrings(AuthMethod[] methods) {
+string[] toString(AuthMethod[] methods) {
   return methods.map!toString.array;
 }
 unittest {
@@ -108,7 +108,7 @@ unittest {
   assert(toString(AuthMethod.apiKey) == "apiKey");  
 
   assert(["form", "spnego", "social", "certificate", "saml", "oidc", "apiKey"].toAuthMethod == [AuthMethod.form, AuthMethod.spnego, AuthMethod.social, AuthMethod.certificate, AuthMethod.saml, AuthMethod.oidc, AuthMethod.apiKey]);
-  assert([AuthMethod.form, AuthMethod.spnego, AuthMethod.social, AuthMethod.certificate, AuthMethod.saml, AuthMethod.oidc, AuthMethod.apiKey].toStrings == ["form", "spnego", "social", "certificate", "saml", "oidc", "apiKey"]);
+  assert([AuthMethod.form, AuthMethod.spnego, AuthMethod.social, AuthMethod.certificate, AuthMethod.saml, AuthMethod.oidc, AuthMethod.apiKey].toString == ["form", "spnego", "social", "certificate", "saml", "oidc", "apiKey"]);
 }
 
 enum PersistenceType {
@@ -127,7 +127,7 @@ PersistenceType[] toPersistenceType(string[] values) {
 string toString(PersistenceType type) {
   return type.to!string;
 }
-string[] toStrings(PersistenceType[] types) {
+string[] toString(PersistenceType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -155,7 +155,7 @@ unittest {
   assert(toString(PersistenceType.file) == "file");
 
   assert(["sql", "nosql", "memory", "file"].toPersistenceType == [PersistenceType.sql, PersistenceType.nosql, PersistenceType.memory, PersistenceType.file]);
-  assert([PersistenceType.sql, PersistenceType.nosql, PersistenceType.memory, PersistenceType.file].toStrings == ["sql", "nosql", "memory", "file"]);
+  assert([PersistenceType.sql, PersistenceType.nosql, PersistenceType.memory, PersistenceType.file].toString == ["sql", "nosql", "memory", "file"]);
 }
 
 // Alert severity
@@ -176,7 +176,7 @@ AlertSeverity[] toAlertSeverities(string[] values) {
 string toString(AlertSeverity severity) {
   return severity.to!string;
 }
-string[] toStrings(AlertSeverity[] severities) {
+string[] toString(AlertSeverity[] severities) {
   return severities.map!toString.array;
 }
 ///
@@ -199,7 +199,7 @@ unittest {
   assert("".toAlertSeverity == AlertSeverity.info); // Default case
 
   assert(["info", "warning", "error", "critical", "fatal"].toAlertSeverities == [AlertSeverity.info, AlertSeverity.warning, AlertSeverity.error, AlertSeverity.critical, AlertSeverity.fatal]);
-  assert([AlertSeverity.info, AlertSeverity.warning, AlertSeverity.error, AlertSeverity.critical, AlertSeverity.fatal].toStrings == ["info", "warning", "error", "critical", "fatal"]);
+  assert([AlertSeverity.info, AlertSeverity.warning, AlertSeverity.error, AlertSeverity.critical, AlertSeverity.fatal].toString == ["info", "warning", "error", "critical", "fatal"]);
 }
 
 // Log level
@@ -229,7 +229,7 @@ LoggingLevel[] toLoggingLevels(string[] values)
 string toString(LoggingLevel level)
   => cast(string)level;
 
-string[] toStrings(LoggingLevel[] levels)
+string[] toString(LoggingLevel[] levels)
   => levels.map!toString.array;
 ///
 unittest {
@@ -253,7 +253,7 @@ unittest {
   assert("".toLoggingLevel == LoggingLevel.info); // Default case
 
   assert(["info", "debug", "warning", "error", "fatal", "trace"].toLoggingLevels == [LoggingLevel.info, LoggingLevel.debug_, LoggingLevel.warning, LoggingLevel.error, LoggingLevel.fatal, LoggingLevel.trace]);
-  assert([LoggingLevel.info, LoggingLevel.debug_, LoggingLevel.warning, LoggingLevel.error, LoggingLevel.fatal, LoggingLevel.trace].toStrings == ["info", "debug", "warning", "error", "fatal", "trace"]);
+  assert([LoggingLevel.info, LoggingLevel.debug_, LoggingLevel.warning, LoggingLevel.error, LoggingLevel.fatal, LoggingLevel.trace].toString == ["info", "debug", "warning", "error", "fatal", "trace"]);
 }
 
 /// HTTP method used during destination health checks or probing.
@@ -282,7 +282,7 @@ HttpMethod[] toHttpMethods(string[] values)
   => values.map!toHttpMethod.array;
 string toString(HttpMethod method)
   => cast(string)method;
-string[] toStrings(HttpMethod[] methods)
+string[] toString(HttpMethod[] methods)
   => methods.map!toString.array;
 ///
 unittest {
@@ -305,5 +305,5 @@ unittest {
   assert("options".toHttpMethod == HttpMethod.options_);
 
   assert(["get", "post", "put", "delete", "patch", "head", "options"].toHttpMethods == [HttpMethod.get_, HttpMethod.post_, HttpMethod.put_, HttpMethod.delete_, HttpMethod.patch_, HttpMethod.head_, HttpMethod.options_]);
-  assert([HttpMethod.get_, HttpMethod.post_, HttpMethod.put_, HttpMethod.delete_, HttpMethod.patch_, HttpMethod.head_, HttpMethod.options_].toStrings == ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]);
+  assert([HttpMethod.get_, HttpMethod.post_, HttpMethod.put_, HttpMethod.delete_, HttpMethod.patch_, HttpMethod.head_, HttpMethod.options_].toString == ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]);
 }

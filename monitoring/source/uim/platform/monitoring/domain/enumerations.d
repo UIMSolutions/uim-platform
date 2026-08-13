@@ -30,7 +30,7 @@ ResourceType[] toResourceType(string[] values) {
 string toString(ResourceType value) {
   return value.to!string;
 }
-string[] toStrings(ResourceType[] values) {
+string[] toString(ResourceType[] values) {
   return values.map!toString.array;
 }
 ///
@@ -56,7 +56,7 @@ unittest {
   assert(ResourceType.customApplication.toString == "customApplication");
   assert(ResourceType.service.toString == "service");
 
-  assert(toStrings([ResourceType.javaApplication, ResourceType.service]) == ["javaApplication", "service"]);
+  assert(toString([ResourceType.javaApplication, ResourceType.service]) == ["javaApplication", "service"]);
   assert(toResourceType(["javaApplication", "service"]) == [ResourceType.javaApplication, ResourceType.service]);
 }
 
@@ -80,7 +80,7 @@ ResourceState[] toResourceState(string[] values) {
 string toString(ResourceState state) {
   return state.to!string;
 }
-string[] toStrings(ResourceState[] states) {
+string[] toString(ResourceState[] states) {
   return states.map!toString.array;
 }
 ///
@@ -100,7 +100,7 @@ unittest {
   assert(ResourceState.stopped.toString == "stopped");
   assert(ResourceState.error.toString == "error");
 
-  assert(toStrings([ResourceState.unknown, ResourceState.error]) == ["unknown", "error"]);
+  assert(toString([ResourceState.unknown, ResourceState.error]) == ["unknown", "error"]);
   assert(toResourceState(["unknown", "error"]) == [ResourceState.unknown, ResourceState.error]);
 }
 
@@ -129,7 +129,7 @@ MetricCategory[] toMetricCategories(string[] values)
 string toString(MetricCategory value)
   => value.to!string;
 
-string[] toStrings(MetricCategory[] values)
+string[] toString(MetricCategory[] values)
   => values.map!toString.array;
 
 /// 
@@ -165,7 +165,7 @@ unittest {
 
   auto categories = [MetricCategory.cpu, MetricCategory.memory, MetricCategory.disk];
   auto categoryStrings = ["cpu", "memory", "disk"];
-  assert(toStrings(categories) == categoryStrings);
+  assert(toString(categories) == categoryStrings);
   assert(toMetricCategories(categoryStrings) == categories);
 }
 
@@ -205,7 +205,7 @@ MetricUnit[] toMetricUnits(string[] values)
 string toString(MetricUnit unit)
   => cast(string)unit;
 
-string[] toStrings(MetricUnit[] units)
+string[] toString(MetricUnit[] units)
   => units.map!toString.array;
 
 /// 
@@ -239,7 +239,7 @@ unittest {
 
   auto units = [MetricUnit.percent, MetricUnit.bytes_, MetricUnit.count];
   auto unitStrings = ["percent", "bytes", "count"];
-  assert(toStrings(units) == unitStrings);
+  assert(toString(units) == unitStrings);
   assert(toMetricUnits(unitStrings) == units);
 }
 
@@ -262,7 +262,7 @@ AggregationMethod[] toAggregationMethods(string[] values)
 string toString(AggregationMethod value)
   => value.to!string;
 
-string[] toStrings(AggregationMethod[] values)
+string[] toString(AggregationMethod[] values)
   => values.map!toString.array;
 
 /// 
@@ -288,7 +288,7 @@ unittest {
 
   assert(["average", "count"].toAggregationMethods == [AggregationMethod.average, AggregationMethod.count
     ]);
-  assert([AggregationMethod.average, AggregationMethod.count].toStrings == ["average", "count"
+  assert([AggregationMethod.average, AggregationMethod.count].toString == ["average", "count"
     ]);
 }
 
@@ -312,7 +312,7 @@ CheckType[] toCheckTypes(string[] values)
 string toString(CheckType value)
   => value.to!string;
 
-string[] toStrings(CheckType[] values)
+string[] toString(CheckType[] values)
   => values.map!toString.array;
 
 /// 
@@ -338,7 +338,7 @@ unittest {
 
   assert(["availability", "database"].toCheckTypes == [CheckType.availability, CheckType.database
     ]);
-  assert([CheckType.availability, CheckType.database].toStrings == ["availability", "database"
+  assert([CheckType.availability, CheckType.database].toString == ["availability", "database"
     ]);
 }
 
@@ -360,7 +360,7 @@ CheckStatus[] toCheckStatuses(string[] values)
 string toString(CheckStatus value)
   => value.to!string;
 
-string[] toStrings(CheckStatus[] values)
+string[] toString(CheckStatus[] values)
   => values.map!toString.array;
 
 ///
@@ -384,7 +384,7 @@ unittest {
 
   assert(["ok", "critical"].toCheckStatuses == [CheckStatus.ok, CheckStatus.critical
     ]);
-  assert([CheckStatus.ok, CheckStatus.critical].toStrings == ["ok", "critical"
+  assert([CheckStatus.ok, CheckStatus.critical].toString == ["ok", "critical"
     ]);
 }
 
@@ -406,7 +406,7 @@ AlertState[] toAlertStates(string[] values)
 string toString(AlertState value)
   => value.to!string;
 
-string[] toStrings(AlertState[] values)
+string[] toString(AlertState[] values)
   => values.map!toString.array;
 
 /// 
@@ -428,7 +428,7 @@ unittest {
 
   assert(["open", "resolved"].toAlertStates == [AlertState.open, AlertState.resolved
     ]);
-  assert([AlertState.open, AlertState.resolved].toStrings == ["open", "resolved"
+  assert([AlertState.open, AlertState.resolved].toString == ["open", "resolved"
     ]);
 }
 
@@ -451,7 +451,7 @@ ThresholdOperator[] toThresholdOperators(string[] values)
 string toString(ThresholdOperator value)
   => value.to!string;
 
-string[] toStrings(ThresholdOperator[] values)
+string[] toString(ThresholdOperator[] values)
   => values.map!toString.array;
 
 ///
@@ -477,7 +477,7 @@ unittest {
 
   assert(["greaterThan", "equal"].toThresholdOperators == [ThresholdOperator.greaterThan, ThresholdOperator.equal
     ]);
-  assert([ThresholdOperator.greaterThan, ThresholdOperator.equal].toStrings == ["greaterThan", "equal"
+  assert([ThresholdOperator.greaterThan, ThresholdOperator.equal].toString == ["greaterThan", "equal"
     ]);
 }
 
@@ -512,7 +512,7 @@ ChannelState[] toChannelStates(string[] values)
 string toString(ChannelState value)
   => value.to!string;
 
-string[] toStrings(ChannelState[] values)
+string[] toString(ChannelState[] values)
   => values.map!toString.array;
 
 ///
@@ -532,6 +532,6 @@ unittest {
 
   assert(["active", "error"].toChannelStates == [ChannelState.active, ChannelState.error
     ]);
-  assert([ChannelState.active, ChannelState.error].toStrings == ["active", "error"
+  assert([ChannelState.active, ChannelState.error].toString == ["active", "error"
     ]);
 }

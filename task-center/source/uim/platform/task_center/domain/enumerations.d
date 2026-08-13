@@ -29,7 +29,7 @@ TaskStatus[] toTaskStatuses(string[] values) {
 string toString(TaskStatus value) {
     return value.to!string;
 }
-string[] toStrings(TaskStatus[] values) {
+string[] toString(TaskStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -56,7 +56,7 @@ unittest {
     assert(TaskStatus.reserved.toString == "reserved");
 
     assert(["open", "completed"].toTaskStatuses == [TaskStatus.open, TaskStatus.completed]);
-    assert([TaskStatus.open, TaskStatus.completed].toStrings == ["open", "completed"]);
+    assert([TaskStatus.open, TaskStatus.completed].toString == ["open", "completed"]);
 }
 
 enum TaskPriority {
@@ -74,7 +74,7 @@ TaskPriority[] toTaskPriorities(string[] values) {
 string toString(TaskPriority value) {
     return value.to!string;
 }
-string[] toStrings(TaskPriority[] values) {
+string[] toString(TaskPriority[] values) {
     return values.map!toString.array;
 }
 ///
@@ -95,7 +95,7 @@ unittest {
     assert(TaskPriority.veryHigh.toString == "veryHigh");   
 
     assert(["low", "high"].toTaskPriorities == [TaskPriority.low, TaskPriority.high]);
-    assert([TaskPriority.low, TaskPriority.high].toStrings == ["low", "high"]);
+    assert([TaskPriority.low, TaskPriority.high].toString == ["low", "high"]);
 }
 
 enum TaskCategory {
@@ -116,7 +116,7 @@ TaskCategory[] toTaskCategories(string[] values) {
 string toString(TaskCategory value) {
     return value.to!string;
 }
-string[] toStrings(TaskCategory[] values) {
+string[] toString(TaskCategory[] values) {
     return values.map!toString.array;
 }
 ///
@@ -143,7 +143,7 @@ unittest {
     assert(TaskCategory.informational.toString == "informational");
 
     assert(["approval", "action"].toTaskCategories == [TaskCategory.approval, TaskCategory.action]);
-    assert([TaskCategory.approval, TaskCategory.action].toStrings == ["approval", "action"]);
+    assert([TaskCategory.approval, TaskCategory.action].toString == ["approval", "action"]);
 }       
 
 enum ProviderType {
@@ -164,7 +164,7 @@ ProviderType[] toProviderTypes(string[] values) {
 string toString(ProviderType value) {
     return value.to!string;
 }
-string[] toStrings(ProviderType[] values) {
+string[] toString(ProviderType[] values) {
     return values.map!toString.array;
 }       
 ///
@@ -191,7 +191,7 @@ unittest {
     assert(ProviderType.custom.toString == "custom");   
 
     assert(["s4hana", "ariba"].toProviderTypes == [ProviderType.s4hana, ProviderType.ariba]);
-    assert([ProviderType.s4hana, ProviderType.ariba].toStrings == ["s4hana", "ariba"]);
+    assert([ProviderType.s4hana, ProviderType.ariba].toString == ["s4hana", "ariba"]);
 }
 
 enum ProviderStatus {
@@ -209,7 +209,7 @@ ProviderStatus[] toProviderStatuses(string[] values) {
 string toString(ProviderStatus value) {
     return value.to!string;
 }
-string[] toStrings(ProviderStatus[] values) {
+string[] toString(ProviderStatus[] values) {
     return values.map!toString.array;
 }   
 ///
@@ -230,7 +230,7 @@ unittest {
     assert(ProviderStatus.syncing.toString == "syncing");   
 
     assert(["active", "error"].toProviderStatuses == [ProviderStatus.active, ProviderStatus.error]);
-    assert([ProviderStatus.active, ProviderStatus.error].toStrings == ["active", "error"]);
+    assert([ProviderStatus.active, ProviderStatus.error].toString == ["active", "error"]);
 }
 
 enum AuthenticationType {
@@ -249,7 +249,7 @@ AuthenticationType[] toAuthenticationTypes(string[] values) {
 string toString(AuthenticationType value) {
     return value.to!string;
 }
-string[] toStrings(AuthenticationType[] values) {
+string[] toString(AuthenticationType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -272,7 +272,7 @@ unittest {
     assert(AuthenticationType.saml.toString == "saml");
 
     assert(["oauth2", "apiKey"].toAuthenticationTypes == [AuthenticationType.oauth2, AuthenticationType.apiKey]);
-    assert([AuthenticationType.oauth2, AuthenticationType.apiKey].toStrings == ["oauth2", "apiKey"]);
+    assert([AuthenticationType.oauth2, AuthenticationType.apiKey].toString == ["oauth2", "apiKey"]);
 }
 
 enum ActionType {
@@ -295,7 +295,7 @@ ActionType[] toActionTypes(string[] values) {
 string toString(ActionType value) {
     return value.to!string;
 }
-string[] toStrings(ActionType[] values) {
+string[] toString(ActionType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -326,7 +326,7 @@ unittest {
     assert(ActionType.resubmit.toString == "resubmit");
 
     assert(["approve", "reject"].toActionTypes == [ActionType.approve, ActionType.reject]);
-    assert([ActionType.approve, ActionType.reject].toStrings == ["approve", "reject"]);
+    assert([ActionType.approve, ActionType.reject].toString == ["approve", "reject"]);
 }
 
 enum SubstitutionStatus {
@@ -344,7 +344,7 @@ SubstitutionStatus[] toSubstitutionStatuses(string[] values) {
 string toString(SubstitutionStatus value) {
     return value.to!string;
 }
-string[] toStrings(SubstitutionStatus[] values) {
+string[] toString(SubstitutionStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -365,7 +365,7 @@ unittest {
     assert(SubstitutionStatus.pending.toString == "pending");
 
     assert(["active", "expired"].toSubstitutionStatuses == [SubstitutionStatus.active, SubstitutionStatus.expired]);
-    assert([SubstitutionStatus.active, SubstitutionStatus.expired].toStrings == ["active", "expired"]);
+    assert([SubstitutionStatus.active, SubstitutionStatus.expired].toString == ["active", "expired"]);
 }
 
 
@@ -384,7 +384,7 @@ AttachmentStatus[] toAttachmentStatuses(string[] values) {
 string toString(AttachmentStatus value) {
     return value.to!string;
 }
-string[] toStrings(AttachmentStatus[] values) {
+string[] toString(AttachmentStatus[] values) {
     return values.map!toString.array;
 }
 ///
@@ -405,7 +405,7 @@ unittest {
     assert(AttachmentStatus.deleted.toString == "deleted");
 
     assert(["uploaded", "available"].toAttachmentStatuses == [AttachmentStatus.uploaded, AttachmentStatus.available]);
-    assert([AttachmentStatus.uploaded, AttachmentStatus.available].toStrings == ["uploaded", "available"]);
+    assert([AttachmentStatus.uploaded, AttachmentStatus.available].toString == ["uploaded", "available"]);
 }
 
 enum FilterCriterionType {
@@ -427,7 +427,7 @@ FilterCriterionType[] toFilterCriterionTypes(string[] values) {
 string toString(FilterCriterionType value) {
     return value.to!string;
 }
-string[] toStrings(FilterCriterionType[] values) {
+string[] toString(FilterCriterionType[] values) {
     return values.map!toString.array;
 }
 ///
@@ -456,6 +456,6 @@ unittest {
     assert(FilterCriterionType.taskDefinition.toString == "taskDefinition");    
 
     assert(["status", "priority"].toFilterCriterionTypes == [FilterCriterionType.status, FilterCriterionType.priority]);
-    assert([FilterCriterionType.status, FilterCriterionType.priority].toStrings == ["status", "priority"]);
+    assert([FilterCriterionType.status, FilterCriterionType.priority].toString == ["status", "priority"]);
 }
 

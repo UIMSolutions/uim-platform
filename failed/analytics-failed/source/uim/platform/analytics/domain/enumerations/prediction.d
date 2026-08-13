@@ -29,7 +29,7 @@ PredictionType[] toPredictionTypes(string[] types) {
 string toString(PredictionType type) {
   return type.to!string;
 }
-string[] toStrings(PredictionType[] types) {
+string[] toString(PredictionType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -53,7 +53,7 @@ unittest {
 
   assert(["classification", "regression", "timeSeries", "clustering", "anomalyDetection"].toPredictionTypes ==
          [PredictionType.classification, PredictionType.regression, PredictionType.timeSeries, PredictionType.clustering, PredictionType.anomalyDetection]);
-  assert(toStrings([PredictionType.classification, PredictionType.regression, PredictionType.timeSeries, PredictionType.clustering, PredictionType.anomalyDetection]) ==
+  assert(toString([PredictionType.classification, PredictionType.regression, PredictionType.timeSeries, PredictionType.clustering, PredictionType.anomalyDetection]) ==
          ["classification", "regression", "timeSeries", "clustering", "anomalyDetection"]);
 }
 
@@ -78,7 +78,7 @@ PredictionStatus[] toPredictionStatuses(string[] statuses) {
 string toString(PredictionStatus status) {
   return status.to!string;
 }
-string[] toStrings(PredictionStatus[] statuses) {
+string[] toString(PredictionStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -102,7 +102,7 @@ unittest {
 
   assert(["created", "training", "ready", "failed", "archived"].toPredictionStatuses ==
          [PredictionStatus.created, PredictionStatus.training, PredictionStatus.ready, PredictionStatus.failed, PredictionStatus.archived]);
-  assert(toStrings([PredictionStatus.created, PredictionStatus.training, PredictionStatus.ready, PredictionStatus.failed, PredictionStatus.archived]) ==
+  assert(toString([PredictionStatus.created, PredictionStatus.training, PredictionStatus.ready, PredictionStatus.failed, PredictionStatus.archived]) ==
          ["created", "training", "ready", "failed", "archived"]);
 }
 

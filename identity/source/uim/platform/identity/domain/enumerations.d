@@ -28,7 +28,7 @@ UserStatus[] toUserStatuses(string[] statuses)
 string toString(UserStatus status)
     => status.to!string;
 
-string[] toStrings(UserStatus[] statuses)
+string[] toString(UserStatus[] statuses)
     => statuses.map!toString.array;
 /// 
 unittest {
@@ -44,7 +44,7 @@ unittest {
     assert(UserStatus.locked.toString == "locked");
     assert(UserStatus.shadow.toString == "shadow");
 
-    assert([UserStatus.active, UserStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([UserStatus.active, UserStatus.inactive].toString == ["active", "inactive"]);
     assert(["active", "inactive"].toUserStatuses == [UserStatus.active, UserStatus.inactive]);
 }
 
@@ -68,7 +68,7 @@ UserType[] toUserTypes(string[] types)
 string toString(UserType type)
     => type.to!string;
 
-string[] toStrings(UserType[] types)
+string[] toString(UserType[] types)
     => types.map!toString.array;
 /// 
 unittest {
@@ -88,7 +88,7 @@ unittest {
     assert(UserType.onboardee.toString == "onboardee");
     assert(UserType.external.toString == "external");
 
-    assert([UserType.employee, UserType.partner].toStrings == ["employee", "partner"]);
+    assert([UserType.employee, UserType.partner].toString == ["employee", "partner"]);
     assert(["employee", "partner"].toUserTypes == [UserType.employee, UserType.partner]);
 }
 
@@ -106,7 +106,7 @@ GroupType[] toGroupTypes(string[] types)
 string toString(GroupType type)
     => type.to!string;
 
-string[] toStrings(GroupType[] types)
+string[] toString(GroupType[] types)
     => types.map!toString.array;
 ///
 unittest {
@@ -118,7 +118,7 @@ unittest {
     assert(GroupType.userGroup.toString == "userGroup");
     assert(GroupType.authorization.toString == "authorization");
 
-    assert([GroupType.userGroup, GroupType.authorization].toStrings == ["userGroup", "authorization"]);
+    assert([GroupType.userGroup, GroupType.authorization].toString == ["userGroup", "authorization"]);
     assert(["userGroup", "authorization"].toGroupTypes == [GroupType.userGroup, GroupType.authorization]);
 }
 
@@ -136,7 +136,7 @@ AppProtocol[] toAppProtocols(string[] protocols)
 string toString(AppProtocol protocol)
     => protocol.to!string;
 
-string[] toStrings(AppProtocol[] protocols)
+string[] toString(AppProtocol[] protocols)
     => protocols.map!toString.array;
 /// 
 unittest {
@@ -148,7 +148,7 @@ unittest {
     assert(AppProtocol.oidc.toString == "oidc");
     assert(AppProtocol.saml.toString == "saml");
 
-    assert([AppProtocol.oidc, AppProtocol.saml].toStrings == ["oidc", "saml"]);
+    assert([AppProtocol.oidc, AppProtocol.saml].toString == ["oidc", "saml"]);
     assert(["oidc", "saml"].toAppProtocols == [AppProtocol.oidc, AppProtocol.saml]);
 }
 
@@ -164,7 +164,7 @@ AppStatus[] toAppStatuses(string[] statuses)
     => statuses.map!toAppStatus.array;
 string toString(AppStatus status)
     => status.to!string;
-string[] toStrings(AppStatus[] statuses)
+string[] toString(AppStatus[] statuses)
     => statuses.map!toString.array;
 /// 
 unittest {
@@ -176,7 +176,7 @@ unittest {
     assert(AppStatus.active.toString == "active");
     assert(AppStatus.inactive.toString == "inactive");
 
-    assert([AppStatus.active, AppStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([AppStatus.active, AppStatus.inactive].toString == ["active", "inactive"]);
     assert(["active", "inactive"].toAppStatuses == [AppStatus.active, AppStatus.inactive]);
 }
 
@@ -195,7 +195,7 @@ IdpType[] toIdpTypes(string[] types)
 string toString(IdpType type)
     => type.to!string;
 
-string[] toStrings(IdpType[] types)
+string[] toString(IdpType[] types)
     => types.map!toString.array;
 /// 
 unittest {
@@ -209,7 +209,7 @@ unittest {
     assert(IdpType.saml.toString == "saml");
     assert(IdpType.corporate.toString == "corporate");
 
-    assert([IdpType.oidc, IdpType.saml].toStrings == ["oidc", "saml"]);
+    assert([IdpType.oidc, IdpType.saml].toString == ["oidc", "saml"]);
     assert(["oidc", "saml"].toIdpTypes == [IdpType.oidc, IdpType.saml]);
 }
 
@@ -225,7 +225,7 @@ IdpStatus[] toIdpStatuses(string[] statuses)
     => statuses.map!toIdpStatus.array;
 string toString(IdpStatus status)
     => status.to!string;
-string[] toStrings(IdpStatus[] statuses)
+string[] toString(IdpStatus[] statuses)
     => statuses.map!toString.array;
 /// 
 unittest {
@@ -237,7 +237,7 @@ unittest {
     assert(IdpStatus.active.toString == "active");
     assert(IdpStatus.inactive.toString == "inactive");
 
-    assert([IdpStatus.active, IdpStatus.inactive].toStrings == ["active", "inactive"]);
+    assert([IdpStatus.active, IdpStatus.inactive].toString == ["active", "inactive"]);
     assert(["active", "inactive"].toIdpStatuses == [IdpStatus.active, IdpStatus.inactive]);
 }
 
@@ -254,7 +254,7 @@ JobType[] toJobTypes(string[] types)
     => types.map!toJobType.array;
 string toString(JobType type)
     => type.to!string;
-string[] toStrings(JobType[] types)
+string[] toString(JobType[] types)
     => types.map!toString.array;
 
 /// Provisioning job lifecycle status.
@@ -272,7 +272,7 @@ JobStatus[] toJobStatuses(string[] statuses)
     => statuses.map!toJobStatus.array;
 string toString(JobStatus status)
     => status.to!string;
-string[] toStrings(JobStatus[] statuses)
+string[] toString(JobStatus[] statuses)
     => statuses.map!toString.array;
 /// 
 unittest {
@@ -290,7 +290,7 @@ unittest {
     assert(JobStatus.failed.toString == "failed");
     assert(JobStatus.cancelled.toString == "cancelled");
 
-    assert([JobStatus.pending, JobStatus.running].toStrings == ["pending", "running"]);
+    assert([JobStatus.pending, JobStatus.running].toString == ["pending", "running"]);
     assert(["pending", "running"].toJobStatuses == [JobStatus.pending, JobStatus.running]);
 }
 
@@ -310,7 +310,7 @@ AuthScheme[] toAuthSchemes(string[] schemes)
     => schemes.map!toAuthScheme.array;
 string toString(AuthScheme scheme)
     => scheme.to!string;
-string[] toStrings(AuthScheme[] schemes)    
+string[] toString(AuthScheme[] schemes)    
     => schemes.map!toString.array;
 unittest {
     mixin(ShowTest!("AuthScheme"));
@@ -329,7 +329,7 @@ unittest {
     assert(AuthScheme.spnego.toString == "spnego");
     assert(AuthScheme.noAuth.toString == "noAuth");
 
-    assert([AuthScheme.form, AuthScheme.basic].toStrings == ["form", "basic"]);
+    assert([AuthScheme.form, AuthScheme.basic].toString == ["form", "basic"]);
     assert(["form", "basic"].toAuthSchemes == [AuthScheme.form, AuthScheme.basic]);
 }
 
@@ -351,7 +351,7 @@ PersistenceBackend[] toPersistenceBackends(string[] backends)
     => backends.map!toPersistenceBackend.array;
 string toString(PersistenceBackend backend)
     => backend.to!string;
-string[] toStrings(PersistenceBackend[] backends)
+string[] toString(PersistenceBackend[] backends)
     => backends.map!toString.array; 
 ///
 unittest {
@@ -365,6 +365,6 @@ unittest {
     assert(PersistenceBackend.file_.toString == "file_");
     assert(PersistenceBackend.mongodb.toString == "mongodb");
 
-    assert([PersistenceBackend.memory, PersistenceBackend.file_].toStrings == ["memory", "file_"]);
+    assert([PersistenceBackend.memory, PersistenceBackend.file_].toString == ["memory", "file_"]);
     assert(["memory", "file"].toPersistenceBackends == [PersistenceBackend.memory, PersistenceBackend.file_]);
 }

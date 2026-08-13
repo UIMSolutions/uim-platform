@@ -29,7 +29,7 @@ KeyAlgorithm[] toKeyAlgorithms(string[] values) {
 string toString(KeyAlgorithm algorithm) {
     return algorithm.to!string;
 }
-string[] toStrings(KeyAlgorithm[] algorithms) {
+string[] toString(KeyAlgorithm[] algorithms) {
     return algorithms.map!toString.array;
 }
 ///
@@ -49,7 +49,7 @@ unittest {
     assert(KeyAlgorithm.ecdsaP256.toString == "ecdsaP256");
     assert(KeyAlgorithm.ecdsaP384.toString == "ecdsaP384");
 
-    assert(toStrings([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP384]) == ["rsa2048", "ecdsaP384"]);
+    assert(toString([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP384]) == ["rsa2048", "ecdsaP384"]);
     assert(toKeyAlgorithms(["rsa2048", "ecdsaP384"]) == [KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP384]);
 }
 
@@ -70,7 +70,7 @@ KeyStatus[] toKeyStatuses(string[] values) {
 string toString(KeyStatus status) {
     return status.to!string;
 }
-string[] toStrings(KeyStatus[] statuses) {
+string[] toString(KeyStatus[] statuses) {
     return statuses.map!toString.array;
 }
 /// 
@@ -88,6 +88,6 @@ unittest {
     assert(KeyStatus.inactive.toString == "inactive");
     assert(KeyStatus.deleted.toString == "deleted");
 
-    assert([KeyStatus.active, KeyStatus.deleted].toStrings == ["active", "deleted"]);
+    assert([KeyStatus.active, KeyStatus.deleted].toString == ["active", "deleted"]);
     assert(["active", "deleted"].toKeyStatuses == [KeyStatus.active, KeyStatus.deleted]);
 }

@@ -29,7 +29,7 @@ string toString(ExecutableType type) {
   return type.to!string; // This will return the enum member name as a string, e.g. "workflow", "serving"
 }
 
-string[] toStrings(ExecutableType[] types) {
+string[] toString(ExecutableType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -45,7 +45,7 @@ unittest {
 
   assert(toExecutableTypes(["workflow", "serving", "unknown"]) ==
       [ExecutableType.workflow, ExecutableType.serving, ExecutableType.workflow]);
-  assert([ExecutableType.workflow, ExecutableType.serving].toStrings ==
+  assert([ExecutableType.workflow, ExecutableType.serving].toString ==
       ["workflow", "serving"]);
 }
 
@@ -72,7 +72,7 @@ string toString(ExecutionStatus status) {
   return status.to!string; // This will return the enum member name as a string, e.g. "pending", "running", etc
 }
 
-string[] toStrings(ExecutionStatus[] statuses) {
+string[] toString(ExecutionStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -103,7 +103,7 @@ unittest {
   assert([
     ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.completed,
     ExecutionStatus.failed, ExecutionStatus.stopped, ExecutionStatus.dead
-  ].toStrings ==
+  ].toString ==
     ["pending", "running", "completed", "failed", "stopped", "dead"]);
 }
 
@@ -128,7 +128,7 @@ string toString(DeploymentStatus status) {
   return status.to!string; // This will return the enum member name as a string,  e.g. "pending", "running", etc
 }
 
-string[] toStrings(DeploymentStatus[] statuses) {
+string[] toString(DeploymentStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -154,7 +154,7 @@ unittest {
     DeploymentStatus.pending, DeploymentStatus.running,
     DeploymentStatus.stopped,
     DeploymentStatus.dead
-  ].toStrings ==
+  ].toString ==
     ["pending", "running", "stopped", "dead"]);
 }
 
@@ -175,7 +175,7 @@ ArtifactKind[] toArtifactKinds(string[] kinds)
 string toString(ArtifactKind kind)
   => kind.to!string; // This will return the enum member name as a string, e.g. "model", "dataset", etc
 
-string[] toStrings(ArtifactKind[] kinds)
+string[] toString(ArtifactKind[] kinds)
   => kinds.map!toString.array; ///
 unittest {
   assert("model".toArtifactKind == ArtifactKind.model);
@@ -196,7 +196,7 @@ unittest {
   assert([
     ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset,
     ArtifactKind.other
-  ].toStrings ==
+  ].toString ==
     ["model", "dataset", "resultset", "other"]);
 }
 
@@ -231,7 +231,7 @@ string toString(TargetStatus status) {
   return cast(string)status; // This will return the enum member name as a string, e.g. "running", "stopped", etc
 }
 
-string[] toStrings(TargetStatus[] statuses) {
+string[] toString(TargetStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -254,7 +254,7 @@ unittest {
   assert([
     TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_,
     TargetStatus.completed
-  ].toStrings ==
+  ].toString ==
     ["RUNNING", "STOPPED", "DELETED", "COMPLETED"]);
 }
 
@@ -286,7 +286,7 @@ string toString(MetricValueType type) {
   return cast(string)type; // This will return the enum member name as a string, e.g. "string_", "float_", "int_"
 }
 
-string[] toStrings(MetricValueType[] types) {
+string[] toString(MetricValueType[] types) {
   return types.map!toString.array;
 }
 ///
@@ -307,7 +307,7 @@ unittest {
       ]);
   assert([MetricValueType.string_, MetricValueType.float_,
       MetricValueType.int_
-    ].toStrings ==
+    ].toString ==
       ["string", "float", "int"]);
 }
 
@@ -330,7 +330,7 @@ string toString(LogSeverity severity) {
   return severity.to!string; // This will return the enum member name as a string, e.g. "info", "warn", "error"
 }
 
-string[] toStrings(LogSeverity[] severities) {
+string[] toString(LogSeverity[] severities) {
   return severities.map!toString.array;
 }
 ///
@@ -349,7 +349,7 @@ unittest {
         LogSeverity.error, LogSeverity.info
       ]);
   assert([LogSeverity.info, LogSeverity.warn, LogSeverity.error
-    ].toStrings ==
+    ].toString ==
       ["info", "warn", "error"]);
 }
 
@@ -394,7 +394,7 @@ string toString(ScheduleStatus status) {
   return status.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
 }
 
-string[] toStrings(ScheduleStatus[] statuses) {
+string[] toString(ScheduleStatus[] statuses) {
   return statuses.map!toString.array;
 }
 ///
@@ -458,7 +458,7 @@ unittest {
       ScheduleStatus.suspended_other,
       ScheduleStatus.active
     ]);
-  assert(toStrings([ScheduleStatus.active,
+  assert(toString([ScheduleStatus.active,
       ScheduleStatus.inactive,
       ScheduleStatus.deleted,
       ScheduleStatus.error,
