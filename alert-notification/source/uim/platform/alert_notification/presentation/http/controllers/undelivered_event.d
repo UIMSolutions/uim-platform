@@ -22,15 +22,23 @@ class UndeliveredEventController : HttpController {
         router.get("/api/v1/alert-notification/undelivered-events/*", &handleGet);
     }
 
-    private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto result   = usecase.listUndeliveredEvents(tenantId);
-        res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
-    }
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto id       = req.requestPath.to!string.split("/")[$-1];
+    auto tenantId = precheck.tenantId;
+    auto result   = usecase.listUndeliveredEvents(tenantId);
+    res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.getUndeliveredEvent(tenantId, id);
         if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);

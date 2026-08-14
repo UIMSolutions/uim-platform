@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: architecture
+  namespace: uim-platform
+  labels:
+    app: architecture
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: architecture
+  template:
+    metadata:
+      labels:
+        app: architecture
+    spec:
+      containers:
+      - name: architecture
+        image: uim-platform/architecture:latest
+        ports:
+        - containerPort: 8122
+        envFrom:
+        - configMapRef:
+            name: architecture-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8122
+          initialDelaySeconds: 5
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8122
+          initialDelaySeconds: 3
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

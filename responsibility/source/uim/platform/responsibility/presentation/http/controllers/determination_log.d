@@ -20,17 +20,18 @@ class DeterminationLogController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/responsibility/determination-logs", &handleList);
         router.get("/api/v1/responsibility/determination-logs/*", &handleGet);
         router.delete_("/api/v1/responsibility/determination-logs/*", &handleDelete);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto pre = super.listHandler(req);
-        if (!pre.success)
-            return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
         auto items = _uc.listLogs(tenantId).map!(e => e.toJson()).array.toJson;
 
         auto responseData = Json.emptyObject
@@ -42,11 +43,11 @@ class DeterminationLogController : ManageHttpController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return errorResponse(precheck.error, precheck.statusCode);
-            
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
         auto id = DeterminationLogId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid log id", 400);
@@ -81,5 +82,5 @@ class DeterminationLogController : ManageHttpController {
             .set("statusCode", 200);
         return successResponse("Determination log deleted successfully", 200, responseData);
     }
-    
+
 }

@@ -14,66 +14,99 @@ mixin(ShowModule!());
 class ConditionController : ManageHttpController {
     private ManageConditionsUseCase usecase;
 
-    this(ManageConditionsUseCase usecase) { this.usecase = usecase; }
+    this(ManageConditionsUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.post  ("/api/v1/alert-notification/conditions",   &handleCreate);
-        router.get   ("/api/v1/alert-notification/conditions",   &handleList);
-        router.get   ("/api/v1/alert-notification/conditions/*", &handleGet);
-        router.put   ("/api/v1/alert-notification/conditions/*", &handleUpdate);
+
+        router.post("/api/v1/alert-notification/conditions", &handleCreate);
+        router.get("/api/v1/alert-notification/conditions", &handleList);
+        router.get("/api/v1/alert-notification/conditions/*", &handleGet);
+        router.put("/api/v1/alert-notification/conditions/*", &handleUpdate);
         router.delete_("/api/v1/alert-notification/conditions/*", &handleDelete);
     }
 
-    private void handleCreate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto body_    = req.json;
-        CreateConditionRequest dto;
-        dto.name          = body_["name"].to!string;
-        dto.description   = body_["description"].opt!string("");
-        dto.propertyKey   = body_["propertyKey"].to!string;
-        dto.predicate     = body_["predicate"].to!string;
-        dto.propertyValue = body_["propertyValue"].to!string;
-        dto.mandatory     = body_["mandatory"].opt!bool(false);
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        auto dto = CreateConditionRequest();
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.propertyKey = data.getString("propertyKey");
+        dto.predicate = data.getString("predicate");
+        dto.propertyValue = data.getString("propertyValue");
+        dto.mandatory = data.getBool("mandatory", false);
         auto result = usecase.createCondition(tenantId, dto);
-        if (!result.success) { writeError(res, cast(int)HTTPStatus.badRequest, result.message); return; }
-        res.writeBody(result.message, cast(int)HTTPStatus.created, "application/json");
+        if (result.hasError())
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Condition created successfully", "Created", 201, responseData);
     }
 
     private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto result   = usecase.listConditions(tenantId);
+        auto result = usecase.listConditions(tenantId);
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
-    private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto id       = req.requestPath.to!string.split("/")[$-1];
-        auto result   = usecase.getCondition(tenantId, id);
-        if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = req.requestPath.to!string.split("/")[$ - 1];
+        auto result = usecase.getCondition(tenantId, id);
+        if (!result.success) {
+            writeError(res, cast(int)HTTPStatus.notFound, result.message);
+            return;
+        }
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
-    private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto id       = req.requestPath.to!string.split("/")[$-1];
-        auto body_    = req.json;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto id = req.requestPath.to!string.split("/")[$ - 1];
+        auto data = precheck.data;
         UpdateConditionRequest dto;
-        dto.description   = body_["description"].opt!string("");
-        dto.propertyKey   = body_["propertyKey"].opt!string("");
-        dto.predicate     = body_["predicate"].opt!string("");
-        dto.propertyValue = body_["propertyValue"].opt!string("");
-        dto.mandatory     = body_["mandatory"].opt!bool(false);
+        dto.description = data.getString("description");
+        dto.propertyKey = data.getString("propertyKey");
+        dto.predicate = data.getString("predicate");
+        dto.propertyValue = data.getString("propertyValue");
+        dto.mandatory = data.getBool("mandatory", false);
         auto result = usecase.updateCondition(tenantId, id, dto);
-        if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
+        if (!result.success) {
+            writeError(res, cast(int)HTTPStatus.notFound, result.message);
+            return;
+        }
         res.writeBody(result.message, cast(int)HTTPStatus.ok, "application/json");
     }
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto id       = req.requestPath.to!string.split("/")[$-1];
-        auto result   = usecase.deleteCondition(tenantId, id);
-        if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
-        res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = req.requestPath.to!string.split("/")[$ - 1];
+        auto result = usecase.deleteCondition(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Label deleted successfully", "Deleted", 200, responseData);
     }
 }

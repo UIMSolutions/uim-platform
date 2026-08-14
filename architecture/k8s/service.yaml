@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: architecture
+  namespace: uim-platform
+  labels:
+    app: architecture
+spec:
+  type: ClusterIP
+  selector:
+    app: architecture
+  ports:
+  - name: http
+    port: 8122
+    targetPort: 8122
+    protocol: TCP

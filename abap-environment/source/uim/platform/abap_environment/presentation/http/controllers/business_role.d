@@ -47,8 +47,9 @@ class BusinessRoleController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
+    auto tenantId = precheck.tenantId;
+
     auto data = precheck.data;
-    auto tenantId = TenantId(data.getString("tenantId"));
     auto r = CreateBusinessRoleRequest();
     r.tenantId = tenantId;
     r.instanceId = SystemInstanceId(data.getString("systemInstanceId"));
@@ -60,12 +61,7 @@ class BusinessRoleController : ManageHttpController {
     if (result.hasError())
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Business role created")
-      .set("status", "created")
-      .set("statusCode", 201);
-
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Business role created successfully", "Created", 201, responseData);
   }
 
