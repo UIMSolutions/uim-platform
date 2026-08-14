@@ -10,7 +10,7 @@ mixin(ShowModule!());
 @safe:
 
 class BuildingBlockUi5View {
-    string renderHub(string tenantId) {
+    string renderOverview(string tenantId) {
         auto tenant = escapeJs(tenantId);
         auto html = appender!string();
         html ~= pageStart("Architecture UI5 Hub");

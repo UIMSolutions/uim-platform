@@ -25,8 +25,12 @@ version (unittest) {
         // # Register all controllers
         container.healthController.registerRoutes(router);
         container.buildingBlockPwaController.registerRoutes(router);
-        container.buildingBlockUi5Controller.registerRoutes(router);
         container.buildingBlockWebController.registerRoutes(router);
+
+        /// # Register UI5 controllers
+        container.overviewUi5Controller.registerRoutes(router);
+        container.buildingBlockUi5Controller.registerRoutes(router);
+        container.architectureBlocksUi5Controller.registerRoutes(router);
 
         auto settings = new HTTPServerSettings();
         settings.bindAddresses = [config.host];

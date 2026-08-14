@@ -36,10 +36,6 @@ class ArchitectureBlockUi5Controller {
         writeHtml(res, view.renderDetail(model.architectureDetail(TenantId(t), t, id)));
     }
 
-    private string tenant(scope HTTPServerRequest req) {
-        return req.query.get("tenantId", "default");
-    }
-
     private void handleArchitectureCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         auto t = tenant(req);
         auto payload = req.json;
@@ -82,25 +78,4 @@ class ArchitectureBlockUi5Controller {
         writeJson(res, status, result);
     }
 
-    private void writeHtml(scope HTTPServerResponse res, string html) {
-        res.writeBody(html, cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
-    }
-
-    private void writeJson(scope HTTPServerResponse res, int status, CommandResult result) {
-        auto payload = Json.emptyObject;
-        payload["success"] = Json(result.success);
-        payload["id"] = Json(result.id);
-        payload["message"] = Json(result.message);
-        payload["code"] = Json(result.code);
-        res.writeBody(payload.toString(), status, "application/json; charset=utf-8");
-    }
-
-    private void writeJsonError(scope HTTPServerResponse res, int status, string message) {
-        auto payload = Json.emptyObject;
-        payload["success"] = Json(false);
-        payload["id"] = Json("");
-        payload["message"] = Json(message);
-        payload["code"] = Json(cast(uint) status);
-        res.writeBody(payload.toString(), status, "application/json; charset=utf-8");
-    }
 }

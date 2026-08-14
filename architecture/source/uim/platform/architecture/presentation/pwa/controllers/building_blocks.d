@@ -101,10 +101,6 @@ class BuildingBlockPwaController {
         res.writeBody(view.serviceWorker(), cast(int) HTTPStatus.ok, "application/javascript; charset=utf-8");
     }
 
-    private string tenant(scope HTTPServerRequest req) {
-        return req.query.get("tenantId", "default");
-    }
-
     private string idFromPath(string path) {
         auto idx = path.lastIndexOf('/');
         if (idx < 0 || idx + 1 >= path.length)

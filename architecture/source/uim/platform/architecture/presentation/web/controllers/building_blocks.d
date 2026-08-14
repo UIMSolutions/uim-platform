@@ -95,10 +95,6 @@ class BuildingBlockWebController {
         return req.query.get("tenantId", "default");
     }
 
-    private void writeHtml(scope HTTPServerResponse res, string html) {
-        res.writeBody(html, cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
-    }
-
     private string idFromPath(string path) {
         auto idx = path.lastIndexOf('/');
         if (idx < 0 || idx + 1 >= path.length)

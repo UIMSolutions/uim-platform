@@ -18,8 +18,6 @@ class BuildingBlockUi5Controller {
     }
 
     void registerRoutes(URLRouter router) {
-        router.get("/ui5/architecture", &handleHub);
-
         router.get("/ui5/architecture/architecture", &handleArchitecture);
         router.get("/ui5/architecture/architecture/:id", &handleArchitectureDetail);
         router.post("/ui5/architecture/architecture/create", &handleArchitectureCreate);
@@ -52,7 +50,7 @@ class BuildingBlockUi5Controller {
     }
 
     private void handleHub(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(res, view.renderHub(tenant(req)));
+        writeHtml(res, view.renderOverview(tenant(req)));
     }
 
     private void handleArchitecture(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -170,10 +168,6 @@ class BuildingBlockUi5Controller {
         handleDelete(req, res, "technology");
     }
 
-    private string tenant(scope HTTPServerRequest req) {
-        return req.query.get("tenantId", "default");
-    }
-
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res, string blockType) {
         auto t = tenant(req);
         auto payload = req.json;
@@ -255,25 +249,5 @@ class BuildingBlockUi5Controller {
         return "";
     }
 
-    private void writeHtml(scope HTTPServerResponse res, string html) {
-        res.writeBody(html, cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
-    }
-
-    private void writeJson(scope HTTPServerResponse res, int status, CommandResult result) {
-        auto payload = Json.emptyObject;
-        payload["success"] = Json(result.success);
-        payload["id"] = Json(result.id);
-        payload["message"] = Json(result.message);
-        payload["code"] = Json(result.code);
-        res.writeBody(payload.toString(), status, "application/json; charset=utf-8");
-    }
-
-    private void writeJsonError(scope HTTPServerResponse res, int status, string message) {
-        auto payload = Json.emptyObject;
-        payload["success"] = Json(false);
-        payload["id"] = Json("");
-        payload["message"] = Json(message);
-        payload["code"] = Json(cast(uint) status);
-        res.writeBody(payload.toString(), status, "application/json; charset=utf-8");
-    }
+    
 }

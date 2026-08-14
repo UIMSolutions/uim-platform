@@ -4,4 +4,5 @@ public:
     import uim.platform.architecture.presentation.ui5.controllers;
     import uim.platform.architecture.presentation.ui5.models;
     import uim.platform.architecture.presentation.ui5.views;
+    import uim.platform.architecture.presentation.ui5.helpers;
 

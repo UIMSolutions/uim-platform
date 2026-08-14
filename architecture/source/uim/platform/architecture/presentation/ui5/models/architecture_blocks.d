@@ -38,23 +38,11 @@ struct Ui5ArchitectureBlockDetailModel {
 
 class ArchitectureBlockUi5Model {
     private ManageArchitectureBlocksUseCase architectureUseCase;
-    private ManageSolutionBlocksUseCase solutionUseCase;
-    private ManageDataBlocksUseCase dataUseCase;
-    private ManageBusinessBlocksUseCase businessUseCase;
-    private ManageTechnologyBlocksUseCase technologyUseCase;
 
     this(
         ManageArchitectureBlocksUseCase architectureUseCase,
-        ManageSolutionBlocksUseCase solutionUseCase,
-        ManageDataBlocksUseCase dataUseCase,
-        ManageBusinessBlocksUseCase businessUseCase,
-        ManageTechnologyBlocksUseCase technologyUseCase
     ) {
         this.architectureUseCase = architectureUseCase;
-        this.solutionUseCase = solutionUseCase;
-        this.dataUseCase = dataUseCase;
-        this.businessUseCase = businessUseCase;
-        this.technologyUseCase = technologyUseCase;
     }
 
     Ui5ArchitectureBlockPageModel architecturePage(TenantId tenantId, string tenantLabel) {
@@ -62,42 +50,6 @@ class ArchitectureBlockUi5Model {
         foreach (block; architectureUseCase.listBlocks(tenantId)) {
             page.items ~= Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
                 block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
-        }
-        return page;
-    }
-
-    Ui5ArchitectureBlockPageModel solutionPage(TenantId tenantId, string tenantLabel) {
-        auto page = basePage("Solution Architecture Blocks", "Concrete solution implementations and mappings.", tenantLabel, "solution");
-        foreach (block; solutionUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
-                block.status.toString, "-", block.versionLabel, formatTags(block.tags));
-        }
-        return page;
-    }
-
-    Ui5ArchitectureBlockPageModel dataPage(TenantId tenantId, string tenantLabel) {
-        auto page = basePage("Data Architecture Blocks", "Data ownership, quality and classification units.", tenantLabel, "data");
-        foreach (block; dataUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
-                block.status.toString, "-", block.versionLabel, formatTags(block.tags));
-        }
-        return page;
-    }
-
-    Ui5ArchitectureBlockPageModel businessPage(TenantId tenantId, string tenantLabel) {
-        auto page = basePage("Business Architecture Blocks", "Business capabilities and process-aligned assets.", tenantLabel, "business");
-        foreach (block; businessUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
-                block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
-        }
-        return page;
-    }
-
-    Ui5ArchitectureBlockPageModel technologyPage(TenantId tenantId, string tenantLabel) {
-        auto page = basePage("Technology Architecture Blocks", "Infrastructure and technology foundation elements.", tenantLabel, "technology");
-        foreach (block; technologyUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
-                block.status.toString, "-", block.versionLabel, formatTags(block.tags));
         }
         return page;
     }
@@ -110,50 +62,6 @@ class ArchitectureBlockUi5Model {
         detail.found = true;
         detail.item = Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
             block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
-        return detail;
-    }
-
-    Ui5ArchitectureBlockDetailModel solutionDetail(TenantId tenantId, string tenantLabel, string id) {
-        auto detail = baseDetail("Solution Block Detail", "Detailed solution block view.", tenantLabel, "solution");
-        auto block = solutionUseCase.getBlock(tenantId, SolutionBlockId(id));
-        if (block.id.value.length == 0)
-            return detail;
-        detail.found = true;
-        detail.item = Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
-            block.status.toString, "-", block.versionLabel, formatTags(block.tags));
-        return detail;
-    }
-
-    Ui5ArchitectureBlockDetailModel dataDetail(TenantId tenantId, string tenantLabel, string id) {
-        auto detail = baseDetail("Data Block Detail", "Detailed data block view.", tenantLabel, "data");
-        auto block = dataUseCase.getBlock(tenantId, DataBlockId(id));
-        if (block.id.value.length == 0)
-            return detail;
-        detail.found = true;
-        detail.item = Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
-            block.status.toString, "-", block.versionLabel, formatTags(block.tags));
-        return detail;
-    }
-
-    Ui5ArchitectureBlockDetailModel businessDetail(TenantId tenantId, string tenantLabel, string id) {
-        auto detail = baseDetail("Business Block Detail", "Detailed business block view.", tenantLabel, "business");
-        auto block = businessUseCase.getBlock(tenantId, BusinessBlockId(id));
-        if (block.id.value.length == 0)
-            return detail;
-        detail.found = true;
-        detail.item = Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
-            block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
-        return detail;
-    }
-
-    Ui5ArchitectureBlockDetailModel technologyDetail(TenantId tenantId, string tenantLabel, string id) {
-        auto detail = baseDetail("Technology Block Detail", "Detailed technology block view.", tenantLabel, "technology");
-        auto block = technologyUseCase.getBlock(tenantId, TechnologyBlockId(id));
-        if (block.id.value.length == 0)
-            return detail;
-        detail.found = true;
-        detail.item = Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
-            block.status.toString, "-", block.versionLabel, formatTags(block.tags));
         return detail;
     }
 
@@ -170,58 +78,6 @@ class ArchitectureBlockUi5Model {
         return architectureUseCase.createBlock(req);
     }
 
-    CommandResult createSolution(TenantId tenantId, Json data) {
-        auto req = CreateSolutionBlockRequest();
-        req.tenantId = tenantId;
-        req.name = data.getString("name", "");
-        req.description = data.getString("description", "");
-        req.owner = data.getString("owner", "");
-        req.lifecycleState = data.getString("lifecycleState", "");
-        req.status = data.getString("status", "");
-        req.versionLabel = data.getString("versionLabel", "");
-        req.tags = parseTags(data.getString("tags", ""));
-        return solutionUseCase.createBlock(req);
-    }
-
-    CommandResult createData(TenantId tenantId, Json data) {
-        auto req = CreateDataBlockRequest();
-        req.tenantId = tenantId;
-        req.name = data.getString("name", "");
-        req.description = data.getString("description", "");
-        req.owner = data.getString("owner", "");
-        req.lifecycleState = data.getString("lifecycleState", "");
-        req.status = data.getString("status", "");
-        req.versionLabel = data.getString("versionLabel", "");
-        req.tags = parseTags(data.getString("tags", ""));
-        return dataUseCase.createBlock(req);
-    }
-
-    CommandResult createBusiness(TenantId tenantId, Json data) {
-        auto req = CreateBusinessBlockRequest();
-        req.tenantId = tenantId;
-        req.name = data.getString("name", "");
-        req.description = data.getString("description", "");
-        req.owner = data.getString("owner", "");
-        req.lifecycleState = data.getString("lifecycleState", "");
-        req.status = data.getString("status", "");
-        req.versionLabel = data.getString("versionLabel", "");
-        req.tags = parseTags(data.getString("tags", ""));
-        return businessUseCase.createBlock(req);
-    }
-
-    CommandResult createTechnology(TenantId tenantId, Json data) {
-        auto req = CreateTechnologyBlockRequest();
-        req.tenantId = tenantId;
-        req.name = data.getString("name", "");
-        req.description = data.getString("description", "");
-        req.owner = data.getString("owner", "");
-        req.lifecycleState = data.getString("lifecycleState", "");
-        req.status = data.getString("status", "");
-        req.versionLabel = data.getString("versionLabel", "");
-        req.tags = parseTags(data.getString("tags", ""));
-        return technologyUseCase.createBlock(req);
-    }
-
     CommandResult updateArchitecture(TenantId tenantId, string id, Json data) {
         auto req = UpdateArchitectureBlockRequest();
         req.tenantId = tenantId;
@@ -235,76 +91,8 @@ class ArchitectureBlockUi5Model {
         return architectureUseCase.updateBlock(req);
     }
 
-    CommandResult updateSolution(TenantId tenantId, string id, Json data) {
-        auto req = UpdateSolutionBlockRequest();
-        req.tenantId = tenantId;
-        req.blockId = SolutionBlockId(id);
-        req.description = data.getString("description", "");
-        req.owner = data.getString("owner", "");
-        req.lifecycleState = data.getString("lifecycleState", "");
-        req.status = data.getString("status", "");
-        req.versionLabel = data.getString("versionLabel", "");
-        req.tags = parseTags(data.getString("tags", ""));
-        return solutionUseCase.updateBlock(req);
-    }
-
-    CommandResult updateData(TenantId tenantId, string id, Json data) {
-        auto req = UpdateDataBlockRequest();
-        req.tenantId = tenantId;
-        req.blockId = DataBlockId(id);
-        req.description = data.getString("description", "");
-        req.owner = data.getString("owner", "");
-        req.lifecycleState = data.getString("lifecycleState", "");
-        req.status = data.getString("status", "");
-        req.versionLabel = data.getString("versionLabel", "");
-        req.tags = parseTags(data.getString("tags", ""));
-        return dataUseCase.updateBlock(req);
-    }
-
-    CommandResult updateBusiness(TenantId tenantId, string id, Json data) {
-        auto req = UpdateBusinessBlockRequest();
-        req.tenantId = tenantId;
-        req.blockId = BusinessBlockId(id);
-        req.description = data.getString("description", "");
-        req.owner = data.getString("owner", "");
-        req.lifecycleState = data.getString("lifecycleState", "");
-        req.status = data.getString("status", "");
-        req.versionLabel = data.getString("versionLabel", "");
-        req.tags = parseTags(data.getString("tags", ""));
-        return businessUseCase.updateBlock(req);
-    }
-
-    CommandResult updateTechnology(TenantId tenantId, string id, Json data) {
-        auto req = UpdateTechnologyBlockRequest();
-        req.tenantId = tenantId;
-        req.blockId = TechnologyBlockId(id);
-        req.description = data.getString("description", "");
-        req.owner = data.getString("owner", "");
-        req.lifecycleState = data.getString("lifecycleState", "");
-        req.status = data.getString("status", "");
-        req.versionLabel = data.getString("versionLabel", "");
-        req.tags = parseTags(data.getString("tags", ""));
-        return technologyUseCase.updateBlock(req);
-    }
-
     CommandResult deleteArchitecture(TenantId tenantId, string id) {
         return architectureUseCase.deleteBlock(tenantId, ArchitectureBlockId(id));
-    }
-
-    CommandResult deleteSolution(TenantId tenantId, string id) {
-        return solutionUseCase.deleteBlock(tenantId, SolutionBlockId(id));
-    }
-
-    CommandResult deleteData(TenantId tenantId, string id) {
-        return dataUseCase.deleteBlock(tenantId, DataBlockId(id));
-    }
-
-    CommandResult deleteBusiness(TenantId tenantId, string id) {
-        return businessUseCase.deleteBlock(tenantId, BusinessBlockId(id));
-    }
-
-    CommandResult deleteTechnology(TenantId tenantId, string id) {
-        return technologyUseCase.deleteBlock(tenantId, TechnologyBlockId(id));
     }
 
     private Ui5ArchitectureBlockPageModel basePage(string title, string subtitle, string tenantLabel, string blockType) {
