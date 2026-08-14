@@ -18,6 +18,7 @@ class MemberFunctionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get   ("/api/v1/responsibility/functions",    &handleList);
         router.get   ("/api/v1/responsibility/functions/*",  &handleGet);
         router.post  ("/api/v1/responsibility/functions",    &handleCreate);
@@ -30,21 +31,27 @@ class MemberFunctionController : ManageHttpController {
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto items = _uc.listFunctions(tenantId);
-        return Json.emptyObject
+        auto responseData = Json.emptyObject
             .set("count",     items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson)
             .set("status",    "success").set("statusCode", 200);
+
+        return successResponse("Member functions listed successfully", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto pre = super.getHandler(req);
         if (!pre.success) return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = MemberFunctionId(precheck.id);
+        auto id = MemberFunctionId(pre.id);
         auto e = _uc.getFunction(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "Function not found").set("statusCode", 404);
-        return e.toJson().set("status", "success").set("statusCode", 200);
+
+        auto responseData = Json.emptyObject
+            .set("status", "success").set("statusCode", 200)
+            .set("resource", e.toJson());
+        return successResponse("Member function retrieved successfully", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -63,7 +70,11 @@ class MemberFunctionController : ManageHttpController {
         auto result = _uc.createFunction(dto);
         if (!result.success)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
+
+        auto responseData = Json.emptyObject
+            .set("status", "success").set("statusCode", 201)
+            .set("id", result.id);
+        return successResponse("Member function created successfully", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -72,7 +83,7 @@ class MemberFunctionController : ManageHttpController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto data = pre["data"];
         MemberFunctionDTO dto;
-        dto.functionId  = MemberFunctionId(precheck.id);
+        dto.functionId  = MemberFunctionId(pre.id);
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");

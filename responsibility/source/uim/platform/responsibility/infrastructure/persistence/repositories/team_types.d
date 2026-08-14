@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 class TeamTypeRepository
     : TenantRepository!(TeamType, TeamTypeId),
-      TeamTypeRepository {
+      ITeamTypeRepository {
 
     TeamType[] findByCategory(TenantId tenantId, string categoryId) {
         return findByTenant(tenantId).filter!(t => t.categoryId == categoryId).array;

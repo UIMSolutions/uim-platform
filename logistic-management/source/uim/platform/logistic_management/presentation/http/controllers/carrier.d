@@ -34,7 +34,7 @@ override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto carriers = _useCase.listCarriers(tenantId);
     import std.algorithm : map;
-    import std.array : array;
+    
     return carriers.map!(c => c.toJson).array.toJson;
   }
 

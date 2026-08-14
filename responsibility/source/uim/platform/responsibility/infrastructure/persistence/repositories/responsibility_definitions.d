@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 class ResponsibilityDefinitionRepository
     : TenantRepository!(ResponsibilityDefinition, ResponsibilityDefinitionId),
-      ResponsibilityDefinitionRepository {
+      IResponsibilityDefinitionRepository {
 
     ResponsibilityDefinition[] findByContext(TenantId tenantId, string contextId) {
         return findByTenant(tenantId).filter!(d => d.contextId == contextId).array;

@@ -5,6 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.domain.ports;
 
-public {
+public:
   import uim.platform.health_fhir.domain.ports.repositories;
-}
+  import uim.platform.health_fhir.domain.ports.ports;

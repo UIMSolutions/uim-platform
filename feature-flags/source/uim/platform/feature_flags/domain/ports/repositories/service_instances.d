@@ -14,6 +14,6 @@ mixin(ShowModule!());
 /// Port for service instance persistence.
 interface IServiceInstanceRepository : ITenantRepository!(ServiceInstanceId, ServiceInstance) {
 
-    ServiceInstance   findByName(TenantId tenantId, string name);
+    ServiceInstance findByName(TenantId tenantId, string name);
 
 }

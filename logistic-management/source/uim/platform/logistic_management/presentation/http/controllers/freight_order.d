@@ -60,7 +60,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto orders = _useCase.listFreightOrders(tenantId);
     import std.algorithm : map;
-    import std.array : array;
+    
     return jsonArray(orders.map!(o => o.toJson).array);
   }
 

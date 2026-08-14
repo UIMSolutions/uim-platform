@@ -6,30 +6,74 @@
 module uim.platform.logistic_management.infrastructure.persistence.repositories.deliveries;
 import uim.platform.logistic_management;
 import std.algorithm : filter, each;
-import std.array : array;
+
 
 mixin(ShowModule!());
 
 @safe:
 class DeliveryRepository : TenantRepository!(Delivery, DeliveryId), IDeliveryRepository {
-  override Delivery[] findByShipment(TenantId tenantId, ShipmentId shipmentId) {
-    return findByTenant(tenantId).filter!(d => d.shipmentId.value == shipmentId.value).array;
+
+  size_t countByShipment(TenantId tenantId, ShipmentId shipmentId) {
+    return findByShipment(tenantId, shipmentId).length;
   }
 
-  override Delivery[] findByStatus(TenantId tenantId, DeliveryStatus status) {
-    return findByTenant(tenantId).filter!(d => d.status == status).array;
+  Delivery[] filterByShipment(Delivery[] deliveries, ShipmentId shipmentId) {
+    return deliveries.filter!(d => d.shipmentId.value == shipmentId.value).array;
   }
 
-  override Delivery[] findByDirection(TenantId tenantId, LogisticsDirection direction) {
-    return findByTenant(tenantId).filter!(d => d.direction == direction).array;
+  Delivery[] findByShipment(TenantId tenantId, ShipmentId shipmentId) {
+    return filterByShipment(findByTenant(tenantId), shipmentId);
   }
 
-  override Delivery[] findByPartner(TenantId tenantId, string partnerId) {
-    return findByTenant(tenantId).filter!(d => d.partnerId == partnerId).array;
+  void removeByShipment(TenantId tenantId, ShipmentId shipmentId) {
+    findByShipment(tenantId, shipmentId).each!(e => remove(e));
   }
 
-  override void removeByShipment(TenantId tenantId, ShipmentId shipmentId) {
-    auto toRemove = findByShipment(tenantId, shipmentId);
-    toRemove.each!(d => remove(tenantId, d.id));
+  size_t countByStatus(TenantId tenantId, DeliveryStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  Delivery[] filterByStatus(Delivery[] deliveries, DeliveryStatus status) {
+    return deliveries.filter!(d => d.status == status).array;
+  }
+
+  Delivery[] findByStatus(TenantId tenantId, DeliveryStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, DeliveryStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
+  }
+
+  size_t countByDirection(TenantId tenantId, LogisticsDirection direction) {
+    return findByDirection(tenantId, direction).length;
+  }
+
+  Delivery[] filterByDirection(Delivery[] deliveries, LogisticsDirection direction) {
+    return deliveries.filter!(d => d.direction == direction).array;
+  }
+
+  Delivery[] findByDirection(TenantId tenantId, LogisticsDirection direction) {
+    return filterByDirection(findByTenant(tenantId), direction);
+  }
+
+  void removeByDirection(TenantId tenantId, LogisticsDirection direction) {
+    findByDirection(tenantId, direction).each!(e => remove(e));
+  }
+
+  size_t countByPartner(TenantId tenantId, string partnerId) {
+    return findByPartner(tenantId, partnerId).length;
+  }
+
+  Delivery[] filterByPartner(Delivery[] deliveries, string partnerId) {
+    return deliveries.filter!(d => d.partnerId == partnerId).array;
+  }
+
+  Delivery[] findByPartner(TenantId tenantId, string partnerId) {
+    return filterByPartner(findByTenant(tenantId), partnerId);
+  }
+
+  void removeByPartner(TenantId tenantId, string partnerId) {
+    findByPartner(tenantId, partnerId).each!(e => remove(e));
   }
 }

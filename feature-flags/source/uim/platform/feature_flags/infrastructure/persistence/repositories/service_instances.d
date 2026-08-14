@@ -6,31 +6,12 @@
 module uim.platform.feature_flags.infrastructure.persistence.repositories.service_instances;
 
 import uim.platform.feature_flags;
-import std.algorithm : filter;
-import std.array     : array;
 
 mixin(ShowModule!());
 
 @safe:
 
 class ServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {
-    // void save(ServiceInstance inst) {
-    //     store[key(inst.tenantId, inst.id.value)] = inst;
-    // }
-
-    // void update(ServiceInstance inst) {
-    //     store[key(inst.tenantId, inst.id.value)] = inst;
-    // }
-
-//    void remove(ServiceInstance inst) {
-//        store.remove(key(inst.tenantId, inst.id.value));
-// //    }
-
-//     ServiceInstance findById(TenantId tenantId, ServiceInstanceId id) {
-//         auto k = key(tenantId, id.value);
-//         auto p = k in store;
-//         return p ? *p : ServiceInstance.init;
-//     }
 
     ServiceInstance findByName(TenantId tenantId, string name) {
         foreach (inst; store.values)

@@ -7,3 +7,4 @@ module uim.platform.logistic_management.domain.ports;
 
 public:
   import uim.platform.logistic_management.domain.ports.repositories;
+  import uim.platform.logistic_management.domain.ports.usecases;

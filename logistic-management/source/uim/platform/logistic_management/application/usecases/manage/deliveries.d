@@ -11,12 +11,12 @@ mixin(ShowModule!());
 @safe:
 class ManageDeliveriesUseCase {
 private:
-  DeliveryRepository _repo;
-  WarehouseOrderRepository _warehouseOrders;
+  IDeliveryRepository _repo;
+  IWarehouseOrderRepository _warehouseOrders;
   LogisticsPlanner _planner;
 
 public:
-  this(DeliveryRepository repo, WarehouseOrderRepository warehouseOrders, LogisticsPlanner planner) {
+  this(IDeliveryRepository repo, IWarehouseOrderRepository warehouseOrders, LogisticsPlanner planner) {
     _repo = repo;
     _warehouseOrders = warehouseOrders;
     _planner = planner;

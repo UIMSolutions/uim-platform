@@ -32,7 +32,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto items = _useCase.listShipments(tenantId);
     import std.algorithm : map;
-    import std.array : array;
+    
     return jsonArray(items.map!(s => s.toJson).array);
   }
 

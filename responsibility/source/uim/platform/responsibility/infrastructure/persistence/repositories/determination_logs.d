@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 class DeterminationLogRepository
     : TenantRepository!(DeterminationLog, DeterminationLogId),
-      DeterminationLogRepository {
+      IDeterminationLogRepository {
 
     DeterminationLog[] findByContext(TenantId tenantId, string contextId) {
         return findByTenant(tenantId).filter!(l => l.contextId == contextId).array;

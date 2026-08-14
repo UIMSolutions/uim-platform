@@ -4,11 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logistic_management.infrastructure.persistence.repositories;
-public {
+
+public:
   import uim.platform.logistic_management.infrastructure.persistence.repositories.carriers;
   import uim.platform.logistic_management.infrastructure.persistence.repositories.freight_orders;
   import uim.platform.logistic_management.infrastructure.persistence.repositories.shipments;
   import uim.platform.logistic_management.infrastructure.persistence.repositories.deliveries;
   import uim.platform.logistic_management.infrastructure.persistence.repositories.warehouse_orders;
   import uim.platform.logistic_management.infrastructure.persistence.repositories.warehouse_tasks;
-}
+

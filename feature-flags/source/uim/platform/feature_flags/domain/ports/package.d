@@ -7,4 +7,5 @@ module uim.platform.feature_flags.domain.ports;
 
 public {
     import uim.platform.feature_flags.domain.ports.repositories;
+    import uim.platform.feature_flags.domain.ports.usecases;
 }

@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 class ManageWarehouseOrdersUseCase {
 private:
-  WarehouseOrderRepository _repo;
-  WarehouseTaskRepository _tasks;
+  IWarehouseOrderRepository _repo;
+  IWarehouseTaskRepository _tasks;
 
 public:
-  this(WarehouseOrderRepository repo, WarehouseTaskRepository tasks) {
+  this(IWarehouseOrderRepository repo, IWarehouseTaskRepository tasks) {
     _repo = repo;
     _tasks = tasks;
   }

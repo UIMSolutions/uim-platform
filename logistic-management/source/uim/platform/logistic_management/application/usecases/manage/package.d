@@ -4,11 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logistic_management.application.usecases.manage;
-public {
+
+public:
   import uim.platform.logistic_management.application.usecases.manage.carriers;
   import uim.platform.logistic_management.application.usecases.manage.freight_orders;
   import uim.platform.logistic_management.application.usecases.manage.shipments;
   import uim.platform.logistic_management.application.usecases.manage.deliveries;
   import uim.platform.logistic_management.application.usecases.manage.warehouse_orders;
   import uim.platform.logistic_management.application.usecases.manage.warehouse_tasks;
-}
+

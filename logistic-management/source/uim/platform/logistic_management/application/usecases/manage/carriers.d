@@ -11,17 +11,18 @@ mixin(ShowModule!());
 @safe:
 class ManageCarriersUseCase {
 private:
-  CarrierRepository _repo;
+  ICarrierRepository repo;
 
 public:
-  this(CarrierRepository repo) {
-    _repo = repo;
+  this(ICarrierRepository repo) {
+    repo = repo;
   }
 
   CommandResult createCarrier(TenantId tenantId, CreateCarrierRequest req) {
     if (req.name.isEmpty)
       return CommandResult(false, "Carrier name is required");
-    if (_repo.existsByName(tenantId, req.name))
+
+    if (repo.existsByName(tenantId, req.name))
       return CommandResult(false, "A carrier with that name already exists");
 
     Carrier c;
@@ -45,12 +46,12 @@ public:
       } catch (Exception) {
       }
     }
-    _repo.save(c);
+    repo.save(c);
     return CommandResult(true, "", c.id.value);
   }
 
   CommandResult updateCarrier(TenantId tenantId, CarrierId id, UpdateCarrierRequest req) {
-    auto c = _repo.findById(tenantId, id);
+    auto c = repo.findById(tenantId, id);
     if (c.isNull)
       return CommandResult(false, "Carrier not found");
 
@@ -87,27 +88,28 @@ public:
     } else {
       updated.supportedModes = c.supportedModes;
     }
-    _repo.save(updated);
+    repo.save(updated);
     return CommandResult(true, "", id.value);
   }
 
   CommandResult deleteCarrier(TenantId tenantId, CarrierId id) {
-    auto c = _repo.findById(tenantId, id);
-    if (c.isNull)
-      return CommandResult(false, "Carrier not found");
-    _repo.remove(tenantId, id);
+    auto e = repo.findById(tenantId, id);
+    if (e.isNull)
+      return CommandResult(false, "", "Carrier not found");
+    
+    repo.remove(e);
     return CommandResult(true);
   }
 
   Carrier getCarrier(TenantId tenantId, CarrierId id) {
-    return _repo.findById(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Carrier[] listCarriers(TenantId tenantId) {
-    return _repo.findByTenant(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   Carrier[] listByStatus(TenantId tenantId, CarrierStatus status) {
-    return _repo.findByStatus(tenantId, status);
+    return repo.findByStatus(tenantId, status);
   }
 }

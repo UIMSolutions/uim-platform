@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 class MemberFunctionRepository
     : TenantRepository!(MemberFunction, MemberFunctionId),
-      MemberFunctionRepository {
+      IMemberFunctionRepository {
 
     MemberFunction[] findByStatus(TenantId tenantId, FunctionStatus status) {
         return findByTenant(tenantId).filter!(f => f.status == status).array;

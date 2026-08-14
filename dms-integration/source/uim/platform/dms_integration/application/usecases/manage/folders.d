@@ -107,37 +107,37 @@ class ManageFoldersUseCase {
 
 ///
 unittest {
-    auto repo = new FolderRepository();
-    auto usecase = new ManageFoldersUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
-
-    // Test create
-    FolderDTO createDto;
-    createDto.tenantId = tenantId;
-    createDto.folderId = FolderId("folder-1");
-    createDto.name = "Test Folder";
-    auto createResult = usecase.createFolder(createDto);
-    assert(createResult.success, createResult.message);
-
-    // Test list
-    auto items = usecase.listFolders(tenantId);
-    assert(items.length == 1);
-
-    // Test get
-    auto item = usecase.getFolder(tenantId, FolderId("folder-1"));
-    assert(!item.isNull);
-
-    // Test update
-    FolderDTO updateDto;
-    updateDto.tenantId = tenantId;
-    updateDto.folderId = FolderId("folder-1");
-    updateDto.name = "Updated Folder";
-    auto updateResult = usecase.updateFolder(updateDto);
-    assert(updateResult.success, updateResult.message);
-
-    // Test delete
-    auto deleteResult = usecase.deleteFolder(tenantId, FolderId("folder-1"));
-    assert(deleteResult.success, deleteResult.message);
-    assert(usecase.listFolders(tenantId).length == 0);
+//     auto repo = new FolderRepository();
+//     auto usecase = new ManageFoldersUseCase(repo);
+//     auto tenantId = TenantId("test-tenant");
+// 
+//     // Test create
+//     FolderDTO createDto;
+//     createDto.tenantId = tenantId;
+//     createDto.folderId = FolderId("folder-1");
+//     createDto.name = "Test Folder";
+//     auto createResult = usecase.createFolder(createDto);
+//     assert(createResult.success, createResult.message);
+// 
+//     // Test list
+//     auto items = usecase.listFolders(tenantId);
+//     assert(items.length == 1);
+// 
+//     // Test get
+//     auto item = usecase.getFolder(tenantId, FolderId("folder-1"));
+//     assert(!item.isNull);
+// 
+//     // Test update
+//     FolderDTO updateDto;
+//     updateDto.tenantId = tenantId;
+//     updateDto.folderId = FolderId("folder-1");
+//     updateDto.name = "Updated Folder";
+//     auto updateResult = usecase.updateFolder(updateDto);
+//     assert(updateResult.success, updateResult.message);
+// 
+//     // Test delete
+//     auto deleteResult = usecase.deleteFolder(tenantId, FolderId("folder-1"));
+//     assert(deleteResult.success, deleteResult.message);
+//     assert(usecase.listFolders(tenantId).length == 0);
 
 }

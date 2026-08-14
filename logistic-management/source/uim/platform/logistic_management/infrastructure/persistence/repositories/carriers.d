@@ -5,22 +5,58 @@
 *****************************************************************************************************************/
 module uim.platform.logistic_management.infrastructure.persistence.repositories.carriers;
 import uim.platform.logistic_management;
-import std.algorithm : filter, any;
-import std.array : array;
+
 
 mixin(ShowModule!());
 
 @safe:
 class CarrierRepository : TenantRepository!(Carrier, CarrierId), ICarrierRepository {
-  override Carrier[] findByStatus(TenantId tenantId, CarrierStatus status) {
-    return findByTenant(tenantId).filter!(c => c.status == status).array;
+
+  size_t countByStatus(TenantId tenantId, CarrierStatus status)
+    => findByStatus(tenantId, status).length;
+
+  Carrier[] filterByStatus(Carrier[] carriers, CarrierStatus status) {
+    return carriers.filter!(c => c.status == status).array;
   }
 
-  override Carrier[] findByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).filter!(c => c.name == name).array;
+  Carrier[] findByStatus(TenantId tenantId, CarrierStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
-  override bool existsByName(TenantId tenantId, string name) {
+  void removeByStatus(TenantId tenantId, CarrierStatus status) {
+    findByStatus(tenantId, status).each!(e => remove(e));
+  }
+
+  size_t countByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name).length;
+  }
+  
+  Carrier[] filterByName(Carrier[] carriers, string name) {
+    return carriers.filter!(c => c.name == name).array;
+  }
+  
+  Carrier[] findByName(TenantId tenantId, string name) {
+    return filterByName(findByTenant(tenantId), name);
+  }
+
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).each!(e => remove(e));
+  }
+
+  size_t countByCode(TenantId tenantId, string code) {
+    return findByCode(tenantId, code).length;
+  }
+
+  Carrier[] filterByCode(Carrier[] carriers, string code) {
+    return carriers.filter!(c => c.code == code).array;
+  }
+
+  bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(c => c.name == name);
   }
+
+  void removeByCode(TenantId tenantId, string code) {
+    findByCode(tenantId, code).each!(e => remove(e));
+  }
+
 }

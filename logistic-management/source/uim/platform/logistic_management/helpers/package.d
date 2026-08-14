@@ -8,5 +8,5 @@ public {
   import uim.platform.service;
   
   import std.algorithm : map, filter, any, each;
-  import std.array : array;
+  
 }

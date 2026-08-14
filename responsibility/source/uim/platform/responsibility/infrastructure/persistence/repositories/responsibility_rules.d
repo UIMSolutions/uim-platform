@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 class ResponsibilityRuleRepository
     : TenantRepository!(ResponsibilityRule, ResponsibilityRuleId),
-      ResponsibilityRuleRepository {
+      IResponsibilityRuleRepository {
 
     ResponsibilityRule[] findByStatus(TenantId tenantId, RuleStatus status) {
         return findByTenant(tenantId).filter!(r => r.status == status).array;

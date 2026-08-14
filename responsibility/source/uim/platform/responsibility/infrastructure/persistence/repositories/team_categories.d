@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 class TeamCategoryRepository
     : TenantRepository!(TeamCategory, TeamCategoryId),
-      TeamCategoryRepository {
+      ITeamCategoryRepository {
 
     TeamCategory findByCode(TenantId tenantId, string code) {
         auto items = findByTenant(tenantId).filter!(c => c.code == code).array;

@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 class ManageWarehouseTasksUseCase {
 private:
-  WarehouseTaskRepository _repo;
+  IWarehouseTaskRepository _repo;
   LogisticsPlanner _planner;
 
 public:
-  this(WarehouseTaskRepository repo, LogisticsPlanner planner) {
+  this(IWarehouseTaskRepository repo, LogisticsPlanner planner) {
     _repo = repo;
     _planner = planner;
   }
@@ -23,9 +23,9 @@ public:
   CommandResult createWarehouseTask(TenantId tenantId, CreateWarehouseTaskRequest req) {
     if (req.taskNumber.length == 0)
       return CommandResult(false, "Task number is required");
+      
     if (req.productId.length == 0)
       return CommandResult(false, "Product ID is required");
-
     
     WarehouseTask wt;
     wt.id = WarehouseTaskId(generateId());

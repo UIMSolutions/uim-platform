@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 class ManageFreightOrdersUseCase {
 private:
-  FreightOrderRepository _repo;
+  IFreightOrderRepository _repo;
   LogisticsPlanner _planner;
 
 public:
-  this(FreightOrderRepository repo, LogisticsPlanner planner) {
+  this(IFreightOrderRepository repo, LogisticsPlanner planner) {
     _repo = repo;
     _planner = planner;
   }

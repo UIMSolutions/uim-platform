@@ -20,6 +20,7 @@ class DeterminationLogController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/responsibility/determination-logs", &handleList);
         router.get("/api/v1/responsibility/determination-logs/*", &handleGet);
         router.delete_("/api/v1/responsibility/determination-logs/*", &handleDelete);
@@ -30,36 +31,55 @@ class DeterminationLogController : ManageHttpController {
         if (!pre.success)
             return Json.emptyObject.set("error", pre.error);
         auto tenantId = TenantId(pre.gString("tenantId"));
-        auto items = _uc.listLogs(tenantId);
-        return Json.emptyObject
+        auto items = _uc.listLogs(tenantId).map!(e => e.toJson()).array.toJson;
+
+        auto responseData = Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("status", "success").set("statusCode", 200);
+            .set("status", "success").set("statusCode", 200)
+            .set("resources", items);
+
+        return successResponse("Determination logs listed successfully", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
-            return Json.emptyObject.set("error", precheck.error);
+            return errorResponse(precheck.error, precheck.statusCode);
             
         auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = DeterminationLogId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid log id", 400);
+
         auto e = _uc.getLog(tenantId, id);
         if (e.isNull)
             return errorResponse("Log not found", 404);
 
-        return e.toJson().set("status", "success").set("statusCode", 200);
+        auto responseData = Json.emptyObject
+            .set("status", "success").set("statusCode", 200)
+            .set("resource", e.toJson());
+        return successResponse("Determination log retrieved successfully", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto result = super.deleteHandler(req);
         if (!result.success)
-            return Json.emptyObject.set("error", result.error);
+            return errorResponse(result.error, result.statusCode);
+
         auto tenantId = TenantId(result.gString("tenantId"));
         auto id = DeterminationLogId(result.id);
+        if (id.isNull)
+            return errorResponse("Invalid log id", 400);
+
         auto deleteResult = _uc.deleteLog(tenantId, id);
         if (!deleteResult.success)
-            return Json.emptyObject.set("error", deleteResult.message).set("statusCode", 404);
-        return Json.emptyObject.set("id", deleteResult.id).set("status", "success").set("statusCode", 200);
+            return errorResponse(deleteResult.error, deleteResult.statusCode);
+
+        auto responseData = Json.emptyObject
+            .set("id", deleteResult.id)
+            .set("status", "success")
+            .set("statusCode", 200);
+        return successResponse("Determination log deleted successfully", 200, responseData);
     }
+    
 }

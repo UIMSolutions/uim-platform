@@ -56,7 +56,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto items = _useCase.listWarehouseTasks(tenantId);
     import std.algorithm : map;
-    import std.array : array;
+    
     return jsonArray(items.map!(t => t.toJson).array);
   }
 

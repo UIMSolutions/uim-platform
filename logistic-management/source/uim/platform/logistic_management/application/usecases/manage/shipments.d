@@ -11,10 +11,10 @@ mixin(ShowModule!());
 @safe:
 class ManageShipmentsUseCase {
 private:
-  ShipmentRepository _repo;
+  IShipmentRepository _repo;
 
 public:
-  this(ShipmentRepository repo) {
+  this(IShipmentRepository repo) {
     _repo = repo;
   }
 

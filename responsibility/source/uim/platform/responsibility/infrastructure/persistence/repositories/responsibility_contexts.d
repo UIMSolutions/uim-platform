@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 class ResponsibilityContextRepository
     : TenantRepository!(ResponsibilityContext, ResponsibilityContextId),
-      ResponsibilityContextRepository {
+      IResponsibilityContextRepository {
 
     ResponsibilityContext[] findByStatus(TenantId tenantId, ContextStatus status) {
         return findByTenant(tenantId).filter!(c => c.status == status).array;

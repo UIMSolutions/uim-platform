@@ -34,7 +34,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto items = _useCase.listWarehouseOrders(tenantId);
     import std.algorithm : map;
-    import std.array : array;
+    
     return jsonArray(items.map!(wo => wo.toJson).array);
   }
 
