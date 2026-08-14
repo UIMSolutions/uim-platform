@@ -13,7 +13,11 @@ version (unittest) {
         auto container = buildContainer(config);
         auto router = new URLRouter();
 
-        router.registerRestInterface(new TechnologyBlocksService(container.manageTechnologyBlocks), "/rest/v1/");
+        router.registerRestInterface(new ArchitectureBlocksService(container.manageArchitectureBlocks), "/rest/v1/architecture-blocks/");
+        router.registerRestInterface(new BusinessBlocksService(container.manageBusinessBlocks), "/rest/v1/business-blocks/");
+        router.registerRestInterface(new DataBlocksService(container.manageDataBlocks), "/rest/v1/data-blocks/");
+        router.registerRestInterface(new SolutionBlocksService(container.manageSolutionBlocks), "/rest/v1/solution-blocks/");
+        router.registerRestInterface(new TechnologyBlocksService(container.manageTechnologyBlocks), "/rest/v1/technology-blocks/");
         foreach (route; router.getAllRoutes()) {
             writeln("Methode: ", route.method, ", Pfad: ", route.pattern);
         }
@@ -21,6 +25,7 @@ version (unittest) {
         // # Register all controllers
         container.healthController.registerRoutes(router);
         container.buildingBlockPwaController.registerRoutes(router);
+        container.buildingBlockUi5Controller.registerRoutes(router);
         container.buildingBlockWebController.registerRoutes(router);
 
         auto settings = new HTTPServerSettings();
@@ -33,6 +38,7 @@ version (unittest) {
         writeln("  Health: /api/v1/health");
         writeln("  API base: /api/v1/building-blocks");
         writeln("  PWA UI: /pwa/architecture?tenantId=default");
+        writeln("  UI5 UI: /ui5/architecture?tenantId=default");
         writeln("  Web UI: /web/architecture?tenantId=default");
         writeln("======================================================");
 
