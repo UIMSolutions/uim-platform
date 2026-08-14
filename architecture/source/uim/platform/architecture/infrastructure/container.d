@@ -15,9 +15,12 @@ struct Container {
 
     // BuildingBlockController buildingBlockController;
     BuildingBlockPwaController buildingBlockPwaController;
-    BuildingBlockUi5Controller buildingBlockUi5Controller;
     BuildingBlockWebController buildingBlockWebController;
     HealthController healthController;
+
+    /// #region UI5 Controllers
+    BuildingBlockUi5Controller buildingBlockUi5Controller;
+    ArchitectureBlocksUi5Controller architectureBlocksUi5Controller;
 }
 
 Container buildContainer(SrvConfig config) {
@@ -64,7 +67,8 @@ Container buildContainer(SrvConfig config) {
     );
     auto ui5View = new BuildingBlockUi5View();
     container.buildingBlockUi5Controller = new BuildingBlockUi5Controller(ui5Model, ui5View);
-
+    container.architectureBlocksUi5Controller = new ArchitectureBlocksUi5Controller(ui5Model, ui5View);
+    
     // container.buildingBlockController = new BuildingBlockController(container.manageBlocksUseCase);
     container.healthController = new HealthController("architecture", "1.0.0", "TOGAF Building Blocks Service");
 
