@@ -3,6 +3,7 @@ module uim.platform.architecture.presentation.web.views.building_blocks;
 import std.ascii : toUpper;
 import std.array : appender;
 import std.conv : to;
+import std.format : format;
 import std.string : replace;
 import uim.platform.architecture;
 
@@ -124,7 +125,7 @@ class BuildingBlockWebView {
                 encoded ~= ch;
             } else {
                 encoded ~= "%";
-                encoded ~= to!string("%02X", cast(ubyte) ch);
+                encoded ~= format("%02X", cast(ubyte) ch);
             }
         }
         return encoded.data;

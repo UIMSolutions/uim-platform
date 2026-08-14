@@ -14,6 +14,7 @@ struct Container {
     ManageTechnologyBlocksUseCase manageTechnologyBlocks;
 
     // BuildingBlockController buildingBlockController;
+    BuildingBlockPwaController buildingBlockPwaController;
     BuildingBlockWebController buildingBlockWebController;
     HealthController healthController;
 }
@@ -42,6 +43,16 @@ Container buildContainer(SrvConfig config) {
     );
     auto webView = new BuildingBlockWebView();
     container.buildingBlockWebController = new BuildingBlockWebController(webModel, webView);
+
+    auto pwaModel = new BuildingBlockPwaModel(
+        container.manageArchitectureBlocks,
+        container.manageSolutionBlocks,
+        container.manageDataBlocks,
+        container.manageBusinessBlocks,
+        container.manageTechnologyBlocks
+    );
+    auto pwaView = new BuildingBlockPwaView();
+    container.buildingBlockPwaController = new BuildingBlockPwaController(pwaModel, pwaView);
 
     // container.buildingBlockController = new BuildingBlockController(container.manageBlocksUseCase);
     container.healthController = new HealthController("architecture", "1.0.0", "TOGAF Building Blocks Service");
