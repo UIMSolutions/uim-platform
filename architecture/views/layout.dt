@@ -1,0 +1,47 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1")
+		meta(name="color-scheme", content="light dark")
+		link(rel="stylesheet", href="/css/pico.min.css")
+		title Hello world!
+
+		style.
+			body {
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				margin: 0;
+			}
+
+			main {
+				flex: 1;
+			}
+	body
+		header.container
+			nav
+				ul
+					li: strong Acme Corp 
+				ul
+					li: a(href="/web")=translations["home"]
+					li: a(href="/web/architecture")=translations["architecture"]
+					li: a(href="/web/business")=translations["business"]
+					li: a(href="/web/data")=translations["data"]
+					li: a(href="/web/solutions")=translations["solutions"]
+					li: a(href="/web/technology")=translations["technology"]
+					li: a(href="/web/contact")=translations["contact"]
+					li: a(href="/web/settings")=translations["settings"]
+					li: a(href="/web/logout")=translations["logout"]
+					li 
+						span(style="margin-right: 2px;") 
+							a(href="?lang=de") DE						
+						span(style="margin-right: 2px;") 
+							a(href="?lang=en") EN
+	
+		main.container
+			block content
+
+		footer.container
+			p &copy; 2026 Acme Corp. All rights reserved.
+

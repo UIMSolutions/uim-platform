@@ -1,0 +1,62 @@
+  script
+    const modal = document.getElementById('abb-modal');
+    const tableBody = document.getElementById('abb-table-body');
+
+    // Event Delegation: Listen for clicks on table rows
+    tableBody.addEventListener('click', (event) => {
+      const row = event.target.closest('tr');
+      if (!row) return;
+
+      const cells = row.cells;
+
+      // Extract content from clicked row
+      document.getElementById('modal-date').textContent = cells[0].textContent;
+      document.getElementById('modal-title').textContent = cells[1].textContent;
+      document.getElementById('modal-layer').textContent = cells[2].textContent;
+      document.getElementById('modal-purpose').textContent = cells[3].textContent;
+      document.getElementById('modal-tech').textContent = cells[4].textContent;
+      document.getElementById('modal-status').innerHTML = cells[5].innerHTML;
+      document.getElementById('modal-desc').textContent = row.getAttribute('data-desc') || 'No additional architectural description provided.';
+
+      // Native browser showModal method (Pico styles this automatically)
+      modal.showModal();
+    });
+
+    // Close Modal Handler
+    const closeModal = () => modal.close();
+    document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+    document.getElementById('close-modal-footer').addEventListener('click', closeModal);
+
+    // Close when clicking outside the modal dialog box
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+      dialog(id="abb-modal")
+    article
+      header
+        button(aria-label="Close", rel="prev", id="close-modal-btn")
+        h3(id="modal-title") Building Block Details
+      div(id="modal-body")
+        p
+          strong Date Added:
+          span(id="modal-date")
+        p
+          strong Layer / Domain:
+          span(id="modal-layer")
+        p
+          strong Purpose:
+          span(id="modal-purpose")
+        p
+          strong Tech Stack:
+          code(id="modal-tech")
+        p
+          strong Status:
+          span(id="modal-status")
+        hr
+        p
+          strong Architectural Overview:
+        blockquote(id="modal-desc")
+      footer
+        button(role="button", class="secondary", id="close-modal-footer") Close
+

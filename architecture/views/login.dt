@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1=translations["loginPage"]
+  p 
+
+    - if (errorMessage.length > 0)
+      div.error-box
+        p = errorMessage
+
+    form(action="/web/login", method="POST")
+      fieldset
+        div.field
+          label(for="username")=translations["username"]
+          input(type="text", id="username", name="username", placeholder=translations["username"], required=true, autofocus=true, value=username)
+
+        div.field
+          label(for="password")=translations["password"]
+          input(type="password", id="password", name="password", required=true)
+
+        button(type="submit")=translations["login"]

@@ -136,19 +136,20 @@ class BuildingBlockWebView {
     }
 
     private string baseStyles() {
-        return "<style>"
-            ~ "body{font-family:Verdana,sans-serif;background:#f6f8fb;color:#1f2937;margin:0;}"
-            ~ ".shell{max-width:1100px;margin:0 auto;padding:24px;}"
-            ~ "h1{margin:0 0 10px;}"
-            ~ ".subtitle{color:#4b5563;margin:4px 0 16px;}"
-            ~ ".grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}"
-            ~ ".card{display:block;padding:14px 16px;background:#0f172a;color:#e2e8f0;text-decoration:none;border-radius:10px;text-align:center;font-weight:600;}"
-            ~ "table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d1d5db;}"
-            ~ "th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:left;font-size:14px;}"
-            ~ "thead{background:#eef2ff;}"
-            ~ ".empty{text-align:center;color:#6b7280;}"
-            ~ ".empty-box{padding:18px;background:#fff8e1;border:1px solid #f1d59a;color:#8a5b00;border-radius:8px;}"
-            ~ "nav a{color:#1d4ed8;text-decoration:none;}"
-            ~ "</style>";
+        return "<link rel=\"stylesheet\" href=\"css/pico.min.css\">";
+        // return "<style>"
+        //     ~ "body{font-family:Verdana,sans-serif;background:#f6f8fb;color:#1f2937;margin:0;}"
+        //     ~ ".shell{max-width:1100px;margin:0 auto;padding:24px;}"
+        //     ~ "h1{margin:0 0 10px;}"
+        //     ~ ".subtitle{color:#4b5563;margin:4px 0 16px;}"
+        //     ~ ".grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}"
+        //     ~ ".card{display:block;padding:14px 16px;background:#0f172a;color:#e2e8f0;text-decoration:none;border-radius:10px;text-align:center;font-weight:600;}"
+        //     ~ "table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d1d5db;}"
+        //     ~ "th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:left;font-size:14px;}"
+        //     ~ "thead{background:#eef2ff;}"
+        //     ~ ".empty{text-align:center;color:#6b7280;}"
+        //     ~ ".empty-box{padding:18px;background:#fff8e1;border:1px solid #f1d59a;color:#8a5b00;border-radius:8px;}"
+        //     ~ "nav a{color:#1d4ed8;text-decoration:none;}"
+        //     ~ "</style>";
     }
 }

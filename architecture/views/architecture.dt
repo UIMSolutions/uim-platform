@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1 Architektur Bausteine
+
+  div(class="overflow-auto")
+    table(class="striped")
+      thead
+        tr
+          th(scope="col") Date
+          th(scope="col") Building Block
+          th(scope="col") Layer / Domain
+          th(scope="col") Purpose / Responsibility
+          th(scope="col") Tech Stack
+          th(scope="col") Status
+
+      tbody
+        tr(data-desc="Handles incoming API requests, routes them to appropriate services, enforces rate limits, and terminates SSL.")
+          td: strong 2026-08-10
+          td API Gateway
+          td Edge Layer
+          td Request routing, rate limiting, SSL termination
+          td: code Kong / NGINX
+          td: mark Production
+

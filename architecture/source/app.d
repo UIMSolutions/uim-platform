@@ -12,6 +12,7 @@ version (unittest) {
         auto config = loadConfig();
         auto container = buildContainer(config);
         auto router = new URLRouter();
+        router.get("*", serveStaticFiles("public/"));
 
         router.registerRestInterface(new ArchitectureBlocksService(container.manageArchitectureBlocks), "/rest/v1/architecture-blocks/");
         router.registerRestInterface(new BusinessBlocksService(container.manageBusinessBlocks), "/rest/v1/business-blocks/");
@@ -33,6 +34,7 @@ version (unittest) {
         container.architectureBlocksUi5Controller.registerRoutes(router);
 
         auto settings = new HTTPServerSettings();
+        settings.sessionStore = new MemorySessionStore;
         settings.bindAddresses = [config.host];
         settings.port = config.port;
 
