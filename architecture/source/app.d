@@ -19,20 +19,25 @@ version (unittest) {
         router.registerRestInterface(new DataBlocksService(container.manageDataBlocks), "/rest/v1/data-blocks/");
         router.registerRestInterface(new SolutionBlocksService(container.manageSolutionBlocks), "/rest/v1/solution-blocks/");
         router.registerRestInterface(new TechnologyBlocksService(container.manageTechnologyBlocks), "/rest/v1/technology-blocks/");
-        foreach (route; router.getAllRoutes()) {
-            writeln("Methode: ", route.method, ", Pfad: ", route.pattern);
-        }
 
         // # Register all controllers
         container.healthController.registerRoutes(router);
         container.buildingBlockPwaController.registerRoutes(router);
         container.buildingBlockWebController.registerRoutes(router);
         router.registerWebInterface(new ArchitectureController);
+        router.registerWebInterface(new BusinessController);
+        router.registerWebInterface(new DataController);
+        router.registerWebInterface(new SolutionController);
+        router.registerWebInterface(new TechnologyController);
 
         /// # Register UI5 controllers
         container.overviewUi5Controller.registerRoutes(router);
         container.buildingBlockUi5Controller.registerRoutes(router);
         container.architectureBlocksUi5Controller.registerRoutes(router);
+
+        foreach (route; router.getAllRoutes()) {
+            writeln("Methode: ", route.method, ", Pfad: ", route.pattern);
+        }
 
         auto settings = new HTTPServerSettings();
         settings.sessionStore = new MemorySessionStore;

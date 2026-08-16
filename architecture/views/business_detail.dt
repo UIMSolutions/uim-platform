@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Business Bausteine
+
+  form(action="", method="")
+    fieldset
+      div.field
+        label(for="id")=translations["id"]
+        input(type="text", id="id", name="id", value=block.id)
+
+      div.field
+        label(for="name")=translations["name"]
+        input(type="text", id="name", name="name", value=block.name)
+
+      div.field
+        label(for="description")=translations["description"]
+        input(type="textarea", id="description", name="description", value=block.description)

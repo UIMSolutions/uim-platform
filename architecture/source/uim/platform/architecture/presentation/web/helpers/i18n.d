@@ -23,7 +23,10 @@ string[string][string] dictionary = [
         "technology": "Technology",
         "contact": "Contact",
         "settings": "Settings",
-        "more": "More"
+        "more": "More",
+        "id": "Id",
+        "name": "Name",
+        "description": "Description"
     ],
     "de": [
         "loginPage": "Anmeldeseite",
@@ -40,7 +43,10 @@ string[string][string] dictionary = [
         "technology": "Technologie",
         "contact": "Kontakt",   
         "settings": "Einstellungen",
-        "more": "Weitere"
+        "more": "Weitere",
+        "id": "Id",
+        "name": "Name",
+        "description": "Beschreibung"
     ]
 ];
 
