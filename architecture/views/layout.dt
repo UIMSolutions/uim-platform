@@ -30,14 +30,18 @@ html(lang="en")
 					li: a(href="/web/data")=translations["data"]
 					li: a(href="/web/solutions")=translations["solutions"]
 					li: a(href="/web/technology")=translations["technology"]
-					li: a(href="/web/contact")=translations["contact"]
-					li: a(href="/web/settings")=translations["settings"]
-					li: a(href="/web/logout")=translations["logout"]
+					li
+						details.dropdown
+							summary=translations["more"]
+							ul
+								li: a(href="/web/settings")=translations["settings"]
+								li: a(href="/web/contact")=translations["contact"]
 					li 
 						span(style="margin-right: 2px;") 
 							a(href="?lang=de") DE						
 						span(style="margin-right: 2px;") 
 							a(href="?lang=en") EN
+					li: a(href="/web/logout")=translations["logout"]
 	
 		main.container
 			block content

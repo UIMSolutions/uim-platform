@@ -13,8 +13,8 @@ string[string][string] dictionary = [
         "username": "Username",
         "password": "Password",
         "welcome": "Welcome back, %s!",
-        "login": "Log In",
-        "logout": "Log Out",
+        "login": "Login",
+        "logout": "Logout",
         "home": "Home",
         "architecture": "Architecture",
         "business": "Business",
@@ -22,7 +22,8 @@ string[string][string] dictionary = [
         "solutions": "Solutions",
         "technology": "Technology",
         "contact": "Contact",
-        "settings": "Settings"
+        "settings": "Settings",
+        "more": "More"
     ],
     "de": [
         "loginPage": "Anmeldeseite",
@@ -38,7 +39,8 @@ string[string][string] dictionary = [
         "solutions": "Lösungen",
         "technology": "Technologie",
         "contact": "Kontakt",   
-        "settings": "Einstellungen"
+        "settings": "Einstellungen",
+        "more": "Weitere"
     ]
 ];
 

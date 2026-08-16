@@ -22,8 +22,8 @@ class BuildingBlockWebController {
         router.post("/web/login", &handleLogin);
         router.get("/web/logout", &handleLogout);
         router.get("/web", &handleIndex);
-        router.get("/web/architecture", &handleArchitecture);
-        router.get("/web/solution", &handleSolution);
+        // router.get("/web/architecture", &handleArchitecture);
+        router.get("/web/solutions", &handleSolution);
         router.get("/web/data", &handleData);
         router.get("/web/business", &handleBusiness);
         router.get("/web/technology", &handleTechnology);

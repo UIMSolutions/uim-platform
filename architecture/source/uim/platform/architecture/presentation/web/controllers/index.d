@@ -6,8 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 void handleIndex(HTTPServerRequest req, HTTPServerResponse res) {
-    if (!req.session)
-    {
+    if (!req.session) {
         res.redirect("/web/login");
         return;
     }
@@ -16,7 +15,11 @@ void handleIndex(HTTPServerRequest req, HTTPServerResponse res) {
     string username = req.session.get!string("username", "Gast");
     bool isLoggedIn = req.session.get!bool("isLoggedIn", false);
     string lang = req.session.get!string("lang", "de");
-
+    string lang2 = req.query.get("lang", "en");
+    if (lang != lang2) {
+        req.session.set("lang", lang2);
+        lang = lang2;
+    }
     auto translations = getTranslations(lang);
     res.render!("index.dt", username, lang, translations);
 }

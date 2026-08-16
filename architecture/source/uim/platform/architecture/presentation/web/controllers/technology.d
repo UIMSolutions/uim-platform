@@ -13,6 +13,11 @@ void handleTechnology(HTTPServerRequest req, HTTPServerResponse res) {
 
     string username = req.session.get!string("username", "User");
     string lang = req.session.get!string("lang", "de");
+    string lang2 = req.query.get("lang", "en");
+    if (lang != lang2) {
+        req.session.set("lang", lang2);
+        lang = lang2;
+    }
     auto translations = getTranslations(lang);
 
     res.render!("technology.dt", username, lang, translations);

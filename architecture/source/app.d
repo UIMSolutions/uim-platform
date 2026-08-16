@@ -27,6 +27,7 @@ version (unittest) {
         container.healthController.registerRoutes(router);
         container.buildingBlockPwaController.registerRoutes(router);
         container.buildingBlockWebController.registerRoutes(router);
+        router.registerWebInterface(new ArchitectureController);
 
         /// # Register UI5 controllers
         container.overviewUi5Controller.registerRoutes(router);
