@@ -22,6 +22,14 @@ struct BusinessBlockId {
     mixin(IdTemplate);
 }
 
+struct ModuleBlockId {
+    mixin(IdTemplate);
+}
+
+struct ServiceBlockId {
+    mixin(IdTemplate);
+}
+
 struct TechnologyBlockId {
     mixin(IdTemplate);
 }

@@ -86,7 +86,7 @@ class TechnologyBlockController : ManageHttpController {
         auto data = precheck.data;
         auto request = CreateTechnologyBlockRequest();
         request.tenantId = tenantId;
-        request.name = data.getString("name", "");
+        request.title = data.getString("title", "");
         request.description = data.getString("description", "");
         request.owner = data.getString("owner", "");
         request.lifecycleState = data.getString("lifecycleState", "");
@@ -115,6 +115,7 @@ class TechnologyBlockController : ManageHttpController {
         auto request = UpdateTechnologyBlockRequest();
         request.tenantId = tenantId;
         request.blockId = id;
+        request.title = data.getString("title", "");
         request.description = data.getString("description", "");
         request.owner = data.getString("owner", "");
         request.lifecycleState = data.getString("lifecycleState", "");

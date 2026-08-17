@@ -26,7 +26,15 @@ string[string][string] dictionary = [
         "more": "More",
         "id": "Id",
         "name": "Name",
-        "description": "Description"
+        "description": "Description",
+        "title": "Title",
+        "product": "Product",
+        "module": "Module",
+        "service": "Service",
+        "version": "Version",
+        "responsible": "Responsible",
+        "capabilityProvided": "Capability Provided",
+        "requiredInterfaces": "Required Interfaces"
     ],
     "de": [
         "loginPage": "Anmeldeseite",
@@ -46,7 +54,15 @@ string[string][string] dictionary = [
         "more": "Weitere",
         "id": "Id",
         "name": "Name",
-        "description": "Beschreibung"
+        "description": "Beschreibung",
+        "title": "Bezeichnung",
+        "product": "Produkt",
+        "module": "Modul",
+        "service": "Service",
+        "version": "Version",
+        "responsible": "Verantwortlich",
+        "capabilityProvided": "Bereitgestellte Fähigkeit",
+        "requiredInterfaces": "Erforderliche Schnittstellen"
     ]
 ];
 

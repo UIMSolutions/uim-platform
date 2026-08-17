@@ -48,7 +48,7 @@ class ArchitectureBlockUi5Model {
     Ui5ArchitectureBlockPageModel architecturePage(TenantId tenantId, string tenantLabel) {
         auto page = basePage("Architecture Architecture Blocks", "Capability-focused architecture landscape.", tenantLabel, "architecture");
         foreach (block; architectureUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
+            page.items ~= Ui5ArchitectureBlockItem(block.id.value, block.title, block.description, block.owner,
                 block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
         }
         return page;
@@ -60,7 +60,7 @@ class ArchitectureBlockUi5Model {
         if (block.id.value.length == 0)
             return detail;
         detail.found = true;
-        detail.item = Ui5ArchitectureBlockItem(block.id.value, block.name, block.description, block.owner,
+        detail.item = Ui5ArchitectureBlockItem(block.id.value, block.title, block.description, block.owner,
             block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -68,7 +68,7 @@ class ArchitectureBlockUi5Model {
     CommandResult createArchitecture(TenantId tenantId, Json data) {
         auto req = CreateArchitectureBlockRequest();
         req.tenantId = tenantId;
-        req.name = data.getString("name", "");
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");

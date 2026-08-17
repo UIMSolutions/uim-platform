@@ -11,7 +11,7 @@ block content
 
       div.field
         label(for="name")=translations["name"]
-        input(type="text", id="name", name="name", value=block.name)
+        input(type="text", id="name", name="name", value=block.title)
 
       div.field
         label(for="description")=translations["description"]

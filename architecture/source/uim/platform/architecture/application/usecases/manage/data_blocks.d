@@ -22,8 +22,8 @@ class ManageDataBlocksUseCase {
     }
 
     CommandResult createBlock(CreateDataBlockRequest req) {
-        if (req.name.isEmpty)
-            return CommandResult(false, "", "name is required");
+        if (req.title.isEmpty)
+            return CommandResult(false, "", "Title is required");
 
         auto block = DataBlock(req.tenantId, DataBlockId(generateId()));
 

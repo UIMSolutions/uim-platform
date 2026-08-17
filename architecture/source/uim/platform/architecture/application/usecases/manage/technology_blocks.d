@@ -22,8 +22,8 @@ class ManageTechnologyBlocksUseCase {
     }
 
     CommandResult createBlock(CreateTechnologyBlockRequest req) {
-        if (req.name.isEmpty)
-            return CommandResult(false, "", "name is required");
+        if (req.title.isEmpty)
+            return CommandResult(false, "", "title is required");
 
         auto block = TechnologyBlock(req.tenantId, TechnologyBlockId(generateId()));
 

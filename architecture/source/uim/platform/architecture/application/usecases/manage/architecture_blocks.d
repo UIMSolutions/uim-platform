@@ -22,10 +22,13 @@ class ManageArchitectureBlocksUseCase {
     }
 
     CommandResult createBlock(CreateArchitectureBlockRequest req) {
-        if (req.name.isEmpty)
-            return CommandResult(false, "", "Name is required");
+        if (req.title.isEmpty)
+            return CommandResult(false, "", "Title is required");
 
-        auto block = ArchitectureBlock(req.tenantId, ArchitectureBlockId(generateId()));
+        auto block = ArchitectureBlock(req.tenantId, req.blockId);
+        block.title = req.title;
+        block.description = req.description;
+        block.owner = req.owner;
 
         repository.save(block);
         return CommandResult(true, block.id.value, "Architecture block created");
@@ -54,4 +57,29 @@ class ManageArchitectureBlocksUseCase {
         repository.remove(block);
         return CommandResult(true, blockId.value, "Architecture block deleted");
     }
+}
+///
+unittest {
+    void testManageArchitectureBlocksUseCase() {
+        auto repo = new ArchitectureBlockRepository();
+        auto usecase = new ManageArchitectureBlocksUseCase(repo);
+        auto tenantId = TenantId("tenant1");
+
+        auto createReq = CreateArchitectureBlockRequest(tenantId, "Test Block", "Description");
+        auto createResult = usecase.createBlock(createReq);
+        assert(createResult.success);
+
+        auto blockId = ArchitectureBlockId(createResult.blockId);
+        auto block = usecase.getBlock(tenantId, blockId);
+        assert(block.id == blockId);
+
+        auto updateReq = UpdateArchitectureBlockRequest(tenantId, blockId, "Updated Block", "Updated Description");
+        auto updateResult = usecase.updateBlock(updateReq);
+        assert(updateResult.success);
+
+        auto deleteResult = usecase.deleteBlock(tenantId, blockId);
+        assert(deleteResult.success);
+    }
+
+    testManageArchitectureBlocksUseCase();
 }

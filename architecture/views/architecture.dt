@@ -1,25 +1,30 @@
 extends layout
 
 block content
+  nav(aria-label="breadcrumb")
+    ul
+      li
+        a(href="/web") Home
+      li Architecture
+
   h1 Architektur Bausteine
+  button(type="button", onclick="window.location.href='/web/architecture/create'") Create
 
   div(class="overflow-auto")
     table(class="striped")
       thead
         tr
-          th(scope="col") Date
-          th(scope="col") Building Block
-          th(scope="col") Layer / Domain
-          th(scope="col") Purpose / Responsibility
-          th(scope="col") Tech Stack
-          th(scope="col") Status
+          th(scope="col") Name
+          th(scope="col") Version
+          th(scope="col") Title
+          th(scope="col") Responsible
 
       tbody
-        tr(data-desc="Handles incoming API requests, routes them to appropriate services, enforces rate limits, and terminates SSL.")
-          td: strong 2026-08-10
-          td API Gateway
-          td Edge Layer
-          td Request routing, rate limiting, SSL termination
-          td: code Kong / NGINX
-          td: mark Production
+        - foreach (block; blocks)
+          tr
+            td
+              a(href="/web/architecture/view/"~block.id.value)=block.id
+            td= block.versionLabel
+            td= block.title
+            td= block.owner
 

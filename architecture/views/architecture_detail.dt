@@ -3,15 +3,24 @@ extends layout
 block content
   h1 Architektur Bausteine
 
-  form(action="", method="")
+  form(action="/web/architecture/save", method="post")
+
+    div(role="group")
+      button(type="button", onclick="window.location.href='/web/architecture/create'") Create
+      button(type="button", onclick="window.location.href='/web/architecture/duplicate/' ~ block.id.value") Duplicate
+      - if (mode != "readonly") 
+        button(type="button", onclick="window.location.href='/web/architecture/edit/' ~ block.id.value") Edit
+        button(type="submit") Save
+      button(type="button", onclick="window.location.href='/web/architecture/delete/' ~ block.id.value") Delete
+
     fieldset
       div.field
         label(for="id")=translations["id"]
-        input(type="text", id="id", name="id", value=block.id)
+        input(type="text", id="id", name="id", value=block.id.value)
 
       div.field
-        label(for="name")=translations["name"]
-        input(type="text", id="name", name="name", value=block.name)
+        label(for="title")=translations["title"]
+        input(type="text", id="title", name="title", value=block.title)
 
       div.field
         label(for="description")=translations["description"]

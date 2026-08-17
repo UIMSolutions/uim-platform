@@ -60,7 +60,7 @@ class BuildingBlockUi5Model {
     Ui5BuildingBlockPageModel architecturePage(TenantId tenantId, string tenantLabel) {
         auto page = basePage("Architecture Building Blocks", "Capability-focused architecture landscape.", tenantLabel, "architecture");
         foreach (block; architectureUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+            page.items ~= Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
                 block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
         }
         return page;
@@ -69,7 +69,7 @@ class BuildingBlockUi5Model {
     Ui5BuildingBlockPageModel solutionPage(TenantId tenantId, string tenantLabel) {
         auto page = basePage("Solution Building Blocks", "Concrete solution implementations and mappings.", tenantLabel, "solution");
         foreach (block; solutionUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+            page.items ~= Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
                 block.status.toString, "-", block.versionLabel, formatTags(block.tags));
         }
         return page;
@@ -78,7 +78,7 @@ class BuildingBlockUi5Model {
     Ui5BuildingBlockPageModel dataPage(TenantId tenantId, string tenantLabel) {
         auto page = basePage("Data Building Blocks", "Data ownership, quality and classification units.", tenantLabel, "data");
         foreach (block; dataUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+            page.items ~= Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
                 block.status.toString, "-", block.versionLabel, formatTags(block.tags));
         }
         return page;
@@ -87,7 +87,7 @@ class BuildingBlockUi5Model {
     Ui5BuildingBlockPageModel businessPage(TenantId tenantId, string tenantLabel) {
         auto page = basePage("Business Building Blocks", "Business capabilities and process-aligned assets.", tenantLabel, "business");
         foreach (block; businessUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+            page.items ~= Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
                 block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
         }
         return page;
@@ -96,7 +96,7 @@ class BuildingBlockUi5Model {
     Ui5BuildingBlockPageModel technologyPage(TenantId tenantId, string tenantLabel) {
         auto page = basePage("Technology Building Blocks", "Infrastructure and technology foundation elements.", tenantLabel, "technology");
         foreach (block; technologyUseCase.listBlocks(tenantId)) {
-            page.items ~= Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+            page.items ~= Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
                 block.status.toString, "-", block.versionLabel, formatTags(block.tags));
         }
         return page;
@@ -108,7 +108,7 @@ class BuildingBlockUi5Model {
         if (block.id.value.length == 0)
             return detail;
         detail.found = true;
-        detail.item = Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+        detail.item = Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
             block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -119,7 +119,7 @@ class BuildingBlockUi5Model {
         if (block.id.value.length == 0)
             return detail;
         detail.found = true;
-        detail.item = Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+        detail.item = Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
             block.status.toString, "-", block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -130,7 +130,7 @@ class BuildingBlockUi5Model {
         if (block.id.value.length == 0)
             return detail;
         detail.found = true;
-        detail.item = Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+        detail.item = Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
             block.status.toString, "-", block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -141,7 +141,7 @@ class BuildingBlockUi5Model {
         if (block.id.value.length == 0)
             return detail;
         detail.found = true;
-        detail.item = Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+        detail.item = Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
             block.status.toString, block.lifecycleState, block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -152,7 +152,7 @@ class BuildingBlockUi5Model {
         if (block.id.value.length == 0)
             return detail;
         detail.found = true;
-        detail.item = Ui5BuildingBlockItem(block.id.value, block.name, block.description, block.owner,
+        detail.item = Ui5BuildingBlockItem(block.id.value, block.title, block.description, block.owner,
             block.status.toString, "-", block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -160,7 +160,7 @@ class BuildingBlockUi5Model {
     CommandResult createArchitecture(TenantId tenantId, Json data) {
         auto req = CreateArchitectureBlockRequest();
         req.tenantId = tenantId;
-        req.name = data.getString("name", "");
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -173,7 +173,7 @@ class BuildingBlockUi5Model {
     CommandResult createSolution(TenantId tenantId, Json data) {
         auto req = CreateSolutionBlockRequest();
         req.tenantId = tenantId;
-        req.name = data.getString("name", "");
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -186,7 +186,7 @@ class BuildingBlockUi5Model {
     CommandResult createData(TenantId tenantId, Json data) {
         auto req = CreateDataBlockRequest();
         req.tenantId = tenantId;
-        req.name = data.getString("name", "");
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -199,7 +199,7 @@ class BuildingBlockUi5Model {
     CommandResult createBusiness(TenantId tenantId, Json data) {
         auto req = CreateBusinessBlockRequest();
         req.tenantId = tenantId;
-        req.name = data.getString("name", "");
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -212,7 +212,7 @@ class BuildingBlockUi5Model {
     CommandResult createTechnology(TenantId tenantId, Json data) {
         auto req = CreateTechnologyBlockRequest();
         req.tenantId = tenantId;
-        req.name = data.getString("name", "");
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -226,6 +226,7 @@ class BuildingBlockUi5Model {
         auto req = UpdateArchitectureBlockRequest();
         req.tenantId = tenantId;
         req.blockId = ArchitectureBlockId(id);
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -239,6 +240,7 @@ class BuildingBlockUi5Model {
         auto req = UpdateSolutionBlockRequest();
         req.tenantId = tenantId;
         req.blockId = SolutionBlockId(id);
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -252,6 +254,7 @@ class BuildingBlockUi5Model {
         auto req = UpdateDataBlockRequest();
         req.tenantId = tenantId;
         req.blockId = DataBlockId(id);
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -265,6 +268,7 @@ class BuildingBlockUi5Model {
         auto req = UpdateBusinessBlockRequest();
         req.tenantId = tenantId;
         req.blockId = BusinessBlockId(id);
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");
@@ -278,6 +282,7 @@ class BuildingBlockUi5Model {
         auto req = UpdateTechnologyBlockRequest();
         req.tenantId = tenantId;
         req.blockId = TechnologyBlockId(id);
+        req.title = data.getString("title", "");
         req.description = data.getString("description", "");
         req.owner = data.getString("owner", "");
         req.lifecycleState = data.getString("lifecycleState", "");

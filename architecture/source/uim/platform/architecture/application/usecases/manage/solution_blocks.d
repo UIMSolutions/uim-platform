@@ -22,10 +22,13 @@ class ManageSolutionBlocksUseCase {
     }
 
     CommandResult createBlock(CreateSolutionBlockRequest req) {
-        if (req.name.isEmpty)
-            return CommandResult(false, "", "name is required");
+        if (req.title.isEmpty)
+            return CommandResult(false, "", "Title is required");
 
-        auto block = SolutionBlock(req.tenantId, SolutionBlockId(generateId()));
+        auto block = SolutionBlock(req.tenantId, req.blockId);
+        block.title = req.title;
+        block.description = req.description;
+        block.owner = req.owner;
 
         repository.save(block);
         return CommandResult(true, block.id.value, "Solution block created");

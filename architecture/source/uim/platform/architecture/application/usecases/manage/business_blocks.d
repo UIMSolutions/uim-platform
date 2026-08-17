@@ -22,8 +22,8 @@ class ManageBusinessBlocksUseCase {
     }
 
     CommandResult createBlock(CreateBusinessBlockRequest req) {
-        if (req.name.isEmpty)
-            return CommandResult(false, "", "name is required");
+        if (req.title.isEmpty)
+            return CommandResult(false, "", "Title is required");
 
         auto block = BusinessBlock(req.tenantId, BusinessBlockId(generateId()));
 

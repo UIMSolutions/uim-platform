@@ -61,7 +61,7 @@ class BuildingBlockPwaModel {
         foreach (block; architectureUseCase.listBlocks(tenantId)) {
             page.items ~= PwaBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -78,7 +78,7 @@ class BuildingBlockPwaModel {
         foreach (block; solutionUseCase.listBlocks(tenantId)) {
             page.items ~= PwaBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -95,7 +95,7 @@ class BuildingBlockPwaModel {
         foreach (block; dataUseCase.listBlocks(tenantId)) {
             page.items ~= PwaBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -112,7 +112,7 @@ class BuildingBlockPwaModel {
         foreach (block; businessUseCase.listBlocks(tenantId)) {
             page.items ~= PwaBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -129,7 +129,7 @@ class BuildingBlockPwaModel {
         foreach (block; technologyUseCase.listBlocks(tenantId)) {
             page.items ~= PwaBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -148,7 +148,7 @@ class BuildingBlockPwaModel {
             return detail;
 
         detail.found = true;
-        detail.item = PwaBuildingBlockItem(block.id.value, block.name, block.description, block.owner, block.status.toString,
+        detail.item = PwaBuildingBlockItem(block.id.value, block.title, block.description, block.owner, block.status.toString,
             block.lifecycleState, block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -160,7 +160,7 @@ class BuildingBlockPwaModel {
             return detail;
 
         detail.found = true;
-        detail.item = PwaBuildingBlockItem(block.id.value, block.name, block.description, block.owner, block.status.toString,
+        detail.item = PwaBuildingBlockItem(block.id.value, block.title, block.description, block.owner, block.status.toString,
             "-", block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -172,7 +172,7 @@ class BuildingBlockPwaModel {
             return detail;
 
         detail.found = true;
-        detail.item = PwaBuildingBlockItem(block.id.value, block.name, block.description, block.owner, block.status.toString,
+        detail.item = PwaBuildingBlockItem(block.id.value, block.title, block.description, block.owner, block.status.toString,
             "-", block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -184,7 +184,7 @@ class BuildingBlockPwaModel {
             return detail;
 
         detail.found = true;
-        detail.item = PwaBuildingBlockItem(block.id.value, block.name, block.description, block.owner, block.status.toString,
+        detail.item = PwaBuildingBlockItem(block.id.value, block.title, block.description, block.owner, block.status.toString,
             block.lifecycleState, block.versionLabel, formatTags(block.tags));
         return detail;
     }
@@ -196,7 +196,7 @@ class BuildingBlockPwaModel {
             return detail;
 
         detail.found = true;
-        detail.item = PwaBuildingBlockItem(block.id.value, block.name, block.description, block.owner, block.status.toString,
+        detail.item = PwaBuildingBlockItem(block.id.value, block.title, block.description, block.owner, block.status.toString,
             "-", block.versionLabel, formatTags(block.tags));
         return detail;
     }

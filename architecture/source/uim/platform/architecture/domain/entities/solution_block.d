@@ -9,7 +9,7 @@ mixin(ShowModule!());
 struct SolutionBlock {
     mixin TenantEntity!(SolutionBlockId);
 
-    string name;
+    string title;
     string description;
     string owner;
     LifecycleStatus status;
@@ -21,7 +21,7 @@ struct SolutionBlock {
 
     Json toJson() const {
         return entityToJson
-            .set("name", name)
+            .set("title", title)
             .set("description", description)
             .set("owner", owner)
             .set("status", status.toString)

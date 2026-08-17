@@ -9,11 +9,13 @@ mixin(ShowModule!());
 struct ArchitectureBlock {
     mixin TenantEntity!(ArchitectureBlockId);
 
-    string name;
+    string title;
     string description;
     string owner;
     string lifecycleState;
     string versionLabel;
+    bool lastVersion;
+    long validDate;
     string[] tags;
     string capabilityProvided;
     string[] requiredInterfaces;
@@ -23,7 +25,7 @@ struct ArchitectureBlock {
     Json toJson() const {
         auto tagsJson = tags.toJson;
         return entityToJson
-            .set("name", name)
+            .set("title", title)
             .set("description", description)
             .set("owner", owner)
             .set("lifecycleState", lifecycleState)
@@ -31,7 +33,9 @@ struct ArchitectureBlock {
             .set("versionLabel", versionLabel)
             .set("tags", tagsJson)
             .set("capabilityProvided", capabilityProvided)
-            .set("requiredInterfaces", requiredInterfaces.toJson);
+            .set("requiredInterfaces", requiredInterfaces.toJson)
+            .set("lastVersion", lastVersion)
+            .set("validDate", validDate);
             //.set("associatedDataBlocks", associatedDataBlocks.toJson);
     }
 }

@@ -10,7 +10,7 @@ struct CreateArchitectureBlockRequest {
     TenantId tenantId;
     ArchitectureBlockId blockId;
 
-    string name;
+    string title;
     string description;
     string owner;
     string lifecycleState;
@@ -23,7 +23,11 @@ struct UpdateArchitectureBlockRequest {
     TenantId tenantId;
     ArchitectureBlockId blockId;
     
+    string title;
     string description;
+    string productId;
+    string moduleId;
+    string serviceId;
     string owner;
     string lifecycleState;
     string status;
@@ -35,7 +39,7 @@ struct CreateBusinessBlockRequest {
     TenantId tenantId;
     BusinessBlockId blockId;
 
-    string name;
+    string title;
     string description;
     string owner;
     string lifecycleState;
@@ -48,6 +52,7 @@ struct UpdateBusinessBlockRequest {
     TenantId tenantId;
     BusinessBlockId blockId;
     
+    string title;
     string description;
     string owner;
     string lifecycleState;
@@ -60,7 +65,7 @@ struct CreateDataBlockRequest {
     TenantId tenantId;
     DataBlockId blockId;
 
-    string name;
+    string title;
     string description;
     string owner;
     string lifecycleState;
@@ -73,6 +78,7 @@ struct UpdateDataBlockRequest {
     TenantId tenantId;
     DataBlockId blockId;
     
+    string title;
     string description;
     string owner;
     string lifecycleState;
@@ -85,7 +91,7 @@ struct CreateSolutionBlockRequest {
     TenantId tenantId;
     SolutionBlockId blockId;
 
-    string name;
+    string title;
     string description;
     string owner;
     string lifecycleState;
@@ -98,6 +104,7 @@ struct UpdateSolutionBlockRequest {
     TenantId tenantId;
     SolutionBlockId blockId;
     
+    string title;
     string description;
     string owner;
     string lifecycleState;
@@ -110,7 +117,7 @@ struct CreateTechnologyBlockRequest {
     TenantId tenantId;
     TechnologyBlockId blockId;
 
-    string name;
+    string title;
     string description;
     string owner;
     string lifecycleState;
@@ -123,6 +130,7 @@ struct UpdateTechnologyBlockRequest {
     TenantId tenantId;
     TechnologyBlockId blockId;
     
+    string title;
     string description;
     string owner;
     string lifecycleState;

@@ -10,7 +10,7 @@ mixin(ShowModule!());
 struct DataBlock {
     mixin TenantEntity!(DataBlockId);
 
-    string name;
+    string title;
     string description;
     string owner;
     LifecycleStatus status;
@@ -22,7 +22,7 @@ struct DataBlock {
     Json toJson() const {
         auto tagsJson = tags.toJson;
         return entityToJson
-            .set("name", name)
+            .set("title", title)
             .set("description", description)
             .set("owner", owner)
             .set("status", status.toString)

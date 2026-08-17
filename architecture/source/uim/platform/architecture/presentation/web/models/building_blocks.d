@@ -61,7 +61,7 @@ class BuildingBlockWebModel {
         foreach (block; architectureUseCase.listBlocks(tenantId)) {
             page.items ~= WebBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -78,7 +78,7 @@ class BuildingBlockWebModel {
         foreach (block; solutionUseCase.listBlocks(tenantId)) {
             page.items ~= WebBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -95,7 +95,7 @@ class BuildingBlockWebModel {
         foreach (block; dataUseCase.listBlocks(tenantId)) {
             page.items ~= WebBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -112,7 +112,7 @@ class BuildingBlockWebModel {
         foreach (block; businessUseCase.listBlocks(tenantId)) {
             page.items ~= WebBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -129,7 +129,7 @@ class BuildingBlockWebModel {
         foreach (block; technologyUseCase.listBlocks(tenantId)) {
             page.items ~= WebBuildingBlockItem(
                 block.id.value,
-                block.name,
+                block.title,
                 block.description,
                 block.owner,
                 block.status.toString,
@@ -150,7 +150,7 @@ class BuildingBlockWebModel {
         detail.found = true;
         detail.item = WebBuildingBlockItem(
             block.id.value,
-            block.name,
+            block.title,
             block.description,
             block.owner,
             block.status.toString,
@@ -170,7 +170,7 @@ class BuildingBlockWebModel {
         detail.found = true;
         detail.item = WebBuildingBlockItem(
             block.id.value,
-            block.name,
+            block.title,
             block.description,
             block.owner,
             block.status.toString,
@@ -190,7 +190,7 @@ class BuildingBlockWebModel {
         detail.found = true;
         detail.item = WebBuildingBlockItem(
             block.id.value,
-            block.name,
+            block.title,
             block.description,
             block.owner,
             block.status.toString,
@@ -210,7 +210,7 @@ class BuildingBlockWebModel {
         detail.found = true;
         detail.item = WebBuildingBlockItem(
             block.id.value,
-            block.name,
+            block.title,
             block.description,
             block.owner,
             block.status.toString,
@@ -230,7 +230,7 @@ class BuildingBlockWebModel {
         detail.found = true;
         detail.item = WebBuildingBlockItem(
             block.id.value,
-            block.name,
+            block.title,
             block.description,
             block.owner,
             block.status.toString,

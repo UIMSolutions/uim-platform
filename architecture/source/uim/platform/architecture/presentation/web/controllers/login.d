@@ -25,6 +25,7 @@ void handleLogin(HTTPServerRequest req, HTTPServerResponse res) {
         Session session = res.startSession();
         session.set("username", username);
         session.set("isLoggedIn", true);
+        session.set("tenant", "default");
 
         logInfo("User '%s' successfully logged in.", username);
         res.redirect("/web");

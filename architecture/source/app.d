@@ -24,7 +24,7 @@ version (unittest) {
         container.healthController.registerRoutes(router);
         container.buildingBlockPwaController.registerRoutes(router);
         container.buildingBlockWebController.registerRoutes(router);
-        router.registerWebInterface(new ArchitectureController);
+        router.registerWebInterface(new ArchitectureController(new ArchitectureBlockRepository));
         router.registerWebInterface(new BusinessController);
         router.registerWebInterface(new DataController);
         router.registerWebInterface(new SolutionController);

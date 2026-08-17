@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  nav(aria-label="breadcrumb")
+    ul
+      li
+        a(href="/web") Home
+      li
+        a(href="/web/architecture") Architecture
+      li View
+
+  h1 Architektur Bausteine
+
+  form(action="", method="")
+
+    div(role="group")
+      button(type="submit") Create
+      button(type="submit") Duplicate
+      button(type="submit") Edit
+      button(type="submit") Delete
+
+    fieldset
+      div.field
+        label(for="id")=translations["id"]
+        input(type="text", id="id", name="id", value=block.id.value)
+
+      div.field
+        label(for="title")=translations["title"]
+        input(type="text", id="title", name="title", value=block.title)
+
+      div.field
+        label(for="description")=translations["description"]
+        textarea(id="description", name="description", value=block.description)
