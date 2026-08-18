@@ -7,32 +7,60 @@ mixin(ShowModule!());
 
 @safe:
 
-// class FileTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
+class FileTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
+    protected string rootPath = "./data/";
 
-//     string rootPath = "build/store/tenants";
+    this() {
+        // Ensure root path exists
+        if (!buildPath(rootPath).exists) {
+            mkdirRecurse(rootPath);
+        }
+    }
 
-//     this() {
-//         // Ensure root path exists
-//         if (!buildPath(rootPath).exists) {
-//             mkdirRecurse(rootPath);
-//         }
-//     }
+    this(string path) {
+        rootPath = path;
+        // Ensure root path exists
+        if (!buildPath(rootPath).exists) {
+            mkdirRecurse(rootPath);
+        }
+    }
 
-//     override bool exists(TenantId tenantId) {
-//         return buildPath(rootPath, tenantId.value).exists;
-//     }
+    // #region exists
+    override bool exists(TenantId tenantId) {
+        return buildPath(rootPath, tenantId.value).exists;
+    }
 
-//     override void createTenant(TenantId tenantId) {
-//         if (!existsTenant(tenantId)) {
-//             mkdirRecurse(buildPath(rootPath, tenantId.value));
-//         }
-//     }
+    bool exists(TenantId tenantId, TId id) {
+        return buildPath(rootPath, tenantId.value, id.value).exists;
+    }
 
-//     override TEntity[TId] getEntities(TenantId tenantId) {
-//         TEntity[TId] results;
-//         // Implementation would typically iterate files in directory
-//         return results;
-//     }
+    bool exists(TEntity entity) {
+        return exists(entity.tenantid, entity.id);
+    }
+    // #endregion exists
+
+    // #region count
+    size_t count(TenantId tenantId) {
+        return dirEntries(buildPath(rootPath, tenantId.value), SpanMode.shallow).filter!(f => f.isFile).array.length;
+    }
+    size_t count(TenantId tenantId, bool delegate(TEntity) @safe predicate) {
+        return getEntities(tenantId).filter!(TEntity => predicate(TEntity));
+    }
+    // #endregion count
+
+    void createTenant(TenantId tenantId) {
+         if (!existsTenant(tenantId)) {
+             mkdirRecurse(buildPath(rootPath, tenantId.value));
+         }
+     }
+
+    TEntity 
+
+    TEntity[TId] getEntities(TenantId tenantId) {
+        TEntity[TId] results;
+        // Implementation would typically iterate files in directory
+        return results;
+    }
 
 //     override void removeTenant(TenantId tenantId) {
 //         if (existsTenant(tenantId)) {
@@ -75,7 +103,7 @@ mixin(ShowModule!());
 //             filePath.remove;
 //         }
 //     }
-// }
+}
 
 // unittest {
 //     // Setup mock types for testing

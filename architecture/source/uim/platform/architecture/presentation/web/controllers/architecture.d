@@ -52,10 +52,10 @@ class ArchitectureController {
         auto translations = getTranslations(lang);
         auto mode = "readonly";
 
-        auto block = ArchitectureBlock();
+        auto block = usecase.getBlock(TenantId(req.session.get!string("tenant", "default")), ArchitectureBlockId(
+                _id));
         res.render!("architecture_view.dt", username, lang, translations, block, mode);
     }
-
 
     @path("/web/architecture/create")
     @method(HTTPMethod.GET)
@@ -179,7 +179,7 @@ class ArchitectureController {
         block.id = ArchitectureBlockId(id);
         block.title = title;
         block.description = description;
-    
+
         auto request = UpdateArchitectureBlockRequest();
         request.tenantId = block.tenantId;
         request.blockId = block.id;
@@ -227,4 +227,29 @@ class ArchitectureController {
         res.redirect("/web/architecture/");
     }
 
+    @path("/web/architecture/duplicate/:id")
+    @method(HTTPMethod.GET)
+    void showDuplicate(HTTPServerRequest req, HTTPServerResponse res, string _id) {
+        if (!req.session || !req.session.get!bool("isLoggedIn", false)) {
+            res.redirect("/web/login");
+            return;
+        }
+
+        string username = req.session.get!string("username", "User");
+        string lang = req.session.get!string("lang", "de");
+        string lang2 = req.query.get("lang", "en");
+        if (lang != lang2) {
+            req.session.set("lang", lang2);
+            lang = lang2;
+        }
+        auto translations = getTranslations(lang);
+        auto mode = "editable";
+
+        auto block = usecase.getBlock(TenantId(req.session.get!string("tenant", "default")), ArchitectureBlockId(_id));    
+        block.id = ArchitectureBlockId(generateId());
+        block.title = "New Architecture Block";
+        block.description = req.form.get("description", "Description of the new architecture block.");
+
+        res.render!("architecture_create.dt", username, lang, translations, block, mode);
+    }
 }

@@ -13,8 +13,16 @@ block content
 
   form(action="/web/architecture/update", method="post")
 
-    div(role="group")
-      button(type="submit") Save
+    div.grid
+      div(role="group")
+        button(type="button", onclick="window.location.href='/web/architecture/create'") Create
+        button(type="button", onclick="window.location.href='/web/architecture/duplicate/" ~ block.id.value ~ "'") Duplicate
+        button.outline(type="button", disabled) Edit
+        button(type="button", onclick="window.location.href='/web/architecture/delete/" ~ block.id.value ~ "'") Delete
+
+      div(role="group")
+        button(type="button", onclick="window.location.href='/web/architecture/view/" ~ block.id.value ~ "'") Cancel
+        button(type="submit") Save
 
     fieldset
       div.field

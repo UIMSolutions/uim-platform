@@ -3,12 +3,17 @@ description "Advanced Event Mesh Service - Event broker management, publish-subs
 authors "Ozan Nurettin Suel"
 copyright "Copyright (c) 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
+
+// Target settings
+targetType "executable"
 targetName "uim-advanced-event-mesh-platform-service"
+targetPath "build"
 
-dependency "uim-platform:service" path=".."
-
+// Source and import paths
 sourcePaths "source"
 importPaths "source"
+
+dependency "uim-platform:service" path=".."
 
 configuration "defaultRun" {
     targetType "executable"

@@ -13,11 +13,18 @@ block content
 
   form(action="/web/architecture/create", method="post")
 
-    div(role="group")
-      button(type="submit") Save
+    div.grid
+      div(role="group")
+        button.outline(type="button", disabled) Create
+        button.outline(type="button", disabled) Duplicate
+        button.outline(type="button", disabled) Edit
+        button.outline(type="button", disabled) Delete
+
+      div(role="group")
+        button(type="button", onclick="window.location.href='/web/architecture'") Cancel
+        button(type="submit") Save
 
     fieldset
-      div.field
       div.field
         label(for="id")=translations["id"]
         input(type="text", id="id", name="id", value=block.id.value)

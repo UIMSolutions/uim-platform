@@ -6,7 +6,6 @@ mixin(ShowModule!());
 
 @safe:
 
-
 string IdTemplate() {
   return `string value;
 

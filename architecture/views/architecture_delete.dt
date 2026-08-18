@@ -13,18 +13,26 @@ block content
 
   form(action="/web/architecture/delete", method="post")
 
-    div(role="group")
-      button(type="submit") Save
+    div.grid
+      div(role="group")
+        button.outline(type="button", disabled) Create
+        button.outline(type="button", disabled) Duplicate
+        button.outline(type="button", disabled) Edit
+        button.outline(type="button", disabled) Delete
+
+      div(role="group")
+        button(type="button", onclick="window.location.href='/web/architecture/view/" ~ block.id.value ~ "'") Cancel
+        button(type="submit") Confirm Delete
 
     fieldset
       div.field
         label(for="id")=translations["id"]
-        input(type="text", id="id", name="id", value=block.id.value)
+        input(type="text", id="id", name="id", aria-label="Read-only input", readonly, value=block.id.value)
 
       div.field
         label(for="title")=translations["title"]
-        input(type="text", id="title", name="title", value=block.title)
+        input(type="text", id="title", name="title", aria-label="Read-only input", readonly, value=block.title)
 
       div.field
         label(for="description")=translations["description"]
-        textarea(id="description", name="description", value=block.description)
+        textarea(id="description", name="description", aria-label="Read-only input", readonly)=block.description
