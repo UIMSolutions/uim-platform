@@ -27,15 +27,15 @@ class ManageDataRetrievalsUseCase {
     this.modelRepo = modelRepo;
   }
 
-  CommandResult createRequest(CreateDataRetrievalRequest req) {
+  UsecaseResult createRequest(CreateDataRetrievalRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.subjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
 
     auto subject = dataSubjects.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     auto now = currentTimestamp();
     // Deadline: 30 days from now (GDPR Art. 12(3))
@@ -73,7 +73,7 @@ class ManageDataRetrievalsUseCase {
     request.downloadUrl = "/api/v1/data-retrievals/" ~ request.id.value ~ "/download";
 
     repo.save(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 
   DataRetrievalRequest getRequest(TenantId tenantId, DataRetrievalRequestId id) {
@@ -88,10 +88,10 @@ class ManageDataRetrievalsUseCase {
     return repo.findByStatus(tenantId, status);
   }
 
-  CommandResult updateStatus(UpdateRetrievalStatusRequest req) {
+  UsecaseResult updateStatus(UpdateRetrievalStatusRequest req) {
     auto request = repo.findById(req.tenantId, req.requestId);
     if (request.isNull)
-      return CommandResult(false, "", "Data retrieval request not found");
+      return UsecaseResult(false, "", "Data retrieval request not found");
 
     request.status = req.status.toRetrievalStatus;
     if (req.downloadUrl.length > 0)
@@ -102,15 +102,15 @@ class ManageDataRetrievalsUseCase {
       request.completedAt = currentTimestamp();
 
     repo.update(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 
-  CommandResult deleteRequest(TenantId tenantId, DataRetrievalRequestId id) {
+  UsecaseResult deleteRequest(TenantId tenantId, DataRetrievalRequestId id) {
     auto request = repo.findById(tenantId, id);
     if (request.isNull)
-      return CommandResult(false, "", "Data retrieval request not found");
+      return UsecaseResult(false, "", "Data retrieval request not found");
 
     repo.remove(request);
-    return CommandResult(true, request.id.value, ""); 
+    return UsecaseResult(true, request.id.value, ""); 
   }
 }

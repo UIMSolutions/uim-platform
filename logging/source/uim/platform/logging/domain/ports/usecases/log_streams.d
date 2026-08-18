@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 interface IManageLogStreamsUseCase { 
 
-  CommandResult createStream(CreateLogStreamRequest req);
+  UsecaseResult createStream(CreateLogStreamRequest req);
 
-  CommandResult updateStream(UpdateLogStreamRequest req);
+  UsecaseResult updateStream(UpdateLogStreamRequest req);
 
   bool hasStream(TenantId tenantId, LogStreamId id);
 
@@ -22,7 +22,7 @@ interface IManageLogStreamsUseCase {
 
   LogStream[] listStreams(TenantId tenantId);
 
-  CommandResult deleteStream(TenantId tenantId, LogStreamId id);
+  UsecaseResult deleteStream(TenantId tenantId, LogStreamId id);
 
 }
 

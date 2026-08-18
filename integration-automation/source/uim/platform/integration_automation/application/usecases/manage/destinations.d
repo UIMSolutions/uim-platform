@@ -21,24 +21,24 @@ class ManageDestinationsUseCase {
     this.systemRepo = systemRepo;
   }
 
-  CommandResult createDestination(CreateDestinationRequest req) {
+  UsecaseResult createDestination(CreateDestinationRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Destination name is required");
+      return UsecaseResult(false, "", "Destination name is required");
     if (req.url.length == 0)
-      return CommandResult(false, "", "URL is required");
+      return UsecaseResult(false, "", "URL is required");
 
     // Ensure unique name per tenant
     auto existing = repo.findByName(req.tenantId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Destination with this name already exists");
+      return UsecaseResult(false, "", "Destination with this name already exists");
 
     // Validate linked system if provided
     if (!req.connectionId.isNull) {
       auto sys = systemRepo.findById(req.tenantId, req.connectionId);
       if (sys.isNull)
-        return CommandResult(false, "", "Linked system not found");
+        return UsecaseResult(false, "", "Linked system not found");
     }
 
     auto dest = Destination(req.tenantId); //, req.createdBy);
@@ -58,7 +58,7 @@ class ManageDestinationsUseCase {
     dest.isEnabled = true;
 
     repo.save(dest);
-    return CommandResult(true, dest.id.value, "");
+    return UsecaseResult(true, dest.id.value, "");
   }
 
   Destination getDestination(TenantId tenantId, DestinationId id) {
@@ -77,15 +77,15 @@ class ManageDestinationsUseCase {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult updateDestination(UpdateDestinationRequest req) {
+  UsecaseResult updateDestination(UpdateDestinationRequest req) {
     if (req.destinationId.isNull)
-      return CommandResult(false, "", "Destination ID is required");
+      return UsecaseResult(false, "", "Destination ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.tenantId, req.destinationId);
     if (existing.isNull)
-      return CommandResult(false, "", "Destination not found");
+      return UsecaseResult(false, "", "Destination not found");
 
     auto updated = existing;
     if (req.name.length > 0)
@@ -115,15 +115,15 @@ class ManageDestinationsUseCase {
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
-  CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
+  UsecaseResult deleteDestination(TenantId tenantId, DestinationId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Destination not found");
+      return UsecaseResult(false, "", "Destination not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }

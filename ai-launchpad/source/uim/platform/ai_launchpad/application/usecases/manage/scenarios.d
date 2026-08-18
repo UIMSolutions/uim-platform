@@ -17,7 +17,7 @@ class ManageScenariosUseCase {
     this.scenarios = scenarios;
   }
 
-  CommandResult syncScenario(SyncScenarioRequest r) {
+  UsecaseResult syncScenario(SyncScenarioRequest r) {
     auto s = Scenario(r.tenantId, r.scenarioId);
     s.connectionId = r.connectionId;
     s.name = r.name;
@@ -25,7 +25,7 @@ class ManageScenariosUseCase {
     s.labels = r.labels;
     
     scenarios.save(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
   Scenario getScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
@@ -40,12 +40,12 @@ class ManageScenariosUseCase {
     return scenarios.findByTenant(tenantId);
   }
 
-  CommandResult deleteScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
+  UsecaseResult deleteScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
     auto scenario = scenarios.findById(tenantId, connectionId, id);
     if (scenario.isNull)
-      return CommandResult(false, "", "Scenario not found");
+      return UsecaseResult(false, "", "Scenario not found");
 
     scenarios.remove(scenario);
-    return CommandResult(true, scenario.id.value, "");
+    return UsecaseResult(true, scenario.id.value, "");
   }
 }

@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageArchiveRequestsUseCase { 
 
-  CommandResult createRequest(CreateArchiveRequest req);
+  UsecaseResult createRequest(CreateArchiveRequest req);
   ArchiveRequest getRequest(TenantId tenantId, ArchiveRequestId requestId);
   ArchiveRequest[] listRequests(TenantId tenantId);
   ArchiveRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId);
-  CommandResult updateStatus(UpdateArchiveStatusRequest req);
-  CommandResult deleteRequest(TenantId tenantId, ArchiveRequestId requestId);
+  UsecaseResult updateStatus(UpdateArchiveStatusRequest req);
+  UsecaseResult deleteRequest(TenantId tenantId, ArchiveRequestId requestId);
 
 }

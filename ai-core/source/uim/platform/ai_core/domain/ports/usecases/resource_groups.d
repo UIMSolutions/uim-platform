@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageResourceGroupsUseCase { 
   
-  CommandResult createResourceGroup(CreateResourceGroupRequest r);
-  CommandResult patchResourceGroup(PatchResourceGroupRequest r);
+  UsecaseResult createResourceGroup(CreateResourceGroupRequest r);
+  UsecaseResult patchResourceGroup(PatchResourceGroupRequest r);
   ResourceGroup getResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId);
   ResourceGroup[] listResourceGroups(TenantId tenantId);
   size_t count(TenantId tenantId);
-  CommandResult deleteResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId);
+  UsecaseResult deleteResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId);
 
 }

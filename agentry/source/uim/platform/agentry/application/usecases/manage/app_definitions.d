@@ -35,7 +35,7 @@ class ManageAppDefinitionsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createDefinition(AppDefinitionDTO dto) {
+    UsecaseResult createDefinition(AppDefinitionDTO dto) {
         auto entity = AppDefinition(dto.tenantId, dto.definitionId, dto.createdBy);
         entity.applicationId = dto.applicationId;
         entity.name = dto.name;
@@ -48,16 +48,16 @@ class ManageAppDefinitionsUseCase {
         entity.businessObjectModel = dto.businessObjectModel;
 
         if (!AgentryValidator.isValidAppDefinition(entity))
-            return CommandResult(false, "", "Invalid app definition data");
+            return UsecaseResult(false, "", "Invalid app definition data");
 
         repo.save(entity);
-        return CommandResult(true, entity.id.value, "App definition created successfully");
+        return UsecaseResult(true, entity.id.value, "App definition created successfully");
     }
 
-    CommandResult updateDefinition(AppDefinitionDTO dto) {
+    UsecaseResult updateDefinition(AppDefinitionDTO dto) {
         auto entity = repo.findById(dto.tenantId, dto.definitionId);
         if (entity.isNull)
-            return CommandResult(false, "", "App definition not found");
+            return UsecaseResult(false, "", "App definition not found");
 
         if (dto.name.length > 0) entity.name = dto.name;
         if (dto.description.length > 0) entity.description = dto.description;
@@ -67,16 +67,16 @@ class ManageAppDefinitionsUseCase {
         if (dto.targetPlatform.length > 0) entity.targetPlatform = dto.targetPlatform;
 
         repo.update(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 
-    CommandResult deleteDefinition(TenantId tenantId, AppDefinitionId id) {
+    UsecaseResult deleteDefinition(TenantId tenantId, AppDefinitionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "App definition not found");
+            return UsecaseResult(false, "", "App definition not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "App definition deleted successfully");
+        return UsecaseResult(true, entity.id.value, "App definition deleted successfully");
     }
 }
 

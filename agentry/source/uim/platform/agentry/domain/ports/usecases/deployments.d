@@ -18,8 +18,8 @@ interface IManageDeploymentsUseCase {
     Deployment[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId);
     Deployment[] listByStatus(TenantId tenantId, DeploymentStatus status);
 
-    CommandResult createDeployment(DeploymentDTO dto);
-    CommandResult updateDeployment(DeploymentDTO dto);
-    CommandResult deleteDeployment(TenantId tenantId, DeploymentId id);
+    UsecaseResult createDeployment(DeploymentDTO dto);
+    UsecaseResult updateDeployment(DeploymentDTO dto);
+    UsecaseResult deleteDeployment(TenantId tenantId, DeploymentId id);
 
 }

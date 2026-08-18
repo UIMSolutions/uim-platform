@@ -20,12 +20,12 @@ public:
     _planner = planner;
   }
 
-  CommandResult createWarehouseTask(TenantId tenantId, CreateWarehouseTaskRequest req) {
+  UsecaseResult createWarehouseTask(TenantId tenantId, CreateWarehouseTaskRequest req) {
     if (req.taskNumber.length == 0)
-      return CommandResult(false, "Task number is required");
+      return UsecaseResult(false, "Task number is required");
       
     if (req.productId.length == 0)
-      return CommandResult(false, "Product ID is required");
+      return UsecaseResult(false, "Product ID is required");
     
     WarehouseTask wt;
     wt.id = WarehouseTaskId(generateId());
@@ -47,14 +47,14 @@ public:
     wt.createdAt = currentTimestamp();
     wt.updatedAt = wt.createdAt;
     _repo.save(wt);
-    return CommandResult(true, "", wt.id.value);
+    return UsecaseResult(true, "", wt.id.value);
   }
 
-  CommandResult confirmTask(TenantId tenantId, WarehouseTaskId id, ConfirmWarehouseTaskRequest req) {
+  UsecaseResult confirmTask(TenantId tenantId, WarehouseTaskId id, ConfirmWarehouseTaskRequest req) {
     auto wt = _repo.findById(tenantId, id);
-    if (wt.isNull) return CommandResult(false, "Warehouse task not found");
+    if (wt.isNull) return UsecaseResult(false, "Warehouse task not found");
     if (!_planner.canTransitionTask(wt.status, WarehouseTaskStatus.confirmed))
-      return CommandResult(false, "Task cannot be confirmed from its current status");
+      return UsecaseResult(false, "Task cannot be confirmed from its current status");
 
     WarehouseTask updated;
     updated.id = wt.id;
@@ -75,16 +75,16 @@ public:
     updated.createdAt = wt.createdAt;
     updated.updatedAt = currentTimestamp();
     _repo.save(updated);
-    return CommandResult(true, "", id.value);
+    return UsecaseResult(true, "", id.value);
   }
 
-  CommandResult deleteWarehouseTask(TenantId tenantId, WarehouseTaskId id) {
+  UsecaseResult deleteWarehouseTask(TenantId tenantId, WarehouseTaskId id) {
     auto wt = _repo.findById(tenantId, id);
-    if (wt.isNull) return CommandResult(false, "Warehouse task not found");
+    if (wt.isNull) return UsecaseResult(false, "Warehouse task not found");
     if (wt.status == WarehouseTaskStatus.confirmed)
-      return CommandResult(false, "Cannot delete a confirmed warehouse task");
+      return UsecaseResult(false, "Cannot delete a confirmed warehouse task");
     _repo.remove(tenantId, id);
-    return CommandResult(true);
+    return UsecaseResult(true);
   }
 
   WarehouseTask getWarehouseTask(TenantId tenantId, WarehouseTaskId id) {

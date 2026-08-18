@@ -19,15 +19,15 @@ class ManageArchiveRequestsUseCase {
     this.subjectRepo = subjectRepo;
   }
 
-  CommandResult createRequest(CreateArchiveRequest req) {
+  UsecaseResult createRequest(CreateArchiveRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.subjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     auto now = currentTimestamp();
     auto archiveRequest = ArchiveRequest();
@@ -44,7 +44,7 @@ class ManageArchiveRequestsUseCase {
     archiveRequest.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : archiveRequest.createdAt;
 
     repo.save(archiveRequest);
-    return CommandResult(true, archiveRequest.id.value, "");
+    return UsecaseResult(true, archiveRequest.id.value, "");
   }
 
   ArchiveRequest getRequest(TenantId tenantId, ArchiveRequestId requestId) {
@@ -59,10 +59,10 @@ class ManageArchiveRequestsUseCase {
     return repo.findByDataSubject(tenantId, subjectId);
   }
 
-  CommandResult updateStatus(UpdateArchiveStatusRequest req) {
+  UsecaseResult updateStatus(UpdateArchiveStatusRequest req) {
     auto archiveRequest = repo.findById(req.tenantId, req.requestId);
     if (archiveRequest.isNull)
-      return CommandResult(false, "", "Archive request not found");
+      return UsecaseResult(false, "", "Archive request not found");
 
     archiveRequest.status = req.status.toArchiveStatus;
     auto now = currentTimestamp();
@@ -72,15 +72,15 @@ class ManageArchiveRequestsUseCase {
       archiveRequest.completedAt = now;
 
     repo.update(archiveRequest);
-    return CommandResult(true, archiveRequest.id.value, "");
+    return UsecaseResult(true, archiveRequest.id.value, "");
   }
 
-  CommandResult deleteRequest(TenantId tenantId, ArchiveRequestId requestId) {
+  UsecaseResult deleteRequest(TenantId tenantId, ArchiveRequestId requestId) {
     auto archiveRequest = repo.findById(tenantId, requestId);
     if (archiveRequest.isNull)
-      return CommandResult(false, "", "Archive request not found");
+      return UsecaseResult(false, "", "Archive request not found");
 
     repo.remove(archiveRequest);
-    return CommandResult(true, archiveRequest.id.value, "");
+    return UsecaseResult(true, archiveRequest.id.value, "");
   }
 }

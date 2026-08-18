@@ -139,7 +139,7 @@ sequenceDiagram
     V-->>UC: true
     UC->>R: save(device)
     R-->>UC: ok
-    UC-->>DC: CommandResult(success, id)
+    UC-->>DC: UsecaseResult(success, id)
     DC-->>Client: 201 Created { id }
 ```
 
@@ -157,7 +157,7 @@ sequenceDiagram
     SC->>UC: createSyncSession(SyncSessionDTO)
     UC->>R: save(session)
     R-->>UC: ok
-    UC-->>SC: CommandResult(success, id)
+    UC-->>SC: UsecaseResult(success, id)
     SC-->>MobileApp: 201 Created { id }
 
     MobileApp->>SC: PUT /api/v1/agentry/sync-sessions/{id}
@@ -165,7 +165,7 @@ sequenceDiagram
     SC->>UC: updateSyncSession(dto)
     UC->>R: update(session)
     R-->>UC: ok
-    UC-->>SC: CommandResult(success, id)
+    UC-->>SC: UsecaseResult(success, id)
     SC-->>MobileApp: 200 OK
 ```
 

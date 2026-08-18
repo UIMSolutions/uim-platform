@@ -147,12 +147,12 @@ sequenceDiagram
 
     Device->>DRC: POST /device-registrations { appId, deviceId, deviceType, pushToken }
     DRC->>DRUC: registerDevice(dto)
-    DRUC-->>DRC: CommandResult(true, regId)
+    DRUC-->>DRC: UsecaseResult(true, regId)
     DRC-->>Device: 201 { id }
 
     Note over PNC,PNUC: Admin sends push notification
     PNC->>PNUC: POST /push-notifications { appId, title, body, targetDeviceIds }
     PNUC->>PNUC: dispatch to push providers
-    PNUC-->>PNC: CommandResult(true, notifId)
+    PNUC-->>PNC: UsecaseResult(true, notifId)
     PNC-->>Device: 201 { id, status=sent }
 ```

@@ -19,17 +19,17 @@ class ManageCorrectionRequestsUseCase {
     this.dsRepo = dsRepo;
   }
 
-  CommandResult createRequest(CreateCorrectionRequest req) {
+  UsecaseResult createRequest(CreateCorrectionRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.subjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
     // if (req.fieldname.isEmpty)
-      // return CommandResult(false, "", "Field name is required");
+      // return UsecaseResult(false, "", "Field name is required");
 // 
     auto subject = dsRepo.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     auto request = CorrectionRequest(req.tenantId); //, req.createdBy);
     request.dataSubjectId = req.subjectId;
@@ -44,7 +44,7 @@ class ManageCorrectionRequestsUseCase {
     request.deadline = request.createdAt + 30 * 24 * 60 * 60 * 10_000_000L; // 30 days
 
     crRepo.save(request);
-    return CommandResult(true,request.id.value, "");
+    return UsecaseResult(true,request.id.value, "");
   }
 
   CorrectionRequest getRequest(TenantId tenantId, CorrectionRequestId id) {
@@ -59,25 +59,25 @@ class ManageCorrectionRequestsUseCase {
     return crRepo.findByDataSubject(tenantId, subjectId);
   }
 
-  CommandResult updateStatus(UpdateCorrectionStatusRequest req) {
+  UsecaseResult updateStatus(UpdateCorrectionStatusRequest req) {
     auto correctionRequest = crRepo.findById(req.tenantId, req.requestId);
     if (correctionRequest.isNull)
-      return CommandResult(false, "", "Correction request not found");
+      return UsecaseResult(false, "", "Correction request not found");
 
     correctionRequest.status = req.status.toCorrectionStatus;
     if (correctionRequest.status == CorrectionStatus.completed)
       correctionRequest.completedAt = currentTimestamp();
 
     crRepo.update(correctionRequest);
-    return CommandResult(true, correctionRequest.id.value, "");
+    return UsecaseResult(true, correctionRequest.id.value, "");
   }
 
-  CommandResult deleteRequest(TenantId tenantId, CorrectionRequestId id) {
+  UsecaseResult deleteRequest(TenantId tenantId, CorrectionRequestId id) {
     auto entity = crRepo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Correction request not found");
+      return UsecaseResult(false, "", "Correction request not found");
 
     crRepo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

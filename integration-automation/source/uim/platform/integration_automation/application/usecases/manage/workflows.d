@@ -33,23 +33,23 @@ class ManageWorkflowsUseCase {
   }
 
   /// Create a new workflow instance from a scenario template.
-  CommandResult createWorkflow(CreateWorkflowRequest req) {
+  UsecaseResult createWorkflow(CreateWorkflowRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.scenarioId.isEmpty)
-      return CommandResult(false, "", "Scenario ID is required");
+      return UsecaseResult(false, "", "Scenario ID is required");
 
     // Enforce SAP limit: max 15 active workflows per tenant
     if (engine.isWorkflowLimitReached(req.tenantId))
-      return CommandResult(false, "", "Active workflow limit (15) reached for this tenant");
+      return UsecaseResult(false, "", "Active workflow limit (15) reached for this tenant");
 
     // Validate scenario exists and is active
     auto scenario = scenarioRepo.findById(req.tenantId, req.scenarioId);
     if (scenario.isNull)
-      return CommandResult(false, "", "Scenario not found");
+      return UsecaseResult(false, "", "Scenario not found");
 
     if (scenario.status != ScenarioStatus.active)
-      return CommandResult(false, "", "Scenario is not active");
+      return UsecaseResult(false, "", "Scenario is not active");
 
     auto wf = Workflow(req.tenantId); // , req.createdBy);
     wf.scenarioId = req.scenarioId;
@@ -90,7 +90,7 @@ class ManageWorkflowsUseCase {
       stepRepo.save(step);
     }
 
-    return CommandResult(true, wf.id.value, "");
+    return UsecaseResult(true, wf.id.value, "");
   }
 
   Workflow getWorkflow(TenantId tenantId, WorkflowId id) {
@@ -106,12 +106,12 @@ class ManageWorkflowsUseCase {
   }
 
   /// Start a planned workflow.
-  CommandResult startWorkflow(TenantId tenantId, WorkflowId id) {
+  UsecaseResult startWorkflow(TenantId tenantId, WorkflowId id) {
     auto wf = workflowRepo.findById(tenantId, id);
     if (wf.isNull)
-      return CommandResult(false, "", "Workflow not found");
+      return UsecaseResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.planned)
-      return CommandResult(false, "", "Workflow is not in planned state");
+      return UsecaseResult(false, "", "Workflow is not in planned state");
 
     wf.status = WorkflowStatus.inProgress;
     wf.startedAt = currentTimestamp();
@@ -119,62 +119,62 @@ class ManageWorkflowsUseCase {
     workflowRepo.update(wf);
 
     engine.advanceWorkflow(tenantId, id);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   /// Suspend an in-progress workflow.
-  CommandResult suspendWorkflow(TenantId tenantId, WorkflowId id) {
+  UsecaseResult suspendWorkflow(TenantId tenantId, WorkflowId id) {
     auto wf = workflowRepo.findById(tenantId, id);
     if (wf.isNull)
-      return CommandResult(false, "", "Workflow not found");
+      return UsecaseResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.inProgress)
-      return CommandResult(false, "", "Workflow is not in progress");
+      return UsecaseResult(false, "", "Workflow is not in progress");
 
     wf.status = WorkflowStatus.suspended;
     wf.updatedAt = currentTimestamp();
     workflowRepo.update(wf);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   /// Resume a suspended workflow.
-  CommandResult resumeWorkflow(TenantId tenantId, WorkflowId id) {
+  UsecaseResult resumeWorkflow(TenantId tenantId, WorkflowId id) {
     auto wf = workflowRepo.findById(tenantId, id);
     if (wf.isNull)
-      return CommandResult(false, "", "Workflow not found");
+      return UsecaseResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.suspended)
-      return CommandResult(false, "", "Workflow is not suspended");
+      return UsecaseResult(false, "", "Workflow is not suspended");
 
     wf.status = WorkflowStatus.inProgress;
     wf.updatedAt = currentTimestamp();
     workflowRepo.update(wf);
 
     engine.advanceWorkflow(tenantId, id);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   /// Terminate a workflow.
-  CommandResult terminateWorkflow(TenantId tenantId, WorkflowId id) {
+  UsecaseResult terminateWorkflow(TenantId tenantId, WorkflowId id) {
     auto wf = workflowRepo.findById(tenantId, id);
     if (wf.isNull)
-      return CommandResult(false, "", "Workflow not found");
+      return UsecaseResult(false, "", "Workflow not found");
     if (wf.status == WorkflowStatus.completed || wf.status == WorkflowStatus.terminated)
-      return CommandResult(false, "", "Workflow is already finished");
+      return UsecaseResult(false, "", "Workflow is already finished");
 
     wf.status = WorkflowStatus.terminated;
     wf.completedAt = currentTimestamp();
     wf.updatedAt = wf.completedAt;
     workflowRepo.update(wf);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult deleteWorkflow(TenantId tenantId, WorkflowId id) {
+  UsecaseResult deleteWorkflow(TenantId tenantId, WorkflowId id) {
     auto existing = workflowRepo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Workflow not found");
+      return UsecaseResult(false, "", "Workflow not found");
 
     stepRepo.removeByWorkflow(tenantId, id);
 
     workflowRepo.remove(existing);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 }

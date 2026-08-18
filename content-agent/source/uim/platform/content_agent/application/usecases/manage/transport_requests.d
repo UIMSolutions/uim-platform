@@ -36,16 +36,16 @@ class ManageTransportRequestsUseCase {
     this.activityRepo = activityRepo;
   }
 
-  CommandResult createTransportRequest(CreateTransportRequest req) {
+  UsecaseResult createTransportRequest(CreateTransportRequest req) {
     if (req.packageIds.length == 0)
-      return CommandResult(false, "", "At least one package is required");
+      return UsecaseResult(false, "", "At least one package is required");
 
     // Resolve packages
     ContentPackage[] packages;
     foreach (pid; req.packageIds) {
       auto pkg = packageRepo.findById(req.tenantId, pid);
       if (pkg.isNull)
-        return CommandResult(false, "", "Package not found: " ~ pid.value);
+        return UsecaseResult(false, "", "Package not found: " ~ pid.value);
 
       packages ~= pkg;
     }
@@ -73,23 +73,23 @@ class ManageTransportRequestsUseCase {
           msg ~= "; ";
         msg ~= e;
       }
-      return CommandResult(false, "", msg);
+      return UsecaseResult(false, "", msg);
     }
 
     requestRepo.save(tr);
     recordActivity(req.tenantId, ActivityType.transportCreated, tr.id.value,
       req.description, "Transport request created", req.createdBy.value);
 
-    return CommandResult(true, tr.id.value, "");
+    return UsecaseResult(true, tr.id.value, "");
   }
 
-  CommandResult releaseTransport(ReleaseTransportRequest req) {
+  UsecaseResult releaseTransport(ReleaseTransportRequest req) {
     auto tr = requestRepo.findById(req.tenantId, req.requestId);
     if (tr.isNull)
-      return CommandResult(false, "", "Transport request not found");
+      return UsecaseResult(false, "", "Transport request not found");
 
     if (tr.status != TransportStatus.created && tr.status != TransportStatus.readyForExport)
-      return CommandResult(false, "", "Transport request is not in a releasable state");
+      return UsecaseResult(false, "", "Transport request is not in a releasable state");
 
     tr.status = TransportStatus.released;
     // tr.releasedAt = currentTimestamp;
@@ -99,19 +99,19 @@ class ManageTransportRequestsUseCase {
     recordActivity(req.tenantId, ActivityType.transportReleased, tr.id.value,
       tr.description, "Transport released", req.releasedBy.value);
 
-    return CommandResult(true, tr.id.value, "");
+    return UsecaseResult(true, tr.id.value, "");
   }
 
-  CommandResult cancelTransport(TenantId tenantId, TransportRequestId requestId) {
+  UsecaseResult cancelTransport(TenantId tenantId, TransportRequestId requestId) {
     auto tr = requestRepo.findById(tenantId, requestId);
     if (tr.isNull)
-      return CommandResult(false, "", "Transport request not found");
+      return UsecaseResult(false, "", "Transport request not found");
 
     tr.status = TransportStatus.cancelled;
     tr.updatedAt = clockSeconds();
     requestRepo.update(tr);
 
-    return CommandResult(true, tr.id.value, "");
+    return UsecaseResult(true, tr.id.value, "");
   }
 
   TransportRequest getTransportRequest(TenantId tenantId, TransportRequestId id) {
@@ -127,7 +127,7 @@ class ManageTransportRequestsUseCase {
     return requestRepo.findByStatus(tenantId, status);
   }
 
-  private CommandResult recordActivity(TenantId tenantId, ActivityType actType,
+  private UsecaseResult recordActivity(TenantId tenantId, ActivityType actType,
     string entityId, string entityName, string desc, string by) {
    
     auto activity = ContentActivity(tenantId);
@@ -140,7 +140,7 @@ class ManageTransportRequestsUseCase {
     activity.timestamp = activity.createdAt;
 
     activityRepo.save(activity);
-    return CommandResult(true, activity.id.value, "");
+    return UsecaseResult(true, activity.id.value, "");
   }
 
 }

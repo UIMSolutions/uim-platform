@@ -22,7 +22,7 @@ class ManageAppVersionsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createAppVersion(CreateAppVersionRequest r) {
+    UsecaseResult createAppVersion(CreateAppVersionRequest r) {
         auto ver = AppVersion(r.tenantId); //, UserId("test-user"));
         ver.appId = r.appId;
         ver.versionCode = r.versionCode;
@@ -37,13 +37,13 @@ class ManageAppVersionsUseCase {
         // TODO: ver.releasedAt = r.releasedAt;
 
         repo.save(ver);
-        return CommandResult(true, ver.id.value, "");
+        return UsecaseResult(true, ver.id.value, "");
     }
 
-    CommandResult updateAppVersion(UpdateAppVersionRequest r) {
+    UsecaseResult updateAppVersion(UpdateAppVersionRequest r) {
         auto ver = repo.findById(r.tenantId, r.versionId);
         if (ver.isNull)
-            return CommandResult(false, "", "App version not found");
+            return UsecaseResult(false, "", "App version not found");
         if (r.releaseNotes.length > 0)
             ver.releaseNotes = r.releaseNotes;
         if (r.downloadUrl.length > 0)
@@ -55,7 +55,7 @@ class ManageAppVersionsUseCase {
         ver.updatedBy = r.updatedBy;
 
         repo.update(ver);
-        return CommandResult(true, ver.id.value, "");
+        return UsecaseResult(true, ver.id.value, "");
     }
 
     AppVersion getAppVersion(TenantId tenantId, AppVersionId id) {
@@ -74,13 +74,13 @@ class ManageAppVersionsUseCase {
         return repo.findByApp(tenantId, id);
     }
 
-    CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
+    UsecaseResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
         auto ver = repo.findById(tenantId, id);
         if (ver.isNull)
-            return CommandResult(false, "", "App version not found");
+            return UsecaseResult(false, "", "App version not found");
 
         repo.remove(ver);
-        return CommandResult(true, ver.id.value, "");
+        return UsecaseResult(true, ver.id.value, "");
     }
 
     size_t countAppVersions(TenantId tenantId, MobileAppId id) {

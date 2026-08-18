@@ -30,7 +30,7 @@ class ManageBrokerServicesUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createService(BrokerServiceDTO dto) {
+    UsecaseResult createService(BrokerServiceDTO dto) {
         BrokerService bs;
         bs.id = dto.serviceId;
         bs.tenantId = dto.tenantId;
@@ -45,15 +45,15 @@ class ManageBrokerServicesUseCase {
         bs.msgVpnName = dto.msgVpnName;
         bs.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidBrokerService(bs))
-            return CommandResult(false, "", "Invalid broker service data");
+            return UsecaseResult(false, "", "Invalid broker service data");
         repo.save(bs);
-        return CommandResult(true, bs.id.value, "");
+        return UsecaseResult(true, bs.id.value, "");
     }
 
-    CommandResult updateService(BrokerServiceDTO dto) {
+    UsecaseResult updateService(BrokerServiceDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.serviceId);
         if (existing.isNull)
-            return CommandResult(false, "", "Broker service not found");
+            return UsecaseResult(false, "", "Broker service not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -64,16 +64,16 @@ class ManageBrokerServicesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteService(TenantId tenantId, BrokerServiceId id) {
+    UsecaseResult deleteService(TenantId tenantId, BrokerServiceId id) {
         auto service = repo.findById(tenantId, id);
         if (service.isNull)
-            return CommandResult(false, "", "Broker service not found");
+            return UsecaseResult(false, "", "Broker service not found");
 
         repo.remove(service);
-        return CommandResult(true, service.id.value, "");
+        return UsecaseResult(true, service.id.value, "");
     }
 }
 

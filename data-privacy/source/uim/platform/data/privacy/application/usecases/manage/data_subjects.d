@@ -20,17 +20,17 @@ class ManageDataSubjectsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createSubject(CreateDataSubjectRequest req) {
+  UsecaseResult createSubject(CreateDataSubjectRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     /* TODO: if (req.displayname.isEmpty)
-      return CommandResult(false, "", "Display name is required");*/
+      return UsecaseResult(false, "", "Display name is required");*/
 
     // Check for duplicate external ID
     if (req.externalId.length > 0) {
       auto existing = repo.findByExternalId(req.tenantId, req.externalId);
       if (!existing.isNull)
-        return CommandResult(false, "", "Data subject with this external ID already exists");
+        return UsecaseResult(false, "", "Data subject with this external ID already exists");
     }
 
     auto subject = DataSubject(req.tenantId);    
@@ -43,7 +43,7 @@ class ManageDataSubjectsUseCase {
     subject.isActive = true;
 
     repo.save(subject);
-    return CommandResult(true, subject.id.value, "");
+    return UsecaseResult(true, subject.id.value, "");
   }
 
   DataSubject getSubject(TenantId tenantId, DataSubjectId id) {
@@ -58,10 +58,10 @@ class ManageDataSubjectsUseCase {
     return repo.findByType(tenantId, subjectType);
   }
 
-  CommandResult updateSubject(UpdateDataSubjectRequest req) {
+  UsecaseResult updateSubject(UpdateDataSubjectRequest req) {
     auto subject = repo.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     if (req.displayName.length > 0)
       subject.displayName = req.displayName;
@@ -76,15 +76,15 @@ class ManageDataSubjectsUseCase {
     subject.updatedAt = currentTimestamp();
 
     repo.update(subject);
-    return CommandResult(true, subject.id.value, "");
+    return UsecaseResult(true, subject.id.value, "");
   }
 
-  CommandResult deleteSubject(TenantId tenantId, DataSubjectId id) {
+  UsecaseResult deleteSubject(TenantId tenantId, DataSubjectId id) {
     auto subject = repo.findById(tenantId, id);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     repo.remove(subject);
-    return CommandResult(true, subject.id.value, ""); // TODO: Consider using a soft delete approach instead of hard delete
+    return UsecaseResult(true, subject.id.value, ""); // TODO: Consider using a soft delete approach instead of hard delete
   }
 }

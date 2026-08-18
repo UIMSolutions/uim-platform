@@ -19,11 +19,11 @@ class ManageKeyPasswordsUseCase {
   }
 
   // Store or overwrite a password for a given alias.
-  CommandResult setPassword(SetPasswordRequest r) {
+  UsecaseResult setPassword(SetPasswordRequest r) {
     if (r.alias_.length == 0)
-      return CommandResult(false, "", "Alias is required");
+      return UsecaseResult(false, "", "Alias is required");
     if (r.passwordValue.length == 0)
-      return CommandResult(false, "", "Password value is required");
+      return UsecaseResult(false, "", "Password value is required");
 
     auto now = currentTimestamp();
 
@@ -32,7 +32,7 @@ class ManageKeyPasswordsUseCase {
       existing.passwordValue = r.passwordValue;
       existing.updatedAt = now;
       repo.update(existing);
-      return CommandResult(true, existing.id.value, "");
+      return UsecaseResult(true, existing.id.value, "");
     }
 
     KeyPassword kp;
@@ -46,7 +46,7 @@ class ManageKeyPasswordsUseCase {
     kp.updatedAt = now;
 
     repo.save(kp);
-    return CommandResult(true, kp.id.value, "");
+    return UsecaseResult(true, kp.id.value, "");
   }
 
   // Retrieve a password by alias. Returns KeyPassword.init when not found.
@@ -59,13 +59,13 @@ class ManageKeyPasswordsUseCase {
   }
 
   // Delete a stored password by alias.
-  CommandResult deletePassword(TenantId tenantId, string accountId, string applicationId, string alias_) {
+  UsecaseResult deletePassword(TenantId tenantId, string accountId, string applicationId, string alias_) {
     auto kp = repo.findByAlias(tenantId, accountId, applicationId, alias_);
     if (kp.isNull)
-      return CommandResult(false, "", "Password not found");
+      return UsecaseResult(false, "", "Password not found");
 
     repo.removeByAlias(tenantId, accountId, applicationId, alias_);
-    return CommandResult(true, kp.id.value, "");
+    return UsecaseResult(true, kp.id.value, "");
   }
 }
 

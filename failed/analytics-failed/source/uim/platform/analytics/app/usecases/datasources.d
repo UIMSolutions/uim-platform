@@ -62,12 +62,12 @@ class DataSourceUseCases {
     return DataSourceResponse.fromEntity(ds);
   }
 
-  CommandResult deleteSource(TenantId tenantId, DataSourceId id) {
+  UsecaseResult deleteSource(TenantId tenantId, DataSourceId id) {
     auto ds = repo.findById(tenantId, id);
     if (ds.isNull)
-      return CommandResult(false, "", "Data source not found");
+      return UsecaseResult(false, "", "Data source not found");
 
     repo.remove(ds);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 }

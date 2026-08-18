@@ -23,17 +23,17 @@ class ManageScenariosUseCase {
     this.repo = repo;
   }
 
-  CommandResult createScenario(CreateScenarioRequest r) {
+  UsecaseResult createScenario(CreateScenarioRequest r) {
     auto err = ScenarioValidator.validate(r.scenarioId.value, r.name);
     if (err.length > 0)
-      return CommandResult(false, "", err);
+      return UsecaseResult(false, "", err);
 
     if (r.resourceGroupId.isEmpty)
-      return CommandResult(false, "", "Resource group ID is required");
+      return UsecaseResult(false, "", "Resource group ID is required");
 
     auto existing = repo.findById(r.tenantId, r.resourceGroupId, r.scenarioId);
     if (!existing.isNull)
-      return CommandResult(false, "", "Scenario already exists");
+      return UsecaseResult(false, "", "Scenario already exists");
 
     auto s = Scenario(r.tenantId, r.scenarioId.isNull ? ScenarioId(createId()) : r.scenarioId); // , r.createdBy);
     s.resourceGroupId = r.resourceGroupId;
@@ -42,7 +42,7 @@ class ManageScenariosUseCase {
     s.labels = r.labels;
 
     repo.save(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
   Scenario getScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
@@ -53,13 +53,13 @@ class ManageScenariosUseCase {
     return repo.findByResourceGroup(tenantId, rgId);
   }
 
-  CommandResult deleteScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
+  UsecaseResult deleteScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
     auto entity = repo.findById(tenantId, rgId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Scenario not found");
+      return UsecaseResult(false, "", "Scenario not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countScenarios(TenantId tenantId, ResourceGroupId rgId) {

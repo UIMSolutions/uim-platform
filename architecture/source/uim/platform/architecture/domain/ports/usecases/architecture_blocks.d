@@ -10,9 +10,9 @@ interface IManageArchitectureBlocksUseCase {
 
     ArchitectureBlock[] listBlocks(TenantId tenantId);
     ArchitectureBlock[] listBlocks(TenantId tenantId, LifecycleStatus status);
-    CommandResult createBlock(CreateArchitectureBlockRequest req);
+    UsecaseResult createBlock(CreateArchitectureBlockRequest req);
     ArchitectureBlock getBlock(TenantId tenantId, ArchitectureBlockId id);
-    CommandResult updateBlock(UpdateArchitectureBlockRequest req);
-    CommandResult deleteBlock(TenantId tenantId, ArchitectureBlockId id);
+    UsecaseResult updateBlock(UpdateArchitectureBlockRequest req);
+    UsecaseResult deleteBlock(TenantId tenantId, ArchitectureBlockId id);
 
 }

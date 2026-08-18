@@ -20,7 +20,7 @@ class ManageApplicationsUseCase {
     Application[] listApplications(TenantId tenantId) { return repo.findByTenant(tenantId); }
     Application[] listByProtocol(TenantId tenantId, AppProtocol protocol) { return repo.findByProtocol(tenantId, protocol); }
 
-    CommandResult createApplication(ApplicationDTO dto) {
+    UsecaseResult createApplication(ApplicationDTO dto) {
         import std.digest.sha : sha256Of, toHexString;
         import std.random : uniform;
         
@@ -54,15 +54,15 @@ class ManageApplicationsUseCase {
         app.riskBasedAuthEnabled = dto.riskBasedAuthEnabled;
 
         if (!IdentityValidator.isValidApplication(app))
-            return CommandResult(false, "", "Invalid application: name and clientId are required");
+            return UsecaseResult(false, "", "Invalid application: name and clientId are required");
 
         repo.save(app);
-        return CommandResult(true, app.id.value, "");
+        return UsecaseResult(true, app.id.value, "");
     }
 
-    CommandResult updateApplication(ApplicationDTO dto) {
+    UsecaseResult updateApplication(ApplicationDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.applicationId);
-        if (existing.isNull) return CommandResult(false, "", "Application not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Application not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -79,13 +79,13 @@ class ManageApplicationsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteApplication(TenantId tenantId, ApplicationId id) {
+    UsecaseResult deleteApplication(TenantId tenantId, ApplicationId id) {
         auto entity = repo.findById(tenantId, id);
-        if (entity.isNull) return CommandResult(false, "", "Application not found");
+        if (entity.isNull) return UsecaseResult(false, "", "Application not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

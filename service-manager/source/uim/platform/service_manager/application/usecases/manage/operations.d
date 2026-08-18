@@ -21,7 +21,7 @@ class ManageOperationsUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createOperation(CreateOperationRequest dto) {
+    UsecaseResult createOperation(CreateOperationRequest dto) {
         auto e = Operation(dto.tenantId);
         e.id = OperationId(currentTimestamp.to!string);
         e.resourceId = dto.resourceId;
@@ -31,28 +31,28 @@ class ManageOperationsUseCase {
         e.createdAt = currentTimestamp;
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateOperation(UpdateOperationRequest dto) {
+    UsecaseResult updateOperation(UpdateOperationRequest dto) {
         auto existing = repo.findById(dto.tenantId, dto.operationId);
         if (existing.isNull)
-            return CommandResult(false, "", "Operation not found");
+            return UsecaseResult(false, "", "Operation not found");
 
         if (dto.errorMessage.length > 0) existing.errorMessage = dto.errorMessage;
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteOperation(TenantId tenantId, OperationId id) {
+    UsecaseResult deleteOperation(TenantId tenantId, OperationId id) {
         auto operation = repo.findById(tenantId, id);
         if (operation.isNull)
-            return CommandResult(false, "", "Operation not found");
+            return UsecaseResult(false, "", "Operation not found");
 
         repo.remove(operation);
-        return CommandResult(true, operation.id.value, "");
+        return UsecaseResult(true, operation.id.value, "");
     }
 }
 

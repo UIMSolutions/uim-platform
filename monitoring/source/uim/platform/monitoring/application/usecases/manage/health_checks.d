@@ -27,9 +27,9 @@ class ManageHealthChecksUseCase {
     this.resultRepo = resultRepo;
   }
 
-  CommandResult createCheck(CreateHealthCheckRequest req) {
+  UsecaseResult createCheck(CreateHealthCheckRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Check name is required");
+      return UsecaseResult(false, "", "Check name is required");
 
     auto check = HealthCheck(req.tenantId);
     check.resourceId = req.resourceId;
@@ -57,17 +57,17 @@ class ManageHealthChecksUseCase {
           msg ~= "; ";
         msg ~= e;
       }
-      return CommandResult(false, "", msg);
+      return UsecaseResult(false, "", msg);
     }
 
     checkRepo.save(check);
-    return CommandResult(true, check.id.value, "");
+    return UsecaseResult(true, check.id.value, "");
   }
 
-  CommandResult updateCheck(UpdateHealthCheckRequest req) {
+  UsecaseResult updateCheck(UpdateHealthCheckRequest req) {
     auto check = checkRepo.findById(req.tenantId, req.id);
     if (check.isNull)
-      return CommandResult(false, "", "Health check not found");
+      return UsecaseResult(false, "", "Health check not found");
 
     if (req.description.length > 0)
       check.description = req.description;
@@ -87,10 +87,10 @@ class ManageHealthChecksUseCase {
     check.updatedAt = clockSeconds();
 
     checkRepo.update(check);
-    return CommandResult(true, check.id.value, "");
+    return UsecaseResult(true, check.id.value, "");
   }
 
-  CommandResult recordResult(RecordCheckResultRequest req) {
+  UsecaseResult recordResult(RecordCheckResultRequest req) {
 
     auto r = HealthCheckResult(req.tenantId);
     r.checkId = req.checkId;
@@ -103,7 +103,7 @@ class ManageHealthChecksUseCase {
     r.executedAt = clockSeconds();
 
     resultRepo.save(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
   HealthCheck getCheck(TenantId tenantId, HealthCheckId id) {
@@ -130,13 +130,13 @@ class ManageHealthChecksUseCase {
     return resultRepo.findLatestByCheck(tenantId, checkId);
   }
 
-  CommandResult deleteCheck(TenantId tenantId, HealthCheckId id) {
+  UsecaseResult deleteCheck(TenantId tenantId, HealthCheckId id) {
     auto check = checkRepo.findById(tenantId, id);
     if (check.isNull)
-      return CommandResult(false, "", "Health check not found");
+      return UsecaseResult(false, "", "Health check not found");
 
     checkRepo.remove(check);
-    return CommandResult(true, check.id.value, "");
+    return UsecaseResult(true, check.id.value, "");
   }
 
 }

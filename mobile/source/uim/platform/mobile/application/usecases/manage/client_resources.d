@@ -22,7 +22,7 @@ class ManageClientResourcesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createClientResource(CreateClientResourceRequest r) {
+    UsecaseResult createClientResource(CreateClientResourceRequest r) {
         auto resource = ClientResource(r.tenantId); //, r.createdBy);
 
         resource.appId = r.appId;
@@ -35,13 +35,13 @@ class ManageClientResourcesUseCase {
         resource.version_ = r.version_;
 
         repo.save(resource);
-        return CommandResult(true, resource.id.value, "");
+        return UsecaseResult(true, resource.id.value, "");
     }
 
-    CommandResult updateClientResource(UpdateClientResourceRequest r) {
+    UsecaseResult updateClientResource(UpdateClientResourceRequest r) {
         auto resource = repo.findById(r.tenantId, r.resourceId);
         if (resource.isNull)
-            return CommandResult(false, "", "Client resource not found");
+            return UsecaseResult(false, "", "Client resource not found");
         if (r.description.length > 0)
             resource.description = r.description;
         // TODO: Decide if we want to allow name updates or not. If yes, we need to validate it.
@@ -57,7 +57,7 @@ class ManageClientResourcesUseCase {
         resource.updatedAt = currentTimestamp();
         resource.updatedBy = r.updatedBy;
         repo.update(resource);
-        return CommandResult(true, resource.id.value, "");
+        return UsecaseResult(true, resource.id.value, "");
     }
 
     ClientResource getClientResource(TenantId tenantId, ClientResourceId id) {
@@ -72,13 +72,13 @@ class ManageClientResourcesUseCase {
         return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteClientResource(TenantId tenantId, ClientResourceId id) {
+    UsecaseResult deleteClientResource(TenantId tenantId, ClientResourceId id) {
         auto resource = repo.findById(tenantId, id);
         if (resource.isNull)
-            return CommandResult(false, "", "Client resource not found");
+            return UsecaseResult(false, "", "Client resource not found");
 
         repo.remove(resource);
-        return CommandResult(true, resource.id.value, "");
+        return UsecaseResult(true, resource.id.value, "");
     }
 
     size_t countClientResourcesByApp(TenantId tenantId, MobileAppId appId) {

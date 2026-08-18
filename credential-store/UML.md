@@ -113,7 +113,7 @@ sequenceDiagram
     CC->>CUC: createCredential(dto)
     CUC->>CR: save(credential)
     CUC->>AR: save(auditEntry — op=create)
-    CUC-->>CC: CommandResult(true, credId)
+    CUC-->>CC: UsecaseResult(true, credId)
     CC-->>App: 201 { id }
 
     App->>CC: GET /credentials/{id}

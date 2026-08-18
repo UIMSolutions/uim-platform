@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface ManageConfigurationsUseCase { 
 
-  CommandResult createConfiguration(CreateConfigurationRequest r);
+  UsecaseResult createConfiguration(CreateConfigurationRequest r);
   Configuration getConfiguration(TenantId tenantId, ResourceGroupId resourceGroupId, ConfigurationId configurationId);
   Configuration[] listConfigurations(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId);
   Configuration[] listConfigurations(TenantId tenantId, ResourceGroupId resourceGroupId);
-  CommandResult deleteConfiguration(TenantId tenantId, ResourceGroupId resourceGroupId, ConfigurationId configurationId);
+  UsecaseResult deleteConfiguration(TenantId tenantId, ResourceGroupId resourceGroupId, ConfigurationId configurationId);
 
 }

@@ -11,7 +11,7 @@ private:
 public:
   this(TradingPartnerRepository repo) { _repo = repo; }
 
-  CommandResult create(CreateTradingPartnerRequest req) {
+  UsecaseResult create(CreateTradingPartnerRequest req) {
     auto tp = TradingPartner(req.tenantId, req.partnerId);
     tp.name         = req.name;
     tp.description  = req.description;
@@ -23,27 +23,27 @@ public:
     tp.active       = true;
     tp.metadata     = req.metadata;
     auto err = IntegrationValidator.validateTradingPartner(tp);
-    if (err !is null) return CommandResult(false, err);
+    if (err !is null) return UsecaseResult(false, err);
     _repo.add(getTenantId(req.tenantId), tp);
-    return CommandResult(true, tp.toJson());
+    return UsecaseResult(true, tp.toJson());
   }
 
-  CommandResult getAll(TenantId tenantId) {
+  UsecaseResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (p; items) arr ~= p.toJson();
-    return CommandResult(true, arr);
+    return UsecaseResult(true, arr);
   }
 
-  CommandResult getById(TenantId tenantId, string id) {
+  UsecaseResult getById(TenantId tenantId, string id) {
     auto tp = _repo.getById(getTenantId(tenantId), TradingPartnerId(id));
-    if (tp.isNull) return CommandResult(false, "Trading partner not found");
-    return CommandResult(true, tp.toJson());
+    if (tp.isNull) return UsecaseResult(false, "Trading partner not found");
+    return UsecaseResult(true, tp.toJson());
   }
 
-  CommandResult update(UpdateTradingPartnerRequest req) {
+  UsecaseResult update(UpdateTradingPartnerRequest req) {
     auto tp = _repo.getById(getTenantId(req.tenantId), TradingPartnerId(req.id));
-    if (tp.isNull) return CommandResult(false, "Trading partner not found");
+    if (tp.isNull) return UsecaseResult(false, "Trading partner not found");
     if (req.name.length > 0)         tp.name         = req.name;
     if (req.contactEmail.length > 0) tp.contactEmail = req.contactEmail;
     if (req.contactName.length > 0)  tp.contactName  = req.contactName;
@@ -51,13 +51,13 @@ public:
     tp.active = req.active;
     foreach (k, v; req.metadata)     tp.metadata[k]  = v;
     _repo.update(getTenantId(req.tenantId), tp);
-    return CommandResult(true, tp.toJson());
+    return UsecaseResult(true, tp.toJson());
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto tp = _repo.getById(getTenantId(tenantId), TradingPartnerId(id));
-    if (tp.isNull) return CommandResult(false, "Trading partner not found");
+    if (tp.isNull) return UsecaseResult(false, "Trading partner not found");
     _repo.remove(getTenantId(tenantId), TradingPartnerId(id));
-    return CommandResult(true, "Trading partner deleted");
+    return UsecaseResult(true, "Trading partner deleted");
   }
 }

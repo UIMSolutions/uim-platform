@@ -17,14 +17,14 @@ class ManagePatientsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPatient(CreatePatientRequest r) {
+  UsecaseResult createPatient(CreatePatientRequest r) {
     auto err = FhirValidator.validatePatient(  r.patientId.value,
       r.name_.length > 0 ? r.name_[0].family_ : ""
     );
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     if (!repo.findById(r.tenantId, r.patientId).isNull)
-      return CommandResult(false, "", "Patient already exists");
+      return UsecaseResult(false, "", "Patient already exists");
 
     auto p = Patient(r.tenantId);
     p.id         = r.patientId;
@@ -36,13 +36,13 @@ class ManagePatientsUseCase {
     p.telecom_   = r.telecom_;
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult updatePatient(UpdatePatientRequest r) {
+  UsecaseResult updatePatient(UpdatePatientRequest r) {
     auto existing = repo.findById(r.tenantId, r.patientId);
     if (existing.isNull)
-      return CommandResult(false, "", "Patient not found");
+      return UsecaseResult(false, "", "Patient not found");
 
     auto p = Patient(r.tenantId);
     p.id         = r.patientId;
@@ -55,7 +55,7 @@ class ManagePatientsUseCase {
     p.createdAt  = existing.createdAt;
 
     repo.update(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   Patient getPatient(TenantId tenantId, PatientId id) {
@@ -70,12 +70,12 @@ class ManagePatientsUseCase {
     return repo.searchByName(tenantId, namePart);
   }
 
-  CommandResult deletePatient(TenantId tenantId, PatientId id) {
+  UsecaseResult deletePatient(TenantId tenantId, PatientId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Patient not found");
+      return UsecaseResult(false, "", "Patient not found");
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countPatients(TenantId tenantId) {

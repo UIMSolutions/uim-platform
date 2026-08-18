@@ -201,7 +201,7 @@ sequenceDiagram
     TC->>TUC: createTransportRequest(dto)
     TUC->>TR: save(transportRequest)
     TR-->>TUC: ok
-    TUC-->>TC: CommandResult(true, id)
+    TUC-->>TC: UsecaseResult(true, id)
     TC-->>Client: 201 { id }
 
     Client->>TC: POST /transports/release/{id}
@@ -210,7 +210,7 @@ sequenceDiagram
     TR-->>TUC: transportRequest
     TUC->>TUC: validate status = "modifiable"
     TUC->>TR: update(status = "released")
-    TUC-->>TC: CommandResult(true, id)
+    TUC-->>TC: UsecaseResult(true, id)
     TC-->>Client: 200 { id }
 ```
 
@@ -229,12 +229,12 @@ sequenceDiagram
     BC->>BUC: createBusinessUser(dto)
     BUC->>BR: save(user)
     BR-->>BUC: ok
-    BUC-->>BC: CommandResult(true, id)
+    BUC-->>BC: UsecaseResult(true, id)
     BC-->>Admin: 201 { id }
 
     Admin->>BC: POST /business-users/lock/{id}
     BC->>BUC: lockUser(id)
     BUC->>BR: findById(id) → update status=locked
-    BUC-->>BC: CommandResult(true, id)
+    BUC-->>BC: UsecaseResult(true, id)
     BC-->>Admin: 200 { id }
 ```

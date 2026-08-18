@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 interface IManageConditionsUseCase {
     
-    CommandResult createCondition(TenantId tenantId, CreateConditionRequest req);
+    UsecaseResult createCondition(TenantId tenantId, CreateConditionRequest req);
 
     QueryResult getCondition(TenantId tenantId, string id);
 
     QueryResult listConditions(TenantId tenantId);
 
-    CommandResult updateCondition(TenantId tenantId, string id, UpdateConditionRequest req);
+    UsecaseResult updateCondition(TenantId tenantId, string id, UpdateConditionRequest req);
 
-    CommandResult deleteCondition(TenantId tenantId, string id);
+    UsecaseResult deleteCondition(TenantId tenantId, string id);
 
 }

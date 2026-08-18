@@ -36,13 +36,13 @@ class ManageCallsUseCase {
         return _repo.findByStatus(tenantId, status);
     }
 
-    CommandResult deleteCall(TenantId tenantId, RfcCallId id) {
+    UsecaseResult deleteCall(TenantId tenantId, RfcCallId id) {
         auto call = _repo.findById(tenantId, id);
         if (call.isNull())
-            return CommandResult(false, id, "RFC call not found: " ~ id);
+            return UsecaseResult(false, id, "RFC call not found: " ~ id);
         if (!_repo.remove(tenantId, id))
-            return CommandResult(false, id, "Failed to delete RFC call");
-        return CommandResult(true, id, "");
+            return UsecaseResult(false, id, "Failed to delete RFC call");
+        return UsecaseResult(true, id, "");
     }
 
     size_t countCalls(TenantId tenantId) {

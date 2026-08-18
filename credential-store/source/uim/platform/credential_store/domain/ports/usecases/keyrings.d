@@ -12,13 +12,13 @@ mixin(ShowModule!());
 @safe:
 interface IManageKeyringsUseCase { 
 
-  CommandResult createKeyring(CreateKeyringRequest r);
-  CommandResult rotateKeyring(RotateKeyringRequest r);
+  UsecaseResult createKeyring(CreateKeyringRequest r);
+  UsecaseResult rotateKeyring(RotateKeyringRequest r);
   Credential getCredential(TenantId tenantId, CredentialId id);
   Credential[] listCredentials(TenantId tenantId, NamespaceId namespaceId);
   KeyringVersion[] getKeyringVersions(TenantId tenantId, CredentialId keyringId);
   KeyringVersion getActiveKeyringVersion(TenantId tenantId, CredentialId keyringId);
-  CommandResult disableCredential(TenantId tenantId, CredentialId id);
-  CommandResult deleteCredential(TenantId tenantId, CredentialId id);
+  UsecaseResult disableCredential(TenantId tenantId, CredentialId id);
+  UsecaseResult deleteCredential(TenantId tenantId, CredentialId id);
 
 }

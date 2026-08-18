@@ -21,14 +21,14 @@ class ManagePushRegistrationsUseCase {
         this.repo = repo;
     }
 
-    CommandResult registerPushRegistration(CreatePushRegistrationRequest r) {
+    UsecaseResult registerPushRegistration(CreatePushRegistrationRequest r) {
         auto existing = repo.findByDeviceAndApp(r.tenantId, r.deviceId, r.appId);
         if (!existing.isNull) {
             existing.pushToken = r.pushToken;
             existing.topics = r.topics;
             existing.updatedAt = currentTimestamp();
             repo.update(existing);
-            return CommandResult(true, existing.id.value, "");
+            return UsecaseResult(true, existing.id.value, "");
         }
         
         auto reg = PushRegistration(r.tenantId);
@@ -42,7 +42,7 @@ class ManagePushRegistrationsUseCase {
         reg.updatedAt = reg.registeredAt;
 
         repo.save(reg);
-        return CommandResult(true, reg.id.value, "");
+        return UsecaseResult(true, reg.id.value, "");
     }
 
     PushRegistration getPushRegistration(TenantId tenantId, PushRegistrationId id) {
@@ -61,13 +61,13 @@ class ManagePushRegistrationsUseCase {
         return repo.findByTopic(tenantId, appId, topic);
     }
 
-    CommandResult deletePushRegistration(TenantId tenantId, PushRegistrationId id) {
+    UsecaseResult deletePushRegistration(TenantId tenantId, PushRegistrationId id) {
         auto reg = repo.findById(tenantId, id);
         if (reg.isNull)
-            return CommandResult(false, "", "Push registration not found");
+            return UsecaseResult(false, "", "Push registration not found");
 
         repo.remove(reg);
-        return CommandResult(true, reg.id.value, "");
+        return UsecaseResult(true, reg.id.value, "");
     }
 
     size_t countPushRegistrationsByApp(TenantId tenantId, MobileAppId appId) {

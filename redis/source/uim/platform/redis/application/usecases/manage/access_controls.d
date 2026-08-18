@@ -32,9 +32,9 @@ class ManageAccessControlsUseCase {
         return repo.findByStatus(tenantId, AccessControlStatus.active);
     }
 
-    CommandResult createAccessControl(AccessControlDTO dto) {
+    UsecaseResult createAccessControl(AccessControlDTO dto) {
         if (repo.cidrExists(dto.tenantId, dto.instanceId, dto.cidr))
-            return CommandResult(false, "", "CIDR already exists for this instance");
+            return UsecaseResult(false, "", "CIDR already exists for this instance");
 
         auto e = AccessControl(dto.tenantId, dto.accessControlId, dto.createdBy);
         e.instanceId = dto.instanceId;
@@ -43,29 +43,29 @@ class ManageAccessControlsUseCase {
         e.status = AccessControlStatus.active;
 
         if (!RedisValidator.isValidAccessControl(e))
-            return CommandResult(false, "", "Invalid access control: instanceId and CIDR required");
+            return UsecaseResult(false, "", "Invalid access control: instanceId and CIDR required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateAccessControl(AccessControlDTO dto) {
+    UsecaseResult updateAccessControl(AccessControlDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.accessControlId);
         if (existing.isNull)
-            return CommandResult(false, "", "Access control not found");
+            return UsecaseResult(false, "", "Access control not found");
 
         if (dto.description.length > 0) existing.description = dto.description;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAccessControl(TenantId tenantId, AccessControlId id) {
+    UsecaseResult deleteAccessControl(TenantId tenantId, AccessControlId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Access control not found");
+            return UsecaseResult(false, "", "Access control not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

@@ -16,9 +16,9 @@ class ManageDestinationsUseCase {
 
     this(DestinationRepository repo) { _repo = repo; }
 
-    CommandResult createDestination(CreateDestinationRequest req) {
+    UsecaseResult createDestination(CreateDestinationRequest req) {
         if (_repo.existsById(req.tenantId, req.destinationId))
-            return CommandResult(false, req.destinationId, "Destination already exists: " ~ req.destinationId);
+            return UsecaseResult(false, req.destinationId, "Destination already exists: " ~ req.destinationId);
 
         auto dest = Destination(req.tenantId);
         dest.active = req.active;
@@ -34,8 +34,8 @@ class ManageDestinationsUseCase {
         dest.useSNC       = req.useSNC;
 
         if (!_repo.save(dest))
-            return CommandResult(false, "", "Failed to save destination");
-        return CommandResult(true, dest.id.value, "");
+            return UsecaseResult(false, "", "Failed to save destination");
+        return UsecaseResult(true, dest.id.value, "");
     }
 
     Destination getDestination(TenantId tenantId, DestinationId id) {
@@ -46,11 +46,11 @@ class ManageDestinationsUseCase {
         return _repo.findByTenant(tenantId);
     }
 
-    CommandResult updateDestination(UpdateDestinationRequest req) {
+    UsecaseResult updateDestination(UpdateDestinationRequest req) {
         
         auto dest = _repo.findById(req.tenantId, req.id);
         if (dest.isNull())
-            return CommandResult(false, req.id, "Destination not found: " ~ req.id);
+            return UsecaseResult(false, req.id, "Destination not found: " ~ req.id);
 
         dest.description = req.description;
         dest.host        = req.host;
@@ -61,17 +61,17 @@ class ManageDestinationsUseCase {
         dest.updatedAt   = MonoTime.currTime.ticks;
 
         if (!_repo.update(dest))
-            return CommandResult(false, dest.id, "Failed to update destination");
-        return CommandResult(true, dest.id, "");
+            return UsecaseResult(false, dest.id, "Failed to update destination");
+        return UsecaseResult(true, dest.id, "");
     }
 
-    CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
+    UsecaseResult deleteDestination(TenantId tenantId, DestinationId id) {
         auto dest = _repo.findById(tenantId, id);
         if (dest.isNull())
-            return CommandResult(false, id, "Destination not found: " ~ id);
+            return UsecaseResult(false, id, "Destination not found: " ~ id);
         if (!_repo.remove(tenantId, id))
-            return CommandResult(false, id, "Failed to delete destination");
-        return CommandResult(true, id, "");
+            return UsecaseResult(false, id, "Failed to delete destination");
+        return UsecaseResult(true, id, "");
     }
 
     size_t countDestinations(TenantId tenantId) {

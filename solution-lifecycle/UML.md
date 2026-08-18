@@ -125,30 +125,30 @@ classDiagram
     }
 
     class ManageMtaArchivesUseCase {
-        +uploadArchive(r) CommandResult
+        +uploadArchive(r) UsecaseResult
         +listArchives(tenantId) MtaArchive[]
         +getArchive(tenantId, id) MtaArchive
-        +deleteArchive(tenantId, id) CommandResult
+        +deleteArchive(tenantId, id) UsecaseResult
     }
     class ManageMtasUseCase {
-        +deployMta(r) CommandResult
-        +updateMta(r) CommandResult
+        +deployMta(r) UsecaseResult
+        +updateMta(r) UsecaseResult
         +listMtas(tenantId) Mta[]
         +getMta(tenantId, id) Mta
-        +deleteMta(r) CommandResult
+        +deleteMta(r) UsecaseResult
     }
     class ManageMtaOperationsUseCase {
         +listOperations(tenantId) MtaOperation[]
         +getOperation(tenantId, id) MtaOperation
-        +pollOperation(tenantId, id) CommandResult
-        +abortOperation(r) CommandResult
+        +pollOperation(tenantId, id) UsecaseResult
+        +abortOperation(r) UsecaseResult
         +getOperationLogs(tenantId, id) string[]
     }
     class ManageMtaSubscriptionsUseCase {
         +listSubscriptions(tenantId) MtaSubscription[]
         +getSubscription(tenantId, id) MtaSubscription
-        +subscribe(r) CommandResult
-        +unsubscribe(r) CommandResult
+        +subscribe(r) UsecaseResult
+        +unsubscribe(r) UsecaseResult
     }
 
     class MtaArchiveController {
@@ -220,7 +220,7 @@ sequenceDiagram
     DeploymentEngine-->>ManageMtasUseCase: DeploymentResult{success, operationId}
     ManageMtasUseCase->>MtaOperationRepository: save(MtaOperation{queued})
     ManageMtasUseCase->>MtaRepository: save(Mta{deploying})
-    ManageMtasUseCase-->>MtaController: CommandResult{success, operationId}
+    ManageMtasUseCase-->>MtaController: UsecaseResult{success, operationId}
     MtaController-->>Client: 202 Accepted {operationId}
 
     Note over Client,MtaOperationRepository: Client polls operation until finished
@@ -249,7 +249,7 @@ sequenceDiagram
     DeploymentEngine-->>ManageMtaSubscriptionsUseCase: DeploymentResult{success, operationId}
     ManageMtaSubscriptionsUseCase->>MtaOperationRepository: save(MtaOperation{subscribe, queued})
     ManageMtaSubscriptionsUseCase->>MtaSubscriptionRepository: save(MtaSubscription{subscribing})
-    ManageMtaSubscriptionsUseCase-->>MtaSubscriptionController: CommandResult{success, operationId}
+    ManageMtaSubscriptionsUseCase-->>MtaSubscriptionController: UsecaseResult{success, operationId}
     MtaSubscriptionController-->>Subscriber: 202 Accepted {operationId}
 ```
 

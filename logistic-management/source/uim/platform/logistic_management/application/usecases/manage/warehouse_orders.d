@@ -20,9 +20,9 @@ public:
     _tasks = tasks;
   }
 
-  CommandResult createWarehouseOrder(TenantId tenantId, CreateWarehouseOrderRequest req) {
+  UsecaseResult createWarehouseOrder(TenantId tenantId, CreateWarehouseOrderRequest req) {
     if (req.orderNumber.length == 0)
-      return CommandResult(false, "Order number is required");
+      return UsecaseResult(false, "Order number is required");
 
     WarehouseOrder wo;
     wo.id = WarehouseOrderId(generateId());
@@ -37,12 +37,12 @@ public:
     wo.createdAt = currentTimestamp();
     wo.updatedAt = wo.createdAt;
     _repo.save(wo);
-    return CommandResult(true, "", wo.id.value);
+    return UsecaseResult(true, "", wo.id.value);
   }
 
-  CommandResult updateWarehouseOrder(TenantId tenantId, WarehouseOrderId id, UpdateWarehouseOrderRequest req) {
+  UsecaseResult updateWarehouseOrder(TenantId tenantId, WarehouseOrderId id, UpdateWarehouseOrderRequest req) {
     auto wo = _repo.findById(tenantId, id);
-    if (wo .isNull) return CommandResult(false, "Warehouse order not found");
+    if (wo .isNull) return UsecaseResult(false, "Warehouse order not found");
 
     
     WarehouseOrder updated;
@@ -62,16 +62,16 @@ public:
       updated.status = wo.status;
     }
     _repo.save(updated);
-    return CommandResult(true, "", id.value);
+    return UsecaseResult(true, "", id.value);
   }
 
-  CommandResult deleteWarehouseOrder(TenantId tenantId, WarehouseOrderId id) {
+  UsecaseResult deleteWarehouseOrder(TenantId tenantId, WarehouseOrderId id) {
     auto wo = _repo.findById(tenantId, id);
-    if (wo .isNull) return CommandResult(false, "Warehouse order not found");
+    if (wo .isNull) return UsecaseResult(false, "Warehouse order not found");
     // Cascade: remove all tasks for this order
     _tasks.removeByWarehouseOrder(tenantId, id);
     _repo.remove(tenantId, id);
-    return CommandResult(true);
+    return UsecaseResult(true);
   }
 
   WarehouseOrder getWarehouseOrder(TenantId tenantId, WarehouseOrderId id) {

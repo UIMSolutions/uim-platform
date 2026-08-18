@@ -30,7 +30,7 @@ class ManageAuditLogsUseCase {
         return repo.findByActor(tenantId, actorId);
     }
 
-    CommandResult recordAuditEvent(AuditLogDTO dto) {
+    UsecaseResult recordAuditEvent(AuditLogDTO dto) {
         
         auto al = AuditLog(dto.tenantId); //, dto.createdBy);
         al.actorId = dto.actorId;
@@ -43,23 +43,23 @@ class ManageAuditLogsUseCase {
 
         
         try { al.action = dto.action.to!AuditAction; }
-        catch (Exception) { return CommandResult(false, "", "Invalid audit action"); }
+        catch (Exception) { return UsecaseResult(false, "", "Invalid audit action"); }
         try { al.resourceType = dto.resourceType.to!ResourceType; }
-        catch (Exception) { return CommandResult(false, "", "Invalid resource type"); }
+        catch (Exception) { return UsecaseResult(false, "", "Invalid resource type"); }
 
         if (!IdentityValidator.isValidAuditLog(al))
-            return CommandResult(false, "", "Invalid audit log data");
+            return UsecaseResult(false, "", "Invalid audit log data");
 
         repo.save(al);
-        return CommandResult(true, al.id.value, "");
+        return UsecaseResult(true, al.id.value, "");
     }
 
-    CommandResult deleteAuditLog(TenantId tenantId, AuditLogId id) {
+    UsecaseResult deleteAuditLog(TenantId tenantId, AuditLogId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Audit log not found");
+            return UsecaseResult(false, "", "Audit log not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

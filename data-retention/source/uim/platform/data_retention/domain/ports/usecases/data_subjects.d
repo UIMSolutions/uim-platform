@@ -12,13 +12,13 @@ mixin(ShowModule!());
 
 interface IManageDataSubjectsUseCase { 
 
-    CommandResult createDataSubject(CreateDataSubjectRequest req);
-    CommandResult updateDataSubject(UpdateDataSubjectRequest req);
-    CommandResult blockDataSubject(TenantId tenantId, DataSubjectId id);
+    UsecaseResult createDataSubject(CreateDataSubjectRequest req);
+    UsecaseResult updateDataSubject(UpdateDataSubjectRequest req);
+    UsecaseResult blockDataSubject(TenantId tenantId, DataSubjectId id);
     bool hasDataSubjectById(TenantId tenantId, DataSubjectId id);
     DataSubject getDataSubject(TenantId tenantId, DataSubjectId id);
     DataSubject[] listDataSubjects(TenantId tenantId);
     DataSubject[] listDataSubjects(TenantId tenantId, DataLifecycleStatus status);
-    CommandResult deleteDataSubject(TenantId tenantId, DataSubjectId id);
+    UsecaseResult deleteDataSubject(TenantId tenantId, DataSubjectId id);
 
 }

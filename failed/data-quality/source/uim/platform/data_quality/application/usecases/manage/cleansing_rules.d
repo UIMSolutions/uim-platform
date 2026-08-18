@@ -20,13 +20,13 @@ class ManageCleansingRulesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createCleansingRule(CreateCleansingRuleRequest req) {
+  UsecaseResult createCleansingRule(CreateCleansingRuleRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Rule name is required");
+      return UsecaseResult(false, "", "Rule name is required");
     if (req.fieldname.isEmpty)
-      return CommandResult(false, "", "Field name is required");
+      return UsecaseResult(false, "", "Field name is required");
 
     auto rule = CleansingRule(req.tenantId);
     rule.name = req.name;
@@ -48,19 +48,19 @@ class ManageCleansingRulesUseCase {
     rule.priority = req.priority;
 
     repo.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult updateCleansingRule(UpdateCleansingRuleRequest req) {
+  UsecaseResult updateCleansingRule(UpdateCleansingRuleRequest req) {
     if (req.ruleId.isEmpty)
-      return CommandResult(false, "", "Rule ID is required");
+      return UsecaseResult(false, "", "Rule ID is required");
 
     auto existing = repo.findById(req.tenantId, req.ruleId);
     if (existing.isNull)
-      return CommandResult(false, "", "Cleansing rule not found");
+      return UsecaseResult(false, "", "Cleansing rule not found");
 
     if (existing.tenantId != req.tenantId)
-      return CommandResult(false, "", "Tenant mismatch");
+      return UsecaseResult(false, "", "Tenant mismatch");
 
     auto rule = existing;
     rule.name = req.name;
@@ -83,19 +83,19 @@ class ManageCleansingRulesUseCase {
     rule.updatedAt = currentTimestamp();
 
     repo.update(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult deleteCleansingRule(TenantId tenantId, CleansingRuleId id) {
+  UsecaseResult deleteCleansingRule(TenantId tenantId, CleansingRuleId id) {
     auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "Cleansing rule not found");
+      return UsecaseResult(false, "", "Cleansing rule not found");
 
     if (rule.tenantId != tenantId)
-      return CommandResult(false, "", "Tenant mismatch");
+      return UsecaseResult(false, "", "Tenant mismatch");
 
     repo.remove(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   CleansingRule getCleansingRule(TenantId tenantId, CleansingRuleId id) {

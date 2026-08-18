@@ -17,8 +17,8 @@ import uim.platform.mobile;
 interface IManageClientLogsUseCase { 
 
     /// Uploads a client log entry to the system.
-    /// Returns a CommandResult indicating the success or failure of the operation.
-    CommandResult uploadLog(UploadClientLogRequest r);
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
+    UsecaseResult uploadLog(UploadClientLogRequest r);
 
     /// Retrieves a client log entry by its ID for the specified tenant.
     /// Returns the ClientLogEntry if found, or null if not found.
@@ -41,8 +41,8 @@ interface IManageClientLogsUseCase {
     ClientLogEntry[] listLogs(TenantId tenantId, MobileAppId appId, string level);
 
     /// Deletes a client log entry by its ID for the specified tenant.
-    /// Returns a CommandResult indicating the success or failure of the operation.
-    CommandResult deleteLog(TenantId tenantId, ClientLogEntryId id);
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
+    UsecaseResult deleteLog(TenantId tenantId, ClientLogEntryId id);
 
     /// Counts the number of client log entries for the specified tenant and app.
     /// Returns the count as a size_t value.

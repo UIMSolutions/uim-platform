@@ -17,12 +17,12 @@ class ManageOrganizationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createOrganization(CreateOrganizationRequest r) {
+  UsecaseResult createOrganization(CreateOrganizationRequest r) {
     auto err = FhirValidator.validateOrganization(r.organizationId.value, r.name_);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     if (!repo.findById(r.tenantId, r.organizationId).isNull)
-      return CommandResult(false, "", "Organization already exists");
+      return UsecaseResult(false, "", "Organization already exists");
 
     auto o = Organization(r.tenantId);
     o.id       = r.organizationId;
@@ -35,13 +35,13 @@ class ManageOrganizationsUseCase {
     o.partOf_  = r.partOf_;
 
     repo.save(o);
-    return CommandResult(true, o.id.value, "");
+    return UsecaseResult(true, o.id.value, "");
   }
 
-  CommandResult updateOrganization(UpdateOrganizationRequest r) {
+  UsecaseResult updateOrganization(UpdateOrganizationRequest r) {
     auto existing = repo.findById(r.tenantId, r.organizationId);
     if (existing.isNull)
-      return CommandResult(false, "", "Organization not found");
+      return UsecaseResult(false, "", "Organization not found");
 
     auto o  = Organization(r.tenantId);
     o.id        = r.organizationId;
@@ -55,7 +55,7 @@ class ManageOrganizationsUseCase {
     o.createdAt = existing.createdAt;
 
     repo.update(o);
-    return CommandResult(true, o.id.value, "");
+    return UsecaseResult(true, o.id.value, "");
   }
 
   Organization getOrganization(TenantId tenantId, OrganizationId id) {
@@ -66,11 +66,11 @@ class ManageOrganizationsUseCase {
     return repo.findByTenantAll(tenantId);
   }
 
-  CommandResult deleteOrganization(TenantId tenantId, OrganizationId id) {
+  UsecaseResult deleteOrganization(TenantId tenantId, OrganizationId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Organization not found");
+      return UsecaseResult(false, "", "Organization not found");
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

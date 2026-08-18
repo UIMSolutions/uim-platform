@@ -17,15 +17,15 @@ class ManageSituationInstancesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createSituationInstance(CreateSituationInstanceRequest r) {
+    UsecaseResult createSituationInstance(CreateSituationInstanceRequest r) {
         if (r.situationInstanceId.isEmpty)
-            return CommandResult(false, "", "Instance ID is required");
+            return UsecaseResult(false, "", "Instance ID is required");
         if (r.situationTemplateId.isEmpty)
-            return CommandResult(false, "", "Template ID is required");
+            return UsecaseResult(false, "", "Template ID is required");
 
         auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Situation instance already exists");
+            return UsecaseResult(false, "", "Situation instance already exists");
 
         auto i = SituationInstance(r.tenantId, r.situationInstanceId); // , r.createdBy);
         i.situationTemplateId = r.situationTemplateId;
@@ -41,7 +41,7 @@ class ManageSituationInstancesUseCase {
         i.detectedAt = i.updatedAt;
 
         repo.save(i);
-        return CommandResult(true, i.id.value, "");
+        return UsecaseResult(true, i.id.value, "");
     }
 
     SituationInstance getSituationInstance(TenantId tenantId, SituationInstanceId id) {
@@ -60,10 +60,10 @@ class ManageSituationInstancesUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult updateSituationInstance(UpdateSituationInstanceRequest r) {
+    UsecaseResult updateSituationInstance(UpdateSituationInstanceRequest r) {
         auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (existing.isNull)
-            return CommandResult(false, "", "Situation instance not found");
+            return UsecaseResult(false, "", "Situation instance not found");
 
         if (r.assignedTo.length > 0)
             existing.assignedTo = r.assignedTo;
@@ -72,13 +72,13 @@ class ManageSituationInstancesUseCase {
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult resolveSituationInstance(ResolveSituationRequest r) {
+    UsecaseResult resolveSituationInstance(ResolveSituationRequest r) {
         auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (existing.isNull)
-            return CommandResult(false, "", "Situation instance not found");
+            return UsecaseResult(false, "", "Situation instance not found");
         
         existing.status = InstanceStatus.resolved;
         existing.resolution.resolvedBy = r.resolvedBy;
@@ -92,15 +92,15 @@ class ManageSituationInstancesUseCase {
         existing.updatedAt = now;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSituationInstance(TenantId tenantId, SituationInstanceId id) {
+    UsecaseResult deleteSituationInstance(TenantId tenantId, SituationInstanceId id) {
         auto instance = repo.findById(tenantId, id);
         if (instance.isNull)
-            return CommandResult(false, "", "Situation instance not found");
+            return UsecaseResult(false, "", "Situation instance not found");
 
         repo.remove(instance);
-        return CommandResult(true, instance.id.value, "");
+        return UsecaseResult(true, instance.id.value, "");
     }
 }

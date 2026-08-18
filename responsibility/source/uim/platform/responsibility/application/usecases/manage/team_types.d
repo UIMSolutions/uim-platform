@@ -28,35 +28,35 @@ class ManageTeamTypesUseCase {
         return repo.findByCategory(tenantId, categoryId);
     }
 
-    CommandResult createType(TeamTypeDTO dto) {
+    UsecaseResult createType(TeamTypeDTO dto) {
         auto t = TeamType(dto.tenantId, dto.typeId, dto.createdBy);
         t.name        = dto.name;
         t.description = dto.description;
         t.code        = dto.code;
         t.categoryId  = dto.categoryId;
         if (t.name.isEmpty)
-            return CommandResult(false, "", "Team type name is required");
+            return UsecaseResult(false, "", "Team type name is required");
         repo.save(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 
-    CommandResult updateType(TeamTypeDTO dto) {
+    UsecaseResult updateType(TeamTypeDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.typeId);
         if (existing.isNull)
-            return CommandResult(false, "", "Team type not found");
+            return UsecaseResult(false, "", "Team type not found");
         if (dto.name.length > 0)        existing.name        = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.code.length > 0)        existing.code        = dto.code;
         if (dto.categoryId.length > 0)  existing.categoryId  = dto.categoryId;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteType(TenantId tenantId, TeamTypeId id) {
+    UsecaseResult deleteType(TenantId tenantId, TeamTypeId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Team type not found");
+            return UsecaseResult(false, "", "Team type not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 }

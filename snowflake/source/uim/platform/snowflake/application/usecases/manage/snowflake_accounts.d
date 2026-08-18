@@ -7,7 +7,7 @@ class ManageSnowflakeAccountsUseCase {
   protected ISnowflakeAccountRepository repo;
   this(ISnowflakeAccountRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateAccountRequest r) {
+  UsecaseResult create(CreateAccountRequest r) {
     SnowflakeAccount a;
     a.id = SnowflakeAccountId(r.id.length > 0 ? r.id : currentTimestamp());
     a.tenantId = TenantId(r.tenantId);
@@ -18,9 +18,9 @@ class ManageSnowflakeAccountsUseCase {
     a.metadata = r.metadata;
     initEntity(a);
     auto err = SnowflakeValidator.validateAccount(a);
-    if (err !is null) return CommandResult(false, a.id.value, err);
+    if (err !is null) return UsecaseResult(false, a.id.value, err);
     repo.save(a);
-    return CommandResult(true, a.id.value, null);
+    return UsecaseResult(true, a.id.value, null);
   }
 
   SnowflakeAccount[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
@@ -29,28 +29,28 @@ class ManageSnowflakeAccountsUseCase {
     return repo.findById(TenantId(tenantId), SnowflakeAccountId(id));
   }
 
-  CommandResult update(UpdateAccountRequest r) {
+  UsecaseResult update(UpdateAccountRequest r) {
     auto a = repo.findById(TenantId(r.tenantId), SnowflakeAccountId(r.id));
-    if (a.isNull) return CommandResult(false, r.id, "Account not found");
+    if (a.isNull) return UsecaseResult(false, r.id, "Account not found");
     if (r.name.length > 0) a.name = r.name;
     if (r.status.length > 0) {  try { a.status = r.status.to!AccountStatus; } catch(Exception) {} }
     repo.update(a);
-    return CommandResult(true, a.id.value, null);
+    return UsecaseResult(true, a.id.value, null);
   }
 
-  CommandResult activate(TenantId tenantId, string id) {
+  UsecaseResult activate(TenantId tenantId, string id) {
     auto a = repo.findById(TenantId(tenantId), SnowflakeAccountId(id));
-    if (a.isNull) return CommandResult(false, id, "Account not found");
+    if (a.isNull) return UsecaseResult(false, id, "Account not found");
     a.status = AccountStatus.active;
     a.activatedAt = currentTimestamp();
     repo.update(a);
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto a = repo.findById(TenantId(tenantId), SnowflakeAccountId(id));
-    if (a.isNull) return CommandResult(false, id, "Account not found");
+    if (a.isNull) return UsecaseResult(false, id, "Account not found");
     repo.remove(TenantId(tenantId), SnowflakeAccountId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

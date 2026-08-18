@@ -42,7 +42,7 @@ class ManageBusinessPartnersUseCase {
         return repo.searchByName(tenantId, searchTerm);
     }
 
-    CommandResult createBusinessPartner(BusinessPartnerDTO dto) {
+    UsecaseResult createBusinessPartner(BusinessPartnerDTO dto) {
         auto bp = BusinessPartner(dto.tenantId); //, UserId("test-user"));  
         bp.id = dto.businessPartnerId;
         bp.bpNumber = dto.bpNumber;
@@ -83,16 +83,16 @@ class ManageBusinessPartnersUseCase {
         bp.validationStatus = ValidationStatus.notValidated;
 
         if (!MasterdataGovernanceValidator.isValidBusinessPartner(bp))
-            return CommandResult(false, "", "Invalid business partner data");
+            return UsecaseResult(false, "", "Invalid business partner data");
 
         repo.save(bp);
-        return CommandResult(true, bp.id.value, "");
+        return UsecaseResult(true, bp.id.value, "");
     }
 
-    CommandResult updateBusinessPartner(BusinessPartnerDTO dto) {
+    UsecaseResult updateBusinessPartner(BusinessPartnerDTO dto) {
         auto bp = repo.findById(dto.tenantId, dto.businessPartnerId);
         if (bp.isNull)
-            return CommandResult(false, "", "Business partner not found");
+            return UsecaseResult(false, "", "Business partner not found");
 
         if (dto.email.length > 0) bp.email = dto.email;
         if (dto.phone.length > 0) bp.phone = dto.phone;
@@ -116,15 +116,15 @@ class ManageBusinessPartnersUseCase {
         bp.validationStatus = ValidationStatus.notValidated;
 
         repo.update(bp);
-        return CommandResult(true, bp.id.value, "");
+        return UsecaseResult(true, bp.id.value, "");
     }
 
-    CommandResult deleteBusinessPartner(TenantId tenantId, BusinessPartnerId id) {
+    UsecaseResult deleteBusinessPartner(TenantId tenantId, BusinessPartnerId id) {
         auto bp = repo.findById(tenantId, id);
         if (bp.isNull)
-            return CommandResult(false, "", "Business partner not found");
+            return UsecaseResult(false, "", "Business partner not found");
 
         repo.remove(bp);
-        return CommandResult(true, bp.id.value, "");
+        return UsecaseResult(true, bp.id.value, "");
     }
 }

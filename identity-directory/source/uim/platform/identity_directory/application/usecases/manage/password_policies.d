@@ -26,7 +26,7 @@ class ManagePasswordPoliciesUseCase {
   }
 
   /// Create a new password policy.
-  CommandResult createPolicy(CreatePasswordPolicyRequest req) {
+  UsecaseResult createPolicy(CreatePasswordPolicyRequest req) {
     auto policy = PasswordPolicy(req.tenantId);
     policy.name = req.name;
     policy.description = req.description;
@@ -58,7 +58,7 @@ class ManagePasswordPoliciesUseCase {
 
     auditRepo.save(event);  
 
-    return CommandResult(true, policy.id.value, "Password policy created successfully", 200);
+    return UsecaseResult(true, policy.id.value, "Password policy created successfully", 200);
   }
 
   /// Get policy by ID.

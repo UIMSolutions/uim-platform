@@ -108,7 +108,7 @@ class ChangeRequestController : ManageHttpController {
         auto comments = data.getString("comments");
 
         auto action = data.getString("action");
-        CommandResult result;
+        UsecaseResult result;
         switch (action) {
         case "submit":
             result = usecase.submitChangeRequest(tenantId, id, userId);

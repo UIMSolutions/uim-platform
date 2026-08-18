@@ -20,15 +20,15 @@ class ManageUserAssignmentsUseCase {
     this.roleCollectionRepo = roleCollectionRepo;
   }
 
-  CommandResult createAssignment(CreateUserAssignmentRequest r) {
+  UsecaseResult createAssignment(CreateUserAssignmentRequest r) {
     if (r.userId.isEmpty)
-      return CommandResult(false, "", "userId is required");
+      return UsecaseResult(false, "", "userId is required");
 
     if (r.roleCollectionId.isEmpty)
-      return CommandResult(false, "", "roleCollectionId is required");
+      return UsecaseResult(false, "", "roleCollectionId is required");
 
     if (!roleCollectionRepo.existsById(r.tenantId, r.roleCollectionId))
-      return CommandResult(false, "", "Role collection not found");
+      return UsecaseResult(false, "", "Role collection not found");
 
     import std.uuid : randomUUID;
 
@@ -42,16 +42,16 @@ class ManageUserAssignmentsUseCase {
     ua.createdAt = currentTimestamp();
 
     repo.save(ua);
-    return CommandResult(true, ua.id.value, "");
+    return UsecaseResult(true, ua.id.value, "");
   }
 
-  CommandResult deleteAssignment(TenantId tenantId, UserAssignmentId id) {
+  UsecaseResult deleteAssignment(TenantId tenantId, UserAssignmentId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "User assignment not found");
+      return UsecaseResult(false, "", "User assignment not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   UserAssignment getAssignment(TenantId tenantId, UserAssignmentId id) {

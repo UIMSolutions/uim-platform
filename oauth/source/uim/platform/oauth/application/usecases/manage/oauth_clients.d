@@ -26,7 +26,7 @@ class ManageOAuthClientsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createClient(OAuthClientDTO dto) {
+    UsecaseResult createClient(OAuthClientDTO dto) {
         OAuthClient client;
         client.id = dto.clientId;
         client.tenantId = dto.tenantId;
@@ -43,16 +43,16 @@ class ManageOAuthClientsUseCase {
         client.createdBy = dto.createdBy;
         auto error = OAuthValidator.validateOAuthClient(client);
         if (error.length > 0)
-            return CommandResult(false, "", error);
+            return UsecaseResult(false, "", error);
             
         repo.save(client);
-        return CommandResult(true, client.id.value, "");
+        return UsecaseResult(true, client.id.value, "");
     }
 
-    CommandResult updateClient(OAuthClientDTO dto) {
+    UsecaseResult updateClient(OAuthClientDTO dto) {
         auto client = repo.findById(dto.tenantId, dto.clientId);
          if (client.isNull)
-            return CommandResult(false, "", "OAuth client not found");  
+            return UsecaseResult(false, "", "OAuth client not found");  
 
         client.name = dto.name;
         client.description = dto.description;
@@ -64,16 +64,16 @@ class ManageOAuthClientsUseCase {
         client.contacts = dto.contacts;
         client.updatedBy = dto.updatedBy;
         repo.update(client);
-        return CommandResult(true, client.id.value, "");
+        return UsecaseResult(true, client.id.value, "");
     }
 
-    CommandResult deleteClient(TenantId tenantId, OAuthClientId id) {
+    UsecaseResult deleteClient(TenantId tenantId, OAuthClientId id) {
         auto client = repo.findById(tenantId, id);
         if (client.isNull)
-            return CommandResult(false, "", "OAuth client not found");
+            return UsecaseResult(false, "", "OAuth client not found");
 
         repo.remove(client);
-        return CommandResult(true, client.id.value, "");
+        return UsecaseResult(true, client.id.value, "");
     }
 }
 

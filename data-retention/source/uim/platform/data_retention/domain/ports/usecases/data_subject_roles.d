@@ -12,12 +12,12 @@ mixin(ShowModule!());
 
 interface IManageDataSubjectRolesUseCase { 
 
-    CommandResult createDataSubjectRole(CreateDataSubjectRoleRequest req);
-    CommandResult updateDataSubjectRole(TenantId tenantId, DataSubjectRoleId id, UpdateDataSubjectRoleRequest req);
+    UsecaseResult createDataSubjectRole(CreateDataSubjectRoleRequest req);
+    UsecaseResult updateDataSubjectRole(TenantId tenantId, DataSubjectRoleId id, UpdateDataSubjectRoleRequest req);
     bool hasDataSubjectRole(TenantId tenantId, DataSubjectRoleId id);
     DataSubjectRole getDataSubjectRole(TenantId tenantId, DataSubjectRoleId id);
     DataSubjectRole[] listDataSubjectRoles(TenantId tenantId);
-    CommandResult deleteDataSubjectRole(TenantId tenantId, DataSubjectRoleId id);
+    UsecaseResult deleteDataSubjectRole(TenantId tenantId, DataSubjectRoleId id);
 
 }
 

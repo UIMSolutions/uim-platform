@@ -34,7 +34,7 @@ class ManageTechniciansUseCase {
         return repo.findByRegion(tenantId, region);
     }
 
-    CommandResult createTechnician(TechnicianDTO dto) {
+    UsecaseResult createTechnician(TechnicianDTO dto) {
         Technician t;
         t.id = dto.technicianId;
         t.tenantId = dto.tenantId;
@@ -52,15 +52,15 @@ class ManageTechniciansUseCase {
         t.travelRadius = dto.travelRadius;
         t.createdBy = dto.createdBy;
         if (!FieldServiceValidator.isValidTechnician(t))
-            return CommandResult(false, "", "Invalid technician data");
+            return UsecaseResult(false, "", "Invalid technician data");
         repo.save(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 
-    CommandResult updateTechnician(TechnicianDTO dto) {
+    UsecaseResult updateTechnician(TechnicianDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.technicianId);
         if (existing.isNull)
-            return CommandResult(false, "", "Technician not found");
+            return UsecaseResult(false, "", "Technician not found");
         if (dto.firstName.length > 0) existing.firstName = dto.firstName;
         if (dto.lastName.length > 0) existing.lastName = dto.lastName;
         if (dto.email.length > 0) existing.email = dto.email;
@@ -69,15 +69,15 @@ class ManageTechniciansUseCase {
         if (dto.address.length > 0) existing.address = dto.address;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
         }
 
-    CommandResult deleteTechnician(TenantId tenantId, TechnicianId id) {
+    UsecaseResult deleteTechnician(TenantId tenantId, TechnicianId id) {
         auto technician = repo.findById(tenantId, id);
         if (technician.isNull)
-            return CommandResult(false, "", "Technician not found");
+            return UsecaseResult(false, "", "Technician not found");
 
         repo.remove(technician);
-        return CommandResult(true, technician.id.value, "");
+        return UsecaseResult(true, technician.id.value, "");
     }
 }

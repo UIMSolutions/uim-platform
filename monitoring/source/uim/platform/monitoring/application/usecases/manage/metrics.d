@@ -28,12 +28,12 @@ class ManageMetricsUseCase {
 
   // --- Metric Definitions ---
 
-  CommandResult createDefinition(CreateMetricDefinitionRequest req) {
+  UsecaseResult createDefinition(CreateMetricDefinitionRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Metric name is required");
+      return UsecaseResult(false, "", "Metric name is required");
 
     if (definitions.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
 
     auto definition = MetricDefinition(req.tenantId); //, UserId("test-user"));
     definition.name = req.name;
@@ -46,13 +46,13 @@ class ManageMetricsUseCase {
     definition.isEnabled = true;
 
     definitions.save(definition);
-    return CommandResult(true, definition.id.value, "");
+    return UsecaseResult(true, definition.id.value, "");
   }
 
-  CommandResult updateDefinition(UpdateMetricDefinitionRequest req) {
+  UsecaseResult updateDefinition(UpdateMetricDefinitionRequest req) {
     auto definition = definitions.findById(req.tenantId, req.id);
     if (definition.isNull)
-      return CommandResult(false, "", "Metric definition not found");
+      return UsecaseResult(false, "", "Metric definition not found");
 
     if (req.displayName.length > 0)
       definition.displayName = req.displayName;
@@ -63,7 +63,7 @@ class ManageMetricsUseCase {
     definition.isEnabled = req.isEnabled;
 
     definitions.update(definition);
-    return CommandResult(true, definition.id.value, "");
+    return UsecaseResult(true, definition.id.value, "");
   }
 
   MetricDefinition getDefinition(TenantId tenantId, MetricDefinitionId id) {
@@ -74,22 +74,22 @@ class ManageMetricsUseCase {
     return definitions.findByTenant(tenantId);
   }
 
-  CommandResult deleteMetricDefinition(TenantId tenantId, MetricDefinitionId id) {
+  UsecaseResult deleteMetricDefinition(TenantId tenantId, MetricDefinitionId id) {
     auto definition = definitions.findById(tenantId, id);
     if (definition.isNull)
-      return CommandResult(false, "", "Metric definition not found");
+      return UsecaseResult(false, "", "Metric definition not found");
 
     definitions.remove(definition);
-    return CommandResult(true, definition.id.value, "");
+    return UsecaseResult(true, definition.id.value, "");
   }
 
   // --- Metric Data Points ---
-  CommandResult pushMetric(PushMetricRequest req) {
+  UsecaseResult pushMetric(PushMetricRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Metric name is required");
+      return UsecaseResult(false, "", "Metric name is required");
 
     if (req.resourceId.isEmpty)
-      return CommandResult(false, "", "Resource ID is required");
+      return UsecaseResult(false, "", "Resource ID is required");
 
     auto m = Metric(req.tenantId);
     m.resourceId = req.resourceId;
@@ -101,10 +101,10 @@ class ManageMetricsUseCase {
     m.timestamp = m.createdAt; // use server time for consistency
 
     metricRepo.save(m);
-    return CommandResult(true, m.id.value, "");
+    return UsecaseResult(true, m.id.value, "");
   }
 
-  CommandResult pushMetricBatch(PushMetricBatchRequest req) {
+  UsecaseResult pushMetricBatch(PushMetricBatchRequest req) {
     Metric[] metrics;
     foreach (r; req.metrics) {
       auto m = Metric(req.tenantId);
@@ -119,7 +119,7 @@ class ManageMetricsUseCase {
     }
 
     metrics.each!(m => metricRepo.save(m));
-    return CommandResult(true, "", "");
+    return UsecaseResult(true, "", "");
   }
 
   Metric[] getMetrics(TenantId tenantId, MonitoredResourceId resourceId) {

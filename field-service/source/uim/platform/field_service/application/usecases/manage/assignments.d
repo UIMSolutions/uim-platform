@@ -34,7 +34,7 @@ class ManageAssignmentsUseCase {
         return repo.findByTechnician(tenantId, technicianId);
     }
 
-    CommandResult createAssignment(AssignmentDTO dto) {
+    UsecaseResult createAssignment(AssignmentDTO dto) {
         auto assignment = Assignment(dto.tenantId, dto.assignmentId, dto.createdBy);
         assignment.activityId = dto.activityId;
         assignment.technicianId = dto.technicianId;
@@ -43,16 +43,16 @@ class ManageAssignmentsUseCase {
         assignment.matchScore = dto.matchScore;
         assignment.notes = dto.notes;
         if (!FieldServiceValidator.isValidAssignment(assignment))
-            return CommandResult(false, "", "Invalid assignment data");
+            return UsecaseResult(false, "", "Invalid assignment data");
 
         repo.save(assignment);
-        return CommandResult(true, assignment.id.value, "");
+        return UsecaseResult(true, assignment.id.value, "");
     }
 
-    CommandResult updateAssignment(AssignmentDTO dto) {
+    UsecaseResult updateAssignment(AssignmentDTO dto) {
         auto assignment = repo.findById(dto.tenantId, dto.assignmentId);
         if (assignment.isNull)
-            return CommandResult(false, "", "Assignment not found");
+            return UsecaseResult(false, "", "Assignment not found");
         if (dto.acceptedDate.length > 0) assignment.acceptedDate = dto.acceptedDate;
         if (dto.startedDate.length > 0) assignment.startedDate = dto.startedDate;
         if (dto.completedDate.length > 0) assignment.completedDate = dto.completedDate;
@@ -60,15 +60,15 @@ class ManageAssignmentsUseCase {
         if (dto.notes.length > 0) assignment.notes = dto.notes;
         if (!dto.updatedBy.isNull) assignment.updatedBy = dto.updatedBy;
         repo.update(assignment);
-        return CommandResult(true, assignment.id.value, "");
+        return UsecaseResult(true, assignment.id.value, "");
     }
 
-    CommandResult deleteAssignment(TenantId tenantId, AssignmentId id) {
+    UsecaseResult deleteAssignment(TenantId tenantId, AssignmentId id) {
         auto assignment = repo.findById(tenantId, id);
         if (assignment.isNull)
-            return CommandResult(false, "", "Assignment not found");
+            return UsecaseResult(false, "", "Assignment not found");
 
         repo.remove(assignment);
-        return CommandResult(true, assignment.id.value, "");
+        return UsecaseResult(true, assignment.id.value, "");
     }
 }

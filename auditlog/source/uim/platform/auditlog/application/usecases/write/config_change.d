@@ -19,11 +19,11 @@ class WriteConfigChangeUseCase {
     this.cclRepo = cclRepo;
   }
 
-  CommandResult writeChange(WriteConfigChangeLogRequest req) {
+  UsecaseResult writeChange(WriteConfigChangeLogRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.configType.length == 0)
-      return CommandResult(false, "", "Config type is required");
+      return UsecaseResult(false, "", "Config type is required");
 
     // Create parent audit log entry
     auto entry = AuditLogEntry(req.tenantId, AuditLogId(""), req.changedBy);
@@ -49,7 +49,7 @@ class WriteConfigChangeUseCase {
     ccLog.timestamp = ccLog.createdAt; // Use the same timestamp for both records
 
     cclRepo.save(ccLog);
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 }
 

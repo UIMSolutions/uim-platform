@@ -16,8 +16,8 @@ interface IManageCatalogsUseCase {
     Catalog getCatalog(TenantId tenantId, CatalogId id);
     Catalog[] listCatalogs(TenantId tenantId);
     Catalog[] listCatalogs(TenantId tenantId, CatalogStatus status);
-    CommandResult createCatalog(CatalogDTO dto);
-    CommandResult updateCatalog(CatalogDTO dto);
-    CommandResult deleteCatalog(TenantId tenantId, CatalogId id);
+    UsecaseResult createCatalog(CatalogDTO dto);
+    UsecaseResult updateCatalog(CatalogDTO dto);
+    UsecaseResult deleteCatalog(TenantId tenantId, CatalogId id);
     
 }

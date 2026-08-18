@@ -157,7 +157,7 @@ class BuildingBlockUi5Model {
         return detail;
     }
 
-    CommandResult createArchitecture(TenantId tenantId, Json data) {
+    UsecaseResult createArchitecture(TenantId tenantId, Json data) {
         auto req = CreateArchitectureBlockRequest();
         req.tenantId = tenantId;
         req.title = data.getString("title", "");
@@ -170,7 +170,7 @@ class BuildingBlockUi5Model {
         return architectureUseCase.createBlock(req);
     }
 
-    CommandResult createSolution(TenantId tenantId, Json data) {
+    UsecaseResult createSolution(TenantId tenantId, Json data) {
         auto req = CreateSolutionBlockRequest();
         req.tenantId = tenantId;
         req.title = data.getString("title", "");
@@ -183,7 +183,7 @@ class BuildingBlockUi5Model {
         return solutionUseCase.createBlock(req);
     }
 
-    CommandResult createData(TenantId tenantId, Json data) {
+    UsecaseResult createData(TenantId tenantId, Json data) {
         auto req = CreateDataBlockRequest();
         req.tenantId = tenantId;
         req.title = data.getString("title", "");
@@ -196,7 +196,7 @@ class BuildingBlockUi5Model {
         return dataUseCase.createBlock(req);
     }
 
-    CommandResult createBusiness(TenantId tenantId, Json data) {
+    UsecaseResult createBusiness(TenantId tenantId, Json data) {
         auto req = CreateBusinessBlockRequest();
         req.tenantId = tenantId;
         req.title = data.getString("title", "");
@@ -209,7 +209,7 @@ class BuildingBlockUi5Model {
         return businessUseCase.createBlock(req);
     }
 
-    CommandResult createTechnology(TenantId tenantId, Json data) {
+    UsecaseResult createTechnology(TenantId tenantId, Json data) {
         auto req = CreateTechnologyBlockRequest();
         req.tenantId = tenantId;
         req.title = data.getString("title", "");
@@ -222,7 +222,7 @@ class BuildingBlockUi5Model {
         return technologyUseCase.createBlock(req);
     }
 
-    CommandResult updateArchitecture(TenantId tenantId, string id, Json data) {
+    UsecaseResult updateArchitecture(TenantId tenantId, string id, Json data) {
         auto req = UpdateArchitectureBlockRequest();
         req.tenantId = tenantId;
         req.blockId = ArchitectureBlockId(id);
@@ -236,7 +236,7 @@ class BuildingBlockUi5Model {
         return architectureUseCase.updateBlock(req);
     }
 
-    CommandResult updateSolution(TenantId tenantId, string id, Json data) {
+    UsecaseResult updateSolution(TenantId tenantId, string id, Json data) {
         auto req = UpdateSolutionBlockRequest();
         req.tenantId = tenantId;
         req.blockId = SolutionBlockId(id);
@@ -250,7 +250,7 @@ class BuildingBlockUi5Model {
         return solutionUseCase.updateBlock(req);
     }
 
-    CommandResult updateData(TenantId tenantId, string id, Json data) {
+    UsecaseResult updateData(TenantId tenantId, string id, Json data) {
         auto req = UpdateDataBlockRequest();
         req.tenantId = tenantId;
         req.blockId = DataBlockId(id);
@@ -264,7 +264,7 @@ class BuildingBlockUi5Model {
         return dataUseCase.updateBlock(req);
     }
 
-    CommandResult updateBusiness(TenantId tenantId, string id, Json data) {
+    UsecaseResult updateBusiness(TenantId tenantId, string id, Json data) {
         auto req = UpdateBusinessBlockRequest();
         req.tenantId = tenantId;
         req.blockId = BusinessBlockId(id);
@@ -278,7 +278,7 @@ class BuildingBlockUi5Model {
         return businessUseCase.updateBlock(req);
     }
 
-    CommandResult updateTechnology(TenantId tenantId, string id, Json data) {
+    UsecaseResult updateTechnology(TenantId tenantId, string id, Json data) {
         auto req = UpdateTechnologyBlockRequest();
         req.tenantId = tenantId;
         req.blockId = TechnologyBlockId(id);
@@ -292,23 +292,23 @@ class BuildingBlockUi5Model {
         return technologyUseCase.updateBlock(req);
     }
 
-    CommandResult deleteArchitecture(TenantId tenantId, string id) {
+    UsecaseResult deleteArchitecture(TenantId tenantId, string id) {
         return architectureUseCase.deleteBlock(tenantId, ArchitectureBlockId(id));
     }
 
-    CommandResult deleteSolution(TenantId tenantId, string id) {
+    UsecaseResult deleteSolution(TenantId tenantId, string id) {
         return solutionUseCase.deleteBlock(tenantId, SolutionBlockId(id));
     }
 
-    CommandResult deleteData(TenantId tenantId, string id) {
+    UsecaseResult deleteData(TenantId tenantId, string id) {
         return dataUseCase.deleteBlock(tenantId, DataBlockId(id));
     }
 
-    CommandResult deleteBusiness(TenantId tenantId, string id) {
+    UsecaseResult deleteBusiness(TenantId tenantId, string id) {
         return businessUseCase.deleteBlock(tenantId, BusinessBlockId(id));
     }
 
-    CommandResult deleteTechnology(TenantId tenantId, string id) {
+    UsecaseResult deleteTechnology(TenantId tenantId, string id) {
         return technologyUseCase.deleteBlock(tenantId, TechnologyBlockId(id));
     }
 

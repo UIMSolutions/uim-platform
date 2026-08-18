@@ -17,16 +17,16 @@ class ManageExecutablesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createExecutable(CreateExecutableRequest r) {
+    UsecaseResult createExecutable(CreateExecutableRequest r) {
         if (r.executableId.isEmpty)
-            return CommandResult(false, "", "Executable ID is required");
+            return UsecaseResult(false, "", "Executable ID is required");
         if (r.scenarioId.isEmpty)
-            return CommandResult(false, "", "Scenario ID is required");
+            return UsecaseResult(false, "", "Scenario ID is required");
         if (r.resourceGroupId.isEmpty)
-            return CommandResult(false, "", "Resource group ID is required");
+            return UsecaseResult(false, "", "Resource group ID is required");
 
         if (repo.existsById(r.tenantId, r.resourceGroupId, r.executableId))
-            return CommandResult(false, "", "Executable already exists");
+            return UsecaseResult(false, "", "Executable already exists");
 
         auto executable = Executable(r.tenantId);
         executable.id = r.executableId;
@@ -40,7 +40,7 @@ class ManageExecutablesUseCase {
         executable.type = r.type == "serving" ? ExecutableType.serving : ExecutableType.workflow;
 
         repo.save(executable);
-        return CommandResult(true, executable.id.value, "");
+        return UsecaseResult(true, executable.id.value, "");
     }
 
     Executable getExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id) {
@@ -55,13 +55,13 @@ class ManageExecutablesUseCase {
         return repo.findByResourceGroup(tenantId, resourceGroupId);
     }
 
-    CommandResult deleteExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id) {
+    UsecaseResult deleteExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id) {
         auto executable = repo.findById(tenantId, resourceGroupId, id);
         if (executable.isNull)
-            return CommandResult(false, "", "Executable not found");
+            return UsecaseResult(false, "", "Executable not found");
 
         repo.remove(executable);
-        return CommandResult(true, executable.id.value, "");
+        return UsecaseResult(true, executable.id.value, "");
     }
 }
 

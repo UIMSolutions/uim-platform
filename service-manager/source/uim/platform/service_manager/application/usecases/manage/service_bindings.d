@@ -21,7 +21,7 @@ class ManageServiceBindingsUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createBinding(CreateServiceBindingRequest dto) {
+    UsecaseResult createBinding(CreateServiceBindingRequest dto) {
 
         auto binding = ServiceBinding(dto.tenantId);
         binding.name = dto.name;
@@ -38,18 +38,18 @@ class ManageServiceBindingsUseCase {
         binding.updatedAt = binding.createdAt;
 
         if (dto.name.isEmpty)
-            return CommandResult(false, "", "Service binding name is required");
+            return UsecaseResult(false, "", "Service binding name is required");
         if (dto.instanceId.isNull)
-            return CommandResult(false, "", "Service instance ID is required");
+            return UsecaseResult(false, "", "Service instance ID is required");
 
         repo.save(binding);
-        return CommandResult(true, binding.id.value, "");
+        return UsecaseResult(true, binding.id.value, "");
     }
 
-    CommandResult updateBinding(UpdateServiceBindingRequest dto) {
+    UsecaseResult updateBinding(UpdateServiceBindingRequest dto) {
         auto binding = repo.findById(dto.tenantId, dto.bindingId);
         if (binding.isNull)
-            return CommandResult(false, "", "Service binding not found");
+            return UsecaseResult(false, "", "Service binding not found");
 
         if (dto.name.length > 0) binding.name = dto.name;
         if (dto.parameters.length > 0) binding.parameters = dto.parameters;
@@ -57,16 +57,16 @@ class ManageServiceBindingsUseCase {
         binding.updatedAt = currentTimestamp;
 
         repo.update(binding);
-        return CommandResult(true, binding.id.value, "");
+        return UsecaseResult(true, binding.id.value, "");
     }
 
-    CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
+    UsecaseResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
         auto binding = repo.findById(tenantId, id);
         if (binding.isNull)
-            return CommandResult(false, "", "Service binding not found");
+            return UsecaseResult(false, "", "Service binding not found");
 
         repo.remove(binding);
-        return CommandResult(true, binding.id.value, "");
+        return UsecaseResult(true, binding.id.value, "");
     }
 }
 

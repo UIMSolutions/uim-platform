@@ -135,11 +135,11 @@ sequenceDiagram
 
     Admin->>CC: POST /cloud-connectors { name, host, port, region }
     CC->>CUC: createConnector(dto)
-    CUC-->>CC: CommandResult(true, connectorId)
+    CUC-->>CC: UsecaseResult(true, connectorId)
     CC-->>Admin: 201 { id }
 
     Admin->>DC: POST /destinations { connectorId, name, url, authType=OAuth2 }
     DC->>DUC: createDestination(dto)
-    DUC-->>DC: CommandResult(true, destId)
+    DUC-->>DC: UsecaseResult(true, destId)
     DC-->>Admin: 201 { id }
 ```

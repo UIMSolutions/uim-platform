@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 interface IIngestTracesUseCase { 
   
-  CommandResult ingestSpan(IngestSpanRequest req);
+  UsecaseResult ingestSpan(IngestSpanRequest req);
 
-  CommandResult ingestSpanBatch(IngestSpanBatchRequest req) ;
+  UsecaseResult ingestSpanBatch(IngestSpanBatchRequest req) ;
 
   Span[] getTrace(TenantId tenantId, TraceId traceId);
 

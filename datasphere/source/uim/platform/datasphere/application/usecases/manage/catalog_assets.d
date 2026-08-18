@@ -21,12 +21,12 @@ class ManageCatalogAssetsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createCatalogAsset(CreateCatalogAssetRequest r) {
+  UsecaseResult createCatalogAsset(CreateCatalogAssetRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Catalog asset name is required");
+      return UsecaseResult(false, "", "Catalog asset name is required");
       
     if (r.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
 
     auto ca = CatalogAsset(r.tenantId, r.assetId);
     ca.spaceId = r.spaceId;
@@ -39,7 +39,7 @@ class ManageCatalogAssetsUseCase {
     ca.qualityStatus = QualityStatus.unknown;
 
     repo.save(ca);
-    return CommandResult(true, ca.id.value, "");
+    return UsecaseResult(true, ca.id.value, "");
   }
 
   CatalogAsset getCatalogAsset(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
@@ -54,10 +54,10 @@ class ManageCatalogAssetsUseCase {
     return repo.search(tenantId, spaceId, query);
   }
 
-  CommandResult updateCatalogAsset(UpdateCatalogAssetRequest r) {
+  UsecaseResult updateCatalogAsset(UpdateCatalogAssetRequest r) {
     auto asset = repo.findById(r.tenantId, r.spaceId, r.assetId);
     if (asset.isNull)
-      return CommandResult(false, "", "Catalog asset not found");
+      return UsecaseResult(false, "", "Catalog asset not found");
 
     asset.name = r.name;
     asset.description = r.description;
@@ -69,15 +69,15 @@ class ManageCatalogAssetsUseCase {
     asset.updatedAt = currentTimestamp;
 
     repo.update(asset);
-    return CommandResult(true, asset.id.value, "");
+    return UsecaseResult(true, asset.id.value, "");
   }
 
-  CommandResult deleteCatalogAsset(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
+  UsecaseResult deleteCatalogAsset(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {
     auto asset = repo.findById(tenantId, spaceId, id);
     if (asset.isNull)
-      return CommandResult(false, "", "Catalog asset not found");
+      return UsecaseResult(false, "", "Catalog asset not found");
 
     repo.remove(asset);
-    return CommandResult(true, asset.id.value, "");
+    return UsecaseResult(true, asset.id.value, "");
   }
 }

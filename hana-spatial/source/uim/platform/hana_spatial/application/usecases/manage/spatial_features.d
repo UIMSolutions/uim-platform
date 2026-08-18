@@ -17,11 +17,11 @@ class ManageSpatialFeaturesUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateSpatialFeatureRequest r) {
+  UsecaseResult create(CreateSpatialFeatureRequest r) {
     auto err = SpatialValidator.validateId(r.id);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateLayer(r.layerId);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto feature = SpatialFeature(r.tenantId); //, r.createdBy);
     feature.id = SpatialFeatureId(r.id);
@@ -37,13 +37,13 @@ class ManageSpatialFeaturesUseCase {
     }
 
     repo.save(feature);
-    return CommandResult(true, feature.id.value, "");
+    return UsecaseResult(true, feature.id.value, "");
   }
 
-  CommandResult update(UpdateSpatialFeatureRequest r) {
+  UsecaseResult update(UpdateSpatialFeatureRequest r) {
     auto existing = repo.findById(r.tenantId, SpatialFeatureId(r.id));
     if (existing.isNull)
-      return CommandResult(false, "", "Spatial feature not found");
+      return UsecaseResult(false, "", "Spatial feature not found");
 
     existing.name = r.name;
     existing.geometry = r.geometry;
@@ -52,7 +52,7 @@ class ManageSpatialFeaturesUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   SpatialFeature getById(TenantId tenantId, string id) {
@@ -67,11 +67,11 @@ class ManageSpatialFeaturesUseCase {
     return repo.findByLayer(tenantId, SpatialLayerId(layerId));
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, SpatialFeatureId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "Spatial feature not found");
+      return UsecaseResult(false, "", "Spatial feature not found");
     repo.remove(tenantId, SpatialFeatureId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

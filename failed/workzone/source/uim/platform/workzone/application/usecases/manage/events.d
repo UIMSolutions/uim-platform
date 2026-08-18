@@ -22,9 +22,9 @@ class ManageEventsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createEvent(CreateEventRequest req) {
+  UsecaseResult createEvent(CreateEventRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Event title is required");
+      return UsecaseResult(false, "", "Event title is required");
 
     auto e = Event(req.tenantId, req.eventId, req.createdBy); 
     e.workspaceId = req.workspaceId;
@@ -43,7 +43,7 @@ class ManageEventsUseCase {
     e.recurrenceRule = req.recurrenceRule;
 
     repo.save(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 
   Event getEvent(TenantId tenantId, EventId id) {
@@ -54,10 +54,10 @@ class ManageEventsUseCase {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  CommandResult updateEvent(UpdateEventRequest req) {
+  UsecaseResult updateEvent(UpdateEventRequest req) {
     auto e = repo.findById(req.tenantId, req.id);
     if (e.isNull)
-      return CommandResult(false, "", "Event not found");
+      return UsecaseResult(false, "", "Event not found");
 
     if (req.title.length > 0)
       e.title = req.title;
@@ -71,15 +71,15 @@ class ManageEventsUseCase {
     e.updatedAt = currentTimestamp();
 
     repo.update(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 
-  CommandResult deleteEvent(TenantId tenantId, EventId id) {
+  UsecaseResult deleteEvent(TenantId tenantId, EventId id) {
     auto e = repo.findById(tenantId, id);
     if (e.isNull)
-      return CommandResult(false, "", "Event not found");
+      return UsecaseResult(false, "", "Event not found");
 
     repo.remove(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 }

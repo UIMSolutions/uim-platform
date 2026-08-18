@@ -28,7 +28,7 @@ class ManageTeamsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createTeam(TeamDTO dto) {
+    UsecaseResult createTeam(TeamDTO dto) {
         auto t = Team(dto.tenantId); //, dto.createdBy);
         t.id          = dto.teamId;
         t.name        = dto.name;
@@ -38,29 +38,29 @@ class ManageTeamsUseCase {
         t.status      = parseStatus(dto.status);
         t.scope_      = parseScope(dto.scope_);
         if (t.name.isEmpty)
-            return CommandResult(false, "", "Team name is required");
+            return UsecaseResult(false, "", "Team name is required");
         repo.save(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 
-    CommandResult updateTeam(TeamDTO dto) {
+    UsecaseResult updateTeam(TeamDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.teamId);
         if (existing.isNull)
-            return CommandResult(false, "", "Team not found");
+            return UsecaseResult(false, "", "Team not found");
         if (dto.name.length > 0)        existing.name        = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.teamTypeId.length > 0)  existing.teamTypeId  = dto.teamTypeId;
         if (!dto.updatedBy.isNull)      existing.updatedBy   = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteTeam(TenantId tenantId, TeamId id) {
+    UsecaseResult deleteTeam(TenantId tenantId, TeamId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Team not found");
+            return UsecaseResult(false, "", "Team not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
     private static TeamStatus parseStatus(string s) {

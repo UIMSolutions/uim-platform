@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 interface IManageDeploymentsUseCase { 
 
-  CommandResult createDeployment(CreateDeploymentRequest r);
+  UsecaseResult createDeployment(CreateDeploymentRequest r);
 
   Deployment getDeployment(TenantId tenantId, ConnectionId connectionId, DeploymentId id);
 
@@ -24,10 +24,10 @@ interface IManageDeploymentsUseCase {
 
   Deployment[] listDeployments(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
 
-  CommandResult patchDeployment(PatchDeploymentRequest r);
+  UsecaseResult patchDeployment(PatchDeploymentRequest r);
 
-  CommandResult[] bulkPatchDeployments(BulkPatchDeploymentRequest r);
+  UsecaseResult[] bulkPatchDeployments(BulkPatchDeploymentRequest r);
 
-  CommandResult deleteDeployment(TenantId tenantId, ConnectionId connectionId, DeploymentId id);
+  UsecaseResult deleteDeployment(TenantId tenantId, ConnectionId connectionId, DeploymentId id);
 
 }

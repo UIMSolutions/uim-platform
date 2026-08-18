@@ -16,8 +16,8 @@ interface IManageEventApplicationsUseCase {
     EventApplication getApplication(TenantId tenantId, EventApplicationId id);
     EventApplication[] listApplications(TenantId tenantId);
     EventApplication[] listApplications(TenantId tenantId, BrokerServiceId serviceId);
-    CommandResult createApplication(EventApplicationDTO dto);
-    CommandResult updateApplication(EventApplicationDTO dto);
-    CommandResult deleteApplication(TenantId tenantId, EventApplicationId id);
+    UsecaseResult createApplication(EventApplicationDTO dto);
+    UsecaseResult updateApplication(EventApplicationDTO dto);
+    UsecaseResult deleteApplication(TenantId tenantId, EventApplicationId id);
 
 }

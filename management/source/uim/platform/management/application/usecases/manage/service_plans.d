@@ -21,11 +21,11 @@ class ManageServicePlansUseCase {
     this.servicePlans = servicePlans;
   }
 
-  CommandResult createPlan(CreateServicePlanRequest req) {
+  UsecaseResult createPlan(CreateServicePlanRequest req) {
     if (req.serviceName.isEmpty)
-      return CommandResult(false, "", "Service name is required");
+      return UsecaseResult(false, "", "Service name is required");
     if (req.planName.isEmpty)
-      return CommandResult(false, "", "Plan name is required");
+      return UsecaseResult(false, "", "Plan name is required");
 
     auto plan = ServicePlan(req.tenantId);
     plan.serviceName = req.serviceName;
@@ -48,13 +48,13 @@ class ManageServicePlansUseCase {
     // plan.updatedBy = req.createdBy;
 
     servicePlans.save(plan);
-    return CommandResult(true, plan.id.value, "");
+    return UsecaseResult(true, plan.id.value, "");
   }
 
-  CommandResult updatePlan(UpdateServicePlanRequest req) {
+  UsecaseResult updatePlan(UpdateServicePlanRequest req) {
     auto plan = servicePlans.findById(req.tenantId, req.planId);
     if (plan.isNull)
-      return CommandResult(false, "", "Service plan not found");
+      return UsecaseResult(false, "", "Service plan not found");
 
     if (req.planDisplayName.length > 0)
       plan.planDisplayName = req.planDisplayName;
@@ -72,7 +72,7 @@ class ManageServicePlansUseCase {
     // plan.updatedAt = clockSeconds();
 
     servicePlans.update(plan);
-    return CommandResult(true, plan.id.value, "");
+    return UsecaseResult(true, plan.id.value, "");
   }
 
   ServicePlan getPlan(TenantId tenantId, ServicePlanId id) {
@@ -95,13 +95,13 @@ class ManageServicePlansUseCase {
     return servicePlans.findByRegion(tenantId, region);
   }
 
-  CommandResult deletePlan(TenantId tenantId, ServicePlanId id) {
+  UsecaseResult deletePlan(TenantId tenantId, ServicePlanId id) {
     auto entity = servicePlans.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Service plan not found");
+      return UsecaseResult(false, "", "Service plan not found");
 
     servicePlans.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }
 

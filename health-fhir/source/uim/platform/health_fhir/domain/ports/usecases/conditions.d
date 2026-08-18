@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 interface IManageConditionsUseCase {
 
-  CommandResult createCondition(CreateConditionRequest r);
+  UsecaseResult createCondition(CreateConditionRequest r);
 
-  CommandResult updateCondition(UpdateConditionRequest r);
+  UsecaseResult updateCondition(UpdateConditionRequest r);
 
   Condition getCondition(TenantId tenantId, ConditionId id);
 
@@ -22,6 +22,6 @@ interface IManageConditionsUseCase {
 
   Condition[] listByPatient(TenantId tenantId, string patientRef);
 
-  CommandResult deleteCondition(TenantId tenantId, ConditionId id);
+  UsecaseResult deleteCondition(TenantId tenantId, ConditionId id);
   
 }

@@ -38,7 +38,7 @@ class ManageFoldersUseCase {
         return repo.findRootFolders(tenantId, repositoryId);
     }
 
-    CommandResult createFolder(FolderDTO dto) {
+    UsecaseResult createFolder(FolderDTO dto) {
         auto folder = Folder(dto.tenantId);
         folder.repositoryId = dto.repositoryId;
         folder.parentFolderId = dto.parentFolderId;
@@ -58,18 +58,18 @@ class ManageFoldersUseCase {
             try { folder.folderType = dto.folderType.to!FolderType; } catch (Exception) {}
         }
         if (!DmsValidator.isValidFolder(folder))
-            return CommandResult(false, "", "Invalid folder: name and repositoryId are required");
+            return UsecaseResult(false, "", "Invalid folder: name and repositoryId are required");
         
         repo.save(folder);
-        return CommandResult(true, folder.id.value, "");
+        return UsecaseResult(true, folder.id.value, "");
     }
 
-    CommandResult updateFolder(FolderDTO dto) {
+    UsecaseResult updateFolder(FolderDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.folderId);
         if (existing.isNull)
-            return CommandResult(false, "", "Folder not found");
+            return UsecaseResult(false, "", "Folder not found");
         if (existing.isSystemFolder)
-            return CommandResult(false, "", "Cannot update system folder");
+            return UsecaseResult(false, "", "Cannot update system folder");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.allowedDocumentTypes.length > 0) existing.allowedDocumentTypes = dto.allowedDocumentTypes;
@@ -77,31 +77,31 @@ class ManageFoldersUseCase {
         if (dto.customProperties.length > 0) existing.customProperties = dto.customProperties;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult moveFolder(TenantId tenantId, FolderId id, FolderId targetParentId, UserId userId) {
+    UsecaseResult moveFolder(TenantId tenantId, FolderId id, FolderId targetParentId, UserId userId) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Folder not found");
+            return UsecaseResult(false, "", "Folder not found");
         if (existing.isSystemFolder)
-            return CommandResult(false, "", "Cannot move system folder");
+            return UsecaseResult(false, "", "Cannot move system folder");
         existing.parentFolderId = targetParentId;
         if (!userId.isEmpty) existing.updatedBy = userId;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteFolder(TenantId tenantId, FolderId id) {
+    UsecaseResult deleteFolder(TenantId tenantId, FolderId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Folder not found");
+            return UsecaseResult(false, "", "Folder not found");
         if (existing.isSystemFolder)
-            return CommandResult(false, "", "Cannot delete system folder");
+            return UsecaseResult(false, "", "Cannot delete system folder");
         if (existing.documentCount > 0)
-            return CommandResult(false, "", "Folder contains documents. Remove all documents first");
+            return UsecaseResult(false, "", "Folder contains documents. Remove all documents first");
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }
 

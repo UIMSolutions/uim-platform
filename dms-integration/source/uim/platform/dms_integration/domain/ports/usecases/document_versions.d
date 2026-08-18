@@ -21,8 +21,8 @@ interface IManageDocumentVersionsUseCase {
 
     DocumentVersion[] listLatestVersions(TenantId tenantId, DocumentId documentId);
 
-    CommandResult createDocumentVersion(DocumentVersionDTO dto);
+    UsecaseResult createDocumentVersion(DocumentVersionDTO dto);
 
-    CommandResult deleteDocumentVersion(TenantId tenantId, DocumentVersionId id);
+    UsecaseResult deleteDocumentVersion(TenantId tenantId, DocumentVersionId id);
 
 }

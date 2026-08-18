@@ -12,14 +12,14 @@ mixin(ShowModule!());
 
 interface IManageOrganizationsUseCase {
 
-  CommandResult createOrganization(CreateOrganizationRequest r);
+  UsecaseResult createOrganization(CreateOrganizationRequest r);
 
-  CommandResult updateOrganization(UpdateOrganizationRequest r);
+  UsecaseResult updateOrganization(UpdateOrganizationRequest r);
 
   Organization getOrganization(TenantId tenantId, OrganizationId id);
 
   Organization[] listOrganizations(TenantId tenantId);
 
-  CommandResult deleteOrganization(TenantId tenantId, OrganizationId id);
+  UsecaseResult deleteOrganization(TenantId tenantId, OrganizationId id);
   
 }

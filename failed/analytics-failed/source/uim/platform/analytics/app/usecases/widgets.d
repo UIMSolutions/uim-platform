@@ -47,9 +47,9 @@ class WidgetUseCases {
     return result;
   }
 
-  CommandResult deleteWidget(TenantId tenantId, WidgetId id) {
+  UsecaseResult deleteWidget(TenantId tenantId, WidgetId id) {
     auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     if (!found.empty) repo.remove(found[0]);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 }

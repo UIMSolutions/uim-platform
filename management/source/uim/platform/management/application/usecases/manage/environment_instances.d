@@ -29,15 +29,15 @@ class ManageEnvironmentsUseCase {
     this.provisioner = provisioner;
   }
 
-  CommandResult createEnvironment(CreateEnvironmentRequest req) {
+  UsecaseResult createEnvironment(CreateEnvironmentRequest req) {
     if (req.subaccountId.isEmpty)
-      return CommandResult(false, "", "Subaccount ID is required");
+      return UsecaseResult(false, "", "Subaccount ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Environment name is required");
+      return UsecaseResult(false, "", "Environment name is required");
 
     auto subaccount = subaccountRepo.findById(req.tenantId, req.subaccountId);
     if (subaccount.isNull)
-      return CommandResult(false, "", "Subaccount not found");
+      return UsecaseResult(false, "", "Subaccount not found");
 
     auto envType = req.environmentType.toEnvironmentType;
     auto existing = repo.findBySubaccount(req.tenantId, req.subaccountId);
@@ -45,7 +45,7 @@ class ManageEnvironmentsUseCase {
     auto validation = provisioner.validateProvisioning(envType, req.planName,
         subaccount, existing);
     if (!validation.valid)
-      return CommandResult(false, "", validation.reason);
+      return UsecaseResult(false, "", validation.reason);
 
     auto inst = Environment(req.tenantId);
     inst.subaccountId = req.subaccountId;
@@ -72,13 +72,13 @@ class ManageEnvironmentsUseCase {
     inst.technicalKey = "env-" ~ inst.id.value[0 .. 8];
     repo.update(inst);
 
-    return CommandResult(true, inst.id.value, "");
+    return UsecaseResult(true, inst.id.value, "");
   }
 
-  CommandResult updateEnvironment(UpdateEnvironmentRequest req) {
+  UsecaseResult updateEnvironment(UpdateEnvironmentRequest req) {
     auto instance = repo.findById(req.tenantId, req.instanceId);
     if (instance.isNull)
-      return CommandResult(false, "", "Environment instance not found");
+      return UsecaseResult(false, "", "Environment instance not found");
 
     if (req.description.length > 0)
       instance.description = req.description;
@@ -95,15 +95,15 @@ class ManageEnvironmentsUseCase {
     instance.updatedAt = clockSeconds();
 
     repo.update(instance);
-    return CommandResult(true, instance.id.value, "");
+    return UsecaseResult(true, instance.id.value, "");
   }
   
-  CommandResult deprovisionEnvironment(TenantId tenantId, EnvironmentId id) {
+  UsecaseResult deprovisionEnvironment(TenantId tenantId, EnvironmentId id) {
     auto instance = repo.findById(tenantId, id);
     if (instance.isNull)
-      return CommandResult(false, "", "Environment instance not found");
+      return UsecaseResult(false, "", "Environment instance not found");
     if (!provisioner.canDelete(instance))
-      return CommandResult(false, "", "Environment cannot be deleted in current status");
+      return UsecaseResult(false, "", "Environment cannot be deleted in current status");
 
     instance.status = EnvironmentStatus.deleting;
     instance.updatedAt = clockSeconds();
@@ -111,7 +111,7 @@ class ManageEnvironmentsUseCase {
 
     // Complete deletion
     repo.remove(instance);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   Environment getEnvironment(TenantId tenantId, EnvironmentId id) {

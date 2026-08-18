@@ -32,9 +32,9 @@ class ManageServiceInstancesUseCase {
         return repo.findByStatus(tenantId, InstanceStatus.active);
     }
 
-    CommandResult createServiceInstance(ServiceInstanceDTO dto) {
+    UsecaseResult createServiceInstance(ServiceInstanceDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Service instance name already exists");
+            return UsecaseResult(false, "", "Service instance name already exists");
 
         auto e = ServiceInstance(dto.tenantId); //, UserId("test-user"));
         e.id = dto.serviceInstanceId;
@@ -52,16 +52,16 @@ class ManageServiceInstancesUseCase {
         e.status = InstanceStatus.provisioning;
 
         if (!RedisValidator.isValidServiceInstance(e))
-            return CommandResult(false, "", "Invalid service instance: name and planId required");
+            return UsecaseResult(false, "", "Invalid service instance: name and planId required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateServiceInstance(ServiceInstanceDTO dto) {
+    UsecaseResult updateServiceInstance(ServiceInstanceDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.serviceInstanceId);
         if (existing.isNull)
-            return CommandResult(false, "", "Service instance not found");
+            return UsecaseResult(false, "", "Service instance not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -70,14 +70,14 @@ class ManageServiceInstancesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
+    UsecaseResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Service instance not found");
+            return UsecaseResult(false, "", "Service instance not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

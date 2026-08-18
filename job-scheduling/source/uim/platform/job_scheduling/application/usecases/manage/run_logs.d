@@ -36,7 +36,7 @@ class ManageRunLogsUseCase {
         return repo.findByJob(tenantId, jobId);
     }
 
-    CommandResult createRunLog(TenantId tenantId, ScheduleId scheduleId, JobId jobId) {
+    UsecaseResult createRunLog(TenantId tenantId, ScheduleId scheduleId, JobId jobId) {
         auto runlog = RunLog(tenantId);
         runlog.scheduleId = scheduleId;
         runlog.jobId = jobId;
@@ -45,17 +45,17 @@ class ManageRunLogsUseCase {
         runlog.scheduledAt = runlog.createdAt;
 
         repo.save(runlog);
-        return CommandResult(true, runlog.id.value, "");
+        return UsecaseResult(true, runlog.id.value, "");
     }
 
-    CommandResult updateStatus(UpdateRunLogRequest req) {
+    UsecaseResult updateStatus(UpdateRunLogRequest req) {
         auto runlog = repo.findById(req.tenantId, req.logId);
         if (runlog.isNull)
-            return CommandResult(false, "", "Run log not found");
+            return UsecaseResult(false, "", "Run log not found");
 
         auto targetStatus = req.status.to!RunStatus;
         if (!RunTracker.canTransition(runlog.status, targetStatus))
-            return CommandResult(false, "", "Invalid status transition");
+            return UsecaseResult(false, "", "Invalid status transition");
 
         runlog.status = targetStatus;
         if (req.statusMessage.length > 0)
@@ -68,7 +68,7 @@ class ManageRunLogsUseCase {
             runlog.triggeredAt = currentTimestamp;
         
         repo.update(runlog);
-        return CommandResult(true, runlog.id.value, "");
+        return UsecaseResult(true, runlog.id.value, "");
     }
 }
 

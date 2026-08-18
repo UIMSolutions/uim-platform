@@ -22,9 +22,9 @@ class ManageWorkpagesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createWorkpage(CreateWorkpageRequest req) {
+  UsecaseResult createWorkpage(CreateWorkpageRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Page title is required");
+      return UsecaseResult(false, "", "Page title is required");
 
     auto page = Workpage(req.tenantId);
     page.workspaceId = req.workspaceId;
@@ -34,7 +34,7 @@ class ManageWorkpagesUseCase {
     page.isDefault = req.isDefault;
 
     repo.save(page);
-    return CommandResult(true, page.id.value, "");
+    return UsecaseResult(true, page.id.value, "");
   }
 
   Workpage getWorkpage(TenantId tenantId, WorkpageId id) {
@@ -45,10 +45,10 @@ class ManageWorkpagesUseCase {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  CommandResult updateWorkpage(UpdateWorkpageRequest req) {
+  UsecaseResult updateWorkpage(UpdateWorkpageRequest req) {
     auto page = repo.findById(req.tenantId, req.id);
     if (page.isNull)
-      return CommandResult(false, "", "Page not found");
+      return UsecaseResult(false, "", "Page not found");
 
     if (req.title.length > 0)
       page.title = req.title;
@@ -59,15 +59,15 @@ class ManageWorkpagesUseCase {
     page.updatedAt = currentTimestamp();
 
     repo.update(page);
-    return CommandResult(true, page.id.value, "");
+    return UsecaseResult(true, page.id.value, "");
   }
 
-  CommandResult deleteWorkpage(TenantId tenantId, WorkpageId id) {
+  UsecaseResult deleteWorkpage(TenantId tenantId, WorkpageId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Page not found");
+      return UsecaseResult(false, "", "Page not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

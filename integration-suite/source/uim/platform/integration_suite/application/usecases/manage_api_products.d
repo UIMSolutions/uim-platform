@@ -11,7 +11,7 @@ private:
 public:
   this(IApiProductRepository repo) { _repo = repo; }
 
-  CommandResult create(CreateApiProductRequest req) {
+  UsecaseResult create(CreateApiProductRequest req) {
     auto prod = ApiProduct(req.tenantId);
     prod.id = req.id);
     prod.name        = req.name;
@@ -23,27 +23,27 @@ public:
     prod.isPublic    = false;
     prod.metadata    = req.metadata;
     auto err = IntegrationValidator.validateApiProduct(prod);
-    if (err !is null) return CommandResult(false, err);
+    if (err !is null) return UsecaseResult(false, err);
     _repo.add(getTenantId(req.tenantId), prod);
-    return CommandResult(true, prod.toJson());
+    return UsecaseResult(true, prod.toJson());
   }
 
-  CommandResult getAll(TenantId tenantId) {
+  UsecaseResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (p; items) arr ~= p.toJson();
-    return CommandResult(true, arr);
+    return UsecaseResult(true, arr);
   }
 
-  CommandResult getById(TenantId tenantId, string id) {
+  UsecaseResult getById(TenantId tenantId, string id) {
     auto prod = _repo.getById(getTenantId(tenantId), ApiProductId(id));
-    if (prod.isNull) return CommandResult(false, "API product not found");
-    return CommandResult(true, prod.toJson());
+    if (prod.isNull) return UsecaseResult(false, "API product not found");
+    return UsecaseResult(true, prod.toJson());
   }
 
-  CommandResult update(UpdateApiProductRequest req) {
+  UsecaseResult update(UpdateApiProductRequest req) {
     auto prod = _repo.getById(getTenantId(req.tenantId), ApiProductId(req.id));
-    if (prod.isNull) return CommandResult(false, "API product not found");
+    if (prod.isNull) return UsecaseResult(false, "API product not found");
     if (req.name.length > 0)        prod.name        = req.name;
     if (req.description.length > 0) prod.description = req.description;
     if (req.apiProxyIds.length > 0) prod.apiProxyIds = req.apiProxyIds;
@@ -53,22 +53,22 @@ public:
     prod.isPublic = req.isPublic;
     foreach (k, v; req.metadata)    prod.metadata[k] = v;
     _repo.update(getTenantId(req.tenantId), prod);
-    return CommandResult(true, prod.toJson());
+    return UsecaseResult(true, prod.toJson());
   }
 
-  CommandResult publish(TenantId tenantId, string id) {
+  UsecaseResult publish(TenantId tenantId, string id) {
     auto prod = _repo.getById(getTenantId(tenantId), ApiProductId(id));
-    if (prod.isNull) return CommandResult(false, "API product not found");
+    if (prod.isNull) return UsecaseResult(false, "API product not found");
     prod.status   = ApiProxyStatus.published;
     prod.isPublic = true;
     _repo.update(getTenantId(tenantId), prod);
-    return CommandResult(true, prod.toJson());
+    return UsecaseResult(true, prod.toJson());
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto prod = _repo.getById(getTenantId(tenantId), ApiProductId(id));
-    if (prod.isNull) return CommandResult(false, "API product not found");
+    if (prod.isNull) return UsecaseResult(false, "API product not found");
     _repo.remove(getTenantId(tenantId), ApiProductId(id));
-    return CommandResult(true, "API product deleted");
+    return UsecaseResult(true, "API product deleted");
   }
 }

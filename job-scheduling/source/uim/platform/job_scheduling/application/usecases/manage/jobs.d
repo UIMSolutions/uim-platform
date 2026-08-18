@@ -23,11 +23,11 @@ class ManageJobsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createJob(CreateJobRequest r) {
+    UsecaseResult createJob(CreateJobRequest r) {
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Job name is required");
+            return UsecaseResult(false, "", "Job name is required");
         if (r.actionUrl.length == 0 && r.type != "cloudFoundryTask")
-            return CommandResult(false, "", "Action URL is required for HTTP jobs");
+            return UsecaseResult(false, "", "Action URL is required for HTTP jobs");
 
         auto job = Job(r.tenantId, r.jobId.isNull ? JobId(createId()) : r.jobId); // , r.createdBy);
         job.name = r.name;
@@ -41,7 +41,7 @@ class ManageJobsUseCase {
         job.endTime = r.endTime;
 
         repo.save(job);
-        return CommandResult(true, job.id.value, "");
+        return UsecaseResult(true, job.id.value, "");
     }
 
     Job getJob(TenantId tenantId, JobId id) {
@@ -60,10 +60,10 @@ class ManageJobsUseCase {
         return repo.search(tenantId, query);
     }
 
-    CommandResult updateJob(UpdateJobRequest r) {
+    UsecaseResult updateJob(UpdateJobRequest r) {
         auto existing = repo.findById(r.tenantId, r.jobId);
         if (existing.isNull)
-            return CommandResult(false, "", "Job not found");
+            return UsecaseResult(false, "", "Job not found");
 
         if (r.name.length > 0)
             existing.name = r.name;
@@ -81,16 +81,16 @@ class ManageJobsUseCase {
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteJob(TenantId tenantId, JobId id) {
+    UsecaseResult deleteJob(TenantId tenantId, JobId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Job not found");
+            return UsecaseResult(false, "", "Job not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 
     size_t countJobs(TenantId tenantId) {

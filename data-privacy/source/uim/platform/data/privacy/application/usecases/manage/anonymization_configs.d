@@ -17,12 +17,12 @@ class ManageAnonymizationConfigsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createConfig(CreateAnonymizationConfigRequest req) {
+  UsecaseResult createConfig(CreateAnonymizationConfigRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
       
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto c = AnonymizationConfig(req.tenantId);
     c.name = req.name;
@@ -32,7 +32,7 @@ class ManageAnonymizationConfigsUseCase {
     c.targetSystems = req.targetSystems;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   AnonymizationConfig getConfig(TenantId tenantId, AnonymizationConfigId id) {
@@ -43,10 +43,10 @@ class ManageAnonymizationConfigsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateConfig(UpdateAnonymizationConfigRequest req) {
+  UsecaseResult updateConfig(UpdateAnonymizationConfigRequest req) {
     auto c = repo.findById(req.tenantId, req.configId);
     if (c.isNull)
-      return CommandResult(false, "", "Anonymization config not found");
+      return UsecaseResult(false, "", "Anonymization config not found");
 
     if (req.name.length > 0) c.name = req.name;
     if (req.description.length > 0) c.description = req.description;
@@ -55,27 +55,27 @@ class ManageAnonymizationConfigsUseCase {
     c.updatedAt = currentTimestamp();
 
     repo.update(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult activateConfig(TenantId tenantId, AnonymizationConfigId configId) {
+  UsecaseResult activateConfig(TenantId tenantId, AnonymizationConfigId configId) {
     auto c = repo.findById(tenantId, configId);
     if (c.isNull)
-      return CommandResult(false, "", "Anonymization config not found");
+      return UsecaseResult(false, "", "Anonymization config not found");
 
     c.status = AnonymizationConfigStatus.active;
     c.updatedAt = currentTimestamp();
 
     repo.update(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult deleteConfig(TenantId tenantId, AnonymizationConfigId configId) {
+  UsecaseResult deleteConfig(TenantId tenantId, AnonymizationConfigId configId) {
     auto config = repo.findById(tenantId, configId);
     if (config.isNull)
-      return CommandResult(false, "", "Anonymization config not found");
+      return UsecaseResult(false, "", "Anonymization config not found");
 
     repo.remove(config);
-    return CommandResult(true, config.id.value, "");
+    return UsecaseResult(true, config.id.value, "");
   }
 }

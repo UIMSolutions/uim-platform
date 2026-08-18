@@ -22,13 +22,13 @@ class ManageInstancesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDatabaseInstance(CreateInstanceRequest r) {
+  UsecaseResult createDatabaseInstance(CreateInstanceRequest r) {
     auto err = InstanceValidator.validate(r.id, r.name);
     if (err.length > 0)
-      return CommandResult(false, "", err);
+      return UsecaseResult(false, "", err);
 
     if (repo.existsById(r.tenantId, r.id))
-      return CommandResult(false, "", "Instance already exists");
+      return UsecaseResult(false, "", "Instance already exists");
 
     auto i = DatabaseInstance(r.tenantId, r.  instanceId.isNull ? DatabaseInstanceId(createId()) : r.instanceId, r.createdBy);
     i.name = r.name;
@@ -48,7 +48,7 @@ class ManageInstancesUseCase {
     i.resources.storageGB = r.storageGB;
 
     repo.save(i);
-    return CommandResult(true, i.id.value, "");
+    return UsecaseResult(true, i.id.value, "");
   }
 
   DatabaseInstance getDatabaseInstance(TenantId tenantId, DatabaseInstanceId id) {
@@ -59,10 +59,10 @@ class ManageInstancesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateDatabaseInstance(UpdateInstanceRequest r) {
+  UsecaseResult updateDatabaseInstance(UpdateInstanceRequest r) {
     auto existing = repo.findById(r.tenantId, r.id);
     if (existing.isNull)
-      return CommandResult(false, "", "Instance not found");
+      return UsecaseResult(false, "", "Instance not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -78,13 +78,13 @@ class ManageInstancesUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult performInstanceAction(InstanceActionRequest r) {
+  UsecaseResult performInstanceAction(InstanceActionRequest r) {
     auto existing = repo.findById(r.tenantId, r.id);
     if (existing.isNull)
-      return CommandResult(false, "", "Instance not found");
+      return UsecaseResult(false, "", "Instance not found");
 
     switch (r.action) {
       case "start":
@@ -97,23 +97,23 @@ class ManageInstancesUseCase {
         existing.status = InstanceStatus.starting;
         break;
       default:
-        return CommandResult(false, "", "Unknown action: " ~ r.action);
+        return UsecaseResult(false, "", "Unknown action: " ~ r.action);
     }
 
     
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteDatabaseInstance(TenantId tenantId, DatabaseInstanceId id) {
+  UsecaseResult deleteDatabaseInstance(TenantId tenantId, DatabaseInstanceId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Instance not found");
+      return UsecaseResult(false, "", "Instance not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countDatabaseInstances(TenantId tenantId) {

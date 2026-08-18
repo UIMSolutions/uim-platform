@@ -18,12 +18,12 @@ public:
     repo = repo;
   }
 
-  CommandResult createCarrier(TenantId tenantId, CreateCarrierRequest req) {
+  UsecaseResult createCarrier(TenantId tenantId, CreateCarrierRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "Carrier name is required");
+      return UsecaseResult(false, "Carrier name is required");
 
     if (repo.existsByName(tenantId, req.name))
-      return CommandResult(false, "A carrier with that name already exists");
+      return UsecaseResult(false, "A carrier with that name already exists");
 
     Carrier c;
     c.id = CarrierId(generateId());
@@ -47,13 +47,13 @@ public:
       }
     }
     repo.save(c);
-    return CommandResult(true, "", c.id.value);
+    return UsecaseResult(true, "", c.id.value);
   }
 
-  CommandResult updateCarrier(TenantId tenantId, CarrierId id, UpdateCarrierRequest req) {
+  UsecaseResult updateCarrier(TenantId tenantId, CarrierId id, UpdateCarrierRequest req) {
     auto c = repo.findById(tenantId, id);
     if (c.isNull)
-      return CommandResult(false, "Carrier not found");
+      return UsecaseResult(false, "Carrier not found");
 
     Carrier updated;
     updated.id = c.id;
@@ -89,16 +89,16 @@ public:
       updated.supportedModes = c.supportedModes;
     }
     repo.save(updated);
-    return CommandResult(true, "", id.value);
+    return UsecaseResult(true, "", id.value);
   }
 
-  CommandResult deleteCarrier(TenantId tenantId, CarrierId id) {
+  UsecaseResult deleteCarrier(TenantId tenantId, CarrierId id) {
     auto e = repo.findById(tenantId, id);
     if (e.isNull)
-      return CommandResult(false, "", "Carrier not found");
+      return UsecaseResult(false, "", "Carrier not found");
     
     repo.remove(e);
-    return CommandResult(true);
+    return UsecaseResult(true);
   }
 
   Carrier getCarrier(TenantId tenantId, CarrierId id) {

@@ -12,14 +12,14 @@ mixin(ShowModule!());
 @safe:
 interface IManageTasksUseCase { 
 
-    CommandResult createTask(CreateTaskRequest r);
+    UsecaseResult createTask(CreateTaskRequest r);
     PATask getTask(TenantId tenantId, TaskId id);
     PATask[] listTasks(TenantId tenantId);
     PATask[] listTasksByAssignee(TenantId tenantId, string assignee);
     PATask[] listTasksByProcessInstance(TenantId tenantId, ProcessInstanceId instanceId);
-    CommandResult claimTask(ClaimTaskRequest r);
-    CommandResult completeTask(CompleteTaskRequest r);
-    CommandResult updateTask(UpdateTaskRequest r);
-    CommandResult deleteTask(TenantId tenantId, TaskId taskId);
+    UsecaseResult claimTask(ClaimTaskRequest r);
+    UsecaseResult completeTask(CompleteTaskRequest r);
+    UsecaseResult updateTask(UpdateTaskRequest r);
+    UsecaseResult deleteTask(TenantId tenantId, TaskId taskId);
 
 }

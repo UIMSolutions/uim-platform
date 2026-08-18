@@ -14,6 +14,6 @@ mixin(ShowModule!());
 /// the submitted metric and record a scaling history event.
 interface IScalingEngineUseCase {
   
-  CommandResult triggerScaling(TriggerScalingRequest r);
+  UsecaseResult triggerScaling(TriggerScalingRequest r);
     
 }

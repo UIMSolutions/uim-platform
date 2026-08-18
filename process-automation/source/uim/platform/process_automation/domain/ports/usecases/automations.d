@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageAutomationsUseCase { 
 
-    CommandResult createAutomation(CreateAutomationRequest r);
+    UsecaseResult createAutomation(CreateAutomationRequest r);
     Automation getAutomation(TenantId tenantId, AutomationId id);
     Automation[] listAutomations(TenantId tenantId);
-    CommandResult updateAutomation(UpdateAutomationRequest r);
-    CommandResult deleteAutomation(TenantId tenantId, AutomationId id);
+    UsecaseResult updateAutomation(UpdateAutomationRequest r);
+    UsecaseResult deleteAutomation(TenantId tenantId, AutomationId id);
 
 }

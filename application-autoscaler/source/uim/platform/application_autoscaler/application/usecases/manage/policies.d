@@ -18,7 +18,7 @@ class ManageScalingPoliciesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPolicy(CreateScalingPolicyRequest r) {
+  UsecaseResult createPolicy(CreateScalingPolicyRequest r) {
     auto id = generateId();
     auto policy = ScalingPolicyEntity(r.tenantId, r.policyId.isNull ? ScalingPolicyId(id) : r.policyId, r.createdBy);
 
@@ -72,14 +72,14 @@ class ManageScalingPoliciesUseCase {
     }
 
     repo.save(policy);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 
-  CommandResult updatePolicy(UpdateScalingPolicyRequest r) {
+  UsecaseResult updatePolicy(UpdateScalingPolicyRequest r) {
     
     auto existing = repo.findById(r.tenantId, r.policyId);
     if (existing.isNull)
-      return CommandResult(false, "", "Policy not found");
+      return UsecaseResult(false, "", "Policy not found");
 
     existing.instanceMinCount = r.instanceMinCount > 0 ? r.instanceMinCount : existing.instanceMinCount;
     existing.instanceMaxCount = r.instanceMaxCount > existing.instanceMinCount
@@ -106,16 +106,16 @@ class ManageScalingPoliciesUseCase {
     existing.scalingRules = newRules;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deletePolicy(TenantId tenantId, ScalingPolicyId id) {
+  UsecaseResult deletePolicy(TenantId tenantId, ScalingPolicyId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Policy not found");
+      return UsecaseResult(false, "", "Policy not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   ScalingPolicyEntity getPolicy(TenantId tenantId, ScalingPolicyId id) {

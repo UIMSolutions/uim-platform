@@ -16,8 +16,8 @@ interface ManageCommandsUseCase {
     Command getCommand(TenantId tenantId, CommandId id);
     Command[] listCommands(TenantId tenantId);
     Command[] listCommands(TenantId tenantId, CatalogId catalogId);
-    CommandResult createCommand(CommandDTO dto);
-    CommandResult updateCommand(CommandDTO dto);
-    CommandResult deleteCommand(TenantId tenantId, CommandId id);
+    UsecaseResult createCommand(CommandDTO dto);
+    UsecaseResult updateCommand(CommandDTO dto);
+    UsecaseResult deleteCommand(TenantId tenantId, CommandId id);
 
 }

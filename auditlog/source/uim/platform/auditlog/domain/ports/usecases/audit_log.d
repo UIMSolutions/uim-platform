@@ -13,6 +13,6 @@ mixin(ShowModule!());
 
 interface WriteAuditLogUseCase { 
 
-  CommandResult writeAuditLog(WriteAuditLogRequest req);
+  UsecaseResult writeAuditLog(WriteAuditLogRequest req);
   
 }

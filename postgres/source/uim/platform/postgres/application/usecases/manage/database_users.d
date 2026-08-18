@@ -28,9 +28,9 @@ class ManageDatabaseUsersUseCase {
         return repo.findByInstance(tenantId, instanceId);
     }
 
-    CommandResult createDatabaseUser(DatabaseUserDTO dto) {
+    UsecaseResult createDatabaseUser(DatabaseUserDTO dto) {
         if (repo.usernameExists(dto.tenantId, dto.instanceId, dto.username))
-            return CommandResult(false, "", "Username already exists on this instance");
+            return UsecaseResult(false, "", "Username already exists on this instance");
 
         auto e = DatabaseUser(dto.tenantId); //, UserId("test-user"));
         e.id = dto.databaseUserId;
@@ -40,27 +40,27 @@ class ManageDatabaseUsersUseCase {
         e.status = UserStatus.active;
 
         if (e.instanceId.value.length == 0 || e.username.isEmpty)
-            return CommandResult(false, "", "instanceId and username are required");
+            return UsecaseResult(false, "", "instanceId and username are required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateDatabaseUser(DatabaseUserDTO dto) {
+    UsecaseResult updateDatabaseUser(DatabaseUserDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.databaseUserId);
         if (existing.isNull)
-            return CommandResult(false, "", "Database user not found");
+            return UsecaseResult(false, "", "Database user not found");
         if (dto.roles.length > 0) existing.roles = dto.roles;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDatabaseUser(TenantId tenantId, DatabaseUserId id) {
+    UsecaseResult deleteDatabaseUser(TenantId tenantId, DatabaseUserId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Database user not found");
+            return UsecaseResult(false, "", "Database user not found");
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

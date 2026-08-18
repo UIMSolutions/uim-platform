@@ -16,7 +16,7 @@ class ManageServiceBindingsUseCase {
 
   this(IServiceBindingRepository repo) { _repo = repo; }
 
-  CommandResult create(TenantId tenantId, CreateServiceBindingRequest req) {
+  UsecaseResult create(TenantId tenantId, CreateServiceBindingRequest req) {
     auto sb = ServiceBinding(tenantId);
     sb.projectId    = ProjectId(req.projectId);
     sb.serviceName  = req.serviceName;
@@ -26,7 +26,7 @@ class ManageServiceBindingsUseCase {
     sb.status       = BindingStatus.active;
 
     _repo.save(sb);
-    return CommandResult(true, sb.id.value, "");
+    return UsecaseResult(true, sb.id.value, "");
   }
 
   ServiceBinding getById(TenantId tenantId, string id) {
@@ -41,10 +41,10 @@ class ManageServiceBindingsUseCase {
     return _repo.findByProject(tenantId, projectId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto sb = _repo.findById(tenantId, ServiceBindingId(id));
-    if (sb.isNull) return CommandResult(false, "", "Service binding not found");
+    if (sb.isNull) return UsecaseResult(false, "", "Service binding not found");
     _repo.remove(tenantId, ServiceBindingId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

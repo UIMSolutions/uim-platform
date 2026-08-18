@@ -18,10 +18,10 @@ class ManageProcessingPurposesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createProcessingPurpose(CreateProcessingPurposeRequest r) {
-        if (r.tenantId.isEmpty) return CommandResult(false, "", "Tenant ID is required");
-        if (r.name.isEmpty) return CommandResult(false, "", "Purpose name is required");
-        if (r.legalBasis.length == 0) return CommandResult(false, "", "Legal basis is required");
+    UsecaseResult createProcessingPurpose(CreateProcessingPurposeRequest r) {
+        if (r.tenantId.isEmpty) return UsecaseResult(false, "", "Tenant ID is required");
+        if (r.name.isEmpty) return UsecaseResult(false, "", "Purpose name is required");
+        if (r.legalBasis.length == 0) return UsecaseResult(false, "", "Legal basis is required");
 
         ProcessingPurpose p;
         p.id = r.purposeId;
@@ -39,7 +39,7 @@ class ManageProcessingPurposesUseCase {
         p.createdAt = currentTimestamp();
 
         repo.save(p);
-        return CommandResult(true, p.id.value, "");
+        return UsecaseResult(true, p.id.value, "");
     }
 
     ProcessingPurpose getProcessingPurpose(TenantId tenantId, ProcessingPurposeId id) {
@@ -50,10 +50,10 @@ class ManageProcessingPurposesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateProcessingPurpose(UpdateProcessingPurposeRequest r) {
+    UsecaseResult updateProcessingPurpose(UpdateProcessingPurposeRequest r) {
         auto existing = repo.findById(r.tenantId, r.purposeId);
         if (existing.isNull)
-            return CommandResult(false, "", "Processing purpose not found");
+            return UsecaseResult(false, "", "Processing purpose not found");
 
         if (r.name.length > 0) existing.name = r.name;
         if (r.description.length > 0) existing.description = r.description;
@@ -65,15 +65,15 @@ class ManageProcessingPurposesUseCase {
         existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProcessingPurpose(TenantId tenantId, ProcessingPurposeId id) {
+    UsecaseResult deleteProcessingPurpose(TenantId tenantId, ProcessingPurposeId id) {
         auto purpose = repo.findById(tenantId, id);
         if (purpose.isNull)
-            return CommandResult(false, "", "Processing purpose not found");
+            return UsecaseResult(false, "", "Processing purpose not found");
 
         repo.remove(purpose);
-        return CommandResult(true, purpose.id.value, "");
+        return UsecaseResult(true, purpose.id.value, "");
     }
 }

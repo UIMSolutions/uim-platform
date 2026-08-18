@@ -22,9 +22,9 @@ class ManageAppVersionsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createAppVersion(CreateAppVersionRequest r) {
+    UsecaseResult createAppVersion(CreateAppVersionRequest r) {
         if (!DeploymentValidator.validateVersionCode(r.versionCode))
-            return CommandResult(false, "", "Invalid version code");
+            return UsecaseResult(false, "", "Invalid version code");
 
         auto ver = AppVersion(r.tenantId);
         ver.appId = r.appId;
@@ -34,13 +34,13 @@ class ManageAppVersionsUseCase {
         ver.totalSizeBytes = 0;
 
         repo.save(ver);
-        return CommandResult(true, ver.id.value, "");
+        return UsecaseResult(true, ver.id.value, "");
     }
 
-    CommandResult updateAppVersion(TenantId tenantId, AppVersionId id, UpdateAppVersionRequest r) {
+    UsecaseResult updateAppVersion(TenantId tenantId, AppVersionId id, UpdateAppVersionRequest r) {
         auto ver = repo.findById(tenantId, id);
         if (ver.isNull)
-            return CommandResult(false, "", "Version not found");
+            return UsecaseResult(false, "", "Version not found");
 
         if (r.description.length > 0) ver.description = r.description;
         if (r.status.length > 0) ver.status = r.status.toVersionStatus;
@@ -48,7 +48,7 @@ class ManageAppVersionsUseCase {
         // ver.updatedBy = r.updatedBy;
 
         repo.update(ver);
-        return CommandResult(true, ver.id.value, "");
+        return UsecaseResult(true, ver.id.value, "");
     }
 
     AppVersion getAppVersionById(TenantId tenantId, AppVersionId id) {
@@ -63,13 +63,13 @@ class ManageAppVersionsUseCase {
         return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
+    UsecaseResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Version not found");
+            return UsecaseResult(false, "", "Version not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 
     size_t countByApp(TenantId tenantId, HtmlAppId appId) {

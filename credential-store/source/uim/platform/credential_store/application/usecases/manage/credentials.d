@@ -24,18 +24,18 @@ class ManageCredentialsUseCase {
   }
 
   // Create or create-or-update based on ifNoneMatch header
-  CommandResult createCredential(CreateCredentialRequest r) {
+  UsecaseResult createCredential(CreateCredentialRequest r) {
     auto credType = toCredentialType(r.type);
 
     auto validationError = CredentialValidator.validate(r.name, r.value, credType, r.metadata, r.format, r.username);
     if (validationError.length > 0)
-      return CommandResult(false, "", validationError);
+      return UsecaseResult(false, "", validationError);
 
     auto existing = credentials.findByName(r.tenantId, r.namespaceId, r.name, credType);
 
     // If-None-Match: * means create only (fail if exists)
     if (r.ifNoneMatch == "*" && !existing.isNull)
-      return CommandResult(false, "", "Credential already exists");
+      return UsecaseResult(false, "", "Credential already exists");
 
     // Create or update
     if (!existing.isNull) {
@@ -47,7 +47,7 @@ class ManageCredentialsUseCase {
       existing.updatedAt = currentTimestamp();
       existing.updatedBy = r.createdBy;
       credentials.update(existing);
-      return CommandResult(true, existing.id.value, "");
+      return UsecaseResult(true, existing.id.value, "");
     }
 
     auto cred = Credential(r.tenantId, r.credentialId.isNull ? CredentialId(createId()) : r.credentialId, r.createdBy);
@@ -64,20 +64,20 @@ class ManageCredentialsUseCase {
     cred.updatedBy = r.createdBy;
 
     credentials.save(cred);
-    return CommandResult(true, cred.id.value, "");
+    return UsecaseResult(true, cred.id.value, "");
   }
 
   // Update with conditional support via ifMatch header
-  CommandResult updateCredential(TenantId tenantId, CredentialId id, UpdateCredentialRequest r) {
+  UsecaseResult updateCredential(TenantId tenantId, CredentialId id, UpdateCredentialRequest r) {
     auto cred = credentials.findById(tenantId, id);
     if (cred.isNull)
-      return CommandResult(false, "", "Credential not found");
+      return UsecaseResult(false, "", "Credential not found");
 
     // If-Match: <id> means conditional update (only if version matches)
     if (r.ifMatch.length > 0 && r.ifMatch != "*") {
       auto matchVersion = tryParseLong(r.ifMatch);
       if (matchVersion != cred.version_)
-        return CommandResult(false, "", "Credential has been modified (version mismatch)");
+        return UsecaseResult(false, "", "Credential has been modified (version mismatch)");
     }
 
     if (r.value.length > 0)
@@ -93,7 +93,7 @@ class ManageCredentialsUseCase {
     cred.updatedBy = r.updatedBy;
 
     credentials.update(cred);
-    return CommandResult(true, cred.id.value, "");
+    return UsecaseResult(true, cred.id.value, "");
   }
 
   Credential getCredential(TenantId tenantId, CredentialId id) {
@@ -112,13 +112,13 @@ class ManageCredentialsUseCase {
     return credentials.findByNamespaceAndType(tenantId, namespaceId, parseCredentialType(type));
   }
 
-  CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
+  UsecaseResult deleteCredential(TenantId tenantId, CredentialId id) {
     auto credential = credentials.findById(tenantId, id);
     if (credential.isNull)
-      return CommandResult(false, "", "Credential not found");
+      return UsecaseResult(false, "", "Credential not found");
 
     credentials.remove(credential);
-    return CommandResult(true, credential.id.value, "");
+    return UsecaseResult(true, credential.id.value, "");
   }
 
   size_t countCredentialsByNamespace(TenantId tenantId, NamespaceId namespaceId) {

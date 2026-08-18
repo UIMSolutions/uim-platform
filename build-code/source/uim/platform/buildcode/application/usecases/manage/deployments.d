@@ -16,7 +16,7 @@ class ManageDeploymentsUseCase {
 
   this(DeploymentRepository repo) { _repo = repo; }
 
-  CommandResult create(TenantId tenantId, CreateDeploymentRequest req) {
+  UsecaseResult create(TenantId tenantId, CreateDeploymentRequest req) {
     DeploymentEnvironment env = DeploymentEnvironment.cloudFoundry;
     static foreach (member; __traits(allMembers, DeploymentEnvironment)) {
       if (req.targetEnvironment == mixin("DeploymentEnvironment." ~ member ~ ".to!string"))
@@ -35,7 +35,7 @@ class ManageDeploymentsUseCase {
     d.deployedAtMs      = 0;
 
     _repo.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
   Deployment getById(TenantId tenantId, DeploymentId id) {
@@ -59,15 +59,15 @@ class ManageDeploymentsUseCase {
     return _repo.findByEnvironment(tenantId, env);
   }
 
-  CommandResult updateStatus(TenantId tenantId, string id, string statusStr, string url = "") {
+  UsecaseResult updateStatus(TenantId tenantId, string id, string statusStr, string url = "") {
     auto d = _repo.findById(tenantId, DeploymentId(id));
-    if (d.isNull) return CommandResult(false, "", "Deployment not found");
+    if (d.isNull) return UsecaseResult(false, "", "Deployment not found");
     static foreach (member; __traits(allMembers, DeploymentStatus)) {
       if (statusStr == mixin("DeploymentStatus." ~ member ~ ".to!string"))
         d.status = mixin("DeploymentStatus." ~ member);
     }
     if (url.length > 0) d.targetUrl = url;
     _repo.update(d);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

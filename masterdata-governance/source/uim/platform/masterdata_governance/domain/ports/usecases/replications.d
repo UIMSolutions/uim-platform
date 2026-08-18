@@ -18,7 +18,7 @@ interface IManageReplicationsUseCase {
     Replication[] listReplications(TenantId tenantId, ReplicationStatus status);
     Replication[] listReplications(TenantId tenantId, BusinessPartnerId bpId);
     Replication[] listReplications(TenantId tenantId, string targetSystem);
-    CommandResult createReplication(ReplicationDTO dto);
-    CommandResult cancelReplication(TenantId tenantId, ReplicationId id);
-    CommandResult deleteReplication(TenantId tenantId, ReplicationId id);
+    UsecaseResult createReplication(ReplicationDTO dto);
+    UsecaseResult cancelReplication(TenantId tenantId, ReplicationId id);
+    UsecaseResult deleteReplication(TenantId tenantId, ReplicationId id);
 }

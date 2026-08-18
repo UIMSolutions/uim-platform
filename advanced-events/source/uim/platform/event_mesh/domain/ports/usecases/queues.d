@@ -19,10 +19,10 @@ interface IManageQueuesUseCase {
     
     Queue[] listQueues(TenantId tenantId, BrokerServiceId serviceId);
     
-    CommandResult createQueue(QueueDTO dto);
+    UsecaseResult createQueue(QueueDTO dto);
     
-    CommandResult updateQueue(QueueDTO dto);
+    UsecaseResult updateQueue(QueueDTO dto);
     
-    CommandResult deleteQueue(TenantId tenantId, QueueId queueId);
+    UsecaseResult deleteQueue(TenantId tenantId, QueueId queueId);
 
 }

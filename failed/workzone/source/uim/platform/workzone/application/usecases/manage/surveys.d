@@ -22,9 +22,9 @@ class ManageSurveysUseCase {
     this.repo = repo;
   }
 
-  CommandResult createSurvey(CreateSurveyRequest req) {
+  UsecaseResult createSurvey(CreateSurveyRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Survey title is required");
+      return UsecaseResult(false, "", "Survey title is required");
 
     auto s = Survey(req.tenantId);
     s.workspaceId = req.workspaceId;
@@ -40,7 +40,7 @@ class ManageSurveysUseCase {
     s.endsAt = req.endsAt;
 
     repo.save(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
   Survey getSurvey(TenantId tenantId, SurveyId id) {
@@ -51,10 +51,10 @@ class ManageSurveysUseCase {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  CommandResult updateSurvey(UpdateSurveyRequest req) {
+  UsecaseResult updateSurvey(UpdateSurveyRequest req) {
     auto s = repo.findById(req.tenantId, req.id);
     if (s.isNull)
-      return CommandResult(false, "", "Survey not found");
+      return UsecaseResult(false, "", "Survey not found");
 
     if (req.title.length > 0)
       s.title = req.title;
@@ -64,15 +64,15 @@ class ManageSurveysUseCase {
     s.updatedAt = currentTimestamp();
 
     repo.update(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
-  CommandResult deleteSurvey(TenantId tenantId, SurveyId id) {
+  UsecaseResult deleteSurvey(TenantId tenantId, SurveyId id) {
     auto s = repo.findById(tenantId, id);
     if (s.isNull)
-      return CommandResult(false, "", "Survey not found");
+      return UsecaseResult(false, "", "Survey not found");
 
     repo.remove(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 }

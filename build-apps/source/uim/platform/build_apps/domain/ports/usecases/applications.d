@@ -16,8 +16,8 @@ interface IManageApplicationsUseCase {
     Application getApplication(TenantId tenantId, ApplicationId id);
     Application[] listApplications(TenantId tenantId);
     Application[] listApplications(TenantId tenantId, string owner);
-    CommandResult createApplication(ApplicationDTO dto);
-    CommandResult updateApplication(ApplicationDTO dto);
-    CommandResult deleteApplication(TenantId tenantId, ApplicationId id);
+    UsecaseResult createApplication(ApplicationDTO dto);
+    UsecaseResult updateApplication(ApplicationDTO dto);
+    UsecaseResult deleteApplication(TenantId tenantId, ApplicationId id);
     
 }

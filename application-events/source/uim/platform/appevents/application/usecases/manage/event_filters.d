@@ -26,7 +26,7 @@ class ManageEventFiltersUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createEventFilter(EventFilterDTO dto) {
+    UsecaseResult createEventFilter(EventFilterDTO dto) {
         auto f = EventFilter(dto.tenantId, dto.filterId.isNull ? EventFilterId(createId()) : dto.filterId, dto.createdBy);
         f.subscriptionId = dto.subscriptionId;
         f.filterType = dto.filterType;
@@ -36,12 +36,12 @@ class ManageEventFiltersUseCase {
         f.active = dto.active;
         
         repo.save(f);
-        return CommandResult(true, f.id.value, "");
+        return UsecaseResult(true, f.id.value, "");
     }
 
-    CommandResult updateEventFilter(EventFilterDTO dto) {
+    UsecaseResult updateEventFilter(EventFilterDTO dto) {
         auto f = repo.findById(dto.tenantId, dto.filterId);
-        if (f.isNull) return CommandResult(false, "", "Filter not found");
+        if (f.isNull) return UsecaseResult(false, "", "Filter not found");
         f.subscriptionId = dto.subscriptionId;
         f.filterType = dto.filterType;
         f.attribute = dto.attribute;
@@ -51,14 +51,14 @@ class ManageEventFiltersUseCase {
         if (!dto.updatedBy.isNull) f.updatedBy = dto.updatedBy;
         
         repo.update(f);
-        return CommandResult(true, f.id.value, "");
+        return UsecaseResult(true, f.id.value, "");
     }
 
-    CommandResult deleteEventFilter(TenantId tenantId, EventFilterId id) {
+    UsecaseResult deleteEventFilter(TenantId tenantId, EventFilterId id) {
         auto f = repo.findById(tenantId, id);
-        if (f.isNull) return CommandResult(false, "", "Filter not found");
+        if (f.isNull) return UsecaseResult(false, "", "Filter not found");
 
         repo.remove(f);
-        return CommandResult(true, f.id.value, "");
+        return UsecaseResult(true, f.id.value, "");
     }
 }

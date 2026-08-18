@@ -26,13 +26,13 @@ class ManageSharesUseCase {
     this.docs = docs;
   }
 
-  CommandResult createShare(CreateShareRequest r) {
+  UsecaseResult createShare(CreateShareRequest r) {
     if (r.documentId.isEmpty)
-      return CommandResult(false, "", "Document ID is required");
+      return UsecaseResult(false, "", "Document ID is required");
 
     auto doc = docs.findById(r.tenantId, r.documentId);
     if (doc.isNull)
-      return CommandResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "Document not found");
 
     auto entity = Share(r.tenantId); //, r.createdBy);
     entity.documentId = r.documentId;
@@ -43,7 +43,7 @@ class ManageSharesUseCase {
     entity.expiresAt = r.expiresAt;
 
     shares.save(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   Share[] listShares(TenantId tenantId) {
@@ -58,23 +58,23 @@ class ManageSharesUseCase {
     return shares.findById(tenantId, id);
   }
 
-  CommandResult revokeShare(TenantId tenantId, ShareId shareId) {
+  UsecaseResult revokeShare(TenantId tenantId, ShareId shareId) {
     auto share = shares.findById(tenantId, shareId);
     if (share.isNull)
-      return CommandResult(false, "", "Share not found");
+      return UsecaseResult(false, "", "Share not found");
 
     share.status = ShareStatus.revoked;
     shares.update(share);
-    return CommandResult(true, share.id.value, "");
+    return UsecaseResult(true, share.id.value, "");
   }
 
-  CommandResult deleteShare(TenantId tenantId, ShareId shareId) {
+  UsecaseResult deleteShare(TenantId tenantId, ShareId shareId) {
     auto share = shares.findById(tenantId, shareId);
     if (share.isNull)
-      return CommandResult(false, "", "Share not found");
+      return UsecaseResult(false, "", "Share not found");
 
     shares.remove(share);
-    return CommandResult(true, share.id.value, "");
+    return UsecaseResult(true, share.id.value, "");
   }
 }
 

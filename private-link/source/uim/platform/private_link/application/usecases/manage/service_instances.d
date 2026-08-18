@@ -19,13 +19,13 @@ class ManageServiceInstancesUseCase {
     this.endpoints = endpoints;
   }
 
-  CommandResult createInstance(CreateServiceInstanceRequest req) {
+  UsecaseResult createInstance(CreateServiceInstanceRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
     if (req.resourceId.length == 0)
-      return CommandResult(false, "", "resourceId is required");
+      return UsecaseResult(false, "", "resourceId is required");
     if (instances.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Service instance with this name already exists");
+      return UsecaseResult(false, "", "Service instance with this name already exists");
 
     auto inst = ServiceInstance();
     inst.id = ServiceInstanceId(generateId());
@@ -42,13 +42,13 @@ class ManageServiceInstancesUseCase {
     inst.updatedAt = inst.createdAt;
 
     instances.save(inst);
-    return CommandResult(true, inst.id.value, "Service instance created");
+    return UsecaseResult(true, inst.id.value, "Service instance created");
   }
 
-  CommandResult updateInstance(UpdateServiceInstanceRequest req) {
+  UsecaseResult updateInstance(UpdateServiceInstanceRequest req) {
     auto inst = instances.findById(req.tenantId, req.instanceId);
     if (inst.id.value.length == 0)
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
 
     auto updated = inst;
     if (req.description.length > 0)
@@ -58,17 +58,17 @@ class ManageServiceInstancesUseCase {
     updated.updatedAt = currentTimestamp();
 
     instances.update(updated);
-    return CommandResult(true, req.instanceId.value, "Service instance updated");
+    return UsecaseResult(true, req.instanceId.value, "Service instance updated");
   }
 
-  CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
+  UsecaseResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
     auto inst = instances.findById(tenantId, id);
     if (inst.id.value.length == 0)
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
 
     endpoints.removeByServiceInstance(tenantId, id);
     instances.remove(inst);
-    return CommandResult(true, id.value, "Service instance deleted");
+    return UsecaseResult(true, id.value, "Service instance deleted");
   }
 
   ServiceInstance getInstance(TenantId tenantId, ServiceInstanceId id) {

@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManagePipelinesUseCase {
 
-  CommandResult create(TenantId tenantId, CreatePipelineRequest req);
+  UsecaseResult create(TenantId tenantId, CreatePipelineRequest req);
   Pipeline getById(TenantId tenantId, string id);
   Pipeline[] list(TenantId tenantId);
   Pipeline[] listByProject(TenantId tenantId, string projectId);
-  CommandResult update(TenantId tenantId, string id, UpdatePipelineRequest req);
-  CommandResult remove(TenantId tenantId, string id);
+  UsecaseResult update(TenantId tenantId, string id, UpdatePipelineRequest req);
+  UsecaseResult remove(TenantId tenantId, string id);
 
 }
 

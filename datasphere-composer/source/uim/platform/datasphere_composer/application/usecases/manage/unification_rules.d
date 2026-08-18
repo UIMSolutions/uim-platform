@@ -15,7 +15,7 @@ class ManageUnificationRulesUseCase {
 
   this(IUnificationRuleRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateUnificationRuleRequest r) {
+  UsecaseResult create(CreateUnificationRuleRequest r) {
     UnificationRule rule;
     rule.id = UnificationRuleId(r.id.length > 0 ? r.id : currentTimestamp());
     rule.tenantId = TenantId(r.tenantId);
@@ -31,10 +31,10 @@ class ManageUnificationRulesUseCase {
     initEntity(rule);
 
     auto err = ComposerValidator.validateUnificationRule(rule);
-    if (err !is null) return CommandResult(false, rule.id.value, err);
+    if (err !is null) return UsecaseResult(false, rule.id.value, err);
 
     repo.save(rule);
-    return CommandResult(true, rule.id.value, null);
+    return UsecaseResult(true, rule.id.value, null);
   }
 
   UnificationRule[] list(TenantId tenantId) {
@@ -45,9 +45,9 @@ class ManageUnificationRulesUseCase {
     return repo.findById(TenantId(tenantId), UnificationRuleId(id));
   }
 
-  CommandResult update(UpdateUnificationRuleRequest r) {
+  UsecaseResult update(UpdateUnificationRuleRequest r) {
     auto rule = repo.findById(TenantId(r.tenantId), UnificationRuleId(r.id));
-    if (rule.isNull) return CommandResult(false, r.id, "Rule not found");
+    if (rule.isNull) return UsecaseResult(false, r.id, "Rule not found");
 
     if (r.name.length > 0)        rule.name = r.name;
     if (r.description.length > 0) rule.description = r.description;
@@ -60,13 +60,13 @@ class ManageUnificationRulesUseCase {
     rule.active = r.active;
 
     repo.update(rule);
-    return CommandResult(true, rule.id.value, null);
+    return UsecaseResult(true, rule.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto rule = repo.findById(TenantId(tenantId), UnificationRuleId(id));
-    if (rule.isNull) return CommandResult(false, id, "Rule not found");
+    if (rule.isNull) return UsecaseResult(false, id, "Rule not found");
     repo.remove(TenantId(tenantId), UnificationRuleId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

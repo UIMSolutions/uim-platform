@@ -46,49 +46,49 @@ class ManageAlertsUseCase {
     return repo.findByResource(tenantId, resourceId);
   }
 
-  CommandResult acknowledgeAlert(AcknowledgeAlertRequest req) {
+  UsecaseResult acknowledgeAlert(AcknowledgeAlertRequest req) {
     auto alert = repo.findById(req.tenantId, req.alertId);
     if (alert.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     if (alert.state != AlertState.open)
-      return CommandResult(false, "", "Alert is not in open state");
+      return UsecaseResult(false, "", "Alert is not in open state");
 
     alert.state = AlertState.acknowledged;
     alert.acknowledgedBy = req.acknowledgedBy;
     alert.acknowledgedAt = clockSeconds();
 
     repo.update(alert);
-    return CommandResult(true, alert.id.value, "");
+    return UsecaseResult(true, alert.id.value, "");
   }
 
-  CommandResult resolveAlert(ResolveAlertRequest req) {
+  UsecaseResult resolveAlert(ResolveAlertRequest req) {
     auto alert = repo.findById(req.tenantId, req.alertId);
     if (alert.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     if (alert.state == AlertState.resolved)
-      return CommandResult(false, "", "Alert is already resolved");
+      return UsecaseResult(false, "", "Alert is already resolved");
 
     alert.state = AlertState.resolved;
     alert.resolvedBy = req.resolvedBy;
     alert.resolvedAt = clockSeconds();
 
     repo.update(alert);
-    return CommandResult(true, alert.id.value, "");
+    return UsecaseResult(true, alert.id.value, "");
   }
 
-  CommandResult deleteAlert(TenantId tenantId, AlertId id) {
+  UsecaseResult deleteAlert(TenantId tenantId, AlertId id) {
     auto alert = repo.findById(tenantId, id);
     if (alert.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     repo.remove(alert);
-    return CommandResult(true, alert.id.value, "");
+    return UsecaseResult(true, alert.id.value, "");
   }
 
   /// Create an alert (used by the evaluate_metrics use case).
-  CommandResult triggerAlert(TenantId tenantId, AlertRuleId ruleId,
+  UsecaseResult triggerAlert(TenantId tenantId, AlertRuleId ruleId,
     MonitoredResourceId resourceId, string ruleName, string metricName,
     double currentValue, double thresholdValue, ThresholdOperator op,
     AlertSeverity severity, string message) {
@@ -107,7 +107,7 @@ class ManageAlertsUseCase {
     alert.triggeredAt = clockSeconds();
 
     repo.save(alert);
-    return CommandResult(true, alert.id.value, "");
+    return UsecaseResult(true, alert.id.value, "");
   }
 
 }

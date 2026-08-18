@@ -28,7 +28,7 @@ class ManageServiceBindingsUseCase {
         return repo.findByInstance(tenantId, instanceId);
     }
 
-    CommandResult createServiceBinding(ServiceBindingDTO dto) {
+    UsecaseResult createServiceBinding(ServiceBindingDTO dto) {
         auto e = ServiceBinding(dto.tenantId); //, UserId("test-user"));
         e.id = dto.serviceBindingId;
         e.instanceId = dto.instanceId;
@@ -40,17 +40,17 @@ class ManageServiceBindingsUseCase {
         e.bindingPort = 5432;
 
         if (e.instanceId.value.length == 0 || e.appId.length == 0)
-            return CommandResult(false, "", "instanceId and appId are required");
+            return UsecaseResult(false, "", "instanceId and appId are required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
+    UsecaseResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Service binding not found");
+            return UsecaseResult(false, "", "Service binding not found");
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

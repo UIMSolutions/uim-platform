@@ -24,16 +24,16 @@ class ManageAccessPoliciesUseCase {
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createPolicy(CreateAccessPolicyRequest req) {
+  UsecaseResult createPolicy(CreateAccessPolicyRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Policy name is required");
+      return UsecaseResult(false, "", "Policy name is required");
 
     if (req.bucketId.isEmpty)
-      return CommandResult(false, "", "Bucket ID is required");
+      return UsecaseResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);
     if (bucket.isNull)
-      return CommandResult(false, "", "Bucket not found");
+      return UsecaseResult(false, "", "Bucket not found");
 
     auto policy = AccessPolicy(req.tenantId); //, UserId("test-user"));
     policy.bucketId = req.bucketId;
@@ -44,13 +44,13 @@ class ManageAccessPoliciesUseCase {
     policy.resources = req.resources;
  
     policyRepo.save(policy);
-    return CommandResult(true, policy.id.value, "");
+    return UsecaseResult(true, policy.id.value, "");
   }
 
-  CommandResult updatePolicy(UpdateAccessPolicyRequest req) {
+  UsecaseResult updatePolicy(UpdateAccessPolicyRequest req) {
     auto policy = policyRepo.findById(req.tenantId, req.accessPolicyId);
     if (policy.isNull)
-      return CommandResult(false, "", "Policy not found");
+      return UsecaseResult(false, "", "Policy not found");
 
     if (req.name.length > 0)
       policy.name = req.name;
@@ -65,7 +65,7 @@ class ManageAccessPoliciesUseCase {
     policy.updatedAt = currentTimestamp();
 
     policyRepo.update(policy);
-    return CommandResult(true, policy.id.value, "");
+    return UsecaseResult(true, policy.id.value, "");
   }
 
   AccessPolicy getPolicy(TenantId tenantId, AccessPolicyId id) {
@@ -76,13 +76,13 @@ class ManageAccessPoliciesUseCase {
     return policyRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult deletePolicy(TenantId tenantId, AccessPolicyId id) {
+  UsecaseResult deletePolicy(TenantId tenantId, AccessPolicyId id) {
     auto policy = policyRepo.findById(tenantId, id);
     if (policy.isNull)
-      return CommandResult(false, "", "Access policy not found");
+      return UsecaseResult(false, "", "Access policy not found");
 
     policyRepo.remove(policy);
-    return CommandResult(true, policy.id.value, "");
+    return UsecaseResult(true, policy.id.value, "");
   }
 }
 

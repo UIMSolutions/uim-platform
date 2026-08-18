@@ -21,9 +21,9 @@ class ManageWorkspacesUseCase {
     this.workspaces = workspaces;
   }
 
-  CommandResult createWorkspace(CreateWorkspaceRequest r) {
+  UsecaseResult createWorkspace(CreateWorkspaceRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Workspace name is required");
+      return UsecaseResult(false, "", "Workspace name is required");
 
     auto w = Workspace(r.tenantId, r.workspaceId.isNull ? WorkspaceId(createId()) : r.workspaceId); // , r.createdBy);
     w.name = r.name;
@@ -33,7 +33,7 @@ class ManageWorkspacesUseCase {
     w.connectionCount = 0;
 
     workspaces.save(w);
-    return CommandResult(true, w.id.value, "");
+    return UsecaseResult(true, w.id.value, "");
   }
 
   Workspace getWorkspace(TenantId tenantId, WorkspaceId id) {
@@ -44,10 +44,10 @@ class ManageWorkspacesUseCase {
     return workspaces.findByTenant(tenantId);
   }
 
-  CommandResult patchWorkspace(PatchWorkspaceRequest r) {
+  UsecaseResult patchWorkspace(PatchWorkspaceRequest r) {
     auto w = workspaces.findById(r.tenantId, r.workspaceId);
     if (w.isNull)
-      return CommandResult(false, "", "Workspace not found");
+      return UsecaseResult(false, "", "Workspace not found");
     if (r.name.length > 0)
       w.name = r.name;
     if (r.description.length > 0)
@@ -55,15 +55,15 @@ class ManageWorkspacesUseCase {
     w.updatedAt = currentTimestamp();
     
     workspaces.save(w);
-    return CommandResult(true, w.id.value, "");
+    return UsecaseResult(true, w.id.value, "");
   }
 
-  CommandResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
+  UsecaseResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
     auto workspace = workspaces.findById(tenantId, id);
     if (workspace.isNull)
-      return CommandResult(false, "", "Workspace not found");
+      return UsecaseResult(false, "", "Workspace not found");
       
     workspaces.remove(workspace);
-    return CommandResult(true, workspace.id.value, "");
+    return UsecaseResult(true, workspace.id.value, "");
   }
 }

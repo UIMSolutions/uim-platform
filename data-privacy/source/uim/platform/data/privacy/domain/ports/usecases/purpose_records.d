@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 interface ManagePurposeRecordsUseCase { 
 
-  CommandResult createRecord(CreatePurposeRecordRequest req);
+  UsecaseResult createRecord(CreatePurposeRecordRequest req);
   PurposeRecord getRecord(TenantId tenantId, PurposeRecordId id);
   PurposeRecord[] listRecords(TenantId tenantId);
   PurposeRecord[] listRecords(TenantId tenantId, DataSubjectId subjectId);
   PurposeRecord[] listRecords(TenantId tenantId, PurposeRecordStatus status);
-  CommandResult deactivateRecord(DeactivatePurposeRecordRequest req);
-  CommandResult deleteRecord(TenantId tenantId, PurposeRecordId recordId);
+  UsecaseResult deactivateRecord(DeactivatePurposeRecordRequest req);
+  UsecaseResult deleteRecord(TenantId tenantId, PurposeRecordId recordId);
 
 }

@@ -22,9 +22,9 @@ class ManageKnowledgeBaseArticlesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createArticle(CreateKBArticleRequest req) {
+  UsecaseResult createArticle(CreateKBArticleRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Article title is required");
+      return UsecaseResult(false, "", "Article title is required");
 
     auto a = KnowledgeBaseArticle(req.tenantId, req.articleId, req.createdBy);
     a.workspaceId = req.workspaceId;
@@ -40,7 +40,7 @@ class ManageKnowledgeBaseArticlesUseCase {
     a.version_ = 1;
 
     repo.save(a);
-    return CommandResult(true, a.id.value, "");
+    return UsecaseResult(true, a.id.value, "");
   }
 
   KnowledgeBaseArticle getArticle(TenantId tenantId, KBArticleId id) {
@@ -55,10 +55,10 @@ class ManageKnowledgeBaseArticlesUseCase {
     return repo.findByCategory(tenantId, category);
   }
 
-  CommandResult updateArticle(UpdateKBArticleRequest req) {
+  UsecaseResult updateArticle(UpdateKBArticleRequest req) {
     auto a = repo.findById(req.tenantId, req.id);
     if (a.isNull)
-      return CommandResult(false, "", "Article not found");
+      return UsecaseResult(false, "", "Article not found");
 
     if (req.title.length > 0)
       a.title = req.title;
@@ -73,15 +73,15 @@ class ManageKnowledgeBaseArticlesUseCase {
     a.updatedAt = currentTimestamp();
 
     repo.update(a);
-    return CommandResult(true, a.id.value, "");
+    return UsecaseResult(true, a.id.value, "");
   }
 
-  CommandResult deleteArticle(TenantId tenantId, KBArticleId id) {
+  UsecaseResult deleteArticle(TenantId tenantId, KBArticleId id) {
     auto a = repo.findById(tenantId, id);
     if (a.isNull)
-      return CommandResult(false, "", "Article not found");
+      return UsecaseResult(false, "", "Article not found");
 
     repo.remove(a);
-    return CommandResult(true, a.id.value, "");
+    return UsecaseResult(true, a.id.value, "");
   }
 }

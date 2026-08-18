@@ -26,32 +26,32 @@ class ManageTaskCommentsUseCase {
         return repo.findByTask(tenantId, byTaskId);
     }
 
-    CommandResult createComment(CreateTaskCommentRequest req) {
+    UsecaseResult createComment(CreateTaskCommentRequest req) {
         auto comment = TaskComment(req.tenantId, req.commentId);
         comment.taskId = req.taskId;
         // TODO: comment.author = req.author;
         comment.content = req.content;
 
         repo.save(comment);
-        return CommandResult(true, comment.id.value, "");
+        return UsecaseResult(true, comment.id.value, "");
     }
 
-    CommandResult updateComment(UpdateTaskCommentRequest req) {
+    UsecaseResult updateComment(UpdateTaskCommentRequest req) {
         auto existing = repo.findById(req.tenantId, req.commentId);
         if (existing.isNull)
-            return CommandResult(false, "", "Comment not found");
+            return UsecaseResult(false, "", "Comment not found");
         if (req.content.length > 0) existing.content = req.content;
  
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteComment(TenantId tenantId, TaskCommentId id) {
+    UsecaseResult deleteComment(TenantId tenantId, TaskCommentId id) {
         auto comment = repo.findById(tenantId, id);
         if (comment.isNull)
-            return CommandResult(false, "", "Comment not found");
+            return UsecaseResult(false, "", "Comment not found");
 
         repo.remove(comment);
-        return CommandResult(true, comment.id.value, "");
+        return UsecaseResult(true, comment.id.value, "");
     }
 }

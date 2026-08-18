@@ -28,7 +28,7 @@ struct TaskCliModel {
         return _useCase.getTask(_tenantId, TaskId(id));
     }
 
-    CommandResult complete(string id) {
+    UsecaseResult complete(string id) {
         return _useCase.completeTask(_tenantId, TaskId(id));
     }
 

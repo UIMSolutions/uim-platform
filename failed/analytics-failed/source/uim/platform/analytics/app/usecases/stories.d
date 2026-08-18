@@ -62,13 +62,13 @@ class StoryUseCases {
     return StoryResponse.fromEntity(s);
   }
 
-  CommandResult deleteStory(TenantId tenantId, StoryId storyId) {
+  UsecaseResult deleteStory(TenantId tenantId, StoryId storyId) {
     auto found = repo.findByTenant(tenantId).filter!(e => e.id == storyId).array;
     auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
-      return CommandResult(false, "", "Story not found");
+      return UsecaseResult(false, "", "Story not found");
 
     repo.remove(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 }

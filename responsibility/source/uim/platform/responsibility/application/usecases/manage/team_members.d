@@ -28,7 +28,7 @@ class ManageTeamMembersUseCase {
         return repo.findByTeam(tenantId, teamId);
     }
 
-    CommandResult addMember(TeamMemberDTO dto) {
+    UsecaseResult addMember(TeamMemberDTO dto) {
         auto m = TeamMember(dto.tenantId); //, UserId("test-user"));
         m.id          = dto.memberId;
         m.teamId      = dto.teamId;
@@ -40,32 +40,32 @@ class ManageTeamMembersUseCase {
         m.validFrom   = dto.validFrom;
         m.validTo     = dto.validTo;
         if (m.userId.length == 0)
-            return CommandResult(false, "", "userId is required");
+            return UsecaseResult(false, "", "userId is required");
         if (m.teamId.length == 0)
-            return CommandResult(false, "", "teamId is required");
+            return UsecaseResult(false, "", "teamId is required");
         repo.save(m);
-        return CommandResult(true, m.id.value, "");
+        return UsecaseResult(true, m.id.value, "");
     }
 
-    CommandResult updateMember(TeamMemberDTO dto) {
+    UsecaseResult updateMember(TeamMemberDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.memberId);
         if (existing.isNull)
-            return CommandResult(false, "", "Team member not found");
+            return UsecaseResult(false, "", "Team member not found");
         if (dto.functionId.length > 0)  existing.functionId  = dto.functionId;
         if (dto.displayName.length > 0) existing.displayName = dto.displayName;
         if (dto.email.length > 0)       existing.email       = dto.email;
         if (dto.validTo > 0)            existing.validTo     = dto.validTo;
         if (!dto.updatedBy.isNull)      existing.updatedBy   = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult removeMember(TenantId tenantId, TeamMemberId id) {
+    UsecaseResult removeMember(TenantId tenantId, TeamMemberId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Team member not found");
+            return UsecaseResult(false, "", "Team member not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
     private static MemberRole parseRole(string s) {

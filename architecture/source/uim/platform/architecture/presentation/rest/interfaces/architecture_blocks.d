@@ -17,13 +17,13 @@ interface IArchitectureBlocksApi {
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/") @method(HTTPMethod.POST)
-    CommandResult createArchitectureBlock(string tenantId, CreateArchitectureBlockRequest request);
+    UsecaseResult createArchitectureBlock(string tenantId, CreateArchitectureBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.PUT)
-    CommandResult updateArchitectureBlock(string tenantId, string _id, UpdateArchitectureBlockRequest request);
+    UsecaseResult updateArchitectureBlock(string tenantId, string _id, UpdateArchitectureBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.DELETE)
-    CommandResult deleteArchitectureBlock(string tenantId, string _id);
+    UsecaseResult deleteArchitectureBlock(string tenantId, string _id);
 }

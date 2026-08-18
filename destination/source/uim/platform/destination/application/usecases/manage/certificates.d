@@ -66,24 +66,24 @@ class ManageCertificatesUseCase {
     return tryParseCertificateType(typeStr, certificateType);
   }
 
-  CommandResult upload(UploadCertificateRequest req) {
+  UsecaseResult upload(UploadCertificateRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Certificate name is required");
+      return UsecaseResult(false, "", "Certificate name is required");
 
     if (req.content.length == 0)
-      return CommandResult(false, "", "Certificate content is required");
+      return UsecaseResult(false, "", "Certificate content is required");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Certificate '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Certificate '" ~ req.name ~ "' already exists");
 
     CertificateType certificateType;
     if (!tryParseCertificateType(req.certificateType, certificateType))
-      return CommandResult(false, "", "Invalid certificate type: " ~ req.certificateType);
+      return UsecaseResult(false, "", "Invalid certificate type: " ~ req.certificateType);
 
     CertificateFormat format_;
     if (!tryParseCertificateFormat(req.format_, format_))
-      return CommandResult(false, "", "Invalid certificate format: " ~ req.format_);
+      return UsecaseResult(false, "", "Invalid certificate format: " ~ req.format_);
 
     auto certificate = Certificate(req.tenantId);
     certificate.subaccountId = req.subaccountId;
@@ -107,13 +107,13 @@ class ManageCertificatesUseCase {
     certificate.status = validation.status;
 
     repo.save(certificate);
-    return CommandResult(true, certificate.id.value, "");
+    return UsecaseResult(true, certificate.id.value, "");
   }
 
-  CommandResult updateCertificate(UpdateCertificateRequest req) {
+  UsecaseResult updateCertificate(UpdateCertificateRequest req) {
     auto c = repo.findById(req.tenantId, req.certificateId);
     if (c.isNull)
-      return CommandResult(false, "", "Certificate not found");
+      return UsecaseResult(false, "", "Certificate not found");
 
     if (req.description.length > 0)
       c.description = req.description;
@@ -131,7 +131,7 @@ class ManageCertificatesUseCase {
     c.status = validation.status;
 
     repo.update(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
   
   Certificate getCertificate(TenantId tenantId, CertificateId id) {
@@ -162,13 +162,13 @@ class ManageCertificatesUseCase {
     return CertificateValidator.validate(certificate);
   }
 
-  CommandResult deleteCertificate(TenantId tenantId, CertificateId id) {
+  UsecaseResult deleteCertificate(TenantId tenantId, CertificateId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Certificate not found");
+      return UsecaseResult(false, "", "Certificate not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }
 

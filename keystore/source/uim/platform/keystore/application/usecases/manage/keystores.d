@@ -19,16 +19,16 @@ class ManageKeystoresUseCase {
   }
 
   // Upload (create) a keystore at the given scope level.
-  CommandResult uploadKeystore(UploadKeystoreRequest r) {
+  UsecaseResult uploadKeystore(UploadKeystoreRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
     if (r.content.length == 0)
-      return CommandResult(false, "", "Content is required");
+      return UsecaseResult(false, "", "Content is required");
 
     auto level = r.level.toKeystoreLevel;
 
     if (repo.existsByName(r.tenantId, r.accountId, r.applicationId, level, r.name))
-      return CommandResult(false, "", "A keystore with this name already exists at the specified level");
+      return UsecaseResult(false, "", "A keystore with this name already exists at the specified level");
 
     Keystore ks = Keystore(r.tenantId);
     ks.name = r.name;
@@ -43,14 +43,14 @@ class ManageKeystoresUseCase {
     ks.updatedBy = r.createdBy;
 
     repo.save(ks);
-    return CommandResult(true, ks.id.value, "");
+    return UsecaseResult(true, ks.id.value, "");
   }
 
   // Update description and/or content of an existing keystore.
-  CommandResult updateKeystore(UpdateKeystoreRequest r) {
+  UsecaseResult updateKeystore(UpdateKeystoreRequest r) {
     auto ks = repo.findById(r.tenantId, r.keystoreId);
     if (ks.isNull)
-      return CommandResult(false, "", "Keystore not found");
+      return UsecaseResult(false, "", "Keystore not found");
 
     if (r.description.length > 0)
       ks.description = r.description;
@@ -60,7 +60,7 @@ class ManageKeystoresUseCase {
     ks.updatedAt = currentTimestamp();
 
     repo.update(ks);
-    return CommandResult(true, ks.id.value, "");
+    return UsecaseResult(true, ks.id.value, "");
   }
 
   Keystore getKeystore(TenantId tenantId, KeystoreId id) {
@@ -80,23 +80,23 @@ class ManageKeystoresUseCase {
   }
 
   // Delete by ID
-  CommandResult deleteKeystore(TenantId tenantId, KeystoreId id) {
+  UsecaseResult deleteKeystore(TenantId tenantId, KeystoreId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Keystore not found");
+      return UsecaseResult(false, "", "Keystore not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   // Delete by name + scope (console-style delete-keystore command)
-  CommandResult deleteKeystore(TenantId tenantId, string accountId, string applicationId, string level, string name) {
+  UsecaseResult deleteKeystore(TenantId tenantId, string accountId, string applicationId, string level, string name) {
     auto ks = repo.findByName(tenantId, accountId, applicationId, level.to!KeystoreLevel, name);
     if (ks.isNull)
-      return CommandResult(false, "", "Keystore not found");
+      return UsecaseResult(false, "", "Keystore not found");
 
     repo.remove(ks);
-    return CommandResult(true, ks.id.value, "");
+    return UsecaseResult(true, ks.id.value, "");
   }
 }
 

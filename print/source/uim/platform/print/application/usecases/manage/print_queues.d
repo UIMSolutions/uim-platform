@@ -30,7 +30,7 @@ class ManagePrintQueuesUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createPrintQueue(PrintQueueDTO dto) {
+    UsecaseResult createPrintQueue(PrintQueueDTO dto) {
         auto queue = PrintQueue(dto.tenantId, dto.createdBy);
         queue.id = dto.queueId;
         queue.name = dto.name;
@@ -43,16 +43,16 @@ class ManagePrintQueuesUseCase {
         queue.retentionDays = dto.retentionDays > 0 ? dto.retentionDays : 7;
 
         if (!PrintValidator.isValidPrintQueue(queue))
-            return CommandResult(false, "", "Invalid print queue: name is required");
+            return UsecaseResult(false, "", "Invalid print queue: name is required");
 
         repo.save(queue);
-        return CommandResult(true, queue.id.value, "");
+        return UsecaseResult(true, queue.id.value, "");
     }
 
-    CommandResult updatePrintQueue(PrintQueueDTO dto) {
+    UsecaseResult updatePrintQueue(PrintQueueDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.queueId);
         if (existing.isNull)
-            return CommandResult(false, "", "Print queue not found");
+            return UsecaseResult(false, "", "Print queue not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -65,14 +65,14 @@ class ManagePrintQueuesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePrintQueue(TenantId tenantId, PrintQueueId id) {
+    UsecaseResult deletePrintQueue(TenantId tenantId, PrintQueueId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Print queue not found");
+            return UsecaseResult(false, "", "Print queue not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

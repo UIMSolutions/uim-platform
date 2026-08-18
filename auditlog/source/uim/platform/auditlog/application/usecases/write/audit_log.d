@@ -19,30 +19,30 @@ class WriteAuditLogUseCase {
     this.configRepo = configRepo;
   }
 
-  CommandResult writeAuditLog(WriteAuditLogRequest req) {
+  UsecaseResult writeAuditLog(WriteAuditLogRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.message.length == 0)
-      return CommandResult(false, "", "Message is required");
+      return UsecaseResult(false, "", "Message is required");
 
     // Check if logging is enabled for this tenant/category
     auto cfg = configRepo.getByTenant(req.tenantId);
     if (!cfg.isNull) {
       if (cfg.status == ConfigStatus.disabled)
-        return CommandResult(false, "", "Audit logging is disabled for this tenant");
+        return UsecaseResult(false, "", "Audit logging is disabled for this tenant");
 
       if (req.category == AuditCategory.dataAccess && !cfg.logDataAccess)
-        return CommandResult(false, "", "Data access logging is disabled");
+        return UsecaseResult(false, "", "Data access logging is disabled");
 
       if (req.category == AuditCategory.dataModification && !cfg.logDataModification)
-        return CommandResult(false, "", "Data modification logging is disabled");
+        return UsecaseResult(false, "", "Data modification logging is disabled");
 
       if (req.category == AuditCategory.securityEvents && !cfg.logSecurityEvents)
-        return CommandResult(false, "", "Security event logging is disabled");
+        return UsecaseResult(false, "", "Security event logging is disabled");
 
       if (req.category == AuditCategory.configuration && !cfg.logConfigurationChanges)
-        return CommandResult(false, "", "Configuration change logging is disabled");
+        return UsecaseResult(false, "", "Configuration change logging is disabled");
     }
 
     auto entry = AuditLogEntry(req.tenantId);
@@ -65,7 +65,7 @@ class WriteAuditLogUseCase {
     entry.timestamp = entry.createdAt; // Set timestamp to current time in initEntity
 
     logRepo.save(entry);
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 }
 

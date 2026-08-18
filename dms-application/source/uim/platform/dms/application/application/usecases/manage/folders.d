@@ -26,23 +26,23 @@ class ManageFoldersUseCase {
     this.repoRepo = repoRepo;
   }
 
-  CommandResult createFolder(CreateFolderRequest r) {
+  UsecaseResult createFolder(CreateFolderRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "DmsFolder name is required");
+      return UsecaseResult(false, "", "DmsFolder name is required");
     if (r.repositoryId.isEmpty)
-      return CommandResult(false, "", "DmsRepository ID is required");
+      return UsecaseResult(false, "", "DmsRepository ID is required");
 
     // Validate repository exists
     auto repository = repoRepo.findById(r.tenantId, r.repositoryId);
     if (repository.isNull)
-      return CommandResult(false, "", "DmsRepository not found");
+      return UsecaseResult(false, "", "DmsRepository not found");
 
     // Build path
     string path = "/" ~ r.name;
     if (r.parentFolderId.value.length > 0) {
       auto parent = folders.findById(r.tenantId, r.parentFolderId);
       if (parent.isNull)
-        return CommandResult(false, "", "Parent folder not found");
+        return UsecaseResult(false, "", "Parent folder not found");
       path = parent.path ~ "/" ~ r.name;
     }
 
@@ -55,7 +55,7 @@ class ManageFoldersUseCase {
     entity.updatedAt = entity.createdAt;
 
     folders.save(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   DmsFolder[] listFolders(TenantId tenantId) {
@@ -74,10 +74,10 @@ class ManageFoldersUseCase {
     return folders.findById(tenantId, id);
   }
 
-  CommandResult updateFolder(UpdateFolderRequest r) {
+  UsecaseResult updateFolder(UpdateFolderRequest r) {
     auto folder = folders.findById(r.tenantId, r.folderId);
     if (folder.isNull)
-      return CommandResult(false, "", "DmsFolder not found");
+      return UsecaseResult(false, "", "DmsFolder not found");
 
     if (r.name.length > 0) {
       folder.name = r.name;
@@ -91,18 +91,18 @@ class ManageFoldersUseCase {
     folder.updatedAt = currentTimestamp();
 
     folders.update(folder);
-    return CommandResult(true, folder.id.value, "");
+    return UsecaseResult(true, folder.id.value, "");
   }
 
-  CommandResult moveFolder(MoveFolderRequest r) {
+  UsecaseResult moveFolder(MoveFolderRequest r) {
     auto folder = folders.findById(r.tenantId, r.folderId);
     if (folder.isNull)
-      return CommandResult(false, "", "DmsFolder not found");
+      return UsecaseResult(false, "", "DmsFolder not found");
 
     if (r.newParentFolderId.value.length > 0) {
       auto newParent = folders.findById(r.tenantId, r.newParentFolderId);
       if (newParent.isNull)
-        return CommandResult(false, "", "New parent folder not found");
+        return UsecaseResult(false, "", "New parent folder not found");
       folder.parentFolderId = r.newParentFolderId;
       folder.path = newParent.path ~ "/" ~ folder.name;
     } else {
@@ -112,16 +112,16 @@ class ManageFoldersUseCase {
     folder.updatedAt = currentTimestamp();
 
     folders.update(folder);
-    return CommandResult(true, folder.id.value, "");
+    return UsecaseResult(true, folder.id.value, "");
   }
 
-  CommandResult deleteFolder(TenantId tenantId, FolderId id) {
+  UsecaseResult deleteFolder(TenantId tenantId, FolderId id) {
     auto folder = folders.findById(tenantId, id);
     if (folder.isNull)
-      return CommandResult(false, "", "DmsFolder not found");
+      return UsecaseResult(false, "", "DmsFolder not found");
 
     folders.remove(folder);
-    return CommandResult(true, folder.id.value, "");
+    return UsecaseResult(true, folder.id.value, "");
   }
 }
 

@@ -13,13 +13,13 @@ mixin(ShowModule!());
 /// Use case: manage the service plan catalog.
 interface IManageServicePlansUseCase {
 
-  CommandResult createPlan(CreateServicePlanRequest req);
-  CommandResult updatePlan(UpdateServicePlanRequest req);
+  UsecaseResult createPlan(CreateServicePlanRequest req);
+  UsecaseResult updatePlan(UpdateServicePlanRequest req);
   ServicePlan getPlan(TenantId tenantId, ServicePlanId id);
   ServicePlan[] listPlans(TenantId tenantId);
   ServicePlan[] listPlansByService(TenantId tenantId, string serviceName);
   ServicePlan[] listPlansByCategory(TenantId tenantId, string category);
   ServicePlan[] listPlansByRegion(TenantId tenantId, string region);
-  CommandResult deletePlan(TenantId tenantId, ServicePlanId id);
+  UsecaseResult deletePlan(TenantId tenantId, ServicePlanId id);
 
 }

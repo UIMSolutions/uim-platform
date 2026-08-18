@@ -14,9 +14,9 @@ mixin(ShowModule!());
 /// Interface for managing transport queues in the content agent domain.
 interface IManageTransportQueuesUseCase { 
 
-  CommandResult createQueue(CreateQueueRequest req);
-  CommandResult updateQueue(UpdateQueueRequest req);
-  CommandResult deleteQueue(TenantId tenantId, TransportQueueId id);
+  UsecaseResult createQueue(CreateQueueRequest req);
+  UsecaseResult updateQueue(UpdateQueueRequest req);
+  UsecaseResult deleteQueue(TenantId tenantId, TransportQueueId id);
   TransportQueue getQueue(TenantId tenantId, TransportQueueId id);
   TransportQueue[] listQueues(TenantId tenantId);
   TransportQueue getDefaultQueue(TenantId tenantId);

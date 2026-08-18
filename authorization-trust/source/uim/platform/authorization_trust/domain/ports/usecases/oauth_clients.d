@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 interface IManageOAuthClientsUseCase {
 
-  CommandResult createOAuthClient(CreateOAuthClientRequest r);
-  CommandResult updateClient(UpdateOAuthClientRequest r);
-  CommandResult deleteClient(TenantId tenantId, OAuthClientId id);
+  UsecaseResult createOAuthClient(CreateOAuthClientRequest r);
+  UsecaseResult updateClient(UpdateOAuthClientRequest r);
+  UsecaseResult deleteClient(TenantId tenantId, OAuthClientId id);
   OAuthClient getClient(TenantId tenantId, OAuthClientId id);
   OAuthClient[] listClients(TenantId tenantId);
   OAuthClient[] listClients(TenantId tenantId, string appId);

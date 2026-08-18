@@ -22,9 +22,9 @@ public:
     _planner = planner;
   }
 
-  CommandResult createDelivery(TenantId tenantId, CreateDeliveryRequest req) {
+  UsecaseResult createDelivery(TenantId tenantId, CreateDeliveryRequest req) {
     if (req.deliveryNumber.length == 0)
-      return CommandResult(false, "Delivery number is required");
+      return UsecaseResult(false, "Delivery number is required");
 
     
     Delivery d;
@@ -56,19 +56,19 @@ public:
     d.createdAt = currentTimestamp();
     d.updatedAt = d.createdAt;
     _repo.save(d);
-    return CommandResult(true, "", d.id.value);
+    return UsecaseResult(true, "", d.id.value);
   }
 
-  CommandResult updateDeliveryStatus(TenantId tenantId, DeliveryId id, UpdateDeliveryRequest req) {
+  UsecaseResult updateDeliveryStatus(TenantId tenantId, DeliveryId id, UpdateDeliveryRequest req) {
     auto d = _repo.findById(tenantId, id);
-    if (d.isNull) return CommandResult(false, "Delivery not found");
+    if (d.isNull) return UsecaseResult(false, "Delivery not found");
 
     
     DeliveryStatus newStatus;
     if (req.status.length > 0) {
-      try { newStatus = req.status.to!DeliveryStatus; } catch (Exception) { return CommandResult(false, "Invalid status value"); }
+      try { newStatus = req.status.to!DeliveryStatus; } catch (Exception) { return UsecaseResult(false, "Invalid status value"); }
       if (!_planner.canTransitionDelivery(d.status, newStatus))
-        return CommandResult(false, "Invalid status transition for delivery");
+        return UsecaseResult(false, "Invalid status transition for delivery");
     } else {
       newStatus = d.status;
     }
@@ -91,16 +91,16 @@ public:
     updated.createdAt = d.createdAt;
     updated.updatedAt = currentTimestamp();
     _repo.save(updated);
-    return CommandResult(true, "", id.value);
+    return UsecaseResult(true, "", id.value);
   }
 
-  CommandResult deleteDelivery(TenantId tenantId, DeliveryId id) {
+  UsecaseResult deleteDelivery(TenantId tenantId, DeliveryId id) {
     auto d = _repo.findById(tenantId, id);
-    if (d.isNull) return CommandResult(false, "Delivery not found");
+    if (d.isNull) return UsecaseResult(false, "Delivery not found");
     // Cascade: remove warehouse orders
     _warehouseOrders.removeByDelivery(tenantId, id);
     _repo.remove(tenantId, id);
-    return CommandResult(true);
+    return UsecaseResult(true);
   }
 
   Delivery getDelivery(TenantId tenantId, DeliveryId id) {

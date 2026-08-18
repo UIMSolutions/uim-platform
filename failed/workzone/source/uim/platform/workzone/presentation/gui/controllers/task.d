@@ -25,7 +25,7 @@ class TaskGuiController {
         _model.refresh();
     }
 
-    CommandResult completeTask(string id) {
+    UsecaseResult completeTask(string id) {
         return _model.completeTask(id);
     }
 

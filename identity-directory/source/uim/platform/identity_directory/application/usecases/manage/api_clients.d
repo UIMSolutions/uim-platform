@@ -71,10 +71,10 @@ class ManageApiClientsUseCase {
   }
 
   /// Revoke an API client.
-  CommandResult revokeClient(TenantId tenantId, ApiClientId id) {
+  UsecaseResult revokeClient(TenantId tenantId, ApiClientId id) {
     auto client = clientRepo.findById(tenantId, id);
     if (client.isNull)
-      return CommandResult(false, "", "API client not found");
+      return UsecaseResult(false, "", "API client not found");
 
     client.active = false;
     clientRepo.update(client);
@@ -94,7 +94,7 @@ class ManageApiClientsUseCase {
 
     auditRepo.save(event);
 
-    return CommandResult(true, client.id.value, "API client revoked successfully.");
+    return UsecaseResult(true, client.id.value, "API client revoked successfully.");
   }
 }
 

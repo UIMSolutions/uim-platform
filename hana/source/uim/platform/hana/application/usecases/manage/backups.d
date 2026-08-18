@@ -21,13 +21,13 @@ class ManageBackupsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createBackup(CreateBackupRequest r) {
+  UsecaseResult createBackup(CreateBackupRequest r) {
     if (r.isNull || r.name.isEmpty)
-      return CommandResult(false, "", "Backup ID and name are required");
+      return UsecaseResult(false, "", "Backup ID and name are required");
 
     auto existing = repo.findById(r.tenantId, r.id);
     if (!existing.isNull)
-      return CommandResult(false, "", "Backup already exists");
+      return UsecaseResult(false, "", "Backup already exists");
 
     auto b = Backup(r.tenantId, r.id);
     b.instanceId = r.instanceId;
@@ -42,7 +42,7 @@ class ManageBackupsUseCase {
 
 
     repo.save(b);
-    return CommandResult(true, b.id.value, "");
+    return UsecaseResult(true, b.id.value, "");
   }
 
   Backup getBackup(TenantId tenantId, BackupId id) {
@@ -53,10 +53,10 @@ class ManageBackupsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateBackup(UpdateBackupRequest r) {
+  UsecaseResult updateBackup(UpdateBackupRequest r) {
     auto existing = repo.findById(r.tenantId, r.backupId);
     if (existing.isNull)
-      return CommandResult(false, "", "Backup not found");
+      return UsecaseResult(false, "", "Backup not found");
 
     existing.name = r.name;
     existing.destination = r.destination;
@@ -64,16 +64,16 @@ class ManageBackupsUseCase {
     existing.schedule.retentionDays = r.retentionDays;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteBackup(TenantId tenantId, BackupId id) {
+  UsecaseResult deleteBackup(TenantId tenantId, BackupId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Backup not found");
+      return UsecaseResult(false, "", "Backup not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countBackups(TenantId tenantId) {

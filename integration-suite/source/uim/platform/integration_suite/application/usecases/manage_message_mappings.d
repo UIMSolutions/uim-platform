@@ -11,7 +11,7 @@ private:
 public:
   this(IMessageMappingRepository repo) { _repo = repo; }
 
-  CommandResult create(CreateMappingRequest req) {
+  UsecaseResult create(CreateMappingRequest req) {
     auto m = MessageMapping(req.tenantId, req.id);
     m.packageId         = IntegrationPackageId(req.packageId);
     m.name              = req.name;
@@ -25,34 +25,34 @@ public:
     m.mappingExpression = req.mappingExpression;
     m.metadata          = req.metadata;
     auto err = IntegrationValidator.validateMessageMapping(m);
-    if (err !is null) return CommandResult(false, err);
+    if (err !is null) return UsecaseResult(false, err);
     _repo.add(getTenantId(req.tenantId), m);
-    return CommandResult(true, m.toJson());
+    return UsecaseResult(true, m.toJson());
   }
 
-  CommandResult getAll(TenantId tenantId) {
+  UsecaseResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (m; items) arr ~= m.toJson();
-    return CommandResult(true, arr);
+    return UsecaseResult(true, arr);
   }
 
-  CommandResult getById(TenantId tenantId, string id) {
+  UsecaseResult getById(TenantId tenantId, string id) {
     auto m = _repo.getById(getTenantId(tenantId), MessageMappingId(id));
-    if (m.isNull) return CommandResult(false, "Mapping not found");
-    return CommandResult(true, m.toJson());
+    if (m.isNull) return UsecaseResult(false, "Mapping not found");
+    return UsecaseResult(true, m.toJson());
   }
 
-  CommandResult listByPackage(TenantId tenantId, string packageId) {
+  UsecaseResult listByPackage(TenantId tenantId, string packageId) {
     auto items = _repo.findByPackage(getTenantId(tenantId), IntegrationPackageId(packageId));
     auto arr = Json.emptyArray;
     foreach (m; items) arr ~= m.toJson();
-    return CommandResult(true, arr);
+    return UsecaseResult(true, arr);
   }
 
-  CommandResult update(UpdateMappingRequest req) {
+  UsecaseResult update(UpdateMappingRequest req) {
     auto m = _repo.getById(getTenantId(req.tenantId), MessageMappingId(req.id));
-    if (m.isNull) return CommandResult(false, "Mapping not found");
+    if (m.isNull) return UsecaseResult(false, "Mapping not found");
     if (req.name.length > 0)              m.name              = req.name;
     if (req.description.length > 0)       m.description       = req.description;
     if (req.version_.length > 0)          m.version_          = req.version_;
@@ -60,13 +60,13 @@ public:
     if (req.mappingExpression.length > 0) m.mappingExpression = req.mappingExpression;
     foreach (k, v; req.metadata)          m.metadata[k]       = v;
     _repo.update(getTenantId(req.tenantId), m);
-    return CommandResult(true, m.toJson());
+    return UsecaseResult(true, m.toJson());
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto m = _repo.getById(getTenantId(tenantId), MessageMappingId(id));
-    if (m.isNull) return CommandResult(false, "Mapping not found");
+    if (m.isNull) return UsecaseResult(false, "Mapping not found");
     _repo.remove(getTenantId(tenantId), MessageMappingId(id));
-    return CommandResult(true, "Mapping deleted");
+    return UsecaseResult(true, "Mapping deleted");
   }
 }

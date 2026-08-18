@@ -46,7 +46,7 @@ class ManageDocumentsUseCase {
         return repo.searchByName(tenantId, searchTerm);
     }
 
-    CommandResult createDocument(DocumentDTO dto) {
+    UsecaseResult createDocument(DocumentDTO dto) {
         Document doc;
         doc.id = dto.documentId;
         doc.tenantId = dto.tenantId;
@@ -75,18 +75,18 @@ class ManageDocumentsUseCase {
         doc.lifecycleStatus = LifecycleStatus.draft;
         doc.checkoutStatus = CheckoutStatus.available;
         if (!DmsValidator.isValidDocument(doc))
-            return CommandResult(false, "", "Invalid document: name and repositoryId are required");
+            return UsecaseResult(false, "", "Invalid document: name and repositoryId are required");
         repo.save(doc);
-        return CommandResult(true, doc.id.value, "");
+        return UsecaseResult(true, doc.id.value, "");
     }
 
-    CommandResult updateDocument(DocumentDTO dto) {
+    UsecaseResult updateDocument(DocumentDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.documentId);
         if (existing.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         if (existing.checkoutStatus == CheckoutStatus.checkedOut &&
             existing.checkedOutBy != dto.updatedBy)
-            return CommandResult(false, "", "Document is checked out by another user");
+            return UsecaseResult(false, "", "Document is checked out by another user");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.tags.length > 0) existing.tags = dto.tags;
@@ -96,15 +96,15 @@ class ManageDocumentsUseCase {
         if (dto.customProperties.length > 0) existing.customProperties = dto.customProperties;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult checkoutDocument(TenantId tenantId, DocumentId id, UserId userId) {
+    UsecaseResult checkoutDocument(TenantId tenantId, DocumentId id, UserId userId) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         if (existing.checkoutStatus == CheckoutStatus.checkedOut)
-            return CommandResult(false, "", "Document is already checked out");
+            return UsecaseResult(false, "", "Document is already checked out");
         existing.checkoutStatus = CheckoutStatus.checkedOut;
         existing.checkedOutBy = userId;
         
@@ -112,78 +112,78 @@ class ManageDocumentsUseCase {
         existing.checkedOutAt = currentTimestamp;
         existing.versioningState = VersioningState.checkedOut;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult checkinDocument(TenantId tenantId, DocumentId id, UserId userId, bool isMajor, string comment) {
+    UsecaseResult checkinDocument(TenantId tenantId, DocumentId id, UserId userId, bool isMajor, string comment) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         if (existing.checkoutStatus != CheckoutStatus.checkedOut)
-            return CommandResult(false, "", "Document is not checked out");
+            return UsecaseResult(false, "", "Document is not checked out");
         if (existing.checkedOutBy != userId)
-            return CommandResult(false, "", "Document is checked out by another user");
+            return UsecaseResult(false, "", "Document is checked out by another user");
         existing.checkoutStatus = CheckoutStatus.available;
         existing.versioningState = isMajor ? VersioningState.major : VersioningState.minor;
         existing.checkedOutBy = UserId("");
         existing.checkedOutAt = 0;
         existing.isMajorVersion = isMajor;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult cancelCheckout(TenantId tenantId, DocumentId id, UserId userId) {
+    UsecaseResult cancelCheckout(TenantId tenantId, DocumentId id, UserId userId) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         if (existing.checkoutStatus != CheckoutStatus.checkedOut)
-            return CommandResult(false, "", "Document is not checked out");
+            return UsecaseResult(false, "", "Document is not checked out");
         existing.checkoutStatus = CheckoutStatus.available;
         existing.versioningState = VersioningState.none;
         existing.checkedOutBy = UserId("");
         existing.checkedOutAt = 0;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult moveDocument(TenantId tenantId, DocumentId id, FolderId targetFolderId, UserId userId) {
+    UsecaseResult moveDocument(TenantId tenantId, DocumentId id, FolderId targetFolderId, UserId userId) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         existing.folderId = targetFolderId;
         if (!userId.isEmpty) existing.updatedBy = userId;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult publishDocument(TenantId tenantId, DocumentId id) {
+    UsecaseResult publishDocument(TenantId tenantId, DocumentId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         existing.documentStatus = DocumentStatus.active;
         existing.lifecycleStatus = LifecycleStatus.published;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult archiveDocument(TenantId tenantId, DocumentId id) {
+    UsecaseResult archiveDocument(TenantId tenantId, DocumentId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         existing.documentStatus = DocumentStatus.archived;
         existing.lifecycleStatus = LifecycleStatus.archived_;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDocument(TenantId tenantId, DocumentId id) {
+    UsecaseResult deleteDocument(TenantId tenantId, DocumentId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         if (existing.checkoutStatus == CheckoutStatus.checkedOut)
-            return CommandResult(false, "", "Cannot delete a checked out document");
+            return UsecaseResult(false, "", "Cannot delete a checked out document");
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }
 

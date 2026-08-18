@@ -31,22 +31,22 @@ class ManageObjectsUseCase {
     this.versionRepo = versionRepo;
   }
 
-  CommandResult createObject(CreateObjectRequest req) {
+  UsecaseResult createObject(CreateObjectRequest req) {
     if (req.bucketId.isEmpty)
-      return CommandResult(false, "", "Bucket ID is required");
+      return UsecaseResult(false, "", "Bucket ID is required");
     if (req.key.length == 0)
-      return CommandResult(false, "", "Object key is required");
+      return UsecaseResult(false, "", "Object key is required");
 
     auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);
     if (bucket.isNull)
-      return CommandResult(false, "", "Bucket not found");
+      return UsecaseResult(false, "", "Bucket not found");
     if (bucket.status != BucketStatus.active)
-      return CommandResult(false, "", "Bucket is not active");
+      return UsecaseResult(false, "", "Bucket is not active");
 
     // Quota check
     auto quotaResult = QuotaValidator.validate(bucket, req.size);
     if (!quotaResult.valid)
-      return CommandResult(false, "", quotaResult.message);
+      return UsecaseResult(false, "", quotaResult.message);
 
     auto obj = StorageObject(req.tenantId); //, UserId("test-user"));
     obj.bucketId = req.bucketId;
@@ -79,13 +79,13 @@ class ManageObjectsUseCase {
     bucket.usedBytes = bucket.usedBytes + req.size;
     bucket.updatedAt = obj.createdAt;
     bucketRepo.update(bucket);
-    return CommandResult(true, obj.id.value, "");
+    return UsecaseResult(true, obj.id.value, "");
   }
 
-  CommandResult updateObjectMetadata(UpdateObjectMetadataRequest req) {
+  UsecaseResult updateObjectMetadata(UpdateObjectMetadataRequest req) {
     auto obj = objectRepo.findById(req.tenantId, req.objectId);
     if (obj.isNull)
-      return CommandResult(false, "", "Object not found");
+      return UsecaseResult(false, "", "Object not found");
 
     if (req.contentType.length > 0)
       obj.contentType = req.contentType;
@@ -96,7 +96,7 @@ class ManageObjectsUseCase {
     obj.updatedAt = currentTimestamp();
 
     objectRepo.update(obj);
-    return CommandResult(true, obj.id.value, "");
+    return UsecaseResult(true, obj.id.value, "");
   }
 
   StorageObject getObject(TenantId tenantId, StorageObjectId objectId) {
@@ -119,10 +119,10 @@ class ManageObjectsUseCase {
     return versionRepo.findByObject(tenantId, objectId);
   }
 
-  CommandResult deleteObject(TenantId tenantId, StorageObjectId id) {
+  UsecaseResult deleteObject(TenantId tenantId, StorageObjectId id) {
     auto obj = objectRepo.findById(tenantId, id);
     if (obj.isNull)
-      return CommandResult(false, "", "Object not found");
+      return UsecaseResult(false, "", "Object not found");
 
     auto bucket = bucketRepo.findById(tenantId, obj.bucketId);
 
@@ -168,21 +168,21 @@ class ManageObjectsUseCase {
       bucketRepo.update(bucket);
     }
 
-    return CommandResult(true, obj.id.value, "");
+    return UsecaseResult(true, obj.id.value, "");
   }
 
-  CommandResult copyObject(CopyObjectRequest req) {
+  UsecaseResult copyObject(CopyObjectRequest req) {
     auto sourceObj = objectRepo.findByKey(req.tenantId, req.sourceBucketId, req.sourceKey);
     if (sourceObj.isNull || sourceObj.isNull)
-      return CommandResult(false, "", "Source object not found");
+      return UsecaseResult(false, "", "Source object not found");
 
     auto destBucket = bucketRepo.findById(req.tenantId, req.destBucketId);
     if (destBucket.isNull || destBucket.isNull)
-      return CommandResult(false, "", "Destination bucket not found");
+      return UsecaseResult(false, "", "Destination bucket not found");
 
     auto quotaResult = QuotaValidator.validate(destBucket, sourceObj.size);
     if (!quotaResult.valid)
-      return CommandResult(false, "", quotaResult.message);
+      return UsecaseResult(false, "", quotaResult.message);
 
     auto copy = StorageObject(req.tenantId); //, UserId("test-user"));
     copy.bucketId = req.destBucketId;
@@ -201,7 +201,7 @@ class ManageObjectsUseCase {
     destBucket.updatedAt = copy.createdAt;
 
     bucketRepo.update(destBucket);
-    return CommandResult(true, copy.id.value, "");
+    return UsecaseResult(true, copy.id.value, "");
   }
 }
 

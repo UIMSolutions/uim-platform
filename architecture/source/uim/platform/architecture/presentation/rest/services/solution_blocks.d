@@ -22,20 +22,20 @@ class SolutionBlocksService : ISolutionBlocksApi {
         return usecase.getBlock(TenantId(tenantId), SolutionBlockId(id));
     }
 
-    override CommandResult createSolutionBlock(string tenantId, CreateSolutionBlockRequest request) {
+    override UsecaseResult createSolutionBlock(string tenantId, CreateSolutionBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         return usecase.createBlock(req);
     }
 
-    override CommandResult updateSolutionBlock(string tenantId, string id, UpdateSolutionBlockRequest request) {
+    override UsecaseResult updateSolutionBlock(string tenantId, string id, UpdateSolutionBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         req.blockId = SolutionBlockId(id);
         return usecase.updateBlock(req);
     }
 
-    override CommandResult deleteSolutionBlock(string tenantId, string id) {
+    override UsecaseResult deleteSolutionBlock(string tenantId, string id) {
         return usecase.deleteBlock(TenantId(tenantId), SolutionBlockId(id));
     }
 }

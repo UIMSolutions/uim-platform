@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageDecisionsUseCase { 
 
-    CommandResult createDecision(CreateDecisionRequest r);
+    UsecaseResult createDecision(CreateDecisionRequest r);
     Decision getDecision(TenantId tenantId, DecisionId id);
     Decision[] listDecisions(TenantId tenantId);
-    CommandResult updateDecision(UpdateDecisionRequest r);
-    CommandResult deleteDecision(TenantId tenantId, DecisionId id);
+    UsecaseResult updateDecision(UpdateDecisionRequest r);
+    UsecaseResult deleteDecision(TenantId tenantId, DecisionId id);
 
 }
 

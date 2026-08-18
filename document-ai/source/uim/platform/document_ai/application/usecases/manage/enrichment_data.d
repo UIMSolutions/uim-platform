@@ -22,11 +22,11 @@ class ManageEnrichmentDataUseCase {
     this.repo = repo;
   }
 
-  CommandResult createEnrichmentData(CreateEnrichmentDataRequest r) {
+  UsecaseResult createEnrichmentData(CreateEnrichmentDataRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Enrichment data name is required");
+      return UsecaseResult(false, "", "Enrichment data name is required");
     if (r.clientId.isEmpty)
-      return CommandResult(false, "", "Client ID is required");
+      return UsecaseResult(false, "", "Client ID is required");
 
     auto ed = EnrichmentData(r.tenantId);
     ed.clientId = r.clientId;
@@ -47,16 +47,16 @@ class ManageEnrichmentDataUseCase {
     ed.fields = fields;
 
     repo.save(ed);
-    return CommandResult(true, ed.id.value, "");
+    return UsecaseResult(true, ed.id.value, "");
   }
 
-  CommandResult updateEnrichmentData(UpdateEnrichmentDataRequest r) {
+  UsecaseResult updateEnrichmentData(UpdateEnrichmentDataRequest r) {
     if (r.enrichmentDataId.isEmpty)
-      return CommandResult(false, "", "Enrichment data ID is required");
+      return UsecaseResult(false, "", "Enrichment data ID is required");
 
     auto existing = repo.findById(r.clientId, r.enrichmentDataId);
     if (existing.isNull)
-      return CommandResult(false, "", "Enrichment data not found");
+      return UsecaseResult(false, "", "Enrichment data not found");
 
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
@@ -78,7 +78,7 @@ class ManageEnrichmentDataUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   EnrichmentData getEnrichmentData(ClientId clientId, EnrichmentDataId id) {
@@ -99,13 +99,13 @@ class ManageEnrichmentDataUseCase {
   size_t countEnrichmentData(ClientId clientId) {
     return repo.countByClient(clientId);
   }
-  CommandResult deleteEnrichmentData(ClientId clientId, EnrichmentDataId id) {
+  UsecaseResult deleteEnrichmentData(ClientId clientId, EnrichmentDataId id) {
     auto entity = repo.findById(clientId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Enrichment data not found");
+      return UsecaseResult(false, "", "Enrichment data not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
 

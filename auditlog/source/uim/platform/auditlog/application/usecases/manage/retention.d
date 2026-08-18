@@ -22,13 +22,13 @@ class ManageRetentionUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPolicy(CreateRetentionPolicyRequest req) {
+  UsecaseResult createPolicy(CreateRetentionPolicyRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Policy name is required");
+      return UsecaseResult(false, "", "Policy name is required");
     if (req.retentionDays <= 0)
-      return CommandResult(false, "", "Retention days must be positive");
+      return UsecaseResult(false, "", "Retention days must be positive");
 
     auto policy = RetentionPolicy(req.tenantId);
     with (policy) {
@@ -41,7 +41,7 @@ class ManageRetentionUseCase {
     }
 
     repo.save(policy);
-    return CommandResult(true, policy.id.value, "");
+    return UsecaseResult(true, policy.id.value, "");
   }
 
   bool existsPolicy(TenantId tenantId, RetentionPolicyId policyId) {
@@ -56,10 +56,10 @@ class ManageRetentionUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
+  UsecaseResult updatePolicy(UpdateRetentionPolicyRequest req) {
     auto policy = repo.findById(req.tenantId, req.retentionPolicyId);
     if (policy.isNull)
-      return CommandResult(false, "", "Retention policy not found");
+      return UsecaseResult(false, "", "Retention policy not found");
 
     if (req.name.length > 0)
       policy.name = req.name;
@@ -73,16 +73,16 @@ class ManageRetentionUseCase {
     policy.updatedAt = currentTimestamp();
 
     repo.update(policy);
-    return CommandResult(true, policy.id.value, "");
+    return UsecaseResult(true, policy.id.value, "");
   }
 
-  CommandResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
+  UsecaseResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
     auto policy = repo.findById(tenantId, policyId);
     if (policy.isNull)
-      return CommandResult(false, "", "Retention policy not found");
+      return UsecaseResult(false, "", "Retention policy not found");
 
     repo.remove(policy);
-    return CommandResult(true, policy.id.value, "");
+    return UsecaseResult(true, policy.id.value, "");
   }
 }
 

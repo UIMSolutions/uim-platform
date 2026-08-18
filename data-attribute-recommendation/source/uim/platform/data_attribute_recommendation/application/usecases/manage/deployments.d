@@ -27,23 +27,23 @@ class ManageDeploymentsUseCase {
     this.configRepo = configRepo;
   }
 
-  CommandResult createDeployment(CreateDeploymentRequest req) {
+  UsecaseResult createDeployment(CreateDeploymentRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.jobId.isEmpty)
-      return CommandResult(false, "", "Training job ID is required");
+      return UsecaseResult(false, "", "Training job ID is required");
 
     // Verify training job completed successfully
     auto job = jobRepo.findById(req.tenantId, req.jobId);
     if (job.isNull)
-      return CommandResult(false, "", "Training job not found");
+      return UsecaseResult(false, "", "Training job not found");
     if (job.status != JobStatus.completed)
-      return CommandResult(false, "", "Training job must be completed before deployment");
+      return UsecaseResult(false, "", "Training job must be completed before deployment");
 
     // Check no active deployment exists for this job
     auto existingDep = repo.findByTrainingJob(req.tenantId, req.jobId);
     if (!existingDep.isNull && existingDep.status == DeploymentStatus.active)
-      return CommandResult(false, "", "An active deployment already exists for this training job");
+      return UsecaseResult(false, "", "An active deployment already exists for this training job");
 
     auto dep = ModelDeployment(req.tenantId);
     dep.trainingJobId = req.jobId;
@@ -59,7 +59,7 @@ class ManageDeploymentsUseCase {
     // Simulate immediate activation
     activateDeployment(req.tenantId, dep.id);
 
-    return CommandResult(true, dep.id.value, "");
+    return UsecaseResult(true, dep.id.value, "");
   }
 
   ModelDeployment getDeployment(TenantId tenantId, DeploymentId id) {
@@ -71,42 +71,42 @@ class ManageDeploymentsUseCase {
   }
 
   /// Activate a deploying or inactive deployment.
-  CommandResult activateDeployment(TenantId tenantId, DeploymentId id) {
+  UsecaseResult activateDeployment(TenantId tenantId, DeploymentId id) {
     auto dep = repo.findById(tenantId, id);
     if (dep.isNull)
-      return CommandResult(false, "", "Deployment not found");
+      return UsecaseResult(false, "", "Deployment not found");
 
     if (dep.status != DeploymentStatus.deploying && dep.status != DeploymentStatus.inactive)
-      return CommandResult(false, "", "Deployment cannot be activated from current state");
+      return UsecaseResult(false, "", "Deployment cannot be activated from current state");
 
     dep.status = DeploymentStatus.active;
     dep.updatedAt = currentTimestamp();
     repo.update(dep);
-    return CommandResult(true, dep.id.value, "");
+    return UsecaseResult(true, dep.id.value, "");
   }
 
   /// Deactivate an active deployment.
-  CommandResult deactivateDeployment(TenantId tenantId, DeploymentId id) {
+  UsecaseResult deactivateDeployment(TenantId tenantId, DeploymentId id) {
     auto dep = repo.findById(tenantId, id);
     if (dep.isNull)
-      return CommandResult(false, "", "Deployment not found");
+      return UsecaseResult(false, "", "Deployment not found");
 
     if (dep.status != DeploymentStatus.active)
-      return CommandResult(false, "", "Only active deployments can be deactivated");
+      return UsecaseResult(false, "", "Only active deployments can be deactivated");
 
     dep.status = DeploymentStatus.inactive;
     dep.updatedAt = currentTimestamp();
     repo.update(dep);
-    return CommandResult(true, dep.id.value, "");
+    return UsecaseResult(true, dep.id.value, "");
   }
 
-  CommandResult deleteDeployment(TenantId tenantId, DeploymentId id) {
+  UsecaseResult deleteDeployment(TenantId tenantId, DeploymentId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Deployment not found");
+      return UsecaseResult(false, "", "Deployment not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }
 

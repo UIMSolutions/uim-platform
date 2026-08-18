@@ -38,7 +38,7 @@ class ManageDataQualityRulesUseCase {
         return repo.findBySeverity(tenantId, severity);
     }
 
-    CommandResult createDataQualityRule(DataQualityRuleDTO dto) {
+    UsecaseResult createDataQualityRule(DataQualityRuleDTO dto) {
         auto rule = DataQualityRule(dto.tenantId); //, UserId("test-user"));
         rule.id = dto.ruleId;
         rule.name = dto.name;
@@ -56,16 +56,16 @@ class ManageDataQualityRulesUseCase {
         rule.maxValue = dto.maxValue;
 
         if (!MasterdataGovernanceValidator.isValidDataQualityRule(rule))
-            return CommandResult(false, "", "Invalid data quality rule data");
+            return UsecaseResult(false, "", "Invalid data quality rule data");
 
         repo.save(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
-    CommandResult updateDataQualityRule(DataQualityRuleDTO dto) {
+    UsecaseResult updateDataQualityRule(DataQualityRuleDTO dto) {
         auto rule = repo.findById(dto.tenantId, dto.ruleId);
         if (rule.isNull)
-            return CommandResult(false, "", "Data quality rule not found");
+            return UsecaseResult(false, "", "Data quality rule not found");
 
         if (dto.name.length > 0) rule.name = dto.name;
         if (dto.description.length > 0) rule.description = dto.description;
@@ -81,15 +81,15 @@ class ManageDataQualityRulesUseCase {
         if (!dto.updatedBy.isNull) rule.updatedBy = dto.updatedBy;
 
         repo.update(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
-    CommandResult deleteDataQualityRule(TenantId tenantId, DataQualityRuleId id) {
+    UsecaseResult deleteDataQualityRule(TenantId tenantId, DataQualityRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
-            return CommandResult(false, "", "Data quality rule not found");
+            return UsecaseResult(false, "", "Data quality rule not found");
 
         repo.remove(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 }

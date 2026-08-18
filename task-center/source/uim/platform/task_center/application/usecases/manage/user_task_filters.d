@@ -30,7 +30,7 @@ class ManageUserTaskFiltersUseCase {
     //     return repo.findDefault(tenantId, userId);
     // }
 
-    CommandResult createFilter(CreateUserTaskFilterRequest req) {
+    UsecaseResult createFilter(CreateUserTaskFilterRequest req) {
         auto taskFilter = UserTaskFilter(req.tenantId);
         taskFilter.id = req.filterId;
         // taskFilter.userId = req.userId;
@@ -39,38 +39,38 @@ class ManageUserTaskFiltersUseCase {
         taskFilter.isDefault = req.isDefault;
 
         repo.save(taskFilter);
-        return CommandResult(true, taskFilter.id.value, "");
+        return UsecaseResult(true, taskFilter.id.value, "");
     }
 
-    CommandResult updateFilter(UpdateUserTaskFilterRequest req) {
+    UsecaseResult updateFilter(UpdateUserTaskFilterRequest req) {
         auto taskFilter = repo.findById(req.tenantId, req.filterId);
         if (taskFilter.isNull)
-            return CommandResult(false, "", "Filter not found");
+            return UsecaseResult(false, "", "Filter not found");
 
         if (req.name.length > 0) taskFilter.name = req.name;
         if (req.description.length > 0) taskFilter.description = req.description;
         taskFilter.isDefault = req.isDefault;
 
         repo.update(taskFilter);
-        return CommandResult(true, taskFilter.id.value, "");
+        return UsecaseResult(true, taskFilter.id.value, "");
     }
 
-    CommandResult setDefaultFilter(TenantId tenantId, UserTaskFilterId id) {
+    UsecaseResult setDefaultFilter(TenantId tenantId, UserTaskFilterId id) {
         auto taskFilter = repo.findById(tenantId, id);
         if (taskFilter.isNull)
-            return CommandResult(false, "", "Filter not found");
+            return UsecaseResult(false, "", "Filter not found");
         taskFilter.isDefault = true;
         
         repo.update(taskFilter);
-        return CommandResult(true, taskFilter.id.value, "");
+        return UsecaseResult(true, taskFilter.id.value, "");
     }
 
-    CommandResult deleteFilter(TenantId tenantId, UserTaskFilterId id) {
+    UsecaseResult deleteFilter(TenantId tenantId, UserTaskFilterId id) {
         auto taskFilter = repo.findById(tenantId, id);
         if (taskFilter.isNull)
-            return CommandResult(false, "", "Filter not found");
+            return UsecaseResult(false, "", "Filter not found");
 
         repo.remove(taskFilter);
-        return CommandResult(true, taskFilter.id.value, "");
+        return UsecaseResult(true, taskFilter.id.value, "");
     }
 }

@@ -18,11 +18,11 @@ class ManageRegisteredApplicationsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createApplication(CreateRegisteredApplicationRequest r) {
-        if (r.tenantId.isNull) return CommandResult(false, "", "Tenant ID is required");
-        if (r.applicationId.isNull) return CommandResult(false, "", "Application ID is required");
+    UsecaseResult createApplication(CreateRegisteredApplicationRequest r) {
+        if (r.tenantId.isNull) return UsecaseResult(false, "", "Tenant ID is required");
+        if (r.applicationId.isNull) return UsecaseResult(false, "", "Application ID is required");
 
-        if (r.name.isEmpty) return CommandResult(false, "", "Application name is required");
+        if (r.name.isEmpty) return UsecaseResult(false, "", "Application name is required");
 
         RegisteredApplication app;
         app.id = r.applicationId;
@@ -40,7 +40,7 @@ class ManageRegisteredApplicationsUseCase {
         app.registeredAt = currentTimestamp();
 
         repo.save(app);
-        return CommandResult(true, app.id.value, "");
+        return UsecaseResult(true, app.id.value, "");
     }
 
     RegisteredApplication getApplication(TenantId tenantId, RegisteredApplicationId id) {
@@ -51,10 +51,10 @@ class ManageRegisteredApplicationsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateApplication(UpdateRegisteredApplicationRequest r) {
+    UsecaseResult updateApplication(UpdateRegisteredApplicationRequest r) {
         auto existing = repo.findById(r.tenantId, r.applicationId);
         if (existing.isNull)
-            return CommandResult(false, "", "Application not found");
+            return UsecaseResult(false, "", "Application not found");
 
         if (r.name.length > 0) existing.name = r.name;
         if (r.description.length > 0) existing.description = r.description;
@@ -66,36 +66,36 @@ class ManageRegisteredApplicationsUseCase {
         existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult activateApplication(TenantId tenantId, RegisteredApplicationId id) {
+    UsecaseResult activateApplication(TenantId tenantId, RegisteredApplicationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Application not found");
+            return UsecaseResult(false, "", "Application not found");
         existing.status = ApplicationStatus.active;
         existing.updatedAt = currentTimestamp();
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult suspendApplication(TenantId tenantId, RegisteredApplicationId id) {
+    UsecaseResult suspendApplication(TenantId tenantId, RegisteredApplicationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Application not found");
+            return UsecaseResult(false, "", "Application not found");
             
         existing.status = ApplicationStatus.suspended;
         existing.updatedAt = currentTimestamp();
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteApplication(TenantId tenantId, RegisteredApplicationId id) {
+    UsecaseResult deleteApplication(TenantId tenantId, RegisteredApplicationId id) {
         auto application = repo.findById(tenantId, id);
         if (application.isNull)
-            return CommandResult(false, "", "Application not found");
+            return UsecaseResult(false, "", "Application not found");
 
         repo.remove(application);
-        return CommandResult(true, application.id.value, "");
+        return UsecaseResult(true, application.id.value, "");
     }
 }

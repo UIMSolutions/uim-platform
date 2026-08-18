@@ -17,11 +17,11 @@ class ManageDataSubjectRolesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDataSubjectRole(CreateDataSubjectRoleRequest req) {
+    UsecaseResult createDataSubjectRole(CreateDataSubjectRoleRequest req) {
         import std.uuid : randomUUID;
 
         if (req.name.isEmpty)
-            return CommandResult(false, "", "Data subject role name is required");
+            return UsecaseResult(false, "", "Data subject role name is required");
 
         DataSubjectRole dsr;
         dsr.id = DataSubjectRoleId(generateId);
@@ -33,13 +33,13 @@ class ManageDataSubjectRolesUseCase {
         dsr.createdAt = clockSeconds();
 
         repo.save(dsr);
-        return CommandResult(true, dsr.id.value, "");
+        return UsecaseResult(true, dsr.id.value, "");
     }
 
-    CommandResult updateDataSubjectRole(TenantId tenantId, DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
+    UsecaseResult updateDataSubjectRole(TenantId tenantId, DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
         auto dsr = repo.findById(tenantId, id);
         if (dsr.isNull)
-            return CommandResult(false, "", "Data subject role not found");
+            return UsecaseResult(false, "", "Data subject role not found");
 
         if (req.name.length > 0)
             dsr.name = req.name;
@@ -49,7 +49,7 @@ class ManageDataSubjectRolesUseCase {
         dsr.updatedAt = clockSeconds();
 
         repo.update(dsr);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
     bool hasDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {
@@ -64,12 +64,12 @@ class ManageDataSubjectRolesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deleteDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {
+    UsecaseResult deleteDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Data subject role not found");
+            return UsecaseResult(false, "", "Data subject role not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }

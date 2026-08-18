@@ -39,7 +39,7 @@ classDiagram
         <<interface>>
         +TenantId tenantId
     }
-    class CommandResult {
+    class UsecaseResult {
         +bool success
         +string id
         +string errorMessage
@@ -70,7 +70,7 @@ flowchart TB
         E3[ResourceEntity — ResourceId + name]
     end
     subgraph Application["Application Helpers (application/)"]
-        A1[dto.d — CommandResult + QueryResult]
+        A1[dto.d — UsecaseResult + QueryResult]
         A2[usecases/id.d — IdUseCase base]
         A3[usecases/tenant.d — TenantUseCase base]
     end

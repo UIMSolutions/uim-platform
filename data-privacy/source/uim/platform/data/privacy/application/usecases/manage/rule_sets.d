@@ -17,11 +17,11 @@ class ManageRuleSetsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRuleSet(CreateRuleSetRequest req) {
+  UsecaseResult createRuleSet(CreateRuleSetRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto rs = RuleSet(req.tenantId);
 
@@ -32,7 +32,7 @@ class ManageRuleSetsUseCase {
     rs.priority = req.priority;
     
     repo.save(rs);
-    return CommandResult(true, rs.id.value, "");
+    return UsecaseResult(true, rs.id.value, "");
   }
 
   RuleSet getRuleSet(TenantId tenantId, RuleSetId id) {
@@ -47,10 +47,10 @@ class ManageRuleSetsUseCase {
     return repo.findByBusinessContext(tenantId, contextId);
   }
 
-  CommandResult updateRuleSet(UpdateRuleSetRequest req) {
+  UsecaseResult updateRuleSet(UpdateRuleSetRequest req) {
     auto rs = repo.findById(req.tenantId, req.setId);
     if (rs.isNull)
-      return CommandResult(false, "", "Rule set not found");
+      return UsecaseResult(false, "", "Rule set not found");
 
     if (req.name.length > 0) rs.name = req.name;
     if (req.description.length > 0) rs.description = req.description;
@@ -58,28 +58,28 @@ class ManageRuleSetsUseCase {
     rs.updatedAt = currentTimestamp();
 
     repo.update(rs);
-    return CommandResult(true, rs.id.value, "");
+    return UsecaseResult(true, rs.id.value, "");
   }
 
-  CommandResult activateRuleSet(TenantId tenantId, RuleSetId id) {
+  UsecaseResult activateRuleSet(TenantId tenantId, RuleSetId id) {
     auto rs = repo.findById(tenantId, id);
     if (rs.isNull)
-      return CommandResult(false, "", "Rule set not found");
+      return UsecaseResult(false, "", "Rule set not found");
 
     rs.status = RuleSetStatus.active;
     rs.activatedAt = currentTimestamp();
     rs.updatedAt = rs.activatedAt;
 
     repo.update(rs);
-    return CommandResult(true, rs.id.value, "");
+    return UsecaseResult(true, rs.id.value, "");
   }
 
-  CommandResult deleteRuleSet(TenantId tenantId, RuleSetId id) {
+  UsecaseResult deleteRuleSet(TenantId tenantId, RuleSetId id) {
     auto rs = repo.findById(tenantId, id);
     if (rs.isNull)
-      return CommandResult(false, "", "Rule set not found");
+      return UsecaseResult(false, "", "Rule set not found");
 
     repo.remove(rs);
-    return CommandResult(true, rs.id.value, "");
+    return UsecaseResult(true, rs.id.value, "");
   }
 }

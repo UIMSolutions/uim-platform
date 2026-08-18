@@ -25,23 +25,23 @@ class ManageDataRecordsUseCase {
     this.datasetRepo = datasetRepo;
   }
 
-  CommandResult createDataRecord(CreateDataRecordRequest req) {
+  UsecaseResult createDataRecord(CreateDataRecordRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.datasetId.isEmpty)
-      return CommandResult(false, "", "Dataset ID is required");
+      return UsecaseResult(false, "", "Dataset ID is required");
 
     if (req.attributes.length == 0)
-      return CommandResult(false, "", "Attributes are required");
+      return UsecaseResult(false, "", "Attributes are required");
 
     // Verify dataset exists and is still mutable
     auto ds = datasetRepo.findById(req.tenantId, req.datasetId);
     if (ds.isNull)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
 
     if (ds.status != DatasetStatus.draft && ds.status != DatasetStatus.ready)
-      return CommandResult(false, "", "Cannot add records to a processed or completed dataset");
+      return UsecaseResult(false, "", "Cannot add records to a processed or completed dataset");
 
     auto record = DataRecord(req.tenantId, DataRecordId(createId), req.createdBy);
     record.datasetId = req.datasetId;
@@ -51,7 +51,7 @@ class ManageDataRecordsUseCase {
     record.status = RecordStatus.pending;
 
     repo.save(record);
-    return CommandResult(true, record.id.value, "");
+    return UsecaseResult(true, record.id.value, "");
   }
 
   DataRecord getDataRecord(TenantId tenantId, DataRecordId id) {
@@ -62,33 +62,33 @@ class ManageDataRecordsUseCase {
     return repo.findByDataset(tenantId, datasetId);
   }
 
-  CommandResult validateDataRecord(TenantId tenantId, DataRecordId id) {
+  UsecaseResult validateDataRecord(TenantId tenantId, DataRecordId id) {
     auto record = repo.findById(tenantId, id);
     if (record.isNull)
-      return CommandResult(false, "", "Record not found");
+      return UsecaseResult(false, "", "Record not found");
 
     record.status = RecordStatus.validated;
     repo.update(record);
-    return CommandResult(true, record.id.value, "");
+    return UsecaseResult(true, record.id.value, "");
   }
 
-  CommandResult rejectDataRecord(TenantId tenantId, DataRecordId id) {
+  UsecaseResult rejectDataRecord(TenantId tenantId, DataRecordId id) {
     auto record = repo.findById(tenantId, id);
     if (record.isNull)
-      return CommandResult(false, "", "Record not found");
+      return UsecaseResult(false, "", "Record not found");
 
     record.status = RecordStatus.rejected;
     repo.update(record);
-    return CommandResult(true, record.id.value, "");
+    return UsecaseResult(true, record.id.value, "");
   }
 
-  CommandResult deleteDataRecord(TenantId tenantId, DataRecordId id) {
+  UsecaseResult deleteDataRecord(TenantId tenantId, DataRecordId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Record not found");
+      return UsecaseResult(false, "", "Record not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }
 

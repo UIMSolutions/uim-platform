@@ -16,7 +16,7 @@ interface IManageEventMessagesUseCase {
     EventMessage getEventMessage(TenantId tenantId, EventMessageId id);
     EventMessage[] listEventMessages(TenantId tenantId);
     EventMessage[] listByChannel(TenantId tenantId, EventChannelId channelId);
-    CommandResult publishMessage(EventMessageDTO dto);
-    CommandResult deleteEventMessage(TenantId tenantId, EventMessageId id);
+    UsecaseResult publishMessage(EventMessageDTO dto);
+    UsecaseResult deleteEventMessage(TenantId tenantId, EventMessageId id);
 
 }

@@ -34,7 +34,7 @@ class ManageBackendConnectionsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createBackendConnection(BackendConnectionDTO dto) {
+    UsecaseResult createBackendConnection(BackendConnectionDTO dto) {
         auto conn = BackendConnection(dto.tenantId, dto.connectionId, dto.createdBy);
         conn.name = dto.name;
         conn.description = dto.description;
@@ -50,16 +50,16 @@ class ManageBackendConnectionsUseCase {
         conn.certificateFingerprint = dto.certificateFingerprint;
 
         if (!AgentryValidator.isValidBackendConnection(conn))
-            return CommandResult(false, "", "Invalid backend connection data");
+            return UsecaseResult(false, "", "Invalid backend connection data");
 
         repo.save(conn);
-        return CommandResult(true, conn.id.value, "");
+        return UsecaseResult(true, conn.id.value, "");
     }
 
-    CommandResult updateBackendConnection(BackendConnectionDTO dto) {
+    UsecaseResult updateBackendConnection(BackendConnectionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.connectionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Backend connection not found");
+            return UsecaseResult(false, "", "Backend connection not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -68,16 +68,16 @@ class ManageBackendConnectionsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteBackendConnection(TenantId tenantId, BackendConnectionId id) {
+    UsecaseResult deleteBackendConnection(TenantId tenantId, BackendConnectionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Backend connection not found");
+            return UsecaseResult(false, "", "Backend connection not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

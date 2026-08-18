@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageDataRetrievalsUseCase { 
 
-  CommandResult createRequest(CreateDataRetrievalRequest req);
+  UsecaseResult createRequest(CreateDataRetrievalRequest req);
   DataRetrievalRequest getRequest(TenantId tenantId, DataRetrievalRequestId id);
   DataRetrievalRequest[] listRequests(TenantId tenantId);
   DataRetrievalRequest[] listByStatus(TenantId tenantId, RetrievalStatus status);
-  CommandResult updateStatus(UpdateRetrievalStatusRequest req);
-  CommandResult deleteRequest(TenantId tenantId, DataRetrievalRequestId id);
+  UsecaseResult updateStatus(UpdateRetrievalStatusRequest req);
+  UsecaseResult deleteRequest(TenantId tenantId, DataRetrievalRequestId id);
   
 }

@@ -24,13 +24,13 @@ class ManageHtmlAppsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createHtmlApp(CreateHtmlAppRequest r) {
+    UsecaseResult createHtmlApp(CreateHtmlAppRequest r) {
         if (!DeploymentValidator.validateAppName(r.name))
-            return CommandResult(false, "", "Invalid application name");
+            return UsecaseResult(false, "", "Invalid application name");
 
         auto existing = repo.findByName(r.tenantId, r.name);
         if (!existing.isNull)
-            return CommandResult(false, "", "Application with this name already exists");
+            return UsecaseResult(false, "", "Application with this name already exists");
 
         auto app = HtmlApp(r.tenantId);
         app.spaceId = r.spaceId;
@@ -43,13 +43,13 @@ class ManageHtmlAppsUseCase {
         app.totalSizeBytes = 0;
 
         repo.save(app);
-        return CommandResult(true, app.id.value, "");
+        return UsecaseResult(true, app.id.value, "");
     }
 
-    CommandResult updateHtmlApp(UpdateHtmlAppRequest r) {
+    UsecaseResult updateHtmlApp(UpdateHtmlAppRequest r) {
         auto app = repo.findById(r.tenantId, r.id);
         if (app.isNull)
-            return CommandResult(false, "", "App not found");
+            return UsecaseResult(false, "", "App not found");
 
         if (r.description.length > 0) app.description = r.description;
         if (r.visibility.length > 0) app.visibility = parseVisibility(r.visibility);
@@ -57,7 +57,7 @@ class ManageHtmlAppsUseCase {
         app.updatedBy = r.updatedBy;
 
         repo.update(app);
-        return CommandResult(true, app.id.value, "");
+        return UsecaseResult(true, app.id.value, "");
     }
 
     HtmlApp getHtmlAppById(TenantId tenantId, HtmlAppId id) {
@@ -72,13 +72,13 @@ class ManageHtmlAppsUseCase {
         return repo.findPublic(tenantId);
     }
 
-    CommandResult deleteHtmlApp(TenantId tenantId, HtmlAppId id) {
+    UsecaseResult deleteHtmlApp(TenantId tenantId, HtmlAppId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "App not found");
+            return UsecaseResult(false, "", "App not found");
             
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
     size_t countHtmlAppsByTenant(TenantId tenantId) {

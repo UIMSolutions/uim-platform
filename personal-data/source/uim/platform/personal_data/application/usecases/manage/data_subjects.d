@@ -18,10 +18,10 @@ class ManageDataSubjectsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDataSubject(CreateDataSubjectRequest r) {
-        if (r.tenantId.isNull) return CommandResult(false, "", "Tenant ID is required");
+    UsecaseResult createDataSubject(CreateDataSubjectRequest r) {
+        if (r.tenantId.isNull) return UsecaseResult(false, "", "Tenant ID is required");
         if (r.firstName.isEmpty && r.lastName.isEmpty)
-            return CommandResult(false, "", "First name or last name is required");
+            return UsecaseResult(false, "", "First name or last name is required");
 
         DataSubject ds = DataSubject();
         // TODO: ds.id = r.subjectId;
@@ -41,7 +41,7 @@ class ManageDataSubjectsUseCase {
         ds.createdAt = currentTimestamp();
 
         repo.save(ds);
-        return CommandResult(true, ds.id.value, "");
+        return UsecaseResult(true, ds.id.value, "");
     }
 
     DataSubject getDataSubject(TenantId tenantId, DataSubjectId id) {
@@ -60,10 +60,10 @@ class ManageDataSubjectsUseCase {
         return repo.findByEmail(tenantId, email);
     }
 
-    CommandResult updateDataSubject(UpdateDataSubjectRequest r) {
+    UsecaseResult updateDataSubject(UpdateDataSubjectRequest r) {
         auto existing = repo.findById(r.tenantId, r.subjectId);
         if (existing.isNull)
-            return CommandResult(false, "", "Data subject not found");
+            return UsecaseResult(false, "", "Data subject not found");
 
         if (r.firstName.length > 0) existing.firstName = r.firstName;
         if (r.lastName.length > 0) existing.lastName = r.lastName;
@@ -74,24 +74,24 @@ class ManageDataSubjectsUseCase {
         existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult blockDataSubject(TenantId tenantId, DataSubjectId id) {
+    UsecaseResult blockDataSubject(TenantId tenantId, DataSubjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Data subject not found");
+            return UsecaseResult(false, "", "Data subject not found");
 
         existing.status = DataSubjectStatus.blocked;
         existing.updatedAt = currentTimestamp();
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult eraseDataSubject(TenantId tenantId, DataSubjectId id) {
+    UsecaseResult eraseDataSubject(TenantId tenantId, DataSubjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Data subject not found");
+            return UsecaseResult(false, "", "Data subject not found");
 
         existing.status = DataSubjectStatus.erased;
         existing.firstName = "***";
@@ -101,15 +101,15 @@ class ManageDataSubjectsUseCase {
         existing.dateOfBirth = "";
         existing.updatedAt = currentTimestamp();
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDataSubject(TenantId tenantId, DataSubjectId id) {
+    UsecaseResult deleteDataSubject(TenantId tenantId, DataSubjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Data subject not found");
+            return UsecaseResult(false, "", "Data subject not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

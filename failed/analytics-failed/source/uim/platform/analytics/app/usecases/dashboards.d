@@ -56,12 +56,12 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(d);
   }
 
-  CommandResult deleteDashboard(TenantId tenantId, DashboardId dashboardId) {
+  UsecaseResult deleteDashboard(TenantId tenantId, DashboardId dashboardId) {
     auto d = repo.findById(tenantId, dashboardId);
     if (d.isNull)
-      return CommandResult(false, "", "Dashboard not found");
+      return UsecaseResult(false, "", "Dashboard not found");
 
     repo.remove(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 }

@@ -18,9 +18,9 @@ import uim.platform.mobile;
 @safe:
 interface IManageFeatureRestrictionsUseCase { 
     
-    CommandResult createFeatureRestriction(CreateFeatureRestrictionRequest r);
+    UsecaseResult createFeatureRestriction(CreateFeatureRestrictionRequest r);
 
-    CommandResult updateFeatureRestriction(UpdateFeatureRestrictionRequest r);
+    UsecaseResult updateFeatureRestriction(UpdateFeatureRestrictionRequest r);
 
     bool evaluateRestriction(TenantId tenantId, FeatureRestrictionId featureId, UserId userId, string deviceId);
 
@@ -30,7 +30,7 @@ interface IManageFeatureRestrictionsUseCase {
 
     FeatureRestriction[] listFeatureRestrictions(TenantId tenantId, MobileAppId appId);
 
-    CommandResult deleteFeatureRestriction(TenantId tenantId, FeatureRestrictionId id);
+    UsecaseResult deleteFeatureRestriction(TenantId tenantId, FeatureRestrictionId id);
 
     size_t countFeatureRestrictions(TenantId tenantId, MobileAppId appId);
 

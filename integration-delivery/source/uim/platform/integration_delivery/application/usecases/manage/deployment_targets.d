@@ -30,9 +30,9 @@ class ManageDeploymentTargetsUseCase {
         return repo.findByStatus(tenantId, DeploymentTargetStatus.active);
     }
 
-    CommandResult createDeploymentTarget(DeploymentTargetDTO dto) {
+    UsecaseResult createDeploymentTarget(DeploymentTargetDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Deployment target name already exists");
+            return UsecaseResult(false, "", "Deployment target name already exists");
 
         auto d = DeploymentTarget(dto.tenantId); //, dto.createdBy);
         d.id = dto.deploymentTargetId;
@@ -46,16 +46,16 @@ class ManageDeploymentTargetsUseCase {
         d.status = DeploymentTargetStatus.active;
 
         if (!CicdValidator.isValidDeploymentTarget(d))
-            return CommandResult(false, "", "Invalid deployment target: name and url required");
+            return UsecaseResult(false, "", "Invalid deployment target: name and url required");
 
         repo.save(d);
-        return CommandResult(true, d.id.value, "");
+        return UsecaseResult(true, d.id.value, "");
     }
 
-    CommandResult updateDeploymentTarget(DeploymentTargetDTO dto) {
+    UsecaseResult updateDeploymentTarget(DeploymentTargetDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.deploymentTargetId);
         if (existing.isNull)
-            return CommandResult(false, "", "Deployment target not found");
+            return UsecaseResult(false, "", "Deployment target not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -66,14 +66,14 @@ class ManageDeploymentTargetsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDeploymentTarget(TenantId tenantId, DeploymentTargetId id) {
+    UsecaseResult deleteDeploymentTarget(TenantId tenantId, DeploymentTargetId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Deployment target not found");
+            return UsecaseResult(false, "", "Deployment target not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

@@ -24,7 +24,7 @@ class ManageConnectionsUseCase {
     this.validator = validator;
   }
 
-  CommandResult createConnection(CreateConnectionRequest r) {
+  UsecaseResult createConnection(CreateConnectionRequest r) {
     auto c = Connection(r.tenantId, r.connectionId.isNull ? ConnectionId(createId()) : r.connectionId); // , r.createdBy);
     c.name = r.name;
     c.url = r.url;
@@ -39,12 +39,12 @@ class ManageConnectionsUseCase {
 
     auto vr = validator.validate(c);
     if (!vr.valid)
-      return CommandResult(false, "", vr.error);
+      return UsecaseResult(false, "", vr.error);
 
     c.status = ConnectionStatus.active;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   Connection getConnection(TenantId tenantId, ConnectionId id) {
@@ -59,10 +59,10 @@ class ManageConnectionsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult patchConnection(PatchConnectionRequest r) {
+  UsecaseResult patchConnection(PatchConnectionRequest r) {
     auto c = repo.findById(r.tenantId, r.connectionId);
     if (c.isNull)
-      return CommandResult(false, "", "Connection not found");
+      return UsecaseResult(false, "", "Connection not found");
     if (r.name.length > 0)
       c.name = r.name;
     if (r.description.length > 0)
@@ -72,15 +72,15 @@ class ManageConnectionsUseCase {
     c.updatedAt = currentTimestamp();
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult deleteConnection(TenantId tenantId, ConnectionId id) {
+  UsecaseResult deleteConnection(TenantId tenantId, ConnectionId id) {
     auto connection = repo.findById(tenantId, id);
     if (connection.isNull)
-      return CommandResult(false, "", "Connection not found");
+      return UsecaseResult(false, "", "Connection not found");
 
     repo.remove(connection);
-    return CommandResult(true, connection.id.value, "");
+    return UsecaseResult(true, connection.id.value, "");
   }
 }

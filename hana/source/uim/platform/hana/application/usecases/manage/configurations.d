@@ -21,13 +21,13 @@ class ManageConfigurationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createConfiguration(CreateConfigurationRequest r) {
+  UsecaseResult createConfiguration(CreateConfigurationRequest r) {
     if (r.isNull || r.key.length == 0)
-      return CommandResult(false, "", "Configuration ID and key are required");
+      return UsecaseResult(false, "", "Configuration ID and key are required");
 
     auto existing = repo.findById(r.id);
     if (!existing.isNull)
-      return CommandResult(false, "", "Configuration already exists");
+      return UsecaseResult(false, "", "Configuration already exists");
 
     Configuration c;
     c.id = r.id;
@@ -42,7 +42,7 @@ class ManageConfigurationsUseCase {
     c.updatedAt = currentTimestamp;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   Configuration getConfiguration(ConfigurationId id) {
@@ -57,13 +57,13 @@ class ManageConfigurationsUseCase {
     return repo.findBySection(instanceId, section);
   }
 
-  CommandResult updateConfiguration(UpdateConfigurationRequest r) {
+  UsecaseResult updateConfiguration(UpdateConfigurationRequest r) {
     auto existing = repo.findById(r.id);
     if (existing.isNull)
-      return CommandResult(false, "", "Configuration not found");
+      return UsecaseResult(false, "", "Configuration not found");
 
     if (existing.isReadOnly)
-      return CommandResult(false, "", "Configuration is read-only");
+      return UsecaseResult(false, "", "Configuration is read-only");
 
     existing.value = r.value;
 
@@ -71,16 +71,16 @@ class ManageConfigurationsUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteConfiguration(ConfigurationId id) {
+  UsecaseResult deleteConfiguration(ConfigurationId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Configuration not found");
+      return UsecaseResult(false, "", "Configuration not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   size_t countConfigurations(TenantId tenantId) {

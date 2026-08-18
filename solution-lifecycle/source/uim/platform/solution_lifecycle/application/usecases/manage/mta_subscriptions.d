@@ -33,12 +33,12 @@ class ManageMtaSubscriptionsUseCase {
         return new MtaSubscription();
     }
 
-    CommandResult subscribe(SubscribeMtaRequest r) {
+    UsecaseResult subscribe(SubscribeMtaRequest r) {
         
         
 
         auto dres = engine.beginSubscribe(r.providerMtaId, r.providerTenantId, r.tenantId);
-        if (!dres.success) return CommandResult(false, "", dres.message);
+        if (!dres.success) return UsecaseResult(false, "", dres.message);
 
         auto op = new MtaOperation();
         op.id              = MtaOperationId(dres.operationId);
@@ -69,16 +69,16 @@ class ManageMtaSubscriptionsUseCase {
         sub.updatedAt           = sub.subscribedAt;
         repo.save(sub);
 
-        return CommandResult(true, op.id.value, "");
+        return UsecaseResult(true, op.id.value, "");
     }
 
-    CommandResult unsubscribe(UnsubscribeMtaRequest r) {
+    UsecaseResult unsubscribe(UnsubscribeMtaRequest r) {
         
         
 
         auto sub = getSubscription(r.tenantId, MtaSubscriptionId(r.subscriptionId));
         if (sub is null || sub.isNull)
-            return CommandResult(false, "", "Subscription not found: " ~ r.subscriptionId);
+            return UsecaseResult(false, "", "Subscription not found: " ~ r.subscriptionId);
 
         auto dres = engine.beginUnsubscribe(r.subscriptionId, r.tenantId);
         auto op = new MtaOperation();
@@ -101,6 +101,6 @@ class ManageMtaSubscriptionsUseCase {
         sub.updatedAt          = sub.unsubscribedAt;
         repo.update(sub);
 
-        return CommandResult(true, op.id.value, "");
+        return UsecaseResult(true, op.id.value, "");
     }
 }

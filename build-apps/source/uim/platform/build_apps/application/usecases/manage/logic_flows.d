@@ -34,7 +34,7 @@ class ManageLogicFlowsUseCase {
         return repo.findByPage(tenantId, pageId);
     }
 
-    CommandResult createLogicFlow(LogicFlowDTO dto) {
+    UsecaseResult createLogicFlow(LogicFlowDTO dto) {
         auto e = LogicFlow(dto.tenantId, dto.flowId.isNull ? LogicFlowId(createId()) : dto.flowId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.pageId = dto.pageId;
@@ -46,16 +46,16 @@ class ManageLogicFlowsUseCase {
         e.variables = dto.variables;
         e.errorHandler = dto.errorHandler;
         if (!BuildAppsValidator.isValidLogicFlow(e))
-            return CommandResult(false, "", "Invalid logic flow data");
+            return UsecaseResult(false, "", "Invalid logic flow data");
             
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateLogicFlow(LogicFlowDTO dto) {
+    UsecaseResult updateLogicFlow(LogicFlowDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.flowId);
         if (existing.isNull)
-            return CommandResult(false, "", "Logic flow not found");
+            return UsecaseResult(false, "", "Logic flow not found");
             
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -64,16 +64,16 @@ class ManageLogicFlowsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteLogicFlow(TenantId tenantId, LogicFlowId id) {
+    UsecaseResult deleteLogicFlow(TenantId tenantId, LogicFlowId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Logic flow not found");
+            return UsecaseResult(false, "", "Logic flow not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

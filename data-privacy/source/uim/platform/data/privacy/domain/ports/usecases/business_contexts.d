@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 interface IManageBusinessContextsUseCase { 
 
-  CommandResult createContext(CreateBusinessContextRequest req);
+  UsecaseResult createContext(CreateBusinessContextRequest req);
   BusinessContext getContext(TenantId tenantId, BusinessContextId id);
   BusinessContext[] listContexts(TenantId tenantId);
   BusinessContext[] listByStatus(TenantId tenantId, BusinessContextStatus status);
-  CommandResult updateContext(UpdateBusinessContextRequest req);
-  CommandResult activateContext(ActivateBusinessContextRequest req);
-  CommandResult deleteContext(TenantId tenantId, BusinessContextId id);
+  UsecaseResult updateContext(UpdateBusinessContextRequest req);
+  UsecaseResult activateContext(ActivateBusinessContextRequest req);
+  UsecaseResult deleteContext(TenantId tenantId, BusinessContextId id);
   
 }

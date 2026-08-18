@@ -32,7 +32,7 @@ class ManageMessagingServicesUseCase {
         return repo.findByNamespace(tenantId, namespace);
     }
 
-    CommandResult createService(MessagingServiceDTO dto) {
+    UsecaseResult createService(MessagingServiceDTO dto) {
         MessagingService s;
         s.id = dto.serviceId;
         s.tenantId = dto.tenantId;
@@ -48,14 +48,14 @@ class ManageMessagingServicesUseCase {
         s.maxMessageSize = dto.maxMessageSize;
         s.createdBy = dto.createdBy;
         if (!EventsValidator.isValidMessagingService(s))
-            return CommandResult(false, "", "Invalid messaging service data");
+            return UsecaseResult(false, "", "Invalid messaging service data");
         repo.save(s);
-        return CommandResult(true, s.id.value, "");
+        return UsecaseResult(true, s.id.value, "");
     }
 
-    CommandResult updateService(MessagingServiceDTO dto) {
+    UsecaseResult updateService(MessagingServiceDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.serviceId);
-        if (existing.isNull) return CommandResult(false, "", "Messaging service not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Messaging service not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.region.length > 0) existing.region = dto.region;
@@ -65,14 +65,14 @@ class ManageMessagingServicesUseCase {
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteService(TenantId tenantId, MessagingServiceId id) {
+    UsecaseResult deleteService(TenantId tenantId, MessagingServiceId id) {
         auto s = repo.findById(tenantId, id);
-        if (s.isNull) return CommandResult(false, "", "Messaging service not found");
+        if (s.isNull) return UsecaseResult(false, "", "Messaging service not found");
         repo.remove(s);
-        return CommandResult(true, s.id.value, "");
+        return UsecaseResult(true, s.id.value, "");
     }
 }
 

@@ -17,12 +17,12 @@ class ManageDataControllerGroupsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createGroup(CreateDataControllerGroupRequest req) {
+  UsecaseResult createGroup(CreateDataControllerGroupRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto g = DataControllerGroup(req.tenantId);
     g.name = req.name;
@@ -31,7 +31,7 @@ class ManageDataControllerGroupsUseCase {
     g.isActive = true;
 
     repo.save(g);
-    return CommandResult(true, g.id.value, "");
+    return UsecaseResult(true, g.id.value, "");
   }
 
   DataControllerGroup getGroup(TenantId tenantId, DataControllerGroupId id) {
@@ -42,10 +42,10 @@ class ManageDataControllerGroupsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateGroup(UpdateDataControllerGroupRequest req) {
+  UsecaseResult updateGroup(UpdateDataControllerGroupRequest req) {
     auto g = repo.findById(req.tenantId, req.groupId);
     if (g.isNull)
-      return CommandResult(false, "", "Data controller group not found");
+      return UsecaseResult(false, "", "Data controller group not found");
 
     if (req.name.length > 0)
       g.name = req.name;
@@ -56,15 +56,15 @@ class ManageDataControllerGroupsUseCase {
     g.updatedAt = currentTimestamp();
 
     repo.update(g);
-    return CommandResult(true, g.id.value, "");
+    return UsecaseResult(true, g.id.value, "");
   }
 
-  CommandResult deleteGroup(TenantId tenantId, DataControllerGroupId groupId) {
+  UsecaseResult deleteGroup(TenantId tenantId, DataControllerGroupId groupId) {
     auto entity = repo.findById(tenantId, groupId);
     if (entity.isNull)
-      return CommandResult(false, "", "Data controller group not found");
+      return UsecaseResult(false, "", "Data controller group not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageActionsUseCase { 
 
-    CommandResult createAction(CreateActionRequest r);
+    UsecaseResult createAction(CreateActionRequest r);
     Action getAction(TenantId tenantId, ActionId id);
     Action[] listActions(TenantId tenantId);
-    CommandResult updateAction(UpdateActionRequest r);
-    CommandResult deleteAction(TenantId tenantId, ActionId actionId);
+    UsecaseResult updateAction(UpdateActionRequest r);
+    UsecaseResult deleteAction(TenantId tenantId, ActionId actionId);
 
 }

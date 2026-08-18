@@ -30,7 +30,7 @@ class ManageOAuthScopesUseCase {
         return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult createScope(OAuthScopeDTO dto) {
+    UsecaseResult createScope(OAuthScopeDTO dto) {
         OAuthScope scope_;
         scope_.id = dto.scopeId;
         scope_.tenantId = dto.tenantId;
@@ -40,32 +40,32 @@ class ManageOAuthScopesUseCase {
         scope_.createdBy = dto.createdBy;
         auto error = OAuthValidator.validateOAuthScope(scope_);
         if (error.length > 0)
-            return CommandResult(false, "", error);
+            return UsecaseResult(false, "", error);
 
         repo.save(scope_);
-        return CommandResult(true, scope_.id.value, "");
+        return UsecaseResult(true, scope_.id.value, "");
     }
 
-    CommandResult updateScope(OAuthScopeDTO dto) {
+    UsecaseResult updateScope(OAuthScopeDTO dto) {
         auto scope_ = repo.findById(dto.tenantId, dto.scopeId);
         if (scope_.isNull)
-            return CommandResult(false, "", "OAuth scope not found");
+            return UsecaseResult(false, "", "OAuth scope not found");
 
         scope_.name = dto.name;
         scope_.description = dto.description;
         scope_.updatedBy = dto.updatedBy;
 
         repo.update(scope_);
-        return CommandResult(true, scope_.id.value, "");
+        return UsecaseResult(true, scope_.id.value, "");
     }
 
-    CommandResult deleteOAuthScope(TenantId tenantId, OAuthScopeId id) {
+    UsecaseResult deleteOAuthScope(TenantId tenantId, OAuthScopeId id) {
         auto scope_ = repo.findById(tenantId, id);
         if (scope_.isNull)
-            return CommandResult(false, "", "OAuth scope not found");
+            return UsecaseResult(false, "", "OAuth scope not found");
 
         repo.remove(scope_);
-        return CommandResult(true, scope_.id.value, "");
+        return UsecaseResult(true, scope_.id.value, "");
     }
 }
 

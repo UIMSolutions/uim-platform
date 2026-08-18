@@ -34,7 +34,7 @@ class ManageTaskProvidersUseCase {
         return repo.findByType(tenantId, byType);
     }
 
-    CommandResult createProvider(CreateTaskProviderRequest req) {
+    UsecaseResult createProvider(CreateTaskProviderRequest req) {
         auto p = TaskProvider(req.tenantId, req.providerId);
         p.name = req.name;
         p.description = req.description;
@@ -43,13 +43,13 @@ class ManageTaskProvidersUseCase {
         p.clientId = req.clientId;
         
         repo.save(p);
-        return CommandResult(true, p.id.value, "");
+        return UsecaseResult(true, p.id.value, "");
     }
 
-    CommandResult updateProvider(UpdateTaskProviderRequest req) {
+    UsecaseResult updateProvider(UpdateTaskProviderRequest req) {
         auto provider = repo.findById(req.tenantId, req.providerId);
         if (provider.isNull)
-            return CommandResult(false, "", "Provider not found");
+            return UsecaseResult(false, "", "Provider not found");
 
         if (req.name.length > 0) provider.name = req.name;
         if (req.description.length > 0) provider.description = req.description;
@@ -59,45 +59,45 @@ class ManageTaskProvidersUseCase {
         provider.updatedBy = req.updatedBy;
         
         repo.update(provider);
-        return CommandResult(true, provider.id.value, "");
+        return UsecaseResult(true, provider.id.value, "");
     }
 
-    CommandResult activateProvider(TenantId tenantId, TaskProviderId id) {
+    UsecaseResult activateProvider(TenantId tenantId, TaskProviderId id) {
         auto provider = repo.findById(tenantId, id);
         if (provider.isNull)
-            return CommandResult(false, "", "Provider not found");
+            return UsecaseResult(false, "", "Provider not found");
         provider.status = ProviderStatus.active;
         
         repo.update(provider);
-        return CommandResult(true, provider.id.value, "");
+        return UsecaseResult(true, provider.id.value, "");
     }
 
-    CommandResult deactivateProvider(TenantId tenantId, TaskProviderId id) {
+    UsecaseResult deactivateProvider(TenantId tenantId, TaskProviderId id) {
         auto provider = repo.findById(tenantId, id);
         if (provider.isNull)
-            return CommandResult(false, "", "Provider not found");
+            return UsecaseResult(false, "", "Provider not found");
 
         provider.status = ProviderStatus.inactive;
         repo.update(provider);
-        return CommandResult(true, provider.id.value, "");
+        return UsecaseResult(true, provider.id.value, "");
     }
 
-    CommandResult syncProvider(TenantId tenantId, TaskProviderId id) {
+    UsecaseResult syncProvider(TenantId tenantId, TaskProviderId id) {
         auto provider = repo.findById(tenantId, id);
         if (provider.isNull)
-            return CommandResult(false, "", "Provider not found");
+            return UsecaseResult(false, "", "Provider not found");
 
         provider.status = ProviderStatus.syncing;
         repo.update(provider);
-        return CommandResult(true, provider.id.value, "");
+        return UsecaseResult(true, provider.id.value, "");
     }
 
-    CommandResult deleteProvider(TenantId tenantId, TaskProviderId id) {
+    UsecaseResult deleteProvider(TenantId tenantId, TaskProviderId id) {
         auto provider = repo.findById(tenantId, id);
         if (provider.isNull)
-            return CommandResult(false, "", "Provider not found");
+            return UsecaseResult(false, "", "Provider not found");
 
         repo.remove(provider);
-        return CommandResult(true, provider.id.value, "");
+        return UsecaseResult(true, provider.id.value, "");
     }
 }

@@ -22,14 +22,14 @@ class ManageDatasetsUseCase {
     this.recordRepo = recordRepo;
   }
 
-  CommandResult createDataset(CreateDatasetRequest req) {
+  UsecaseResult createDataset(CreateDatasetRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Dataset name is required");
+      return UsecaseResult(false, "", "Dataset name is required");
 
     if (repo.existsByName(req.tenantId, req.name))
-        return CommandResult(false, "", "Dataset with this name already exists");
+        return UsecaseResult(false, "", "Dataset with this name already exists");
 
     auto ds = Dataset(req.tenantId, DatasetId(createId), req.createdBy);
 
@@ -40,7 +40,7 @@ class ManageDatasetsUseCase {
     ds.status = DatasetStatus.draft;
 
     repo.save(ds);
-    return CommandResult(true, ds.id.value, "");
+    return UsecaseResult(true, ds.id.value, "");
   }
 
   Dataset getDataset(TenantId tenantId, DatasetId id) {
@@ -51,19 +51,19 @@ class ManageDatasetsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateDataset(UpdateDatasetRequest req) {
+  UsecaseResult updateDataset(UpdateDatasetRequest req) {
     if (req.datasetId.isNull)
-      return CommandResult(false, "", "Dataset ID is required");
+      return UsecaseResult(false, "", "Dataset ID is required");
 
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.tenantId, req.datasetId);
     if (existing.isNull)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
 
     if (existing.status != DatasetStatus.draft)
-      return CommandResult(false, "", "Only draft datasets can be updated");
+      return UsecaseResult(false, "", "Only draft datasets can be updated");
 
     auto updated = existing;
     if (req.name.length > 0)
@@ -75,20 +75,20 @@ class ManageDatasetsUseCase {
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
   /// Validate a dataset and transition it to 'ready' status.
-  CommandResult validateDataset(TenantId tenantId, DatasetId id) {
+  UsecaseResult validateDataset(TenantId tenantId, DatasetId id) {
     auto ds = repo.findById(tenantId, id);
     if (ds.isNull)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
 
     if (ds.status != DatasetStatus.draft)
-      return CommandResult(false, "", "Only draft datasets can be validated");
+      return UsecaseResult(false, "", "Only draft datasets can be validated");
 
     if (ds.columnDefinitions.length == 0)
-      return CommandResult(false, "", "Column definitions are required before validation");
+      return UsecaseResult(false, "", "Column definitions are required before validation");
 
     auto now = currentTimestamp();
     ds.rowCount = recordRepo.countByDataset(tenantId, id);
@@ -97,36 +97,36 @@ class ManageDatasetsUseCase {
     ds.updatedAt = now;
 
     repo.update(ds);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   /// Process a dataset (simulate data preparation).
-  CommandResult processDataset(TenantId tenantId, DatasetId id) {
+  UsecaseResult processDataset(TenantId tenantId, DatasetId id) {
     auto ds = repo.findById(tenantId, id);
     if (ds.isNull)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
 
     if (ds.status != DatasetStatus.ready)
-      return CommandResult(false, "", "Dataset must be in 'ready' status to process");
+      return UsecaseResult(false, "", "Dataset must be in 'ready' status to process");
 
     auto now = currentTimestamp();
     ds.status = DatasetStatus.completed;
     ds.updatedAt = now;
 
     repo.update(ds);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult deleteDataset(TenantId tenantId, DatasetId id) {
+  UsecaseResult deleteDataset(TenantId tenantId, DatasetId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
 
     // Cascade delete records
     recordRepo.removeByDataset(tenantId, id);
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }
 

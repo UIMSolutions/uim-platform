@@ -146,7 +146,7 @@ ManageWebhooksUseCase --> WebhookController: Webhook found
 WebhookController -> ManageBuildsUseCase: triggerBuild(dto)
 ManageBuildsUseCase -> BuildRepository: save(build{status=pending})
 BuildRepository --> ManageBuildsUseCase: OK
-ManageBuildsUseCase --> WebhookController: CommandResult{id}
+ManageBuildsUseCase --> WebhookController: UsecaseResult{id}
 
 WebhookController --> GitRepository: 202 Accepted
 GitRepository --> Developer: Push acknowledged

@@ -22,9 +22,9 @@ class ManageNavigationItemsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createNavigationItem(CreateNavigationItemRequest req) {
+  UsecaseResult createNavigationItem(CreateNavigationItemRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Navigation item title is required");
+      return UsecaseResult(false, "", "Navigation item title is required");
 
     auto n = NavigationItem(req.tenantId);
     n.siteId = req.siteId;
@@ -40,7 +40,7 @@ class ManageNavigationItemsUseCase {
     n.openInNewWindow = req.openInNewWindow;
 
     repo.save(n);
-    return CommandResult(true, n.id.value, "");
+    return UsecaseResult(true, n.id.value, "");
   }
 
   NavigationItem getNavigationItem(TenantId tenantId, NavigationItemId id) {
@@ -51,10 +51,10 @@ class ManageNavigationItemsUseCase {
     return repo.findBySite(tenantId, siteId);
   }
 
-  CommandResult updateNavigationItem(UpdateNavigationItemRequest req) {
+  UsecaseResult updateNavigationItem(UpdateNavigationItemRequest req) {
     auto n = repo.findById(req.tenantId, req.id);
     if (n.isNull)
-      return CommandResult(false, "", "Navigation item not found");
+      return UsecaseResult(false, "", "Navigation item not found");
 
     if (req.title.length > 0)
       n.title = req.title;
@@ -66,15 +66,15 @@ class ManageNavigationItemsUseCase {
     n.updatedAt = currentTimestamp();
 
     repo.update(n);
-    return CommandResult(true, n.id.value, "");
+    return UsecaseResult(true, n.id.value, "");
   }
 
-  CommandResult deleteNavigationItem(TenantId tenantId, NavigationItemId id) {
+  UsecaseResult deleteNavigationItem(TenantId tenantId, NavigationItemId id) {
     auto n = repo.findById(tenantId, id);
     if (n.isNull)
-      return CommandResult(false, "", "Navigation item not found");
+      return UsecaseResult(false, "", "Navigation item not found");
 
     repo.remove(n);
-    return CommandResult(true, n.id.value, "");
+    return UsecaseResult(true, n.id.value, "");
   }
 }

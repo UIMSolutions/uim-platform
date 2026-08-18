@@ -17,15 +17,15 @@ class ManageArtifactsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createArtifact(CreateArtifactRequest r) {
+    UsecaseResult createArtifact(CreateArtifactRequest r) {
         if (r.artifactId.isEmpty)
-            return CommandResult(false, "", "Artifact ID is required");
+            return UsecaseResult(false, "", "Artifact ID is required");
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Artifact name is required");
+            return UsecaseResult(false, "", "Artifact name is required");
 
         auto existing = repo.findById(r.tenantId, r.artifactId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Artifact already exists");
+            return UsecaseResult(false, "", "Artifact already exists");
 
         auto a = Artifact(r.tenantId, r.artifactId, r.createdBy);
         a.name = r.name;
@@ -39,7 +39,7 @@ class ManageArtifactsUseCase {
         a.publishedAt = a.createdAt;
 
         repo.save(a);
-        return CommandResult(true, a.id.value, "");
+        return UsecaseResult(true, a.id.value, "");
     }
 
     Artifact getArtifact(TenantId tenantId, ArtifactId id) {
@@ -54,10 +54,10 @@ class ManageArtifactsUseCase {
         return repo.findByType(tenantId, type);
     }
 
-    CommandResult updateArtifact(UpdateArtifactRequest r) {
+    UsecaseResult updateArtifact(UpdateArtifactRequest r) {
         auto artifact = repo.findById(r.tenantId, r.artifactId);
         if (artifact.isNull)
-            return CommandResult(false, "", "Artifact not found");
+            return UsecaseResult(false, "", "Artifact not found");
 
         artifact.name = r.name;
         artifact.description = r.description;
@@ -68,15 +68,15 @@ class ManageArtifactsUseCase {
         artifact.updatedAt = currentTimestamp;
 
         repo.update(artifact);
-        return CommandResult(true, artifact.id.value, "");
+        return UsecaseResult(true, artifact.id.value, "");
     }
 
-    CommandResult deleteArtifact(TenantId tenantId, ArtifactId id) {
+    UsecaseResult deleteArtifact(TenantId tenantId, ArtifactId id) {
         auto artifact = repo.findById(tenantId, id);
         if (artifact.isNull)
-            return CommandResult(false, "", "Artifact not found");
+            return UsecaseResult(false, "", "Artifact not found");
 
         repo.remove(artifact);
-        return CommandResult(true, artifact.id.value, "");
+        return UsecaseResult(true, artifact.id.value, "");
     }
 }

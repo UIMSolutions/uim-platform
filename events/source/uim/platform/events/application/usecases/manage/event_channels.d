@@ -21,7 +21,7 @@ class ManageEventChannelsUseCase {
     EventChannel[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
     EventChannel[] listByNamespace(TenantId tenantId, string namespace) { return repo.findByNamespace(tenantId, namespace); }
 
-    CommandResult createChannel(EventChannelDTO dto) {
+    UsecaseResult createChannel(EventChannelDTO dto) {
         EventChannel ec;
         ec.id = dto.channelId;
         ec.tenantId = dto.tenantId;
@@ -35,28 +35,28 @@ class ManageEventChannelsUseCase {
         ec.maxPartitions = dto.maxPartitions;
         ec.createdBy = dto.createdBy;
         if (!EventsValidator.isValidEventChannel(ec))
-            return CommandResult(false, "", "Invalid event channel data");
+            return UsecaseResult(false, "", "Invalid event channel data");
         repo.save(ec);
-        return CommandResult(true, ec.id.value, "");
+        return UsecaseResult(true, ec.id.value, "");
     }
 
-    CommandResult updateChannel(EventChannelDTO dto) {
+    UsecaseResult updateChannel(EventChannelDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.channelId);
-        if (existing.isNull) return CommandResult(false, "", "Event channel not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Event channel not found");
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.asyncapiDefinition.length > 0) existing.asyncapiDefinition = dto.asyncapiDefinition;
         if (dto.maxRetentionPeriod.length > 0) existing.maxRetentionPeriod = dto.maxRetentionPeriod;
         if (dto.maxPartitions.length > 0) existing.maxPartitions = dto.maxPartitions;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteChannel(TenantId tenantId, EventChannelId id) {
+    UsecaseResult deleteChannel(TenantId tenantId, EventChannelId id) {
         auto ec = repo.findById(tenantId, id);
-        if (ec.isNull) return CommandResult(false, "", "Event channel not found");
+        if (ec.isNull) return UsecaseResult(false, "", "Event channel not found");
         repo.remove(ec);
-        return CommandResult(true, ec.id.value, "");
+        return UsecaseResult(true, ec.id.value, "");
     }
 }
 

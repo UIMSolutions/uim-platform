@@ -13,10 +13,10 @@ mixin(ShowModule!());
 interface IManageServiceBindingsUseCase { 
 
   ServiceBindingResponse createServiceBinding(CreateServiceBindingRequest r);
-  CommandResult updateServiceBinding(UpdateServiceBindingRequest r);
+  UsecaseResult updateServiceBinding(UpdateServiceBindingRequest r);
   ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId);
   ServiceBinding[] listServiceBindings(TenantId tenantId);
-  CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId);
+  UsecaseResult deleteServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId);
   size_t countServiceBindings(TenantId tenantId);
 
 }

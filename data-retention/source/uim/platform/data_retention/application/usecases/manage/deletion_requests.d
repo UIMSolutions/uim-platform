@@ -17,9 +17,9 @@ class ManageDeletionRequestsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDeletionRequest(CreateDeletionRequestRequest req) {
+    UsecaseResult createDeletionRequest(CreateDeletionRequestRequest req) {
         if (req.subjectId.isNull)
-            return CommandResult(false, "", "Data subject ID is required");
+            return UsecaseResult(false, "", "Data subject ID is required");
 
         DeletionRequest dr = DeletionRequest(req.tenantId, DeletionRequestId(generateId));
         dr.subjectId = req.subjectId;
@@ -32,13 +32,13 @@ class ManageDeletionRequestsUseCase {
         dr.createdAt = clockSeconds();
 
         repo.save(dr);
-        return CommandResult(true, dr.id.value, "");
+        return UsecaseResult(true, dr.id.value, "");
     }
 
-    CommandResult updateDeletionRequest(UpdateDeletionRequestRequest req) {
+    UsecaseResult updateDeletionRequest(UpdateDeletionRequestRequest req) {
         auto dr = repo.findById(req.tenantId, req.requestId);
         if (dr.isNull)
-            return CommandResult(false, "", "Deletion request not found");
+            return UsecaseResult(false, "", "Deletion request not found");
 
         if (req.status.length > 0)
             dr.status = toDeletionRequestStatus(req.status);
@@ -49,7 +49,7 @@ class ManageDeletionRequestsUseCase {
         dr.updatedAt = clockSeconds();
 
         repo.update(dr);
-        return CommandResult(true, dr.id.value, "");
+        return UsecaseResult(true, dr.id.value, "");
     }
 
     bool hasDeletionRequest(TenantId tenantId, DeletionRequestId id) {
@@ -68,12 +68,12 @@ class ManageDeletionRequestsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult deleteDeletionRequest(TenantId tenantId, DeletionRequestId id) {
+    UsecaseResult deleteDeletionRequest(TenantId tenantId, DeletionRequestId id) {
         auto request = repo.findById(tenantId, id);
         if (request.isNull)
-            return CommandResult(false, "", "Deletion request not found");
+            return UsecaseResult(false, "", "Deletion request not found");
 
         repo.remove(request);
-        return CommandResult(true, request.id.value, "");
+        return UsecaseResult(true, request.id.value, "");
     }
 }

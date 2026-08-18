@@ -10,9 +10,9 @@ interface IManageSolutionBlocksUseCase {
 
     SolutionBlock[] listBlocks(TenantId tenantId);
     SolutionBlock[] listBlocks(TenantId tenantId, LifecycleStatus status);
-    CommandResult createBlock(CreateSolutionBlockRequest req);
+    UsecaseResult createBlock(CreateSolutionBlockRequest req);
     SolutionBlock getBlock(TenantId tenantId, SolutionBlockId id);
-    CommandResult updateBlock(UpdateSolutionBlockRequest req);
-    CommandResult deleteBlock(TenantId tenantId, SolutionBlockId id);
+    UsecaseResult updateBlock(UpdateSolutionBlockRequest req);
+    UsecaseResult deleteBlock(TenantId tenantId, SolutionBlockId id);
 
 }

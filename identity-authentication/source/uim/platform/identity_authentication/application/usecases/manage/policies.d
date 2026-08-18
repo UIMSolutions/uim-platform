@@ -43,13 +43,13 @@ class ManagePoliciesUseCase {
     return policyRepo.findByTenant(tenantId);
   }
 
-  CommandResult deletePolicy(TenantId tenantId, PolicyId id) {
+  UsecaseResult deletePolicy(TenantId tenantId, PolicyId id) {
     auto policy = policyRepo.findById(tenantId, id);
     if (policy.isNull)
-      return CommandResult(false, "", "Policy not found.");
+      return UsecaseResult(false, "", "Policy not found.");
 
     policyRepo.remove(policy);
-    return CommandResult(true, policy.id.value, "Policy deleted successfully.");
+    return UsecaseResult(true, policy.id.value, "Policy deleted successfully.");
   }
 }
 

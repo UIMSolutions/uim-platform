@@ -21,40 +21,40 @@ class ManageBuildingBlocksUseCase {
         return repository.findByStatus(tenantId, status);
     }
 
-    CommandResult createBlock(CreateBuildingBlockRequest req) {
+    UsecaseResult createBlock(CreateBuildingBlockRequest req) {
         if (req.name.isEmpty)
-            return CommandResult(false, "", "name is required");
+            return UsecaseResult(false, "", "name is required");
 
         if (repository.existsByNameAndType(req.tenantId, req.blockType, req.name))
-            return CommandResult(false, "", "Building block already exists for tenant and type");
+            return UsecaseResult(false, "", "Building block already exists for tenant and type");
 
         auto block = BuildingBlock(req.tenantId, BuildingBlockId(generateId()));
 
         repository.save(block);
-        return CommandResult(true, block.id.value, "Building block created");
+        return UsecaseResult(true, block.id.value, "Building block created");
     }
 
     BuildingBlock getBlock(TenantId tenantId, BuildingBlockId blockId) {
         return repository.findById(tenantId, blockId);
     }
 
-    CommandResult updateBlock(UpdateBuildingBlockRequest req) {
+    UsecaseResult updateBlock(UpdateBuildingBlockRequest req) {
         auto block = repository.findById(req.tenantId, req.blockId);
         if (block.id.value.length == 0)
-            return CommandResult(false, "", "Building block not found");
+            return UsecaseResult(false, "", "Building block not found");
 
         block.updatedAt = currentTimestamp();
 
         repository.update(block);
-        return CommandResult(true, block.id.value, "Building block updated");
+        return UsecaseResult(true, block.id.value, "Building block updated");
     }
 
-    CommandResult deleteBlock(TenantId tenantId, BuildingBlockId blockId) {
+    UsecaseResult deleteBlock(TenantId tenantId, BuildingBlockId blockId) {
         auto block = repository.findById(tenantId, blockId);
         if (block.id.value.length == 0)
-            return CommandResult(false, "", "Building block not found");
+            return UsecaseResult(false, "", "Building block not found");
 
         repository.remove(block);
-        return CommandResult(true, blockId.value, "Building block deleted");
+        return UsecaseResult(true, blockId.value, "Building block deleted");
     }
 }

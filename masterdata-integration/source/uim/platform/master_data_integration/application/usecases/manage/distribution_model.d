@@ -21,12 +21,12 @@ class ManageDistributionModelsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createModel(CreateDistributionModelRequest req) {
+  UsecaseResult createModel(CreateDistributionModelRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Distribution model name is required");
+      return UsecaseResult(false, "", "Distribution model name is required");
 
     if (req.sourceClientId.isEmpty)
-      return CommandResult(false, "", "Source client ID is required");
+      return UsecaseResult(false, "", "Source client ID is required");
 
     auto model = DistributionModel(req.tenantId); //, UserId("test-user"));
     model.name = req.name;
@@ -42,13 +42,13 @@ class ManageDistributionModelsUseCase {
     model.cronSchedule = req.cronSchedule;
 
     repo.save(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
-  CommandResult updateModel(UpdateDistributionModelRequest req) {
+  UsecaseResult updateModel(UpdateDistributionModelRequest req) {
     auto model = repo.findById(req.tenantId, req.modelId);
     if (model.isNull)
-      return CommandResult(false, "", "Distribution model not found");
+      return UsecaseResult(false, "", "Distribution model not found");
 
     if (req.name.length > 0)
       model.name = req.name;
@@ -71,27 +71,27 @@ class ManageDistributionModelsUseCase {
     model.updatedAt = clockSeconds();
 
     repo.update(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
-  CommandResult activateModel(TenantId tenantId, DistributionModelId id) {
+  UsecaseResult activateModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
-      return CommandResult(false, "", "Distribution model not found");
+      return UsecaseResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.active;
     model.updatedAt = clockSeconds();
     repo.update(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
-  CommandResult deactivateModel(TenantId tenantId, DistributionModelId id) {
+  UsecaseResult deactivateModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
-      return CommandResult(false, "", "Distribution model not found");
+      return UsecaseResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.inactive;
     model.updatedAt = clockSeconds();
     repo.update(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
   DistributionModel getModel(TenantId tenantId, DistributionModelId id) {
@@ -106,13 +106,13 @@ class ManageDistributionModelsUseCase {
     return repo.findByStatus(tenantId, toDistributionModelStatus(status));
   }
 
-  CommandResult deleteModel(TenantId tenantId, DistributionModelId id) {
+  UsecaseResult deleteModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
-      return CommandResult(false, "", "Distribution model not found");
+      return UsecaseResult(false, "", "Distribution model not found");
 
     repo.remove(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 }
 

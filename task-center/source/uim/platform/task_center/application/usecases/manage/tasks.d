@@ -46,9 +46,9 @@ class ManageTasksUseCase {
         return repo.findByPriority(tenantId, byPriority);
     }
 
-    CommandResult createTask(CreateTaskRequest req) {
+    UsecaseResult createTask(CreateTaskRequest req) {
         if (!TaskValidator.validate(req.taskId.value, req.title))
-            return CommandResult(false, "", "Invalid task data");
+            return UsecaseResult(false, "", "Invalid task data");
         
         auto task = UIMTask(req.tenantId);
         task.id = req.taskId;
@@ -65,13 +65,13 @@ class ManageTasksUseCase {
         task.createdBy = req.createdBy;
 
         repo.save(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 
-    CommandResult updateTask(UpdateTaskRequest req) {
+    UsecaseResult updateTask(UpdateTaskRequest req) {
         auto task = repo.findById(req.tenantId, req.taskId);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
             
         if (req.title.length > 0) task.title = req.title;
         if (req.description.length > 0) task.description = req.description;
@@ -80,13 +80,13 @@ class ManageTasksUseCase {
         task.updatedBy = req.updatedBy;
 
         repo.update(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 
-    CommandResult claimTask(TenantId tenantId, TaskId id, UserId userId) {
+    UsecaseResult claimTask(TenantId tenantId, TaskId id, UserId userId) {
         auto task = repo.findById(tenantId, id);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         task.isClaimed = true;
         task.claimedBy = userId;
@@ -94,13 +94,13 @@ class ManageTasksUseCase {
         task.processor = userId.value;
 
         repo.update(task);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
-    CommandResult releaseTask(TenantId tenantId, TaskId id) {
+    UsecaseResult releaseTask(TenantId tenantId, TaskId id) {
         auto task = repo.findById(tenantId, id);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         task.isClaimed = false;
         task.claimedBy = UserId.init;
@@ -108,49 +108,49 @@ class ManageTasksUseCase {
         task.processor = "";
 
         repo.update(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 
-    CommandResult forwardTask(TenantId tenantId, TaskId id, UserId toUser, string comment) {
+    UsecaseResult forwardTask(TenantId tenantId, TaskId id, UserId toUser, string comment) {
         auto task = repo.findById(tenantId, id);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         task.assignee = toUser.value;
         task.status = TaskStatus.forwarded;
 
         repo.update(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 
-    CommandResult completeTask(TenantId tenantId, TaskId id) {
+    UsecaseResult completeTask(TenantId tenantId, TaskId id) {
         auto task = repo.findById(tenantId, id);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         task.status = TaskStatus.completed;
         
         repo.update(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 
-    CommandResult cancelTask(TenantId tenantId, TaskId id) {
+    UsecaseResult cancelTask(TenantId tenantId, TaskId id) {
         auto task = repo.findById(tenantId, id);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         task.status = TaskStatus.cancelled;
 
         repo.update(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 
-    CommandResult deleteTask(TenantId tenantId, TaskId id) {
+    UsecaseResult deleteTask(TenantId tenantId, TaskId id) {
         auto task = repo.findById(tenantId, id);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         repo.remove(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 }

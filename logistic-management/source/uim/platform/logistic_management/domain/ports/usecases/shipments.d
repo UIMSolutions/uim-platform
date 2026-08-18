@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageShipmentsUseCase {
 
-  CommandResult createShipment(TenantId tenantId, CreateShipmentRequest req);
+  UsecaseResult createShipment(TenantId tenantId, CreateShipmentRequest req);
 
-  CommandResult updateShipment(TenantId tenantId, ShipmentId id, UpdateShipmentRequest req);
+  UsecaseResult updateShipment(TenantId tenantId, ShipmentId id, UpdateShipmentRequest req);
 
-  CommandResult deleteShipment(TenantId tenantId, ShipmentId id);
+  UsecaseResult deleteShipment(TenantId tenantId, ShipmentId id);
 
   Shipment getShipment(TenantId tenantId, ShipmentId id);
 

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 interface IManageScenariosUseCase { 
 
-  CommandResult syncScenario(SyncScenarioRequest r);
+  UsecaseResult syncScenario(SyncScenarioRequest r);
 
   Scenario getScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id);
 
@@ -20,6 +20,6 @@ interface IManageScenariosUseCase {
 
   Scenario[] listScenarios(TenantId tenantId);
 
-  CommandResult deleteScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id);
+  UsecaseResult deleteScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id);
   
 }

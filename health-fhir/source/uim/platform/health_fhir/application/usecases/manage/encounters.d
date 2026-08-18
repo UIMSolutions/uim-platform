@@ -17,12 +17,12 @@ class ManageEncountersUseCase {
     this.repo = repo;
   }
 
-  CommandResult createEncounter(CreateEncounterRequest r) {
+  UsecaseResult createEncounter(CreateEncounterRequest r) {
     auto err = FhirValidator.validateEncounter(r.encounterId.value);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     if (!repo.findById(r.tenantId, r.encounterId).isNull)
-      return CommandResult(false, "", "Encounter already exists");
+      return UsecaseResult(false, "", "Encounter already exists");
 
     auto e = Encounter(r.tenantId); //, r.createdBy);
     e.id              = r.encounterId;
@@ -38,13 +38,13 @@ class ManageEncountersUseCase {
     e.serviceProvider_ = r.serviceProvider_;
 
     repo.save(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 
-  CommandResult updateEncounter(UpdateEncounterRequest r) {
+  UsecaseResult updateEncounter(UpdateEncounterRequest r) {
     auto existing = repo.findById(r.tenantId, r.encounterId);
     if (existing.isNull)
-      return CommandResult(false, "", "Encounter not found");
+      return UsecaseResult(false, "", "Encounter not found");
 
     auto e = Encounter(r.tenantId);
     e.id               = r.encounterId;
@@ -61,7 +61,7 @@ class ManageEncountersUseCase {
     e.createdAt        = existing.createdAt;
 
     repo.update(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 
   Encounter getEncounter(TenantId tenantId, EncounterId id) {
@@ -76,11 +76,11 @@ class ManageEncountersUseCase {
     return repo.findByPatient(tenantId, patientRef);
   }
 
-  CommandResult deleteEncounter(TenantId tenantId, EncounterId id) {
+  UsecaseResult deleteEncounter(TenantId tenantId, EncounterId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Encounter not found");
+      return UsecaseResult(false, "", "Encounter not found");
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

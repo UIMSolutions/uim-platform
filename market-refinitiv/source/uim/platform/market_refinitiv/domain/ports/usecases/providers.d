@@ -12,11 +12,11 @@ mixin(ShowModule!());
 
 interface IManageProvidersUseCase {
 
-  CommandResult createProvider(CreateProviderRequest req);
+  UsecaseResult createProvider(CreateProviderRequest req);
   Provider getProvider(TenantId tenantId, ProviderId id);
   Provider[] listProviders(TenantId tenantId);
   Provider[] listActiveProviders(TenantId tenantId);
-  CommandResult updateProvider(UpdateProviderRequest req);
-  CommandResult deleteProvider(TenantId tenantId, ProviderId id);
+  UsecaseResult updateProvider(UpdateProviderRequest req);
+  UsecaseResult deleteProvider(TenantId tenantId, ProviderId id);
 
 }

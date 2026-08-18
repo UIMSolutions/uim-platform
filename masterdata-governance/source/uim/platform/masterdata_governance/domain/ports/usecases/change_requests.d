@@ -18,12 +18,12 @@ interface IManageChangeRequestsUseCase {
     ChangeRequest[] listChangeRequests(TenantId tenantId, ChangeRequestStatus status);
     ChangeRequest[] listChangeRequests(TenantId tenantId, BusinessPartnerId bpId);
     ChangeRequest[] listChangeRequests(TenantId tenantId, UserId userId);
-    CommandResult createChangeRequest(ChangeRequestDTO dto);
-    CommandResult submitChangeRequest(TenantId tenantId, ChangeRequestId id, UserId submittedBy);
-    CommandResult approveChangeRequest(TenantId tenantId, ChangeRequestId id, UserId approvedBy, string reviewerComments);
-    CommandResult rejectChangeRequest(TenantId tenantId, ChangeRequestId id, UserId rejectedBy, string reviewerComments);
-    CommandResult requestRevision(TenantId tenantId, ChangeRequestId id, UserId reviewedBy, string reviewerComments);
-    CommandResult withdrawChangeRequest(TenantId tenantId, ChangeRequestId id);
-    CommandResult deleteChangeRequest(TenantId tenantId, ChangeRequestId id);
+    UsecaseResult createChangeRequest(ChangeRequestDTO dto);
+    UsecaseResult submitChangeRequest(TenantId tenantId, ChangeRequestId id, UserId submittedBy);
+    UsecaseResult approveChangeRequest(TenantId tenantId, ChangeRequestId id, UserId approvedBy, string reviewerComments);
+    UsecaseResult rejectChangeRequest(TenantId tenantId, ChangeRequestId id, UserId rejectedBy, string reviewerComments);
+    UsecaseResult requestRevision(TenantId tenantId, ChangeRequestId id, UserId reviewedBy, string reviewerComments);
+    UsecaseResult withdrawChangeRequest(TenantId tenantId, ChangeRequestId id);
+    UsecaseResult deleteChangeRequest(TenantId tenantId, ChangeRequestId id);
 
 }

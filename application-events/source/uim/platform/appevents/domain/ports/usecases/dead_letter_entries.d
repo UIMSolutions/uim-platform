@@ -16,7 +16,7 @@ interface ManageDeadLetterEntriesUseCase {
     DeadLetterEntry getDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id);
     DeadLetterEntry[] listDeadLetterEntries(TenantId tenantId);
     DeadLetterEntry[] listByStatus(TenantId tenantId, DeadLetterStatus status);
-    CommandResult createDeadLetterEntry(DeadLetterEntryDTO dto);
-    CommandResult deleteDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id);
+    UsecaseResult createDeadLetterEntry(DeadLetterEntryDTO dto);
+    UsecaseResult deleteDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id);
 
 }

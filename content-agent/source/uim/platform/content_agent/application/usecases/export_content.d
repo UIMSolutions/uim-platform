@@ -31,13 +31,13 @@ class ExportContentUseCase {
     this.activityRepo = activityRepo;
   }
 
-  CommandResult startExport(StartExportRequest req) {
+  UsecaseResult startExport(StartExportRequest req) {
     if (!packageRepo.existsById(req.tenantId, req.packageId))
-      return CommandResult(false, "", "Package not found");
+      return UsecaseResult(false, "", "Package not found");
 
     auto pkg = packageRepo.findById(req.tenantId, req.packageId);
     if (pkg.status != PackageStatus.assembled)
-      return CommandResult(false, "", "Package must be assembled before export");
+      return UsecaseResult(false, "", "Package must be assembled before export");
 
     auto job = ExportJob(req.tenantId, req.jobId.isNull ? ExportJobId(createId()) : req.jobId, req.startedBy);
     job.packageId = req.packageId;
@@ -66,7 +66,7 @@ class ExportContentUseCase {
     // recordActivity(req.tenantId, ActivityType.exportCompleted, pkg.id.value, pkg.name,
     //   "Export completed for package: " ~ pkg.name, req.startedBy);
 
-    return CommandResult(true, pkg.id.value, "");
+    return UsecaseResult(true, pkg.id.value, "");
   }
 
   ExportJob getExportJob(TenantId tenantId, ExportJobId id) {

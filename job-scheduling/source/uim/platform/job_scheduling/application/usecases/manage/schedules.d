@@ -24,13 +24,13 @@ class ManageSchedulesUseCase {
         this.schedules = schedules;
     }
 
-    CommandResult createSchedule(CreateScheduleRequest request) {
+    UsecaseResult createSchedule(CreateScheduleRequest request) {
         if (request.jobId.isEmpty)
-            return CommandResult(false, "", "Job ID is required");
+            return UsecaseResult(false, "", "Job ID is required");
 
         // Validate cron if provided
         if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(            request.cronExpression))
-            return CommandResult(false, "", "Invalid cron expression");
+            return UsecaseResult(false, "", "Invalid cron expression");
 
         auto schedule = Schedule(request.tenantId); // , request.createdBy);
         schedule.jobId = request.jobId;
@@ -48,7 +48,7 @@ class ManageSchedulesUseCase {
         schedule.endTime = request.endTime;
 
         schedules.save(schedule);
-        return CommandResult(true, schedule.id.value, "");
+        return UsecaseResult(true, schedule.id.value, "");
     }
 
     Schedule getSchedule(TenantId tenantId, ScheduleId id) {
@@ -63,13 +63,13 @@ class ManageSchedulesUseCase {
         return schedules.search(tenantId, query);
     }
 
-    CommandResult updateSchedule(UpdateScheduleRequest request) {
+    UsecaseResult updateSchedule(UpdateScheduleRequest request) {
         auto existing = schedules.findById(request.tenantId, request.scheduleId);
         if (existing.isNull)
-            return CommandResult(false, "", "Schedule not found");
+            return UsecaseResult(false, "", "Schedule not found");
 
         if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(            request.cronExpression))
-            return CommandResult(false, "", "Invalid cron expression");
+            return UsecaseResult(false, "", "Invalid cron expression");
 
         if (request.description.length > 0)
             existing.description = request.description;
@@ -91,28 +91,28 @@ class ManageSchedulesUseCase {
         existing.updatedAt = currentTimestamp;
 
         schedules.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSchedule(TenantId tenantId, ScheduleId id) {
+    UsecaseResult deleteSchedule(TenantId tenantId, ScheduleId id) {
         auto existing = schedules.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Schedule not found");
+            return UsecaseResult(false, "", "Schedule not found");
 
         schedules.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAllSchedules(TenantId tenantId, JobId jobId) {
+    UsecaseResult deleteAllSchedules(TenantId tenantId, JobId jobId) {
         auto findings = schedules.findByJob(tenantId, jobId);
         if (findings.length == 0)
-            return CommandResult(false, jobId.value, "No schedules found for the job");
+            return UsecaseResult(false, jobId.value, "No schedules found for the job");
         
         findings.each!(s => schedules.remove(s));
-        return CommandResult(true, jobId.value, "");
+        return UsecaseResult(true, jobId.value, "");
     }
 
-    CommandResult activateAllSchedules(ActivateAllSchedulesRequest request) {
+    UsecaseResult activateAllSchedules(ActivateAllSchedulesRequest request) {
         auto findings = schedules.findByJob(request.tenantId, request.jobId);
         foreach (s; findings) {
             s.active = request.active;
@@ -122,7 +122,7 @@ class ManageSchedulesUseCase {
             s.updatedAt = currentTimestamp;
             schedules.update(s);
         }
-        return CommandResult(true, request.jobId.value, "");
+        return UsecaseResult(true, request.jobId.value, "");
     }
 
 }

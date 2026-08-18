@@ -42,7 +42,7 @@ class ArchitectureBlockUi5Controller {
         auto t = tenant(req);
         auto payload = req.json;
 
-        CommandResult result;
+        UsecaseResult result;
         result = model.createArchitecture(TenantId(t), payload);
 
         auto status = result.isSuccess ? cast(int) HTTPStatus.created : cast(int) HTTPStatus.badRequest;
@@ -58,7 +58,7 @@ class ArchitectureBlockUi5Controller {
         }
 
         auto payload = req.json;
-        CommandResult result;
+        UsecaseResult result;
         result = model.updateArchitecture(TenantId(t), id, payload);
 
         auto status = result.isSuccess ? cast(int) HTTPStatus.ok : cast(int) HTTPStatus.notFound;
@@ -73,7 +73,7 @@ class ArchitectureBlockUi5Controller {
             return;
         }
 
-        CommandResult result;
+        UsecaseResult result;
         result = model.deleteArchitecture(TenantId(t), id   );
 
         auto status = result.isSuccess ? cast(int) HTTPStatus.ok : cast(int) HTTPStatus.notFound;

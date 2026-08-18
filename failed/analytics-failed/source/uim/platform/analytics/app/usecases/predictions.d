@@ -58,9 +58,9 @@ class PredictionUseCases {
     return PredictionResponse.fromEntity(p);
   }
 
-  CommandResult deletePrediction(TenantId tenantId, string id) {
+  UsecaseResult deletePrediction(TenantId tenantId, string id) {
     auto found = repo.findByTenant(tenantId).filter!(e => e.id.value == id).array;
     if (!found.empty) repo.remove(found[0]);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

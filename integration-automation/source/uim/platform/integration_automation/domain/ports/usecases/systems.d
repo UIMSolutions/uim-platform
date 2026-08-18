@@ -22,13 +22,13 @@ class ManageSystemsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createSystem(CreateSystemRequest req) {
+  UsecaseResult createSystem(CreateSystemRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "System name is required");
+      return UsecaseResult(false, "", "System name is required");
     if (req.host.length == 0)
-      return CommandResult(false, "", "Host is required");
+      return UsecaseResult(false, "", "Host is required");
 
     SystemConnection sys;
 
@@ -46,7 +46,7 @@ class ManageSystemsUseCase {
     sys.tenantId = req.tenantId;
 
     repo.save(sys);
-    return CommandResult(true, sys.id.value, "");
+    return UsecaseResult(true, sys.id.value, "");
   }
 
   SystemConnection getSystem(TenantId tenantId, SystemConnectionId id) {
@@ -61,16 +61,16 @@ class ManageSystemsUseCase {
     return repo.findByType(tenantId, systemType);
   }
 
-  CommandResult updateSystem(UpdateSystemRequest req) {
+  UsecaseResult updateSystem(UpdateSystemRequest req) {
     if (req.connectionId.isEmpty)
-      return CommandResult(false, "", "System ID is required");
+      return UsecaseResult(false, "", "System ID is required");
   
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.tenantId, req.connectionId);
     if (existing.isNull)
-      return CommandResult(false, "", "System not found");
+      return UsecaseResult(false, "", "System not found");
 
     auto updated = existing;
     if (req.name.length > 0)
@@ -98,28 +98,28 @@ class ManageSystemsUseCase {
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
-  CommandResult deleteSystem(TenantId tenantId, SystemConnectionId id) {
+  UsecaseResult deleteSystem(TenantId tenantId, SystemConnectionId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "System not found");
+      return UsecaseResult(false, "", "System not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   /// Test a system connection (simulated).
-  CommandResult testConnection(TenantId tenantId, SystemConnectionId id) {
+  UsecaseResult testConnection(TenantId tenantId, SystemConnectionId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
-      return CommandResult(false, "", "System not found");
+      return UsecaseResult(false, "", "System not found");
 
     // Simulate connection test — in production, would actually ping the system
     sys.status = ConnectionStatus.active;
     sys.updatedAt = currentTimestamp();
     repo.update(sys);
-    return CommandResult(true, sys.id.value, "");
+    return UsecaseResult(true, sys.id.value, "");
   }
 }

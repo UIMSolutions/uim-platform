@@ -13,10 +13,10 @@ import uim.platform.abap_environment;
 /// Application service for communication arrangement CRUD.
 interface IManageCommunicationArrangementsUseCase { 
 
-  CommandResult createArrangement(CreateCommunicationArrangementRequest req);
-  CommandResult updateArrangement(UpdateCommunicationArrangementRequest req);
+  UsecaseResult createArrangement(CreateCommunicationArrangementRequest req);
+  UsecaseResult updateArrangement(UpdateCommunicationArrangementRequest req);
   CommunicationArrangement getArrangement(TenantId tenantId, CommunicationArrangementId id);
   CommunicationArrangement[] listArrangements(TenantId tenantId, SystemInstanceId systemId);
-  CommandResult deleteArrangement(TenantId tenantId, CommunicationArrangementId id);
+  UsecaseResult deleteArrangement(TenantId tenantId, CommunicationArrangementId id);
 
 }

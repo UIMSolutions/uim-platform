@@ -18,13 +18,13 @@ class ManageTlsConfigurationsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createTlsConfiguration(CreateTlsConfigurationRequest r) {
+    UsecaseResult createTlsConfiguration(CreateTlsConfigurationRequest r) {
         auto err = DomainValidator.validate(r.tlsConfigurationId.value, r.name);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         if (repo.existsById(r.tenantId, r.tlsConfigurationId))
-            return CommandResult(false, "", "TLS configuration already exists");
+            return UsecaseResult(false, "", "TLS configuration already exists");
 
         auto c = TlsConfiguration(r.tenantId, r.tlsConfigurationId, r.createdBy);
         c.name = r.name;
@@ -35,7 +35,7 @@ class ManageTlsConfigurationsUseCase {
         c.hstsIncludeSubDomains = r.hstsIncludeSubDomains;
 
         repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 
     TlsConfiguration getTlsConfiguration(TenantId tenantId, TlsConfigurationId id) {
@@ -46,10 +46,10 @@ class ManageTlsConfigurationsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateTlsConfiguration(UpdateTlsConfigurationRequest r) {
+    UsecaseResult updateTlsConfiguration(UpdateTlsConfigurationRequest r) {
         auto config = repo.findById(r.tenantId, r.tlsConfigurationId);
         if (config.isNull)
-            return CommandResult(false, "", "TLS configuration not found");
+            return UsecaseResult(false, "", "TLS configuration not found");
 
         config.name = r.name;
         config.description = r.description;
@@ -61,16 +61,16 @@ class ManageTlsConfigurationsUseCase {
         config.updatedAt = currentTimestamp();
 
         repo.update(config);
-        return CommandResult(true, config.id.value, "");
+        return UsecaseResult(true, config.id.value, "");
     }
 
-    CommandResult deleteTlsConfiguration(TenantId tenantId, TlsConfigurationId id) {
+    UsecaseResult deleteTlsConfiguration(TenantId tenantId, TlsConfigurationId id) {
         auto config = repo.findById(tenantId, id);
         if (config.isNull)
-            return CommandResult(false, "", "TLS configuration not found");
+            return UsecaseResult(false, "", "TLS configuration not found");
 
         repo.remove(config);
-        return CommandResult(true, config.id.value, "");
+        return UsecaseResult(true, config.id.value, "");
     }
 }
 

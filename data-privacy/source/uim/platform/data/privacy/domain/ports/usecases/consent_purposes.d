@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageConsentPurposesUseCase { 
   
-  CommandResult createPurpose(CreateConsentPurposeRequest req);
+  UsecaseResult createPurpose(CreateConsentPurposeRequest req);
   ConsentPurpose getPurpose(TenantId tenantId, ConsentPurposeId id);
   ConsentPurpose[] listPurposes(TenantId tenantId);
   ConsentPurpose[] listByController(TenantId tenantId, DataControllerId controllerId);
-  CommandResult updatePurpose(UpdateConsentPurposeRequest req);
-  CommandResult deletePurpose(TenantId tenantId, ConsentPurposeId id);
+  UsecaseResult updatePurpose(UpdateConsentPurposeRequest req);
+  UsecaseResult deletePurpose(TenantId tenantId, ConsentPurposeId id);
   
 }

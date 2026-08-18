@@ -16,8 +16,8 @@ interface ManageScheduledExecutionsUseCase {
     ScheduledExecution getScheduledExecution(TenantId tenantId, ScheduledExecutionId id);
     ScheduledExecution[] listScheduledExecutions(TenantId tenantId);
     ScheduledExecution[] listScheduledExecutions(TenantId tenantId, CommandId commandId);
-    CommandResult createScheduledExecution(ScheduledExecutionDTO dto);
-    CommandResult updateScheduledExecution(ScheduledExecutionDTO dto);
-    CommandResult deleteScheduledExecution(TenantId tenantId, ScheduledExecutionId id);
+    UsecaseResult createScheduledExecution(ScheduledExecutionDTO dto);
+    UsecaseResult updateScheduledExecution(ScheduledExecutionDTO dto);
+    UsecaseResult deleteScheduledExecution(TenantId tenantId, ScheduledExecutionId id);
 
 }

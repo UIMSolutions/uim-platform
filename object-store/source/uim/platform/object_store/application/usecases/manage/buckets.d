@@ -22,16 +22,16 @@ class ManageBucketsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createBucket(CreateBucketRequest req) {
+  UsecaseResult createBucket(CreateBucketRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Bucket name is required");
+      return UsecaseResult(false, "", "Bucket name is required");
       
     if (req.region.length == 0)
-      return CommandResult(false, "", "Region is required");
+      return UsecaseResult(false, "", "Region is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Bucket with name '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Bucket with name '" ~ req.name ~ "' already exists");
 
     auto bucket = Bucket(req.tenantId); //, UserId("test-user"));
     bucket.name = req.name;
@@ -44,16 +44,16 @@ class ManageBucketsUseCase {
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)
-      return CommandResult(false, "", encResult.error);
+      return UsecaseResult(false, "", encResult.error);
 
     repo.save(bucket);
-    return CommandResult(true, bucket.id.value, "");
+    return UsecaseResult(true, bucket.id.value, "");
   }
 
-  CommandResult updateBucket(UpdateBucketRequest req) {
+  UsecaseResult updateBucket(UpdateBucketRequest req) {
     auto bucket = repo.findById(req.tenantId, req.bucketId);
     if (bucket.isNull)
-      return CommandResult(false, "", "Bucket not found");
+      return UsecaseResult(false, "", "Bucket not found");
 
     if (req.storageClass.length > 0)
       bucket.storageClass = req.storageClass.to!StorageClass;
@@ -68,10 +68,10 @@ class ManageBucketsUseCase {
 
     auto encResult = EncryptionPolicy.validate(bucket);
     if (!encResult.valid)
-      return CommandResult(false, "", encResult.error);
+      return UsecaseResult(false, "", encResult.error);
 
     repo.update(bucket);
-    return CommandResult(true, bucket.id.value, "");
+    return UsecaseResult(true, bucket.id.value, "");
   }
 
   Bucket getBucket(TenantId tenantId, BucketId id) {
@@ -82,16 +82,16 @@ class ManageBucketsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteBucket(TenantId tenantId, BucketId bucketId) {
+  UsecaseResult deleteBucket(TenantId tenantId, BucketId bucketId) {
     auto bucket = repo.findById(tenantId, bucketId);
     if (bucket.isNull)
-      return CommandResult(false, "", "Bucket not found");
+      return UsecaseResult(false, "", "Bucket not found");
 
     if (bucket.objectCount > 0)
-      return CommandResult(false, "", "Bucket is not empty");
+      return UsecaseResult(false, "", "Bucket is not empty");
 
     repo.remove(bucket);
-    return CommandResult(true, bucket.id.value, "");
+    return UsecaseResult(true, bucket.id.value, "");
   }
 }
 

@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageDevSpacesUseCase {
 
-  CommandResult create(TenantId tenantId, CreateDevSpaceRequest req);
+  UsecaseResult create(TenantId tenantId, CreateDevSpaceRequest req);
   DevSpace getById(TenantId tenantId, string id);
   DevSpace[] listByProject(TenantId tenantId, string projectId);
   DevSpace[] list(TenantId tenantId);
-  CommandResult setStatus(TenantId tenantId, string id, string statusStr);
-  CommandResult remove(TenantId tenantId, string id);
+  UsecaseResult setStatus(TenantId tenantId, string id, string statusStr);
+  UsecaseResult remove(TenantId tenantId, string id);
 
 }

@@ -333,7 +333,7 @@ activate MJR
 MJR --> MJU : void
 deactivate MJR
 
-MJU --> JC : CommandResult(success, jobId)
+MJU --> JC : UsecaseResult(success, jobId)
 deactivate MJU
 
 loop for each inline schedule
@@ -345,7 +345,7 @@ loop for each inline schedule
     activate MSR
     MSR --> MSU : void
     deactivate MSR
-    MSU --> JC : CommandResult(success, scheduleId)
+    MSU --> JC : UsecaseResult(success, scheduleId)
     deactivate MSU
 end
 

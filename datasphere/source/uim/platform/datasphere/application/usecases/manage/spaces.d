@@ -22,13 +22,13 @@ class ManageSpacesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createSpace(CreateSpaceRequest r) {
+  UsecaseResult createSpace(CreateSpaceRequest r) {
     auto err = SpaceValidator.validate(r.spaceId, r.name);
     if (err.length > 0)
-      return CommandResult(false, "", err);
+      return UsecaseResult(false, "", err);
 
     if (repo.existsById(r.tenantId, r.spaceId))
-      return CommandResult(false, "", "Space already exists");
+      return UsecaseResult(false, "", "Space already exists");
 
     auto s = Space(r.tenantId);
     s.id = r.spaceId;
@@ -38,7 +38,7 @@ class ManageSpacesUseCase {
     s.priority = r.priority;
 
     repo.save(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
   Space getSpace(TenantId tenantId, SpaceId id) {
@@ -49,10 +49,10 @@ class ManageSpacesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateSpace(UpdateSpaceRequest r) {
+  UsecaseResult updateSpace(UpdateSpaceRequest r) {
     auto existing = repo.findById(r.tenantId, r.spaceId);
     if (existing.isNull)
-      return CommandResult(false, "", "Space not found");
+      return UsecaseResult(false, "", "Space not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -63,16 +63,16 @@ class ManageSpacesUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteSpace(TenantId tenantId, SpaceId id) {
+  UsecaseResult deleteSpace(TenantId tenantId, SpaceId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Space not found");
+      return UsecaseResult(false, "", "Space not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countSpaces(TenantId tenantId) {

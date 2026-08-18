@@ -16,7 +16,7 @@ import uim.platform.mobile;
 @safe:
 interface IManageUsageReportsUseCase { 
 
-    CommandResult createUsageReport(CreateUsageReportRequest r);
+    UsecaseResult createUsageReport(CreateUsageReportRequest r);
 
     UsageReport getUsageReport(TenantId tenantId, UsageReportId id);
 
@@ -26,7 +26,7 @@ interface IManageUsageReportsUseCase {
 
     UsageReport[] listUsageReports(TenantId tenantId, DeviceRegistrationId deviceId);
 
-    CommandResult deleteUsageReport(TenantId tenantId, UsageReportId id);
+    UsecaseResult deleteUsageReport(TenantId tenantId, UsageReportId id);
 
     size_t countByApp(TenantId tenantId, MobileAppId appId);
 

@@ -38,7 +38,7 @@ class ManageRepositoriesUseCase {
         return repo.findDefault(tenantId);
     }
 
-    CommandResult createRepository(RepositoryDTO dto) {
+    UsecaseResult createRepository(RepositoryDTO dto) {
         Repository_ r;
         r.id = dto.repositoryId;
         r.tenantId = dto.tenantId;
@@ -62,15 +62,15 @@ class ManageRepositoriesUseCase {
         }
         r.status = RepositoryStatus.provisioning;
         if (!DmsValidator.isValidRepository(r))
-            return CommandResult(false, "", "Invalid repository data: name is required");
+            return UsecaseResult(false, "", "Invalid repository data: name is required");
         repo.save(r);
-        return CommandResult(true, r.id.value, "");
+        return UsecaseResult(true, r.id.value, "");
     }
 
-    CommandResult updateRepository(RepositoryDTO dto) {
+    UsecaseResult updateRepository(RepositoryDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.repositoryId);
         if (existing.isNull)
-            return CommandResult(false, "", "Repository not found");
+            return UsecaseResult(false, "", "Repository not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.externalUrl.length > 0) existing.externalUrl = dto.externalUrl;
@@ -81,33 +81,33 @@ class ManageRepositoriesUseCase {
         existing.isDefault = dto.isDefault;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult activateRepository(TenantId tenantId, RepositoryId id) {
+    UsecaseResult activateRepository(TenantId tenantId, RepositoryId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Repository not found");
+            return UsecaseResult(false, "", "Repository not found");
         existing.status = RepositoryStatus.active;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deactivateRepository(TenantId tenantId, RepositoryId id) {
+    UsecaseResult deactivateRepository(TenantId tenantId, RepositoryId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Repository not found");
+            return UsecaseResult(false, "", "Repository not found");
         existing.status = RepositoryStatus.inactive;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteRepository(TenantId tenantId, RepositoryId id) {
+    UsecaseResult deleteRepository(TenantId tenantId, RepositoryId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Repository not found");
+            return UsecaseResult(false, "", "Repository not found");
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }
 

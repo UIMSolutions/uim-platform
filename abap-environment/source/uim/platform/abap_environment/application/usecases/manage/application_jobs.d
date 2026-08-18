@@ -18,15 +18,15 @@ class ManageApplicationJobsUseCase {
     this.jobs = jobs;
   }
 
-  CommandResult createApplicationJob(CreateApplicationJobRequest request) {
+  UsecaseResult createApplicationJob(CreateApplicationJobRequest request) {
     if (request.name.isEmpty)
-      return CommandResult(false, "", "Job name is required");
+      return UsecaseResult(false, "", "Job name is required");
       
     if (request.jobTemplateName.isEmpty)
-      return CommandResult(false, "", "Job template name is required");
+      return UsecaseResult(false, "", "Job template name is required");
 
     if (request.systemInstanceId.isEmpty)
-      return CommandResult(false, "", "System instance ID is required");
+      return UsecaseResult(false, "", "System instance ID is required");
 
     auto job = ApplicationJob(request.tenantId);
     job.systemInstanceId = request.systemInstanceId;
@@ -41,13 +41,13 @@ class ManageApplicationJobsUseCase {
     job.jobParameters = request.jobParameters;
 
     jobs.save(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
-  CommandResult updateApplicationJob(UpdateApplicationJobRequest request) {
+  UsecaseResult updateApplicationJob(UpdateApplicationJobRequest request) {
     auto job = jobs.findById(request.tenantId, request.applicationJobId);
     if (job.isNull)
-      return CommandResult(false, "", "Application job not found");
+      return UsecaseResult(false, "", "Application job not found");
 
     if (request.description.length > 0)
       job.description = request.description;
@@ -65,16 +65,16 @@ class ManageApplicationJobsUseCase {
     job.updatedAt = currentTimestamp();
 
     jobs.update(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
-  CommandResult cancelApplicationJob(TenantId tenantId, ApplicationJobId id) {
+  UsecaseResult cancelApplicationJob(TenantId tenantId, ApplicationJobId id) {
     auto job = jobs.findById(tenantId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Application job not found");
+      return UsecaseResult(false, "", "Application job not found");
 
     if (job.status != JobStatus.scheduled && job.status != JobStatus.running)
-      return CommandResult(false, "", "Job can only be canceled when scheduled or running");
+      return UsecaseResult(false, "", "Job can only be canceled when scheduled or running");
 
     job.status = JobStatus.canceled;
     job.active = false;
@@ -83,7 +83,7 @@ class ManageApplicationJobsUseCase {
     job.updatedAt = currentTimestamp();
 
     jobs.update(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
   ApplicationJob getApplicationJob(TenantId tenantId, ApplicationJobId id) {
@@ -94,13 +94,13 @@ class ManageApplicationJobsUseCase {
     return jobs.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteApplicationJob(TenantId tenantId, ApplicationJobId id) {
+  UsecaseResult deleteApplicationJob(TenantId tenantId, ApplicationJobId id) {
     auto job = jobs.findById(tenantId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Application job not found");
+      return UsecaseResult(false, "", "Application job not found");
 
     jobs.remove(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 }
 

@@ -22,10 +22,10 @@ class ManageAIRequestsUseCase {
     _quota     = QuotaService();
   }
 
-  CommandResult generate(TenantId tenantId, AIGenerateRequest req) {
+  UsecaseResult generate(TenantId tenantId, AIGenerateRequest req) {
     auto promptErrors = _validator.validatePrompt(req.prompt);
     if (promptErrors.length > 0)
-      return CommandResult(false, "", promptErrors[0]);
+      return UsecaseResult(false, "", promptErrors[0]);
 
     AIGenerationType gtype = AIGenerationType.codeFragment;
     static foreach (member; __traits(allMembers, AIGenerationType)) {
@@ -43,7 +43,7 @@ class ManageAIRequestsUseCase {
     r.modelUsed      = "Joule";
 
     _repo.save(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
   AIRequest getById(TenantId tenantId, string id) {
@@ -67,9 +67,9 @@ class ManageAIRequestsUseCase {
     return _repo.findByStatus(tenantId, st);
   }
 
-  CommandResult updateStatus(TenantId tenantId, string id, string statusStr, string generatedCode = "", string errorMsg = "") {
+  UsecaseResult updateStatus(TenantId tenantId, string id, string statusStr, string generatedCode = "", string errorMsg = "") {
     auto r = _repo.findById(tenantId, AIRequestId(id));
-    if (r.isNull) return CommandResult(false, "", "AI request not found");
+    if (r.isNull) return UsecaseResult(false, "", "AI request not found");
     static foreach (member; __traits(allMembers, AIRequestStatus)) {
       if (statusStr == mixin("AIRequestStatus." ~ member ~ ".to!string"))
         r.status = mixin("AIRequestStatus." ~ member);
@@ -77,6 +77,6 @@ class ManageAIRequestsUseCase {
     if (generatedCode.length > 0) r.generatedCode = generatedCode;
     if (errorMsg.length > 0)      r.errorMessage  = errorMsg;
     _repo.update(r);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

@@ -15,9 +15,9 @@ interface IManageUIComponentsUseCase {
 
     UIComponent getUIComponent(TenantId tenantId, UIComponentId id);
     UIComponent[] listUIComponents(TenantId tenantId);
-    CommandResult createUIComponent(UIComponentDTO dto);
-    CommandResult updateUIComponent(UIComponentDTO dto);
-    CommandResult deleteUIComponent(TenantId tenantId, UIComponentId id);
+    UsecaseResult createUIComponent(UIComponentDTO dto);
+    UsecaseResult updateUIComponent(UIComponentDTO dto);
+    UsecaseResult deleteUIComponent(TenantId tenantId, UIComponentId id);
 
 }
 

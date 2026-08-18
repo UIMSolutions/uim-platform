@@ -30,7 +30,7 @@ class ManageDevSpacesUseCase {
         return repo.findByOwner(tenantId, owner);
     }
 
-    CommandResult createDevSpace(DevSpaceDTO dto) {
+    UsecaseResult createDevSpace(DevSpaceDTO dto) {
         DevSpace e;
         e.id = dto.spaceId;
         e.tenantId = dto.tenantId;
@@ -45,15 +45,15 @@ class ManageDevSpacesUseCase {
         e.diskLimit = dto.diskLimit;
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidDevSpace(e))
-            return CommandResult(false, "", "Invalid dev space data");
+            return UsecaseResult(false, "", "Invalid dev space data");
         repo.save(e);
-        return CommandResult(true, dto.spaceId.value, "");
+        return UsecaseResult(true, dto.spaceId.value, "");
     }
 
-    CommandResult updateDevSpace(DevSpaceDTO dto) {
+    UsecaseResult updateDevSpace(DevSpaceDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.spaceId);
         if (existing.isNull)
-            return CommandResult(false, "", "Dev space not found");
+            return UsecaseResult(false, "", "Dev space not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -61,15 +61,15 @@ class ManageDevSpacesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, dto.spaceId.value, "");
+        return UsecaseResult(true, dto.spaceId.value, "");
     }
 
-    CommandResult deleteDevSpace(TenantId tenantId, DevSpaceId id) {
+    UsecaseResult deleteDevSpace(TenantId tenantId, DevSpaceId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Dev space not found");
+            return UsecaseResult(false, "", "Dev space not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }

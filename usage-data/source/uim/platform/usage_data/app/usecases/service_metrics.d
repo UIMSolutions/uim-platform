@@ -54,10 +54,10 @@ class ServiceMetricUseCases {
     return result;
   }
 
-  CommandResult deleteMetric(TenantId tenantId, ServiceMetricId id) {
+  UsecaseResult deleteMetric(TenantId tenantId, ServiceMetricId id) {
     auto m = repo.findById(tenantId, id);
-    if (m.isNull) return CommandResult(false, "", "Service metric not found");
+    if (m.isNull) return UsecaseResult(false, "", "Service metric not found");
     repo.remove(m);
-    return CommandResult(true, m.id.value, "");
+    return UsecaseResult(true, m.id.value, "");
   }
 }

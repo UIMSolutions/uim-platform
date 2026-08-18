@@ -19,13 +19,13 @@ class ManagePrivateEndpointsUseCase {
     this.instances = instances;
   }
 
-  CommandResult createEndpoint(CreatePrivateEndpointRequest req) {
+  UsecaseResult createEndpoint(CreatePrivateEndpointRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto inst = instances.findById(req.tenantId, req.serviceInstanceId);
     if (inst.id.value.length == 0)
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
 
     auto ep = PrivateEndpoint();
     ep.id = PrivateEndpointId(generateId());
@@ -51,13 +51,13 @@ class ManagePrivateEndpointsUseCase {
     updated.updatedAt = ep.createdAt;
     instances.update(updated);
 
-    return CommandResult(true, ep.id.value, "Private endpoint created, awaiting acceptance");
+    return UsecaseResult(true, ep.id.value, "Private endpoint created, awaiting acceptance");
   }
 
-  CommandResult approveEndpoint(ApprovePrivateEndpointRequest req) {
+  UsecaseResult approveEndpoint(ApprovePrivateEndpointRequest req) {
     auto ep = endpoints.findById(req.tenantId, req.endpointId);
     if (ep.id.value.length == 0)
-      return CommandResult(false, "", "Private endpoint not found");
+      return UsecaseResult(false, "", "Private endpoint not found");
 
     auto updated = ep;
     updated.status = EndpointStatus.approved;
@@ -79,13 +79,13 @@ class ManagePrivateEndpointsUseCase {
       instances.update(instUp);
     }
 
-    return CommandResult(true, ep.id.value, "Private endpoint approved");
+    return UsecaseResult(true, ep.id.value, "Private endpoint approved");
   }
 
-  CommandResult updateEndpointStatus(UpdatePrivateEndpointStatusRequest req) {
+  UsecaseResult updateEndpointStatus(UpdatePrivateEndpointStatusRequest req) {
     auto ep = endpoints.findById(req.tenantId, req.endpointId);
     if (ep.id.value.length == 0)
-      return CommandResult(false, "", "Private endpoint not found");
+      return UsecaseResult(false, "", "Private endpoint not found");
 
     auto updated = ep;
     updated.status = toEndpointStatus(req.status);
@@ -93,15 +93,15 @@ class ManagePrivateEndpointsUseCase {
     updated.updatedAt = currentTimestamp();
 
     endpoints.update(updated);
-    return CommandResult(true, ep.id.value, "Endpoint status updated");
+    return UsecaseResult(true, ep.id.value, "Endpoint status updated");
   }
 
-  CommandResult deleteEndpoint(TenantId tenantId, PrivateEndpointId id) {
+  UsecaseResult deleteEndpoint(TenantId tenantId, PrivateEndpointId id) {
     auto ep = endpoints.findById(tenantId, id);
     if (ep.id.value.length == 0)
-      return CommandResult(false, "", "Private endpoint not found");
+      return UsecaseResult(false, "", "Private endpoint not found");
     endpoints.remove(ep);
-    return CommandResult(true, id.value, "Private endpoint deleted");
+    return UsecaseResult(true, id.value, "Private endpoint deleted");
   }
 
   PrivateEndpoint getEndpoint(TenantId tenantId, PrivateEndpointId id) {

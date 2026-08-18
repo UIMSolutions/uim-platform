@@ -24,13 +24,13 @@ class ManageSitesUseCase {
     this.siteRepo = siteRepo;
   }
 
-  CommandResult createSite(CreateSiteRequest req) {
+  UsecaseResult createSite(CreateSiteRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Site name is required");
+      return UsecaseResult(false, "", "Site name is required");
 
     if (req.alias_.length > 0) {
       if (siteRepo.existsByAlias(req.tenantId, req.alias_))
-        return CommandResult(false, "", "Site alias already exists");
+        return UsecaseResult(false, "", "Site alias already exists");
     }
 
     auto site = Site(req.tenantId); //, UserId("test-user"));
@@ -42,7 +42,7 @@ class ManageSitesUseCase {
     site.settings = req.settings;
 
     siteRepo.save(site);
-    return CommandResult(true, site.id.value, "Site created successfully.");
+    return UsecaseResult(true, site.id.value, "Site created successfully.");
   }
 
   Site getSite(TenantId tenantId, SiteId id) {
@@ -57,10 +57,10 @@ class ManageSitesUseCase {
     return siteRepo.findByStatus(tenantId, status, offset, limit);
   }
 
-  CommandResult updateSite(UpdateSiteRequest req) {
+  UsecaseResult updateSite(UpdateSiteRequest req) {
     auto site = siteRepo.findById(req.tenantId, req.siteId);
     if (site.isNull)
-      return CommandResult(false, "", "Site not found");
+      return UsecaseResult(false, "", "Site not found");
 
     site.name = req.name.length > 0 ? req.name : site.name;
     site.description = req.description;
@@ -69,55 +69,55 @@ class ManageSitesUseCase {
     site.settings = req.settings;
     site.updatedAt = currentTimestamp();
     siteRepo.update(site);
-    return CommandResult(true, site.id.value, "Site updated successfully.");
+    return UsecaseResult(true, site.id.value, "Site updated successfully.");
   }
 
-  CommandResult publishSite(TenantId tenantId, SiteId id) {
+  UsecaseResult publishSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site.isNull)
-      return CommandResult(false, "", "Site not found");
+      return UsecaseResult(false, "", "Site not found");
 
     auto result = validateForPublish(site);
     if (!result.valid) {
       // import std.algorithm : joiner;
 
-      return CommandResult(false, "", result.messages.joiner("; ").to!string);
+      return UsecaseResult(false, "", result.messages.joiner("; ").to!string);
     }
 
     site.status = SiteStatus.published;
     site.updatedAt = currentTimestamp();
     siteRepo.update(site);
-    return CommandResult(true, site.id.value, "Site published successfully.");
+    return UsecaseResult(true, site.id.value, "Site published successfully.");
   }
 
-  CommandResult unpublishSite(TenantId tenantId, SiteId id) {
+  UsecaseResult unpublishSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site.isNull)
-      return CommandResult(false, "", "Site not found");
+      return UsecaseResult(false, "", "Site not found");
 
     site.status = SiteStatus.unpublished;
     site.updatedAt = currentTimestamp();
     siteRepo.update(site);
-    return CommandResult(true, site.id.value, "Site unpublished successfully.");
+    return UsecaseResult(true, site.id.value, "Site unpublished successfully.");
   }
 
-  CommandResult archiveSite(TenantId tenantId, SiteId id) {
+  UsecaseResult archiveSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site.isNull)
-      return CommandResult(false, "", "Site not found");
+      return UsecaseResult(false, "", "Site not found");
 
     site.status = SiteStatus.archived;
     site.updatedAt = currentTimestamp();
     siteRepo.update(site);
-    return CommandResult(true, site.id.value, "Site archived successfully.");
+    return UsecaseResult(true, site.id.value, "Site archived successfully.");
   }
 
-  CommandResult deleteSite(TenantId tenantId, SiteId id) {
+  UsecaseResult deleteSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
     if (site.isNull)
-      return CommandResult(false, "", "Site not found");
+      return UsecaseResult(false, "", "Site not found");
 
     siteRepo.remove(site);
-    return CommandResult(true, site.id.value, "Site deleted successfully.");
+    return UsecaseResult(true, site.id.value, "Site deleted successfully.");
   }
 }

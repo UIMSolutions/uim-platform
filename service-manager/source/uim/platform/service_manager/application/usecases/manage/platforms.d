@@ -21,7 +21,7 @@ class ManagePlatformsUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createPlatform(CreatePlatformRequest dto) {
+    UsecaseResult createPlatform(CreatePlatformRequest dto) {
         auto platform = Platform(dto.tenantId);
 
         platform.id = PlatformId(currentTimestamp.to!string);
@@ -35,16 +35,16 @@ class ManagePlatformsUseCase {
         platform.subaccountId = dto.subaccountId;
 
         if (dto.name.isEmpty)
-            return CommandResult(false, "", "Platform name is required");
+            return UsecaseResult(false, "", "Platform name is required");
 
         repo.save(platform);
-        return CommandResult(true, platform.id.value, "");
+        return UsecaseResult(true, platform.id.value, "");
     }
 
-    CommandResult updatePlatform(UpdatePlatformRequest dto) {
+    UsecaseResult updatePlatform(UpdatePlatformRequest dto) {
         auto platform = repo.findById(dto.tenantId, dto.platformId);
         if (platform.isNull)
-            return CommandResult(false, "", "Platform not found");
+            return UsecaseResult(false, "", "Platform not found");
 
         if (dto.name.length > 0)
             platform.name = dto.name;
@@ -59,16 +59,16 @@ class ManagePlatformsUseCase {
         platform.updatedAt = currentTimestamp;
 
         repo.update(platform);
-        return CommandResult(true, platform.id.value, "");
+        return UsecaseResult(true, platform.id.value, "");
     }
 
-    CommandResult deletePlatform(TenantId tenantId, PlatformId id) {
+    UsecaseResult deletePlatform(TenantId tenantId, PlatformId id) {
         auto platform = repo.findById(tenantId, id);
         if (platform.isNull)
-            return CommandResult(false, "", "Platform not found");
+            return UsecaseResult(false, "", "Platform not found");
 
         repo.remove(platform);
-        return CommandResult(true, platform.id.value, "");
+        return UsecaseResult(true, platform.id.value, "");
     }
 }
 

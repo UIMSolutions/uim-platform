@@ -19,10 +19,10 @@ interface IManageTopicsUseCase {
 
     Topic[] listTopics(TenantId tenantId, BrokerServiceId serviceId);
 
-    CommandResult createTopic(TopicDTO dto);
+    UsecaseResult createTopic(TopicDTO dto);
 
-    CommandResult updateTopic(TopicDTO dto);
+    UsecaseResult updateTopic(TopicDTO dto);
 
-    CommandResult deleteTopic(TenantId tenantId, TopicId topicId);
+    UsecaseResult deleteTopic(TenantId tenantId, TopicId topicId);
 }
 

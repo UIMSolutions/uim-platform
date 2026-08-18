@@ -17,12 +17,12 @@ class ManageDataControllersUseCase {
     this.repo = repo;
   }
 
-  CommandResult createController(CreateDataControllerRequest req) {
+  UsecaseResult createController(CreateDataControllerRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
       
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto c = DataController(req.tenantId);
     c.name = req.name;
@@ -37,7 +37,7 @@ class ManageDataControllersUseCase {
     c.isActive = true;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   DataController getController(TenantId tenantId, DataControllerId id) {
@@ -48,10 +48,10 @@ class ManageDataControllersUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateController(UpdateDataControllerRequest req) {
+  UsecaseResult updateController(UpdateDataControllerRequest req) {
     auto c = repo.findById(req.tenantId, req.controllerId);
     if (c.isNull)
-      return CommandResult(false, "", "Data controller not found");
+      return UsecaseResult(false, "", "Data controller not found");
 
     if (req.name.length > 0)
       c.name = req.name;
@@ -74,15 +74,15 @@ class ManageDataControllersUseCase {
     c.updatedAt = currentTimestamp();
 
     repo.update(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult deleteController(TenantId tenantId, DataControllerId id) {
+  UsecaseResult deleteController(TenantId tenantId, DataControllerId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Data controller not found");
+      return UsecaseResult(false, "", "Data controller not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }

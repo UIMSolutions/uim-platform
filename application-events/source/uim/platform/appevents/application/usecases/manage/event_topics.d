@@ -28,9 +28,9 @@ class ManageEventTopicsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createEventTopic(EventTopicDTO dto) {
+    UsecaseResult createEventTopic(EventTopicDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Topic name already exists");
+            return UsecaseResult(false, "", "Topic name already exists");
 
         auto t = EventTopic(dto.tenantId); //, dto.createdBy);
         if (!dto.topicId.isNull)
@@ -45,13 +45,13 @@ class ManageEventTopicsUseCase {
         t.ownerId = dto.ownerId;
 
         repo.save(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 
-    CommandResult updateEventTopic(EventTopicDTO dto) {
+    UsecaseResult updateEventTopic(EventTopicDTO dto) {
         auto t = repo.findById(dto.tenantId, dto.topicId);
         if (t.isNull)
-            return CommandResult(false, "", "Topic not found");
+            return UsecaseResult(false, "", "Topic not found");
 
         t.name = dto.name;
         t.namespace = dto.namespace;
@@ -64,15 +64,15 @@ class ManageEventTopicsUseCase {
             t.updatedBy = dto.updatedBy;
 
         repo.update(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 
-    CommandResult deleteEventTopic(TenantId tenantId, EventTopicId id) {
+    UsecaseResult deleteEventTopic(TenantId tenantId, EventTopicId id) {
         auto t = repo.findById(tenantId, id);
         if (t.isNull)
-            return CommandResult(false, "", "Topic not found");
+            return UsecaseResult(false, "", "Topic not found");
 
         repo.remove(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 }

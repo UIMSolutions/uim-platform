@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManageDataProcessingLogsUseCase {
 
-    CommandResult createProcessingLog(CreateDataProcessingLogRequest r);
+    UsecaseResult createProcessingLog(CreateDataProcessingLogRequest r);
     bool hasProcessingLog(TenantId tenantId, DataProcessingLogId id);
     DataProcessingLog getProcessingLog(TenantId tenantId, DataProcessingLogId id);
     DataProcessingLog[] listProcessingLogs(TenantId tenantId);
     DataProcessingLog[] listProcessingLogs(TenantId tenantId, DataSubjectId dataSubjectId);
     DataProcessingLog[] listProcessingLogs(TenantId tenantId, DataSubjectRequestId requestId);
-    CommandResult deleteProcessingLog(TenantId tenantId, DataProcessingLogId id);
+    UsecaseResult deleteProcessingLog(TenantId tenantId, DataProcessingLogId id);
 
 }

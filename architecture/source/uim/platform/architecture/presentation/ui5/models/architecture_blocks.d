@@ -65,7 +65,7 @@ class ArchitectureBlockUi5Model {
         return detail;
     }
 
-    CommandResult createArchitecture(TenantId tenantId, Json data) {
+    UsecaseResult createArchitecture(TenantId tenantId, Json data) {
         auto req = CreateArchitectureBlockRequest();
         req.tenantId = tenantId;
         req.title = data.getString("title", "");
@@ -78,7 +78,7 @@ class ArchitectureBlockUi5Model {
         return architectureUseCase.createBlock(req);
     }
 
-    CommandResult updateArchitecture(TenantId tenantId, string id, Json data) {
+    UsecaseResult updateArchitecture(TenantId tenantId, string id, Json data) {
         auto req = UpdateArchitectureBlockRequest();
         req.tenantId = tenantId;
         req.blockId = ArchitectureBlockId(id);
@@ -91,7 +91,7 @@ class ArchitectureBlockUi5Model {
         return architectureUseCase.updateBlock(req);
     }
 
-    CommandResult deleteArchitecture(TenantId tenantId, string id) {
+    UsecaseResult deleteArchitecture(TenantId tenantId, string id) {
         return architectureUseCase.deleteBlock(tenantId, ArchitectureBlockId(id));
     }
 

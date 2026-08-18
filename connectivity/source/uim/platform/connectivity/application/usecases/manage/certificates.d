@@ -21,13 +21,13 @@ class ManageCertificatesUseCase {
     this.certificates = certificates;
   }
 
-  CommandResult createCertificate(CreateCertificateRequest req) {
+  UsecaseResult createCertificate(CreateCertificateRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Certificate name is required");
+      return UsecaseResult(false, "", "Certificate name is required");
 
     // Check for duplicate name within tenant
     if (certificates.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Certificate with name '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Certificate with name '" ~ req.name ~ "' already exists");
 
     auto cert = Certificate(req.tenantId);
     cert.name = req.name;
@@ -42,20 +42,20 @@ class ManageCertificatesUseCase {
     cert.validTo = req.validTo;
 
     certificates.save(cert);
-    return CommandResult(true, cert.id.value, "");
+    return UsecaseResult(true, cert.id.value, "");
   }
 
-  CommandResult updateCertificate(UpdateCertificateRequest req) {
+  UsecaseResult updateCertificate(UpdateCertificateRequest req) {
     auto cert = certificates.findById(req.tenantId, req.certificateId);
     if (cert.isNull)
-      return CommandResult(false, "", "Certificate not found");
+      return UsecaseResult(false, "", "Certificate not found");
 
     if (req.description.length > 0)
       cert.description = req.description;
     cert.active = req.active;
 
     certificates.update(cert);
-    return CommandResult(true, cert.id.value, "");
+    return UsecaseResult(true, cert.id.value, "");
   }
 
   Certificate getCertificate(TenantId tenantId, CertificateId id) {
@@ -70,12 +70,12 @@ class ManageCertificatesUseCase {
     return certificates.findExpiring(tenantId, now, withinDays);
   }
 
-  CommandResult deleteCertificate(TenantId tenantId, CertificateId id) {
+  UsecaseResult deleteCertificate(TenantId tenantId, CertificateId id) {
     auto cert = certificates.findById(tenantId, id);
     if (cert.isNull)
-      return CommandResult(false, "", "Certificate not found");
+      return UsecaseResult(false, "", "Certificate not found");
 
     certificates.remove(cert);
-    return CommandResult(true, cert.id.value, "");
+    return UsecaseResult(true, cert.id.value, "");
   }
 }

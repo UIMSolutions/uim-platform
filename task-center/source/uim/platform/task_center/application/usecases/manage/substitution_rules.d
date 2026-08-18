@@ -43,7 +43,7 @@ class ManageSubstitutionRulesUseCase {
         * Create Substitution Rule
         * This method creates a new substitution rule based on the provided request. It initializes the rule with the request data and saves it to the repository.
         */
-    CommandResult createRule(CreateSubstitutionRuleRequest req) {
+    UsecaseResult createRule(CreateSubstitutionRuleRequest req) {
         auto rule = SubstitutionRule(req.tenantId);
         rule.id = req.ruleId;
         rule.userId = req.userId;
@@ -55,17 +55,17 @@ class ManageSubstitutionRulesUseCase {
         rule.createdBy = req.createdBy;
 
         repo.save(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
     /** 
         * Update Substitution Rule
         * This method updates an existing substitution rule based on the provided request. It modifies the rule with the request data and saves the changes to the repository.
         */
-    CommandResult updateRule(UpdateSubstitutionRuleRequest req) {
+    UsecaseResult updateRule(UpdateSubstitutionRuleRequest req) {
         auto existing = repo.findById(req.tenantId, req.ruleId);
         if (existing.isNull)
-            return CommandResult(false, "", "Substitution rule not found");
+            return UsecaseResult(false, "", "Substitution rule not found");
 
         if (!req.substituteId.isEmpty) existing.substituteId = req.substituteId;
         if (!req.definitionId.isEmpty) existing.definitionId = req.definitionId;
@@ -75,37 +75,37 @@ class ManageSubstitutionRulesUseCase {
         existing.updatedBy = req.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
     /** 
         * Activate Substitution Rule
         * This method activates an existing substitution rule by setting its status to active. It updates the rule in the repository.
         */
-    CommandResult activateRule(TenantId tenantId, SubstitutionRuleId id) {
+    UsecaseResult activateRule(TenantId tenantId, SubstitutionRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
-            return CommandResult(false, "", "Substitution rule not found");
+            return UsecaseResult(false, "", "Substitution rule not found");
 
         rule.status = SubstitutionStatus.active;
         
         repo.update(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
     /** 
         * Deactivate Substitution Rule
         * This method deactivates an existing substitution rule by setting its status to inactive. It updates the rule in the repository.
         */
-    CommandResult deactivateRule(TenantId tenantId, SubstitutionRuleId id) {
+    UsecaseResult deactivateRule(TenantId tenantId, SubstitutionRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
-            return CommandResult(false, "", "Substitution rule not found");
+            return UsecaseResult(false, "", "Substitution rule not found");
 
         rule.status = SubstitutionStatus.inactive;
 
         repo.update(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
     /** 
@@ -121,12 +121,12 @@ class ManageSubstitutionRulesUseCase {
         * Overall, the deletion of substitution rules should be handled with caution and should take into account the potential impact on active tasks, reporting, auditing, and access control to ensure that we maintain a robust and reliable task management system while also providing flexibility for users to manage their substitution rules effectively.  
         * Note: The actual implementation of the deleteRule method may vary based on the specific requirements and constraints of the application, and it is important to carefully consider the implications of deleting substitution rules in the context of the overall task management system to ensure that we maintain a balance between functionality, usability, and reliability.
         */
-    CommandResult deleteRule(TenantId tenantId, SubstitutionRuleId id) {
+    UsecaseResult deleteRule(TenantId tenantId, SubstitutionRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
-            return CommandResult(false, "", "Substitution rule not found");
+            return UsecaseResult(false, "", "Substitution rule not found");
 
         repo.remove(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 }

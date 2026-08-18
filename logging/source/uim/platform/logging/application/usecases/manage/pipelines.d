@@ -62,17 +62,17 @@ class ManagePipelinesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPipeline(CreatePipelineRequest req) {
+  UsecaseResult createPipeline(CreatePipelineRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Pipeline name is required");
+      return UsecaseResult(false, "", "Pipeline name is required");
 
     PipelineSourceType sourceType;
     if (!tryParseSourceType(req.sourceType, sourceType))
-      return CommandResult(false, "", "Invalid pipeline source type: " ~ req.sourceType);
+      return UsecaseResult(false, "", "Invalid pipeline source type: " ~ req.sourceType);
 
     PipelineFormat format;
     if (!tryParseFormat(req.format, format))
-      return CommandResult(false, "", "Invalid pipeline format: " ~ req.format);
+      return UsecaseResult(false, "", "Invalid pipeline format: " ~ req.format);
 
     auto p = Pipeline(req.tenantId); //, req.createdBy);
     p.name = req.name;
@@ -85,7 +85,7 @@ class ManagePipelinesUseCase {
     foreach (index, proc; req.processors) {
       ProcessorType processorType;
       if (!tryParseProcessorType(proc.type, processorType))
-        return CommandResult(false, "", "Invalid processor type at index " ~ index.to!string ~ ": " ~ proc.type);
+        return UsecaseResult(false, "", "Invalid processor type at index " ~ index.to!string ~ ": " ~ proc.type);
 
       PipelineProcessor pp;
       pp.type = processorType;
@@ -96,20 +96,20 @@ class ManagePipelinesUseCase {
     }
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult updatePipeline(UpdatePipelineRequest req) {
+  UsecaseResult updatePipeline(UpdatePipelineRequest req) {
     auto p = repo.findById(req.tenantId, req.pipelineId);
     if (p.isNull)
-      return CommandResult(false, "", "Pipeline not found");
+      return UsecaseResult(false, "", "Pipeline not found");
 
     if (req.description.length > 0)
       p.description = req.description;
     if (req.format.length > 0) {
       PipelineFormat format;
       if (!tryParseFormat(req.format, format))
-        return CommandResult(false, "", "Invalid pipeline format: " ~ req.format);
+        return UsecaseResult(false, "", "Invalid pipeline format: " ~ req.format);
       p.format = format;
     }
     if (req.targetStreamId.value.length > 0)
@@ -122,7 +122,7 @@ class ManagePipelinesUseCase {
       foreach (index, proc; req.processors) {
         ProcessorType processorType;
         if (!tryParseProcessorType(proc.type, processorType))
-          return CommandResult(false, "", "Invalid processor type at index " ~ index.to!string ~ ": " ~ proc.type);
+          return UsecaseResult(false, "", "Invalid processor type at index " ~ index.to!string ~ ": " ~ proc.type);
 
         PipelineProcessor pp;
         pp.type = processorType;
@@ -134,7 +134,7 @@ class ManagePipelinesUseCase {
     }
 
     repo.update(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   bool hasPipeline(TenantId tenantId, PipelineId id) {
@@ -153,13 +153,13 @@ class ManagePipelinesUseCase {
     return repo.findActive(tenantId);
   }
 
-  CommandResult deletePipeline(TenantId tenantId, PipelineId id) {
+  UsecaseResult deletePipeline(TenantId tenantId, PipelineId id) {
     auto p = repo.findById(tenantId, id);
     if (p.isNull)
-      return CommandResult(false, "", "Pipeline not found");
+      return UsecaseResult(false, "", "Pipeline not found");
 
     repo.remove(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
 }

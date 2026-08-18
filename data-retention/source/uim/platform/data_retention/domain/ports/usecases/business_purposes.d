@@ -12,14 +12,14 @@ mixin(ShowModule!());
 
 interface IManageBusinessPurposesUseCase { 
     
-    CommandResult createBusinessPurpose(CreateBusinessPurposeRequest req);
-    CommandResult updateBusinessPurpose(UpdateBusinessPurposeRequest req);
-    CommandResult activateBusinessPurpose(TenantId tenantId, BusinessPurposeId id);
-    CommandResult deactivateBusinessPurpose(TenantId tenantId, BusinessPurposeId id);
+    UsecaseResult createBusinessPurpose(CreateBusinessPurposeRequest req);
+    UsecaseResult updateBusinessPurpose(UpdateBusinessPurposeRequest req);
+    UsecaseResult activateBusinessPurpose(TenantId tenantId, BusinessPurposeId id);
+    UsecaseResult deactivateBusinessPurpose(TenantId tenantId, BusinessPurposeId id);
     bool hasBusinessPurpose(TenantId tenantId, BusinessPurposeId id);
     BusinessPurpose getBusinessPurpose(TenantId tenantId, BusinessPurposeId id);
     BusinessPurpose[] listBusinessPurposes(TenantId tenantId);
     BusinessPurpose[] listBusinessPurposes(TenantId tenantId, ApplicationGroupId groupId);
-    CommandResult deleteBusinessPurpose(TenantId tenantId, BusinessPurposeId id);
+    UsecaseResult deleteBusinessPurpose(TenantId tenantId, BusinessPurposeId id);
 
 }

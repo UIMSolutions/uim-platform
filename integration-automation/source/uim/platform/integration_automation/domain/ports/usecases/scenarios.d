@@ -17,7 +17,7 @@ mixin(ShowModule!());
 @safe:
 interface IManageScenariosUseCase { 
 
-  CommandResult createScenario(CreateScenarioRequest req);
+  UsecaseResult createScenario(CreateScenarioRequest req);
 
   IntegrationScenario getScenario(TenantId tenantId, ScenarioId id);
 
@@ -27,8 +27,8 @@ interface IManageScenariosUseCase {
 
   IntegrationScenario[] listActive(TenantId tenantId);
 
-  CommandResult updateScenario(UpdateScenarioRequest req);
+  UsecaseResult updateScenario(UpdateScenarioRequest req);
 
-  CommandResult deleteScenario(TenantId tenantId, ScenarioId id);
+  UsecaseResult deleteScenario(TenantId tenantId, ScenarioId id);
   
 }

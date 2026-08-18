@@ -23,12 +23,12 @@ class ManageExportsUseCase {
     this.audits = audits;
   }
 
-  CommandResult createExport(CreateExportJobRequest req) {
+  UsecaseResult createExport(CreateExportJobRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.requestedBy.isNull)
-      return CommandResult(false, "", "Requester is required");
+      return UsecaseResult(false, "", "Requester is required");
 
     auto now = currentTimestamp();
     auto job = ExportJob(req.tenantId);
@@ -49,7 +49,7 @@ class ManageExportsUseCase {
     job.downloadUrl = "/api/v1/exports/" ~ job.id.value ~ "/download";
 
     jobs.save(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
   bool hasExport(TenantId tenantId, ExportJobId id) {
@@ -64,13 +64,13 @@ class ManageExportsUseCase {
     return jobs.findByTenant(tenantId);
   }
 
-  CommandResult deleteExport(TenantId tenantId, ExportJobId id) {
+  UsecaseResult deleteExport(TenantId tenantId, ExportJobId id) {
     auto job = jobs.findById(tenantId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Export job not found");
+      return UsecaseResult(false, "", "Export job not found");
 
     jobs.remove(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 }
 

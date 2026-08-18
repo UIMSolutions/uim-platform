@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageRetentionUseCase { 
 
-  CommandResult createPolicy(CreateRetentionPolicyRequest req);
+  UsecaseResult createPolicy(CreateRetentionPolicyRequest req);
   bool existsPolicy(TenantId tenantId, RetentionPolicyId policyId);
   RetentionPolicy getPolicy(TenantId tenantId, RetentionPolicyId policyId);
   RetentionPolicy[] listPolicies(TenantId tenantId);
-  CommandResult updatePolicy(UpdateRetentionPolicyRequest req);
-  CommandResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId);
+  UsecaseResult updatePolicy(UpdateRetentionPolicyRequest req);
+  UsecaseResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId);
 
 }

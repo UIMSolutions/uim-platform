@@ -30,7 +30,7 @@ class ManageSocialIdentitiesUseCase {
         return repo.findByCustomer(tenantId, customerId);
     }
 
-    CommandResult linkSocialIdentity(SocialIdentityDTO dto) {
+    UsecaseResult linkSocialIdentity(SocialIdentityDTO dto) {
         auto si = SocialIdentity(dto.tenantId, dto.identityId.isNull ? SocialIdentityId(createId()) : dto.identityId, dto.createdBy);
         si.customerId = dto.customerId;
         si.providerUserId = dto.providerUserId;
@@ -43,31 +43,31 @@ class ManageSocialIdentitiesUseCase {
         si.status = SocialIdentityStatus.linked;
 
         try { si.provider = dto.provider.to!LoginProvider; }
-        catch (Exception) { return CommandResult(false, "", "Invalid social provider"); }
+        catch (Exception) { return UsecaseResult(false, "", "Invalid social provider"); }
 
         if (!IdentityValidator.isValidSocialIdentity(si))
-            return CommandResult(false, "", "Invalid social identity data");
+            return UsecaseResult(false, "", "Invalid social identity data");
 
         repo.save(si);
-        return CommandResult(true, si.id.value, "");
+        return UsecaseResult(true, si.id.value, "");
     }
 
-    CommandResult unlinkSocialIdentity(TenantId tenantId, SocialIdentityId id) {
+    UsecaseResult unlinkSocialIdentity(TenantId tenantId, SocialIdentityId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Social identity not found");
+            return UsecaseResult(false, "", "Social identity not found");
 
         existing.status = SocialIdentityStatus.unlinked;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSocialIdentity(TenantId tenantId, SocialIdentityId id) {
+    UsecaseResult deleteSocialIdentity(TenantId tenantId, SocialIdentityId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Social identity not found");
+            return UsecaseResult(false, "", "Social identity not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

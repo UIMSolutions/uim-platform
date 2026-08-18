@@ -55,10 +55,10 @@ class ManageRolesUseCase {
     return roleRepo.findByTenant(tenantId, offset, limit);
   }
 
-  CommandResult updateRole(UpdateRoleRequest req) {
+  UsecaseResult updateRole(UpdateRoleRequest req) {
     Role role = roleRepo.findById(req.roleId);
     if (role.isNull)
-      return CommandResult(false, "", "Role not found");
+      return UsecaseResult(false, "", "Role not found");
 
     with (role) {
       name = req.name.length > 0 ? req.name : name;
@@ -66,13 +66,13 @@ class ManageRolesUseCase {
       updatedAt = currentTimestamp();
     }
     roleRepo.update(role);
-    return CommandResult(true, req.roleId.value, "");
+    return UsecaseResult(true, req.roleId.value, "");
   }
 
-  CommandResult assignRole(AssignRoleRequest req) {
+  UsecaseResult assignRole(AssignRoleRequest req) {
     Role role = roleRepo.findById(req.roleId);
     if (role.isNull)
-      return CommandResult(false, "", "Role not found");
+      return UsecaseResult(false, "", "Role not found");
 
     with (role) {
       foreach (uid; req.userIds) {
@@ -92,28 +92,28 @@ class ManageRolesUseCase {
     }
 
     roleRepo.update(role);
-    return CommandResult(true, req.roleId.value, "");
+    return UsecaseResult(true, req.roleId.value, "");
   }
 
-  CommandResult unassignUsers(RoleId roleId, string[] unassignUserIds) {
+  UsecaseResult unassignUsers(RoleId roleId, string[] unassignUserIds) {
     auto role = roleRepo.findById(roleId);
     if (role.isNull)
-      return CommandResult(false, "", "Role not found");
+      return UsecaseResult(false, "", "Role not found");
 
     with (role) {
       userIds = userIds.filter!(u => !unassignUserIds.canFind(u)).array.toJson;
       updatedAt = currentTimestamp();
     }
     roleRepo.update(role);
-    return CommandResult(true, roleId.value, "");
+    return UsecaseResult(true, roleId.value, "");
   }
 
-  CommandResult deleteRole(RoleId id) {
+  UsecaseResult deleteRole(RoleId id) {
     auto role = roleRepo.findById(id);
     if (role.isNull)
-      return CommandResult(false, "", "Role not found");
+      return UsecaseResult(false, "", "Role not found");
 
     roleRepo.remove(role);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 }

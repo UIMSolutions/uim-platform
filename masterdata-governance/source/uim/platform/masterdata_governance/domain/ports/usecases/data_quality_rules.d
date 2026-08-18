@@ -18,8 +18,8 @@ interface IManageDataQualityRulesUseCase {
     DataQualityRule[] listActive(TenantId tenantId);
     DataQualityRule[] listDataQualityRules(TenantId tenantId, string fieldName);
     DataQualityRule[] listDataQualityRules(TenantId tenantId, RuleSeverity severity);
-    CommandResult createDataQualityRule(DataQualityRuleDTO dto);
-    CommandResult updateDataQualityRule(DataQualityRuleDTO dto);
-    CommandResult deleteDataQualityRule(TenantId tenantId, DataQualityRuleId id);
+    UsecaseResult createDataQualityRule(DataQualityRuleDTO dto);
+    UsecaseResult updateDataQualityRule(DataQualityRuleDTO dto);
+    UsecaseResult deleteDataQualityRule(TenantId tenantId, DataQualityRuleId id);
     
 }

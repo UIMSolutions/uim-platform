@@ -15,7 +15,7 @@ class ManageDataProductsUseCase {
 
   this(IDataProductRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateDataProductRequest r) {
+  UsecaseResult create(CreateDataProductRequest r) {
     DataProduct p;
     p.id = DataProductId(r.id.length > 0 ? r.id.value : generateId);
     p.tenantId = TenantId(r.tenantId);
@@ -30,7 +30,7 @@ class ManageDataProductsUseCase {
     initEntity(p);
 
     repo.save(p);
-    return CommandResult(true, p.id.value, null);
+    return UsecaseResult(true, p.id.value, null);
   }
 
   DataProduct[] list(TenantId tenantId) {
@@ -45,9 +45,9 @@ class ManageDataProductsUseCase {
     return repo.findById(TenantId(tenantId), DataProductId(id));
   }
 
-  CommandResult update(UpdateDataProductRequest r) {
+  UsecaseResult update(UpdateDataProductRequest r) {
     auto p = repo.findById(TenantId(r.tenantId), DataProductId(r.id));
-    if (p.isNull) return CommandResult(false, r.id, "Data product not found");
+    if (p.isNull) return UsecaseResult(false, r.id, "Data product not found");
 
     if (r.name.length > 0)        p.name = r.name;
     if (r.description.length > 0) p.description = r.description;
@@ -58,13 +58,13 @@ class ManageDataProductsUseCase {
     }
 
     repo.update(p);
-    return CommandResult(true, p.id.value, null);
+    return UsecaseResult(true, p.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto p = repo.findById(TenantId(tenantId), DataProductId(id));
-    if (p.isNull) return CommandResult(false, id, "Data product not found");
+    if (p.isNull) return UsecaseResult(false, id, "Data product not found");
     repo.remove(TenantId(tenantId), DataProductId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

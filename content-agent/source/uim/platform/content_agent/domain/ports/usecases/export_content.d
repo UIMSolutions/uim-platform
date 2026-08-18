@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Application service for exporting content packages.
 interface IExportContentUseCase {
 
-  CommandResult startExport(StartExportRequest req);
+  UsecaseResult startExport(StartExportRequest req);
   ExportJob getExportJob(TenantId tenantId, ExportJobId id);
   ExportJob[] listExportJobs(TenantId tenantId);
   ExportJob[] listByPackage(TenantId tenantId, ContentPackageId packageId);

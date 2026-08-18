@@ -30,7 +30,7 @@ class ManageScheduledExecutionsUseCase {
         return repo.findByCommand(tenantId, commandId);
     }
 
-    CommandResult createScheduledExecution(ScheduledExecutionDTO dto) {
+    UsecaseResult createScheduledExecution(ScheduledExecutionDTO dto) {
         auto se = ScheduledExecution(dto.tenantId, dto.executionId.isNull ? ScheduledExecutionId(createId) : dto.executionId, dto.createdBy);
         se.commandId = dto.commandId;
         se.cronExpression = dto.cronExpression;
@@ -40,16 +40,16 @@ class ManageScheduledExecutionsUseCase {
         se.maxRetries = dto.maxRetries;
         se.retryDelay = dto.retryDelay;
         if (!AutomationValidator.isValidScheduledExecution(se))
-            return CommandResult(false, "", "Invalid scheduled execution data");
+            return UsecaseResult(false, "", "Invalid scheduled execution data");
             
         repo.save(se);
-        return CommandResult(true, se.id.value, "");
+        return UsecaseResult(true, se.id.value, "");
     }
 
-    CommandResult updateScheduledExecution(ScheduledExecutionDTO dto) {
+    UsecaseResult updateScheduledExecution(ScheduledExecutionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.executionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Scheduled execution not found");
+            return UsecaseResult(false, "", "Scheduled execution not found");
 
         if (dto.cronExpression.length > 0) existing.cronExpression = dto.cronExpression;
         if (dto.scheduledAt > 0) existing.scheduledAt = dto.scheduledAt;
@@ -57,16 +57,16 @@ class ManageScheduledExecutionsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteScheduledExecution(TenantId tenantId, ScheduledExecutionId id) {
+    UsecaseResult deleteScheduledExecution(TenantId tenantId, ScheduledExecutionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Scheduled execution not found");
+            return UsecaseResult(false, "", "Scheduled execution not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

@@ -17,14 +17,14 @@ class ManageGeocodingResultsUseCase {
     this.repo = repo;
   }
 
-  CommandResult geocodeAddress(GeocodeAddressRequest r) {
+  UsecaseResult geocodeAddress(GeocodeAddressRequest r) {
     auto err = SpatialValidator.validateAddress(r.address);
     if (err.length > 0)
-      return CommandResult(false, "", err);
+      return UsecaseResult(false, "", err);
 
     err = SpatialValidator.validateId(r.id);
     if (err.length > 0)
-      return CommandResult(false, "", err);
+      return UsecaseResult(false, "", err);
 
     auto result = GeocodingResult(r.tenantId, r.id, r.createdBy);
     result.type = GeocodingType.forward_;
@@ -36,17 +36,17 @@ class ManageGeocodingResultsUseCase {
     result.providerId = r.providerId;
 
     repo.save(result);
-    return CommandResult(true, result.id.value, "");
+    return UsecaseResult(true, result.id.value, "");
   }
 
-  CommandResult reverseGeocode(ReverseGeocodeRequest r) {
+  UsecaseResult reverseGeocode(ReverseGeocodeRequest r) {
     auto err = SpatialValidator.validateCoordinate(r.latitude, r.longitude);
     if (err.length > 0)
-      return CommandResult(false, "", err);
+      return UsecaseResult(false, "", err);
 
     err = SpatialValidator.validateId(r.id);
     if (err.length > 0)
-      return CommandResult(false, "", err);
+      return UsecaseResult(false, "", err);
 
      auto result = GeocodingResult(r.tenantId); //, r.createdBy);
     result.id = GeocodingResultId(r.id);
@@ -57,7 +57,7 @@ class ManageGeocodingResultsUseCase {
     result.providerId = r.providerId;
 
     repo.save(result);
-    return CommandResult(true, result.id.value, "");
+    return UsecaseResult(true, result.id.value, "");
   }
 
   GeocodingResult getById(TenantId tenantId, string id) {
@@ -68,11 +68,11 @@ class ManageGeocodingResultsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, GeocodingResultId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "Geocoding result not found");
+      return UsecaseResult(false, "", "Geocoding result not found");
     repo.remove(tenantId, GeocodingResultId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

@@ -142,11 +142,11 @@ sequenceDiagram
 
     Op->>VRC: POST /validation-results { ruleId, entityId }
     VRC->>VUC: runValidation(dto)
-    VUC-->>VRC: CommandResult(true, resultId)
+    VUC-->>VRC: UsecaseResult(true, resultId)
     VRC-->>Op: 201 { id, passed=false }
 
     Op->>DBC: POST /quality-dashboards { name }
     DBC->>DUC: snapshotKPIs(tenantId)
-    DUC-->>DBC: CommandResult(true, dashId)
+    DUC-->>DBC: UsecaseResult(true, dashId)
     DBC-->>Op: 201 { id, kpiSnapshot }
 ```

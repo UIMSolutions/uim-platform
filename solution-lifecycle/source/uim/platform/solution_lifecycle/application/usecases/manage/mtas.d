@@ -28,7 +28,7 @@ class ManageMtasUseCase {
     // ------------------------------------------------------------------
     // Deploy a new MTA from an uploaded archive
     // ------------------------------------------------------------------
-    CommandResult deployMta(DeployMtaRequest r) {
+    UsecaseResult deployMta(DeployMtaRequest r) {
         
         
 
@@ -38,10 +38,10 @@ class ManageMtasUseCase {
         foreach (a; archives)
             if (a.id.value == r.archiveId) { archive = a; break; }
         if (archive is null || archive.isNull)
-            return CommandResult(false, "", "MTA archive not found: " ~ r.archiveId);
+            return UsecaseResult(false, "", "MTA archive not found: " ~ r.archiveId);
 
         auto dres = engine.beginDeploy(r.archiveId, archive.mtaId, archive.mtaVersion, r.tenantId);
-        if (!dres.success) return CommandResult(false, "", dres.message);
+        if (!dres.success) return UsecaseResult(false, "", dres.message);
 
         // Create operation record
         auto op = new MtaOperation();
@@ -83,13 +83,13 @@ class ManageMtasUseCase {
         mta.updatedAt       = op.startedAt;
         mtaRepo.save(mta);
 
-        return CommandResult(true, op.id.value, "");
+        return UsecaseResult(true, op.id.value, "");
     }
 
     // ------------------------------------------------------------------
     // Update an existing deployed MTA
     // ------------------------------------------------------------------
-    CommandResult updateMta(UpdateMtaRequest r) {
+    UsecaseResult updateMta(UpdateMtaRequest r) {
         
         
 
@@ -98,10 +98,10 @@ class ManageMtasUseCase {
         foreach (m; mtas)
             if (m.mtaId == r.mtaId) { existing = m; break; }
         if (existing is null || existing.isNull)
-            return CommandResult(false, "", "Deployed MTA not found: " ~ r.mtaId);
+            return UsecaseResult(false, "", "Deployed MTA not found: " ~ r.mtaId);
 
         auto dres = engine.beginUpdate(r.archiveId, r.mtaId, r.tenantId);
-        if (!dres.success) return CommandResult(false, "", dres.message);
+        if (!dres.success) return UsecaseResult(false, "", dres.message);
 
         auto op = new MtaOperation();
         op.id              = MtaOperationId(dres.operationId);
@@ -125,7 +125,7 @@ class ManageMtasUseCase {
         existing.updatedAt       = op.startedAt;
         mtaRepo.update(existing);
 
-        return CommandResult(true, op.id.value, "");
+        return UsecaseResult(true, op.id.value, "");
     }
 
     // ------------------------------------------------------------------
@@ -145,7 +145,7 @@ class ManageMtasUseCase {
     // ------------------------------------------------------------------
     // Delete (async)
     // ------------------------------------------------------------------
-    CommandResult deleteMta(DeleteMtaRequest r) {
+    UsecaseResult deleteMta(DeleteMtaRequest r) {
         
         
 
@@ -154,7 +154,7 @@ class ManageMtasUseCase {
         foreach (m; mtas)
             if (m.mtaId == r.mtaId) { existing = m; break; }
         if (existing is null || existing.isNull)
-            return CommandResult(false, "", "Deployed MTA not found: " ~ r.mtaId);
+            return UsecaseResult(false, "", "Deployed MTA not found: " ~ r.mtaId);
 
         auto dres = engine.beginDelete(r.mtaId, r.tenantId);
         auto op = new MtaOperation();
@@ -176,6 +176,6 @@ class ManageMtasUseCase {
         existing.updatedAt       = op.startedAt;
         mtaRepo.update(existing);
 
-        return CommandResult(true, op.id.value, "");
+        return UsecaseResult(true, op.id.value, "");
     }
 }

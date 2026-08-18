@@ -18,13 +18,13 @@ class ManageOAuthClientsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createOAuthClient(CreateOAuthClientRequest r) {
+  UsecaseResult createOAuthClient(CreateOAuthClientRequest r) {
     if (r.clientId.isEmpty)
-      return CommandResult(false, "", "clientId is required");
+      return UsecaseResult(false, "", "clientId is required");
 
     auto existingClients = repo.findByTenant(r.tenantId).filter!(c => c.clientId == r.clientId).array;
     if (!existingClients.empty)
-      return CommandResult(false, "", "A client with this clientId already exists");
+      return UsecaseResult(false, "", "A client with this clientId already exists");
 
     import std.uuid : randomUUID;
     OAuthClient c;
@@ -44,13 +44,13 @@ class ManageOAuthClientsUseCase {
     c.updatedAt    = c.createdAt;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult updateClient(UpdateOAuthClientRequest r) {
+  UsecaseResult updateClient(UpdateOAuthClientRequest r) {
     auto c = repo.findById(r.tenantId, r.clientId);
     if (c.isNull)
-      return CommandResult(false, "", "OAuth client not found");
+      return UsecaseResult(false, "", "OAuth client not found");
 
     if (r.name.length > 0)       c.name = r.name;
     if (r.description.length > 0) c.description = r.description;
@@ -62,16 +62,16 @@ class ManageOAuthClientsUseCase {
     c.updatedAt = currentTimestamp();
 
     repo.update(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult deleteClient(TenantId tenantId, OAuthClientId id) {
+  UsecaseResult deleteClient(TenantId tenantId, OAuthClientId id) {
     auto c = repo.findById(tenantId, id);
     if (c.isNull)
-      return CommandResult(false, "", "OAuth client not found");
+      return UsecaseResult(false, "", "OAuth client not found");
 
     repo.remove(c);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   OAuthClient getClient(TenantId tenantId, OAuthClientId id) {

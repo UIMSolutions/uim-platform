@@ -22,20 +22,20 @@ class TechnologyBlocksService : ITechnologyBlocksApi {
         return usecase.getBlock(TenantId(tenantId), TechnologyBlockId(id));
     }
 
-    override CommandResult createTechnologyBlock(string tenantId, CreateTechnologyBlockRequest request) {
+    override UsecaseResult createTechnologyBlock(string tenantId, CreateTechnologyBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         return usecase.createBlock(req);
     }
 
-    override CommandResult updateTechnologyBlock(string tenantId, string id, UpdateTechnologyBlockRequest request) {
+    override UsecaseResult updateTechnologyBlock(string tenantId, string id, UpdateTechnologyBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         req.blockId = TechnologyBlockId(id);
         return usecase.updateBlock(req);
     }
 
-    override CommandResult deleteTechnologyBlock(string tenantId, string id) {
+    override UsecaseResult deleteTechnologyBlock(string tenantId, string id) {
         return usecase.deleteBlock(TenantId(tenantId), TechnologyBlockId(id));
     }
 }

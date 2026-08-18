@@ -34,7 +34,7 @@ class ManageDataConnectionsUseCase {
         return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult createDataConnection(DataConnectionDTO dto) {
+    UsecaseResult createDataConnection(DataConnectionDTO dto) {
         auto e = DataConnection(dto.tenantId, dto.connectionId.isNull ? DataConnectionId(createId()) : dto.connectionId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.name = dto.name;
@@ -47,16 +47,16 @@ class ManageDataConnectionsUseCase {
         e.responseMapping = dto.responseMapping;
         e.destinationName = dto.destinationName;
         if (!BuildAppsValidator.isValidDataConnection(e))
-            return CommandResult(false, "", "Invalid data connection");
+            return UsecaseResult(false, "", "Invalid data connection");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateDataConnection(DataConnectionDTO dto) {
+    UsecaseResult updateDataConnection(DataConnectionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.connectionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Data connection not found");
+            return UsecaseResult(false, "", "Data connection not found");
             
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -65,16 +65,16 @@ class ManageDataConnectionsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDataConnection(TenantId tenantId, DataConnectionId id) {
+    UsecaseResult deleteDataConnection(TenantId tenantId, DataConnectionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Data connection not found");
+            return UsecaseResult(false, "", "Data connection not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

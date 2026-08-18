@@ -17,7 +17,7 @@ class ManageFlexPersonalizationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPersonalization(CreateFlexPersonalizationRequest r) {
+  UsecaseResult createPersonalization(CreateFlexPersonalizationRequest r) {
     auto p = FlexPersonalization();
     p.id_         = r.personalizationId;
     p.tenant_     = r.tenantId;
@@ -31,20 +31,20 @@ class ManageFlexPersonalizationsUseCase {
     p.isSynced_   = false;
 
     auto err = FlexValidator.validateFlexPersonalization(p);
-    if (err !is null) return CommandResult(false, null, err);
+    if (err !is null) return UsecaseResult(false, null, err);
 
     repo.save(r.tenantId, p);
-    return CommandResult(true, p.id_.value);
+    return UsecaseResult(true, p.id_.value);
   }
 
-  CommandResult updatePersonalization(UpdateFlexPersonalizationRequest r) {
+  UsecaseResult updatePersonalization(UpdateFlexPersonalizationRequest r) {
     auto p = repo.findById(r.tenantId, r.personalizationId);
-    if (p.isNull) return CommandResult(false, null, "FlexPersonalization not found");
+    if (p.isNull) return UsecaseResult(false, null, "FlexPersonalization not found");
     p.content_  = r.content_;
     p.isSynced_ = r.isSynced_;
     p.updatedAt_ = "";
     repo.update(r.tenantId, p);
-    return CommandResult(true, p.id_.value, "FlexPersonalization updated successfully.");
+    return UsecaseResult(true, p.id_.value, "FlexPersonalization updated successfully.");
   }
 
   FlexPersonalization getPersonalization(TenantId tenantId, FlexPersonalizationId id) {
@@ -59,16 +59,16 @@ class ManageFlexPersonalizationsUseCase {
     return repo.findByUser(tenantId, appId, userId);
   }
 
-  CommandResult deletePersonalization(TenantId tenantId, FlexPersonalizationId id) {
+  UsecaseResult deletePersonalization(TenantId tenantId, FlexPersonalizationId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-    return CommandResult(false, null, "FlexPersonalization not found");
+    return UsecaseResult(false, null, "FlexPersonalization not found");
     repo.removeById(tenantId, id);
-    return CommandResult(true, id.value, "FlexPersonalization deleted successfully.");
+    return UsecaseResult(true, id.value, "FlexPersonalization deleted successfully.");
   }
 
-  CommandResult resetUserPersonalizations(TenantId tenantId, string appId, string userId) {
+  UsecaseResult resetUserPersonalizations(TenantId tenantId, string appId, string userId) {
     repo.removeByUser(tenantId, appId, userId);
-    return CommandResult(true, userId, "User personalizations reset successfully.");
+    return UsecaseResult(true, userId, "User personalizations reset successfully.");
   }
 }

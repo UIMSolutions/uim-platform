@@ -30,7 +30,7 @@ class ManageRunConfigurationsUseCase {
         return configurations.findByProject(tenantId, projectId);
     }
 
-    CommandResult createRunConfiguration(RunConfigurationDTO dto) {
+    UsecaseResult createRunConfiguration(RunConfigurationDTO dto) {
         auto  e = RunConfiguration(dto.tenantId, dto.configId, dto.createdBy);
         e.projectId = dto.projectId;
         e.name = dto.name;
@@ -41,16 +41,16 @@ class ManageRunConfigurationsUseCase {
         e.port = dto.port;
         e.debugPort = dto.debugPort;
         if (!StudioValidator.isValidRunConfiguration(e))
-            return CommandResult(false, "", "Invalid run configuration data");
+            return UsecaseResult(false, "", "Invalid run configuration data");
 
         configurations.save(e);
-        return CommandResult(true, dto.configId.value, "");
+        return UsecaseResult(true, dto.configId.value, "");
     }
 
-    CommandResult updateRunConfiguration(RunConfigurationDTO dto) {
+    UsecaseResult updateRunConfiguration(RunConfigurationDTO dto) {
         auto existing = configurations.findById(dto.tenantId, dto.configId);
         if (existing.isNull)
-            return CommandResult(false, "", "Run configuration not found");
+            return UsecaseResult(false, "", "Run configuration not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -58,15 +58,15 @@ class ManageRunConfigurationsUseCase {
         if (dto.arguments.length > 0) existing.arguments = dto.arguments;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         configurations.update(existing);
-        return CommandResult(true, dto.configId.value, "");
+        return UsecaseResult(true, dto.configId.value, "");
     }
 
-    CommandResult deleteRunConfiguration(TenantId tenantId, RunConfigurationId id) {
+    UsecaseResult deleteRunConfiguration(TenantId tenantId, RunConfigurationId id) {
         auto config = configurations.findById(tenantId, id);
         if (config.isNull)
-            return CommandResult(false, "", "Run configuration not found");
+            return UsecaseResult(false, "", "Run configuration not found");
 
         configurations.remove(config);
-        return CommandResult(true, config.id.value, "");
+        return UsecaseResult(true, config.id.value, "");
     }
 }

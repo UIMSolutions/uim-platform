@@ -30,7 +30,7 @@ class ManageStagesUseCase {
         return repo.findByBuildOrdered(tenantId, buildId);
     }
 
-    CommandResult createStage(StageDTO dto) {
+    UsecaseResult createStage(StageDTO dto) {
         auto s = Stage(dto.tenantId); //, dto.createdBy);
         s.id = dto.stageId;
         s.buildId = dto.buildId;
@@ -40,29 +40,29 @@ class ManageStagesUseCase {
         s.status = StageStatus.pending;
 
         if (!CicdValidator.isValidStage(s))
-            return CommandResult(false, "", "Invalid stage data: name and buildId required");
+            return UsecaseResult(false, "", "Invalid stage data: name and buildId required");
 
         repo.save(s);
-        return CommandResult(true, s.id.value, "");
+        return UsecaseResult(true, s.id.value, "");
     }
 
-    CommandResult updateStage(StageDTO dto) {
+    UsecaseResult updateStage(StageDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.stageId);
         if (existing.isNull)
-            return CommandResult(false, "", "Stage not found");
+            return UsecaseResult(false, "", "Stage not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteStage(TenantId tenantId, StageId id) {
+    UsecaseResult deleteStage(TenantId tenantId, StageId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Stage not found");
+            return UsecaseResult(false, "", "Stage not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

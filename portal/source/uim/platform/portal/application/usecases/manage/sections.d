@@ -57,10 +57,10 @@ class ManageSectionsUseCase {
     return sectionRepo.findByPage(pageId);
   }
 
-  CommandResult updateSection(UpdateSectionRequest req) {
+  UsecaseResult updateSection(UpdateSectionRequest req) {
     auto section = sectionRepo.findById(req.sectionId);
     if (section.isNull)
-      return CommandResult(false, "", "Section not found");
+      return UsecaseResult(false, "", "Section not found");
 
     with (section) {
       title = req.title.length > 0 ? req.title : title;
@@ -70,12 +70,12 @@ class ManageSectionsUseCase {
       updatedAt = currentTimestamp();
     }
     sectionRepo.update(section);
-    return CommandResult(true, req.sectionId.value, "");
+    return UsecaseResult(true, req.sectionId.value, "");
   }
 
-  CommandResult deleteSection(SectionId sectionId, PageId pageId) {
+  UsecaseResult deleteSection(SectionId sectionId, PageId pageId) {
     if (!sectionRepo.existsById(sectionId))
-      return CommandResult(false, "", "Section not found")  ;
+      return UsecaseResult(false, "", "Section not found")  ;
 
     sectionRepo.remove(sectionId);
 
@@ -86,6 +86,6 @@ class ManageSectionsUseCase {
       pageRepo.update(page);
     }
 
-    return CommandResult(true, sectionId.value, "");
+    return UsecaseResult(true, sectionId.value, "");
   }
 }

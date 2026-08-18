@@ -14,8 +14,8 @@ interface IManageCommandInputsUseCase {
     
     CommandInput getCommandInput(TenantId tenantId, CommandInputId id);
     CommandInput[] listCommandInputs(TenantId tenantId);
-    CommandResult createCommandInput(CommandInputDTO dto);
-    CommandResult updateCommandInput(CommandInputDTO dto);
-    CommandResult deleteCommandInput(TenantId tenantId, CommandInputId id);
+    UsecaseResult createCommandInput(CommandInputDTO dto);
+    UsecaseResult updateCommandInput(CommandInputDTO dto);
+    UsecaseResult deleteCommandInput(TenantId tenantId, CommandInputId id);
     
 }

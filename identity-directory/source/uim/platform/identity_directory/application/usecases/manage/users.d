@@ -34,17 +34,17 @@ class ManageUsersUseCase {
   }
 
   /// Create a new user.
-  CommandResult createUser(CreateUserRequest req) {
+  UsecaseResult createUser(CreateUserRequest req) {
     // Check username uniqueness
     if (userRepo.existsByUserName(req.tenantId, req.userName))
-      return CommandResult(false, "", "User with this userName already exists", 409);
+      return UsecaseResult(false, "", "User with this userName already exists", 409);
 
     // Validate password against policy
     auto policy = policyRepo.findActiveForTenant(req.tenantId);
     if (policy != typeof(policy).init && req.password.length > 0) {
       auto validation = validatePassword(req.password, policy);
       if (!validation.valid) 
-        return CommandResult(false, "", validation.violations.joiner("; ").to!string, 400);
+        return UsecaseResult(false, "", validation.violations.joiner("; ").to!string, 400);
     }
 
     auto user = IDUser(req.tenantId);
@@ -81,7 +81,7 @@ class ManageUsersUseCase {
     event.timestamp = event.createdAt;
     auditRepo.save(event);
 
-    return CommandResult(true, user.id.value, "", 200);
+    return UsecaseResult(true, user.id.value, "", 200);
   }
 
   /// Get user by ID.
@@ -100,10 +100,10 @@ class ManageUsersUseCase {
   }
 
   /// Update user profile.
-  CommandResult updateUser(UpdateUserRequest req) {
+  UsecaseResult updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
-      return CommandResult(false, "", "User not found", 404);
+      return UsecaseResult(false, "", "User not found", 404);
 
     if (req.name != UserName.init)
       user.name = req.name;
@@ -143,15 +143,15 @@ class ManageUsersUseCase {
     event.timestamp = event.createdAt;
     auditRepo.save(event);
 
-    return CommandResult(true, user.id.value, "", 200);
+    return UsecaseResult(true, user.id.value, "", 200);
 
   }
 
   /// Deactivate (soft-delete) a user.
-  CommandResult deactivateUser(TenantId tenantId, UserId id) {
+  UsecaseResult deactivateUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "User not found", 404);
+      return UsecaseResult(false, "", "User not found", 404);
 
     user.active = false;
     user.status = UserStatus.inactive;
@@ -170,14 +170,14 @@ class ManageUsersUseCase {
     event.timestamp = event.createdAt;
     auditRepo.save(event);  
 
-    return CommandResult(true, id.value, "", 200);
+    return UsecaseResult(true, id.value, "", 200);
   }
 
   /// Delete a user permanently.
-  CommandResult deleteUser(TenantId tenantId, UserId id) {
+  UsecaseResult deleteUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "User not found", 404);
+      return UsecaseResult(false, "", "User not found", 404);
 
     userRepo.remove(user);
 
@@ -196,17 +196,17 @@ class ManageUsersUseCase {
     //     "User deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
     auditRepo.save(event);
 
-    return CommandResult(true, user.id.value, "", 200);
+    return UsecaseResult(true, user.id.value, "", 200);
   }
 
   /// Change user password.
-  CommandResult changePassword(TenantId tenantId, UserId id, string oldPassword, string newPassword) {
+  UsecaseResult changePassword(TenantId tenantId, UserId id, string oldPassword, string newPassword) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "User not found", 404);
+      return UsecaseResult(false, "", "User not found", 404);
 
     if (user.passwordHash.length > 0 && !passwordSvc.verifyPassword(oldPassword, user.passwordHash))
-      return CommandResult(false, "", "Current password is incorrect", 400);
+      return UsecaseResult(false, "", "Current password is incorrect", 400);
 
     // Validate against policy
     auto policy = policyRepo.findActiveForTenant(user.tenantId);
@@ -215,7 +215,7 @@ class ManageUsersUseCase {
       if (!validation.valid) {
         // import std.algorithm : joiner;
         
-        return CommandResult(false, "", validation.violations.joiner("; ").to!string, 400);
+        return UsecaseResult(false, "", validation.violations.joiner("; ").to!string, 400);
       }
     }
 
@@ -226,7 +226,7 @@ class ManageUsersUseCase {
     auto event = AuditEvent(user.tenantId);
     event.id = AuditEventId(createId);
     if (id.isNull)
-      return CommandResult(false, "", "User ID is null", 400);
+      return UsecaseResult(false, "", "User ID is null", 400);
 
     event.eventType = AuditEventType.passwordChanged;
     event.actorId = "system";
@@ -238,7 +238,7 @@ class ManageUsersUseCase {
     event.timestamp = event.createdAt;
     auditRepo.save(event);
 
-    return CommandResult(true, id.value, "", 200);
+    return UsecaseResult(true, id.value, "", 200);
   }
 }
 

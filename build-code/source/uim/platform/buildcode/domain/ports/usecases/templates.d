@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageTemplatesUseCase {
 
-  CommandResult create(TenantId tenantId, CreateTemplateRequest req);
+  UsecaseResult create(TenantId tenantId, CreateTemplateRequest req);
   ProjectTemplate getById(TenantId tenantId, string id);
   ProjectTemplate[] list(TenantId tenantId);
   ProjectTemplate[] listByProjectType(TenantId tenantId, string typeStr);
   ProjectTemplate[] listBuiltIn(TenantId tenantId);
-  CommandResult remove(TenantId tenantId, string id);
+  UsecaseResult remove(TenantId tenantId, string id);
 
 }

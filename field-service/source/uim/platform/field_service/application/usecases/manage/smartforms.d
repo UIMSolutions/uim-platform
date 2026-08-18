@@ -34,7 +34,7 @@ class ManageSmartformsUseCase {
         return repo.findByActivity(tenantId, activityId);
     }
 
-    CommandResult createSmartform(SmartformDTO dto) {
+    UsecaseResult createSmartform(SmartformDTO dto) {
         Smartform sf;
         sf.id = dto.smartformId;
         sf.tenantId = dto.tenantId;
@@ -46,15 +46,15 @@ class ManageSmartformsUseCase {
         sf.safetyLabel = dto.safetyLabel;
         sf.createdBy = dto.createdBy;
         if (!FieldServiceValidator.isValidSmartform(sf))
-            return CommandResult(false, "", "Invalid smartform data");
+            return UsecaseResult(false, "", "Invalid smartform data");
         repo.save(sf);
-        return CommandResult(true, sf.id.value, "");
+        return UsecaseResult(true, sf.id.value, "");
     }
 
-    CommandResult updateSmartform(SmartformDTO dto) {
+    UsecaseResult updateSmartform(SmartformDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.smartformId);
         if (existing.isNull)
-            return CommandResult(false, "", "Smartform not found");
+            return UsecaseResult(false, "", "Smartform not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.formData.length > 0) existing.formData = dto.formData;
@@ -64,15 +64,15 @@ class ManageSmartformsUseCase {
         if (!dto.approvedBy.isNull) existing.approvedBy = dto.approvedBy;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSmartform(TenantId tenantId, SmartformId id) {
+    UsecaseResult deleteSmartform(TenantId tenantId, SmartformId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Smartform not found");
+            return UsecaseResult(false, "", "Smartform not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }

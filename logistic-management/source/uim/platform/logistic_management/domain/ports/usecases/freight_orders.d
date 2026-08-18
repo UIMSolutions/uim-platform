@@ -11,13 +11,13 @@ mixin(ShowModule!());
 @safe:
 interface IManageFreightOrdersUseCase {
 
-  CommandResult createFreightOrder(TenantId tenantId, CreateFreightOrderRequest req);
+  UsecaseResult createFreightOrder(TenantId tenantId, CreateFreightOrderRequest req);
 
-  CommandResult updateFreightOrder(TenantId tenantId, FreightOrderId id, UpdateFreightOrderRequest req);
+  UsecaseResult updateFreightOrder(TenantId tenantId, FreightOrderId id, UpdateFreightOrderRequest req);
 
-  CommandResult transitionFreightOrder(TenantId tenantId, FreightOrderId id, TransitionFreightOrderRequest req);
+  UsecaseResult transitionFreightOrder(TenantId tenantId, FreightOrderId id, TransitionFreightOrderRequest req);
 
-  CommandResult deleteFreightOrder(TenantId tenantId, FreightOrderId id);
+  UsecaseResult deleteFreightOrder(TenantId tenantId, FreightOrderId id);
 
   FreightOrder getFreightOrder(TenantId tenantId, FreightOrderId id);
 

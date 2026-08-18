@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 interface IIngestLogsUseCase { 
 
-  CommandResult ingest(IngestLogRequest req);
+  UsecaseResult ingest(IngestLogRequest req);
 
-  CommandResult ingestBatch(IngestLogBatchRequest req);
+  UsecaseResult ingestBatch(IngestLogBatchRequest req);
   
 }

@@ -11,7 +11,7 @@ private:
 public:
   this(IIntegrationFlowRepository repo) { _repo = repo; }
 
-  CommandResult create(CreateFlowRequest req) {
+  UsecaseResult create(CreateFlowRequest req) {
     auto flow = IntegrationFlow(req.tenantId, req.flowId);
     flow.packageId           = IntegrationPackageId(req.packageId);
     flow.name                = req.name;
@@ -27,51 +27,51 @@ public:
     flow.steps               = req.steps;
     flow.metadata            = req.metadata;
     auto err = IntegrationValidator.validateFlow(flow);
-    if (err !is null) return CommandResult(false, err);
+    if (err !is null) return UsecaseResult(false, err);
     _repo.add(getTenantId(req.tenantId), flow);
-    return CommandResult(true, flow.toJson());
+    return UsecaseResult(true, flow.toJson());
   }
 
-  CommandResult getAll(TenantId tenantId) {
+  UsecaseResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (f; items) arr ~= f.toJson();
-    return CommandResult(true, arr);
+    return UsecaseResult(true, arr);
   }
 
-  CommandResult getById(TenantId tenantId, string id) {
+  UsecaseResult getById(TenantId tenantId, string id) {
     auto flow = _repo.getById(getTenantId(tenantId), IntegrationFlowId(id));
-    if (flow.isNull) return CommandResult(false, "Flow not found");
-    return CommandResult(true, flow.toJson());
+    if (flow.isNull) return UsecaseResult(false, "Flow not found");
+    return UsecaseResult(true, flow.toJson());
   }
 
-  CommandResult update(UpdateFlowRequest req) {
+  UsecaseResult update(UpdateFlowRequest req) {
     auto flow = _repo.getById(getTenantId(req.tenantId), IntegrationFlowId(req.id));
-    if (flow.isNull) return CommandResult(false, "Flow not found");
+    if (flow.isNull) return UsecaseResult(false, "Flow not found");
     if (req.name.length > 0)        flow.name        = req.name;
     if (req.description.length > 0) flow.description = req.description;
     if (req.version_.length > 0)    flow.version_    = req.version_;
     if (req.status.length > 0)      flow.status      = req.status.to!ArtifactStatus;
     foreach (k, v; req.metadata)    flow.metadata[k] = v;
     _repo.update(getTenantId(req.tenantId), flow);
-    return CommandResult(true, flow.toJson());
+    return UsecaseResult(true, flow.toJson());
   }
 
-  CommandResult deploy(DeployFlowRequest req) {
+  UsecaseResult deploy(DeployFlowRequest req) {
     auto flow = _repo.getById(getTenantId(req.tenantId), IntegrationFlowId(req.id));
-    if (flow.isNull) return CommandResult(false, "Flow not found");
+    if (flow.isNull) return UsecaseResult(false, "Flow not found");
     flow.deploymentStatus = DeploymentStatus.running;
     flow.status           = ArtifactStatus.deployed;
     flow.deployedAt       = currentTimestamp();
     flow.deployedBy       = req.deployedBy;
     _repo.update(getTenantId(req.tenantId), flow);
-    return CommandResult(true, flow.toJson());
+    return UsecaseResult(true, flow.toJson());
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto flow = _repo.getById(getTenantId(tenantId), IntegrationFlowId(id));
-    if (flow.isNull) return CommandResult(false, "Flow not found");
+    if (flow.isNull) return UsecaseResult(false, "Flow not found");
     _repo.remove(getTenantId(tenantId), IntegrationFlowId(id));
-    return CommandResult(true, "Flow deleted");
+    return UsecaseResult(true, "Flow deleted");
   }
 }

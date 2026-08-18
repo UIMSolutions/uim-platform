@@ -116,7 +116,7 @@ POST /api/v1/deliveries
   └─► DeliveryController.createHandler
         └─► ManageDeliveriesUseCase.createDelivery
               ├─► DeliveryRepository.save   (persistence)
-              └─► CommandResult → HTTP 201
+              └─► UsecaseResult → HTTP 201
 
 PUT /api/v1/deliveries/{id}  { "status":"picking" }
   └─► DeliveryController.updateHandler
@@ -124,7 +124,7 @@ PUT /api/v1/deliveries/{id}  { "status":"picking" }
               ├─► DeliveryRepository.findById
               ├─► LogisticsPlanner.canTransitionDelivery  (guard)
               ├─► DeliveryRepository.save   (updated status)
-              └─► CommandResult → HTTP 200
+              └─► UsecaseResult → HTTP 200
 
 DELETE /api/v1/deliveries/{id}
   └─► DeliveryController.deleteHandler

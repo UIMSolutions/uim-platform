@@ -12,15 +12,15 @@ mixin(ShowModule!());
 
 interface IManagePractitionersUseCase {
 
-  CommandResult createPractitioner(CreatePractitionerRequest r);
+  UsecaseResult createPractitioner(CreatePractitionerRequest r);
 
-  CommandResult updatePractitioner(UpdatePractitionerRequest r);
+  UsecaseResult updatePractitioner(UpdatePractitionerRequest r);
 
   Practitioner getPractitioner(TenantId tenantId, PractitionerId id);
 
   Practitioner[] listPractitioners(TenantId tenantId);
 
-  CommandResult deletePractitioner(TenantId tenantId, PractitionerId id);
+  UsecaseResult deletePractitioner(TenantId tenantId, PractitionerId id);
 
   size_t countPractitioners(TenantId tenantId);
   

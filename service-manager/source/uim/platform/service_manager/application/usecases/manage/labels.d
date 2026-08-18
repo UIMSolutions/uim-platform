@@ -30,7 +30,7 @@ class ManageLabelsUseCase {
         return repo.findByResource(tenantId, resourceType, resourceId);
     }
 
-    CommandResult createLabel(CreateLabelRequest dto) {
+    UsecaseResult createLabel(CreateLabelRequest dto) {
         Label e;
         e.id = LabelId(currentTimestamp.to!string);
         e.tenantId = dto.tenantId;
@@ -41,16 +41,16 @@ class ManageLabelsUseCase {
         e.createdAt = currentTimestamp;
 
         if (dto.key.length == 0)
-            return CommandResult(false, "", "Label key is required");
+            return UsecaseResult(false, "", "Label key is required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateLabel(UpdateLabelRequest dto) {
+    UsecaseResult updateLabel(UpdateLabelRequest dto) {
         auto existing = repo.findById(dto.tenantId, dto.labelId);
         if (existing.isNull)
-            return CommandResult(false, "", "Label not found");
+            return UsecaseResult(false, "", "Label not found");
 
         if (dto.key.length > 0)
             existing.key = dto.key;
@@ -58,16 +58,16 @@ class ManageLabelsUseCase {
             existing.value = dto.value;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteLabel(TenantId tenantId, LabelId id) {
+    UsecaseResult deleteLabel(TenantId tenantId, LabelId id) {
         auto label = repo.findById(tenantId, id);
         if (label.isNull)
-            return CommandResult(false, "", "Label not found");
+            return UsecaseResult(false, "", "Label not found");
 
         repo.remove(label);
-        return CommandResult(true, label.id.value, "");
+        return UsecaseResult(true, label.id.value, "");
     }
 }
 

@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 interface IManageConfigurationsUseCase { 
   
-  CommandResult createConfiguration(CreateConfigurationRequest r);
+  UsecaseResult createConfiguration(CreateConfigurationRequest r);
 
   Configuration getConfiguration(TenantId tenantId, ConnectionId connectionId, ConfigurationId id);
 
@@ -25,6 +25,6 @@ interface IManageConfigurationsUseCase {
 
   Configuration[] listConfigurations(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
 
-  CommandResult deleteConfiguration(TenantId tenantId, ConnectionId connectionId, ConfigurationId id);
+  UsecaseResult deleteConfiguration(TenantId tenantId, ConnectionId connectionId, ConfigurationId id);
   
 }

@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 interface IManageActionsUseCase {
 
-    CommandResult createAction(TenantId tenantId, CreateActionRequest req);
+    UsecaseResult createAction(TenantId tenantId, CreateActionRequest req);
 
     QueryResult getAction(TenantId tenantId, ActionId id);
 
     QueryResult listActions(TenantId tenantId);
 
-    CommandResult updateAction(TenantId tenantId, ActionId id, UpdateActionRequest req);
+    UsecaseResult updateAction(TenantId tenantId, ActionId id, UpdateActionRequest req);
 
-    CommandResult deleteAction(TenantId tenantId, ActionId id);
+    UsecaseResult deleteAction(TenantId tenantId, ActionId id);
 
 }

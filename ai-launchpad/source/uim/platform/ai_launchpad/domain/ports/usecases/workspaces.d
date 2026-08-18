@@ -12,14 +12,14 @@ mixin(ShowModule!());
 @safe:
 interface IManageWorkspacesUseCase { 
 
-  CommandResult createWorkspace(CreateWorkspaceRequest r);
+  UsecaseResult createWorkspace(CreateWorkspaceRequest r);
 
   Workspace getWorkspace(TenantId tenantId, WorkspaceId id);
 
   Workspace[] listWorkspaces(TenantId tenantId);
 
-  CommandResult patchWorkspace(PatchWorkspaceRequest r);
+  UsecaseResult patchWorkspace(PatchWorkspaceRequest r);
 
-  CommandResult deleteWorkspace(TenantId tenantId, WorkspaceId id);
+  UsecaseResult deleteWorkspace(TenantId tenantId, WorkspaceId id);
 
 }

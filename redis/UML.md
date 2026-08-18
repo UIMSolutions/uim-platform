@@ -272,7 +272,7 @@ uc -> val : isValidServiceInstance(entity)
 val --> uc : true
 uc -> repo : save(entity)
 repo --> uc : ok
-uc --> ctrl : CommandResult(success=true, id=...)
+uc --> ctrl : UsecaseResult(success=true, id=...)
 ctrl --> dev : 201 Created\n{id, name, status="provisioning", ...}
 @enduml
 ```

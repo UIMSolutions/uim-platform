@@ -29,7 +29,7 @@ class WebBrokerServiceModel {
         return usecase.getService(tenantId, BrokerServiceId(id));
     }
 
-    CommandResult create(TenantId tenantId, Json data) {
+    UsecaseResult create(TenantId tenantId, Json data) {
         BrokerServiceDTO dto;
         dto.serviceId = BrokerServiceId(data.getString("id").length > 0 ? data.getString("id") : newId());
         dto.tenantId = tenantId;
@@ -46,7 +46,7 @@ class WebBrokerServiceModel {
         return usecase.createService(dto);
     }
 
-    CommandResult update(TenantId tenantId, string id, Json data) {
+    UsecaseResult update(TenantId tenantId, string id, Json data) {
         BrokerServiceDTO dto;
         dto.serviceId = BrokerServiceId(id);
         dto.tenantId = tenantId;
@@ -60,7 +60,7 @@ class WebBrokerServiceModel {
         return usecase.updateService(dto);
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
+    UsecaseResult remove(TenantId tenantId, string id) {
         return usecase.deleteService(tenantId, BrokerServiceId(id));
     }
 }
@@ -80,7 +80,7 @@ class WebQueueModel {
         return usecase.getQueue(tenantId, QueueId(id));
     }
 
-    CommandResult create(TenantId tenantId, Json data) {
+    UsecaseResult create(TenantId tenantId, Json data) {
         QueueDTO dto;
         dto.queueId = QueueId(data.getString("id").length > 0 ? data.getString("id") : newId());
         dto.tenantId = tenantId;
@@ -101,7 +101,7 @@ class WebQueueModel {
         return usecase.createQueue(dto);
     }
 
-    CommandResult update(TenantId tenantId, string id, Json data) {
+    UsecaseResult update(TenantId tenantId, string id, Json data) {
         QueueDTO dto;
         dto.queueId = QueueId(id);
         dto.tenantId = tenantId;
@@ -114,7 +114,7 @@ class WebQueueModel {
         return usecase.updateQueue(dto);
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
+    UsecaseResult remove(TenantId tenantId, string id) {
         return usecase.deleteQueue(tenantId, QueueId(id));
     }
 }
@@ -134,7 +134,7 @@ class WebTopicModel {
         return usecase.getTopic(tenantId, TopicId(id));
     }
 
-    CommandResult create(TenantId tenantId, Json data) {
+    UsecaseResult create(TenantId tenantId, Json data) {
         TopicDTO dto;
         dto.topicId = TopicId(data.getString("id").length > 0 ? data.getString("id") : newId());
         dto.tenantId = tenantId;
@@ -149,7 +149,7 @@ class WebTopicModel {
         return usecase.createTopic(dto);
     }
 
-    CommandResult update(TenantId tenantId, string id, Json data) {
+    UsecaseResult update(TenantId tenantId, string id, Json data) {
         TopicDTO dto;
         dto.topicId = TopicId(id);
         dto.tenantId = tenantId;
@@ -161,7 +161,7 @@ class WebTopicModel {
         return usecase.updateTopic(dto);
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
+    UsecaseResult remove(TenantId tenantId, string id) {
         return usecase.deleteTopic(tenantId, TopicId(id));
     }
 }
@@ -181,7 +181,7 @@ class WebSubscriptionModel {
         return usecase.getSubscription(tenantId, EventSubscriptionId(id));
     }
 
-    CommandResult create(TenantId tenantId, Json data) {
+    UsecaseResult create(TenantId tenantId, Json data) {
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(data.getString("id").length > 0 ? data.getString("id") : newId());
         dto.tenantId = tenantId;
@@ -199,7 +199,7 @@ class WebSubscriptionModel {
         return usecase.createSubscription(dto);
     }
 
-    CommandResult update(TenantId tenantId, string id, Json data) {
+    UsecaseResult update(TenantId tenantId, string id, Json data) {
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(id);
         dto.tenantId = tenantId;
@@ -211,7 +211,7 @@ class WebSubscriptionModel {
         return usecase.updateSubscription(dto);
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
+    UsecaseResult remove(TenantId tenantId, string id) {
         return usecase.deleteSubscription(tenantId, EventSubscriptionId(id));
     }
 }
@@ -231,7 +231,7 @@ class WebEventMessageModel {
         return usecase.getMessage(tenantId, EventMessageId(id));
     }
 
-    CommandResult create(TenantId tenantId, Json data) {
+    UsecaseResult create(TenantId tenantId, Json data) {
         EventMessageDTO dto;
         dto.messageId = EventMessageId(data.getString("id").length > 0 ? data.getString("id") : newId());
         dto.tenantId = tenantId;
@@ -249,16 +249,16 @@ class WebEventMessageModel {
         return usecase.publishMessage(dto);
     }
 
-    CommandResult update(TenantId tenantId, string id, Json data) {
+    UsecaseResult update(TenantId tenantId, string id, Json data) {
         auto status = data.getString("status");
         auto acknowledge = data.getString("acknowledge");
         if (status == "acknowledged" || acknowledge == "true") {
             return usecase.acknowledgeMessage(tenantId, EventMessageId(id));
         }
-        return CommandResult(false, "", "Event message update supports acknowledgement only");
+        return UsecaseResult(false, "", "Event message update supports acknowledgement only");
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
+    UsecaseResult remove(TenantId tenantId, string id) {
         return usecase.deleteMessage(tenantId, EventMessageId(id));
     }
 }
@@ -278,7 +278,7 @@ class WebEventSchemaModel {
         return usecase.getSchema(tenantId, EventSchemaId(id));
     }
 
-    CommandResult create(TenantId tenantId, Json data) {
+    UsecaseResult create(TenantId tenantId, Json data) {
         EventSchemaDTO dto;
         dto.schemaId = EventSchemaId(data.getString("id").length > 0 ? data.getString("id") : newId());
         dto.tenantId = tenantId;
@@ -292,7 +292,7 @@ class WebEventSchemaModel {
         return usecase.createSchema(dto);
     }
 
-    CommandResult update(TenantId tenantId, string id, Json data) {
+    UsecaseResult update(TenantId tenantId, string id, Json data) {
         EventSchemaDTO dto;
         dto.schemaId = EventSchemaId(id);
         dto.tenantId = tenantId;
@@ -304,7 +304,7 @@ class WebEventSchemaModel {
         return usecase.updateSchema(dto);
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
+    UsecaseResult remove(TenantId tenantId, string id) {
         return usecase.deleteSchema(tenantId, EventSchemaId(id));
     }
 }
@@ -324,7 +324,7 @@ class WebEventApplicationModel {
         return usecase.getApplication(tenantId, EventApplicationId(id));
     }
 
-    CommandResult create(TenantId tenantId, Json data) {
+    UsecaseResult create(TenantId tenantId, Json data) {
         EventApplicationDTO dto;
         dto.applicationId = EventApplicationId(data.getString("id").length > 0 ? data.getString("id") : newId());
         dto.tenantId = tenantId;
@@ -344,7 +344,7 @@ class WebEventApplicationModel {
         return usecase.createApplication(dto);
     }
 
-    CommandResult update(TenantId tenantId, string id, Json data) {
+    UsecaseResult update(TenantId tenantId, string id, Json data) {
         EventApplicationDTO dto;
         dto.applicationId = EventApplicationId(id);
         dto.tenantId = tenantId;
@@ -359,7 +359,7 @@ class WebEventApplicationModel {
         return usecase.updateApplication(dto);
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
+    UsecaseResult remove(TenantId tenantId, string id) {
         return usecase.deleteApplication(tenantId, EventApplicationId(id));
     }
 }
@@ -379,7 +379,7 @@ class WebMeshBridgeModel {
         return usecase.getBridge(tenantId, MeshBridgeId(id));
     }
 
-    CommandResult create(TenantId tenantId, Json data) {
+    UsecaseResult create(TenantId tenantId, Json data) {
         MeshBridgeDTO dto;
         dto.bridgeId = MeshBridgeId(data.getString("id").length > 0 ? data.getString("id") : newId());
         dto.tenantId = tenantId;
@@ -400,7 +400,7 @@ class WebMeshBridgeModel {
         return usecase.createBridge(dto);
     }
 
-    CommandResult update(TenantId tenantId, string id, Json data) {
+    UsecaseResult update(TenantId tenantId, string id, Json data) {
         MeshBridgeDTO dto;
         dto.bridgeId = MeshBridgeId(id);
         dto.tenantId = tenantId;
@@ -413,7 +413,7 @@ class WebMeshBridgeModel {
         return usecase.updateBridge(dto);
     }
 
-    CommandResult remove(TenantId tenantId, string id) {
+    UsecaseResult remove(TenantId tenantId, string id) {
         return usecase.deleteBridge(tenantId, MeshBridgeId(id));
     }
 }

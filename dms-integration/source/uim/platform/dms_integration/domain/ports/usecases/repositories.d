@@ -23,14 +23,14 @@ interface IManageRepositoriesUseCase {
 
     Repository_[] listDefaultRepositories(TenantId tenantId);
 
-    CommandResult createRepository(RepositoryDTO dto);
+    UsecaseResult createRepository(RepositoryDTO dto);
 
-    CommandResult updateRepository(RepositoryDTO dto);
+    UsecaseResult updateRepository(RepositoryDTO dto);
 
-    CommandResult activateRepository(TenantId tenantId, RepositoryId id);
+    UsecaseResult activateRepository(TenantId tenantId, RepositoryId id);
 
-    CommandResult deactivateRepository(TenantId tenantId, RepositoryId id);
+    UsecaseResult deactivateRepository(TenantId tenantId, RepositoryId id);
 
-    CommandResult deleteRepository(TenantId tenantId, RepositoryId id);
+    UsecaseResult deleteRepository(TenantId tenantId, RepositoryId id);
 
 }

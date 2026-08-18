@@ -22,9 +22,9 @@ class ManageGroupsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createGroup(CreateGroupRequest req) {
+  UsecaseResult createGroup(CreateGroupRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "WZGroup name is required");
+      return UsecaseResult(false, "", "WZGroup name is required");
 
     auto g = WZGroup(req.tenantId);
     g.name = req.name;
@@ -33,7 +33,7 @@ class ManageGroupsUseCase {
     g.active = true;
 
     repo.save(g);
-    return CommandResult(true, g.id.value, "");
+    return UsecaseResult(true, g.id.value, "");
   }
 
   WZGroup getGroup(TenantId tenantId, GroupId id) {
@@ -44,10 +44,10 @@ class ManageGroupsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateGroup(UpdateGroupRequest req) {
+  UsecaseResult updateGroup(UpdateGroupRequest req) {
     auto g = repo.findById(req.tenantId, req.id);
     if (g.isNull)
-      return CommandResult(false, "", "WZGroup not found");
+      return UsecaseResult(false, "", "WZGroup not found");
 
     if (req.name.length > 0)
       g.name = req.name;
@@ -57,15 +57,15 @@ class ManageGroupsUseCase {
     g.updatedAt = currentTimestamp();
 
     repo.update(g);
-    return CommandResult(true, g.id.value, "");
+    return UsecaseResult(true, g.id.value, "");
   }
 
-  CommandResult deleteGroup(TenantId tenantId, GroupId id) {
+  UsecaseResult deleteGroup(TenantId tenantId, GroupId id) {
     auto g = repo.findById(tenantId, id);
     if (g.isNull)
-      return CommandResult(false, "", "WZGroup not found");
+      return UsecaseResult(false, "", "WZGroup not found");
 
     repo.remove(g);
-    return CommandResult(true, g.id.value, "");
+    return UsecaseResult(true, g.id.value, "");
   }
 }

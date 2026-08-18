@@ -64,9 +64,9 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  CommandResult deletePlanningModel(TenantId tenantId, PlanningModelId id) {
+  UsecaseResult deletePlanningModel(TenantId tenantId, PlanningModelId id) {
     auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     if (!found.empty) repo.remove(found[0]);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 }

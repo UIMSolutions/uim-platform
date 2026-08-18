@@ -34,7 +34,7 @@ class ManageEquipmentUseCase {
         return repo.findByType(tenantId, equipmentType);
     }
 
-    CommandResult createEquipment(EquipmentDTO dto) {
+    UsecaseResult createEquipment(EquipmentDTO dto) {
         auto e = Equipment(dto.tenantId, dto.equipmentId, dto.createdBy);
         e.customerId = dto.customerId;
         e.serialNumber = dto.serialNumber;
@@ -49,15 +49,15 @@ class ManageEquipmentUseCase {
         e.longitude = dto.longitude;
         e.measuringPoint = dto.measuringPoint;
         if (!FieldServiceValidator.isValidEquipment(e))
-            return CommandResult(false, "", "Invalid equipment data");
+            return UsecaseResult(false, "", "Invalid equipment data");
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateEquipment(EquipmentDTO dto) {
+    UsecaseResult updateEquipment(EquipmentDTO dto) {
         auto equipment = repo.findById(dto.tenantId, dto.equipmentId);
         if (equipment.isNull)
-            return CommandResult(false, "", "Equipment not found");
+            return UsecaseResult(false, "", "Equipment not found");
         if (dto.name.length > 0) equipment.name = dto.name;
         if (dto.description.length > 0) equipment.description = dto.description;
         if (dto.manufacturer.length > 0) equipment.manufacturer = dto.manufacturer;
@@ -67,15 +67,15 @@ class ManageEquipmentUseCase {
         if (dto.nextServiceDate.length > 0) equipment.nextServiceDate = dto.nextServiceDate;
         if (!dto.updatedBy.isNull) equipment.updatedBy = dto.updatedBy;
         repo.update(equipment);
-        return CommandResult(true, equipment.id.value, "");
+        return UsecaseResult(true, equipment.id.value, "");
     }
 
-    CommandResult deleteEquipment(TenantId tenantId, EquipmentId id) {
+    UsecaseResult deleteEquipment(TenantId tenantId, EquipmentId id) {
         auto equipment = repo.findById(tenantId, id);
         if (equipment.isNull)
-            return CommandResult(false, "", "Equipment not found");
+            return UsecaseResult(false, "", "Equipment not found");
 
         repo.remove(equipment);
-        return CommandResult(true, equipment.id.value, "");
+        return UsecaseResult(true, equipment.id.value, "");
     }
 }

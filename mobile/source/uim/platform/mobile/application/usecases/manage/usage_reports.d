@@ -21,11 +21,11 @@ class ManageUsageReportsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createUsageReport(CreateUsageReportRequest r) {
+    UsecaseResult createUsageReport(CreateUsageReportRequest r) {
         // Check if a report with the same sessionId and eventType already exists for the same app and device
         // auto existing = repo.findBySessionAndEvent(r.tenantId, r.appId, r.deviceId, r.sessionId, r.eventType);
         // if (!existing.isNull)
-        //     return CommandResult(false, "", "A usage report with the same session ID and event type already exists for this app and device");
+        //     return UsecaseResult(false, "", "A usage report with the same session ID and event type already exists for this app and device");
 
         auto usage = UsageReport(r.tenantId); //, UserId("test-user"));
         usage.appId = r.appId;
@@ -39,7 +39,7 @@ class ManageUsageReportsUseCase {
         usage.timestamp = r.timestamp > 0 ? r.timestamp : currentTimestamp();
 
         repo.save(usage);
-        return CommandResult(true, usage.id.value, "");
+        return UsecaseResult(true, usage.id.value, "");
     }
 
     UsageReport getUsageReport(TenantId tenantId, UsageReportId id) {
@@ -58,13 +58,13 @@ class ManageUsageReportsUseCase {
         return repo.findByDevice(tenantId, deviceId);
     }
 
-    CommandResult deleteUsageReport(TenantId tenantId, UsageReportId id) {
+    UsecaseResult deleteUsageReport(TenantId tenantId, UsageReportId id) {
         auto report = repo.findById(tenantId, id);
         if (report.isNull)
-            return CommandResult(false, "", "Usage report not found");
+            return UsecaseResult(false, "", "Usage report not found");
 
         repo.remove(report);
-        return CommandResult(true, report.id.value, "");
+        return UsecaseResult(true, report.id.value, "");
     }
 
     size_t countByApp(TenantId tenantId, MobileAppId appId) {

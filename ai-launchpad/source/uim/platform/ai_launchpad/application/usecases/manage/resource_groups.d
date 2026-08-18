@@ -20,9 +20,9 @@ class ManageResourceGroupsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createResourceGroup(CreateResourceGroupRequest r) {
+  UsecaseResult createResourceGroup(CreateResourceGroupRequest r) {
     if (r.resourceGroupId.isEmpty)
-      return CommandResult(false, "", "Resource group ID is required");
+      return UsecaseResult(false, "", "Resource group ID is required");
 
     auto rg = ResourceGroup(r.tenantId, r.resourceGroupId.isNull ? ResourceGroupId(createId()) : r.resourceGroupId); // , r.createdBy);
     rg.connectionId = r.connectionId;
@@ -35,7 +35,7 @@ class ManageResourceGroupsUseCase {
     }
 
     repo.save(rg);
-    return CommandResult(true, rg.id.value, "");
+    return UsecaseResult(true, rg.id.value, "");
   }
 
   ResourceGroup getResourceGroup(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id) {
@@ -50,10 +50,10 @@ class ManageResourceGroupsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult patchResourceGroup(PatchResourceGroupRequest r) {
+  UsecaseResult patchResourceGroup(PatchResourceGroupRequest r) {
     auto rg = repo.findById(r.tenantId, r.connectionId, r.resourceGroupId);
     if (rg.isNull)
-      return CommandResult(false, "", "Resource group not found");
+      return UsecaseResult(false, "", "Resource group not found");
 
     if (r.labels.length > 0) {
       rg.labels = [];
@@ -66,15 +66,15 @@ class ManageResourceGroupsUseCase {
 
     rg.updatedAt = currentTimestamp();
     repo.save(rg);
-    return CommandResult(true, rg.id.value, "");
+    return UsecaseResult(true, rg.id.value, "");
   }
 
-  CommandResult deleteResourceGroup(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id) {
+  UsecaseResult deleteResourceGroup(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id) {
     auto entity = repo.findById(tenantId, connectionId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Resource group not found");
+      return UsecaseResult(false, "", "Resource group not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

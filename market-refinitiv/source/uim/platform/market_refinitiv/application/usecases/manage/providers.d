@@ -17,13 +17,13 @@ class ManageProvidersUseCase {
     this.repo = repo;
   }
 
-  CommandResult createProvider(CreateProviderRequest req) {
+  UsecaseResult createProvider(CreateProviderRequest req) {
     if (req.code.length == 0)
-      return CommandResult(false, "", "Provider code is required");
+      return UsecaseResult(false, "", "Provider code is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Provider name is required");
+      return UsecaseResult(false, "", "Provider name is required");
     if (repo.codeExists(req.tenantId, req.code))
-      return CommandResult(false, "", "A provider with this code already exists");
+      return UsecaseResult(false, "", "A provider with this code already exists");
 
     auto p = Provider(req.tenantId); //, UserId("test-user"));
     p.code         = req.code;
@@ -33,7 +33,7 @@ class ManageProvidersUseCase {
     p.isActive     = true;
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   Provider getById(TenantId tenantId, ProviderId id) {
@@ -48,10 +48,10 @@ class ManageProvidersUseCase {
     return repo.findActive(tenantId);
   }
 
-  CommandResult updateProvider(UpdateProviderRequest req) {
+  UsecaseResult updateProvider(UpdateProviderRequest req) {
     auto p = repo.findById(req.tenantId, req.providerId);
     if (p.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
 
     p.name         = req.name;
     p.description  = req.description;
@@ -60,15 +60,15 @@ class ManageProvidersUseCase {
     p.updatedAt    = currentTimestamp;
 
     repo.update(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult deleteProvider(TenantId tenantId, ProviderId id) {
+  UsecaseResult deleteProvider(TenantId tenantId, ProviderId id) {
     auto p = repo.findById(tenantId, id);
     if (p.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
 
     repo.remove(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 }

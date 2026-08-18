@@ -22,12 +22,12 @@ class ManageMonitoredResourcesUseCase {
     this.repo = repo;
   }
 
-  CommandResult register(RegisterResourceRequest req) {
+  UsecaseResult register(RegisterResourceRequest req) {
     if (repo.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Resource with name '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Resource with name '" ~ req.name ~ "' already exists");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Resource name is required");
+      return UsecaseResult(false, "", "Resource name is required");
 
     auto resource = MonitoredResource(req.tenantId); //, UserId("test-user"));
     resource.subaccountId = req.subaccountId;
@@ -43,13 +43,13 @@ class ManageMonitoredResourcesUseCase {
     resource.lastSeenAt = resource.registeredAt;
 
     repo.save(resource);
-    return CommandResult(true, resource.id.value, "");
+    return UsecaseResult(true, resource.id.value, "");
   }
 
-  CommandResult updateResource(UpdateResourceRequest req) {
+  UsecaseResult updateResource(UpdateResourceRequest req) {
     auto resource = repo.findById(req.tenantId, req.resourceId);
     if (resource.isNull)
-      return CommandResult(false, "", "Resource not found");
+      return UsecaseResult(false, "", "Resource not found");
 
     if (req.description.length > 0)
       resource.description = req.description;
@@ -66,7 +66,7 @@ class ManageMonitoredResourcesUseCase {
     resource.lastSeenAt = clockSeconds();
 
     repo.update(resource);
-    return CommandResult(true, resource.id.value, "");
+    return UsecaseResult(true, resource.id.value, "");
   }
 
   bool existsResource(TenantId tenantId, MonitoredResourceId id) {
@@ -85,13 +85,13 @@ class ManageMonitoredResourcesUseCase {
     return repo.findByType(tenantId, typeStr.to!ResourceType);
   }
 
-  CommandResult deleteMonitoredResource(TenantId tenantId, MonitoredResourceId id) {
+  UsecaseResult deleteMonitoredResource(TenantId tenantId, MonitoredResourceId id) {
     auto resource = repo.findById(tenantId, id);
     if (resource.isNull)
-      return CommandResult(false, "", "Resource not found");
+      return UsecaseResult(false, "", "Resource not found");
 
     repo.remove(resource);
-    return CommandResult(true, resource.id.value, "");
+    return UsecaseResult(true, resource.id.value, "");
   }
 
 }

@@ -16,11 +16,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageViewsUseCase { 
   
-  CommandResult createView(CreateViewRequest r);
+  UsecaseResult createView(CreateViewRequest r);
   View getById(TenantId tenantId, SpaceId spaceId, ViewId id);
   View[] list(TenantId tenantId, SpaceId spaceId);
   View[] listExposed(TenantId tenantId, SpaceId spaceId);
-  CommandResult updateView(UpdateViewRequest r);
-  CommandResult deleteView(TenantId tenantId, SpaceId spaceId, ViewId id);
+  UsecaseResult updateView(UpdateViewRequest r);
+  UsecaseResult deleteView(TenantId tenantId, SpaceId spaceId, ViewId id);
 
 }

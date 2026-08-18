@@ -21,12 +21,12 @@ class ManageHDIContainersUseCase {
     this.repo = repo;
   }
 
-  CommandResult createHDIContainer(CreateHDIContainerRequest r) {
+  UsecaseResult createHDIContainer(CreateHDIContainerRequest r) {
     if (r.isNull || r.name.isEmpty)
-      return CommandResult(false, "", "HDI Container ID and name are required");
+      return UsecaseResult(false, "", "HDI Container ID and name are required");
 
     if (repo.existsById(r.id))
-      return CommandResult(false, "", "HDI Container already exists");
+      return UsecaseResult(false, "", "HDI Container already exists");
 
     auto c = HDIContainer(r.tenantId, r.id, r.createdBy);
     c.instanceId = r.instanceId;
@@ -37,7 +37,7 @@ class ManageHDIContainersUseCase {
     c.grantedSchemas = r.grantedSchemas;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   HDIContainer getHDIContainer(HDIContainerId id) {
@@ -48,10 +48,10 @@ class ManageHDIContainersUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateHDIContainer(UpdateHDIContainerRequest r) {
+  UsecaseResult updateHDIContainer(UpdateHDIContainerRequest r) {
     auto existing = repo.findById(r.id);
     if (existing.isNull)
-      return CommandResult(false, "", "HDI Container not found");
+      return UsecaseResult(false, "", "HDI Container not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -61,16 +61,16 @@ class ManageHDIContainersUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteHDIContainer(HDIContainerId id) {
+  UsecaseResult deleteHDIContainer(HDIContainerId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "HDI Container not found");
+      return UsecaseResult(false, "", "HDI Container not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countHDIContainers(TenantId tenantId) {

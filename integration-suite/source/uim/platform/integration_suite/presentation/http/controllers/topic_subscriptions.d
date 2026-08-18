@@ -52,7 +52,7 @@ public:
 
         auto tenantId = precheck.tenantId;
       auto queueId = req.query.get("queueId", "");
-      CommandResult result;
+      UsecaseResult result;
       if (queueId.length > 0)
         result = _usecase.listByQueue(req.getTenantId, queueId);
       else

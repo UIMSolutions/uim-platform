@@ -32,14 +32,14 @@ class DeployApplicationUseCase {
         this.versionRepo = versionRepo;
     }
 
-    CommandResult deploy(CreateDeploymentRequest r) {
+    UsecaseResult deploy(CreateDeploymentRequest r) {
         auto app = appRepo.findById(r.tenantId, r.appId);
         if (app.isNull)
-            return CommandResult(false, "", "App not found");
+            return UsecaseResult(false, "", "App not found");
 
         auto version_ = versionRepo.findById(r.tenantId, r.versionId);
         if (version_.isNull)
-            return CommandResult(false, "", "Version not found");
+            return UsecaseResult(false, "", "Version not found");
 
         auto record = DeploymentRecord(r.tenantId);
         record.appId = r.appId;
@@ -63,7 +63,7 @@ class DeployApplicationUseCase {
         version_.deployedAt = record.createdAt;
 
         versionRepo.update(version_);
-        return CommandResult(true, record.id.value, "");
+        return UsecaseResult(true, record.id.value, "");
     }
 
     DeploymentRecord getRecord(TenantId tenantId, DeploymentRecordId id) {

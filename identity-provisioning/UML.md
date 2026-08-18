@@ -137,7 +137,7 @@ sequenceDiagram
 
     Admin->>JC: POST /provisioning-jobs { sourceId, targetId, jobType=full }
     JC->>JUC: createJob(dto)
-    JUC-->>JC: CommandResult(true, jobId)
+    JUC-->>JC: UsecaseResult(true, jobId)
     JC-->>Admin: 201 { id }
 
     Admin->>JC: POST /provisioning-jobs/{id}/start
@@ -145,6 +145,6 @@ sequenceDiagram
     JUC->>LR: save(log — level=INFO, msg=Job started)
     JUC->>ER: save(entity — op=create, status=success)
     JUC->>LR: save(log — level=INFO, msg=Job completed)
-    JUC-->>JC: CommandResult(true, id)
+    JUC-->>JC: UsecaseResult(true, id)
     JC-->>Admin: 200 { id, status=completed }
 ```

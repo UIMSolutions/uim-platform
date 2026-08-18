@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 interface IManageDatasetsUseCase { 
   
-  CommandResult registerDataset(RegisterDatasetRequest r);
+  UsecaseResult registerDataset(RegisterDatasetRequest r);
 
   Dataset getDataset(TenantId tenantId, ConnectionId connectionId, DatasetId id);
 
@@ -20,8 +20,8 @@ interface IManageDatasetsUseCase {
 
   Dataset[] listDatasets(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
 
-  CommandResult patchDataset(PatchDatasetRequest r);
+  UsecaseResult patchDataset(PatchDatasetRequest r);
 
-  CommandResult deleteDataset(TenantId tenantId, ConnectionId connectionId, DatasetId id);
+  UsecaseResult deleteDataset(TenantId tenantId, ConnectionId connectionId, DatasetId id);
   
 }

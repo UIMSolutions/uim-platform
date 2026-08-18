@@ -28,11 +28,11 @@ class ManageConfigurationsUseCase {
         return repo.findByInstance(tenantId, instanceId);
     }
 
-    CommandResult createConfiguration(ConfigurationDTO dto) {
+    UsecaseResult createConfiguration(ConfigurationDTO dto) {
         ServiceInstanceId instId = dto.instanceId;
         auto existing = repo.findByInstance(dto.tenantId, instId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Configuration already exists for this instance");
+            return UsecaseResult(false, "", "Configuration already exists for this instance");
 
         auto e = Configuration(dto.tenantId, dto.configurationId, dto.createdBy);
         e.instanceId = dto.instanceId;
@@ -46,16 +46,16 @@ class ManageConfigurationsUseCase {
         e.activeVersion = dto.activeVersion;
 
         if (!RedisValidator.isValidConfiguration(e))
-            return CommandResult(false, "", "Invalid configuration: instanceId required");
+            return UsecaseResult(false, "", "Invalid configuration: instanceId required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateConfiguration(ConfigurationDTO dto) {
+    UsecaseResult updateConfiguration(ConfigurationDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.configurationId);
         if (existing.isNull)
-            return CommandResult(false, "", "Configuration not found");
+            return UsecaseResult(false, "", "Configuration not found");
 
         existing.maxMemoryPolicy = dto.maxMemoryPolicy;
         existing.timeout_ = dto.timeout_;
@@ -68,14 +68,14 @@ class ManageConfigurationsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteConfiguration(TenantId tenantId, ConfigurationId id) {
+    UsecaseResult deleteConfiguration(TenantId tenantId, ConfigurationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Configuration not found");
+            return UsecaseResult(false, "", "Configuration not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

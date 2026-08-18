@@ -25,11 +25,11 @@ class ManageTrainingJobsUseCase {
     this.docRepo = docRepo;
   }
 
-  CommandResult createTrainingJob(CreateTrainingJobRequest r) {
+  UsecaseResult createTrainingJob(CreateTrainingJobRequest r) {
     if (r.clientId.isEmpty)
-      return CommandResult(false, "", "Client ID is required");
+      return UsecaseResult(false, "", "Client ID is required");
     if (r.documentTypeId.isEmpty)
-      return CommandResult(false, "", "Document type ID is required");
+      return UsecaseResult(false, "", "Document type ID is required");
 
     // Count confirmed documents available for training
     auto docs = docRepo.findByDocumentType(r.clientId, r.documentTypeId);
@@ -50,33 +50,33 @@ class ManageTrainingJobsUseCase {
     tj.documentCount = confirmedCount;
 
     jobRepo.save(tj);
-    return CommandResult(true, tj.id.value, "");
+    return UsecaseResult(true, tj.id.value, "");
   }
 
-  CommandResult patchTrainingJob(PatchTrainingJobRequest r) {
+  UsecaseResult patchTrainingJob(PatchTrainingJobRequest r) {
     if (r.trainingJobId.isEmpty)
-      return CommandResult(false, "", "Training job ID is required");
+      return UsecaseResult(false, "", "Training job ID is required");
 
     auto existing = jobRepo.findById(r.clientId, r.trainingJobId);
     if (existing.isNull)
-      return CommandResult(false, "", "Training job not found");
+      return UsecaseResult(false, "", "Training job not found");
 
     if (r.targetStatus.length > 0) {
       switch (r.targetStatus) {
         case "running":
           if (existing.status != TrainingJobStatus.pending)
-            return CommandResult(false, "", "Can only start pending jobs");
+            return UsecaseResult(false, "", "Can only start pending jobs");
           existing.status = TrainingJobStatus.running;
           
           existing.startedAt = currentTimestamp;
           break;
         case "cancelled":
           if (existing.status != TrainingJobStatus.pending && existing.status != TrainingJobStatus.running)
-            return CommandResult(false, "", "Can only cancel pending or running jobs");
+            return UsecaseResult(false, "", "Can only cancel pending or running jobs");
           existing.status = TrainingJobStatus.cancelled;
           break;
         default:
-          return CommandResult(false, "", "Invalid target status");
+          return UsecaseResult(false, "", "Invalid target status");
       }
     }
 
@@ -84,7 +84,7 @@ class ManageTrainingJobsUseCase {
     existing.updatedAt = currentTimestamp;
 
     jobRepo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   TrainingJob getTrainingJob(ClientId clientId, TrainingJobId id) {
@@ -103,16 +103,16 @@ class ManageTrainingJobsUseCase {
     return jobRepo.findByDocumentType(clientId, typeId);
   }
 
-  CommandResult deleteTrainingJob(ClientId clientId, TrainingJobId id) {
+  UsecaseResult deleteTrainingJob(ClientId clientId, TrainingJobId id) {
     auto job = jobRepo.findById(clientId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Training job not found");
+      return UsecaseResult(false, "", "Training job not found");
 
     if (job.status == TrainingJobStatus.running)
-      return CommandResult(false, "", "Cannot delete running training job");
+      return UsecaseResult(false, "", "Cannot delete running training job");
 
     jobRepo.remove(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
   size_t countTrainingJobs(ClientId clientId) {

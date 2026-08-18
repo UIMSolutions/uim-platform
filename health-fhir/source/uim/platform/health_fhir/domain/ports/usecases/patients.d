@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 interface IManagePatientsUseCase {
 
-  CommandResult createPatient(CreatePatientRequest r);
+  UsecaseResult createPatient(CreatePatientRequest r);
 
-  CommandResult updatePatient(UpdatePatientRequest r);
+  UsecaseResult updatePatient(UpdatePatientRequest r);
   
   Patient getPatient(TenantId tenantId, PatientId id);
 
@@ -22,7 +22,7 @@ interface IManagePatientsUseCase {
 
   Patient[] searchByName(TenantId tenantId, string namePart);
 
-  CommandResult deletePatient(TenantId tenantId, PatientId id);
+  UsecaseResult deletePatient(TenantId tenantId, PatientId id);
 
   size_t countPatients(TenantId tenantId);
   

@@ -21,12 +21,12 @@ class ManageReplicationTasksUseCase {
     this.repo = repo;
   }
 
-  CommandResult createReplicationTask(CreateReplicationTaskRequest r) {
+  UsecaseResult createReplicationTask(CreateReplicationTaskRequest r) {
     if (r.isNull || r.name.isEmpty)
-      return CommandResult(false, "", "Replication task ID and name are required");
+      return UsecaseResult(false, "", "Replication task ID and name are required");
 
     if (repo.existsById(r.tenantId, r.replicationTaskId))
-      return CommandResult(false, "", "Replication task already exists");
+      return UsecaseResult(false, "", "Replication task already exists");
 
     auto t = ReplicationTask(r.tenantId);  
     t.id = r.taskId;
@@ -39,7 +39,7 @@ class ManageReplicationTasksUseCase {
     t.scheduleExpression = r.scheduleExpression;
 
     repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   ReplicationTask getReplicationTask(ReplicationTaskId id) {
@@ -50,10 +50,10 @@ class ManageReplicationTasksUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateReplicationTask(UpdateReplicationTaskRequest r) {
+  UsecaseResult updateReplicationTask(UpdateReplicationTaskRequest r) {
     auto existing = repo.findById(r.id);
     if (existing.isNull)
-      return CommandResult(false, "", "Replication task not found");
+      return UsecaseResult(false, "", "Replication task not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -63,16 +63,16 @@ class ManageReplicationTasksUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteReplicationTask(ReplicationTaskId id) {
+  UsecaseResult deleteReplicationTask(ReplicationTaskId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Replication task not found");
+      return UsecaseResult(false, "", "Replication task not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countReplicationTasks(TenantId tenantId) {

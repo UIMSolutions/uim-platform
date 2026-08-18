@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageFormsUseCase { 
 
-    CommandResult createForm(CreateFormRequest r);
+    UsecaseResult createForm(CreateFormRequest r);
     Form getForm(TenantId tenantId, FormId id);
     Form[] listForms(TenantId tenantId);
-    CommandResult updateForm(UpdateFormRequest r);
-    CommandResult deleteForm(TenantId tenantId, FormId id);
+    UsecaseResult updateForm(UpdateFormRequest r);
+    UsecaseResult deleteForm(TenantId tenantId, FormId id);
 
 }

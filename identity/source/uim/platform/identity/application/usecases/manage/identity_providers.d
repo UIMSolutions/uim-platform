@@ -22,7 +22,7 @@ class ManageIdentityProvidersUseCase {
     IdentityProvider[] listIdentityProviders(TenantId tenantId) { return repo.findByTenant(tenantId); }
     IdentityProvider findDefault(TenantId tenantId) { return repo.findDefault(tenantId); }
 
-    CommandResult createIdentityProvider(IdentityProviderDTO dto) {
+    UsecaseResult createIdentityProvider(IdentityProviderDTO dto) {
         auto idp = IdentityProvider(dto.tenantId);
         idp.id = dto.idpId;
         idp.name = dto.name;
@@ -42,15 +42,15 @@ class ManageIdentityProvidersUseCase {
         }
 
         if (!IdentityValidator.isValidIdentityProvider(idp))
-            return CommandResult(false, "", "Invalid IdP: name and entityId are required");
+            return UsecaseResult(false, "", "Invalid IdP: name and entityId are required");
 
         repo.save(idp);
-        return CommandResult(true, idp.id.value, "");
+        return UsecaseResult(true, idp.id.value, "");
     }
 
-    CommandResult updateIdentityProvider(IdentityProviderDTO dto) {
+    UsecaseResult updateIdentityProvider(IdentityProviderDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.idpId);
-        if (existing.isNull) return CommandResult(false, "", "Identity provider not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Identity provider not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -66,13 +66,13 @@ class ManageIdentityProvidersUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteIdentityProvider(TenantId tenantId, IdentityProviderId id) {
+    UsecaseResult deleteIdentityProvider(TenantId tenantId, IdentityProviderId id) {
         auto entity = repo.findById(tenantId, id);
-        if (entity.isNull) return CommandResult(false, "", "Identity provider not found");
+        if (entity.isNull) return UsecaseResult(false, "", "Identity provider not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

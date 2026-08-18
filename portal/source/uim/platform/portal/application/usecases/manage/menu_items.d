@@ -72,9 +72,9 @@ class ManageMenuItemsUseCase {
     return menuRepo.findChildren(parentId);
   }
 
-  CommandResult updateMenuItem(UpdateMenuItemRequest req) {
+  UsecaseResult updateMenuItem(UpdateMenuItemRequest req) {
     if (!menuRepo.existsById(req.menuItemId))
-      return CommandResult(false, "", "Menu item not found");
+      return UsecaseResult(false, "", "Menu item not found");
 
     auto item = menuRepo.findById(req.menuItemId);
     with (item) {
@@ -90,12 +90,12 @@ class ManageMenuItemsUseCase {
       updatedAt = currentTimestamp();
     }
     menuRepo.update(item);
-    return CommandResult(true, item.menuItemId.value, "Menu item updated successfully.");
+    return UsecaseResult(true, item.menuItemId.value, "Menu item updated successfully.");
   }
 
-  CommandResult deleteMenuItem(MenuItemId menuItemId, SiteId siteId) {
+  UsecaseResult deleteMenuItem(MenuItemId menuItemId, SiteId siteId) {
     if (!menuRepo.existsById(menuItemId))
-      return CommandResult(false, "", "Menu item not found");
+      return UsecaseResult(false, "", "Menu item not found");
 
     menuRepo.remove(menuItemId);
 
@@ -106,6 +106,6 @@ class ManageMenuItemsUseCase {
       siteRepo.update(site);
     }
 
-    return CommandResult(true, menuItemId.value, "Menu item deleted successfully.");
+    return UsecaseResult(true, menuItemId.value, "Menu item deleted successfully.");
   }
 }

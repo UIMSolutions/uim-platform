@@ -11,7 +11,7 @@ private:
 public:
   this(IMessageQueueRepository repo) { _repo = repo; }
 
-  CommandResult create(CreateQueueRequest req) {
+  UsecaseResult create(CreateQueueRequest req) {
     auto q = MessageQueue(req.tenantId, req.id);
     q.name                = req.name;
     q.description         = req.description;
@@ -23,40 +23,40 @@ public:
     q.deadLetterQueueName = req.deadLetterQueueName;
     q.metadata            = req.metadata;
     auto err = IntegrationValidator.validateMessageQueue(q);
-    if (err !is null) return CommandResult(false, err);
+    if (err !is null) return UsecaseResult(false, err);
     _repo.add(getTenantId(req.tenantId), q);
-    return CommandResult(true, q.toJson());
+    return UsecaseResult(true, q.toJson());
   }
 
-  CommandResult getAll(TenantId tenantId) {
+  UsecaseResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (q; items) arr ~= q.toJson();
-    return CommandResult(true, arr);
+    return UsecaseResult(true, arr);
   }
 
-  CommandResult getById(TenantId tenantId, string id) {
+  UsecaseResult getById(TenantId tenantId, string id) {
     auto q = _repo.getById(getTenantId(tenantId), MessageQueueId(id));
-    if (q.isNull) return CommandResult(false, "Queue not found");
-    return CommandResult(true, q.toJson());
+    if (q.isNull) return UsecaseResult(false, "Queue not found");
+    return UsecaseResult(true, q.toJson());
   }
 
-  CommandResult update(UpdateQueueRequest req) {
+  UsecaseResult update(UpdateQueueRequest req) {
     auto q = _repo.getById(getTenantId(req.tenantId), MessageQueueId(req.id));
-    if (q.isNull) return CommandResult(false, "Queue not found");
+    if (q.isNull) return UsecaseResult(false, "Queue not found");
     if (req.status.length > 0)    q.status          = req.status.to!QueueStatus;
     if (req.maxMessageSize != 0)  q.maxMessageSize   = req.maxMessageSize;
     if (req.maxQueueSize != 0)    q.maxQueueSize     = req.maxQueueSize;
     if (req.retentionPeriod != 0) q.retentionPeriod  = req.retentionPeriod;
     foreach (k, v; req.metadata)  q.metadata[k]      = v;
     _repo.update(getTenantId(req.tenantId), q);
-    return CommandResult(true, q.toJson());
+    return UsecaseResult(true, q.toJson());
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto q = _repo.getById(getTenantId(tenantId), MessageQueueId(id));
-    if (q.isNull) return CommandResult(false, "Queue not found");
+    if (q.isNull) return UsecaseResult(false, "Queue not found");
     _repo.remove(getTenantId(tenantId), MessageQueueId(id));
-    return CommandResult(true, "Queue deleted");
+    return UsecaseResult(true, "Queue deleted");
   }
 }

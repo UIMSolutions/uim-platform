@@ -38,7 +38,7 @@ class ManageBuildsUseCase {
         return repo.findLatestByJob(tenantId, jobId);
     }
 
-    CommandResult triggerBuild(BuildDTO dto) {
+    UsecaseResult triggerBuild(BuildDTO dto) {
         auto b = Build(dto.tenantId); //, dto.createdBy);
         b.id = dto.buildId;
         b.jobId = dto.jobId;
@@ -50,42 +50,42 @@ class ManageBuildsUseCase {
         b.status = BuildStatus.pending;
 
         if (!CicdValidator.isValidBuild(b))
-            return CommandResult(false, "", "Invalid build data: jobId required");
+            return UsecaseResult(false, "", "Invalid build data: jobId required");
 
         repo.save(b);
-        return CommandResult(true, b.id.value, "");
+        return UsecaseResult(true, b.id.value, "");
     }
 
-    CommandResult updateBuildStatus(TenantId tenantId, BuildId id, BuildStatus status, string errorMessage = "") {
+    UsecaseResult updateBuildStatus(TenantId tenantId, BuildId id, BuildStatus status, string errorMessage = "") {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Build not found");
+            return UsecaseResult(false, "", "Build not found");
 
         existing.status = status;
         if (errorMessage.length > 0) existing.errorMessage = errorMessage;
         if (status == BuildStatus.running && existing.startedAt == 0)
             existing.startedAt = 0; // caller sets timestamp
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult cancelBuild(TenantId tenantId, BuildId id) {
+    UsecaseResult cancelBuild(TenantId tenantId, BuildId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Build not found");
+            return UsecaseResult(false, "", "Build not found");
         if (existing.status != BuildStatus.running && existing.status != BuildStatus.pending)
-            return CommandResult(false, "", "Build cannot be cancelled in current state");
+            return UsecaseResult(false, "", "Build cannot be cancelled in current state");
 
         existing.status = BuildStatus.cancelled;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteBuild(TenantId tenantId, BuildId id) {
+    UsecaseResult deleteBuild(TenantId tenantId, BuildId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Build not found");
+            return UsecaseResult(false, "", "Build not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

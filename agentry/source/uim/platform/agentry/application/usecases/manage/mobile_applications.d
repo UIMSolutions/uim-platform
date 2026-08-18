@@ -34,7 +34,7 @@ class ManageMobileApplicationsUseCase {
         return repo.findByPlatform(tenantId, platform);
     }
 
-    CommandResult createMobileApplication(MobileApplicationDTO dto) {
+    UsecaseResult createMobileApplication(MobileApplicationDTO dto) {
         auto app = MobileApplication(dto.tenantId, dto.applicationId, dto.createdBy);
         app.name = dto.name;
         app.description = dto.description;
@@ -49,16 +49,16 @@ class ManageMobileApplicationsUseCase {
         app.packageName = dto.packageName;
 
         if (!AgentryValidator.isValidMobileApplication(app))
-            return CommandResult(false, "", "Invalid mobile application data");
+            return UsecaseResult(false, "", "Invalid mobile application data");
 
         repo.save(app);
-        return CommandResult(true, app.id.value, "");
+        return UsecaseResult(true, app.id.value, "");
     }
 
-    CommandResult updateMobileApplication(MobileApplicationDTO dto) {
+    UsecaseResult updateMobileApplication(MobileApplicationDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.applicationId);
         if (existing.isNull)
-            return CommandResult(false, "", "Mobile application not found");
+            return UsecaseResult(false, "", "Mobile application not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -70,16 +70,16 @@ class ManageMobileApplicationsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteMobileApplication(TenantId tenantId, MobileApplicationId id) {
+    UsecaseResult deleteMobileApplication(TenantId tenantId, MobileApplicationId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Mobile application not found");
+            return UsecaseResult(false, "", "Mobile application not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

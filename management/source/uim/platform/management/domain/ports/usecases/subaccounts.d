@@ -13,15 +13,15 @@ mixin(ShowModule!());
 /// Use case: manage subaccount lifecycle within global accounts.
 interface IManageSubaccountsUseCase { 
 
-  CommandResult createSubaccount(CreateSubaccountRequest req);
-  CommandResult updateSubaccount(UpdateSubaccountRequest req);
-  CommandResult moveSubaccount(TenantId tenantId, SubaccountId id, MoveSubaccountRequest req);
-  CommandResult suspendSubaccount(TenantId tenantId, SubaccountId id);
-  CommandResult reactivateSubaccount(TenantId tenantId, SubaccountId id);
+  UsecaseResult createSubaccount(CreateSubaccountRequest req);
+  UsecaseResult updateSubaccount(UpdateSubaccountRequest req);
+  UsecaseResult moveSubaccount(TenantId tenantId, SubaccountId id, MoveSubaccountRequest req);
+  UsecaseResult suspendSubaccount(TenantId tenantId, SubaccountId id);
+  UsecaseResult reactivateSubaccount(TenantId tenantId, SubaccountId id);
   Subaccount getSubaccount(TenantId tenantId, SubaccountId id);
   Subaccount[] listSubaccounts(TenantId tenantId, GlobalAccountId gaId);
   Subaccount[] listSubaccounts(TenantId tenantId, DirectoryId dirId);
   Subaccount[] listSubaccounts(TenantId tenantId, GlobalAccountId gaId, string region);
-  CommandResult deleteSubaccount(TenantId tenantId, SubaccountId id);
+  UsecaseResult deleteSubaccount(TenantId tenantId, SubaccountId id);
 
 }

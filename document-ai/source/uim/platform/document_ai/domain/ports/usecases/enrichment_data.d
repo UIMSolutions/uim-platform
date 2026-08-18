@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 interface IManageEnrichmentDataUseCase {  
   
-  CommandResult createEnrichmentData(CreateEnrichmentDataRequest r);
-  CommandResult updateEnrichmentData(UpdateEnrichmentDataRequest r);
+  UsecaseResult createEnrichmentData(CreateEnrichmentDataRequest r);
+  UsecaseResult updateEnrichmentData(UpdateEnrichmentDataRequest r);
   EnrichmentData getEnrichmentData(ClientId clientId, EnrichmentDataId id);
   EnrichmentData[] listEnrichmentData(ClientId clientId, DocumentTypeId typeId);
   EnrichmentData[] listEnrichmentData(ClientId clientId, string subtype);
   size_t countEnrichmentData(ClientId clientId);
-  CommandResult deleteEnrichmentData(ClientId clientId, EnrichmentDataId id);
+  UsecaseResult deleteEnrichmentData(ClientId clientId, EnrichmentDataId id);
 
 }

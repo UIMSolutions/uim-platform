@@ -21,14 +21,14 @@ class ManageServiceBindingsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createServiceBinding(CreateServiceBindingRequest req) {
+  UsecaseResult createServiceBinding(CreateServiceBindingRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Binding name is required");
+      return UsecaseResult(false, "", "Binding name is required");
     if (req.serviceInstanceId.isEmpty)
-      return CommandResult(false, "", "Service instance ID is required");
+      return UsecaseResult(false, "", "Service instance ID is required");
 
     if (repo.existsByName(req.namespaceId, req.name))
-      return CommandResult(false, "", "Binding '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Binding '" ~ req.name ~ "' already exists");
 
     auto binding = ServiceBinding(req.tenantId); //, UserId("test-user"));
     binding.serviceInstanceId = req.serviceInstanceId;
@@ -43,13 +43,13 @@ class ManageServiceBindingsUseCase {
     binding.labels = req.labels;
 
     repo.save(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 
-  CommandResult updateServiceBinding(UpdateServiceBindingRequest req) {
+  UsecaseResult updateServiceBinding(UpdateServiceBindingRequest req) {
     auto binding = repo.findById(req.tenantId, req.id);
     if (binding.isNull)
-      return CommandResult(false, "", "Service binding not found");
+      return UsecaseResult(false, "", "Service binding not found");
 
     if (req.description.length > 0)
       binding.description = req.description;
@@ -62,7 +62,7 @@ class ManageServiceBindingsUseCase {
     binding.updatedAt = clockSeconds();
 
     repo.update(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 
   bool hasServiceBinding(TenantId tenantId, ServiceBindingId id) {
@@ -81,12 +81,12 @@ class ManageServiceBindingsUseCase {
     return repo.findByServiceInstance(tenantId, instId);
   }
 
-  CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
+  UsecaseResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
     auto binding = repo.findById(tenantId, id);
     if (binding.isNull)
-      return CommandResult(false, "", "Service binding not found");
+      return UsecaseResult(false, "", "Service binding not found");
 
     repo.remove(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 }

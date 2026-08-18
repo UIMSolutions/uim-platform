@@ -16,9 +16,9 @@ interface IManageMeshBridgesUseCase {
     MeshBridge getBridge(TenantId tenantId,  MeshBridgeId bridgeId);
     MeshBridge[] listBridges(TenantId tenantId);
     MeshBridge[] listBridges(TenantId tenantId, BrokerServiceId serviceId);
-    CommandResult createBridge(MeshBridgeDTO dto);
-    CommandResult updateBridge(MeshBridgeDTO dto);
-    CommandResult deleteBridge(TenantId tenantId, MeshBridgeId bridgeId);
+    UsecaseResult createBridge(MeshBridgeDTO dto);
+    UsecaseResult updateBridge(MeshBridgeDTO dto);
+    UsecaseResult deleteBridge(TenantId tenantId, MeshBridgeId bridgeId);
 
 }
 

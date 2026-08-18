@@ -119,7 +119,7 @@ def extract_get_method(content):
 
 def extract_create_method(content):
     """Extract create method: method name, dto type."""
-    m = re.search(r'CommandResult\s+(create\w+)\s*\((\w+)\s+dto\)', content)
+    m = re.search(r'UsecaseResult\s+(create\w+)\s*\((\w+)\s+dto\)', content)
     if m:
         return m.group(1), m.group(2)
     return None, None
@@ -127,7 +127,7 @@ def extract_create_method(content):
 
 def extract_update_method(content):
     """Extract update method: method name, dto type."""
-    m = re.search(r'CommandResult\s+(update\w+)\s*\((\w+)\s+dto\)', content)
+    m = re.search(r'UsecaseResult\s+(update\w+)\s*\((\w+)\s+dto\)', content)
     if m:
         return m.group(1), m.group(2)
     return None, None
@@ -135,7 +135,7 @@ def extract_update_method(content):
 
 def extract_delete_method(content):
     """Extract delete method: method name, id type."""
-    m = re.search(r'CommandResult\s+(delete\w+)\s*\(TenantId\s+\w+,\s*(\w+)\s+\w+\)', content)
+    m = re.search(r'UsecaseResult\s+(delete\w+)\s*\(TenantId\s+\w+,\s*(\w+)\s+\w+\)', content)
     if m:
         return m.group(1), m.group(2)
     return None, None

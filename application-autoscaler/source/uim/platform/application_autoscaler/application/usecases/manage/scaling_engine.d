@@ -29,23 +29,23 @@ class ScalingEngineUseCase {
     this.evaluator   = evaluator;
   }
 
-  CommandResult triggerScaling(TriggerScalingRequest r) {
+  UsecaseResult triggerScaling(TriggerScalingRequest r) {
     import std.random : uniform;
 
     // Resolve binding
     auto binding = bindingRepo.findByAppGuid(r.tenantId, r.appId);
     if (binding.isNull)
-      return CommandResult(false, "", "No binding found for appId " ~ r.appId.value);
+      return UsecaseResult(false, "", "No binding found for appId " ~ r.appId.value);
 
     if (binding.policyId.length == 0)
-      return CommandResult(false, "", "No policy attached to app binding");
+      return UsecaseResult(false, "", "No policy attached to app binding");
 
     auto policy = policyRepo.findById(binding.policyId);
     if (policy.isNull)
-      return CommandResult(false, "", "Policy not found");
+      return UsecaseResult(false, "", "Policy not found");
 
     if (policy.status != PolicyStatus.active)
-      return CommandResult(false, "", "Policy is not active");
+      return UsecaseResult(false, "", "Policy is not active");
 
     int currentInstances = binding.currentInstances > 0 ? binding.currentInstances : 1;
     int newInstances = evaluator.evaluate(policy, r.metricType, r.currentValue, currentInstances);
@@ -78,6 +78,6 @@ class ScalingEngineUseCase {
     }
 
     historyRepo.save(evt);
-    return CommandResult(true, histId, "");
+    return UsecaseResult(true, histId, "");
   }
 }

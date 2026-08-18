@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 interface IManageExecutionsUseCase { 
 
-  CommandResult createExecution(CreateExecutionRequest r);
+  UsecaseResult createExecution(CreateExecutionRequest r);
 
   Execution getExecution(TenantId tenantId, ConnectionId connectionId, ExecutionId id);
 
@@ -20,10 +20,10 @@ interface IManageExecutionsUseCase {
 
   Execution[] listExecutions(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
 
-  CommandResult patchExecution(PatchExecutionRequest r);
+  UsecaseResult patchExecution(PatchExecutionRequest r);
 
-  CommandResult[] bulkPatchExecution(BulkPatchExecutionRequest r);
+  UsecaseResult[] bulkPatchExecution(BulkPatchExecutionRequest r);
 
-  CommandResult deleteExecution(TenantId tenantId, ConnectionId connectionId, ExecutionId id);
+  UsecaseResult deleteExecution(TenantId tenantId, ConnectionId connectionId, ExecutionId id);
   
 }

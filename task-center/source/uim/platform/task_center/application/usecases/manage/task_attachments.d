@@ -26,7 +26,7 @@ class ManageTaskAttachmentsUseCase {
         return repo.findByTask(tenantId, taskId);
     }
 
-    CommandResult createAttachment(CreateTaskAttachmentRequest req) {
+    UsecaseResult createAttachment(CreateTaskAttachmentRequest req) {
         auto attachment = TaskAttachment(req.tenantId, req.attachmentId); // , req.createdBy);
         attachment.taskId = req.taskId;
         attachment.fileName = req.fileName;
@@ -35,15 +35,15 @@ class ManageTaskAttachmentsUseCase {
         attachment.uploadedBy = req.uploadedBy;
 
         repo.save(attachment);
-        return CommandResult(true, attachment.id.value, "");
+        return UsecaseResult(true, attachment.id.value, "");
     }
 
-    CommandResult deleteAttachment(TenantId tenantId, TaskAttachmentId id) {
+    UsecaseResult deleteAttachment(TenantId tenantId, TaskAttachmentId id) {
         auto attachment = repo.findById(tenantId, id);
         if (attachment.isNull)
-            return CommandResult(false, "", "Task attachment not found");
+            return UsecaseResult(false, "", "Task attachment not found");
 
         repo.remove(attachment);
-        return CommandResult(true, attachment.id.value, "");
+        return UsecaseResult(true, attachment.id.value, "");
     }
 }

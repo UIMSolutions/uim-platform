@@ -17,15 +17,15 @@ class ManageAutomationsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createAutomation(CreateAutomationRequest r) {
+    UsecaseResult createAutomation(CreateAutomationRequest r) {
         if (r.automationId.isEmpty)
-            return CommandResult(false, "", "Automation ID is required");
+            return UsecaseResult(false, "", "Automation ID is required");
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Automation name is required");
+            return UsecaseResult(false, "", "Automation name is required");
 
         auto existing = repo.findById(r.tenantId, r.automationId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Automation already exists");
+            return UsecaseResult(false, "", "Automation already exists");
 
         auto a = Automation(r.tenantId, r.automationId, r.createdBy);
         a.projectId = r.projectId;
@@ -36,7 +36,7 @@ class ManageAutomationsUseCase {
         a.version_ = r.version_;
 
         repo.save(a);
-        return CommandResult(true, a.id.value, "");
+        return UsecaseResult(true, a.id.value, "");
     }
 
     Automation getAutomation(TenantId tenantId, AutomationId id) {
@@ -47,10 +47,10 @@ class ManageAutomationsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateAutomation(UpdateAutomationRequest r) {
+    UsecaseResult updateAutomation(UpdateAutomationRequest r) {
         auto existing = repo.findById(r.tenantId, r.automationId);
         if (existing.isNull)
-            return CommandResult(false, "", "Automation not found");
+            return UsecaseResult(false, "", "Automation not found");
 
         existing.name = r.name;
         existing.description = r.description;
@@ -62,15 +62,15 @@ class ManageAutomationsUseCase {
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAutomation(TenantId tenantId, AutomationId id) {
+    UsecaseResult deleteAutomation(TenantId tenantId, AutomationId id) {
         auto automation = repo.findById(tenantId, id);
         if (automation.isNull)
-            return CommandResult(false, "", "Automation not found");
+            return UsecaseResult(false, "", "Automation not found");
 
         repo.remove(automation);
-        return CommandResult(true, automation.id.value, "");
+        return UsecaseResult(true, automation.id.value, "");
     }
 }

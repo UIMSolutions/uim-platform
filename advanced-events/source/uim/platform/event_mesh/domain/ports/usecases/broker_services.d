@@ -16,8 +16,8 @@ interface IManageBrokerServicesUseCase {
     BrokerService getService(TenantId tenantId, BrokerServiceId id);
     BrokerService[] listServices(TenantId tenantId);
     BrokerService[] listServices(TenantId tenantId, BrokerServiceStatus status);
-    CommandResult createService(BrokerServiceDTO dto);
-    CommandResult updateService(BrokerServiceDTO dto);
-    CommandResult deleteService(TenantId tenantId, BrokerServiceId id);
+    UsecaseResult createService(BrokerServiceDTO dto);
+    UsecaseResult updateService(BrokerServiceDTO dto);
+    UsecaseResult deleteService(TenantId tenantId, BrokerServiceId id);
 }
 

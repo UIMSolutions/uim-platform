@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageBusinessProcessesUseCase { 
 
-  CommandResult createProcess(CreateBusinessProcessRequest req);
+  UsecaseResult createProcess(CreateBusinessProcessRequest req);
   BusinessProcess getProcess(TenantId tenantId, BusinessProcessId id);
   BusinessProcess[] listProcesses(TenantId tenantId);
-  CommandResult updateProcess(UpdateBusinessProcessRequest req);
-  CommandResult deleteProcess(TenantId tenantId, BusinessProcessId id);
+  UsecaseResult updateProcess(UpdateBusinessProcessRequest req);
+  UsecaseResult deleteProcess(TenantId tenantId, BusinessProcessId id);
   
 }

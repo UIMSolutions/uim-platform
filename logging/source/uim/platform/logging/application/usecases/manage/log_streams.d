@@ -37,13 +37,13 @@ class ManageLogStreamsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createStream(CreateLogStreamRequest req) {
+  UsecaseResult createStream(CreateLogStreamRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Stream name is required");
+      return UsecaseResult(false, "", "Stream name is required");
 
     LogSourceType sourceType;
     if (!tryParseSourceType(req.sourceType, sourceType))
-      return CommandResult(false, "", "Invalid source type: " ~ req.sourceType);
+      return UsecaseResult(false, "", "Invalid source type: " ~ req.sourceType);
 
     auto stream = LogStream(req.tenantId); //, req.createdBy);
     stream.name = req.name;
@@ -54,13 +54,13 @@ class ManageLogStreamsUseCase {
     stream.createdBy = req.createdBy;
 
     repo.save(stream);
-    return CommandResult(true, stream.id.value, "");
+    return UsecaseResult(true, stream.id.value, "");
   }
 
-  CommandResult updateStream(UpdateLogStreamRequest req) {
+  UsecaseResult updateStream(UpdateLogStreamRequest req) {
     auto stream = repo.findById(req.tenantId, req.streamId);
     if (stream.isNull)
-      return CommandResult(false, "", "Log stream not found");
+      return UsecaseResult(false, "", "Log stream not found");
 
     if (req.description.length > 0)
       stream.description = req.description;
@@ -70,7 +70,7 @@ class ManageLogStreamsUseCase {
     stream.updatedAt = clockSeconds();
 
     repo.update(stream);
-    return CommandResult(true, stream.id.value, "");
+    return UsecaseResult(true, stream.id.value, "");
   }
 
   bool hasStream(TenantId tenantId, LogStreamId id) {
@@ -85,13 +85,13 @@ class ManageLogStreamsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteStream(TenantId tenantId, LogStreamId id) {
+  UsecaseResult deleteStream(TenantId tenantId, LogStreamId id) {
     auto stream = repo.findById(tenantId, id);
     if (stream.isNull)
-      return CommandResult(false, "", "Log stream not found");
+      return UsecaseResult(false, "", "Log stream not found");
 
     repo.remove(stream);
-    return CommandResult(true, stream.id.value, "");
+    return UsecaseResult(true, stream.id.value, "");
   }
 
 }

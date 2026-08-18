@@ -25,18 +25,18 @@ class ManageProjectsUseCase {
     _quota     = QuotaService();
   }
 
-  CommandResult create(TenantId tenantId, CreateProjectRequest req) {
+  UsecaseResult create(TenantId tenantId, CreateProjectRequest req) {
     auto nameErrors = _validator.validateName(req.name);
     if (nameErrors.length > 0)
-      return CommandResult(false, "", nameErrors[0]);
+      return UsecaseResult(false, "", nameErrors[0]);
 
     if (_repo.nameExists(tenantId, req.name))
-      return CommandResult(false, "", "A project with that name already exists");
+      return UsecaseResult(false, "", "A project with that name already exists");
 
     auto existing = _repo.findByTenant(tenantId);
     auto quotaError = _quota.checkProjectQuota(existing.length);
     if (quotaError !is null)
-      return CommandResult(false, "", quotaError);
+      return UsecaseResult(false, "", quotaError);
 
     ProjectType ptype  = ProjectType.other;
     TechStack   tstack = TechStack.other;
@@ -61,7 +61,7 @@ class ManageProjectsUseCase {
     p.tags           = req.tags;
 
     _repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   Project getById(TenantId tenantId, string id) {
@@ -81,9 +81,9 @@ class ManageProjectsUseCase {
     return _repo.findByStatus(tenantId, st);
   }
 
-  CommandResult update(TenantId tenantId, string id, UpdateProjectRequest req) {
+  UsecaseResult update(TenantId tenantId, string id, UpdateProjectRequest req) {
     auto p = _repo.findById(tenantId, ProjectId(id));
-    if (p.isNull) return CommandResult(false, "", "Project not found");
+    if (p.isNull) return UsecaseResult(false, "", "Project not found");
 
     if (req.description.length > 0) p.description   = req.description;
     if (req.ownerEmail.length > 0)  p.ownerEmail     = req.ownerEmail;
@@ -96,13 +96,13 @@ class ManageProjectsUseCase {
         p.status = mixin("ProjectStatus." ~ member);
     }
     _repo.update(p);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto p = _repo.findById(tenantId, ProjectId(id));
-    if (p.isNull) return CommandResult(false, "", "Project not found");
+    if (p.isNull) return UsecaseResult(false, "", "Project not found");
     _repo.remove(tenantId, ProjectId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

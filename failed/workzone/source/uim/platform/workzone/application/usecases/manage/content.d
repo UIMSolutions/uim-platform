@@ -23,9 +23,9 @@ class ManageContentUseCase {
     this.repo = repo;
   }
 
-  CommandResult createContent(CreateContentRequest req) {
+  UsecaseResult createContent(CreateContentRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Content title is required");
+      return UsecaseResult(false, "", "Content title is required");
 
     auto item = ContentItem(req.tenantId, req.contentId, req.authorId);
     item.workspaceId = req.workspaceId;
@@ -40,7 +40,7 @@ class ManageContentUseCase {
     item.language = req.language;
 
     repo.save(item);
-    return CommandResult(true, item.id.value, "");
+    return UsecaseResult(true, item.id.value, "");
   }
 
   ContentItem getContent(TenantId tenantId, ContentId id) {
@@ -57,10 +57,10 @@ class ManageContentUseCase {
     return null;
   }
 
-  CommandResult updateContent(UpdateContentRequest req) {
+  UsecaseResult updateContent(UpdateContentRequest req) {
     auto item = repo.findById(req.tenantId, req.id);
     if (item.isNull)
-      return CommandResult(false, "", "Content not found");
+      return UsecaseResult(false, "", "Content not found");
 
     if (req.title.length > 0)
       item.title = req.title;
@@ -77,27 +77,27 @@ class ManageContentUseCase {
       item.publishedAt = currentTimestamp();
 
     repo.update(item);
-    return CommandResult(true, item.id.value, "");
+    return UsecaseResult(true, item.id.value, "");
   }
 
-  CommandResult publishContent(TenantId tenantId, ContentId id) {
+  UsecaseResult publishContent(TenantId tenantId, ContentId id) {
     auto item = repo.findById(tenantId, id);
     if (item.isNull)
-      return CommandResult(false, "", "Content not found");
+      return UsecaseResult(false, "", "Content not found");
 
     item.status = ContentStatus.published;
     item.publishedAt = currentTimestamp();
     item.updatedAt = currentTimestamp();
     repo.update(item);
-    return CommandResult(true, item.id.value, "");
+    return UsecaseResult(true, item.id.value, "");
   }
 
-  CommandResult deleteContent(TenantId tenantId, ContentId id) {
+  UsecaseResult deleteContent(TenantId tenantId, ContentId id) {
     auto item = repo.findById(tenantId, id);
     if (item.isNull)
-      return CommandResult(false, "", "Content not found");
+      return UsecaseResult(false, "", "Content not found");
 
     repo.remove(item);
-    return CommandResult(true, item.id.value, "");
+    return UsecaseResult(true, item.id.value, "");
   }
 }

@@ -179,19 +179,19 @@ sequenceDiagram
     Client->>EC: POST /executions { configurationId }
     EC->>EUC: createExecution(dto)
     EUC->>ER: save(execution — status=pending)
-    EUC-->>EC: CommandResult(true, execId)
+    EUC-->>EC: UsecaseResult(true, execId)
     EC-->>Client: 201 { id }
 
     Client->>EC: POST /executions/{id}/start
     EC->>EUC: startExecution(id)
     EUC->>ER: update(status=running)
-    EUC-->>EC: CommandResult(true, id)
+    EUC-->>EC: UsecaseResult(true, id)
     EC-->>Client: 200 { id }
 
     Client->>EC: POST /metrics { executionId, name, value }
     EC->>EUC: logMetric(dto)
     EUC->>MR: save(metric)
-    EUC-->>EC: CommandResult(true, metricId)
+    EUC-->>EC: UsecaseResult(true, metricId)
     EC-->>Client: 201 { id }
 ```
 
@@ -209,12 +209,12 @@ sequenceDiagram
     Client->>DC: POST /deployments { configurationId, modelName }
     DC->>DUC: createDeployment(dto)
     DUC->>DR: save(deployment — status=unknown)
-    DUC-->>DC: CommandResult(true, id)
+    DUC-->>DC: UsecaseResult(true, id)
     DC-->>Client: 201 { id }
 
     Client->>DC: PATCH /deployments/{id} { targetStatus=running }
     DC->>DUC: updateDeployment(id, dto)
     DUC->>DR: update(targetStatus=running, status=pending)
-    DUC-->>DC: CommandResult(true, id)
+    DUC-->>DC: UsecaseResult(true, id)
     DC-->>Client: 200 { id }
 ```

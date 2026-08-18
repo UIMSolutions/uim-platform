@@ -17,12 +17,12 @@ class ManageConditionsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createCondition(CreateConditionRequest r) {
+  UsecaseResult createCondition(CreateConditionRequest r) {
     auto err = FhirValidator.validateCondition(r.conditionId.value);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     if (!repo.findById(r.tenantId, r.conditionId).isNull)
-      return CommandResult(false, "", "Condition already exists");
+      return UsecaseResult(false, "", "Condition already exists");
 
     auto c = Condition(r.tenantId);
     c.id                   = r.conditionId;
@@ -40,13 +40,13 @@ class ManageConditionsUseCase {
     c.note_                = r.note_;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult updateCondition(UpdateConditionRequest r) {
+  UsecaseResult updateCondition(UpdateConditionRequest r) {
     auto existing = repo.findById(r.tenantId, r.conditionId);
     if (existing.isNull)
-      return CommandResult(false, "", "Condition not found");
+      return UsecaseResult(false, "", "Condition not found");
 
     auto c = Condition(r.tenantId); //, r.createdBy);
     c.id                   = r.conditionId;
@@ -65,7 +65,7 @@ class ManageConditionsUseCase {
     c.createdAt            = existing.createdAt;
 
     repo.update(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   Condition getCondition(TenantId tenantId, ConditionId id) {
@@ -80,11 +80,11 @@ class ManageConditionsUseCase {
     return repo.findByPatient(tenantId, patientRef);
   }
 
-  CommandResult deleteCondition(TenantId tenantId, ConditionId id) {
+  UsecaseResult deleteCondition(TenantId tenantId, ConditionId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Condition not found");
+      return UsecaseResult(false, "", "Condition not found");
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

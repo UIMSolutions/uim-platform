@@ -18,15 +18,15 @@ class ManageTransportRequestsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createTransportRequest(CreateTransportRequestRequest req) {
+  UsecaseResult createTransportRequest(CreateTransportRequestRequest req) {
     if (req.description.length == 0)
-      return CommandResult(false, "", "Transport request description is required");
+      return UsecaseResult(false, "", "Transport request description is required");
 
     if (req.owner.length == 0)
-      return CommandResult(false, "", "Owner is required");
+      return UsecaseResult(false, "", "Owner is required");
     
     if (req.sourceSystemId.isEmpty)
-      return CommandResult(false, "", "Source system ID is required");
+      return UsecaseResult(false, "", "Source system ID is required");
 
     auto tr = TransportRequest(req.tenantId);
     tr.sourceSystemId = req.sourceSystemId;
@@ -37,16 +37,16 @@ class ManageTransportRequestsUseCase {
     tr.status = TransportStatus.modifiable;
 
     repo.save(tr);
-    return CommandResult(true, tr.id.value, "");
+    return UsecaseResult(true, tr.id.value, "");
   }
 
-  CommandResult addTransportTask(AddTransportTaskRequest req) {
+  UsecaseResult addTransportTask(AddTransportTaskRequest req) {
     auto tr = repo.findById(req.tenantId, req.requestId);
     if (tr.isNull)
-      return CommandResult(false, "", "Transport request not found");
+      return UsecaseResult(false, "", "Transport request not found");
 
     if (tr.status != TransportStatus.modifiable)
-      return CommandResult(false, "", "Transport request is not modifiable");
+      return UsecaseResult(false, "", "Transport request is not modifiable");
 
     auto task = TransportTask(req.tenantId);
     task.owner = req.owner;
@@ -56,13 +56,13 @@ class ManageTransportRequestsUseCase {
     tr.tasks ~= task;
     
     repo.update(tr);
-    return CommandResult(true, task.id.value, "");
+    return UsecaseResult(true, task.id.value, "");
   }
 
-  CommandResult releaseTransportTask(TenantId tenantId, TransportRequestId requestId, TransportTaskId taskId) {
+  UsecaseResult releaseTransportTask(TenantId tenantId, TransportRequestId requestId, TransportTaskId taskId) {
     auto transportRequest = repo.findById(tenantId, requestId);
     if (transportRequest.isNull)
-      return CommandResult(false, "", "Transport request not found");
+      return UsecaseResult(false, "", "Transport request not found");
 
     foreach (task; transportRequest.tasks) {
       if (task.id == taskId) {
@@ -73,7 +73,7 @@ class ManageTransportRequestsUseCase {
             msg ~= i > 0
               ? "; " : e;
           }
-          return CommandResult(false, "", msg);
+          return UsecaseResult(false, "", msg);
         }
         task.status = TransportStatus.released;
 
@@ -81,16 +81,16 @@ class ManageTransportRequestsUseCase {
         task.releasedAt = currentTimestamp();
 
         repo.update(transportRequest);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
       }
     }
-    return CommandResult(false, "", "Task not found");
+    return UsecaseResult(false, "", "Task not found");
   }
 
-  CommandResult releaseTransportRequest(TenantId tenantId, TransportRequestId id) {
+  UsecaseResult releaseTransportRequest(TenantId tenantId, TransportRequestId id) {
     auto tr = repo.findById(tenantId, id);
     if (tr.isNull)
-      return CommandResult(false, "", "Transport request not found");
+      return UsecaseResult(false, "", "Transport request not found");
 
     auto validation = TransportReleaseValidator.validateRelease(tr);
     if (!validation.valid) {
@@ -99,7 +99,7 @@ class ManageTransportRequestsUseCase {
         msg ~= i > 0
           ? "; " : e;
       }
-      return CommandResult(false, "", msg);
+      return UsecaseResult(false, "", msg);
     }
 
     tr.status = TransportStatus.released;
@@ -108,7 +108,7 @@ class ManageTransportRequestsUseCase {
     tr.releasedAt = currentTimestamp();
 
     repo.update(tr);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   TransportRequest getTransportRequest(TenantId tenantId, TransportRequestId id) {
@@ -123,16 +123,16 @@ class ManageTransportRequestsUseCase {
     return repo.findByStatus(tenantId, systemId, status);
   }
 
-  CommandResult deleteTransportRequest(TenantId tenantId, TransportRequestId id) {
+  UsecaseResult deleteTransportRequest(TenantId tenantId, TransportRequestId id) {
     auto request = repo.findById(tenantId, id);
     if (request.isNull)
-      return CommandResult(false, "", "Transport request not found");
+      return UsecaseResult(false, "", "Transport request not found");
 
     if (request.status != TransportStatus.modifiable)
-      return CommandResult(false, "", "Only modifiable transport requests can be deleted");
+      return UsecaseResult(false, "", "Only modifiable transport requests can be deleted");
 
     repo.remove(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 }
 

@@ -51,10 +51,10 @@ class MonthlyCostReportUseCases {
     return MonthlyCostReportResponse.fromEntity(r);
   }
 
-  CommandResult deleteReport(TenantId tenantId, MonthlyCostReportId id) {
+  UsecaseResult deleteReport(TenantId tenantId, MonthlyCostReportId id) {
     auto r = repo.findById(tenantId, id);
-    if (r.isNull) return CommandResult(false, "", "Monthly cost report not found");
+    if (r.isNull) return UsecaseResult(false, "", "Monthly cost report not found");
     repo.remove(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 }

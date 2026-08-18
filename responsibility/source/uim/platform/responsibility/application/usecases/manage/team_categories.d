@@ -24,34 +24,34 @@ class ManageTeamCategoriesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createCategory(TeamCategoryDTO dto) {
+    UsecaseResult createCategory(TeamCategoryDTO dto) {
         auto c = TeamCategory(dto.tenantId); //, dto.createdBy);
         c.id          = dto.categoryId;
         c.name        = dto.name;
         c.description = dto.description;
         c.code        = dto.code;
         if (c.name.isEmpty)
-            return CommandResult(false, "", "Category name is required");
+            return UsecaseResult(false, "", "Category name is required");
         repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 
-    CommandResult updateCategory(TeamCategoryDTO dto) {
+    UsecaseResult updateCategory(TeamCategoryDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.categoryId);
         if (existing.isNull)
-            return CommandResult(false, "", "Category not found");
+            return UsecaseResult(false, "", "Category not found");
         if (dto.name.length > 0)        existing.name        = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.code.length > 0)        existing.code        = dto.code;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCategory(TenantId tenantId, TeamCategoryId id) {
+    UsecaseResult deleteCategory(TenantId tenantId, TeamCategoryId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Category not found");
+            return UsecaseResult(false, "", "Category not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 }

@@ -30,7 +30,7 @@ class ManageTriggersUseCase {
         return repo.findByCommand(tenantId, commandId);
     }
 
-    CommandResult createTrigger(TriggerDTO dto) {
+    UsecaseResult createTrigger(TriggerDTO dto) {
         auto t = Trigger(dto.tenantId, dto.triggerId.isNull ? TriggerId(createId) : dto.triggerId, dto.createdBy);
         t.commandId = dto.commandId;
         t.name = dto.name;
@@ -40,16 +40,16 @@ class ManageTriggersUseCase {
         t.filterExpression = dto.filterExpression;
         t.inputMapping = dto.inputMapping;
         if (!AutomationValidator.isValidTrigger(t))
-            return CommandResult(false, "", "Invalid trigger data");
+            return UsecaseResult(false, "", "Invalid trigger data");
 
         repo.save(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 
-    CommandResult updateTrigger(TriggerDTO dto) {
+    UsecaseResult updateTrigger(TriggerDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.triggerId);
         if (existing.isNull)
-            return CommandResult(false, "", "Trigger not found");
+            return UsecaseResult(false, "", "Trigger not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -58,16 +58,16 @@ class ManageTriggersUseCase {
         if (dto.filterExpression.length > 0) existing.filterExpression = dto.filterExpression;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteTrigger(TenantId tenantId, TriggerId id) {
+    UsecaseResult deleteTrigger(TenantId tenantId, TriggerId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Trigger not found");
+            return UsecaseResult(false, "", "Trigger not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

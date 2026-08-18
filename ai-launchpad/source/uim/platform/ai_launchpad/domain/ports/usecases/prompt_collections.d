@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 interface IManagePromptCollectionsUseCase { 
 
-  CommandResult createCollection(CreatePromptCollectionRequest r);
+  UsecaseResult createCollection(CreatePromptCollectionRequest r);
   
   PromptCollection getCollection(TenantId tenantId, PromptCollectionId id);
 
@@ -20,8 +20,8 @@ interface IManagePromptCollectionsUseCase {
 
   PromptCollection[] listCollections(TenantId tenantId);
 
-  CommandResult patchCollection(PatchPromptCollectionRequest r);
+  UsecaseResult patchCollection(PatchPromptCollectionRequest r);
 
-  CommandResult deleteCollection(TenantId tenantId, PromptCollectionId id);
+  UsecaseResult deleteCollection(TenantId tenantId, PromptCollectionId id);
   
 }

@@ -28,9 +28,9 @@ class ManageServiceBindingsUseCase {
         return repo.findByInstance(tenantId, instanceId);
     }
 
-    CommandResult createServiceBinding(ServiceBindingDTO dto) {
+    UsecaseResult createServiceBinding(ServiceBindingDTO dto) {
         if (!RedisValidator.isValidServiceBinding(ServiceBinding.init))
-            return CommandResult(false, "", "Invalid binding: instanceId and appId required");
+            return UsecaseResult(false, "", "Invalid binding: instanceId and appId required");
 
         auto e = ServiceBinding(dto.tenantId, dto.bindingId, dto.createdBy);
         e.instanceId = dto.instanceId;
@@ -40,17 +40,17 @@ class ManageServiceBindingsUseCase {
         e.status = BindingStatus.active;
 
         if (e.instanceId.isNull || e.appId.length == 0)
-            return CommandResult(false, "", "Invalid binding: instanceId and appId required");
+            return UsecaseResult(false, "", "Invalid binding: instanceId and appId required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
+    UsecaseResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Service binding not found");
+            return UsecaseResult(false, "", "Service binding not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

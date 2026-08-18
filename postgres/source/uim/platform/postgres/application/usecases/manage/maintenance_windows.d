@@ -28,7 +28,7 @@ class ManageMaintenanceWindowsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createMaintenanceWindow(MaintenanceWindowDTO dto) {
+    UsecaseResult createMaintenanceWindow(MaintenanceWindowDTO dto) {
         auto e = MaintenanceWindow(dto.tenantId, dto.maintenanceWindowId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.dayOfWeek = dto.dayOfWeek;
@@ -38,16 +38,16 @@ class ManageMaintenanceWindowsUseCase {
         e.status = MaintenanceStatus.scheduled;
 
         if (e.instanceId.value.length == 0)
-            return CommandResult(false, "", "instanceId is required");
+            return UsecaseResult(false, "", "instanceId is required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateMaintenanceWindow(MaintenanceWindowDTO dto) {
+    UsecaseResult updateMaintenanceWindow(MaintenanceWindowDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.maintenanceWindowId);
         if (existing.isNull)
-            return CommandResult(false, "", "Maintenance window not found");
+            return UsecaseResult(false, "", "Maintenance window not found");
 
         if (dto.dayOfWeek.length > 0) existing.dayOfWeek = dto.dayOfWeek;
         if (dto.startHourUtc >= 0) existing.startHourUtc = dto.startHourUtc;
@@ -56,15 +56,15 @@ class ManageMaintenanceWindowsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteMaintenanceWindow(TenantId tenantId, MaintenanceWindowId id) {
+    UsecaseResult deleteMaintenanceWindow(TenantId tenantId, MaintenanceWindowId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Maintenance window not found");
+            return UsecaseResult(false, "", "Maintenance window not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

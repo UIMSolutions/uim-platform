@@ -17,13 +17,13 @@ class ManageIsolinesUseCase {
     this.repo = repo;
   }
 
-  CommandResult calculate(CalculateIsolineRequest r) {
+  UsecaseResult calculate(CalculateIsolineRequest r) {
     auto err = SpatialValidator.validateCoordinate(r.centerLat, r.centerLon);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateRangeValue(r.rangeValue);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateId(r.id);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto isoline = Isoline(r.tenantId, r.id.isNull ? IsolineId(createId()) : r.id, r.createdBy);
     isoline.center = GeoCoordinate(r.centerLat, r.centerLon);
@@ -41,7 +41,7 @@ class ManageIsolinesUseCase {
     }
 
     repo.save(isoline);
-    return CommandResult(true, isoline.id.value, "");
+    return UsecaseResult(true, isoline.id.value, "");
   }
 
   Isoline getById(TenantId tenantId, string id) {
@@ -52,11 +52,11 @@ class ManageIsolinesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, IsolineId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "Isoline not found");
+      return UsecaseResult(false, "", "Isoline not found");
     repo.remove(tenantId, IsolineId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

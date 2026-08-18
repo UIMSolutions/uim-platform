@@ -38,7 +38,7 @@ class ManageImportQueueEntriesUseCase {
         return repo.findByRequest(tenantId, requestId);
     }
 
-    CommandResult enqueue(ImportQueueEntryDTO dto) {
+    UsecaseResult enqueue(ImportQueueEntryDTO dto) {
         ImportQueueEntry entry;
         entry.tenantId = dto.tenantId;
         entry.id = dto.entryId;
@@ -50,42 +50,42 @@ class ManageImportQueueEntriesUseCase {
         entry.createdBy = dto.createdBy;
         entry.status = ImportStatus.initial;
         if (!TransportValidator.isValidQueueEntry(entry))
-            return CommandResult(false, "", "Invalid queue entry: nodeId and requestId are required");
+            return UsecaseResult(false, "", "Invalid queue entry: nodeId and requestId are required");
 
         repo.save(entry);
-        return CommandResult(true, entry.id.value, "");
+        return UsecaseResult(true, entry.id.value, "");
     }
 
-    CommandResult updateEntryStatus(TenantId tenantId, ImportQueueEntryId id, ImportStatus status, string errorMessage = "") {
+    UsecaseResult updateEntryStatus(TenantId tenantId, ImportQueueEntryId id, ImportStatus status, string errorMessage = "") {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Import queue entry not found");
+            return UsecaseResult(false, "", "Import queue entry not found");
         existing.status = status;
         if (errorMessage.length > 0) existing.errorMessage = errorMessage;
         
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult resetEntry(TenantId tenantId, ImportQueueEntryId id) {
+    UsecaseResult resetEntry(TenantId tenantId, ImportQueueEntryId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Import queue entry not found");
+            return UsecaseResult(false, "", "Import queue entry not found");
         existing.status = ImportStatus.initial;
         existing.errorMessage = "";
         existing.startedAt = 0;
         existing.completedAt = 0;
         existing.importLog = "";
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteEntry(TenantId tenantId, ImportQueueEntryId id) {
+    UsecaseResult deleteEntry(TenantId tenantId, ImportQueueEntryId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Import queue entry not found");
+            return UsecaseResult(false, "", "Import queue entry not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

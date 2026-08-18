@@ -26,7 +26,7 @@ class ManageDevSpaceTypesUseCase {
         return spaceTypes.findByTenant(tenantId);
     }
 
-    CommandResult createDevSpaceType(DevSpaceTypeDTO dto) {
+    UsecaseResult createDevSpaceType(DevSpaceTypeDTO dto) {
         DevSpaceType e;
         e.id = dto.typeId;
         e.tenantId = dto.tenantId;
@@ -38,15 +38,15 @@ class ManageDevSpaceTypesUseCase {
         e.iconUrl = dto.iconUrl;
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidDevSpaceType(e))
-            return CommandResult(false, "", "Invalid dev space type data");
+            return UsecaseResult(false, "", "Invalid dev space type data");
         spaceTypes.save(e);
-        return CommandResult(true, dto.typeId.value, "");
+        return UsecaseResult(true, dto.typeId.value, "");
     }
 
-    CommandResult updateDevSpaceType(DevSpaceTypeDTO dto) {
+    UsecaseResult updateDevSpaceType(DevSpaceTypeDTO dto) {
         auto existing = spaceTypes.findById(dto.tenantId, dto.typeId);
         if (existing.isNull)
-            return CommandResult(false, "", "Dev space type not found");
+            return UsecaseResult(false, "", "Dev space type not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -54,15 +54,15 @@ class ManageDevSpaceTypesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         spaceTypes.update(existing);
-        return CommandResult(true, dto.typeId.value, "");
+        return UsecaseResult(true, dto.typeId.value, "");
     }
 
-    CommandResult deleteDevSpaceType(TenantId tenantId, DevSpaceTypeId id) {
+    UsecaseResult deleteDevSpaceType(TenantId tenantId, DevSpaceTypeId id) {
         auto type = spaceTypes.findById(tenantId, id);
         if (type.isNull)
-            return CommandResult(false, "", "Dev space type not found");
+            return UsecaseResult(false, "", "Dev space type not found");
 
         spaceTypes.remove(type);
-        return CommandResult(true, type.id.value, "");
+        return UsecaseResult(true, type.id.value, "");
     }
 }

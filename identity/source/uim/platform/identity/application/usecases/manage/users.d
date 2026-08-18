@@ -21,7 +21,7 @@ class ManageUsersUseCase {
     User[] listByStatus(TenantId tenantId, UserStatus status) { return repo.findByStatus(tenantId, status); }
     User findByEmail(TenantId tenantId, string email) { return repo.findByEmail(tenantId, email); }
 
-    CommandResult createUser(UserDTO dto) {
+    UsecaseResult createUser(UserDTO dto) {
         import std.digest.sha : sha256Of, toHexString;
         auto u = User(dto.tenantId, dto.userId);
         u.userName = dto.userName;
@@ -47,15 +47,15 @@ class ManageUsersUseCase {
         }
 
         if (!IdentityValidator.isValidUser(u))
-            return CommandResult(false, "", "Invalid user: userName and email are required");
+            return UsecaseResult(false, "", "Invalid user: userName and email are required");
 
         repo.save(u);
-        return CommandResult(true, u.id.value, "");
+        return UsecaseResult(true, u.id.value, "");
     }
 
-    CommandResult updateUser(UserDTO dto) {
+    UsecaseResult updateUser(UserDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.userId);
-        if (existing.isNull) return CommandResult(false, "", "User not found");
+        if (existing.isNull) return UsecaseResult(false, "", "User not found");
 
         if (dto.displayName.length > 0) existing.displayName = dto.displayName;
         if (dto.firstName.length > 0) existing.firstName = dto.firstName;
@@ -71,13 +71,13 @@ class ManageUsersUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteUser(TenantId tenantId, UserId id) {
+    UsecaseResult deleteUser(TenantId tenantId, UserId id) {
         auto entity = repo.findById(tenantId, id);
-        if (entity.isNull) return CommandResult(false, "", "User not found");
+        if (entity.isNull) return UsecaseResult(false, "", "User not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

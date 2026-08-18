@@ -15,8 +15,8 @@ interface IManageEventChannelsUseCase {
 
     EventChannel getEventChannel(TenantId tenantId, EventChannelId id);
     EventChannel[] listEventChannels(TenantId tenantId);
-    CommandResult createEventChannel(EventChannelDTO dto);
-    CommandResult updateEventChannel(EventChannelDTO dto);
-    CommandResult deleteEventChannel(TenantId tenantId, EventChannelId id);
+    UsecaseResult createEventChannel(EventChannelDTO dto);
+    UsecaseResult updateEventChannel(EventChannelDTO dto);
+    UsecaseResult deleteEventChannel(TenantId tenantId, EventChannelId id);
 
 }

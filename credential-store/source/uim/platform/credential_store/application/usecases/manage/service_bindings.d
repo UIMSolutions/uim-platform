@@ -49,10 +49,10 @@ class ManageServiceBindingsUseCase {
     return resp;
   }
 
-  CommandResult updateServiceBinding(UpdateServiceBindingRequest r) {
+  UsecaseResult updateServiceBinding(UpdateServiceBindingRequest r) {
     auto binding = bindings.findById(r.tenantId, r.bindingId);
     if (binding.isNull)
-      return CommandResult(false, "", "Service binding not found");
+      return UsecaseResult(false, "", "Service binding not found");
 
     if (r.description.length > 0)
       binding.description = r.description;
@@ -64,7 +64,7 @@ class ManageServiceBindingsUseCase {
       binding.allowedNamespaces = r.allowedNamespaces;
 
     bindings.update(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 
   ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId) {
@@ -75,13 +75,13 @@ class ManageServiceBindingsUseCase {
     return bindings.findByTenant(tenantId);
   }
 
-  CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId) {
+  UsecaseResult deleteServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId) {
     auto binding = bindings.findById(tenantId, serviceBindingId);
     if (binding.isNull)
-      return CommandResult(false, "", "Service binding not found");
+      return UsecaseResult(false, "", "Service binding not found");
 
     bindings.remove(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 
   size_t countServiceBindings(TenantId tenantId) {

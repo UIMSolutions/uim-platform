@@ -53,7 +53,7 @@ connectivity/
 │   │       ├── auth_flow_resolver.d                #     Validates auth config for all 11 auth types
 │   │       └── access_control_evaluator.d          #     Longest-prefix access rule matching
 │   ├── application/                                #   Application layer (use cases)
-│   │   ├── dto.d                                   #     Request DTOs & CommandResult
+│   │   ├── dto.d                                   #     Request DTOs & UsecaseResult
 │   │   └── usecases/                              #     Application services
 │   │       ├── manage.destinations.d               #       Destination CRUD with auth validation
 │   │       ├── manage.connectors.d                 #       Connector register/heartbeat/disconnect
@@ -303,50 +303,50 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
   skinparam packageBackgroundColor APPLICATION_COLOR
 
   class ManageDestinationsUseCase << (U,#FF7043) >> {
-    + createDestination(req) : CommandResult
-    + updateDestination(id, req) : CommandResult
+    + createDestination(req) : UsecaseResult
+    + updateDestination(id, req) : UsecaseResult
     + getDestination(id) : Destination
     + getByName(tenantId, name) : Destination
     + listDestinations(tenantId) : Destination[]
-    + deleteDestination(id) : CommandResult
+    + deleteDestination(id) : UsecaseResult
   }
 
   class ManageConnectorsUseCase << (U,#FF7043) >> {
-    + registerConnector(req) : CommandResult
-    + heartbeat(id, req) : CommandResult
-    + disconnect(id) : CommandResult
+    + registerConnector(req) : UsecaseResult
+    + heartbeat(id, req) : UsecaseResult
+    + disconnect(id) : UsecaseResult
     + getConnector(id) : CloudConnector
     + listBySubaccount(subaccountId) : CloudConnector[]
     + listByTenant(tenantId) : CloudConnector[]
-    + unregister(id) : CommandResult
+    + unregister(id) : UsecaseResult
   }
 
   class ManageChannelsUseCase << (U,#FF7043) >> {
-    + createChannel(req) : CommandResult
-    + openChannel(id) : CommandResult
-    + closeChannel(id) : CommandResult
+    + createChannel(req) : UsecaseResult
+    + openChannel(id) : UsecaseResult
+    + closeChannel(id) : UsecaseResult
     + getChannel(id) : ServiceChannel
     + listByConnector(connectorId) : ServiceChannel[]
     + listByTenant(tenantId) : ServiceChannel[]
-    + deleteChannel(id) : CommandResult
+    + deleteChannel(id) : UsecaseResult
   }
 
   class ManageAccessRulesUseCase << (U,#FF7043) >> {
-    + createRule(req) : CommandResult
-    + updateRule(id, req) : CommandResult
+    + createRule(req) : UsecaseResult
+    + updateRule(id, req) : UsecaseResult
     + getRule(id) : AccessRule
     + listByConnector(connectorId) : AccessRule[]
     + listByTenant(tenantId) : AccessRule[]
-    + deleteRule(id) : CommandResult
+    + deleteRule(id) : UsecaseResult
   }
 
   class ManageCertificatesUseCase << (U,#FF7043) >> {
-    + createCertificate(req) : CommandResult
-    + updateCertificate(id, req) : CommandResult
+    + createCertificate(req) : UsecaseResult
+    + updateCertificate(id, req) : UsecaseResult
     + getCertificate(id) : Certificate
     + listCertificates(tenantId) : Certificate[]
     + listExpiring(tenantId, now, days) : Certificate[]
-    + deleteCertificate(id) : CommandResult
+    + deleteCertificate(id) : UsecaseResult
   }
 
   class MonitorConnectivityUseCase << (U,#FF7043) >> {

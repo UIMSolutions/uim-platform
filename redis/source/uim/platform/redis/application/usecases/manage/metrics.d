@@ -36,7 +36,7 @@ class ManageMetricsUseCase {
         return repo.findLatestByInstance(tenantId, instanceId);
     }
 
-    CommandResult recordMetric(MetricDTO dto) {
+    UsecaseResult recordMetric(MetricDTO dto) {
         auto e = Metric(dto.tenantId, dto.metricId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.timestamp_ = dto.timestamp_;
@@ -53,17 +53,17 @@ class ManageMetricsUseCase {
         e.networkOutputKbs = dto.networkOutputKbs;
 
         if (!RedisValidator.isValidMetric(e))
-            return CommandResult(false, "", "Invalid metric: instanceId and timestamp required");
+            return UsecaseResult(false, "", "Invalid metric: instanceId and timestamp required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult deleteMetric(TenantId tenantId, MetricId id) {
+    UsecaseResult deleteMetric(TenantId tenantId, MetricId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Metric not found");
+            return UsecaseResult(false, "", "Metric not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

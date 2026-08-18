@@ -30,7 +30,7 @@ class ManagePagesUseCase {
         return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult createPage(PageDTO dto) {
+    UsecaseResult createPage(PageDTO dto) {
         auto e = Page(dto.tenantId, dto.pageId.isNull ? PageId(createId()) : dto.pageId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.name = dto.name;
@@ -43,16 +43,16 @@ class ManagePagesUseCase {
         e.sortOrder = dto.sortOrder;
         e.isStartPage = dto.isStartPage;
         if (!BuildAppsValidator.isValidPage(e))
-            return CommandResult(false, "", "Invalid page data");
+            return UsecaseResult(false, "", "Invalid page data");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updatePage(PageDTO dto) {
+    UsecaseResult updatePage(PageDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.pageId);
         if (existing.isNull )
-            return CommandResult(false, "", "Page not found");
+            return UsecaseResult(false, "", "Page not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -62,16 +62,16 @@ class ManagePagesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePage(TenantId tenantId, PageId id) {
+    UsecaseResult deletePage(TenantId tenantId, PageId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Page not found");
+            return UsecaseResult(false, "", "Page not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

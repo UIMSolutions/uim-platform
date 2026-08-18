@@ -27,13 +27,13 @@ class ManageTransportQueuesUseCase {
     this.activityRepo = activityRepo;
   }
 
-  CommandResult createQueue(CreateQueueRequest req) {
+  UsecaseResult createQueue(CreateQueueRequest req) {
     auto existing = queueRepo.findByName(req.tenantId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Queue with name '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Queue with name '" ~ req.name ~ "' already exists");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Queue name is required");
+      return UsecaseResult(false, "", "Queue name is required");
 
     auto queue = TransportQueue(req.tenantId, req.queueId.isNull ? TransportQueueId(createId()) : req.queueId, req.createdBy);
     queue.name = req.name;
@@ -47,13 +47,13 @@ class ManageTransportQueuesUseCase {
     recordActivity(req.tenantId, ActivityType.queueConfigured, queue.id.value, req.name,
         "Transport queue configured", req.createdBy.value);
 
-    return CommandResult(true, queue.id.value, "");
+    return UsecaseResult(true, queue.id.value, "");
   }
 
-  CommandResult updateQueue(UpdateQueueRequest req) {
+  UsecaseResult updateQueue(UpdateQueueRequest req) {
     auto queue = queueRepo.findById(req.tenantId, req.queueId);
     if (queue.isNull)
-      return CommandResult(false, "", "Queue not found");
+      return UsecaseResult(false, "", "Queue not found");
 
     if (req.description.length > 0)
       queue.description = req.description;
@@ -65,16 +65,16 @@ class ManageTransportQueuesUseCase {
     queue.updatedAt = clockSeconds();
 
     queueRepo.update(queue);
-    return CommandResult(true, queue.id.value, "");
+    return UsecaseResult(true, queue.id.value, "");
   }
 
-  CommandResult deleteQueue(TenantId tenantId, TransportQueueId id) {
+  UsecaseResult deleteQueue(TenantId tenantId, TransportQueueId id) {
     auto queue = queueRepo.findById(tenantId, id);
     if (queue.isNull)
-      return CommandResult(false, "", "Queue not found");
+      return UsecaseResult(false, "", "Queue not found");
 
     queueRepo.remove(queue);
-    return CommandResult(true, queue.id.value, "");
+    return UsecaseResult(true, queue.id.value, "");
   }
 
   TransportQueue getQueue(TenantId tenantId, TransportQueueId id) {

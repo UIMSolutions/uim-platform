@@ -148,6 +148,6 @@ sequenceDiagram
     EAUC->>EAUC: match conditions against templates
     EAUC->>SIR: save(instance — status=open)
     EAUC->>NR: save(notification — channel=email)
-    EAUC-->>DCC: CommandResult(true, contextId)
+    EAUC-->>DCC: UsecaseResult(true, contextId)
     DCC-->>Agent: 201 { id }
 ```

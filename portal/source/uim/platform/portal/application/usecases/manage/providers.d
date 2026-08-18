@@ -49,9 +49,9 @@ class ManageProvidersUseCase {
     return providerRepo.findByTenant(tenantId, offset, limit);
   }
 
-  CommandResult updateProvider(UpdateProviderRequest req) {
+  UsecaseResult updateProvider(UpdateProviderRequest req) {
     if (!providerRepo.existsById(req.tenantId, req.providerId))
-      return CommandResult(false, "", "Content provider not found");
+      return UsecaseResult(false, "", "Content provider not found");
 
     auto provider = providerRepo.findById(req.tenantId, req.providerId);
     with (provider) {
@@ -63,15 +63,15 @@ class ManageProvidersUseCase {
       updatedAt = currentTimestamp();
     }
     providerRepo.update(provider);
-    return CommandResult(true, provider.providerId.value, "Content provider updated successfully.");
+    return UsecaseResult(true, provider.providerId.value, "Content provider updated successfully.");
   }
 
-  CommandResult deleteProvider(TenantId tenantId, ProviderId id) {
+  UsecaseResult deleteProvider(TenantId tenantId, ProviderId id) {
     auto provider = providerRepo.findById(tenantId, id);
      if (provider.isNull)
-      return CommandResult(false, "", "Content provider not found");  
+      return UsecaseResult(false, "", "Content provider not found");  
 
     providerRepo.remove(provider);
-    return CommandResult(true, provider.id.value, "Content provider deleted successfully.");
+    return UsecaseResult(true, provider.id.value, "Content provider deleted successfully.");
   }
 }

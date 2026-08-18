@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 interface IManageDocumentTypesUseCase {
   
-  CommandResult createDocumentType(CreateDocumentTypeRequest r);
-  CommandResult updateDocumentType(UpdateDocumentTypeRequest r);
+  UsecaseResult createDocumentType(CreateDocumentTypeRequest r);
+  UsecaseResult updateDocumentType(UpdateDocumentTypeRequest r);
   DocumentType getDocumentType(DocumentTypeId id, ClientId clientId);
   DocumentType[] listDocumentTypes(ClientId clientId);
   DocumentType[] listDocumentTypes(DocumentCategory category, ClientId clientId);
-  CommandResult deleteDocumentType(ClientId clientId, DocumentTypeId id);
+  UsecaseResult deleteDocumentType(ClientId clientId, DocumentTypeId id);
   size_t count(ClientId clientId);
 
 }

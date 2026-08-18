@@ -23,7 +23,7 @@ class ManageFeatureRestrictionsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createFeatureRestriction(CreateFeatureRestrictionRequest r) {
+    UsecaseResult createFeatureRestriction(CreateFeatureRestrictionRequest r) {
         auto restriction = FeatureRestriction(r.tenantId);
 
         restriction.appId = r.appId;
@@ -39,13 +39,13 @@ class ManageFeatureRestrictionsUseCase {
         restriction.endDate = r.endDate;
 
         repo.save(restriction);
-        return CommandResult(true, restriction.id.value, "");
+        return UsecaseResult(true, restriction.id.value, "");
     }
 
-    CommandResult updateFeatureRestriction(UpdateFeatureRestrictionRequest r) {
+    UsecaseResult updateFeatureRestriction(UpdateFeatureRestrictionRequest r) {
         auto restriction = repo.findById(r.tenantId, r.restrictionId);
         if (restriction.isNull)
-            return CommandResult(false, "", "Feature restriction not found");
+            return UsecaseResult(false, "", "Feature restriction not found");
 
         if (r.description.length > 0) restriction.description = r.description;
         restriction.enabled = r.enabled;
@@ -58,7 +58,7 @@ class ManageFeatureRestrictionsUseCase {
         restriction.updatedAt = currentTimestamp();
         restriction.updatedBy = r.updatedBy;
         repo.update(restriction);
-        return CommandResult(true, restriction.id.value, "");
+        return UsecaseResult(true, restriction.id.value, "");
     }
 
     bool evaluateRestriction(TenantId tenantId, FeatureRestrictionId featureId, UserId userId, string deviceId) {
@@ -81,13 +81,13 @@ class ManageFeatureRestrictionsUseCase {
         return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteFeatureRestriction(TenantId tenantId, FeatureRestrictionId id) {
+    UsecaseResult deleteFeatureRestriction(TenantId tenantId, FeatureRestrictionId id) {
         auto restriction = repo.findById(tenantId, id);
         if (restriction.isNull)
-            return CommandResult(false, "", "Feature restriction not found");
+            return UsecaseResult(false, "", "Feature restriction not found");
 
         repo.remove(restriction);
-        return CommandResult(true, restriction.id.value, "");
+        return UsecaseResult(true, restriction.id.value, "");
     }
 
     size_t countFeatureRestrictions(TenantId tenantId, MobileAppId appId) {

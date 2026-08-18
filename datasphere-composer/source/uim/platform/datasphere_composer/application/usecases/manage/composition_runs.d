@@ -15,7 +15,7 @@ class ManageCompositionRunsUseCase {
 
   this(ICompositionRunRepository repo) { this.repo = repo; }
 
-  CommandResult start(StartCompositionRunRequest r) {
+  UsecaseResult start(StartCompositionRunRequest r) {
     CompositionRun run;
     run.id = CompositionRunId(r.id.length > 0 ? r.id : currentTimestamp());
     run.tenantId = TenantId(r.tenantId);
@@ -27,7 +27,7 @@ class ManageCompositionRunsUseCase {
     initEntity(run);
 
     repo.save(run);
-    return CommandResult(true, run.id.value, null);
+    return UsecaseResult(true, run.id.value, null);
   }
 
   CompositionRun[] list(TenantId tenantId) {
@@ -47,27 +47,27 @@ class ManageCompositionRunsUseCase {
     return repo.findById(TenantId(tenantId), CompositionRunId(id));
   }
 
-  CommandResult performAction(CompositionRunActionRequest r) {
+  UsecaseResult performAction(CompositionRunActionRequest r) {
     auto run = repo.findById(TenantId(r.tenantId), CompositionRunId(r.id));
-    if (run.isNull) return CommandResult(false, r.id, "Composition run not found");
+    if (run.isNull) return UsecaseResult(false, r.id, "Composition run not found");
 
     if (r.action == "cancel") {
       if (run.status != CompositionRunStatus.running &&
           run.status != CompositionRunStatus.pending) {
-        return CommandResult(false, r.id, "Only running or pending runs can be cancelled");
+        return UsecaseResult(false, r.id, "Only running or pending runs can be cancelled");
       }
       run.status = CompositionRunStatus.cancelled;
       repo.update(run);
-      return CommandResult(true, r.id, null);
+      return UsecaseResult(true, r.id, null);
     }
 
-    return CommandResult(false, r.id, "Unknown action: " ~ r.action);
+    return UsecaseResult(false, r.id, "Unknown action: " ~ r.action);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto run = repo.findById(TenantId(tenantId), CompositionRunId(id));
-    if (run.isNull) return CommandResult(false, id, "Composition run not found");
+    if (run.isNull) return UsecaseResult(false, id, "Composition run not found");
     repo.remove(TenantId(tenantId), CompositionRunId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

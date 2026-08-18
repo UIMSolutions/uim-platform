@@ -21,15 +21,15 @@ class ManageApplicationsUseCase {
     this.appRepository = appRepository;
   }
 
-  CommandResult register(RegisterApplicationRequest req) {
+  UsecaseResult register(RegisterApplicationRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Application name is required");
+      return UsecaseResult(false, "", "Application name is required");
     if (req.environmentId.isEmpty)
-      return CommandResult(false, "", "Environment ID is required");
+      return UsecaseResult(false, "", "Environment ID is required");
 
     auto existing = appRepository.findByName(req.environmentId, req.name);
     if (existing.isNull)
-      return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
+      return UsecaseResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
     auto app = Application(req.tenantId); //, UserId("test-user"));
     with(app) {
@@ -72,16 +72,16 @@ class ManageApplicationsUseCase {
     app.events = events;
 
     appRepository.save(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
-  CommandResult updateApplication(string appId, UpdateApplicationRequest req) {
+  UsecaseResult updateApplication(string appId, UpdateApplicationRequest req) {
     return updateApplication(ApplicationId(appId), req);
   }
 
-  CommandResult updateApplication(TenantId tenantId, ApplicationId appId, UpdateApplicationRequest req) {
+  UsecaseResult updateApplication(TenantId tenantId, ApplicationId appId, UpdateApplicationRequest req) {
     if (!appRepository.existsById(tenantId, appId))
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
 
     auto app = appRepository.findById(tenantId, appId);
     if (req.description.length > 0)
@@ -121,30 +121,30 @@ class ManageApplicationsUseCase {
 
     app.updatedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
-  CommandResult connectApplication(TenantId tenantId, ApplicationId appId) {
+  UsecaseResult connectApplication(TenantId tenantId, ApplicationId appId) {
     auto app = appRepository.findById(tenantId, appId);
     if (app.isNull)
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
 
     app.status = AppConnectivityStatus.connected;
     app.updatedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
-  CommandResult disconnectApplication(TenantId tenantId, ApplicationId appId) {
+  UsecaseResult disconnectApplication(TenantId tenantId, ApplicationId appId) {
     if (!appRepository.existsById(tenantId, appId))
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
 
     auto app = appRepository.findById(tenantId, appId);
     app.status = AppConnectivityStatus.disconnected;
     app.updatedAt = clockSeconds();
     
     appRepository.update(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
   bool hasApplication(TenantId tenantId, ApplicationId appId) {
@@ -163,17 +163,17 @@ class ManageApplicationsUseCase {
     return appRepository.findByTenant(tenantId);
   }
 
-  CommandResult deleteApplication(TenantId tenantId, string appId) {
+  UsecaseResult deleteApplication(TenantId tenantId, string appId) {
     return deleteApplication(tenantId, ApplicationId(appId));
   }
 
-  CommandResult deleteApplication(TenantId tenantId, ApplicationId appId) {
+  UsecaseResult deleteApplication(TenantId tenantId, ApplicationId appId) {
     auto app = appRepository.findById(tenantId, appId);
     if (app.isNull)
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
 
     appRepository.remove(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 }
 

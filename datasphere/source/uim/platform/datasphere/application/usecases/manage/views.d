@@ -21,11 +21,11 @@ class ManageViewsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createView(CreateViewRequest r) {
+  UsecaseResult createView(CreateViewRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "View name is required");
+      return UsecaseResult(false, "", "View name is required");
     if (r.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
 
     auto v = View(r.tenantId, r.viewId);
     v.spaceId = r.spaceId;
@@ -36,7 +36,7 @@ class ManageViewsUseCase {
     v.isExposed = r.isExposed;
 
     repo.save(v);
-    return CommandResult(true, v.id.value, "");
+    return UsecaseResult(true, v.id.value, "");
   }
 
   View getView(TenantId tenantId, SpaceId spaceId, ViewId id) {
@@ -51,10 +51,10 @@ class ManageViewsUseCase {
     return repo.findExposed(tenantId, spaceId);
   }
 
-  CommandResult updateView(UpdateViewRequest r) {
+  UsecaseResult updateView(UpdateViewRequest r) {
     auto view = repo.findById(r.tenantId, r.spaceId, r.viewId);
     if (view.isNull)
-      return CommandResult(false, "", "View not found");
+      return UsecaseResult(false, "", "View not found");
 
     view.name = r.name;
     view.description = r.description;
@@ -67,15 +67,15 @@ class ManageViewsUseCase {
     view.updatedAt = currentTimestamp;
 
     repo.update(view);
-    return CommandResult(true, view.id.value, "");
+    return UsecaseResult(true, view.id.value, "");
   }
 
-  CommandResult deleteView(TenantId tenantId, SpaceId spaceId, ViewId id) {
+  UsecaseResult deleteView(TenantId tenantId, SpaceId spaceId, ViewId id) {
     auto view = repo.findById(tenantId, spaceId, id);
     if (view.isNull)
-      return CommandResult(false, "", "View not found");
+      return UsecaseResult(false, "", "View not found");
 
     repo.remove(view);
-    return CommandResult(true, view.id.value, "");
+    return UsecaseResult(true, view.id.value, "");
   }
 }

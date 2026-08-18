@@ -21,13 +21,13 @@ class ManageAlertsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createAlert(CreateAlertRequest r) {
+  UsecaseResult createAlert(CreateAlertRequest r) {
     if (r.isNull || r.name.isEmpty)
-      return CommandResult(false, "", "Alert ID and name are required");
+      return UsecaseResult(false, "", "Alert ID and name are required");
 
     auto existing = repo.findById(r.tenantId, r.id);
     if (!existing.isNull)
-      return CommandResult(false, "", "Alert already exists");
+      return UsecaseResult(false, "", "Alert already exists");
 
     auto a = Alert(r.tenantId, r.alertId);
     a.instanceId = r.instanceId;
@@ -42,7 +42,7 @@ class ManageAlertsUseCase {
     a.threshold.unit = r.unit;
 
     repo.save(a);
-    return CommandResult(true, a.id.value, "");
+    return UsecaseResult(true, a.id.value, "");
   }
 
   Alert getAlertById(TenantId tenantId, AlertId id) {
@@ -57,10 +57,10 @@ class ManageAlertsUseCase {
     return repo.findActive(tenantId);
   }
 
-  CommandResult acknowledgeAlert(AcknowledgeAlertRequest r) {
+  UsecaseResult acknowledgeAlert(AcknowledgeAlertRequest r) {
     auto existing = repo.findById(r.tenantId, r.alertId);
     if (existing.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     existing.status = AlertStatus.acknowledged;
     existing.acknowledgedBy = r.acknowledgedBy;
@@ -70,13 +70,13 @@ class ManageAlertsUseCase {
     existing.acknowledgedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult updateAlert(UpdateAlertRequest r) {
+  UsecaseResult updateAlert(UpdateAlertRequest r) {
     auto existing = repo.findById(r.tenantId, r.alertId);
     if (existing.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -84,16 +84,16 @@ class ManageAlertsUseCase {
     existing.threshold.criticalValue = r.criticalValue;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteAlert(TenantId tenantId, AlertId id) {
+  UsecaseResult deleteAlert(TenantId tenantId, AlertId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countAlerts(TenantId tenantId) {

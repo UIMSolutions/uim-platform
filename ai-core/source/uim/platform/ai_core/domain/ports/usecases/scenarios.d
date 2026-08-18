@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageScenariosUseCase { 
 
-  CommandResult createScenario(CreateScenarioRequest r);
+  UsecaseResult createScenario(CreateScenarioRequest r);
   Scenario getScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId id);
   Scenario[] listScenarios(TenantId tenantId, ResourceGroupId rgId);
-  CommandResult deleteScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId id);
+  UsecaseResult deleteScenario(TenantId tenantId, ResourceGroupId rgId, ScenarioId id);
   size_t countScenarios(TenantId tenantId, ResourceGroupId rgId);
 
 }

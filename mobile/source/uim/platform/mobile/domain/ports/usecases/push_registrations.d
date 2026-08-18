@@ -16,7 +16,7 @@ import uim.platform.mobile;
 @safe:
 interface IManagePushRegistrationsUseCase { 
 
-    CommandResult registerPushRegistration(CreatePushRegistrationRequest r);
+    UsecaseResult registerPushRegistration(CreatePushRegistrationRequest r);
 
     PushRegistration getPushRegistration(TenantId tenantId, PushRegistrationId id);
 
@@ -26,7 +26,7 @@ interface IManagePushRegistrationsUseCase {
 
     PushRegistration[] listPushRegistrations(TenantId tenantId, MobileAppId appId, string topic);
 
-    CommandResult deletePushRegistration(TenantId tenantId, PushRegistrationId id);
+    UsecaseResult deletePushRegistration(TenantId tenantId, PushRegistrationId id);
 
     size_t countPushRegistrationsByApp(TenantId tenantId, MobileAppId appId);
 

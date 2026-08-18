@@ -39,7 +39,7 @@ class ProduceEventsUseCase {
         this.dispatcher = dispatcher;
     }
 
-    CommandResult postEvent(TenantId tenantId, PostAlertEventRequest req) {
+    UsecaseResult postEvent(TenantId tenantId, PostAlertEventRequest req) {
         import std.conv : to;
         import std.datetime.systime : Clock;
 
@@ -107,6 +107,6 @@ class ProduceEventsUseCase {
         }
 
         event.status = EventStatus.sent;
-        return CommandResult(true, event.id.toString(), event.toJson().toString());
+        return UsecaseResult(true, event.id.toString(), event.toJson().toString());
     }
 }

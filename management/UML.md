@@ -159,11 +159,11 @@ sequenceDiagram
 
     Admin->>SC: POST /subaccounts { globalAccountId, displayName, region, subdomain }
     SC->>SUC: createSubaccount(dto)
-    SUC-->>SC: CommandResult(true, subId)
+    SUC-->>SC: UsecaseResult(true, subId)
     SC-->>Admin: 201 { id }
 
     Admin->>EC: POST /entitlements { subaccountId, planId, quota=10 }
     EC->>EUC: assignEntitlement(dto)
-    EUC-->>EC: CommandResult(true, entId)
+    EUC-->>EC: UsecaseResult(true, entId)
     EC-->>Admin: 201 { id }
 ```

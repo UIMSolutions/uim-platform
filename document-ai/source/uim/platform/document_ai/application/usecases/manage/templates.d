@@ -22,13 +22,13 @@ class ManageTemplatesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createTemplate(CreateTemplateRequest r) {
+  UsecaseResult createTemplate(CreateTemplateRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Template name is required");
+      return UsecaseResult(false, "", "Template name is required");
     if (r.clientId.isEmpty)
-      return CommandResult(false, "", "Client ID is required");
+      return UsecaseResult(false, "", "Client ID is required");
     if (r.schemaId.isEmpty)
-      return CommandResult(false, "", "Schema ID is required");
+      return UsecaseResult(false, "", "Schema ID is required");
 
     auto t = Template(r.tenantId);
     t.clientId = r.clientId;
@@ -59,16 +59,16 @@ class ManageTemplatesUseCase {
     t.regions = regions;
 
     repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
-  CommandResult updateTemplate(UpdateTemplateRequest r) {
+  UsecaseResult updateTemplate(UpdateTemplateRequest r) {
     if (r.templateId.isEmpty)
-      return CommandResult(false, "", "Template ID is required");
+      return UsecaseResult(false, "", "Template ID is required");
 
     auto existing = repo.findById(r.clientId, r.templateId);
     if (existing.isNull)
-      return CommandResult(false, "", "Template not found");
+      return UsecaseResult(false, "", "Template not found");
 
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
@@ -86,7 +86,7 @@ class ManageTemplatesUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   Template getTemplate(ClientId clientId, TemplateId id) {
@@ -107,13 +107,13 @@ class ManageTemplatesUseCase {
   size_t countTemplates(ClientId clientId) {
     return repo.countByClient(clientId);
   }
-  CommandResult deleteTemplate(ClientId clientId, TemplateId id) {
+  UsecaseResult deleteTemplate(ClientId clientId, TemplateId id) {
     auto entity = repo.findById(clientId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Template not found");
+      return UsecaseResult(false, "", "Template not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
 

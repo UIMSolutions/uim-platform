@@ -16,8 +16,8 @@ interface IManagePagesUseCase {
     Page getPage(TenantId tenantId, PageId id);
     Page[] listPages(TenantId tenantId);
     Page[] listPages(TenantId tenantId, ApplicationId applicationId);
-    CommandResult createPage(PageDTO dto);
-    CommandResult updatePage(PageDTO dto);
-    CommandResult deletePage(TenantId tenantId, PageId id);
+    UsecaseResult createPage(PageDTO dto);
+    UsecaseResult updatePage(PageDTO dto);
+    UsecaseResult deletePage(TenantId tenantId, PageId id);
     
 }

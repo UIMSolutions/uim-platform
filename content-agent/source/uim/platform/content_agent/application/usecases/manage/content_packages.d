@@ -31,12 +31,12 @@ class ManageContentPackagesUseCase {
     this.activities = activities;
   }
 
-  CommandResult createPackage(CreatePackageRequest req) {
+  UsecaseResult createPackage(CreatePackageRequest req) {
     if (packages.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Package with name '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Package with name '" ~ req.name ~ "' already exists");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Package name is required");
+      return UsecaseResult(false, "", "Package name is required");
    
     auto pkg = ContentPackage(req.tenantId, req.createdBy);
 
@@ -53,13 +53,13 @@ class ManageContentPackagesUseCase {
     recordActivity(req.tenantId, ActivityType.packageCreated, pkg.id.value, req.name,
         "Package created", req.createdBy);
 
-    return CommandResult(true, pkg.id.value, "");
+    return UsecaseResult(true, pkg.id.value, "");
   }
 
-  CommandResult updatePackage(UpdatePackageRequest req) {
+  UsecaseResult updatePackage(UpdatePackageRequest req) {
     auto pkg = packages.findById(req.tenantId, req.packageId);
     if (pkg.isNull)
-      return CommandResult(false, "", "Package not found");
+      return UsecaseResult(false, "", "Package not found");
 
     if (req.description.length > 0)
       pkg.description = req.description;
@@ -76,16 +76,16 @@ class ManageContentPackagesUseCase {
       pkg.status = PackageStatus.draft;
 
     packages.update(pkg);
-    return CommandResult(true, pkg.id.value, "");
+    return UsecaseResult(true, pkg.id.value, "");
   }
 
-  CommandResult assemblePackage(AssemblePackageRequest req) {
+  UsecaseResult assemblePackage(AssemblePackageRequest req) {
     auto pkg = packages.findById(req.tenantId, req.packageId);
     if (pkg.isNull)
-      return CommandResult(false, "", "Package not found");
+      return UsecaseResult(false, "", "Package not found");
 
     if (pkg.status != PackageStatus.draft)
-      return CommandResult(false, "", "Package must be in draft state to assemble");
+      return UsecaseResult(false, "", "Package must be in draft state to assemble");
 
     auto providers = providers.findByTenant(req.tenantId);
     auto result = PackageAssembler.validate(pkg, providers);
@@ -96,7 +96,7 @@ class ManageContentPackagesUseCase {
           msg ~= "; ";
         msg ~= e;
       }
-      return CommandResult(false, "", msg);
+      return UsecaseResult(false, "", msg);
     }
 
     pkg.status = PackageStatus.assembled;
@@ -108,7 +108,7 @@ class ManageContentPackagesUseCase {
     recordActivity(req.tenantId, ActivityType.packageAssembled, pkg.id.value,
         pkg.name, "Package assembled", req.assembledBy.value);
 
-    return CommandResult(true, pkg.id.value, "");
+    return UsecaseResult(true, pkg.id.value, "");
   }
 
   ContentPackage getPackage(TenantId tenantId, ContentPackageId id) {
@@ -124,15 +124,15 @@ class ManageContentPackagesUseCase {
     return packages.findByStatus(tenantId, status);
   }
 
-  CommandResult deletePackage(TenantId tenantId, ContentPackageId id) {
+  UsecaseResult deletePackage(TenantId tenantId, ContentPackageId id) {
     auto pkg = packages.findById(tenantId, id);
     if (pkg.isNull)
-      return CommandResult(false, "", "Package not found");
+      return UsecaseResult(false, "", "Package not found");
 
     packages.remove(pkg);
     recordActivity(pkg.tenantId, ActivityType.packageDeleted, id.value, pkg.name, "Package deleted", "");
 
-    return CommandResult(true, pkg.id.value, "");
+    return UsecaseResult(true, pkg.id.value, "");
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,

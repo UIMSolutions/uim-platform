@@ -172,7 +172,7 @@ class BuildingBlockUi5Controller {
         auto t = tenant(req);
         auto payload = req.json;
 
-        CommandResult result;
+        UsecaseResult result;
         final switch (blockType) {
             case "architecture": result = model.createArchitecture(TenantId(t), payload); break;
             case "solution": result = model.createSolution(TenantId(t), payload); break;
@@ -195,7 +195,7 @@ class BuildingBlockUi5Controller {
         }
 
         auto payload = req.json;
-        CommandResult result;
+        UsecaseResult result;
         final switch (blockType) {
             case "architecture": result = model.updateArchitecture(TenantId(t), id, payload); break;
             case "solution": result = model.updateSolution(TenantId(t), id, payload); break;
@@ -217,7 +217,7 @@ class BuildingBlockUi5Controller {
             return;
         }
 
-        CommandResult result;
+        UsecaseResult result;
         final switch (blockType) {
             case "architecture": result = model.deleteArchitecture(TenantId(t), id); break;
             case "solution": result = model.deleteSolution(TenantId(t), id); break;

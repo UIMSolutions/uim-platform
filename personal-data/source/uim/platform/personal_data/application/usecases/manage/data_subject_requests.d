@@ -18,10 +18,10 @@ class ManageDataSubjectRequestsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDataSubjectRequest(CreateDataSubjectRequestRequest r) {
-        if (r.tenantId.isNull) return CommandResult(false, "", "ID is required");
-        if (r.subjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
-        if (r.requestType.length == 0) return CommandResult(false, "", "Request type is required");
+    UsecaseResult createDataSubjectRequest(CreateDataSubjectRequestRequest r) {
+        if (r.tenantId.isNull) return UsecaseResult(false, "", "ID is required");
+        if (r.subjectId.isEmpty) return UsecaseResult(false, "", "Data subject ID is required");
+        if (r.requestType.length == 0) return UsecaseResult(false, "", "Request type is required");
 
         DataSubjectRequest req;
         req.id = r.requestId;
@@ -39,7 +39,7 @@ class ManageDataSubjectRequestsUseCase {
         req.createdAt = currentTimestamp();
 
         repo.save(req);
-        return CommandResult(true, req.id.value, "");
+        return UsecaseResult(true, req.id.value, "");
     }
 
     DataSubjectRequest getDataSubjectRequest(TenantId tenantId, DataSubjectRequestId id) {
@@ -58,10 +58,10 @@ class ManageDataSubjectRequestsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult updateDataSubjectRequest(UpdateDataSubjectRequestRequest r) {
+    UsecaseResult updateDataSubjectRequest(UpdateDataSubjectRequestRequest r) {
         auto request = repo.findById(r.tenantId, r.requestId);
         if (request.isNull)
-            return CommandResult(false, "", "Data subject request not found");
+            return UsecaseResult(false, "", "Data subject request not found");
 
         if (r.status.length > 0) {
             request.status = r.status.to!RequestStatus;
@@ -83,16 +83,16 @@ class ManageDataSubjectRequestsUseCase {
         request.updatedAt = currentTimestamp();
 
         repo.update(request);
-        return CommandResult(true, request.id.value, "");
+        return UsecaseResult(true, request.id.value, "");
     }
 
-    CommandResult deleteDataSubjectRequest(TenantId tenantId, DataSubjectRequestId id) {
+    UsecaseResult deleteDataSubjectRequest(TenantId tenantId, DataSubjectRequestId id) {
         auto request = repo.findById(tenantId, id);
         if (request.isNull)
-            return CommandResult(false, "", "Data subject request not found");
+            return UsecaseResult(false, "", "Data subject request not found");
 
         repo.remove(request);
-        return CommandResult(true, request.id.value, "");
+        return UsecaseResult(true, request.id.value, "");
     }
 }
 ///

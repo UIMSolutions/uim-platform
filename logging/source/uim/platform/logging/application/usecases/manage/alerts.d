@@ -33,33 +33,33 @@ class ManageAlertsUseCase : TenantUseCase!(IAlertRepository, Alert, AlertId) {
     return repository.findBySeverity(tenantId, severity);
   }
 
-  CommandResult acknowledgeAlert(AcknowledgeAlertRequest req) {
+  UsecaseResult acknowledgeAlert(AcknowledgeAlertRequest req) {
     auto a = repository.findById(req.tenantId, req.alertId);
     if (a.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     a.state = AlertState.acknowledged;
     a.acknowledgedBy = req.acknowledgedBy;
     a.acknowledgedAt = clockSeconds();
 
     repository.update(a);
-    return CommandResult(true, req.alertId.value, "");
+    return UsecaseResult(true, req.alertId.value, "");
   }
 
-  CommandResult resolveAlert(ResolveAlertRequest req) {
+  UsecaseResult resolveAlert(ResolveAlertRequest req) {
     auto a = repository.findById(req.tenantId, req.alertId);
     if (a.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     a.state = AlertState.resolved;
     a.resolvedBy = req.resolvedBy;
     a.resolvedAt = clockSeconds();
 
     repository.update(a);
-    return CommandResult(true, req.alertId.value, "");
+    return UsecaseResult(true, req.alertId.value, "");
   }
 
-  CommandResult triggerAlert(TenantId tenantId, AlertRuleId ruleId, string ruleName,
+  UsecaseResult triggerAlert(TenantId tenantId, AlertRuleId ruleId, string ruleName,
     AlertSeverity severity, string message, long matchCount, LogEntryId sampleId) {
     import std.uuid : randomUUID;
 
@@ -73,16 +73,16 @@ class ManageAlertsUseCase : TenantUseCase!(IAlertRepository, Alert, AlertId) {
     a.sampleLogEntryId = sampleId;
 
     repository.save(a);
-    return CommandResult(true, a.id.value, "");
+    return UsecaseResult(true, a.id.value, "");
   }
 
-  CommandResult deleteAlert(TenantId tenantId, AlertId id) {
+  UsecaseResult deleteAlert(TenantId tenantId, AlertId id) {
     auto alert = repository.findById(tenantId, id);
     if (alert.isNull)
-      return CommandResult(false, "", "Alert not found");
+      return UsecaseResult(false, "", "Alert not found");
 
     repository.remove(alert);
-    return CommandResult(true, alert.id.value, "");
+    return UsecaseResult(true, alert.id.value, "");
   }
 
 }

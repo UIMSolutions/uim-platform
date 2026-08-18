@@ -21,13 +21,13 @@ class ManageSchemasUseCase {
     this.repo = repo;
   }
 
-  CommandResult createSchema(CreateSchemaRequest r) {
+  UsecaseResult createSchema(CreateSchemaRequest r) {
     if (r.schemaId.isEmpty || r.name.isEmpty)
-      return CommandResult(false, "", "Schema ID and name are required");
+      return UsecaseResult(false, "", "Schema ID and name are required");
 
     auto existing = repo.findById(r.tenantId, r.schemaId);
     if (!existing.isNull)
-      return CommandResult(false, "", "Schema already exists");
+      return UsecaseResult(false, "", "Schema already exists");
 
     auto s = Schema(r.tenantId); //, r.createdBy);
     s.id = r.schemaId;
@@ -36,7 +36,7 @@ class ManageSchemasUseCase {
     s.owner = r.owner;
 
     repo.save(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
   Schema getSchemaById(TenantId tenantId, SchemaId id) {
@@ -47,10 +47,10 @@ class ManageSchemasUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateSchema(UpdateSchemaRequest r) {
+  UsecaseResult updateSchema(UpdateSchemaRequest r) {
     auto schema = repo.findById(r.tenantId, r.schemaId);
     if (schema.isNull)
-      return CommandResult(false, "", "Schema not found");
+      return UsecaseResult(false, "", "Schema not found");
 
     schema.owner = r.owner;
 
@@ -58,16 +58,16 @@ class ManageSchemasUseCase {
     schema.updatedAt = currentTimestamp;
 
     repo.update(schema);
-    return CommandResult(true, schema.id.value, "");
+    return UsecaseResult(true, schema.id.value, "");
   }
 
-  CommandResult deleteSchema(TenantId tenantId, SchemaId schemaId) {
+  UsecaseResult deleteSchema(TenantId tenantId, SchemaId schemaId) {
     auto schema = repo.findById(tenantId, schemaId);
     if (schema.isNull)
-      return CommandResult(false, "", "Schema not found");
+      return UsecaseResult(false, "", "Schema not found");
 
     repo.remove(schema);
-    return CommandResult(true, schema.id.value, "");
+    return UsecaseResult(true, schema.id.value, "");
   }
 
   size_t countSchemas(TenantId tenantId) {

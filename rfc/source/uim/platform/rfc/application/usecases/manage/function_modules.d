@@ -16,9 +16,9 @@ class ManageFunctionModulesUseCase {
 
     this(FunctionModuleRepository repo) { _repo = repo; }
 
-    CommandResult createFunctionModule(CreateFunctionModuleRequest req) {
+    UsecaseResult createFunctionModule(CreateFunctionModuleRequest req) {
         if (_repo.existsById(req.tenantId, req.id))
-            return CommandResult(false, req.id, "Function module already exists: " ~ req.id);
+            return UsecaseResult(false, req.id, "Function module already exists: " ~ req.id);
 
         auto fm = FunctionModule(req.tenantId, req.id);
         fm.functionGroup = req.functionGroup;
@@ -28,8 +28,8 @@ class ManageFunctionModulesUseCase {
                                                                     p.defaultValue, p.optional, p.description);
 
         if (!_repo.save(fm))
-            return CommandResult(false, "", "Failed to save function module");
-        return CommandResult(true, fm.id, "");
+            return UsecaseResult(false, "", "Failed to save function module");
+        return UsecaseResult(true, fm.id, "");
     }
 
     FunctionModule getFunctionModule(TenantId tenantId, FunctionModuleId id) {
@@ -44,11 +44,11 @@ class ManageFunctionModulesUseCase {
         return _repo.findByFunctionGroup(tenantId, functionGroup);
     }
 
-    CommandResult updateFunctionModule(UpdateFunctionModuleRequest req) {
+    UsecaseResult updateFunctionModule(UpdateFunctionModuleRequest req) {
         
         auto fm = _repo.findById(req.tenantId, req.id);
         if (fm.isNull())
-            return CommandResult(false, req.id, "Function module not found: " ~ req.id);
+            return UsecaseResult(false, req.id, "Function module not found: " ~ req.id);
 
         fm.shortText     = req.shortText;
         fm.remoteEnabled = req.remoteEnabled;
@@ -59,17 +59,17 @@ class ManageFunctionModulesUseCase {
         fm.updatedAt = MonoTime.currTime.ticks;
 
         if (!_repo.update(fm))
-            return CommandResult(false, fm.id, "Failed to update function module");
-        return CommandResult(true, fm.id, "");
+            return UsecaseResult(false, fm.id, "Failed to update function module");
+        return UsecaseResult(true, fm.id, "");
     }
 
-    CommandResult deleteFunctionModule(TenantId tenantId, FunctionModuleId id) {
+    UsecaseResult deleteFunctionModule(TenantId tenantId, FunctionModuleId id) {
         auto fm = _repo.findById(tenantId, id);
         if (fm.isNull())
-            return CommandResult(false, id, "Function module not found: " ~ id);
+            return UsecaseResult(false, id, "Function module not found: " ~ id);
         if (!_repo.remove(tenantId, id))
-            return CommandResult(false, id, "Failed to delete function module");
-        return CommandResult(true, id, "");
+            return UsecaseResult(false, id, "Failed to delete function module");
+        return UsecaseResult(true, id, "");
     }
 
     size_t countFunctionModules(TenantId tenantId) {

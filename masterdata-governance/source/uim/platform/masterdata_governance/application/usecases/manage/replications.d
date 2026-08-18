@@ -38,7 +38,7 @@ class ManageReplicationsUseCase {
         return repo.findByTargetSystem(tenantId, targetSystem);
     }
 
-    CommandResult createReplication(ReplicationDTO dto) {
+    UsecaseResult createReplication(ReplicationDTO dto) {
         auto rep = Replication(dto.tenantId); //, UserId("test-user"));
         rep.id = dto.replicationId;
         rep.businessPartnerId = dto.businessPartnerId;
@@ -54,30 +54,30 @@ class ManageReplicationsUseCase {
         rep.retryCount = 0;
 
         if (!MasterdataGovernanceValidator.isValidReplication(rep))
-            return CommandResult(false, "", "Invalid replication data");
+            return UsecaseResult(false, "", "Invalid replication data");
 
         repo.save(rep);
-        return CommandResult(true, rep.id.value, "");
+        return UsecaseResult(true, rep.id.value, "");
     }
 
-    CommandResult cancelReplication(TenantId tenantId, ReplicationId id) {
+    UsecaseResult cancelReplication(TenantId tenantId, ReplicationId id) {
         auto rep = repo.findById(tenantId, id);
         if (rep.isNull)
-            return CommandResult(false, "", "Replication not found");
+            return UsecaseResult(false, "", "Replication not found");
         if (rep.status == ReplicationStatus.completed || rep.status == ReplicationStatus.cancelled)
-            return CommandResult(false, "", "Replication cannot be cancelled in current status");
+            return UsecaseResult(false, "", "Replication cannot be cancelled in current status");
 
         rep.status = ReplicationStatus.cancelled;
         repo.update(rep);
-        return CommandResult(true, rep.id.value, "");
+        return UsecaseResult(true, rep.id.value, "");
     }
 
-    CommandResult deleteReplication(TenantId tenantId, ReplicationId id) {
+    UsecaseResult deleteReplication(TenantId tenantId, ReplicationId id) {
         auto rep = repo.findById(tenantId, id);
         if (rep.isNull)
-            return CommandResult(false, "", "Replication not found");
+            return UsecaseResult(false, "", "Replication not found");
 
         repo.remove(rep);
-        return CommandResult(true, rep.id.value, "");
+        return UsecaseResult(true, rep.id.value, "");
     }
 }

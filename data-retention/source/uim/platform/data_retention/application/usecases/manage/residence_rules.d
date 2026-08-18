@@ -17,11 +17,11 @@ class ManageResidenceRulesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createResidenceRule(CreateResidenceRuleRequest req) {
+    UsecaseResult createResidenceRule(CreateResidenceRuleRequest req) {
         import std.uuid : randomUUID;
 
         if (req.duration <= 0)
-            return CommandResult(false, "", "Duration must be positive");
+            return UsecaseResult(false, "", "Duration must be positive");
 
         auto rr = ResidenceRule(req.tenantId);
         rr.businessPurposeId = req.purposeId;
@@ -31,13 +31,13 @@ class ManageResidenceRulesUseCase {
         rr.isActive = true;
 
         repo.save(rr);
-        return CommandResult(true, rr.id.value, "");
+        return UsecaseResult(true, rr.id.value, "");
     }
 
-    CommandResult updateResidenceRule(UpdateResidenceRuleRequest req) {
+    UsecaseResult updateResidenceRule(UpdateResidenceRuleRequest req) {
         auto rule = repo.findById(req.tenantId, req.ruleId);
         if (rule.isNull)
-            return CommandResult(false, "", "Residence rule not found");
+            return UsecaseResult(false, "", "Residence rule not found");
 
         if (req.duration > 0)
             rule.duration = req.duration;
@@ -49,7 +49,7 @@ class ManageResidenceRulesUseCase {
         rule.updatedAt = clockSeconds();
 
         repo.update(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
     bool hasResidenceRule(TenantId tenantId, ResidenceRuleId id) {
@@ -68,13 +68,13 @@ class ManageResidenceRulesUseCase {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
 
-    CommandResult deleteResidenceRule(TenantId tenantId, ResidenceRuleId id) {
+    UsecaseResult deleteResidenceRule(TenantId tenantId, ResidenceRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
-            return CommandResult(false, "", "Residence rule not found");
+            return UsecaseResult(false, "", "Residence rule not found");
 
         repo.remove(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
 }

@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageClientsUseCase { 
   
-  CommandResult createClient(CreateClientRequest r);
-  CommandResult patchClient(PatchClientRequest r);
+  UsecaseResult createClient(CreateClientRequest r);
+  UsecaseResult patchClient(PatchClientRequest r);
   Client getClient(TenantId tenantId, ClientId id);
   Client[] listClients(TenantId tenantId);
   size_t countClients(TenantId tenantId);
-  CommandResult deleteClient(TenantId tenantId, ClientId id);
+  UsecaseResult deleteClient(TenantId tenantId, ClientId id);
 
 }

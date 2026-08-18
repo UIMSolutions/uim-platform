@@ -143,7 +143,7 @@ HC -> UC : publishMessage(dto)
 UC -> ChanRepo : findById(channelId)
 UC -> Repo : save(EventMessage)
 Repo --> UC : saved
-UC --> HC : CommandResult(success, id)
+UC --> HC : UsecaseResult(success, id)
 HC --> Publisher : 201 Created {id}
 @enduml
 ```

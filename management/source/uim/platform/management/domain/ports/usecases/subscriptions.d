@@ -13,9 +13,9 @@ mixin(ShowModule!());
 /// Use case: manage SaaS application subscriptions.
 interface IManageSubscriptionsUseCase { 
 
-  CommandResult createSubscription(CreateSubscriptionRequest request);
-  CommandResult unsubscribeSubscription(TenantId tenantId, SubscriptionId id);
-  CommandResult updateSubscriptionPlan(UpdateSubscriptionRequest req);
+  UsecaseResult createSubscription(CreateSubscriptionRequest request);
+  UsecaseResult unsubscribeSubscription(TenantId tenantId, SubscriptionId id);
+  UsecaseResult updateSubscriptionPlan(UpdateSubscriptionRequest req);
   Subscription getSubscription(TenantId tenantId, SubscriptionId id);
   Subscription[] listSubscriptions(TenantId tenantId, SubaccountId subId);
 

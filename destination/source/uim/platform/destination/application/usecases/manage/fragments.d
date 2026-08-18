@@ -21,13 +21,13 @@ class ManageFragmentsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createFragment(CreateFragmentRequest req) {
+  UsecaseResult createFragment(CreateFragmentRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Fragment name is required");
+      return UsecaseResult(false, "", "Fragment name is required");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
 
     auto f = DestinationFragment(req.tenantId, DestinationFragmentId(createId), req.createdBy);
     f.subaccountId = req.subaccountId;
@@ -48,13 +48,13 @@ class ManageFragmentsUseCase {
     f.properties = req.properties;
 
     repo.save(f);
-    return CommandResult(true, f.id.value, "");
+    return UsecaseResult(true, f.id.value, "");
   }
 
-  CommandResult updateFragment(UpdateFragmentRequest req) {
+  UsecaseResult updateFragment(UpdateFragmentRequest req) {
     auto fragment = repo.findById(req.tenantId, req.fragmentId);
     if (fragment.isNull)
-      return CommandResult(false, "", "Fragment not found");
+      return UsecaseResult(false, "", "Fragment not found");
 
     if (req.description.length > 0)
       fragment.description = req.description;
@@ -85,7 +85,7 @@ class ManageFragmentsUseCase {
     fragment.updatedAt = clockSeconds();
 
     repo.update(fragment);
-    return CommandResult(true, fragment.id.value, "");
+    return UsecaseResult(true, fragment.id.value, "");
   }
 
   /// Checks if a fragment with the given ID exists for the tenant.
@@ -109,13 +109,13 @@ class ManageFragmentsUseCase {
   }
 
   /// Deletes a fragment by its ID.
-  CommandResult deleteFragment(TenantId tenantId, DestinationFragmentId id) {
+  UsecaseResult deleteFragment(TenantId tenantId, DestinationFragmentId id) {
     auto fragment = repo.findById(tenantId, id);
     if (fragment.isNull)
-      return CommandResult(false, "", "Fragment not found");
+      return UsecaseResult(false, "", "Fragment not found");
 
     repo.remove(fragment);
-    return CommandResult(true, fragment.id.value, "");
+    return UsecaseResult(true, fragment.id.value, "");
   }
 
   private static DestinationLevel parseLevel(string s) {

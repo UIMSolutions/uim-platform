@@ -18,8 +18,8 @@ interface IManageSyncSessionsUseCase {
     SyncSession[] listByDevice(TenantId tenantId, DeviceId deviceId);
     SyncSession[] listByStatus(TenantId tenantId, SyncStatus status);
 
-    CommandResult createSyncSession(SyncSessionDTO dto);
-    CommandResult updateSyncSession(SyncSessionDTO dto);
-    CommandResult deleteSyncSession(TenantId tenantId, SyncSessionId id);
+    UsecaseResult createSyncSession(SyncSessionDTO dto);
+    UsecaseResult updateSyncSession(SyncSessionDTO dto);
+    UsecaseResult deleteSyncSession(TenantId tenantId, SyncSessionId id);
 
 }

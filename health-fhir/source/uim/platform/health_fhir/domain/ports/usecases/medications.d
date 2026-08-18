@@ -12,14 +12,14 @@ mixin(ShowModule!());
 
 interface IManageMedicationsUseCase {
 
-  CommandResult createMedication(CreateMedicationRequest r);
+  UsecaseResult createMedication(CreateMedicationRequest r);
 
-  CommandResult updateMedication(UpdateMedicationRequest r);
+  UsecaseResult updateMedication(UpdateMedicationRequest r);
 
   Medication getMedication(TenantId tenantId, MedicationId id);
 
   Medication[] listMedications(TenantId tenantId);
 
-  CommandResult deleteMedication(TenantId tenantId, MedicationId id);
+  UsecaseResult deleteMedication(TenantId tenantId, MedicationId id);
   
 }

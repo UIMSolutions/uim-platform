@@ -21,7 +21,7 @@ class ManageServicePlansUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createPlan(CreateServicePlanRequest dto) {
+    UsecaseResult createPlan(CreateServicePlanRequest dto) {
         auto plan = ServicePlan(dto.tenantId);
 
         plan.id = ServicePlanId(currentTimestamp.to!string);
@@ -37,16 +37,16 @@ class ManageServicePlansUseCase {
         plan.updatedAt = plan.createdAt;
 
         if (dto.name.isEmpty)
-            return CommandResult(false, "", "Service plan name is required");
+            return UsecaseResult(false, "", "Service plan name is required");
 
         repo.save(plan);
-        return CommandResult(true, plan.id.value, "");
+        return UsecaseResult(true, plan.id.value, "");
     }
 
-    CommandResult updatePlan(UpdateServicePlanRequest dto) {
+    UsecaseResult updatePlan(UpdateServicePlanRequest dto) {
         auto existing = repo.findById(dto.tenantId, dto.planId);
         if (existing.isNull)
-            return CommandResult(false, "", "Service plan not found");
+            return UsecaseResult(false, "", "Service plan not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -56,16 +56,16 @@ class ManageServicePlansUseCase {
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePlan(TenantId tenantId, ServicePlanId id) {
+    UsecaseResult deletePlan(TenantId tenantId, ServicePlanId id) {
         auto plan = repo.findById(tenantId, id);
         if (plan.isNull)
-            return CommandResult(false, "", "Service plan not found");
+            return UsecaseResult(false, "", "Service plan not found");
 
         repo.remove(plan);
-        return CommandResult(true, plan.id.value, "");
+        return UsecaseResult(true, plan.id.value, "");
     }
 }
 

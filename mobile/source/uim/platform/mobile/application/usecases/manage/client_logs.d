@@ -21,7 +21,7 @@ class ManageClientLogsUseCase {
         this.repo = repo;
     }
 
-    CommandResult uploadLog(UploadClientLogRequest r) {
+    UsecaseResult uploadLog(UploadClientLogRequest r) {
         auto entry = ClientLogEntry(r.tenantId);
         entry.appId = r.appId;
         entry.deviceId = r.deviceId;
@@ -35,7 +35,7 @@ class ManageClientLogsUseCase {
         entry.timestamp = r.timestamp > 0 ? r.timestamp : currentTimestamp();
 
         repo.save(entry);
-        return CommandResult(true, entry.id.value, "");
+        return UsecaseResult(true, entry.id.value, "");
     }
 
     ClientLogEntry getLog(TenantId tenantId, ClientLogEntryId id) {
@@ -58,13 +58,13 @@ class ManageClientLogsUseCase {
         return repo.findByLevel(tenantId, appId, level.toLoggingLevel());
     }
 
-    CommandResult deleteLog(TenantId tenantId, ClientLogEntryId id) {
+    UsecaseResult deleteLog(TenantId tenantId, ClientLogEntryId id) {
         auto entry = repo.findById(tenantId, id);
         if (entry.isNull)
-            return CommandResult(false, "", "Client log entry not found");
+            return UsecaseResult(false, "", "Client log entry not found");
 
         repo.remove(entry);
-        return CommandResult(true, entry.id.value, "");
+        return UsecaseResult(true, entry.id.value, "");
     }
 
     size_t countLogs(TenantId tenantId, MobileAppId appId) {

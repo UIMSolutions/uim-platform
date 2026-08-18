@@ -22,9 +22,9 @@ class ManagePromptCollectionsUseCase {
     this.collections = repo;
   }
 
-  CommandResult createCollection(CreatePromptCollectionRequest r) {
+  UsecaseResult createCollection(CreatePromptCollectionRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Collection name is required");
+      return UsecaseResult(false, "", "Collection name is required");
 
     auto pc = PromptCollection(r.tenantId);
     pc.name = r.name;
@@ -34,7 +34,7 @@ class ManagePromptCollectionsUseCase {
     pc.promptCount = 0;
 
     collections.save(pc);
-    return CommandResult(true, pc.id.value, "");
+    return UsecaseResult(true, pc.id.value, "");
   }
 
   PromptCollection getCollection(TenantId tenantId, PromptCollectionId id) {
@@ -49,9 +49,9 @@ class ManagePromptCollectionsUseCase {
     return collections.findByTenant(tenantId);
   }
 
-  CommandResult patchCollection(PatchPromptCollectionRequest r) {
+  UsecaseResult patchCollection(PatchPromptCollectionRequest r) {
     if (!collections.existsById(r.tenantId, r.collectionId))
-      return CommandResult(false, "", "Prompt collection not found");
+      return UsecaseResult(false, "", "Prompt collection not found");
       
     auto pc = collections.findById(r.tenantId, r.collectionId);
     if (r.name.length > 0)
@@ -61,15 +61,15 @@ class ManagePromptCollectionsUseCase {
     pc.updatedAt = currentTimestamp();
     
     collections.save(pc);
-    return CommandResult(true, pc.id.value, "");
+    return UsecaseResult(true, pc.id.value, "");
   }
 
-  CommandResult deleteCollection(TenantId tenantId, PromptCollectionId id) {
+  UsecaseResult deleteCollection(TenantId tenantId, PromptCollectionId id) {
     auto collection = collections.findById(tenantId, id);
     if (collection.isNull)
-      return CommandResult(false, "", "Prompt collection not found");
+      return UsecaseResult(false, "", "Prompt collection not found");
 
     collections.remove(collection);
-    return CommandResult(true, collection.id.value, "");
+    return UsecaseResult(true, collection.id.value, "");
   }
 }

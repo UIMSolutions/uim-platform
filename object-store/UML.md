@@ -138,11 +138,11 @@ sequenceDiagram
 
     App->>OC: POST /storage-objects { bucketId, key, mimeType, size }
     OC->>OUC: putObject(dto)
-    OUC-->>OC: CommandResult(true, objectId)
+    OUC-->>OC: UsecaseResult(true, objectId)
     OC-->>App: 201 { id, etag }
 
     App->>LC: POST /lifecycle-rules { bucketId, prefix=logs/, expirationDays=30 }
     LC->>LUC: createRule(dto)
-    LUC-->>LC: CommandResult(true, ruleId)
+    LUC-->>LC: UsecaseResult(true, ruleId)
     LC-->>App: 201 { id }
 ```

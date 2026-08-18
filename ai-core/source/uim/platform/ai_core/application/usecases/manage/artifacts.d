@@ -17,18 +17,18 @@ class ManageArtifactsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createArtifact(CreateArtifactRequest r) {
+  UsecaseResult createArtifact(CreateArtifactRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Artifact name is required");
+      return UsecaseResult(false, "", "Artifact name is required");
 
     if (r.kind.length == 0)
-      return CommandResult(false, "", "Artifact kind is required");
+      return UsecaseResult(false, "", "Artifact kind is required");
 
     if (r.scenarioId.isEmpty)
-      return CommandResult(false, "", "Scenario ID is required");
+      return UsecaseResult(false, "", "Scenario ID is required");
       
     if (r.resourceGroupId.isEmpty)
-      return CommandResult(false, "", "Resource group ID is required");
+      return UsecaseResult(false, "", "Resource group ID is required");
 
     auto a = Artifact(r.tenantId);
     a.resourceGroupId = r.resourceGroupId;
@@ -65,7 +65,7 @@ class ManageArtifactsUseCase {
     a.labels = labels;
 
     repo.save(a);
-    return CommandResult(true, a.id.value, "");
+    return UsecaseResult(true, a.id.value, "");
   }
 
   Artifact getArtifact(TenantId tenantId, ResourceGroupId resourceGroupId, ArtifactId artifactId) {
@@ -88,13 +88,13 @@ class ManageArtifactsUseCase {
     return repo.findByExecution(tenantId, resourceGroupId, executionId);
   }
 
-  CommandResult deleteArtifact(TenantId tenantId, ResourceGroupId resourceGroupId, ArtifactId artifactId) {
+  UsecaseResult deleteArtifact(TenantId tenantId, ResourceGroupId resourceGroupId, ArtifactId artifactId) {
     auto artifact = repo.findById(tenantId, resourceGroupId, artifactId);
     if (artifact.isNull)
-      return CommandResult(false, "", "Artifact not found");
+      return UsecaseResult(false, "", "Artifact not found");
 
     repo.remove(artifact);
-    return CommandResult(true, artifact.id.value, "");
+    return UsecaseResult(true, artifact.id.value, "");
   }
 
   size_t count(TenantId tenantId, ResourceGroupId resourceGroupId) {

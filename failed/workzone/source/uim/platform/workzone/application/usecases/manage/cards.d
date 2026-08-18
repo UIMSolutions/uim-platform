@@ -22,9 +22,9 @@ class ManageCardsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createCard(CreateCardRequest req) {
+  UsecaseResult createCard(CreateCardRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Card title is required");
+      return UsecaseResult(false, "", "Card title is required");
 
     auto c = Card(req.tenantId, req.cardId, req.createdBy);
     c.title = req.title;
@@ -36,7 +36,7 @@ class ManageCardsUseCase {
     c.manifest = req.manifest;
     
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   Card getCard(TenantId tenantId, CardId id) {
@@ -51,10 +51,10 @@ class ManageCardsUseCase {
     return repo.findByType(tenantId, cardType);
   }
 
-  CommandResult updateCard(UpdateCardRequest req) {
+  UsecaseResult updateCard(UpdateCardRequest req) {
     auto c = repo.findById(req.tenantId, req.id);
     if (c.isNull)
-      return CommandResult(false, "", "Card not found");
+      return UsecaseResult(false, "", "Card not found");
 
     if (req.title.length > 0)
       c.title = req.title;
@@ -70,15 +70,15 @@ class ManageCardsUseCase {
     c.updatedAt = currentTimestamp();
 
     repo.update(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult deleteCard(TenantId tenantId, CardId id) {
+  UsecaseResult deleteCard(TenantId tenantId, CardId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Card not found");
+      return UsecaseResult(false, "", "Card not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

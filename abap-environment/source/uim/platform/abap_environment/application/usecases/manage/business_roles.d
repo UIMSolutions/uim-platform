@@ -18,15 +18,15 @@ class ManageBusinessRolesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createBusinessRole(CreateBusinessRoleRequest req) {
+  UsecaseResult createBusinessRole(CreateBusinessRoleRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Role name is required");
+      return UsecaseResult(false, "", "Role name is required");
 
     if (req.instanceId.isNull)
-      return CommandResult(false, "", "System instance ID is required");
+      return UsecaseResult(false, "", "System instance ID is required");
 
     if (repo.existsByName(req.tenantId, req.instanceId, req.name))
-      return CommandResult(false, "", "Business role '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Business role '" ~ req.name ~ "' already exists");
 
     auto role = BusinessRole(req.tenantId);
     role.instanceId = req.instanceId;
@@ -37,13 +37,13 @@ class ManageBusinessRolesUseCase {
     role.assignedCatalogs = req.assignedCatalogs;
 
     repo.save(role);
-    return CommandResult(true, role.id.value, "");
+    return UsecaseResult(true, role.id.value, "");
   }
 
-  CommandResult updateBusinessRole(UpdateBusinessRoleRequest req) {
+  UsecaseResult updateBusinessRole(UpdateBusinessRoleRequest req) {
     auto role = repo.findById(req.tenantId, req.businessRoleId);
     if (role.isNull)
-      return CommandResult(false, "", "Business role not found");
+      return UsecaseResult(false, "", "Business role not found");
 
     if (req.description.length > 0)
       role.description = req.description;
@@ -57,7 +57,7 @@ class ManageBusinessRolesUseCase {
     role.updatedAt = currentTimestamp();
 
     repo.update(role);
-    return CommandResult(true, role.id.value, "");
+    return UsecaseResult(true, role.id.value, "");
   }
 
   bool existsBusinessRole(TenantId tenantId, BusinessRoleId id) {
@@ -72,13 +72,13 @@ class ManageBusinessRolesUseCase {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteBusinessRole(TenantId tenantId, BusinessRoleId id) {
+  UsecaseResult deleteBusinessRole(TenantId tenantId, BusinessRoleId id) {
     auto role = repo.findById(tenantId, id);
     if (role.isNull)
-      return CommandResult(false, "", "Business role not found");
+      return UsecaseResult(false, "", "Business role not found");
 
     repo.remove(role);
-    return CommandResult(true, role.id.value, "");
+    return UsecaseResult(true, role.id.value, "");
   }
 }
 

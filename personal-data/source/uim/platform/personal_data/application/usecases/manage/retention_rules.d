@@ -18,9 +18,9 @@ class ManageRetentionRulesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createRetentionRule(CreateRetentionRuleRequest r) {
-        if (r.ruleId.isNull) return CommandResult(false, "", "ID is required");
-        if (r.name.isEmpty) return CommandResult(false, "", "Rule name is required");
+    UsecaseResult createRetentionRule(CreateRetentionRuleRequest r) {
+        if (r.ruleId.isNull) return UsecaseResult(false, "", "ID is required");
+        if (r.name.isEmpty) return UsecaseResult(false, "", "Rule name is required");
 
         RetentionRule rule;
         rule.id = r.ruleId;
@@ -40,7 +40,7 @@ class ManageRetentionRulesUseCase {
         rule.createdAt = currentTimestamp();
 
         repo.save(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
     RetentionRule getRetentionRule(TenantId tenantId, RetentionRuleId id) {
@@ -51,10 +51,10 @@ class ManageRetentionRulesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateRetentionRule(UpdateRetentionRuleRequest r) {
+    UsecaseResult updateRetentionRule(UpdateRetentionRuleRequest r) {
         auto existing = repo.findById(r.tenantId, r.ruleId);
         if (existing.isNull)
-            return CommandResult(false, "", "Retention rule not found");
+            return UsecaseResult(false, "", "Retention rule not found");
 
         if (r.name.length > 0) existing.name = r.name;
         if (r.description.length > 0) existing.description = r.description;
@@ -67,15 +67,15 @@ class ManageRetentionRulesUseCase {
         existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteRetentionRule(TenantId tenantId, RetentionRuleId id) {
+    UsecaseResult deleteRetentionRule(TenantId tenantId, RetentionRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
-            return CommandResult(false, "", "Retention rule not found");
+            return UsecaseResult(false, "", "Retention rule not found");
 
         repo.remove(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 }

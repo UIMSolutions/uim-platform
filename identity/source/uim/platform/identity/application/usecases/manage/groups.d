@@ -20,7 +20,7 @@ class ManageGroupsUseCase {
     IDMGroup[] listGroups(TenantId tenantId) { return repo.findByTenant(tenantId); }
     IDMGroup[] listByType(TenantId tenantId, GroupType type_) { return repo.findByType(tenantId, type_); }
 
-    CommandResult createGroup(GroupDTO dto) {
+    UsecaseResult createGroup(GroupDTO dto) {
         auto g = IDMGroup(dto.tenantId);
         g.id = dto.groupId;
         g.name = dto.name;
@@ -32,15 +32,15 @@ class ManageGroupsUseCase {
         g.memberIds = dto.memberIds;
 
         if (!IdentityValidator.isValidGroup(g))
-            return CommandResult(false, "", "Invalid group: name is required");
+            return UsecaseResult(false, "", "Invalid group: name is required");
 
         repo.save(g);
-        return CommandResult(true, g.id.value, "");
+        return UsecaseResult(true, g.id.value, "");
     }
 
-    CommandResult updateGroup(GroupDTO dto) {
+    UsecaseResult updateGroup(GroupDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.groupId);
-        if (existing.isNull) return CommandResult(false, "", "Group not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Group not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -48,33 +48,33 @@ class ManageGroupsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult addMember(TenantId tenantId, IDMGroupId groupId, UserId userId) {
+    UsecaseResult addMember(TenantId tenantId, IDMGroupId groupId, UserId userId) {
         auto g = repo.findById(tenantId, groupId);
-        if (g.isNull) return CommandResult(false, "", "Group not found");
+        if (g.isNull) return UsecaseResult(false, "", "Group not found");
         import std.algorithm : canFind;
         if (!g.memberIds.canFind(userId.value))
             g.memberIds ~= userId.value;
         repo.update(g);
-        return CommandResult(true, groupId.value, "");
+        return UsecaseResult(true, groupId.value, "");
     }
 
-    CommandResult removeMember(TenantId tenantId, IDMGroupId groupId, UserId userId) {
+    UsecaseResult removeMember(TenantId tenantId, IDMGroupId groupId, UserId userId) {
         auto g = repo.findById(tenantId, groupId);
-        if (g.isNull) return CommandResult(false, "", "Group not found");
+        if (g.isNull) return UsecaseResult(false, "", "Group not found");
         import std.algorithm : filter;
         import std.array : array;
         g.memberIds = g.memberIds.filter!(m => m != userId.value).array;
         repo.update(g);
-        return CommandResult(true, groupId.value, "");
+        return UsecaseResult(true, groupId.value, "");
     }
 
-    CommandResult deleteGroup(TenantId tenantId, IDMGroupId id) {
+    UsecaseResult deleteGroup(TenantId tenantId, IDMGroupId id) {
         auto entity = repo.findById(tenantId, id);
-        if (entity.isNull) return CommandResult(false, "", "Group not found");
+        if (entity.isNull) return UsecaseResult(false, "", "Group not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

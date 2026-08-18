@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageApplicationGroupsUseCase { 
     
-    CommandResult createApplicationGroup(CreateApplicationGroupRequest req);
-    CommandResult updateApplicationGroup(UpdateApplicationGroupRequest req);
+    UsecaseResult createApplicationGroup(CreateApplicationGroupRequest req);
+    UsecaseResult updateApplicationGroup(UpdateApplicationGroupRequest req);
     bool hasApplicationGroup(TenantId tenantId, ApplicationGroupId id);
     ApplicationGroup getApplicationGroup(TenantId tenantId, ApplicationGroupId id);
     ApplicationGroup[] listApplicationGroups(TenantId tenantId);
-    CommandResult deleteApplicationGroup(TenantId tenantId, ApplicationGroupId id);
+    UsecaseResult deleteApplicationGroup(TenantId tenantId, ApplicationGroupId id);
 
 }

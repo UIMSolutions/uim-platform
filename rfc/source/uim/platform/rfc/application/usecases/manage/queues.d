@@ -52,13 +52,13 @@ class ManageQueuesUseCase {
         return resp;
     }
 
-    CommandResult deleteQueueEntry(TenantId tenantId, string id) {
+    UsecaseResult deleteQueueEntry(TenantId tenantId, string id) {
         auto entry = _queueRepo.findById(tenantId, id);
         if (entry.isNull())
-            return CommandResult(false, id, "Queue entry not found: " ~ id);
+            return UsecaseResult(false, id, "Queue entry not found: " ~ id);
         if (!_queueRepo.remove(tenantId, id))
-            return CommandResult(false, id, "Failed to delete queue entry");
-        return CommandResult(true, id, "");
+            return UsecaseResult(false, id, "Failed to delete queue entry");
+        return UsecaseResult(true, id, "");
     }
 
     size_t countEntries(TenantId tenantId, QueueName queueName) {

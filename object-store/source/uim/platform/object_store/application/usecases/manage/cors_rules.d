@@ -24,13 +24,13 @@ class ManageCorsRulesUseCase {
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createRule(CreateCorsRuleRequest req) {
+  UsecaseResult createRule(CreateCorsRuleRequest req) {
     if (req.bucketId.isEmpty)
-      return CommandResult(false, "", "Bucket ID is required");
+      return UsecaseResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);
     if (bucket.isNull)
-      return CommandResult(false, "", "Bucket not found");
+      return UsecaseResult(false, "", "Bucket not found");
 
     auto rule = CorsRule(req.tenantId); //, UserId("test-user"));
     rule.bucketId = req.bucketId;
@@ -41,13 +41,13 @@ class ManageCorsRulesUseCase {
     rule.maxAgeSeconds = req.maxAgeSeconds > 0 ? req.maxAgeSeconds : 3600;
 
     corsRules.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(UpdateCorsRuleRequest req) {
+  UsecaseResult updateRule(UpdateCorsRuleRequest req) {
     auto rule = corsRules.findById(req.tenantId, req.corsRuleId);
     if (rule.isNull)
-      return CommandResult(false, "", "CORS rule not found");
+      return UsecaseResult(false, "", "CORS rule not found");
 
     if (req.allowedOrigins.length > 0)
       rule.allowedOrigins = req.allowedOrigins;
@@ -62,7 +62,7 @@ class ManageCorsRulesUseCase {
     rule.updatedAt = currentTimestamp();
 
     corsRules.update(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   CorsRule getRule(TenantId tenantId, CorsRuleId corsRuleId) {
@@ -73,12 +73,12 @@ class ManageCorsRulesUseCase {
     return corsRules.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult deleteRule(TenantId tenantId, CorsRuleId corsRuleId) {
+  UsecaseResult deleteRule(TenantId tenantId, CorsRuleId corsRuleId) {
     auto rule = corsRules.findById(tenantId, corsRuleId);
     if (rule.isNull)
-      return CommandResult(false, "", "CORS rule not found");
+      return UsecaseResult(false, "", "CORS rule not found");
 
     corsRules.remove(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 }

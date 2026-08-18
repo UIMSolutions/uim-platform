@@ -160,11 +160,11 @@ sequenceDiagram
 
     Admin->>SC: POST /spaces { name, diskStorage, memoryQuota }
     SC->>SUC: createSpace(dto)
-    SUC-->>SC: CommandResult(true, spaceId)
+    SUC-->>SC: UsecaseResult(true, spaceId)
     SC-->>Admin: 201 { id }
 
     Admin->>CC: POST /connections { spaceId, name, type=HANA, host, port }
     CC->>CUC: createConnection(dto)
-    CUC-->>CC: CommandResult(true, connId)
+    CUC-->>CC: UsecaseResult(true, connId)
     CC-->>Admin: 201 { id }
 ```

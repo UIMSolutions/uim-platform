@@ -18,9 +18,9 @@ class ManageSubscriptionsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req) {
+    UsecaseResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req) {
         if (repo.existsByName(tenantId, req.name))
-            return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
+            return UsecaseResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
         auto sub = Subscription(tenantId);
         sub.name = req.name;
@@ -31,7 +31,7 @@ class ManageSubscriptionsUseCase {
         sub.labels = req.labels.dup;
 
         repo.save(sub);
-        return CommandResult(true, sub.id.value, sub.toJson().toString());
+        return UsecaseResult(true, sub.id.value, sub.toJson().toString());
     }
 
     QueryResult getSubscription(TenantId tenantId, string id) {
@@ -47,10 +47,10 @@ class ManageSubscriptionsUseCase {
         return QueryResult(true, "", arr);
     }
 
-    CommandResult updateSubscription(TenantId tenantId, SubscriptionId id, UpdateSubscriptionRequest req) {
+    UsecaseResult updateSubscription(TenantId tenantId, SubscriptionId id, UpdateSubscriptionRequest req) {
         auto sub = repo.findById(tenantId, id);
         if (sub.isNull())
-            return CommandResult(false, "", "Subscription not found");
+            return UsecaseResult(false, "", "Subscription not found");
 
         if (req.description.length)
             sub.description = req.description;
@@ -64,15 +64,15 @@ class ManageSubscriptionsUseCase {
             sub.labels = req.labels.dup;
 
         repo.save(sub);
-        return CommandResult(true, sub.id.value, sub.toJson().toString());
+        return UsecaseResult(true, sub.id.value, sub.toJson().toString());
     }
 
-    CommandResult deleteSubscription(TenantId tenantId, SubscriptionId id) {
+    UsecaseResult deleteSubscription(TenantId tenantId, SubscriptionId id) {
         auto sub = repo.findById(tenantId, id);
         if (sub.isNull())
-            return CommandResult(false, "", "Subscription not found");
+            return UsecaseResult(false, "", "Subscription not found");
 
         repo.removeBy(sub);
-        return CommandResult(true, sub.id.value, "Subscription deleted");
+        return UsecaseResult(true, sub.id.value, "Subscription deleted");
     }
 }

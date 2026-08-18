@@ -19,16 +19,16 @@ class ManageExecutionsUseCase {
     this.confRepo = confRepo;
   }
 
-  CommandResult createExecution(CreateExecutionRequest r) {
+  UsecaseResult createExecution(CreateExecutionRequest r) {
     if (r.configurationId.isEmpty)
-      return CommandResult(false, "", "Configuration ID is required");
+      return UsecaseResult(false, "", "Configuration ID is required");
 
     if (r.resourceGroupId.isEmpty)
-      return CommandResult(false, "", "Resource group ID is required");
+      return UsecaseResult(false, "", "Resource group ID is required");
 
     auto conf = confRepo.findById(r.tenantId, r.resourceGroupId, r.configurationId);
     if (conf.isNull)
-      return CommandResult(false, "", "Configuration not found");
+      return UsecaseResult(false, "", "Configuration not found");
 
     auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId); // , r.createdBy);
     e.resourceGroupId = r.resourceGroupId;
@@ -39,13 +39,13 @@ class ManageExecutionsUseCase {
     e.statusMessage = "Execution created and pending";
 
     execRepo.save(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 
-  CommandResult patchExecution(PatchExecutionRequest r) {
+  UsecaseResult patchExecution(PatchExecutionRequest r) {
     auto e = execRepo.findById(r.tenantId, r.resourceGroupId, r.executionId);
     if (e.isNull)
-      return CommandResult(false, "", "Execution not found");
+      return UsecaseResult(false, "", "Execution not found");
 
     TargetStatus target;
     if (r.targetStatus == "stopped")
@@ -53,10 +53,10 @@ class ManageExecutionsUseCase {
     else if (r.targetStatus == "deleted")
       target = TargetStatus.deleted_;
     else
-      return CommandResult(false, "", "Invalid target status");
+      return UsecaseResult(false, "", "Invalid target status");
 
     if (!ExecutionScheduler.canTransition(e.status, target))
-      return CommandResult(false, "", "Cannot transition to target status from current status");
+      return UsecaseResult(false, "", "Cannot transition to target status from current status");
 
     e.targetStatus = target;
     if (target == TargetStatus.stopped)
@@ -69,7 +69,7 @@ class ManageExecutionsUseCase {
     e.updatedAt = currentTimestamp;
 
     execRepo.update(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 
   Execution getExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId) {
@@ -92,13 +92,13 @@ class ManageExecutionsUseCase {
     return execRepo.countByResourceGroup(tenantId, resourceGroupId);
   }
   
-  CommandResult deleteExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId) {
+  UsecaseResult deleteExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId) {
     auto execution = execRepo.findById(tenantId, resourceGroupId, executionId);
     if (execution.isNull)
-      return CommandResult(false, "", "Execution not found");
+      return UsecaseResult(false, "", "Execution not found");
 
     execRepo.remove(execution);
-    return CommandResult(true, execution.id.value, "");
+    return UsecaseResult(true, execution.id.value, "");
   }
 
 }

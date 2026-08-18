@@ -22,20 +22,20 @@ class ArchitectureBlocksService : IArchitectureBlocksApi {
         return usecase.getBlock(TenantId(tenantId), ArchitectureBlockId(id));
     }
 
-    override CommandResult createArchitectureBlock(string tenantId, CreateArchitectureBlockRequest request) {
+    override UsecaseResult createArchitectureBlock(string tenantId, CreateArchitectureBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         return usecase.createBlock(req);
     }
 
-    override CommandResult updateArchitectureBlock(string tenantId, string id, UpdateArchitectureBlockRequest request) {
+    override UsecaseResult updateArchitectureBlock(string tenantId, string id, UpdateArchitectureBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         req.blockId = ArchitectureBlockId(id);
         return usecase.updateBlock(req);
     }
 
-    override CommandResult deleteArchitectureBlock(string tenantId, string id) {
+    override UsecaseResult deleteArchitectureBlock(string tenantId, string id) {
         return usecase.deleteBlock(TenantId(tenantId), ArchitectureBlockId(id));
     }
 }

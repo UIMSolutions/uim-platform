@@ -13,13 +13,13 @@ mixin(ShowModule!());
 
 interface IManageTrainingJobsUseCase {
   
-  CommandResult createTrainingJob(CreateTrainingJobRequest r);
-  CommandResult patchTrainingJob(PatchTrainingJobRequest r);
+  UsecaseResult createTrainingJob(CreateTrainingJobRequest r);
+  UsecaseResult patchTrainingJob(PatchTrainingJobRequest r);
   TrainingJob getTrainingJob(ClientId clientId, TrainingJobId id);
   TrainingJob[] listTrainingJobs(ClientId clientId);
   TrainingJob[] listTrainingJobs(ClientId clientId, TrainingJobStatus status);
   TrainingJob[] listTrainingJobs(ClientId clientId, DocumentTypeId typeId);
-  CommandResult deleteTrainingJob(ClientId clientId, TrainingJobId id);
+  UsecaseResult deleteTrainingJob(ClientId clientId, TrainingJobId id);
   size_t countTrainingJobs(ClientId clientId);
 
 }

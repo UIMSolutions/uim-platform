@@ -25,16 +25,16 @@ class ManageServiceBindingsUseCase {
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createBinding(CreateServiceBindingRequest req) {
+  UsecaseResult createBinding(CreateServiceBindingRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Binding name is required");
+      return UsecaseResult(false, "", "Binding name is required");
       
     if (req.bucketId.isEmpty)
-      return CommandResult(false, "", "Bucket ID is required");
+      return UsecaseResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);
     if (bucket.isNull)
-      return CommandResult(false, "", "Bucket not found");
+      return UsecaseResult(false, "", "Bucket not found");
 
     auto accessKeyId = randomUUID().toString;
     auto secretKey = randomUUID().toString;
@@ -49,7 +49,7 @@ class ManageServiceBindingsUseCase {
     binding.expiresAt = req.expiresAt;
 
     bindingRepo.save(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 
   ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {
@@ -60,23 +60,23 @@ class ManageServiceBindingsUseCase {
     return bindingRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult revokeBinding(TenantId tenantId, ServiceBindingId id) {
+  UsecaseResult revokeBinding(TenantId tenantId, ServiceBindingId id) {
     auto binding = bindingRepo.findById(tenantId, id);
     if (binding.isNull)
-      return CommandResult(false, "", "Binding not found");
+      return UsecaseResult(false, "", "Binding not found");
 
     binding.status = BindingStatus.revoked;
     bindingRepo.update(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 
-  CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
+  UsecaseResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
     auto binding = bindingRepo.findById(tenantId, id);
     if (binding.isNull)
-      return CommandResult(false, "", "Binding not found");
+      return UsecaseResult(false, "", "Binding not found");
 
     bindingRepo.remove(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 }
 

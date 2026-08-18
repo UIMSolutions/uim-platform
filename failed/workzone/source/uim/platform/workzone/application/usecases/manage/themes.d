@@ -22,9 +22,9 @@ class ManageThemesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createTheme(CreateThemeRequest req) {
+  UsecaseResult createTheme(CreateThemeRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Theme name is required");
+      return UsecaseResult(false, "", "Theme name is required");
 
     auto t = Theme(req.tenantId);
     t.name = req.name;
@@ -37,7 +37,7 @@ class ManageThemesUseCase {
     t.isDefault = req.isDefault;
 
     repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   Theme getTheme(TenantId tenantId, ThemeId id) {
@@ -48,10 +48,10 @@ class ManageThemesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateTheme(UpdateThemeRequest req) {
+  UsecaseResult updateTheme(UpdateThemeRequest req) {
     auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
-      return CommandResult(false, "", "Theme not found");
+      return UsecaseResult(false, "", "Theme not found");
 
     if (req.name.length > 0)
       t.name = req.name;
@@ -64,15 +64,15 @@ class ManageThemesUseCase {
     t.updatedAt = currentTimestamp();
 
     repo.update(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
-  CommandResult deleteTheme(TenantId tenantId, ThemeId id) {
+  UsecaseResult deleteTheme(TenantId tenantId, ThemeId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
-      return CommandResult(false, "", "Theme not found");
+      return UsecaseResult(false, "", "Theme not found");
 
     repo.remove(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 }

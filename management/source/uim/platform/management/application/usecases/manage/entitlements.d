@@ -24,13 +24,13 @@ class ManageEntitlementsUseCase {
     this.evaluator = evaluator;
   }
 
-  CommandResult assignEntitlement(AssignEntitlementRequest request) {
+  UsecaseResult assignEntitlement(AssignEntitlementRequest request) {
     if (request.globalAccountId.isEmpty)
-      return CommandResult(false, "", "Global account ID is required");
+      return UsecaseResult(false, "", "Global account ID is required");
     if (request.servicePlanId.isEmpty)
-      return CommandResult(false, "", "Service plan ID is required");
+      return UsecaseResult(false, "", "Service plan ID is required");
     if (request.serviceName.isEmpty)
-      return CommandResult(false, "", "Service name is required");
+      return UsecaseResult(false, "", "Service name is required");
 
     // Check current quota usage for this plan in the global account
     auto existing = repo.findByServicePlan(request.tenantId, request.globalAccountId, request.servicePlanId);
@@ -54,13 +54,13 @@ class ManageEntitlementsUseCase {
     entitlement.assignedBy = request.assignedBy;
 
     repo.save(entitlement);
-    return CommandResult(true, entitlement.id.value, "");
+    return UsecaseResult(true, entitlement.id.value, "");
   }
 
-  CommandResult updateEntitlementQuota(UpdateEntitlementQuotaRequest request) {
+  UsecaseResult updateEntitlementQuota(UpdateEntitlementQuotaRequest request) {
     auto ent = repo.findById(request.tenantId, request.entitlementId);
     if (ent.isNull)
-      return CommandResult(false, "", "Entitlement not found");
+      return UsecaseResult(false, "", "Entitlement not found");
 
     ent.quotaAssigned = request.quotaAssigned;
     ent.unlimited = request.unlimited;
@@ -68,19 +68,19 @@ class ManageEntitlementsUseCase {
     ent.updatedAt = clockSeconds();
 
     repo.update(ent);
-    return CommandResult(true, ent.id.value, "");
+    return UsecaseResult(true, ent.id.value, "");
   }
 
-  CommandResult revokeEntitlement(TenantId tenantId, EntitlementId id) {
+  UsecaseResult revokeEntitlement(TenantId tenantId, EntitlementId id) {
     auto ent = repo.findById(tenantId, id);
     if (ent.isNull)
-      return CommandResult(false, "", "Entitlement not found");
+      return UsecaseResult(false, "", "Entitlement not found");
 
     ent.status = EntitlementStatus.revoked;
     ent.updatedAt = clockSeconds();
 
     repo.update(ent);
-    return CommandResult(true, ent.id.value, "");
+    return UsecaseResult(true, ent.id.value, "");
   }
 
   Entitlement getEntitlement(TenantId tenantId, EntitlementId id) {
@@ -99,13 +99,13 @@ class ManageEntitlementsUseCase {
     return repo.findByDirectory(tenantId, dirId);
   }
 
-  CommandResult deleteEntitlement(TenantId tenantId, EntitlementId id) {
+  UsecaseResult deleteEntitlement(TenantId tenantId, EntitlementId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Entitlement not found");
+      return UsecaseResult(false, "", "Entitlement not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }
 

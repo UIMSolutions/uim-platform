@@ -30,7 +30,7 @@ class ManageConsentRecordsUseCase {
         return repo.findByCustomer(tenantId, customerId);
     }
 
-    CommandResult grantConsent(ConsentRecordDTO dto) {
+    UsecaseResult grantConsent(ConsentRecordDTO dto) {
         
         auto cr = ConsentRecord(dto.tenantId);
         cr.customerId = dto.customerId;
@@ -44,40 +44,40 @@ class ManageConsentRecordsUseCase {
 
         
         try { cr.consentType = dto.consentType.to!ConsentType; }
-        catch (Exception) { return CommandResult(false, "", "Invalid consent type"); }
+        catch (Exception) { return UsecaseResult(false, "", "Invalid consent type"); }
         try { cr.legalBasis = dto.legalBasis.to!LegalBasis; }
-        catch (Exception) { return CommandResult(false, "", "Invalid legal basis"); }
+        catch (Exception) { return UsecaseResult(false, "", "Invalid legal basis"); }
 
         if (!IdentityValidator.isValidConsentRecord(cr))
-            return CommandResult(false, "", "Invalid consent record");
+            return UsecaseResult(false, "", "Invalid consent record");
 
         repo.save(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 
-    CommandResult revokeConsent(TenantId tenantId, ConsentRecordId id) {
+    UsecaseResult revokeConsent(TenantId tenantId, ConsentRecordId id) {
         
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Consent record not found");
+            return UsecaseResult(false, "", "Consent record not found");
 
         existing.granted = false;
         existing.revokedAt = MonoTime.currTime.ticks;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult revokeAllConsents(TenantId tenantId, CustomerId customerId) {
+    UsecaseResult revokeAllConsents(TenantId tenantId, CustomerId customerId) {
         repo.revokeByCustomer(tenantId, customerId);
-        return CommandResult(true, customerId.value, "");
+        return UsecaseResult(true, customerId.value, "");
     }
 
-    CommandResult deleteConsentRecord(TenantId tenantId, ConsentRecordId id) {
+    UsecaseResult deleteConsentRecord(TenantId tenantId, ConsentRecordId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Consent record not found");
+            return UsecaseResult(false, "", "Consent record not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

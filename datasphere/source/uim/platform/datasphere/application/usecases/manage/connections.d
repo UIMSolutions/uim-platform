@@ -21,11 +21,11 @@ class ManageConnectionsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createConnection(CreateConnectionRequest r) {
+  UsecaseResult createConnection(CreateConnectionRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Connection name is required");
+      return UsecaseResult(false, "", "Connection name is required");
     if (r.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
 
     auto c = Connection(r.tenantId);
     c.spaceId = r.spaceId;
@@ -38,7 +38,7 @@ class ManageConnectionsUseCase {
     c.isValid = false;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   Connection getConnection(TenantId tenantId, SpaceId spaceId, ConnectionId id) {
@@ -49,10 +49,10 @@ class ManageConnectionsUseCase {
     return repo.findBySpace(tenantId, spaceId);
   }
 
-  CommandResult updateConnection(UpdateConnectionRequest r) {
+  UsecaseResult updateConnection(UpdateConnectionRequest r) {
     auto connection = repo.findById(r.tenantId, r.spaceId, r.connectionId);
     if (connection.isNull)
-      return CommandResult(false, "", "Connection not found");
+      return UsecaseResult(false, "", "Connection not found");
 
     connection.name = r.name;
     connection.description = r.description;
@@ -63,15 +63,15 @@ class ManageConnectionsUseCase {
     connection.updatedAt = currentTimestamp;
 
     repo.update(connection);
-    return CommandResult(true, connection.id.value, "");
+    return UsecaseResult(true, connection.id.value, "");
   }
 
-  CommandResult deleteConnection(TenantId tenantId, SpaceId spaceId, ConnectionId id) {
+  UsecaseResult deleteConnection(TenantId tenantId, SpaceId spaceId, ConnectionId id) {
     auto connection = repo.findById(tenantId, spaceId, id);
     if (connection.isNull)
-      return CommandResult(false, "", "Connection not found");
+      return UsecaseResult(false, "", "Connection not found");
 
     repo.remove(connection);
-    return CommandResult(true, connection.id.value, "");
+    return UsecaseResult(true, connection.id.value, "");
   }
 }

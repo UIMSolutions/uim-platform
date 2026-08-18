@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManageProjectsUseCase {
   
-  CommandResult create(TenantId tenantId, CreateProjectRequest req);
+  UsecaseResult create(TenantId tenantId, CreateProjectRequest req);
   Project getById(TenantId tenantId, string id);
   Project[] list(TenantId tenantId);
   Project[] listByStatus(TenantId tenantId, string statusStr);
-  CommandResult update(TenantId tenantId, string id, UpdateProjectRequest req);
-  CommandResult remove(TenantId tenantId, string id);
+  UsecaseResult update(TenantId tenantId, string id, UpdateProjectRequest req);
+  UsecaseResult remove(TenantId tenantId, string id);
 
 }
 

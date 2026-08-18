@@ -17,7 +17,7 @@ interface IManageLogicFlowsUseCase {
     LogicFlow[] listLogicFlows(TenantId tenantId);
     LogicFlow[] listLogicFlows(TenantId tenantId, ApplicationId applicationId);
     LogicFlow[] listByPage(TenantId tenantId, PageId pageId);
-    CommandResult createLogicFlow(LogicFlowDTO dto);
-    CommandResult updateLogicFlow(LogicFlowDTO dto);
-    CommandResult deleteLogicFlow(TenantId tenantId, LogicFlowId id);
+    UsecaseResult createLogicFlow(LogicFlowDTO dto);
+    UsecaseResult updateLogicFlow(LogicFlowDTO dto);
+    UsecaseResult deleteLogicFlow(TenantId tenantId, LogicFlowId id);
 }

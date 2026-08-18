@@ -26,7 +26,7 @@ class ManageAuthorizationCodesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createCode(AuthorizationCodeDTO dto) {
+    UsecaseResult createCode(AuthorizationCodeDTO dto) {
         auto code = AuthorizationCode(dto.tenantId); //, dto.createdBy);
         code.id = dto.codeId;
         code.tenantId = dto.tenantId;
@@ -38,28 +38,28 @@ class ManageAuthorizationCodesUseCase {
         code.expiresAt = dto.expiresAt;
         auto error = OAuthValidator.validateAuthorizationCode(code);
         if (error.length > 0)
-            return CommandResult(false, "", error);
+            return UsecaseResult(false, "", error);
 
         repo.save(code);
-        return CommandResult(true, code.id.value, "");
+        return UsecaseResult(true, code.id.value, "");
     }
 
-    CommandResult markUsedCode(TenantId tenantId, AuthorizationCodeId id) {
+    UsecaseResult markUsedCode(TenantId tenantId, AuthorizationCodeId id) {
         auto code = repo.findById(tenantId, id);
         if (code.isNull)
-            return CommandResult(false, "", "Authorization code not found");
+            return UsecaseResult(false, "", "Authorization code not found");
         code.status = AuthCodeStatus.used;
         repo.update(code);
-        return CommandResult(true, code.id.value, "");
+        return UsecaseResult(true, code.id.value, "");
     }
 
-    CommandResult deleteCode(TenantId tenantId, AuthorizationCodeId id) {
+    UsecaseResult deleteCode(TenantId tenantId, AuthorizationCodeId id) {
         auto code = repo.findById(tenantId, id);
         if (code.isNull)
-            return CommandResult(false, "", "Authorization code not found");
+            return UsecaseResult(false, "", "Authorization code not found");
 
         repo.remove(code);
-        return CommandResult(true, code.id.value, "");
+        return UsecaseResult(true, code.id.value, "");
     }
 }
 

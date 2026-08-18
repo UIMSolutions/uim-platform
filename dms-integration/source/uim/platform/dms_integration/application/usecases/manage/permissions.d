@@ -38,7 +38,7 @@ class ManagePermissionsUseCase {
         return repo.findByPrincipal(tenantId, principalId);
     }
 
-    CommandResult grantPermission(PermissionDTO dto) {
+    UsecaseResult grantPermission(PermissionDTO dto) {
         Permission perm;
         perm.id = dto.permissionId;
         perm.tenantId = dto.tenantId;
@@ -63,27 +63,27 @@ class ManagePermissionsUseCase {
         import std.datetime.systime : Clock;
         perm.grantedAt = currentTimestamp;
         if (!DmsValidator.isValidPermission(perm))
-            return CommandResult(false, "", "Invalid permission: principalId and target (documentId or folderId) are required");
+            return UsecaseResult(false, "", "Invalid permission: principalId and target (documentId or folderId) are required");
         repo.save(perm);
-        return CommandResult(true, perm.id.value, "");
+        return UsecaseResult(true, perm.id.value, "");
     }
 
-    CommandResult revokePermission(TenantId tenantId, PermissionId id) {
+    UsecaseResult revokePermission(TenantId tenantId, PermissionId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Permission not found");
+            return UsecaseResult(false, "", "Permission not found");
         if (existing.isInherited)
-            return CommandResult(false, "", "Cannot revoke inherited permission directly");
+            return UsecaseResult(false, "", "Cannot revoke inherited permission directly");
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePermission(TenantId tenantId, PermissionId id) {
+    UsecaseResult deletePermission(TenantId tenantId, PermissionId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Permission not found");
+            return UsecaseResult(false, "", "Permission not found");
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }
 

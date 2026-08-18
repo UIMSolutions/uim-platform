@@ -21,15 +21,15 @@ class ManageRepositoriesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRepository(CreateRepositoryRequest r) {
+  UsecaseResult createRepository(CreateRepositoryRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "DmsRepository name is required");
+      return UsecaseResult(false, "", "DmsRepository name is required");
     if (r.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findByName(r.tenantId, r.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "DmsRepository with this name already exists");
+      return UsecaseResult(false, "", "DmsRepository with this name already exists");
 
     auto entity = DmsRepository(r.tenantId); //, r.repositoryId, r.createdBy);
     entity.name = r.name;
@@ -39,7 +39,7 @@ class ManageRepositoriesUseCase {
     entity.allowedFileTypes = r.allowedFileTypes;
 
     repo.save(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   DmsRepository[] listRepositories(TenantId tenantId) {
@@ -50,10 +50,10 @@ class ManageRepositoriesUseCase {
     return repo.findById(tenantId, repositoryId);
   }
 
-  CommandResult updateRepository(UpdateRepositoryRequest r) {
+  UsecaseResult updateRepository(UpdateRepositoryRequest r) {
     auto entity = repo.findById(r.tenantId, r.repositoryId);
     if (entity.isNull)
-      return CommandResult(false, "", "DmsRepository not found");
+      return UsecaseResult(false, "", "DmsRepository not found");
 
     if (r.name.length > 0)
       entity.name = r.name;
@@ -66,40 +66,40 @@ class ManageRepositoriesUseCase {
     entity.updatedAt = currentTimestamp();
 
     repo.update(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
-  CommandResult archiveRepository(TenantId tenantId, RepositoryId repositoryId) {
+  UsecaseResult archiveRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
     if (entity.isNull)
-      return CommandResult(false, "", "DmsRepository not found");
+      return UsecaseResult(false, "", "DmsRepository not found");
 
     entity.status = RepositoryStatus.archived;
     entity.updatedAt = currentTimestamp();
 
     repo.update(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
-  CommandResult activateRepository(TenantId tenantId, RepositoryId repositoryId) {
+  UsecaseResult activateRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
     if (entity.isNull)
-      return CommandResult(false, "", "DmsRepository not found");
+      return UsecaseResult(false, "", "DmsRepository not found");
 
     entity.status = RepositoryStatus.active;
     entity.updatedAt = currentTimestamp();
     
     repo.update(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
-  CommandResult deleteRepository(TenantId tenantId, RepositoryId repositoryId) {
+  UsecaseResult deleteRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
     if (entity.isNull)
-      return CommandResult(false, "", "DmsRepository not found");
+      return UsecaseResult(false, "", "DmsRepository not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }
 

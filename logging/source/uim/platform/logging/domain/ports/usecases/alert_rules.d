@@ -14,9 +14,9 @@ mixin(ShowModule!());
 @safe:
 interface IManageAlertRulesUseCase { 
 
-  CommandResult createAlertRule(CreateAlertRuleRequest req);
+  UsecaseResult createAlertRule(CreateAlertRuleRequest req);
 
-  CommandResult updateAlertRule(UpdateAlertRuleRequest req);
+  UsecaseResult updateAlertRule(UpdateAlertRuleRequest req);
 
   bool hasRule(TenantId tenantId, AlertRuleId id);
 
@@ -26,6 +26,6 @@ interface IManageAlertRulesUseCase {
 
   AlertRule[] listEnabledRules(TenantId tenantId);
 
-  CommandResult deleteAlertRule(TenantId tenantId, AlertRuleId id);
+  UsecaseResult deleteAlertRule(TenantId tenantId, AlertRuleId id);
 
 }

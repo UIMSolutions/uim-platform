@@ -62,10 +62,10 @@ class ManageThemesUseCase {
     return repo.findByTenant(tenantId, offset, limit);
   }
 
-  CommandResult updateTheme(UpdateThemeRequest req) {
+  UsecaseResult updateTheme(UpdateThemeRequest req) {
     auto theme = repo.findById(req.tenantId, req.themeId);
     if (theme.isNull)
-      return CommandResult(false, "", "Theme not found");
+      return UsecaseResult(false, "", "Theme not found");
 
     with (theme) {
       name = req.name.length > 0 ? req.name : theme.name;
@@ -87,18 +87,18 @@ class ManageThemesUseCase {
     theme.updatedAt = currentTimestamp();
 
     repo.update(theme);
-    return CommandResult(true, theme.id.value, "Theme updated successfully.");
+    return UsecaseResult(true, theme.id.value, "Theme updated successfully.");
   }
 
-  CommandResult deleteTheme(TenantId tenantId, ThemeId id) {
+  UsecaseResult deleteTheme(TenantId tenantId, ThemeId id) {
     auto theme = repo.findById(tenantId, id);
     if (theme.isNull)
-      return CommandResult(false, "", "Theme not found");
+      return UsecaseResult(false, "", "Theme not found");
 
     if (theme.isDefault)
-      return CommandResult(false, "", "Cannot delete the default theme");
+      return UsecaseResult(false, "", "Cannot delete the default theme");
 
     repo.remove(theme);
-    return CommandResult(true, theme.id.value, "Theme deleted successfully.");
+    return UsecaseResult(true, theme.id.value, "Theme deleted successfully.");
   }
 }

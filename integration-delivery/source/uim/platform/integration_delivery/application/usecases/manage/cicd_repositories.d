@@ -30,7 +30,7 @@ class ManageCicdRepositoriesUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createCicdRepository(CicdRepositoryDTO dto) {
+    UsecaseResult createCicdRepository(CicdRepositoryDTO dto) {
         auto r = CicdRepository(dto.tenantId, dto.createdBy);
         r.id = dto.cicdRepositoryId;
         r.name = dto.name;
@@ -42,16 +42,16 @@ class ManageCicdRepositoriesUseCase {
         r.status = RepositoryStatus.active;
 
         if (!CicdValidator.isValidRepository(r))
-            return CommandResult(false, "", "Invalid repository data: name and url required");
+            return UsecaseResult(false, "", "Invalid repository data: name and url required");
 
         repo.save(r);
-        return CommandResult(true, r.id.value, "");
+        return UsecaseResult(true, r.id.value, "");
     }
 
-    CommandResult updateCicdRepository(CicdRepositoryDTO dto) {
+    UsecaseResult updateCicdRepository(CicdRepositoryDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.cicdRepositoryId);
         if (existing.isNull)
-            return CommandResult(false, "", "Repository not found");
+            return UsecaseResult(false, "", "Repository not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -60,14 +60,14 @@ class ManageCicdRepositoriesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCicdRepository(TenantId tenantId, CicdRepositoryId id) {
+    UsecaseResult deleteCicdRepository(TenantId tenantId, CicdRepositoryId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Repository not found");
+            return UsecaseResult(false, "", "Repository not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

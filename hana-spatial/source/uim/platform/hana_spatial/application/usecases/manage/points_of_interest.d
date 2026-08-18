@@ -17,13 +17,13 @@ class ManagePointsOfInterestUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreatePoiRequest r) {
+  UsecaseResult create(CreatePoiRequest r) {
     auto err = SpatialValidator.validateId(r.id);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateName(r.name);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateCoordinate(r.latitude, r.longitude);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto poi = PointOfInterest(r.tenantId);
     poi.id = PointOfInterestId(r.id);
@@ -49,13 +49,13 @@ class ManagePointsOfInterestUseCase {
     }
 
     repo.save(poi);
-    return CommandResult(true, poi.id.value, "");
+    return UsecaseResult(true, poi.id.value, "");
   }
 
-  CommandResult update(UpdatePoiRequest r) {
+  UsecaseResult update(UpdatePoiRequest r) {
     auto existing = repo.findById(r.tenantId, PointOfInterestId(r.id));
     if (existing.isNull)
-      return CommandResult(false, "", "POI not found");
+      return UsecaseResult(false, "", "POI not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -69,7 +69,7 @@ class ManagePointsOfInterestUseCase {
     } catch (Exception) {}
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   PointOfInterest getById(TenantId tenantId, string id) {
@@ -80,11 +80,11 @@ class ManagePointsOfInterestUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, PointOfInterestId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "POI not found");
+      return UsecaseResult(false, "", "POI not found");
     repo.remove(tenantId, PointOfInterestId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

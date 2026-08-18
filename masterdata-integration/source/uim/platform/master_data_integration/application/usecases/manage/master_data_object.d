@@ -26,13 +26,13 @@ class ManageMasterDataObjectsUseCase {
     this.changeLogRepo = changeLogRepo;
   }
 
-  CommandResult createObject(CreateMasterDataObjectRequest req) {
+  UsecaseResult createObject(CreateMasterDataObjectRequest req) {
     /// Validate required fields
     if (req.objectType.length == 0)
-      return CommandResult(false, "", "Object type is required");
+      return UsecaseResult(false, "", "Object type is required");
 
     if (req.displayName.isEmpty)
-      return CommandResult(false, "", "Display name is required");
+      return UsecaseResult(false, "", "Display name is required");
 
     auto obj = MasterDataObject(req.tenantId); //, UserId("test-user"));
     obj.modelId = req.modelId;
@@ -53,13 +53,13 @@ class ManageMasterDataObjectsUseCase {
     // ToDo: logChange(req.tenantId, obj.id, req.modelId, obj.category,
     //   ChangeType.create_, obj.objectType, [], (string[string]).init,
     //   req.attributes, req.sourceSystem, req.sourceClient, req.createdBy, 0, 1);
-    return CommandResult(true, obj.id.value, "");
+    return UsecaseResult(true, obj.id.value, "");
   }
 
-  CommandResult updateObject(UpdateMasterDataObjectRequest req) {
+  UsecaseResult updateObject(UpdateMasterDataObjectRequest req) {
     auto obj = repo.findById(req.tenantId, req.objectId);
     if (obj.isNull)
-      return CommandResult(false, "", "Master data object not found");
+      return UsecaseResult(false, "", "Master data object not found");
 
     string[] changedFields;
     string[string] oldValues;
@@ -98,7 +98,7 @@ class ManageMasterDataObjectsUseCase {
     // ToDo: logChange(obj.tenantId, obj.id, obj.modelId, obj.category, ChangeType.update_,
     //   obj.objectType, changedFields, oldValues, req.attributes, obj.sourceSystem,
     //   obj.sourceClient, req.updatedBy, oldVersion, obj.versionNumber);
-    return CommandResult(true, obj.id.value, "");
+    return UsecaseResult(true, obj.id.value, "");
   }
 
   MasterDataObject getObject(TenantId tenantId, MasterDataObjectId id) {
@@ -121,17 +121,17 @@ class ManageMasterDataObjectsUseCase {
     return repo.findByGlobal(tenantId, globalId);
   }
 
-  CommandResult deleteObject(TenantId tenantId, MasterDataObjectId id) {
+  UsecaseResult deleteObject(TenantId tenantId, MasterDataObjectId id) {
     auto obj = repo.findById(tenantId, id);
     if (obj.isNull)
-      return CommandResult(false, "", "Master data object not found");
+      return UsecaseResult(false, "", "Master data object not found");
 
     repo.remove(obj);
     logChange(obj.tenantId, obj.id, obj.modelId, obj.category,
       ChangeType.delete_, obj.objectType, [], (string[string]).init,
       (string[string]).init, obj.sourceSystem, obj.sourceClient, "",
       obj.versionNumber, obj.versionNumber);
-    return CommandResult(true, obj.id.value, "");
+    return UsecaseResult(true, obj.id.value, "");
   }
 
   private void logChange(TenantId tenantId, MasterDataObjectId objectId,

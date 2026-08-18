@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManagePersonalDataRecordsUseCase { 
 
-    CommandResult createPersonalDataRecord(CreatePersonalDataRecordRequest r);
+    UsecaseResult createPersonalDataRecord(CreatePersonalDataRecordRequest r);
     PersonalDataRecord getPersonalDataRecord(TenantId tenantId, PersonalDataRecordId id);
     PersonalDataRecord[] listPersonalDataRecords(TenantId tenantId);
     PersonalDataRecord[] listPersonalDataRecords(TenantId tenantId, DataSubjectId dataSubjectId);
     PersonalDataRecord[] listPersonalDataRecords(TenantId tenantId, RegisteredApplicationId applicationId);
     PersonalDataRecord[] listPersonalDataRecords(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId appId);
-    CommandResult deletePersonalDataRecord(TenantId tenantId, PersonalDataRecordId id);
+    UsecaseResult deletePersonalDataRecord(TenantId tenantId, PersonalDataRecordId id);
 
 }

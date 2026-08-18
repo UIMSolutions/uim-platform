@@ -20,9 +20,9 @@ class ManageAssetsUseCase {
     this.validator = AnalyticsValidator();
   }
 
-  CommandResult createAsset(CreateAssetRequest req) {
+  UsecaseResult createAsset(CreateAssetRequest req) {
     auto err = validator.validateCreate(req);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto now = MonoTime.currTime.ticks;
 
@@ -39,7 +39,7 @@ class ManageAssetsUseCase {
     asset.updatedAt = cast(long) now;
 
     auto id = repository.save(asset);
-    return CommandResult(true, id, "Created");
+    return UsecaseResult(true, id, "Created");
   }
 
   InsightAsset[] listAssets(TenantId tenantId) {
@@ -50,12 +50,12 @@ class ManageAssetsUseCase {
     return repository.findById(tenantId, id);
   }
 
-  CommandResult updateAsset(UpdateAssetRequest req) {
+  UsecaseResult updateAsset(UpdateAssetRequest req) {
     auto err = validator.validateUpdate(req);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto existing = repository.findById(req.tenantId, req.id);
-    if (existing.isNull) return CommandResult(false, "", "Asset not found");
+    if (existing.isNull) return UsecaseResult(false, "", "Asset not found");
 
     existing.name = req.name;
     existing.kind = req.kind;
@@ -65,27 +65,27 @@ class ManageAssetsUseCase {
     existing.updatedAt = cast(long) MonoTime.currTime.ticks;
 
     if (!repository.update(existing))
-      return CommandResult(false, "", "Update failed");
+      return UsecaseResult(false, "", "Update failed");
 
-    return CommandResult(true, existing.id, "Updated");
+    return UsecaseResult(true, existing.id, "Updated");
   }
 
-  CommandResult deleteAsset(TenantId tenantId, AssetId id) {
+  UsecaseResult deleteAsset(TenantId tenantId, AssetId id) {
     if (!repository.remove(tenantId, id))
-      return CommandResult(false, "", "Asset not found");
-    return CommandResult(true, id, "Deleted");
+      return UsecaseResult(false, "", "Asset not found");
+    return UsecaseResult(true, id, "Deleted");
   }
 
-  CommandResult publishAsset(TenantId tenantId, AssetId id) {
+  UsecaseResult publishAsset(TenantId tenantId, AssetId id) {
     auto existing = repository.findById(tenantId, id);
-    if (existing.isNull) return CommandResult(false, "", "Asset not found");
+    if (existing.isNull) return UsecaseResult(false, "", "Asset not found");
 
     existing.published = true;
     existing.updatedAt = cast(long) MonoTime.currTime.ticks;
     if (!repository.update(existing))
-      return CommandResult(false, "", "Publish failed");
+      return UsecaseResult(false, "", "Publish failed");
 
-    return CommandResult(true, existing.id, "Published");
+    return UsecaseResult(true, existing.id, "Published");
   }
 }
 

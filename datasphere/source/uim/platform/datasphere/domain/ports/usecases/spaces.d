@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageSpacesUseCase { 
   
-  CommandResult createSpace(CreateSpaceRequest r);
+  UsecaseResult createSpace(CreateSpaceRequest r);
   Space getSpace(TenantId tenantId, SpaceId id);
   Space[] listSpaces(TenantId tenantId);
-  CommandResult updateSpace(UpdateSpaceRequest r);
-  CommandResult deleteSpace(TenantId tenantId, SpaceId id);
+  UsecaseResult updateSpace(UpdateSpaceRequest r);
+  UsecaseResult deleteSpace(TenantId tenantId, SpaceId id);
   size_t countSpaces(TenantId tenantId);
   
 }

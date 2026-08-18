@@ -20,11 +20,11 @@ class ManageNotificationChannelsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createChannel(CreateNotificationChannelRequest req) {
+  UsecaseResult createChannel(CreateNotificationChannelRequest req) {
     import std.uuid : randomUUID;
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Channel name is required");
+      return UsecaseResult(false, "", "Channel name is required");
 
     auto channel = NotificationChannel(req.tenantId); //, req.createdBy);
     channel.name = req.name;
@@ -40,13 +40,13 @@ class ManageNotificationChannelsUseCase {
     channel.slackChannel = req.slackChannel;
 
     repo.save(channel);
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
-  CommandResult updateChannel(UpdateNotificationChannelRequest req) {
+  UsecaseResult updateChannel(UpdateNotificationChannelRequest req) {
     auto channel = repo.findById(req.tenantId, req.channelId);
     if (channel.isNull)
-      return CommandResult(false, "", "Notification channel not found");
+      return UsecaseResult(false, "", "Notification channel not found");
 
     NotificationChannel updated = channel;
 
@@ -72,7 +72,7 @@ class ManageNotificationChannelsUseCase {
     updated.updatedAt = clockSeconds();
   
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
   NotificationChannel getChannel(TenantId tenantId, NotificationChannelId id) {
@@ -83,13 +83,13 @@ class ManageNotificationChannelsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteChannel(TenantId tenantId, NotificationChannelId id) {
+  UsecaseResult deleteChannel(TenantId tenantId, NotificationChannelId id) {
     auto channel = repo.findById(tenantId, id);
     if (channel.isNull)
-      return CommandResult(false, "", "Notification channel not found");
+      return UsecaseResult(false, "", "Notification channel not found");
 
     repo.remove(channel);
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
 }

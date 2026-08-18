@@ -32,7 +32,7 @@ class ManageDeadLetterEntriesUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createDeadLetterEntry(DeadLetterEntryDTO dto) {
+    UsecaseResult createDeadLetterEntry(DeadLetterEntryDTO dto) {
         auto entry = DeadLetterEntry(dto.tenantId, dto.entryId.isNull ? DeadLetterEntryId(createId()) : dto.entryId, dto.createdBy);
         entry.originalMessageId = dto.originalMessageId;
         entry.channelId = dto.channelId;
@@ -42,14 +42,14 @@ class ManageDeadLetterEntriesUseCase {
         entry.status = DeadLetterStatus.pending;
         
         repo.save(entry);
-        return CommandResult(true, entry.id.value, "");
+        return UsecaseResult(true, entry.id.value, "");
     }
 
-    CommandResult deleteDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id) {
+    UsecaseResult deleteDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id) {
         auto entry = repo.findById(tenantId, id);
-        if (entry.isNull) return CommandResult(false, "", "Dead-letter entry not found");
+        if (entry.isNull) return UsecaseResult(false, "", "Dead-letter entry not found");
 
         repo.remove(entry);
-        return CommandResult(true, entry.id.value, "");
+        return UsecaseResult(true, entry.id.value, "");
     }
 }

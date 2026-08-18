@@ -22,7 +22,7 @@ class ManageUserSessionsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createUserSession(CreateUserSessionRequest r) {
+    UsecaseResult createUserSession(CreateUserSessionRequest r) {
         auto ses = UserSession(r.tenantId); //, UserId("test-user"));
         ses.appId = r.appId;
         ses.userId = r.userId;
@@ -34,19 +34,19 @@ class ManageUserSessionsUseCase {
         ses.lastActivityAt = ses.startedAt;
 
         repo.save(ses);
-        return CommandResult(true, ses.id.value, "");
+        return UsecaseResult(true, ses.id.value, "");
     }
 
-    CommandResult terminateUserSession(TenantId tenantId, UserSessionId id) {
+    UsecaseResult terminateUserSession(TenantId tenantId, UserSessionId id) {
         auto ses = repo.findById(tenantId, id);
         if (ses.isNull)
-            return CommandResult(false, "", "Session not found");
+            return UsecaseResult(false, "", "Session not found");
         ses.status = SessionStatus.terminated;
         ses.endedAt = currentTimestamp();
         ses.updatedAt = currentTimestamp();
 
         repo.update(ses);
-        return CommandResult(true, ses.id.value, "");
+        return UsecaseResult(true, ses.id.value, "");
     }
 
     UserSession getUserSession(TenantId tenantId, UserSessionId id) {
@@ -65,13 +65,13 @@ class ManageUserSessionsUseCase {
         return repo.findActive(tenantId, appId);
     }
 
-    CommandResult deleteUserSession(TenantId tenantId, UserSessionId id) {
+    UsecaseResult deleteUserSession(TenantId tenantId, UserSessionId id) {
         auto ses = repo.findById(tenantId, id);
         if (ses.isNull)
-            return CommandResult(false, "", "Session not found");
+            return UsecaseResult(false, "", "Session not found");
 
         repo.remove(ses);
-        return CommandResult(true, ses.id.value, "");
+        return UsecaseResult(true, ses.id.value, "");
     }
 
     size_t countActive(TenantId tenantId, MobileAppId appId) {

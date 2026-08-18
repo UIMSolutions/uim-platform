@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManageResidenceRulesUseCase { 
     
-    CommandResult createResidenceRule(CreateResidenceRuleRequest req);
-    CommandResult updateResidenceRule(UpdateResidenceRuleRequest req);
+    UsecaseResult createResidenceRule(CreateResidenceRuleRequest req);
+    UsecaseResult updateResidenceRule(UpdateResidenceRuleRequest req);
     bool hasResidenceRule(TenantId tenantId, ResidenceRuleId id);
     ResidenceRule getResidenceRule(TenantId tenantId, ResidenceRuleId id);
     ResidenceRule[] listResidenceRules(TenantId tenantId);
     ResidenceRule[] listResidenceRules(TenantId tenantId, BusinessPurposeId purposeId);
-    CommandResult deleteResidenceRule(TenantId tenantId, ResidenceRuleId id);
+    UsecaseResult deleteResidenceRule(TenantId tenantId, ResidenceRuleId id);
 
 }

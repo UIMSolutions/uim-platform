@@ -18,13 +18,13 @@ class ManageConsentRecordsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createConsentRecord(CreateConsentRecordRequest r) {
+    UsecaseResult createConsentRecord(CreateConsentRecordRequest r) {
         if (r.tenantId.isEmpty)
-            return CommandResult(false, "", "Tenant ID is required");
+            return UsecaseResult(false, "", "Tenant ID is required");
         if (r.dataSubjectId.isEmpty)
-            return CommandResult(false, "", "Data subject ID is required");
+            return UsecaseResult(false, "", "Data subject ID is required");
         if (r.purposeId.isEmpty)
-            return CommandResult(false, "", "Purpose ID is required");
+            return UsecaseResult(false, "", "Purpose ID is required");
 
         ConsentRecord cr = ConsentRecord(r.tenantId);
         cr.id = r.recordId;
@@ -42,7 +42,7 @@ class ManageConsentRecordsUseCase {
         cr.createdAt = currentTimestamp();
 
         repo.save(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 
     bool hasConsentRecord(TenantId tenantId, ConsentRecordId id) {
@@ -61,25 +61,25 @@ class ManageConsentRecordsUseCase {
         return repo.findByDataSubject(tenantId, dataSubjectId);
     }
 
-    CommandResult withdrawConsentRecord(WithdrawConsentRequest r) {
+    UsecaseResult withdrawConsentRecord(WithdrawConsentRequest r) {
         auto existing = repo.findById(r.tenantId, r.recordId);
         if (existing.isNull)
-            return CommandResult(false, "", "Consent record not found");
+            return UsecaseResult(false, "", "Consent record not found");
 
         existing.status = ConsentStatus.withdrawn;
         existing.withdrawnAt = currentTimestamp();
         existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteConsentRecord(TenantId tenantId, ConsentRecordId id) {
+    UsecaseResult deleteConsentRecord(TenantId tenantId, ConsentRecordId id) {
         auto record = repo.findById(tenantId, id);
         if (record.isNull)
-            return CommandResult(false, "", "Consent record not found");
+            return UsecaseResult(false, "", "Consent record not found");
 
         repo.remove(record);
-        return CommandResult(true, record.id.value, "");
+        return UsecaseResult(true, record.id.value, "");
     }
 }

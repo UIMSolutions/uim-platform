@@ -30,7 +30,7 @@ class ManageAppBuildsUseCase {
         return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult createAppBuild(AppBuildDTO dto) {
+    UsecaseResult createAppBuild(AppBuildDTO dto) {
         auto e = AppBuild(dto.tenantId, dto.buildId.isNull ? AppBuildId(createId()) : dto.buildId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.name = dto.name;
@@ -41,15 +41,15 @@ class ManageAppBuildsUseCase {
         e.buildConfig = dto.buildConfig;
         e.signingConfig = dto.signingConfig;
         if (!BuildAppsValidator.isValidAppBuild(e))
-            return CommandResult(false, "", "Invalid app build data");
+            return UsecaseResult(false, "", "Invalid app build data");
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateAppBuild(AppBuildDTO dto) {
+    UsecaseResult updateAppBuild(AppBuildDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.buildId);
         if (existing.isNull)
-            return CommandResult(false, "", "App build not found");
+            return UsecaseResult(false, "", "App build not found");
             
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -58,16 +58,16 @@ class ManageAppBuildsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAppBuild(TenantId tenantId, AppBuildId id) {
+    UsecaseResult deleteAppBuild(TenantId tenantId, AppBuildId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "App build not found");
+            return UsecaseResult(false, "", "App build not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 
     private static BuildTarget toBuildTarget(string value) {

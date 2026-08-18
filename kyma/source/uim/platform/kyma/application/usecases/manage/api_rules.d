@@ -21,16 +21,16 @@ class ManageApiRulesUseCase {
     this.ruleRepository = ruleRepository;
   }
 
-  CommandResult createApiRule(CreateApiRuleRequest req) {
+  UsecaseResult createApiRule(CreateApiRuleRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "API rule name is required");
+      return UsecaseResult(false, "", "API rule name is required");
     if (req.serviceName.isEmpty)
-      return CommandResult(false, "", "Service name is required");
+      return UsecaseResult(false, "", "Service name is required");
     if (req.host.length == 0)
-      return CommandResult(false, "", "Host is required");
+      return UsecaseResult(false, "", "Host is required");
 
     if (ruleRepository.existsByName(req.namespaceId, req.name))
-      return CommandResult(false, "", "API rule '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "API rule '" ~ req.name ~ "' already exists");
 
     auto rule = ApiRule(req.tenantId); //, req.createdBy);
     with (rule) {
@@ -69,17 +69,17 @@ class ManageApiRulesUseCase {
     rule.rules = entries;
 
     ruleRepository.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult updateApiRule(string id, UpdateApiRuleRequest req) {
+  UsecaseResult updateApiRule(string id, UpdateApiRuleRequest req) {
     return updateApiRule(ApiRuleId(id), req);
   }
 
-  CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
+  UsecaseResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
     auto rule = ruleRepository.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "API rule not found");
+      return UsecaseResult(false, "", "API rule not found");
 
     if (req.description.length > 0)
       rule.description = req.description;
@@ -121,7 +121,7 @@ class ManageApiRulesUseCase {
     rule.updatedAt = clockSeconds();
 
     ruleRepository.update(rule);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   bool hasApiRule(string id) {
@@ -156,17 +156,17 @@ class ManageApiRulesUseCase {
     return ruleRepository.findByEnvironment(envId);
   }
 
-  CommandResult deleteApiRule(string id) {
+  UsecaseResult deleteApiRule(string id) {
     return deleteApiRule(ApiRuleId(id));
   }
 
-  CommandResult deleteApiRule(ApiRuleId id) {
+  UsecaseResult deleteApiRule(ApiRuleId id) {
     auto rule = ruleRepository.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "API rule not found");
+      return UsecaseResult(false, "", "API rule not found");
 
     ruleRepository.remove(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
 }

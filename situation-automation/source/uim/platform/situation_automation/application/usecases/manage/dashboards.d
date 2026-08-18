@@ -17,14 +17,14 @@ class ManageDashboardsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDashboard(CreateDashboardRequest r) {
+    UsecaseResult createDashboard(CreateDashboardRequest r) {
         auto err = SituationEvaluator.validate(r.tenantId, r.dashboardId.value, r.name);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         auto existing = repo.findById(r.tenantId, r.dashboardId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Dashboard already exists");
+            return UsecaseResult(false, "", "Dashboard already exists");
 
         auto d = Dashboard(r.tenantId, r.dashboardId, r.createdBy);
         d.name = r.name;
@@ -32,7 +32,7 @@ class ManageDashboardsUseCase {
         d.refreshIntervalSeconds = r.refreshIntervalSeconds;
 
         repo.save(d);
-        return CommandResult(true, d.id.value, "");
+        return UsecaseResult(true, d.id.value, "");
     }
 
     Dashboard getDashboard(TenantId tenantId, DashboardId id) {
@@ -43,10 +43,10 @@ class ManageDashboardsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateDashboard(UpdateDashboardRequest r) {
+    UsecaseResult updateDashboard(UpdateDashboardRequest r) {
         auto dashboard = repo.findById(r.tenantId, r.dashboardId);
         if (dashboard.isNull)
-            return CommandResult(false, "", "Dashboard not found");
+            return UsecaseResult(false, "", "Dashboard not found");
 
         dashboard.updatedAt = currentTimestamp();
         dashboard.name = r.name;
@@ -54,15 +54,15 @@ class ManageDashboardsUseCase {
         dashboard.refreshIntervalSeconds = r.refreshIntervalSeconds;
 
         repo.update(dashboard);
-        return CommandResult(true, dashboard.id.value, "");
+        return UsecaseResult(true, dashboard.id.value, "");
     }
 
-    CommandResult deleteDashboard(TenantId tenantId, DashboardId id) {
+    UsecaseResult deleteDashboard(TenantId tenantId, DashboardId id) {
         auto dashboard = repo.findById(tenantId, id);
         if (dashboard.isNull)
-            return CommandResult(false, "", "Dashboard not found");
+            return UsecaseResult(false, "", "Dashboard not found");
 
         repo.remove(dashboard);
-        return CommandResult(true, dashboard.id.value, "");
+        return UsecaseResult(true, dashboard.id.value, "");
     }
 }

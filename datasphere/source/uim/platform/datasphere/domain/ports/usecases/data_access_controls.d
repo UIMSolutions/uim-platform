@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageDataAccessControlsUseCase { 
 
-  CommandResult createDataAccessControl(CreateDataAccessControlRequest r);
+  UsecaseResult createDataAccessControl(CreateDataAccessControlRequest r);
   DataAccessControl getDataAccessControl(TenantId tenantId, SpaceId spaceId, DataAccessControlId id);
   DataAccessControl[] listDataAccessControls(TenantId tenantId, SpaceId spaceId);
-  CommandResult updateDataAccessControl(UpdateDataAccessControlRequest r);
-  CommandResult deleteDataAccessControl(TenantId tenantId, SpaceId spaceId, DataAccessControlId id);
+  UsecaseResult updateDataAccessControl(UpdateDataAccessControlRequest r);
+  UsecaseResult deleteDataAccessControl(TenantId tenantId, SpaceId spaceId, DataAccessControlId id);
 
 }

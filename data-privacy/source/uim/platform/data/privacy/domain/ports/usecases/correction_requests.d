@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageCorrectionRequestsUseCase { 
 
-  CommandResult createRequest(CreateCorrectionRequest req);
+  UsecaseResult createRequest(CreateCorrectionRequest req);
   CorrectionRequest getRequest(TenantId tenantId, CorrectionRequestId id);
   CorrectionRequest[] listRequests(TenantId tenantId);
   CorrectionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId);
-  CommandResult updateStatus(UpdateCorrectionStatusRequest req);
-  CommandResult deleteRequest(TenantId tenantId, CorrectionRequestId id);
+  UsecaseResult updateStatus(UpdateCorrectionStatusRequest req);
+  UsecaseResult deleteRequest(TenantId tenantId, CorrectionRequestId id);
   
 }

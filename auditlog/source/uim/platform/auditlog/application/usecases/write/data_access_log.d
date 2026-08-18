@@ -25,12 +25,12 @@ class WriteDataAccessLogUseCase {
     this.dalRepo = dalRepo;
   }
 
-  CommandResult writeLog(WriteDataAccessLogRequest req) {
+  UsecaseResult writeLog(WriteDataAccessLogRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.dataSubject.length == 0)
-      return CommandResult(false, "", "Data subject is required");
+      return UsecaseResult(false, "", "Data subject is required");
 
     // Create parent audit log entry
     auto entry = AuditLogEntry(req.tenantId);
@@ -62,7 +62,7 @@ class WriteDataAccessLogUseCase {
 
     dalRepo.save(daLog);
 
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 }
 

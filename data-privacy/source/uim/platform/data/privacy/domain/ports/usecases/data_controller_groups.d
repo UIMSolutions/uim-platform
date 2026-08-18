@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageDataControllerGroupsUseCase { 
 
-  CommandResult createGroup(CreateDataControllerGroupRequest req);
+  UsecaseResult createGroup(CreateDataControllerGroupRequest req);
   DataControllerGroup getGroup(TenantId tenantId, DataControllerGroupId id);
   DataControllerGroup[] listGroups(TenantId tenantId);
-  CommandResult updateGroup(UpdateDataControllerGroupRequest req);
-  CommandResult deleteGroup(TenantId tenantId, DataControllerGroupId groupId);
+  UsecaseResult updateGroup(UpdateDataControllerGroupRequest req);
+  UsecaseResult deleteGroup(TenantId tenantId, DataControllerGroupId groupId);
   
 }
 

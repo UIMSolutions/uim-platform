@@ -16,7 +16,7 @@ class ManageTemplatesUseCase {
 
   this(TemplateRepository repo) { _repo = repo; }
 
-  CommandResult create(TenantId tenantId, CreateTemplateRequest req) {
+  UsecaseResult create(TenantId tenantId, CreateTemplateRequest req) {
     ProjectType ptype  = ProjectType.other;
     TechStack   tstack = TechStack.other;
     static foreach (member; __traits(allMembers, ProjectType)) {
@@ -41,7 +41,7 @@ class ManageTemplatesUseCase {
     t.parameters  = req.parameters;
 
     _repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   ProjectTemplate getById(TenantId tenantId, string id) {
@@ -65,10 +65,10 @@ class ManageTemplatesUseCase {
     return _repo.findBuiltIn(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto t = _repo.findById(tenantId, TemplateId(id));
-    if (t.isNull) return CommandResult(false, "", "Template not found");
+    if (t.isNull) return UsecaseResult(false, "", "Template not found");
     _repo.remove(tenantId, TemplateId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

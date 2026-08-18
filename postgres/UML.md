@@ -228,7 +228,7 @@ R --> UC : false
 UC -> UC : validate(entity)
 UC -> R : save(entity)
 R --> UC : ok
-UC --> C : CommandResult(true, id)
+UC --> C : UsecaseResult(true, id)
 C --> Client : 201 Created { id, status: "provisioning" }
 @enduml
 ```

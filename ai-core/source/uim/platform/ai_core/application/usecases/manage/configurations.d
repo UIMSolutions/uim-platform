@@ -17,15 +17,15 @@ class ManageConfigurationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createConfiguration(CreateConfigurationRequest r) {
+  UsecaseResult createConfiguration(CreateConfigurationRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Configuration name is required");
+      return UsecaseResult(false, "", "Configuration name is required");
     if (r.scenarioId.isEmpty)
-      return CommandResult(false, "", "Scenario ID is required");
+      return UsecaseResult(false, "", "Scenario ID is required");
     if (r.executableId.isEmpty)
-      return CommandResult(false, "", "Executable ID is required");
+      return UsecaseResult(false, "", "Executable ID is required");
     if (r.resourceGroupId.isEmpty)
-      return CommandResult(false, "", "Resource group ID is required");
+      return UsecaseResult(false, "", "Resource group ID is required");
 
     auto c = Configuration(r.tenantId, r.configurationId.isNull ? ConfigurationId(createId()) : r.configurationId); // , r.createdBy);
     c.resourceGroupId = r.resourceGroupId;
@@ -61,7 +61,7 @@ class ManageConfigurationsUseCase {
     c.createdAt = currentTimestamp;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   Configuration getConfiguration(TenantId tenantId, ResourceGroupId resourceGroupId, ConfigurationId configurationId) {
@@ -76,13 +76,13 @@ class ManageConfigurationsUseCase {
     return repo.findByResourceGroup(tenantId, resourceGroupId);
   }
 
-  CommandResult deleteConfiguration(TenantId tenantId, ResourceGroupId resourceGroupId, ConfigurationId configurationId) {
+  UsecaseResult deleteConfiguration(TenantId tenantId, ResourceGroupId resourceGroupId, ConfigurationId configurationId) {
     auto config = repo.findById(tenantId, resourceGroupId, configurationId);
     if (config.isNull)
-      return CommandResult(false, "", "Configuration not found");
+      return UsecaseResult(false, "", "Configuration not found");
 
     repo.remove(config);
-    return CommandResult(true, config.id.value, "");
+    return UsecaseResult(true, config.id.value, "");
   }
 
   size_t count(TenantId tenantId, ResourceGroupId resourceGroupId) {

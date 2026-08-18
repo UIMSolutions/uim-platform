@@ -12,14 +12,14 @@ mixin(ShowModule!());
 @safe:
 interface IManageNotificationChannelsUseCase { 
   
-  CommandResult createChannel(CreateNotificationChannelRequest req);
+  UsecaseResult createChannel(CreateNotificationChannelRequest req);
 
-  CommandResult updateChannel(UpdateNotificationChannelRequest req);
+  UsecaseResult updateChannel(UpdateNotificationChannelRequest req);
 
   NotificationChannel getChannel(TenantId tenantId, NotificationChannelId id);
 
   NotificationChannel[] listChannels(TenantId tenantId);
 
-  CommandResult deleteChannel(TenantId tenantId, NotificationChannelId id);
+  UsecaseResult deleteChannel(TenantId tenantId, NotificationChannelId id);
    
 }

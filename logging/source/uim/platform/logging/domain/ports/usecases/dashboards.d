@@ -20,11 +20,11 @@ class ManageDashboardsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDashboard(CreateDashboardRequest req) {
+  UsecaseResult createDashboard(CreateDashboardRequest req) {
     import std.uuid : randomUUID;
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Dashboard name is required");
+      return UsecaseResult(false, "", "Dashboard name is required");
 
     auto d = Dashboard(req.tenantId); //, req.createdBy);
     d.name = req.name;
@@ -45,13 +45,13 @@ class ManageDashboardsUseCase {
     }
 
     repo.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
-  CommandResult updateDashboard(UpdateDashboardRequest req) {
+  UsecaseResult updateDashboard(UpdateDashboardRequest req) {
     auto d = repo.findById(req.tenantId, req.dashboardId);
     if (d.isNull)
-      return CommandResult(false, "", "Dashboard not found");
+      return UsecaseResult(false, "", "Dashboard not found");
 
     if (req.name.length > 0)
       d.name = req.name;
@@ -79,7 +79,7 @@ class ManageDashboardsUseCase {
     }
 
     repo.update(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
   bool hasDashboardById(TenantId tenantId, DashboardId dashboardId) {
@@ -98,13 +98,13 @@ class ManageDashboardsUseCase {
     return repo.findDefault(tenantId);
   }
 
-  CommandResult deleteDashboard(TenantId tenantId, DashboardId dashboardId) {
+  UsecaseResult deleteDashboard(TenantId tenantId, DashboardId dashboardId) {
     auto dashboard = repo.findById(tenantId, dashboardId);
     if (dashboard.isNull)
-      return CommandResult(false, "", "Dashboard not found");
+      return UsecaseResult(false, "", "Dashboard not found");
 
     repo.remove(dashboard);
-    return CommandResult(true, dashboard.id.value, "");
+    return UsecaseResult(true, dashboard.id.value, "");
   }
 
 

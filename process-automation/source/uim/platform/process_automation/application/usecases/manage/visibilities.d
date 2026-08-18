@@ -17,15 +17,15 @@ class ManageVisibilitiesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createVisibility(CreateVisibilityRequest r) {
+    UsecaseResult createVisibility(CreateVisibilityRequest r) {
         if (r.visibilityId.isEmpty)
-            return CommandResult(false, "", "Visibility ID is required");
+            return UsecaseResult(false, "", "Visibility ID is required");
             
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Visibility name is required");
+            return UsecaseResult(false, "", "Visibility name is required");
 
         if (repo.existsById(r.tenantId, r.visibilityId))
-            return CommandResult(false, "", "Visibility dashboard already exists");
+            return UsecaseResult(false, "", "Visibility dashboard already exists");
 
         auto v = Visibility(r.tenantId, r.visibilityId, r.createdBy);
         v.name = r.name;
@@ -35,7 +35,7 @@ class ManageVisibilitiesUseCase {
         v.refreshIntervalSeconds = r.refreshIntervalSeconds;
 
         repo.save(v);
-        return CommandResult(true, v.id.value, "");
+        return UsecaseResult(true, v.id.value, "");
     }
 
     Visibility getVisibility(TenantId tenantId, VisibilityId visibilityId) {
@@ -46,10 +46,10 @@ class ManageVisibilitiesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateVisibility(UpdateVisibilityRequest r) {
+    UsecaseResult updateVisibility(UpdateVisibilityRequest r) {
         auto existing = repo.findById(r.tenantId, r.visibilityId);
         if (existing.isNull)
-            return CommandResult(false, "", "Visibility dashboard not found");
+            return UsecaseResult(false, "", "Visibility dashboard not found");
 
         existing.name = r.name;
         existing.description = r.description;
@@ -60,15 +60,15 @@ class ManageVisibilitiesUseCase {
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteVisibility(TenantId tenantId, VisibilityId visibilityId) {
+    UsecaseResult deleteVisibility(TenantId tenantId, VisibilityId visibilityId) {
         auto visibility = repo.findById(tenantId, visibilityId);
         if (visibility.isNull)
-            return CommandResult(false, "", "Visibility dashboard not found");
+            return UsecaseResult(false, "", "Visibility dashboard not found");
 
         repo.remove(visibility);
-        return CommandResult(true, visibility.id.value, "");
+        return UsecaseResult(true, visibility.id.value, "");
     }
 }

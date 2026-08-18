@@ -12,6 +12,6 @@ mixin(ShowModule!());
 @safe:
 interface IWriteDataAccessLogUseCase {
   
-  CommandResult writeLog(WriteDataAccessLogRequest req);
+  UsecaseResult writeLog(WriteDataAccessLogRequest req);
 
 }

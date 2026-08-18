@@ -31,7 +31,7 @@ class ManageEventMessagesUseCase {
         return repo.findByChannel(tenantId, channelId);
     }
 
-    CommandResult publishMessage(EventMessageDTO dto) {
+    UsecaseResult publishMessage(EventMessageDTO dto) {
         auto msg = EventMessage(dto.tenantId, dto.messageId, dto.createdBy);
         msg.channelId = dto.channelId;
         msg.eventType = dto.eventType;
@@ -41,14 +41,14 @@ class ManageEventMessagesUseCase {
         msg.targetSystemId = dto.targetSystemId;
         msg.retryCount = 0;
         repo.save(msg);
-        return CommandResult(true, msg.id.value, "");
+        return UsecaseResult(true, msg.id.value, "");
     }
 
-    CommandResult deleteEventMessage(TenantId tenantId, EventMessageId id) {
+    UsecaseResult deleteEventMessage(TenantId tenantId, EventMessageId id) {
         auto msg = repo.findById(tenantId, id);
-        if (msg.isNull) return CommandResult(false, "", "Message not found");
+        if (msg.isNull) return UsecaseResult(false, "", "Message not found");
 
         repo.remove(msg);
-        return CommandResult(true, msg.id.value, "");
+        return UsecaseResult(true, msg.id.value, "");
     }
 }

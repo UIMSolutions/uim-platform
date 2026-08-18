@@ -19,15 +19,15 @@ class ManageDestructionRequestsUseCase {
     this.dataSubjects = dataSubjects;
   }
 
-  CommandResult createRequest(CreateDestructionRequest req) {
+  UsecaseResult createRequest(CreateDestructionRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.dataSubjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
 
     auto subject = dataSubjects.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     auto r = DestructionRequest(req.tenantId);
     r.dataSubjectId = req.dataSubjectId;
@@ -40,7 +40,7 @@ class ManageDestructionRequestsUseCase {
     r.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : currentTimestamp();
 
     repo.save(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
   DestructionRequest getRequest(TenantId tenantId, DestructionRequestId id) {
@@ -55,10 +55,10 @@ class ManageDestructionRequestsUseCase {
     return repo.findByDataSubject(tenantId, subjectId);
   }
 
-  CommandResult updateStatus(UpdateDestructionStatusRequest req) {
+  UsecaseResult updateStatus(UpdateDestructionStatusRequest req) {
     auto request = repo.findById(req.tenantId, req.requestId);
     if (request.isNull)
-      return CommandResult(false, "", "Destruction request not found");
+      return UsecaseResult(false, "", "Destruction request not found");
 
     request.status = req.status.toDestructionStatus;
     auto now = currentTimestamp();
@@ -68,15 +68,15 @@ class ManageDestructionRequestsUseCase {
       request.completedAt = now;
 
     repo.update(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 
-  CommandResult deleteRequest(TenantId tenantId, DestructionRequestId requestId) {
+  UsecaseResult deleteRequest(TenantId tenantId, DestructionRequestId requestId) {
     auto request = repo.findById(tenantId, requestId);
     if (request.isNull)
-      return CommandResult(false, "", "Destruction request not found");
+      return UsecaseResult(false, "", "Destruction request not found");
 
     repo.remove(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 }

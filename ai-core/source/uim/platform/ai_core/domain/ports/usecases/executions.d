@@ -12,13 +12,13 @@ mixin(ShowModule!());
 @safe:
 interface IManageExecutionsUseCase { 
 
-  CommandResult createExecution(CreateExecutionRequest r);
-  CommandResult patchExecution(PatchExecutionRequest r);
+  UsecaseResult createExecution(CreateExecutionRequest r);
+  UsecaseResult patchExecution(PatchExecutionRequest r);
   Execution getExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId);
   Execution[] listExecutions(TenantId tenantId, ResourceGroupId resourceGroupId);
   Execution[] listExecutions(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId);
   Execution[] listExecutions(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionStatus status);
   size_t countExecutions(TenantId tenantId, ResourceGroupId resourceGroupId);
-  CommandResult deleteExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId);
+  UsecaseResult deleteExecution(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutionId executionId);
 
 }

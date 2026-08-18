@@ -26,7 +26,7 @@ class ManageBrandingConfigsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createConfig(BrandingConfigDTO dto) {
+    UsecaseResult createConfig(BrandingConfigDTO dto) {
         BrandingConfig e;
         e.id = dto.configId;
         e.tenantId = dto.tenantId;
@@ -42,15 +42,15 @@ class ManageBrandingConfigsUseCase {
         e.createdBy = dto.createdBy;
         auto error = OAuthValidator.validateBrandingConfig(e);
         if (error.length > 0)
-            return CommandResult(false, "", error);
+            return UsecaseResult(false, "", error);
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateConfig(BrandingConfigDTO dto) {
+    UsecaseResult updateConfig(BrandingConfigDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.configId);
         if (existing.isNull)
-            return CommandResult(false, "", "Branding config not found");
+            return UsecaseResult(false, "", "Branding config not found");
 
         existing.name = dto.name;
         existing.description = dto.description;
@@ -63,17 +63,17 @@ class ManageBrandingConfigsUseCase {
         existing.customCss = dto.customCss;
         existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
 
-    CommandResult deleteConfig(TenantId tenantId, BrandingConfigId id) {
+    UsecaseResult deleteConfig(TenantId tenantId, BrandingConfigId id) {
         auto config = repo.findById(tenantId, id);
         if (config.isNull)            
-            return CommandResult(false, "", "Branding config not found");
+            return UsecaseResult(false, "", "Branding config not found");
 
         repo.remove(config);
-        return CommandResult(true, config.id.value, "");
+        return UsecaseResult(true, config.id.value, "");
     }
 }
 

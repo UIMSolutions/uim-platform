@@ -22,7 +22,7 @@ class ManageFeedsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createFeedEntry(CreateFeedEntryRequest req) {
+  UsecaseResult createFeedEntry(CreateFeedEntryRequest req) {
     auto entry = FeedEntry(req.tenantId, req.feedEntryId, req.actorId);
     entry.workspaceId = req.workspaceId;
     entry.actorId = req.actorId;
@@ -34,7 +34,7 @@ class ManageFeedsUseCase {
     entry.message = req.message;
 
     repo.save(entry);
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 
   FeedEntry getFeedEntry(TenantId tenantId, FeedEntryId id) {
@@ -45,12 +45,12 @@ class ManageFeedsUseCase {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  CommandResult deleteFeedEntry(TenantId tenantId, FeedEntryId id) {
+  UsecaseResult deleteFeedEntry(TenantId tenantId, FeedEntryId id) {
     auto entry = repo.findById(tenantId, id);
     if (entry.isNull)
-      return CommandResult(false, "", "Feed entry not found");
+      return UsecaseResult(false, "", "Feed entry not found");
 
     repo.remove(entry);
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 }

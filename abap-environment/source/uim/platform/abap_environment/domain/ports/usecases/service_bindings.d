@@ -13,10 +13,10 @@ import uim.platform.abap_environment;
 /// Application service for service binding CRUD.
 interface IManageServiceBindingsUseCase { 
 
-  CommandResult createServiceBinding(CreateServiceBindingRequest req);
-  CommandResult updateServiceBinding(UpdateServiceBindingRequest req);
+  UsecaseResult createServiceBinding(CreateServiceBindingRequest req);
+  UsecaseResult updateServiceBinding(UpdateServiceBindingRequest req);
   ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id);
   ServiceBinding[] listServiceBindings(TenantId tenantId, SystemInstanceId systemId);
-  CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id);
+  UsecaseResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id);
   
 }

@@ -21,37 +21,37 @@ class ManageDataBlocksUseCase {
         return repository.findByStatus(tenantId, status);
     }
 
-    CommandResult createBlock(CreateDataBlockRequest req) {
+    UsecaseResult createBlock(CreateDataBlockRequest req) {
         if (req.title.isEmpty)
-            return CommandResult(false, "", "Title is required");
+            return UsecaseResult(false, "", "Title is required");
 
         auto block = DataBlock(req.tenantId, DataBlockId(generateId()));
 
         repository.save(block);
-        return CommandResult(true, block.id.value, "Data block created");
+        return UsecaseResult(true, block.id.value, "Data block created");
     }
 
     DataBlock getBlock(TenantId tenantId, DataBlockId blockId) {
         return repository.findById(tenantId, blockId);
     }
 
-    CommandResult updateBlock(UpdateDataBlockRequest req) {
+    UsecaseResult updateBlock(UpdateDataBlockRequest req) {
         auto block = repository.findById(req.tenantId, req.blockId);
         if (block.id.value.length == 0)
-            return CommandResult(false, "", "Data block not found");
+            return UsecaseResult(false, "", "Data block not found");
 
         block.updatedAt = currentTimestamp();
 
         repository.update(block);
-        return CommandResult(true, block.id.value, "Data block updated");
+        return UsecaseResult(true, block.id.value, "Data block updated");
     }
 
-    CommandResult deleteBlock(TenantId tenantId, DataBlockId blockId) {
+    UsecaseResult deleteBlock(TenantId tenantId, DataBlockId blockId) {
         auto block = repository.findById(tenantId, blockId);
         if (block.id.value.length == 0)
-            return CommandResult(false, "", "Data block not found");
+            return UsecaseResult(false, "", "Data block not found");
 
         repository.remove(block);
-        return CommandResult(true, blockId.value, "Data block deleted");
+        return UsecaseResult(true, blockId.value, "Data block deleted");
     }
 }

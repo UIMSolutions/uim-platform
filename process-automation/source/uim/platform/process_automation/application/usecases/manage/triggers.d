@@ -17,15 +17,15 @@ class ManageTriggersUseCase {
         this.repo = repo;
     }
 
-    CommandResult createTrigger(CreateTriggerRequest r) {
+    UsecaseResult createTrigger(CreateTriggerRequest r) {
         if (r.triggerId.isEmpty)
-            return CommandResult(false, "", "Trigger ID is required");
+            return UsecaseResult(false, "", "Trigger ID is required");
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Trigger name is required");
+            return UsecaseResult(false, "", "Trigger name is required");
 
         auto existing = repo.findById(r.tenantId, r.triggerId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Trigger already exists");
+            return UsecaseResult(false, "", "Trigger already exists");
 
         auto t = Trigger(r.tenantId, r.triggerId, r.createdBy);
         t.processId = r.processId;
@@ -37,7 +37,7 @@ class ManageTriggersUseCase {
         t.filterExpression = r.filterExpression;
 
         repo.save(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 
     Trigger getTrigger(TenantId tenantId, TriggerId triggerId) {
@@ -52,10 +52,10 @@ class ManageTriggersUseCase {
         return repo.findByProcess(tenantId, processId);
     }
 
-    CommandResult updateTrigger(UpdateTriggerRequest r) {
+    UsecaseResult updateTrigger(UpdateTriggerRequest r) {
         auto existing = repo.findById(r.tenantId, r.triggerId);
         if (existing.isNull)
-            return CommandResult(false, "", "Trigger not found");
+            return UsecaseResult(false, "", "Trigger not found");
 
         existing.name = r.name;
         existing.description = r.description;
@@ -66,15 +66,15 @@ class ManageTriggersUseCase {
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteTrigger(TenantId tenantId, TriggerId triggerId) {
+    UsecaseResult deleteTrigger(TenantId tenantId, TriggerId triggerId) {
         auto trigger = repo.findById(tenantId, triggerId);
         if (trigger.isNull)
-            return CommandResult(false, "", "Trigger not found");
+            return UsecaseResult(false, "", "Trigger not found");
 
         repo.remove(trigger);
-        return CommandResult(true, trigger.id.value, "");
+        return UsecaseResult(true, trigger.id.value, "");
     }
 }

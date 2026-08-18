@@ -22,13 +22,13 @@ interface IManageAlertsUseCase {
 
   Alert[] listAlerts(TenantId tenantId, AlertSeverity severity);
 
-  CommandResult acknowledgeAlert(AcknowledgeAlertRequest req);
+  UsecaseResult acknowledgeAlert(AcknowledgeAlertRequest req);
 
-  CommandResult resolveAlert(ResolveAlertRequest req);
+  UsecaseResult resolveAlert(ResolveAlertRequest req);
 
-  CommandResult triggerAlert(TenantId tenantId, AlertRuleId ruleId, string ruleName,
+  UsecaseResult triggerAlert(TenantId tenantId, AlertRuleId ruleId, string ruleName,
     AlertSeverity severity, string message, long matchCount, LogEntryId sampleId);
 
-  CommandResult deleteAlert(TenantId tenantId, AlertId id);
+  UsecaseResult deleteAlert(TenantId tenantId, AlertId id);
 
 }

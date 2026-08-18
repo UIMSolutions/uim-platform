@@ -34,7 +34,7 @@ class ManageServiceCallsUseCase {
         return repo.findByPriority(tenantId, priority);
     }
 
-    CommandResult createServiceCall(ServiceCallDTO dto) {
+    UsecaseResult createServiceCall(ServiceCallDTO dto) {
         ServiceCall sc;
         sc.id = dto.serviceCallId;
         sc.tenantId = dto.tenantId;
@@ -53,15 +53,15 @@ class ManageServiceCallsUseCase {
         sc.longitude = dto.longitude;
         sc.createdBy = dto.createdBy;
         if (!FieldServiceValidator.isValidServiceCall(sc))
-            return CommandResult(false, "", "Invalid service call data");
+            return UsecaseResult(false, "", "Invalid service call data");
         repo.save(sc);
-        return CommandResult(true, sc.id.value, "");
+        return UsecaseResult(true, sc.id.value, "");
     }
 
-    CommandResult updateServiceCall(ServiceCallDTO dto) {
+    UsecaseResult updateServiceCall(ServiceCallDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.serviceCallId);
         if (existing.isNull)
-            return CommandResult(false, "", "Service call not found");
+            return UsecaseResult(false, "", "Service call not found");
         if (dto.subject.length > 0) existing.subject = dto.subject;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.contactPerson.length > 0) existing.contactPerson = dto.contactPerson;
@@ -70,15 +70,15 @@ class ManageServiceCallsUseCase {
         if (dto.resolution.length > 0) existing.resolution = dto.resolution;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServiceCall(TenantId tenantId, ServiceCallId id) {
+    UsecaseResult deleteServiceCall(TenantId tenantId, ServiceCallId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Service call not found");
+            return UsecaseResult(false, "", "Service call not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }

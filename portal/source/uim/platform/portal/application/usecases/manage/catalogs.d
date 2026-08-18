@@ -48,9 +48,9 @@ class ManageCatalogsUseCase {
     return catalogRepo.findByTenant(tenantId, offset, limit);
   }
 
-  CommandResult updateCatalog(UpdateCatalogRequest req) {
+  UsecaseResult updateCatalog(UpdateCatalogRequest req) {
     if (!catalogRepo.existsById(req.tenantId, req.catalogId))
-      return CommandResult(false, "", "Catalog not found");
+      return UsecaseResult(false, "", "Catalog not found");
 
     auto catalog = catalogRepo.findById(req.tenantId, req.catalogId);
     with (catalog) {
@@ -62,15 +62,15 @@ class ManageCatalogsUseCase {
     }
     
     catalogRepo.update(catalog);
-    return CommandResult(true, catalog.catalogId.value, "Catalog updated successfully.");
+    return UsecaseResult(true, catalog.catalogId.value, "Catalog updated successfully.");
   }
 
-  CommandResult deleteCatalog(TenantId tenantId, CatalogId id) {
+  UsecaseResult deleteCatalog(TenantId tenantId, CatalogId id) {
     auto catalog = catalogRepo.findById(tenantId, id);
     if (catalog.isNull)
-      return CommandResult(false, "", "Catalog not found");
+      return UsecaseResult(false, "", "Catalog not found");
 
     catalogRepo.remove(catalog);
-    return CommandResult(true, id.value, "Catalog deleted successfully.");
+    return UsecaseResult(true, id.value, "Catalog deleted successfully.");
   }
 }

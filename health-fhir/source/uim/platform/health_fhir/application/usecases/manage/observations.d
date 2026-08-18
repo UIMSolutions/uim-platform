@@ -17,12 +17,12 @@ class ManageObservationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createObservation(CreateObservationRequest r) {
+  UsecaseResult createObservation(CreateObservationRequest r) {
     auto err = FhirValidator.validateObservation(r.observationId.value, r.status_.to!string);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     if (!repo.findById(r.tenantId, r.observationId).isNull)
-      return CommandResult(false, "", "Observation already exists");
+      return UsecaseResult(false, "", "Observation already exists");
 
     auto o = Observation(r.tenantId);
     o.id                  = r.observationId;
@@ -38,13 +38,13 @@ class ManageObservationsUseCase {
     o.note_               = r.note_;
 
     repo.save(o);
-    return CommandResult(true, o.id.value, "");
+    return UsecaseResult(true, o.id.value, "");
   }
 
-  CommandResult updateObservation(UpdateObservationRequest r) {
+  UsecaseResult updateObservation(UpdateObservationRequest r) {
     auto existing = repo.findById(r.tenantId, r.observationId);
     if (existing.isNull)
-      return CommandResult(false, "", "Observation not found");
+      return UsecaseResult(false, "", "Observation not found");
 
     auto o = Observation(r.tenantId);
     o.id                  = r.observationId;
@@ -61,7 +61,7 @@ class ManageObservationsUseCase {
     o.createdAt           = existing.createdAt;
 
     repo.update(o);
-    return CommandResult(true, o.id.value, "");
+    return UsecaseResult(true, o.id.value, "");
   }
 
   Observation getObservation(TenantId tenantId, ObservationId id) {
@@ -76,11 +76,11 @@ class ManageObservationsUseCase {
     return repo.findByPatient(tenantId, patientRef);
   }
 
-  CommandResult deleteObservation(TenantId tenantId, ObservationId id) {
+  UsecaseResult deleteObservation(TenantId tenantId, ObservationId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Observation not found");
+      return UsecaseResult(false, "", "Observation not found");
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

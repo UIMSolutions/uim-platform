@@ -13,10 +13,10 @@ import uim.platform.abap_environment;
 /// Application service for business user management.
 interface IManageBusinessUsersUseCase { 
 
-  CommandResult createBusinessUser(CreateBusinessUserRequest req);
-  CommandResult updateBusinessUser(UpdateBusinessUserRequest req);
+  UsecaseResult createBusinessUser(CreateBusinessUserRequest req);
+  UsecaseResult updateBusinessUser(UpdateBusinessUserRequest req);
   BusinessUser getBusinessUser(TenantId tenantId, BusinessUserId id);
   BusinessUser[] listBusinessUsers(TenantId tenantId, SystemInstanceId systemId);
-  CommandResult deleteBusinessUser(TenantId tenantId, BusinessUserId id);
+  UsecaseResult deleteBusinessUser(TenantId tenantId, BusinessUserId id);
   
 }

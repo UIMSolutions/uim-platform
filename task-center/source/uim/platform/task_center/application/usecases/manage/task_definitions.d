@@ -34,7 +34,7 @@ class ManageTaskDefinitionsUseCase {
         return repo.findByCategory(tenantId, byCategory);
     }
 
-    CommandResult createDefinition(CreateTaskDefinitionRequest req) {
+    UsecaseResult createDefinition(CreateTaskDefinitionRequest req) {
         auto definition = TaskDefinition(req.tenantId, req.definitionId);
         definition.providerId = req.providerId;
         definition.name = req.name;
@@ -43,13 +43,13 @@ class ManageTaskDefinitionsUseCase {
         definition.requiresClaim = req.requiresClaim;
 
         repo.save(definition);
-        return CommandResult(true, definition.id.value, "");
+        return UsecaseResult(true, definition.id.value, "");
     }
 
-    CommandResult updateDefinition(UpdateTaskDefinitionRequest req) {
+    UsecaseResult updateDefinition(UpdateTaskDefinitionRequest req) {
         auto existing = repo.findById(req.tenantId, req.definitionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Task definition not found");
+            return UsecaseResult(false, "", "Task definition not found");
         
         if (req.name.length > 0)
             existing.name = req.name;
@@ -61,37 +61,37 @@ class ManageTaskDefinitionsUseCase {
         existing.updatedBy = req.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult activateDefinition(TenantId tenantId, TaskDefinitionId id) {
+    UsecaseResult activateDefinition(TenantId tenantId, TaskDefinitionId id) {
         auto definition = repo.findById(tenantId, id);
         if (definition.isNull)
-            return CommandResult(false, "", "Task definition not found");
+            return UsecaseResult(false, "", "Task definition not found");
         
         definition.isActive = true;
 
         repo.update(definition);
-        return CommandResult(true, definition.id.value, "");
+        return UsecaseResult(true, definition.id.value, "");
     }
 
-    CommandResult deactivateDefinition(TenantId tenantId, TaskDefinitionId id) {
+    UsecaseResult deactivateDefinition(TenantId tenantId, TaskDefinitionId id) {
         auto definition = repo.findById(tenantId, id);
         if (definition.isNull)
-            return CommandResult(false, "", "Task definition not found");
+            return UsecaseResult(false, "", "Task definition not found");
         
         definition.isActive = false;
 
         repo.update(definition);
-        return CommandResult(true, definition.id.value, "");
+        return UsecaseResult(true, definition.id.value, "");
     }
 
-    CommandResult deleteDefinition(TenantId tenantId, TaskDefinitionId id) {
+    UsecaseResult deleteDefinition(TenantId tenantId, TaskDefinitionId id) {
         auto definition = repo.findById(tenantId, id);
         if (definition.isNull)
-            return CommandResult(false, "", "Task definition not found");
+            return UsecaseResult(false, "", "Task definition not found");
 
         repo.remove(definition);
-        return CommandResult(true, definition.id.value, "");
+        return UsecaseResult(true, definition.id.value, "");
     }
 }

@@ -13,8 +13,8 @@ mixin(ShowModule!());
 /// Use case: manage environment instance lifecycle (CF, Kyma, ABAP).
 interface IManageEnvironmentsUseCase { 
 
-  CommandResult createEnvironment(CreateEnvironmentRequest req);
-  CommandResult updateEnvironment(UpdateEnvironmentRequest req);
-  CommandResult deprovisionEnvironment(TenantId tenantId, EnvironmentId id);
+  UsecaseResult createEnvironment(CreateEnvironmentRequest req);
+  UsecaseResult updateEnvironment(UpdateEnvironmentRequest req);
+  UsecaseResult deprovisionEnvironment(TenantId tenantId, EnvironmentId id);
   
   }

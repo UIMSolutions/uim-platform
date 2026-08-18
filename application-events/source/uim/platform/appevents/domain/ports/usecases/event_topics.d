@@ -15,8 +15,8 @@ interface IManageEventTopicsUseCase {
 
     EventTopic getEventTopic(TenantId tenantId, EventTopicId id);
     EventTopic[] listEventTopics(TenantId tenantId);
-    CommandResult createEventTopic(EventTopicDTO dto);
-    CommandResult updateEventTopic(EventTopicDTO dto);
-    CommandResult deleteEventTopic(TenantId tenantId, EventTopicId id);
+    UsecaseResult createEventTopic(EventTopicDTO dto);
+    UsecaseResult updateEventTopic(EventTopicDTO dto);
+    UsecaseResult deleteEventTopic(TenantId tenantId, EventTopicId id);
 
 }

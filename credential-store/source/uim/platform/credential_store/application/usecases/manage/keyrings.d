@@ -27,12 +27,12 @@ class ManageKeyringsUseCase {
     this.versionRepo = versionRepo;
   }
 
-  CommandResult createKeyring(CreateKeyringRequest r) {
+  UsecaseResult createKeyring(CreateKeyringRequest r) {
     if (r.name.isEmpty || r.name.length > 255)
-      return CommandResult(false, "", "Keyring name must be 1-255 characters");
+      return UsecaseResult(false, "", "Keyring name must be 1-255 characters");
 
     if (credRepo.existsByName(r.tenantId, r.namespaceId, r.name, CredentialType.keyring))
-      return CommandResult(false, "", "Keyring already exists in this namespace");
+      return UsecaseResult(false, "", "Keyring already exists in this namespace");
 
     // Create keyring credential entry
     auto cred = Credential(r.tenantId, r.credentialId.isNull ? CredentialId(createId) : r.credentialId, r.createdBy);
@@ -54,17 +54,17 @@ class ManageKeyringsUseCase {
     ver.isActive = true;
 
     versionRepo.save(ver);
-    return CommandResult(true, cred.id.value, "");
+    return UsecaseResult(true, cred.id.value, "");
   }
 
-  CommandResult rotateKeyring(RotateKeyringRequest r) {
+  UsecaseResult rotateKeyring(RotateKeyringRequest r) {
     auto cred = credRepo.findById(r.tenantId, r.keyringId);
     if (cred.isNull)
-      return CommandResult(false, "", "Keyring not found");
+      return UsecaseResult(false, "", "Keyring not found");
     if (cred.type != CredentialType.keyring)
-      return CommandResult(false, "", "Credential is not a keyring");
+      return UsecaseResult(false, "", "Credential is not a keyring");
     if (cred.status != CredentialStatus.active)
-      return CommandResult(false, "", "Keyring is not active");
+      return UsecaseResult(false, "", "Keyring is not active");
 
     auto now = currentTimestamp();
 
@@ -87,7 +87,7 @@ class ManageKeyringsUseCase {
     cred.updatedAt = now;
     credRepo.update(cred);
 
-    return CommandResult(true, ver.id.value, "");
+    return UsecaseResult(true, ver.id.value, "");
   }
 
   Credential getCredential(TenantId tenantId, CredentialId id) {
@@ -106,32 +106,32 @@ class ManageKeyringsUseCase {
     return versionRepo.findActiveVersion(tenantId, keyringId);
   }
 
-  CommandResult disableCredential(TenantId tenantId, CredentialId id) {
+  UsecaseResult disableCredential(TenantId tenantId, CredentialId id) {
     auto cred = credRepo.findById(tenantId, id);
     if (cred.isNull)
-      return CommandResult(false, "", "Keyring not found");
+      return UsecaseResult(false, "", "Keyring not found");
 
     cred.status = CredentialStatus.disabled;
     cred.updatedAt = currentTimestamp();
     credRepo.update(cred);
-    return CommandResult(true, cred.id.value, "");
+    return UsecaseResult(true, cred.id.value, "");
   }
 
-  CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
+  UsecaseResult deleteCredential(TenantId tenantId, CredentialId id) {
     auto cred = credRepo.findById(tenantId, id);
     if (cred.isNull)
-      return CommandResult(false, "", "Keyring not found");
+      return UsecaseResult(false, "", "Keyring not found");
 
     // Protection: must be disabled for 7+ days
     if (cred.status != CredentialStatus.disabled)
-      return CommandResult(false, "", "Keyring must be disabled before deletion");
+      return UsecaseResult(false, "", "Keyring must be disabled before deletion");
 
     if (!KeyringManager.canDelete(cred.updatedAt, currentTimestamp()))
-      return CommandResult(false, "", "Keyring must be disabled for at least 7 days before deletion");
+      return UsecaseResult(false, "", "Keyring must be disabled for at least 7 days before deletion");
 
     versionRepo.removeByKeyring(tenantId, id);
     credRepo.remove(cred);
-    return CommandResult(true, cred.id.value, "");
+    return UsecaseResult(true, cred.id.value, "");
   }
 
 }

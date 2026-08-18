@@ -19,14 +19,14 @@ class ManageKeyEntriesUseCase {
   }
 
   // Import a key or certificate entry into a keystore.
-  CommandResult importEntry(ImportKeyEntryRequest r) {
+  UsecaseResult importEntry(ImportKeyEntryRequest r) {
     if (r.alias_.length == 0)
-      return CommandResult(false, "", "Alias is required");
+      return UsecaseResult(false, "", "Alias is required");
     if (r.content.length == 0)
-      return CommandResult(false, "", "Content is required");
+      return UsecaseResult(false, "", "Content is required");
 
     if (repo.existsByAlias(r.tenantId, r.keystoreId, r.alias_))
-      return CommandResult(false, "", "An entry with this alias already exists in the keystore");
+      return UsecaseResult(false, "", "An entry with this alias already exists in the keystore");
 
     KeyEntry entry;
     entry.id = randomUUID();
@@ -43,7 +43,7 @@ class ManageKeyEntriesUseCase {
     entry.createdAt = currentTimestamp();
 
     repo.save(entry);
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 
   KeyEntry getById(TenantId tenantId, KeyEntryId id) {
@@ -58,13 +58,13 @@ class ManageKeyEntriesUseCase {
     return repo.findByKeystore(tenantId, keystoreId);
   }
 
-  CommandResult deleteKeyEntry(TenantId tenantId, KeyEntryId id) {
+  UsecaseResult deleteKeyEntry(TenantId tenantId, KeyEntryId id) {
     auto entry = repo.findById(tenantId, id);
     if (entry.isNull)
-      return CommandResult(false, "", "Key entry not found");
+      return UsecaseResult(false, "", "Key entry not found");
 
     repo.remove(entry);
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 }
 

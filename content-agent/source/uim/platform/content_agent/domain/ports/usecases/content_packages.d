@@ -13,12 +13,12 @@ mixin(ShowModule!());
 /// Application service for content package CRUD and assembly.
 interface IManageContentPackagesUseCase { 
 
-  CommandResult createPackage(CreatePackageRequest req);
-  CommandResult updatePackage(UpdatePackageRequest req);
-  CommandResult assemblePackage(AssemblePackageRequest req);
+  UsecaseResult createPackage(CreatePackageRequest req);
+  UsecaseResult updatePackage(UpdatePackageRequest req);
+  UsecaseResult assemblePackage(AssemblePackageRequest req);
   ContentPackage getPackage(TenantId tenantId, ContentPackageId id);
   ContentPackage[] listPackages(TenantId tenantId);
   ContentPackage[] listByStatus(TenantId tenantId, string statusStr);
-  CommandResult deletePackage(TenantId tenantId, ContentPackageId id);
+  UsecaseResult deletePackage(TenantId tenantId, ContentPackageId id);
 
 }

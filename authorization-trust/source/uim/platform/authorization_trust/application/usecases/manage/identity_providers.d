@@ -18,11 +18,11 @@ class ManageIdentityProvidersUseCase {
     this.repo = repo;
   }
 
-  CommandResult createProvider(CreateIdentityProviderRequest r) {
+  UsecaseResult createProvider(CreateIdentityProviderRequest r) {
     if (r.alias_.length == 0)
-      return CommandResult(false, "", "IdP alias is required");
+      return UsecaseResult(false, "", "IdP alias is required");
     if (repo.existsByAlias(r.tenantId, r.alias_))
-      return CommandResult(false, "", "An identity provider with this alias already exists");
+      return UsecaseResult(false, "", "An identity provider with this alias already exists");
 
     import std.uuid : randomUUID;
     IdentityProvider idp;
@@ -41,13 +41,13 @@ class ManageIdentityProvidersUseCase {
     idp.updatedAt   = idp.createdAt;
 
     repo.save(idp);
-    return CommandResult(true, idp.id.value, "");
+    return UsecaseResult(true, idp.id.value, "");
   }
 
-  CommandResult updateProvider(UpdateIdentityProviderRequest r) {
+  UsecaseResult updateProvider(UpdateIdentityProviderRequest r) {
     auto idp = repo.findById(r.tenantId, r.providerId);
     if (idp.isNull)
-      return CommandResult(false, "", "Identity provider not found");
+      return UsecaseResult(false, "", "Identity provider not found");
 
     if (r.displayName.length > 0) idp.displayName = r.displayName;
     if (r.metadataUrl.length > 0) idp.metadataUrl = r.metadataUrl;
@@ -59,16 +59,16 @@ class ManageIdentityProvidersUseCase {
     idp.updatedAt = currentTimestamp();
 
     repo.update(idp);
-    return CommandResult(true, idp.id.value, "");
+    return UsecaseResult(true, idp.id.value, "");
   }
 
-  CommandResult deleteProvider(TenantId tenantId, IdentityProviderId id) {
+  UsecaseResult deleteProvider(TenantId tenantId, IdentityProviderId id) {
     auto provider = repo.findById(tenantId, id);
     if (provider.isNull)
-      return CommandResult(false, "", "Identity provider not found");
+      return UsecaseResult(false, "", "Identity provider not found");
       
     repo.remove(provider);
-    return CommandResult(true, provider.id.value, "");
+    return UsecaseResult(true, provider.id.value, "");
   }
 
   IdentityProvider getProvider(TenantId tenantId, IdentityProviderId id) {

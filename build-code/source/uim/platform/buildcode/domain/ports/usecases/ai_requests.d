@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageAIRequestsUseCase {
 
-  CommandResult generate(TenantId tenantId, AIGenerateRequest req);
+  UsecaseResult generate(TenantId tenantId, AIGenerateRequest req);
   AIRequest getById(TenantId tenantId, string id);
   AIRequest[] list(TenantId tenantId);
   AIRequest[] listByProject(TenantId tenantId, string projectId);
   AIRequest[] listByStatus(TenantId tenantId, string statusStr);
-  CommandResult updateStatus(TenantId tenantId, string id, string statusStr, string generatedCode = "", string errorMsg = "");
+  UsecaseResult updateStatus(TenantId tenantId, string id, string statusStr, string generatedCode = "", string errorMsg = "");
   
 }

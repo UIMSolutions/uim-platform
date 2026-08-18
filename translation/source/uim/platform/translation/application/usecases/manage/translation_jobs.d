@@ -21,11 +21,11 @@ class ManageTranslationJobsUseCase {
     }
 
     /// Submit a new async translation job — returns the job ID immediately.
-    CommandResult submitJob(SubmitTranslationJobRequest r) {
+    UsecaseResult submitJob(SubmitTranslationJobRequest r) {
         if (r.content.length == 0)
-            return CommandResult(false, "", "Content is required");
+            return UsecaseResult(false, "", "Content is required");
         if (r.sourceLanguage.length == 0 || r.targetLanguage.length == 0)
-            return CommandResult(false, "", "Source and target languages are required");
+            return UsecaseResult(false, "", "Source and target languages are required");
 
         auto job = TranslationJob(r.tenantId, r.jobId); //, r.createdBy);
         job.jobType = r.jobType;
@@ -39,16 +39,16 @@ class ManageTranslationJobsUseCase {
         catch (Exception) { job.provider = TranslationProvider.machineMt; }
 
         repo.save(job);
-        return CommandResult(true, job.id.value, "");
+        return UsecaseResult(true, job.id.value, "");
     }
 
     /// Simulate processing a pending job (in production, a worker would do this).
-    CommandResult processJob(TenantId tenantId, TranslationJobId id) {
+    UsecaseResult processJob(TenantId tenantId, TranslationJobId id) {
         auto job = repo.findById(tenantId, id);
         if (job.isNull)
-            return CommandResult(false, "", "Translation job not found");
+            return UsecaseResult(false, "", "Translation job not found");
         if (job.status != JobStatus.pending)
-            return CommandResult(false, "", "Job is not in pending state");
+            return UsecaseResult(false, "", "Job is not in pending state");
 
         job.status = JobStatus.processing;
         repo.update(job);
@@ -60,7 +60,7 @@ class ManageTranslationJobsUseCase {
         job.completedAt = MonoTime.currTime.ticks;
 
         repo.update(job);
-        return CommandResult(true, job.id.value, "");
+        return UsecaseResult(true, job.id.value, "");
     }
 
     TranslationJob[] listJobs(TenantId tenantId) {
@@ -71,15 +71,15 @@ class ManageTranslationJobsUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult cancelJob(TenantId tenantId, TranslationJobId id) {
+    UsecaseResult cancelJob(TenantId tenantId, TranslationJobId id) {
         auto job = repo.findById(tenantId, id);
         if (job.isNull)
-            return CommandResult(false, "", "Translation job not found");
+            return UsecaseResult(false, "", "Translation job not found");
         if (job.status == JobStatus.completed || job.status == JobStatus.failed)
-            return CommandResult(false, "", "Cannot cancel a finished job");
+            return UsecaseResult(false, "", "Cannot cancel a finished job");
 
         job.status = JobStatus.cancelled;
         repo.update(job);
-        return CommandResult(true, job.id.value, "");
+        return UsecaseResult(true, job.id.value, "");
     }
 }

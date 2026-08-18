@@ -20,7 +20,7 @@ class ManageRetentionPoliciesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRetentionPolicy(CreateRetentionPolicyRequest req) {
+  UsecaseResult createRetentionPolicy(CreateRetentionPolicyRequest req) {
     import std.uuid : randomUUID;
 
     auto p = RetentionPolicy(req.tenantId); //, req.createdBy);
@@ -37,17 +37,17 @@ class ManageRetentionPoliciesUseCase {
       string msg;
       foreach (e; validation.errors)
         msg ~= e ~ "; ";
-      return CommandResult(false, "", msg);
+      return UsecaseResult(false, "", msg);
     }
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult updateRetentionPolicy(UpdateRetentionPolicyRequest req) {
+  UsecaseResult updateRetentionPolicy(UpdateRetentionPolicyRequest req) {
     auto policy = repo.findById(req.tenantId, req.policyId);
     if (policy.isNull)
-      return CommandResult(false, "", "Retention policy not found");
+      return UsecaseResult(false, "", "Retention policy not found");
 
     if (req.description.length > 0)
       policy.description = req.description;
@@ -60,7 +60,7 @@ class ManageRetentionPoliciesUseCase {
     policy.updatedAt = clockSeconds();
 
     repo.update(policy);
-    return CommandResult(true, policy.id.value, "");
+    return UsecaseResult(true, policy.id.value, "");
   }
 
   RetentionPolicy getRetentionPolicy(TenantId tenantId, RetentionPolicyId id) {
@@ -71,13 +71,13 @@ class ManageRetentionPoliciesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteRetentionPolicy(TenantId tenantId, RetentionPolicyId policyId) {
+  UsecaseResult deleteRetentionPolicy(TenantId tenantId, RetentionPolicyId policyId) {
     auto policy = repo.findById(tenantId, policyId);
     if (policy.isNull)
-      return CommandResult(false, "", "Retention policy not found");
+      return UsecaseResult(false, "", "Retention policy not found");
 
     repo.remove(policy);
-    return CommandResult(true, policy.id.value, "");
+    return UsecaseResult(true, policy.id.value, "");
   }
 
 }

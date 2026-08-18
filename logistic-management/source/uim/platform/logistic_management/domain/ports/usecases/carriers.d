@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageCarriersUseCase {
 
-  CommandResult createCarrier(TenantId tenantId, CreateCarrierRequest req);
+  UsecaseResult createCarrier(TenantId tenantId, CreateCarrierRequest req);
 
-  CommandResult updateCarrier(TenantId tenantId, CarrierId id, UpdateCarrierRequest req);
+  UsecaseResult updateCarrier(TenantId tenantId, CarrierId id, UpdateCarrierRequest req);
   
-  CommandResult deleteCarrier(TenantId tenantId, CarrierId id);
+  UsecaseResult deleteCarrier(TenantId tenantId, CarrierId id);
 
   Carrier getCarrier(TenantId tenantId, CarrierId id);
 

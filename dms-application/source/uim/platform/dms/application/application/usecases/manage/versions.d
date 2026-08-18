@@ -20,27 +20,27 @@ class ManageVersionsUseCase {
     this.versioningService = versioningService;
   }
 
-  CommandResult checkOut(TenantId tenantId, DocumentId docId, UserId userId) {
+  UsecaseResult checkOut(TenantId tenantId, DocumentId docId, UserId userId) {
     auto ok = versioningService.checkOut(tenantId, docId, userId);
     if (!ok)
-      return CommandResult(false, "", "Cannot check out document (not found or already locked)");
-    return CommandResult(true, docId.value, "");
+      return UsecaseResult(false, "", "Cannot check out document (not found or already locked)");
+    return UsecaseResult(true, docId.value, "");
   }
 
-  CommandResult checkIn(CheckInRequest r) {
+  UsecaseResult checkIn(CheckInRequest r) {
     auto ver = versioningService.checkIn(r.tenantId, r.documentId, r.userId,
         r.isMajor, r.comment, r.fileName, r.mimeType, r.fileSize, r.checksum);
 
     if (ver.isNull)
-      return CommandResult(false, "", "Cannot check in document (not found or not locked)");
-    return CommandResult(true, ver.id.value, "");
+      return UsecaseResult(false, "", "Cannot check in document (not found or not locked)");
+    return UsecaseResult(true, ver.id.value, "");
   }
 
-  CommandResult cancelCheckOut(TenantId tenantId, DocumentId docId) {
+  UsecaseResult cancelCheckOut(TenantId tenantId, DocumentId docId) {
     auto ok = versioningService.cancelCheckOut(tenantId, docId);
     if (!ok)
-      return CommandResult(false, "", "Cannot cancel checkout (not found or not locked)");
-    return CommandResult(true, docId.value, "");
+      return UsecaseResult(false, "", "Cannot cancel checkout (not found or not locked)");
+    return UsecaseResult(true, docId.value, "");
   }
 
   DocumentVersion[] getAllVersions(TenantId tenantId, DocumentId docId) {

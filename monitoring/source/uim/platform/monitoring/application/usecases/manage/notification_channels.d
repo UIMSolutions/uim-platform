@@ -22,9 +22,9 @@ class ManageNotificationChannelsUseCase {
     this.channels = channels;
   }
 
-  CommandResult createChannel(CreateNotificationChannelRequest request) {
+  UsecaseResult createChannel(CreateNotificationChannelRequest request) {
     if (request.name.isEmpty)
-      return CommandResult(false, "", "Channel name is required");
+      return UsecaseResult(false, "", "Channel name is required");
 
     auto channel = NotificationChannel(request.tenantId); //, UserId("test-user"));
     channel.name = request.name;
@@ -47,14 +47,14 @@ class ManageNotificationChannelsUseCase {
     channel.onPremiseProtocol = request.onPremiseProtocol;
 
     channels.save(channel);
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
-  CommandResult updateChannel(UpdateNotificationChannelRequest request) {
+  UsecaseResult updateChannel(UpdateNotificationChannelRequest request) {
     NotificationChannel channel = channels.findById(request.tenantId, request.channelId);
 
     if (channel.isNull)
-      return CommandResult(false, "", "Notification channel not found");
+      return UsecaseResult(false, "", "Notification channel not found");
 
     if (request.description.length > 0)
       channel.description = request.description;
@@ -80,7 +80,7 @@ class ManageNotificationChannelsUseCase {
     channel.updatedAt = clockSeconds();
 
     channels.update(channel);
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
   bool existsChannel(TenantId tenantId, NotificationChannelId id) {
@@ -99,24 +99,24 @@ class ManageNotificationChannelsUseCase {
     return channels.findActive(tenantId);
   }
 
-  CommandResult activateChannel(TenantId tenantId, NotificationChannelId id) {
+  UsecaseResult activateChannel(TenantId tenantId, NotificationChannelId id) {
     auto channel = channels.findById(tenantId, id);
     if (channel.isNull)
-      return CommandResult(false, "", "Notification channel not found");
+      return UsecaseResult(false, "", "Notification channel not found");
 
     channel.state = ChannelState.active;
     channel.updatedAt = clockSeconds();
     channels.update(channel);
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
-  CommandResult deleteChannel(TenantId tenantId, NotificationChannelId id) {
+  UsecaseResult deleteChannel(TenantId tenantId, NotificationChannelId id) {
     auto channel = channels.findById(tenantId, id);
     if (channel.isNull)
-      return CommandResult(false, "", "Notification channel not found");
+      return UsecaseResult(false, "", "Notification channel not found");
 
     channels.remove(channel);
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
 }

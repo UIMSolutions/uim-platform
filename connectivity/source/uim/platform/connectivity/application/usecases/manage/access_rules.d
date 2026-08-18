@@ -24,14 +24,14 @@ class ManageAccessRulesUseCase {
     this.connectors = connectors;
   }
 
-  CommandResult createAccessRule(CreateAccessRuleRequest req) {
+  UsecaseResult createAccessRule(CreateAccessRuleRequest req) {
     auto tenantId = req.tenantId;
     // Validate connector exists
     if (!connectors.existsById(tenantId, req.connectorId))
-      return CommandResult(false, "", "Connector not found");
+      return UsecaseResult(false, "", "Connector not found");
 
     if (req.virtualHost.length == 0)
-      return CommandResult(false, "", "Virtual host is required");
+      return UsecaseResult(false, "", "Virtual host is required");
 
     auto rule = AccessRule(tenantId);
     rule.connectorId = req.connectorId;
@@ -44,13 +44,13 @@ class ManageAccessRulesUseCase {
     rule.principalPropagation = req.principalPropagation;
 
     rules.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult updateAccessRule(UpdateAccessRuleRequest req) {
+  UsecaseResult updateAccessRule(UpdateAccessRuleRequest req) {
     auto rule = rules.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
-      return CommandResult(false, "", "Access rule not found");
+      return UsecaseResult(false, "", "Access rule not found");
 
     AccessRule updated = rule;
 
@@ -69,7 +69,7 @@ class ManageAccessRulesUseCase {
     updated.principalPropagation = req.principalPropagation;
 
     rules.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
   AccessRule getAccessRule(TenantId tenantId, RuleId id) {
@@ -84,12 +84,12 @@ class ManageAccessRulesUseCase {
     return rules.findByTenant(tenantId);
   }
 
-  CommandResult deleteAccessRule(TenantId tenantId, RuleId id) {
+  UsecaseResult deleteAccessRule(TenantId tenantId, RuleId id) {
     auto rule = rules.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "Access rule not found");
+      return UsecaseResult(false, "", "Access rule not found");
 
     rules.remove(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 }

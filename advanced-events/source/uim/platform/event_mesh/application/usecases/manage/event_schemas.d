@@ -30,7 +30,7 @@ class ManageEventSchemasUseCase {
         return repo.findByFormat(tenantId, format);
     }
 
-    CommandResult createSchema(EventSchemaDTO dto) {
+    UsecaseResult createSchema(EventSchemaDTO dto) {
         EventSchema schema;
 
         schema.id = dto.schemaId;
@@ -43,16 +43,16 @@ class ManageEventSchemasUseCase {
         schema.shared_ = dto.shared_;
         schema.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidEventSchema(schema))
-            return CommandResult(false, "", "Invalid event schema data");
+            return UsecaseResult(false, "", "Invalid event schema data");
 
         repo.save(schema);
-        return CommandResult(true, schema.id.value, "");
+        return UsecaseResult(true, schema.id.value, "");
     }
 
-    CommandResult updateSchema(EventSchemaDTO dto) {
+    UsecaseResult updateSchema(EventSchemaDTO dto) {
         auto schema = repo.findById(dto.tenantId, dto.schemaId);
         if (schema.isNull)
-            return CommandResult(false, "", "Event schema not found");
+            return UsecaseResult(false, "", "Event schema not found");
             
         if (dto.name.length > 0) schema.name = dto.name;
         if (dto.description.length > 0) schema.description = dto.description;
@@ -61,16 +61,16 @@ class ManageEventSchemasUseCase {
         if (!dto.updatedBy.isNull) schema.updatedBy = dto.updatedBy;
         
         repo.update(schema);
-        return CommandResult(true, schema.id.value, "");
+        return UsecaseResult(true, schema.id.value, "");
     }
 
-    CommandResult deleteSchema(TenantId tenantId, EventSchemaId schemaId) {
+    UsecaseResult deleteSchema(TenantId tenantId, EventSchemaId schemaId) {
         auto schema = repo.findById(tenantId, schemaId);
         if (schema.isNull)
-            return CommandResult(false, "", "Event schema not found");
+            return UsecaseResult(false, "", "Event schema not found");
             
         repo.remove(schema);
-        return CommandResult(true, schema.id.value, "");
+        return UsecaseResult(true, schema.id.value, "");
     }
 }
 

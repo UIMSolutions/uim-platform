@@ -24,15 +24,15 @@ class ManageBlockingRequestsUseCase {
     this.dataSubjects = dataSubjects;
   }
 
-  CommandResult createRequest(CreateBlockingRequest req) {
+  UsecaseResult createRequest(CreateBlockingRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.dataSubjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
 
     auto subject = dataSubjects.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     auto request = BlockingRequest(req.tenantId); //, req.createdBy);
 
@@ -45,7 +45,7 @@ class ManageBlockingRequestsUseCase {
     request.requestedAt = currentTimestamp();
 
     blockingRequests.save(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 
   BlockingRequest getRequest(TenantId tenantId, BlockingRequestId id) {
@@ -60,10 +60,10 @@ class ManageBlockingRequestsUseCase {
     return blockingRequests.findByStatus(tenantId, status);
   }
 
-  CommandResult updateStatus(UpdateBlockingStatusRequest req) {
+  UsecaseResult updateStatus(UpdateBlockingStatusRequest req) {
     auto request = blockingRequests.findById(req.tenantId, req.id);
     if (request.isNull)
-      return CommandResult(false, "", "Blocking request not found");
+      return UsecaseResult(false, "", "Blocking request not found");
 
     request.status = req.status.toBlockingStatus;
     if (request.status == BlockingStatus.active)
@@ -72,15 +72,15 @@ class ManageBlockingRequestsUseCase {
       request.releasedAt = currentTimestamp();
 
     blockingRequests.update(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 
-  CommandResult deleteRequest(TenantId tenantId, BlockingRequestId id) {
+  UsecaseResult deleteRequest(TenantId tenantId, BlockingRequestId id) {
     auto request = blockingRequests.findById(tenantId, id);
     if (request.isNull)
-      return CommandResult(false, "", "Blocking request not found");
+      return UsecaseResult(false, "", "Blocking request not found");
 
     blockingRequests.remove(request);
-    return CommandResult(true, request.id.value, ""); 
+    return UsecaseResult(true, request.id.value, ""); 
   }
 }

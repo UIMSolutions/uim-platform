@@ -32,9 +32,9 @@ class ManageServicePlansUseCase {
         return repo.findByTier(tenantId, tier);
     }
 
-    CommandResult createServicePlan(ServicePlanDTO dto) {
+    UsecaseResult createServicePlan(ServicePlanDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Service plan name already exists");
+            return UsecaseResult(false, "", "Service plan name already exists");
 
         auto e = ServicePlan(dto.tenantId, dto.servicePlanId, dto.createdBy);
         e.name = dto.name;
@@ -49,16 +49,16 @@ class ManageServicePlansUseCase {
         e.available = dto.available;
 
         if (!RedisValidator.isValidServicePlan(e))
-            return CommandResult(false, "", "Invalid plan: name and memoryMb > 0 required");
+            return UsecaseResult(false, "", "Invalid plan: name and memoryMb > 0 required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateServicePlan(ServicePlanDTO dto) {
+    UsecaseResult updateServicePlan(ServicePlanDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.servicePlanId);
         if (existing.isNull)
-            return CommandResult(false, "", "Service plan not found");
+            return UsecaseResult(false, "", "Service plan not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -67,14 +67,14 @@ class ManageServicePlansUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
+    UsecaseResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Service plan not found");
+            return UsecaseResult(false, "", "Service plan not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

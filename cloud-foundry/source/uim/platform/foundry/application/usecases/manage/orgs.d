@@ -26,16 +26,16 @@ class ManageOrgsUseCase {
     this.spaces = spaces;
   }
 
-  CommandResult createOrg(CreateOrgRequest req) {
+  UsecaseResult createOrg(CreateOrgRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
       
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Organization name is required");
+      return UsecaseResult(false, "", "Organization name is required");
 
     // Unique name per tenant
     if (orgs.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Organization with this name already exists");
+      return UsecaseResult(false, "", "Organization with this name already exists");
 
     auto org = Organization(req.tenantId, req.orgId.isNull ? OrgId(createId()) : req.orgId, req.createdBy);
     org.name = req.name;
@@ -47,7 +47,7 @@ class ManageOrgsUseCase {
     org.totalAppInstances = req.totalAppInstances > 0 ? req.totalAppInstances : 100;
 
     orgs.save(org);
-    return CommandResult(true, org.id.value, "");
+    return UsecaseResult(true, org.id.value, "");
   }
 
   Organization getOrg(TenantId tenantId, OrgId id) {
@@ -58,16 +58,16 @@ class ManageOrgsUseCase {
     return orgs.findByTenant(tenantId);
   }
 
-  CommandResult updateOrg(UpdateOrgRequest req) {
+  UsecaseResult updateOrg(UpdateOrgRequest req) {
     if (req.orgId.isNull)
-      return CommandResult(false, "", "Organization ID is required");
+      return UsecaseResult(false, "", "Organization ID is required");
 
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto org = orgs.findById(req.tenantId, req.orgId);
     if (org.isNull)
-      return CommandResult(false, "", "Organization not found");
+      return UsecaseResult(false, "", "Organization not found");
 
     auto updated = org; 
     if (req.name.length > 0)
@@ -85,46 +85,46 @@ class ManageOrgsUseCase {
     updated.updatedAt = currentTimestamp();
 
     orgs.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
-  CommandResult suspendOrg(TenantId tenantId, OrgId id) {
+  UsecaseResult suspendOrg(TenantId tenantId, OrgId id) {
     auto org = orgs.findById(tenantId, id);
     if (org.isNull)
-      return CommandResult(false, "", "Organization not found");
+      return UsecaseResult(false, "", "Organization not found");
     if (org.status == OrgStatus.suspended)
-      return CommandResult(false, "", "Organization is already suspended");
+      return UsecaseResult(false, "", "Organization is already suspended");
 
     org.status = OrgStatus.suspended;
     org.updatedAt = currentTimestamp();
 
     orgs.update(org);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult activateOrg(TenantId tenantId, OrgId id) {
+  UsecaseResult activateOrg(TenantId tenantId, OrgId id) {
     auto org = orgs.findById(tenantId, id);
     if (org.isNull)
-      return CommandResult(false, "", "Organization not found");
+      return UsecaseResult(false, "", "Organization not found");
 
     if (org.status == OrgStatus.active)
-      return CommandResult(false, "", "Organization is already active");
+      return UsecaseResult(false, "", "Organization is already active");
 
     org.status = OrgStatus.active;
     org.updatedAt = currentTimestamp();
     orgs.update(org);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult deleteOrg(TenantId tenantId, OrgId orgId) {
+  UsecaseResult deleteOrg(TenantId tenantId, OrgId orgId) {
     auto org = orgs.findById(tenantId, orgId);
     if (org.isNull)
-      return CommandResult(false, "", "Organization not found");
+      return UsecaseResult(false, "", "Organization not found");
 
     // Cascade: remove all spaces in this org
     spaces.removeByOrg(tenantId, orgId);
     orgs.remove(org);
-    return CommandResult(true, org.id.value, "");
+    return UsecaseResult(true, org.id.value, "");
   }
 }
 

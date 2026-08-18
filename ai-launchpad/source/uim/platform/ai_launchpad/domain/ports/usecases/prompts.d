@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 interface IManagePromptsUseCase { 
 
-  CommandResult createPrompt(CreatePromptRequest r);
+  UsecaseResult createPrompt(CreatePromptRequest r);
    
   Prompt getPrompt(TenantId tenantId, PromptId id);
 
@@ -26,8 +26,8 @@ interface IManagePromptsUseCase {
 
   Prompt[] listPrompts(TenantId tenantId);
 
-  CommandResult patchPrompt(PatchPromptRequest r);
+  UsecaseResult patchPrompt(PatchPromptRequest r);
 
-  CommandResult deletePrompt(TenantId tenantId, PromptId id);
+  UsecaseResult deletePrompt(TenantId tenantId, PromptId id);
 
 }

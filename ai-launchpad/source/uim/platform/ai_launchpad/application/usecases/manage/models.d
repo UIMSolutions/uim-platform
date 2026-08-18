@@ -22,9 +22,9 @@ class ManageModelsUseCase {
     this.models = models;
   }
 
-  CommandResult registerModel(RegisterModelRequest r) {
+  UsecaseResult registerModel(RegisterModelRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Model name is required");
+      return UsecaseResult(false, "", "Model name is required");
 
     auto m = Model(r.tenantId, r.modelId.isNull ? ModelId(createId()) : r.modelId); // , r.createdBy);
     m.connectionId = r.connectionId;
@@ -39,7 +39,7 @@ class ManageModelsUseCase {
     m.labels = r.labels;
 
     models.save(m);
-    return CommandResult(true, m.id.value, "");
+    return UsecaseResult(true, m.id.value, "");
   }
 
   Model getModel(TenantId tenantId, ConnectionId connectionId, ModelId id) {
@@ -54,11 +54,11 @@ class ManageModelsUseCase {
     return models.findByScenario(tenantId, connectionId, scenarioId);
   }
 
-  CommandResult patchModel(PatchModelRequest r) {
+  UsecaseResult patchModel(PatchModelRequest r) {
     auto m = models.findById(r.tenantId, r.connectionId, r.modelId);
 
     if (m.isNull)
-      return CommandResult(false, "", "Model not found");
+      return UsecaseResult(false, "", "Model not found");
     if (r.description.length > 0)
       m.description = r.description;
     if (r.status == "archived")
@@ -68,15 +68,15 @@ class ManageModelsUseCase {
     m.updatedAt = currentTimestamp();
 
     models.save(m);
-    return CommandResult(true, m.id.value, "");
+    return UsecaseResult(true, m.id.value, "");
   }
 
-  CommandResult deleteModel(TenantId tenantId, ConnectionId connectionId, ModelId id) {
+  UsecaseResult deleteModel(TenantId tenantId, ConnectionId connectionId, ModelId id) {
     auto model = models.findById(tenantId, connectionId, id);
     if (model.isNull)
-      return CommandResult(false, "", "Model not found");
+      return UsecaseResult(false, "", "Model not found");
 
     models.remove(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 }

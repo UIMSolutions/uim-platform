@@ -26,7 +26,7 @@ class ManageServiceOfferingsUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createOffering(CreateServiceOfferingRequest dto) {
+    UsecaseResult createOffering(CreateServiceOfferingRequest dto) {
         auto e = ServiceOffering(dto.tenantId);
 
         e.id = dto.offeringId.isNull ? ServiceOfferingId(randomUUID.to!string) : dto.offeringId;
@@ -39,16 +39,16 @@ class ManageServiceOfferingsUseCase {
         e.createdAt = currentTimestamp;
 
         if (dto.name.isEmpty)
-            return CommandResult(false, "", "Service offering name is required");
+            return UsecaseResult(false, "", "Service offering name is required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateOffering(UpdateServiceOfferingRequest dto) {
+    UsecaseResult updateOffering(UpdateServiceOfferingRequest dto) {
         auto existing = repo.findById(dto.tenantId, dto.offeringId);
         if (existing.isNull)
-            return CommandResult(false, "", "Service offering not found");
+            return UsecaseResult(false, "", "Service offering not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -58,16 +58,16 @@ class ManageServiceOfferingsUseCase {
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteOffering(TenantId tenantId, ServiceOfferingId id) {
+    UsecaseResult deleteOffering(TenantId tenantId, ServiceOfferingId id) {
         auto offering = repo.findById(tenantId, id);
         if (offering.isNull)
-            return CommandResult(false, "", "Service offering not found");
+            return UsecaseResult(false, "", "Service offering not found");
 
         repo.remove(offering);
-        return CommandResult(true, offering.id.value, "");
+        return UsecaseResult(true, offering.id.value, "");
     }
 }
 

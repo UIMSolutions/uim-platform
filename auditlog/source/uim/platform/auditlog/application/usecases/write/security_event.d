@@ -25,12 +25,12 @@ class WriteSecurityEventUseCase {
     this.secRepo = secRepo;
   }
 
-  CommandResult writeEvent(WriteSecurityEventRequest req) {
+  UsecaseResult writeEvent(WriteSecurityEventRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.eventType.length == 0)
-      return CommandResult(false, "", "Event type is required");
+      return UsecaseResult(false, "", "Event type is required");
 
     // Create parent audit log entry
     auto entry = AuditLogEntry(req.tenantId);
@@ -68,7 +68,7 @@ class WriteSecurityEventUseCase {
 
     secRepo.save(secEvent);
 
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 
   private string buildSecurityMessage(WriteSecurityEventRequest req) {

@@ -17,8 +17,8 @@ interface IManageEventMessagesUseCase {
     EventMessage[] listMessages(TenantId tenantId);
     EventMessage[] listMessages(TenantId tenantId, TopicId topicId);
     EventMessage[] listMessages(TenantId tenantId, QueueId queueId);
-    CommandResult publishMessage(EventMessageDTO dto);
-    CommandResult acknowledgeMessage(TenantId tenantId, EventMessageId messageId);
-    CommandResult deleteMessage(TenantId tenantId, EventMessageId messageId);
+    UsecaseResult publishMessage(EventMessageDTO dto);
+    UsecaseResult acknowledgeMessage(TenantId tenantId, EventMessageId messageId);
+    UsecaseResult deleteMessage(TenantId tenantId, EventMessageId messageId);
 }
 

@@ -37,12 +37,12 @@ class DatasetUseCases {
     return result;
   }
 
-  CommandResult deleteDataset(TenantId tenantId, DatasetId datasetId) {
+  UsecaseResult deleteDataset(TenantId tenantId, DatasetId datasetId) {
     auto found = repo.findByTenant(tenantId).filter!(e => e.id == datasetId).array;
     if (found.empty)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
     auto ds = found[0];
     repo.remove(ds);
-    return CommandResult(true, ds.id.value, "");
+    return UsecaseResult(true, ds.id.value, "");
   }
 }

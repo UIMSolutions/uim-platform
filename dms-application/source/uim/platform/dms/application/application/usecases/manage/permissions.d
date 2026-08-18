@@ -26,11 +26,11 @@ class ManagePermissionsUseCase {
     this.accessService = accessService;
   }
 
-  CommandResult grantPermission(CreatePermissionRequest r) {
+  UsecaseResult grantPermission(CreatePermissionRequest r) {
     if (r.resourceId.isEmpty)
-      return CommandResult(false, "", "Resource ID is required");
+      return UsecaseResult(false, "", "Resource ID is required");
     if (r.userId.isEmpty)
-      return CommandResult(false, "", "User ID is required");
+      return UsecaseResult(false, "", "User ID is required");
 
     // Check if permission already exists for this user+resource
     if (!permissions.existsByResourceAndUser(r.tenantId, r.resourceId,
@@ -40,7 +40,7 @@ class ManagePermissionsUseCase {
       // Update existing
       existing.level = r.level;
       permissions.update(existing);
-      return CommandResult(true, existing.id.value, "");
+      return UsecaseResult(true, existing.id.value, "");
     }
 
     auto entity = Permission(r.tenantId); //, r.createdBy);
@@ -50,7 +50,7 @@ class ManagePermissionsUseCase {
     entity.level = r.level;
 
     permissions.save(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   Permission[] listByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
@@ -66,23 +66,23 @@ class ManagePermissionsUseCase {
     return accessService.hasPermission(tenantId, resourceId, resourceType, userId, required);
   }
 
-  CommandResult updatePermission(UpdatePermissionRequest r) {
+  UsecaseResult updatePermission(UpdatePermissionRequest r) {
     auto permission = permissions.findById(r.tenantId, r.permissionId);
     if (permission.isNull)
-      return CommandResult(false, "", "Permission not found");
+      return UsecaseResult(false, "", "Permission not found");
 
     permission.level = r.level;
     permissions.update(permission);
-    return CommandResult(true, permission.id.value, "");
+    return UsecaseResult(true, permission.id.value, "");
   }
 
-  CommandResult revokePermission(TenantId tenantId, PermissionId id) {
+  UsecaseResult revokePermission(TenantId tenantId, PermissionId id) {
     auto permission = permissions.findById(tenantId, id);
     if (permission.isNull)
-      return CommandResult(false, "", "Permission not found");
+      return UsecaseResult(false, "", "Permission not found");
 
     permissions.remove(permission);
-    return CommandResult(true, permission.id.value, "");
+    return UsecaseResult(true, permission.id.value, "");
   }
 }
 

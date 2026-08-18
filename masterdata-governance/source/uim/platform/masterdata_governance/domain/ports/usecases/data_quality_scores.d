@@ -18,8 +18,8 @@ interface IManageDataQualityScoresUseCase {
     DataQualityScore getScoreByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId);
     DataQualityScore[] listByQualityStatus(TenantId tenantId, QualityStatus status);
     DataQualityScore[] listBelowThreshold(TenantId tenantId, int threshold);
-    CommandResult createDataQualityScore(DataQualityScoreDTO dto);
-    CommandResult updateDataQualityScore(DataQualityScoreDTO dto);
-    CommandResult deleteDataQualityScore(TenantId tenantId, DataQualityScoreId id);
+    UsecaseResult createDataQualityScore(DataQualityScoreDTO dto);
+    UsecaseResult updateDataQualityScore(DataQualityScoreDTO dto);
+    UsecaseResult deleteDataQualityScore(TenantId tenantId, DataQualityScoreId id);
 
 }

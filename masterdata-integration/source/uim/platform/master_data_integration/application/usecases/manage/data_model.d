@@ -21,11 +21,11 @@ class ManageDataModelsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createModel(CreateDataModelRequest req) {
+  UsecaseResult createModel(CreateDataModelRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Data model name is required");
+      return UsecaseResult(false, "", "Data model name is required");
     if (req.namespace.length == 0)
-      return CommandResult(false, "", "Namespace is required");
+      return UsecaseResult(false, "", "Namespace is required");
 
     auto model = DataModel(req.tenantId); //, UserId("test-user"));
     model.name = req.name;
@@ -39,13 +39,13 @@ class ManageDataModelsUseCase {
     model.isActive = true;
 
     repo.save(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
-  CommandResult updateModel(UpdateDataModelRequest req) {
+  UsecaseResult updateModel(UpdateDataModelRequest req) {
     auto model = repo.findById(req.tenantId, req.modelId);
     if (model.isNull)
-      return CommandResult(false, "", "Data model not found");
+      return UsecaseResult(false, "", "Data model not found");
 
     if (req.description.length > 0)
       model.description = req.description;
@@ -60,7 +60,7 @@ class ManageDataModelsUseCase {
     model.updatedAt = currentTimestamp();
 
     repo.update(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
   DataModel getModel(TenantId tenantId, DataModelId id) {
@@ -79,13 +79,13 @@ class ManageDataModelsUseCase {
     return repo.findByName(tenantId, name);
   }
 
-  CommandResult deleteModel(TenantId tenantId, DataModelId id) {
+  UsecaseResult deleteModel(TenantId tenantId, DataModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
-      return CommandResult(false, "", "Data model not found");
+      return UsecaseResult(false, "", "Data model not found");
 
     repo.remove(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
   private FieldDefinition[] toFieldDefs(FieldDefinitionDto[] dtos) {

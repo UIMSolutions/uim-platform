@@ -24,18 +24,18 @@ class ManageTransformationsUseCase {
     this.engine = engine;
   }
 
-  CommandResult createTransformation(CreateTransformationRequest req) {
+  UsecaseResult createTransformation(CreateTransformationRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.systemId.isEmpty)
-      return CommandResult(false, "", "System ID is required");
+      return UsecaseResult(false, "", "System ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Transformation name is required");
+      return UsecaseResult(false, "", "Transformation name is required");
     if (req.mappingRules.length == 0)
-      return CommandResult(false, "", "Mapping rules are required");
+      return UsecaseResult(false, "", "Mapping rules are required");
 
     if (!engine.validateRules(req.mappingRules))
-      return CommandResult(false, "", "Invalid mapping rules format");
+      return UsecaseResult(false, "", "Invalid mapping rules format");
 
     auto t = Transformation(req.tenantId); //, req.createdBy) ;
     t.name = req.name;
@@ -43,7 +43,7 @@ class ManageTransformationsUseCase {
     t.conditions = req.conditions;
 
     repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   Transformation getTransformation(TenantId tenantId, TransformationId id) {
@@ -58,22 +58,22 @@ class ManageTransformationsUseCase {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  CommandResult updateTransformation(UpdateTransformationRequest req) {
+  UsecaseResult updateTransformation(UpdateTransformationRequest req) {
     if (req.transformationId.isNull)
-      return CommandResult(false, "", "Transformation ID is required");
+      return UsecaseResult(false, "", "Transformation ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.tenantId, req.transformationId);
     if (existing.isNull)
-      return CommandResult(false, "", "Transformation not found");
+      return UsecaseResult(false, "", "Transformation not found");
 
     auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.mappingRules.length > 0) {
       if (!engine.validateRules(req.mappingRules))
-        return CommandResult(false, "", "Invalid mapping rules format");
+        return UsecaseResult(false, "", "Invalid mapping rules format");
       updated.mappingRules = req.mappingRules;
     }
     if (req.conditions.length > 0)
@@ -81,7 +81,7 @@ class ManageTransformationsUseCase {
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
   /// Test a transformation with sample input.
@@ -89,13 +89,13 @@ class ManageTransformationsUseCase {
     return engine.applyTransformations(tenantId, inputAttributes, systemId);
   }
 
-  CommandResult deleteTransformation(TenantId tenantId, TransformationId id) {
+  UsecaseResult deleteTransformation(TenantId tenantId, TransformationId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Transformation not found");
+      return UsecaseResult(false, "", "Transformation not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }
 

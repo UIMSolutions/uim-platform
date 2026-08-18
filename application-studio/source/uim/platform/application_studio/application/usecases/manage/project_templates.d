@@ -26,7 +26,7 @@ class ManageProjectTemplatesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createProjectTemplate(ProjectTemplateDTO dto) {
+    UsecaseResult createProjectTemplate(ProjectTemplateDTO dto) {
         ProjectTemplate e;
         e.id = dto.templateId;
         e.tenantId = dto.tenantId;
@@ -39,15 +39,15 @@ class ManageProjectTemplatesUseCase {
         e.iconUrl = dto.iconUrl;
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidProjectTemplate(e))
-            return CommandResult(false, "", "Invalid project template data");
+            return UsecaseResult(false, "", "Invalid project template data");
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateProjectTemplate(ProjectTemplateDTO dto) {
+    UsecaseResult updateProjectTemplate(ProjectTemplateDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.templateId);
         if (existing.isNull)
-            return CommandResult(false, "", "Project template not found");
+            return UsecaseResult(false, "", "Project template not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -55,15 +55,15 @@ class ManageProjectTemplatesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProjectTemplate(TenantId tenantId, ProjectTemplateId id) {
+    UsecaseResult deleteProjectTemplate(TenantId tenantId, ProjectTemplateId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Project template not found");
+            return UsecaseResult(false, "", "Project template not found");
 
             repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }

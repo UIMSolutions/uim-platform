@@ -39,7 +39,7 @@ class ManageConfigurationsUseCase {
     return c;
   }
 
-  CommandResult updateConfiguration(UpdateConfigurationRequest request) {
+  UsecaseResult updateConfiguration(UpdateConfigurationRequest request) {
     auto existing = repo.get(request.tenantId);
     if (!repo.existsByTenant(request.tenantId)) {
       // Create new configuration
@@ -52,7 +52,7 @@ class ManageConfigurationsUseCase {
       c.enableAlertNotifications = request.enableAlertNotifications;
 
       repo.save(c);
-      return CommandResult(true, c.id.value, "");
+      return UsecaseResult(true, c.id.value, "");
     }
 
     existing.defaultRetries = request.defaultRetries;
@@ -63,7 +63,7 @@ class ManageConfigurationsUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }
 

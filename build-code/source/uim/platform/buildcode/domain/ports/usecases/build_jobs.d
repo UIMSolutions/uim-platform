@@ -15,11 +15,11 @@ mixin(ShowModule!());
 
 interface IManageBuildJobsUseCase {
 
-  CommandResult trigger(TenantId tenantId, TriggerBuildRequest req);
+  UsecaseResult trigger(TenantId tenantId, TriggerBuildRequest req);
   BuildJob getById(TenantId tenantId, string id);
   BuildJob[] list(TenantId tenantId);
   BuildJob[] listByPipeline(TenantId tenantId, string pipelineId);
   BuildJob[] listByProject(TenantId tenantId, string projectId);
-  CommandResult updateStatus(TenantId tenantId, string id, string statusStr);
+  UsecaseResult updateStatus(TenantId tenantId, string id, string statusStr);
   
 }

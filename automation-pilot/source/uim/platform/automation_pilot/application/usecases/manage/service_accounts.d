@@ -26,7 +26,7 @@ class ManageServiceAccountsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createServiceAccount(ServiceAccountDTO dto) {
+    UsecaseResult createServiceAccount(ServiceAccountDTO dto) {
         auto sa = ServiceAccount(dto.tenantId, dto.accountId.isNull ? ServiceAccountId(createId) : dto.accountId, dto.createdBy);
         sa.name = dto.name;
         sa.description = dto.description;
@@ -34,16 +34,16 @@ class ManageServiceAccountsUseCase {
         sa.permissions = dto.permissions;
         sa.expiresAt = dto.expiresAt;
         if (!AutomationValidator.isValidServiceAccount(sa))
-            return CommandResult(false, "", "Invalid service account data");
+            return UsecaseResult(false, "", "Invalid service account data");
 
         repo.save(sa);
-        return CommandResult(true, sa.id.value, "");
+        return UsecaseResult(true, sa.id.value, "");
     }
 
-    CommandResult updateServiceAccount(ServiceAccountDTO dto) {
+    UsecaseResult updateServiceAccount(ServiceAccountDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.accountId);
         if (existing.isNull)
-            return CommandResult(false, "", "Service account not found");
+            return UsecaseResult(false, "", "Service account not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -51,16 +51,16 @@ class ManageServiceAccountsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServiceAccount(TenantId tenantId, ServiceAccountId id) {
+    UsecaseResult deleteServiceAccount(TenantId tenantId, ServiceAccountId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Service account not found");
+            return UsecaseResult(false, "", "Service account not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

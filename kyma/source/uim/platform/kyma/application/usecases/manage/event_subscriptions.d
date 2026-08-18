@@ -21,16 +21,16 @@ class ManageEventSubscriptionsUseCase {
     this.subscriptionRepository = subscriptionRepository;
   }
 
-  CommandResult createEventSubscription(CreateEventSubscriptionRequest req) {
+  UsecaseResult createEventSubscription(CreateEventSubscriptionRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Subscription name is required");
+      return UsecaseResult(false, "", "Subscription name is required");
     if (req.source.length == 0)
-      return CommandResult(false, "", "Event source is required");
+      return UsecaseResult(false, "", "Event source is required");
     if (req.eventTypes.length == 0)
-      return CommandResult(false, "", "At least one event type is required");
+      return UsecaseResult(false, "", "At least one event type is required");
 
     if (subscriptionRepository.existsByName(req.namespaceId, req.name))
-      return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
     auto sub = EventSubscription(req.tenantId); //, UserId("test-user"));
     sub.namespaceId = req.namespaceId;
@@ -50,12 +50,12 @@ class ManageEventSubscriptionsUseCase {
     sub.labels = req.labels;
 
     subscriptionRepository.save(sub);
-    return CommandResult(true, sub.id.value, "");
+    return UsecaseResult(true, sub.id.value, "");
   }
 
-  CommandResult updateEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
+  UsecaseResult updateEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
     if (!subscriptionRepository.existsById(tenantId, subscriptionId))
-      return CommandResult(false, "", "Subscription not found");
+      return UsecaseResult(false, "", "Subscription not found");
 
     auto sub = subscriptionRepository.findById(tenantId, subscriptionId);
     if (request.description.length > 0)
@@ -78,29 +78,29 @@ class ManageEventSubscriptionsUseCase {
     sub.updatedAt = clockSeconds();
 
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionId.value, "");
+    return UsecaseResult(true, subscriptionId.value, "");
   }
 
-  CommandResult pauseEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
+  UsecaseResult pauseEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
     auto sub = subscriptionRepository.findById(tenantId, subscriptionId);
     if (sub.isNull)
-      return CommandResult(false, "", "Subscription not found");
+      return UsecaseResult(false, "", "Subscription not found");
 
     sub.status = SubscriptionStatus.paused;
     sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionId.value, "");
+    return UsecaseResult(true, subscriptionId.value, "");
   }
 
-  CommandResult resumeEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
+  UsecaseResult resumeEventSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
     auto sub = subscriptionRepository.findById(tenantId, subscriptionId);
     if (sub.isNull)
-      return CommandResult(false, "", "Subscription not found");
+      return UsecaseResult(false, "", "Subscription not found");
 
     sub.status = SubscriptionStatus.active;
     sub.updatedAt = clockSeconds();
     subscriptionRepository.update(sub);
-    return CommandResult(true, subscriptionId.value, "");
+    return UsecaseResult(true, subscriptionId.value, "");
   }
 
   bool hasSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
@@ -119,12 +119,12 @@ class ManageEventSubscriptionsUseCase {
     return subscriptionRepository.findByEnvironment(tenantId, environmentId);
   }
 
-  CommandResult deleteSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
+  UsecaseResult deleteSubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
     auto sub = subscriptionRepository.findById(tenantId, subscriptionId);
     if (sub.isNull)
-      return CommandResult(false, "", "Subscription not found");
+      return UsecaseResult(false, "", "Subscription not found");
 
     subscriptionRepository.remove(sub);
-    return CommandResult(true, sub.id.value, "");
+    return UsecaseResult(true, sub.id.value, "");
   }
 }

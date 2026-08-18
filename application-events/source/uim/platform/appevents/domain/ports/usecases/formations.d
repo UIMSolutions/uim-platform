@@ -15,8 +15,8 @@ interface IManageFormationsUseCase {
 
     Formation getFormation(TenantId tenantId, FormationId id);
     Formation[] listFormations(TenantId tenantId);
-    CommandResult createFormation(FormationDTO dto);
-    CommandResult updateFormation(FormationDTO dto);
-    CommandResult deleteFormation(TenantId tenantId, FormationId id);
+    UsecaseResult createFormation(FormationDTO dto);
+    UsecaseResult updateFormation(FormationDTO dto);
+    UsecaseResult deleteFormation(TenantId tenantId, FormationId id);
 
 }

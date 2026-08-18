@@ -101,7 +101,7 @@ The **SaaS Provisioning Service** provides the capability to register multitenan
 | `SaasApplication` | Provider → Service → Repository | Application registration data |
 | `AppSubscription` | Consumer → Service → Repository | Subscription lifecycle state |
 | `SubscriptionJob` | Service internal → Repository | Async job tracking records |
-| `CommandResult` | Repository → Service → Client | Operation result (success/id/error) |
+| `UsecaseResult` | Repository → Service → Client | Operation result (success/id/error) |
 
 ### NSV-3: System Technology Forecast
 

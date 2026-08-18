@@ -34,7 +34,7 @@ class ManageAccessTokensUseCase {
         return repo.findByClient(tenantId, clientId);
     }
 
-    CommandResult createToken(AccessTokenDTO dto) {
+    UsecaseResult createToken(AccessTokenDTO dto) {
         auto token = AccessToken(dto.tenantId); //, UserId("test-user"));
         token.id = dto.tokenId;
         token.tokenValue = dto.tokenValue;
@@ -44,29 +44,29 @@ class ManageAccessTokensUseCase {
         token.expiresAt = dto.expiresAt;
         auto error = OAuthValidator.validateAccessToken(token);
         if (error.length > 0)
-            return CommandResult(false, "", error);
+            return UsecaseResult(false, "", error);
         
         repo.save(token);
-        return CommandResult(true, token.id.value, "");
+        return UsecaseResult(true, token.id.value, "");
     }
 
-    CommandResult revokeToken(TenantId tenantId, AccessTokenId id) {
+    UsecaseResult revokeToken(TenantId tenantId, AccessTokenId id) {
         auto token = repo.findById(tenantId, id);
         if (token.isNull)
-            return CommandResult(false, "", "Access token not found");
+            return UsecaseResult(false, "", "Access token not found");
             
         token.status = TokenStatus.revoked;
         repo.update(token);
-        return CommandResult(true, token.id.value, "");
+        return UsecaseResult(true, token.id.value, "");
     }
 
-    CommandResult deleteToken(TenantId tenantId, AccessTokenId id) {
+    UsecaseResult deleteToken(TenantId tenantId, AccessTokenId id) {
         auto token = repo.findById(tenantId, id);
         if (token.isNull)            
-            return CommandResult(false, "", "Access token not found");
+            return UsecaseResult(false, "", "Access token not found");
 
         repo.remove(token);
-        return CommandResult(true, token.id.value, "");
+        return UsecaseResult(true, token.id.value, "");
     }
 }
 

@@ -17,14 +17,14 @@ class ManageActionsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createAction(CreateActionRequest r) {
+    UsecaseResult createAction(CreateActionRequest r) {
         if (r.actionId.isEmpty)
-            return CommandResult(false, "", "Action ID is required");
+            return UsecaseResult(false, "", "Action ID is required");
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Action name is required");
+            return UsecaseResult(false, "", "Action name is required");
 
         if (repo.existsById(r.tenantId, r.actionId))
-            return CommandResult(false, "", "Action already exists");
+            return UsecaseResult(false, "", "Action already exists");
 
         auto a = Action(r.tenantId); //, UserId("test-user"));
         a.id = r.actionId;
@@ -39,7 +39,7 @@ class ManageActionsUseCase {
         a.version_ = r.version_;
 
         repo.save(a);
-        return CommandResult(true, a.id.value, "");
+        return UsecaseResult(true, a.id.value, "");
     }
 
     Action getAction(TenantId tenantId, ActionId id) {
@@ -50,10 +50,10 @@ class ManageActionsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateAction(UpdateActionRequest r) {
+    UsecaseResult updateAction(UpdateActionRequest r) {
         auto action = repo.findById(r.tenantId, r.actionId);
         if (action.isNull)
-            return CommandResult(false, "", "Action not found");
+            return UsecaseResult(false, "", "Action not found");
 
         action.name = r.name;
         action.description = r.description;
@@ -68,15 +68,15 @@ class ManageActionsUseCase {
         action.updatedAt = currentTimestamp;
 
         repo.update(action);
-        return CommandResult(true, action.id.value, "");
+        return UsecaseResult(true, action.id.value, "");
     }
 
-    CommandResult deleteAction(TenantId tenantId, ActionId actionId) {
+    UsecaseResult deleteAction(TenantId tenantId, ActionId actionId) {
         auto action = repo.findById(tenantId, actionId);
         if (action.isNull)
-            return CommandResult(false, "", "Action not found");
+            return UsecaseResult(false, "", "Action not found");
 
         repo.remove(action);
-        return CommandResult(true, action.id.value, "");
+        return UsecaseResult(true, action.id.value, "");
     }
 }

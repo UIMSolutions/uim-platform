@@ -163,7 +163,7 @@ sequenceDiagram
     AR-->>SUC: auditEntryId
     SUC->>SR: save(securityEvent — auditEntryId)
     SR-->>SUC: ok
-    SUC-->>SEC: CommandResult(true, id)
+    SUC-->>SEC: UsecaseResult(true, id)
     SEC-->>Client: 201 { id }
 ```
 
@@ -185,6 +185,6 @@ sequenceDiagram
     EUC->>AR: findByCategory(category, from, to)
     AR-->>EUC: entries[]
     EUC->>ER: update(status=completed, downloadUrl, recordCount)
-    EUC-->>EC: CommandResult(true, id)
+    EUC-->>EC: UsecaseResult(true, id)
     EC-->>Admin: 201 { id, downloadUrl }
 ```

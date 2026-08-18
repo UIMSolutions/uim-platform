@@ -30,7 +30,7 @@ class ManageEventApplicationsUseCase {
         return repo.findByBrokerService(tenantId, serviceId);
     }
 
-    CommandResult createApplication(EventApplicationDTO dto) {
+    UsecaseResult createApplication(EventApplicationDTO dto) {
         EventApplication a;
         a.id = dto.applicationId;
         a.tenantId = dto.tenantId;
@@ -48,15 +48,15 @@ class ManageEventApplicationsUseCase {
         a.maxConnections = dto.maxConnections;
         a.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidEventApplication(a))
-            return CommandResult(false, "", "Invalid event application data");
+            return UsecaseResult(false, "", "Invalid event application data");
         repo.save(a);
-        return CommandResult(true, a.id.value, "");
+        return UsecaseResult(true, a.id.value, "");
     }
 
-    CommandResult updateApplication(EventApplicationDTO dto) {
+    UsecaseResult updateApplication(EventApplicationDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.applicationId);
         if (existing.isNull)
-            return CommandResult(false, "", "Event application not found");
+            return UsecaseResult(false, "", "Event application not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -68,16 +68,16 @@ class ManageEventApplicationsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteApplication(TenantId tenantId, EventApplicationId id) {
+    UsecaseResult deleteApplication(TenantId tenantId, EventApplicationId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Event application not found");
+            return UsecaseResult(false, "", "Event application not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

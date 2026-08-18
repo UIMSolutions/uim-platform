@@ -27,16 +27,16 @@ class ManageDestinationsUseCase {
     this.logs = logs;
   }
 
-  CommandResult createDestination(CreateDestinationRequest req) {
+  UsecaseResult createDestination(CreateDestinationRequest req) {
     // Validate unique name within tenant
     if (destinations.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Destination with name '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Destination with name '" ~ req.name ~ "' already exists");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Destination name is required");
+      return UsecaseResult(false, "", "Destination name is required");
 
     if (req.url.length == 0)
-      return CommandResult(false, "", "Destination URL is required");
+      return UsecaseResult(false, "", "Destination URL is required");
 
     auto dest = Destination(req.tenantId);
     dest.name = req.name;
@@ -66,17 +66,17 @@ class ManageDestinationsUseCase {
           msg ~= "; ";
         msg ~= error;
       }
-      return CommandResult(false, "", msg);
+      return UsecaseResult(false, "", msg);
     }
 
     destinations.save(dest);
-    return CommandResult(true, dest.id.value, "");
+    return UsecaseResult(true, dest.id.value, "");
   }
 
-  CommandResult updateDestination(UpdateDestinationRequest req) {
+  UsecaseResult updateDestination(UpdateDestinationRequest req) {
     auto dest = destinations.findById(req.tenantId, req.destinationId);
     if (dest.isNull)
-      return CommandResult(false, "", "Destination not found");
+      return UsecaseResult(false, "", "Destination not found");
 
     if (req.description.length > 0)
       dest.description = req.description;
@@ -117,11 +117,11 @@ class ManageDestinationsUseCase {
           msg ~= "; ";
         msg ~= error;
       }
-      return CommandResult(false, "", msg);
+      return UsecaseResult(false, "", msg);
     }
 
     destinations.update(dest);
-    return CommandResult(true, dest.id.value, "");
+    return UsecaseResult(true, dest.id.value, "");
   }
 
   Destination getDestination(TenantId tenantId, DestinationId id) {
@@ -136,12 +136,12 @@ class ManageDestinationsUseCase {
     return destinations.findByTenant(tenantId);
   }
 
-  CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
+  UsecaseResult deleteDestination(TenantId tenantId, DestinationId id) {
     auto dest = destinations.findById(tenantId, id);
     if (dest.isNull)
-      return CommandResult(false, "", "Destination not found");
+      return UsecaseResult(false, "", "Destination not found");
 
     destinations.remove(dest);
-    return CommandResult(true, dest.id.value, "");
+    return UsecaseResult(true, dest.id.value, "");
   }
 }

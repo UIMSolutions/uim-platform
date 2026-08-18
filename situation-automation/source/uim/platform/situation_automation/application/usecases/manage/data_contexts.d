@@ -17,15 +17,15 @@ class ManageDataContextsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDataContext(CreateDataContextRequest r) {
+    UsecaseResult createDataContext(CreateDataContextRequest r) {
         if (r.dataContextId.isEmpty)
-            return CommandResult(false, "", "Data context ID is required");
+            return UsecaseResult(false, "", "Data context ID is required");
         if (r.situationInstanceId.isEmpty)
-            return CommandResult(false, "", "Instance ID is required");
+            return UsecaseResult(false, "", "Instance ID is required");
 
         auto existing = repo.findById(r.tenantId, r.dataContextId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Data context already exists");
+            return UsecaseResult(false, "", "Data context already exists");
 
         auto d = DataContext(r.tenantId); //, r.dataContextId);
         d.instanceId = r.situationInstanceId;
@@ -40,7 +40,7 @@ class ManageDataContextsUseCase {
         d.capturedAt = currentTimestamp;
 
         repo.save(d);
-        return CommandResult(true, d.id.value, "");
+        return UsecaseResult(true, d.id.value, "");
     }
 
     DataContext getDataContext(TenantId tenantId, DataContextId id) {
@@ -55,20 +55,20 @@ class ManageDataContextsUseCase {
         return repo.findByInstance(tenantId, instanceId);
     }
 
-    CommandResult deleteDataContext(TenantId tenantId, DataContextId id) {
+    UsecaseResult deleteDataContext(TenantId tenantId, DataContextId id) {
         auto context = repo.findById(tenantId, id);
         if (context.isNull)
-            return CommandResult(false, "", "Data context not found");
+            return UsecaseResult(false, "", "Data context not found");
 
         repo.remove(context);
-        return CommandResult(true, context.id.value, "");
+        return UsecaseResult(true, context.id.value, "");
     }
 
-    CommandResult deletePersonalData(TenantId tenantId) {
+    UsecaseResult deletePersonalData(TenantId tenantId) {
         auto items = repo.findByPersonalData(tenantId);
         foreach (item; items) {
             repo.remove(item);
         }
-        return CommandResult(true, "", "");
+        return UsecaseResult(true, "", "");
     }
 }

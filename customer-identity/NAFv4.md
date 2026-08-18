@@ -152,7 +152,7 @@ The Customer Identity Service (CIAM B2C) provides identity lifecycle management 
 4. UseCase          →  ICustomerRepository.findByEmail(tenantId, email) → null
 5. UseCase          →  ICustomerRepository.add(customer)
 6. UseCase          →  ManageAuditLogsUseCase.recordAuditEvent(REGISTER)
-7. UseCase          →  CommandResult(success=true, id)
+7. UseCase          →  UsecaseResult(success=true, id)
 8. CustomerCtrl     →  201 Created {id}
 ```
 
@@ -165,7 +165,7 @@ The Customer Identity Service (CIAM B2C) provides identity lifecycle management 
 4. UseCase          →  ISocialIdentityRepository.findByProvider(provider, uid) → null
 5. UseCase          →  ISocialIdentityRepository.add(socialIdentity)
 6. UseCase          →  ManageAuditLogsUseCase.recordAuditEvent(LINK_SOCIAL)
-7. UseCase          →  CommandResult(success=true, id)
+7. UseCase          →  UsecaseResult(success=true, id)
 8. SocialIdCtrl     →  201 Created {id}
 ```
 
@@ -176,7 +176,7 @@ The Customer Identity Service (CIAM B2C) provides identity lifecycle management 
 2. ConsentCtrl      →  ManageConsentRecordsUseCase.grantConsent(dto)
 3. UseCase          →  IConsentRecordRepository.add(record)
 4. UseCase          →  ManageAuditLogsUseCase.recordAuditEvent(GRANT_CONSENT)
-5. UseCase          →  CommandResult(success=true, id)
+5. UseCase          →  UsecaseResult(success=true, id)
 6. ConsentCtrl      →  201 Created {id}
 ```
 

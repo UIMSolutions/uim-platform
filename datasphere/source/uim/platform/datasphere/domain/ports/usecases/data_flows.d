@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageDataFlowsUseCase { 
 
-  CommandResult createDataFlow(CreateDataFlowRequest r);
+  UsecaseResult createDataFlow(CreateDataFlowRequest r);
   DataFlow getDataFlow(TenantId tenantId, SpaceId spaceId, DataFlowId id);
   DataFlow[] listDataFlows(TenantId tenantId, SpaceId spaceId);
-  CommandResult patchDataFlow(PatchDataFlowRequest r);
-  CommandResult deleteDataFlow(TenantId tenantId, SpaceId spaceId, DataFlowId id);
+  UsecaseResult patchDataFlow(PatchDataFlowRequest r);
+  UsecaseResult deleteDataFlow(TenantId tenantId, SpaceId spaceId, DataFlowId id);
 
 }

@@ -16,8 +16,8 @@ interface IManageTriggersUseCase {
     Trigger getTrigger(TenantId tenantId, TriggerId id);
     Trigger[] listTriggers(TenantId tenantId);
     Trigger[] listTriggers(TenantId tenantId, CommandId commandId);
-    CommandResult createTrigger(TriggerDTO dto);
-    CommandResult updateTrigger(TriggerDTO dto);
-    CommandResult deleteTrigger(TenantId tenantId, TriggerId id);
+    UsecaseResult createTrigger(TriggerDTO dto);
+    UsecaseResult updateTrigger(TriggerDTO dto);
+    UsecaseResult deleteTrigger(TenantId tenantId, TriggerId id);
 
 }

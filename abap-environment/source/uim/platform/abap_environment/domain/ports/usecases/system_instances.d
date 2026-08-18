@@ -13,10 +13,10 @@ import uim.platform.abap_environment;
 /// Application service for ABAP system instance lifecycle management.
 interface IManageSystemInstancesUseCase { 
 
-  CommandResult createInstance(CreateSystemInstanceRequest req);
-  CommandResult updateInstance(UpdateSystemInstanceRequest req);;
+  UsecaseResult createInstance(CreateSystemInstanceRequest req);
+  UsecaseResult updateInstance(UpdateSystemInstanceRequest req);;
   SystemInstance getInstance(TenantId tenantId, SystemInstanceId id);
   SystemInstance[] listInstances(TenantId tenantId);
-  CommandResult deleteInstance(TenantId tenantId, SystemInstanceId id);
+  UsecaseResult deleteInstance(TenantId tenantId, SystemInstanceId id);
   
 }

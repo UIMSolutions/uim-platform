@@ -16,5 +16,5 @@ interface IDirectoryApi {
 
     @path("/rest/v1/directories")
     @headerParam("tenantId", "X-Tenant-ID")
-    CommandResult createDirectory(string tenantId, CreateDirectoryRequest request);
+    UsecaseResult createDirectory(string tenantId, CreateDirectoryRequest request);
 }

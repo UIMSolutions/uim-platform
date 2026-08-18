@@ -16,14 +16,14 @@ mixin(ShowModule!());
 @safe:
 interface IManageConsentRecordsUseCase { 
 
-  CommandResult grantConsent(CreateConsentRecordRequest req);
+  UsecaseResult grantConsent(CreateConsentRecordRequest req);
   ConsentRecord getConsent(TenantId tenantId, ConsentRecordId id);
   ConsentRecord[] listConsents(TenantId tenantId);
   ConsentRecord[] listConsents(TenantId tenantId, DataSubjectId subjectId);
   ConsentRecord[] listConsents(TenantId tenantId, ProcessingPurpose purpose);
   ConsentRecord[] listActiveConsents(TenantId tenantId, DataSubjectId subjectId);
   ConsentRecord[] listActiveConsents(TenantId tenantId);
-  CommandResult revokeConsent(RevokeConsentRequest req);
-  CommandResult deleteConsent(TenantId tenantId, ConsentRecordId id);
+  UsecaseResult revokeConsent(RevokeConsentRequest req);
+  UsecaseResult deleteConsent(TenantId tenantId, ConsentRecordId id);
   
 }

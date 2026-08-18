@@ -17,13 +17,13 @@ interface ITechnologyBlocksApi {
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/") @method(HTTPMethod.POST)
-    CommandResult createTechnologyBlock(string tenantId, CreateTechnologyBlockRequest request);
+    UsecaseResult createTechnologyBlock(string tenantId, CreateTechnologyBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.PUT)
-    CommandResult updateTechnologyBlock(string tenantId, string _id, UpdateTechnologyBlockRequest request);
+    UsecaseResult updateTechnologyBlock(string tenantId, string _id, UpdateTechnologyBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.DELETE)
-    CommandResult deleteTechnologyBlock(string tenantId, string _id);
+    UsecaseResult deleteTechnologyBlock(string tenantId, string _id);
 }

@@ -22,12 +22,12 @@ class ManageSchemasUseCase {
     this.repo = repo;
   }
 
-  CommandResult createSchema(CreateSchemaRequest r) {
+  UsecaseResult createSchema(CreateSchemaRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Schema name is required");
+      return UsecaseResult(false, "", "Schema name is required");
       
     if (r.clientId.isEmpty)
-      return CommandResult(false, "", "Client ID is required");
+      return UsecaseResult(false, "", "Client ID is required");
 
     auto s = Schema(r.tenantId);
     s.clientId = r.clientId;
@@ -66,16 +66,16 @@ class ManageSchemasUseCase {
     s.lineItemFields = lFields;
 
     repo.save(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
-  CommandResult updateSchema(UpdateSchemaRequest r) {
+  UsecaseResult updateSchema(UpdateSchemaRequest r) {
     if (r.schemaId.isEmpty)
-      return CommandResult(false, "", "Schema ID is required");
+      return UsecaseResult(false, "", "Schema ID is required");
 
     auto existing = repo.findById(r.schemaId, r.clientId);
     if (existing.isNull)
-      return CommandResult(false, "", "Schema not found");
+      return UsecaseResult(false, "", "Schema not found");
 
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
@@ -93,7 +93,7 @@ class ManageSchemasUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   Schema getSchema(SchemaId id, ClientId clientId) {
@@ -108,13 +108,13 @@ class ManageSchemasUseCase {
     return repo.findByDocumentType(typeId, clientId);
   }
 
-  CommandResult deleteSchema(SchemaId id, ClientId clientId) {
+  UsecaseResult deleteSchema(SchemaId id, ClientId clientId) {
     auto schema = repo.findById(id, clientId);
     if (schema.isNull)
-      return CommandResult(false, "", "Schema not found");
+      return UsecaseResult(false, "", "Schema not found");
 
     repo.remove(schema);
-    return CommandResult(true, schema.id.value, "");
+    return UsecaseResult(true, schema.id.value, "");
   }
 
   size_t countSchemas(ClientId clientId) {

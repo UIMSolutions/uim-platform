@@ -21,9 +21,9 @@ class ManageFilterRulesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRule(CreateFilterRuleRequest req) {
+  UsecaseResult createRule(CreateFilterRuleRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Filter rule name is required");
+      return UsecaseResult(false, "", "Filter rule name is required");
 
     auto rule = FilterRule(req.tenantId); //, UserId("test-user"));
     rule.name = req.name;
@@ -36,13 +36,13 @@ class ManageFilterRulesUseCase {
     rule.isActive = true;
 
     repo.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(UpdateFilterRuleRequest req) {
+  UsecaseResult updateRule(UpdateFilterRuleRequest req) {
     auto rule = repo.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
-      return CommandResult(false, "", "Filter rule not found");
+      return UsecaseResult(false, "", "Filter rule not found");
 
     if (req.name.length > 0)
       rule.description = req.description;
@@ -54,7 +54,7 @@ class ManageFilterRulesUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   FilterRule getRule(TenantId tenantId, FilterRuleId id) {
@@ -73,13 +73,13 @@ class ManageFilterRulesUseCase {
     return repo.findActive(tenantId);
   }
 
-  CommandResult deleteRule(TenantId tenantId, FilterRuleId id) {
+  UsecaseResult deleteRule(TenantId tenantId, FilterRuleId id) {
     auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "Filter rule not found");
+      return UsecaseResult(false, "", "Filter rule not found");
       
     repo.remove(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   private FilterCondition[] toConditions(FilterConditionDto[] dtos) {

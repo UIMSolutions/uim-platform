@@ -28,7 +28,7 @@ class ManageMessageClientsUseCase {
         return repo.findByService(tenantId, serviceId);
     }
 
-    CommandResult createClient(MessageClientDTO dto) {
+    UsecaseResult createClient(MessageClientDTO dto) {
         MessageClient c;
         c.id = dto.clientId;
         c.tenantId = dto.tenantId;
@@ -40,28 +40,28 @@ class ManageMessageClientsUseCase {
         c.permittedNamespace = dto.permittedNamespace;
         c.createdBy = dto.createdBy;
         if (!EventsValidator.isValidMessageClient(c))
-            return CommandResult(false, "", "Invalid message client data");
+            return UsecaseResult(false, "", "Invalid message client data");
         repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 
-    CommandResult updateClient(MessageClientDTO dto) {
+    UsecaseResult updateClient(MessageClientDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.clientId);
-        if (existing.isNull) return CommandResult(false, "", "Message client not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Message client not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.namespace.length > 0) existing.namespace = dto.namespace;
         if (dto.permittedNamespace.length > 0) existing.permittedNamespace = dto.permittedNamespace;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteClient(TenantId tenantId, MessageClientId id) {
+    UsecaseResult deleteClient(TenantId tenantId, MessageClientId id) {
         auto c = repo.findById(tenantId, id);
-        if (c.isNull) return CommandResult(false, "", "Message client not found");
+        if (c.isNull) return UsecaseResult(false, "", "Message client not found");
         repo.remove(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 }
 

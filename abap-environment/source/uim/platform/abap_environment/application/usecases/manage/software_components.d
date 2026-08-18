@@ -20,22 +20,22 @@ class ManageSoftwareComponentsUseCase {
     this.systemRepo = systemRepo;
   }
 
-  CommandResult createSoftwareComponent(CreateSoftwareComponentRequest req) {
+  UsecaseResult createSoftwareComponent(CreateSoftwareComponentRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Component name is required");
+      return UsecaseResult(false, "", "Component name is required");
     
     if (req.systemInstanceId.isEmpty)
-      return CommandResult(false, "", "System instance ID is required");
+      return UsecaseResult(false, "", "System instance ID is required");
 
     auto system = systemRepo.findById(req.tenantId, req.systemInstanceId);
     if (system.isNull)
-      return CommandResult(false, "", "System instance not found");
+      return UsecaseResult(false, "", "System instance not found");
  
     if (system.status != SystemStatus.active)
-      return CommandResult(false, "", "System instance must be active");
+      return UsecaseResult(false, "", "System instance must be active");
 
     if (repo.existsByName(req.tenantId, req.systemInstanceId, req.name))
-      return CommandResult(false, "", "Software component '" ~ req.name ~ "' already exists in this system");
+      return UsecaseResult(false, "", "Software component '" ~ req.name ~ "' already exists in this system");
 
     auto comp = SoftwareComponent(req.tenantId);
     comp.systemInstanceId = req.systemInstanceId;
@@ -49,16 +49,16 @@ class ManageSoftwareComponentsUseCase {
     comp.namespace = req.namespace;
 
     repo.save(comp);
-    return CommandResult(true, comp.id.value, "");
+    return UsecaseResult(true, comp.id.value, "");
   }
 
-  CommandResult cloneSoftwareComponent(CloneSoftwareComponentRequest req) {
+  UsecaseResult cloneSoftwareComponent(CloneSoftwareComponentRequest req) {
     auto comp = repo.findById(req.tenantId, req.softwareComponentId);
     if (comp.isNull)
-      return CommandResult(false, "", "Software component not found");
+      return UsecaseResult(false, "", "Software component not found");
 
     if (comp.status != ComponentStatus.notCloned && comp.status != ComponentStatus.error)
-      return CommandResult(false, "", "Component is already cloned or cloning in progress");
+      return UsecaseResult(false, "", "Component is already cloned or cloning in progress");
 
     comp.status = ComponentStatus.cloning;
     if (req.branch.length > 0)
@@ -80,16 +80,16 @@ class ManageSoftwareComponentsUseCase {
     comp.commitHistory ~= commit;
 
     repo.update(comp);
-    return CommandResult(true, comp.id.value, "");
+    return UsecaseResult(true, comp.id.value, "");
   }
 
-  CommandResult pullSoftwareComponent(PullSoftwareComponentRequest req) {
+  UsecaseResult pullSoftwareComponent(PullSoftwareComponentRequest req) {
     auto comp = repo.findById(req.tenantId, req.softwareComponentId);
     if (comp.isNull)
-      return CommandResult(false, "", "Software component not found");
+      return UsecaseResult(false, "", "Software component not found");
 
     if (comp.status != ComponentStatus.cloned)
-      return CommandResult(false, "", "Component must be cloned before pulling");
+      return UsecaseResult(false, "", "Component must be cloned before pulling");
 
     comp.status = ComponentStatus.pulling;
 
@@ -110,7 +110,7 @@ class ManageSoftwareComponentsUseCase {
     comp.commitHistory ~= commit;
 
     repo.update(comp);
-    return CommandResult(true, comp.id.value, "");
+    return UsecaseResult(true, comp.id.value, "");
   }
 
   SoftwareComponent getSoftwareComponent(TenantId tenantId, SoftwareComponentId id) {
@@ -121,13 +121,13 @@ class ManageSoftwareComponentsUseCase {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteSoftwareComponent(TenantId tenantId, SoftwareComponentId id) {
+  UsecaseResult deleteSoftwareComponent(TenantId tenantId, SoftwareComponentId id) {
     auto comp = repo.findById(tenantId, id);
     if (comp.isNull)
-      return CommandResult(false, "", "Software component not found");
+      return UsecaseResult(false, "", "Software component not found");
 
     repo.remove(comp);
-    return CommandResult(true, comp.id.value, "");
+    return UsecaseResult(true, comp.id.value, "");
   }
 }
 

@@ -27,18 +27,18 @@ interface IManageStepsUseCase {
   WorkflowStep[] getTasksByRole(TenantId tenantId, string role);
 
   /// Start a step (mark as in-progress).
-  CommandResult startStep(TenantId tenantId, WorkflowStepId stepId, UserId userId);
+  UsecaseResult startStep(TenantId tenantId, WorkflowStepId stepId, UserId userId);
 
   /// Complete a step and advance the workflow.
-  CommandResult completeStep(CompleteStepRequest req);
+  UsecaseResult completeStep(CompleteStepRequest req);
 
   /// Mark a step as failed.
-  CommandResult failStep(FailStepRequest req);
+  UsecaseResult failStep(FailStepRequest req);
 
   /// Skip a step and advance the workflow.
-  CommandResult skipStep(SkipStepRequest req);
+  UsecaseResult skipStep(SkipStepRequest req);
 
   /// Assign a step to a user.
-  CommandResult assignStep(AssignStepRequest req);
+  UsecaseResult assignStep(AssignStepRequest req);
   
   }

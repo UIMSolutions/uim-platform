@@ -20,7 +20,7 @@ class ManageProvisioningJobsUseCase {
     ProvisioningJob[] listJobs(TenantId tenantId) { return repo.findByTenant(tenantId); }
     ProvisioningJob[] listByStatus(TenantId tenantId, JobStatus status) { return repo.findByStatus(tenantId, status); }
 
-    CommandResult createJob(ProvisioningJobDTO dto) {
+    UsecaseResult createJob(ProvisioningJobDTO dto) {
         auto j = ProvisioningJob(dto.tenantId);
         j.id = dto.jobId;
         j.name = dto.name;
@@ -35,49 +35,49 @@ class ManageProvisioningJobsUseCase {
         }
 
         if (!IdentityValidator.isValidProvisioningJob(j))
-            return CommandResult(false, "", "Invalid job: sourceSystem and targetSystem are required");
+            return UsecaseResult(false, "", "Invalid job: sourceSystem and targetSystem are required");
 
         repo.save(j);
-        return CommandResult(true, j.id.value, "");
+        return UsecaseResult(true, j.id.value, "");
     }
 
-    CommandResult startJob(TenantId tenantId, ProvisioningJobId id) {
+    UsecaseResult startJob(TenantId tenantId, ProvisioningJobId id) {
         
         auto j = repo.findById(tenantId, id);
-        if (j.isNull) return CommandResult(false, "", "Provisioning job not found");
+        if (j.isNull) return UsecaseResult(false, "", "Provisioning job not found");
         if (j.status != JobStatus.pending)
-            return CommandResult(false, "", "Job is not in pending state");
+            return UsecaseResult(false, "", "Job is not in pending state");
         j.status = JobStatus.running;
         j.startedAt = MonoTime.currTime.ticks;
         repo.update(j);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
-    CommandResult finishJob(TenantId tenantId, ProvisioningJobId id, bool success, string errorLog = "") {
+    UsecaseResult finishJob(TenantId tenantId, ProvisioningJobId id, bool success, string errorLog = "") {
         
         auto j = repo.findById(tenantId, id);
-        if (j.isNull) return CommandResult(false, "", "Provisioning job not found");
+        if (j.isNull) return UsecaseResult(false, "", "Provisioning job not found");
         j.status = success ? JobStatus.success : JobStatus.failed;
         j.finishedAt = MonoTime.currTime.ticks;
         if (errorLog.length > 0) j.errorLog = errorLog;
         repo.update(j);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
-    CommandResult cancelJob(TenantId tenantId, ProvisioningJobId id) {
+    UsecaseResult cancelJob(TenantId tenantId, ProvisioningJobId id) {
         auto j = repo.findById(tenantId, id);
-        if (j.isNull) return CommandResult(false, "", "Provisioning job not found");
+        if (j.isNull) return UsecaseResult(false, "", "Provisioning job not found");
         if (j.status == JobStatus.success || j.status == JobStatus.failed)
-            return CommandResult(false, "", "Cannot cancel a completed job");
+            return UsecaseResult(false, "", "Cannot cancel a completed job");
         j.status = JobStatus.cancelled;
         repo.update(j);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
-    CommandResult deleteJob(TenantId tenantId, ProvisioningJobId id) {
+    UsecaseResult deleteJob(TenantId tenantId, ProvisioningJobId id) {
         auto entity = repo.findById(tenantId, id);
-        if (entity.isNull) return CommandResult(false, "", "Provisioning job not found");
+        if (entity.isNull) return UsecaseResult(false, "", "Provisioning job not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

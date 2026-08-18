@@ -17,14 +17,14 @@ class ManageEntityTypesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createEntityType(CreateEntityTypeRequest r) {
+    UsecaseResult createEntityType(CreateEntityTypeRequest r) {
         auto err = SituationEvaluator.validate(r.tenantId, r.entityTypeId.value, r.name);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         auto existing = repo.findById(r.tenantId, r.entityTypeId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Entity type already exists");
+            return UsecaseResult(false, "", "Entity type already exists");
 
         auto e = EntityType(r.tenantId); //, r.entityTypeId, r.createdBy);
         e.name = r.name;
@@ -32,7 +32,7 @@ class ManageEntityTypesUseCase {
         e.sourceSystem = r.sourceSystem;
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
     EntityType getEntityType(TenantId tenantId, EntityTypeId id) {
@@ -43,10 +43,10 @@ class ManageEntityTypesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateEntityType(UpdateEntityTypeRequest r) {
+    UsecaseResult updateEntityType(UpdateEntityTypeRequest r) {
         auto existing = repo.findById(r.tenantId, r.entityTypeId);
         if (existing.isNull)
-            return CommandResult(false, "", "Entity type not found");
+            return UsecaseResult(false, "", "Entity type not found");
 
         existing.name = r.name;
         existing.description = r.description;
@@ -56,15 +56,15 @@ class ManageEntityTypesUseCase {
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteEntityType(TenantId tenantId, EntityTypeId id) {
+    UsecaseResult deleteEntityType(TenantId tenantId, EntityTypeId id) {
         auto type = repo.findById(tenantId, id);
         if (type.isNull)
-            return CommandResult(false, "", "Entity type not found");
+            return UsecaseResult(false, "", "Entity type not found");
 
         repo.remove(type);
-        return CommandResult(true, type.id.value, "");
+        return UsecaseResult(true, type.id.value, "");
     }
 }

@@ -285,21 +285,21 @@ sequenceDiagram
     QC->>QUC: createQueue(dto)
     QUC->>QR: save(queue)
     QR-->>QUC: ok
-    QUC-->>QC: CommandResult(true, queueId)
+    QUC-->>QC: UsecaseResult(true, queueId)
     QC-->>Client: 201 { id }
 
     Client->>SC: POST /queue-subscriptions { queueId, topicPattern }
     SC->>SUC: createSubscription(dto)
     SUC->>SR: save(subscription)
     SR-->>SUC: ok
-    SUC-->>SC: CommandResult(true, subscriptionId)
+    SUC-->>SC: UsecaseResult(true, subscriptionId)
     SC-->>Client: 201 { id }
 
     Client->>WC: POST /webhooks { subscriptionId, url }
     WC->>WUC: createWebhook(dto)
     WUC->>WR: save(webhook)
     WR-->>WUC: ok
-    WUC-->>WC: CommandResult(true, webhookId)
+    WUC-->>WC: UsecaseResult(true, webhookId)
     WC-->>Client: 201 { id }
 ```
 
@@ -320,11 +320,11 @@ sequenceDiagram
     EC->>ECUC: createChannel(dto)
     ECUC->>ECR: save(channel)
     ECR-->>ECUC: ok
-    ECUC-->>EC: CommandResult(true, channelId)
+    ECUC-->>EC: UsecaseResult(true, channelId)
     EC-->>P: 201 { id }
 
     P->>MBC: POST /message-bindings { clientId, channelId, permission=publish }
     MBC->>MBUC: createBinding(dto)
-    MBUC-->>MBC: CommandResult(true, bindingId)
+    MBUC-->>MBC: UsecaseResult(true, bindingId)
     MBC-->>P: 201 { id }
 ```

@@ -18,9 +18,9 @@ class ManageAppFilesUseCase {
         this.repo = repo;
     }
 
-    CommandResult upload(UploadAppFileRequest r) {
+    UsecaseResult upload(UploadAppFileRequest r) {
         if (!DeploymentValidator.validateFilePath(r.filePath))
-            return CommandResult(false, "", "Invalid file path");
+            return UsecaseResult(false, "", "Invalid file path");
 
         auto file = AppFile(r.tenantId);
         file.appId = r.appId;
@@ -34,13 +34,13 @@ class ManageAppFilesUseCase {
         file.content = r.content;
 
         repo.save(file);
-        return CommandResult(true, file.id.value, "");
+        return UsecaseResult(true, file.id.value, "");
     }
 
-    CommandResult update(UpdateAppFileRequest r) {
+    UsecaseResult update(UpdateAppFileRequest r) {
         auto file = repo.findById(r.tenantId, r.fileId);
         if (file.isNull)
-            return CommandResult(false, "", "File not found");
+            return UsecaseResult(false, "", "File not found");
 
         if (r.content.length > 0) {
             file.content = r.content;
@@ -53,7 +53,7 @@ class ManageAppFilesUseCase {
         file.updatedBy = r.updatedBy;
 
         repo.update(file);
-        return CommandResult(true, file.id.value, "");
+        return UsecaseResult(true, file.id.value, "");
     }
 
     AppFile getFile(TenantId tenantId, AppFileId id) {
@@ -68,13 +68,13 @@ class ManageAppFilesUseCase {
         return repo.findByVersion(tenantId, versionId);
     }
 
-    CommandResult deleteFile(TenantId tenantId, AppFileId id) {
+    UsecaseResult deleteFile(TenantId tenantId, AppFileId id) {
         auto file = repo.findById(tenantId, id);
         if (file.isNull)
-            return CommandResult(false, "", "File not found");
+            return UsecaseResult(false, "", "File not found");
 
         repo.remove(file);
-        return CommandResult(true, file.id.value, "");
+        return UsecaseResult(true, file.id.value, "");
     }
 
     size_t countFiles(TenantId tenantId, AppVersionId versionId) {

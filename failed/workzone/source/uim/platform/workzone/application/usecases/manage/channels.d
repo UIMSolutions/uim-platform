@@ -22,9 +22,9 @@ class ManageChannelsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createChannel(CreateChannelRequest req) {
+  UsecaseResult createChannel(CreateChannelRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Channel name is required");
+      return UsecaseResult(false, "", "Channel name is required");
 
     auto ch = Channel(req.tenantId, req.channelId, req.createdBy);
     ch.workspaceId = req.workspaceId;
@@ -34,7 +34,7 @@ class ManageChannelsUseCase {
     ch.config = req.config;
 
     repo.save(ch);
-    return CommandResult(true, ch.id.value, "");
+    return UsecaseResult(true, ch.id.value, "");
   }
 
   Channel getChannel(TenantId tenantId, ChannelId id) {
@@ -45,10 +45,10 @@ class ManageChannelsUseCase {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  CommandResult updateChannel(UpdateChannelRequest req) {
+  UsecaseResult updateChannel(UpdateChannelRequest req) {
     auto ch = repo.findById(req.tenantId, req.id);
     if (ch.isNull)
-      return CommandResult(false, "", "Channel not found");
+      return UsecaseResult(false, "", "Channel not found");
 
     if (req.name.length > 0)
       ch.name = req.name;
@@ -59,15 +59,15 @@ class ManageChannelsUseCase {
     ch.updatedAt = currentTimestamp();
 
     repo.update(ch);
-    return CommandResult(true, ch.id.value, "");
+    return UsecaseResult(true, ch.id.value, "");
   }
 
-  CommandResult deleteChannel(TenantId tenantId, ChannelId id) {
+  UsecaseResult deleteChannel(TenantId tenantId, ChannelId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Channel not found");
+      return UsecaseResult(false, "", "Channel not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

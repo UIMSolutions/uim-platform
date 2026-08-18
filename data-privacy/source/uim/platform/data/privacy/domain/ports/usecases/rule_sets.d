@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 interface IManageRuleSetsUseCase { 
 
-  CommandResult createRuleSet(CreateRuleSetRequest req);
+  UsecaseResult createRuleSet(CreateRuleSetRequest req);
   RuleSet getRuleSet(TenantId tenantId, RuleSetId id);
   RuleSet[] listRuleSets(TenantId tenantId);
   RuleSet[] listByBusinessContext(TenantId tenantId, BusinessContextId contextId);
-  CommandResult updateRuleSet(UpdateRuleSetRequest req);
-  CommandResult activateRuleSet(TenantId tenantId, RuleSetId id);
-  CommandResult deleteRuleSet(TenantId tenantId, RuleSetId id);
+  UsecaseResult updateRuleSet(UpdateRuleSetRequest req);
+  UsecaseResult activateRuleSet(TenantId tenantId, RuleSetId id);
+  UsecaseResult deleteRuleSet(TenantId tenantId, RuleSetId id);
   
 }

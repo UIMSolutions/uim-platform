@@ -17,15 +17,15 @@ class ManageDecisionsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDecision(CreateDecisionRequest r) {
+    UsecaseResult createDecision(CreateDecisionRequest r) {
         if (r.decisionId.isEmpty)
-            return CommandResult(false, "", "Decision ID is required");
+            return UsecaseResult(false, "", "Decision ID is required");
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Decision name is required");
+            return UsecaseResult(false, "", "Decision name is required");
 
         auto existing = repo.findById(r.tenantId, r.decisionId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Decision already exists");
+            return UsecaseResult(false, "", "Decision already exists");
 
         auto d = Decision(r.tenantId); //, UserId("test-user"));
         d.id = r.decisionId;
@@ -37,7 +37,7 @@ class ManageDecisionsUseCase {
         d.updatedAt = d.createdAt;
 
         repo.save(d);
-        return CommandResult(true, d.id.value, "");
+        return UsecaseResult(true, d.id.value, "");
     }
 
     Decision getDecision(TenantId tenantId, DecisionId id) {
@@ -48,10 +48,10 @@ class ManageDecisionsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateDecision(UpdateDecisionRequest r) {
+    UsecaseResult updateDecision(UpdateDecisionRequest r) {
         auto decision = repo.findById(r.tenantId, r.decisionId);
         if (decision.isNull)
-            return CommandResult(false, "", "Decision not found");
+            return UsecaseResult(false, "", "Decision not found");
 
         decision.name = r.name;
         decision.description = r.description;
@@ -62,15 +62,15 @@ class ManageDecisionsUseCase {
         decision.updatedAt = currentTimestamp;
 
         repo.update(decision);
-        return CommandResult(true, decision.id.value, "");
+        return UsecaseResult(true, decision.id.value, "");
     }
 
-    CommandResult deleteDecision(TenantId tenantId, DecisionId id) {
+    UsecaseResult deleteDecision(TenantId tenantId, DecisionId id) {
         auto decision = repo.findById(tenantId, id);
         if (decision.isNull)
-            return CommandResult(false, "", "Decision not found");
+            return UsecaseResult(false, "", "Decision not found");
 
         repo.remove(decision);
-        return CommandResult(true, decision.id.value, "");
+        return UsecaseResult(true, decision.id.value, "");
     }
 }

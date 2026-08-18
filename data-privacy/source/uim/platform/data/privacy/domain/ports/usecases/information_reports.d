@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageInformationReportsUseCase { 
 
-  CommandResult createReport(CreateInformationReportRequest req);
+  UsecaseResult createReport(CreateInformationReportRequest req);
   InformationReport getReport(TenantId tenantId, InformationReportId reportId);
   InformationReport[] listReports(TenantId tenantId);
   InformationReport[] listReports(TenantId tenantId, DataSubjectId subjectId);
-  CommandResult updateReportStatus(UpdateInformationReportStatusRequest req);
-  CommandResult deleteReport(TenantId tenantId, InformationReportId reportId);
+  UsecaseResult updateReportStatus(UpdateInformationReportStatusRequest req);
+  UsecaseResult deleteReport(TenantId tenantId, InformationReportId reportId);
 
 }

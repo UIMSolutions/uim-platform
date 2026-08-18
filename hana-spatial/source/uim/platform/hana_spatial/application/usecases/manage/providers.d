@@ -17,11 +17,11 @@ class ManageProvidersUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateProviderRequest r) {
+  UsecaseResult create(CreateProviderRequest r) {
     auto err = SpatialValidator.validateId(r.id);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateName(r.name);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto provider = Provider(r.tenantId);
     provider.id = ProviderId(r.id);
@@ -44,13 +44,13 @@ class ManageProvidersUseCase {
     }
 
     repo.save(provider);
-    return CommandResult(true, provider.id.value, "");
+    return UsecaseResult(true, provider.id.value, "");
   }
 
-  CommandResult update(UpdateProviderRequest r) {
+  UsecaseResult update(UpdateProviderRequest r) {
     auto existing = repo.findById(r.tenantId, ProviderId(r.id));
     if (existing.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -67,7 +67,7 @@ class ManageProvidersUseCase {
     } catch (Exception) {}
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   Provider getById(TenantId tenantId, string id) {
@@ -78,11 +78,11 @@ class ManageProvidersUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, ProviderId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
     repo.remove(tenantId, ProviderId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

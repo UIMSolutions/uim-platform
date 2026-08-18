@@ -17,11 +17,11 @@ class ManagePurposeRecordsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRecord(CreatePurposeRecordRequest req) {
+  UsecaseResult createRecord(CreatePurposeRecordRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.subjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
 
     auto r = PurposeRecord(req.tenantId);
     r.dataSubjectId = req.subjectId;
@@ -35,7 +35,7 @@ class ManagePurposeRecordsUseCase {
     r.validUntil = req.validUntil;
 
     repo.save(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
   PurposeRecord getRecord(TenantId tenantId, PurposeRecordId id) {
@@ -54,27 +54,27 @@ class ManagePurposeRecordsUseCase {
     return repo.findByStatus(tenantId, status);
   }
 
-  CommandResult deactivateRecord(DeactivatePurposeRecordRequest req) {
+  UsecaseResult deactivateRecord(DeactivatePurposeRecordRequest req) {
     auto r = repo.findById(req.tenantId, req.recordId);
     if (r.isNull)
-      return CommandResult(false, "", "Purpose record not found");
+      return UsecaseResult(false, "", "Purpose record not found");
     if (r.status == PurposeRecordStatus.deactivated)
-      return CommandResult(false, "", "Purpose record already deactivated");
+      return UsecaseResult(false, "", "Purpose record already deactivated");
 
     r.status = PurposeRecordStatus.deactivated;
     r.deactivatedAt = currentTimestamp();
     r.updatedAt = r.deactivatedAt;
 
     repo.update(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
-  CommandResult deleteRecord(TenantId tenantId, PurposeRecordId recordId) {
+  UsecaseResult deleteRecord(TenantId tenantId, PurposeRecordId recordId) {
     auto r = repo.findById(tenantId, recordId);
     if (r.isNull)
-      return CommandResult(false, "", "Purpose record not found");
+      return UsecaseResult(false, "", "Purpose record not found");
 
     repo.remove(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 }

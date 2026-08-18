@@ -28,7 +28,7 @@ class ManageConfigurationsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createConfiguration(ConfigurationDTO dto) {
+    UsecaseResult createConfiguration(ConfigurationDTO dto) {
         auto e = Configuration(dto.tenantId); //, UserId("test-user"));
         e.id = dto.configurationId;
         e.instanceId = dto.instanceId;
@@ -43,16 +43,16 @@ class ManageConfigurationsUseCase {
         e.maintenanceWindowDuration = dto.maintenanceWindowDuration;
 
         if (e.instanceId.value.length == 0)
-            return CommandResult(false, "", "instanceId is required");
+            return UsecaseResult(false, "", "instanceId is required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateConfiguration(ConfigurationDTO dto) {
+    UsecaseResult updateConfiguration(ConfigurationDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.configurationId);
         if (existing.isNull)
-            return CommandResult(false, "", "Configuration not found");
+            return UsecaseResult(false, "", "Configuration not found");
         if (dto.auditLogLevels.length > 0) existing.auditLogLevels = dto.auditLogLevels;
         if (dto.backupRetentionPeriod > 0) existing.backupRetentionPeriod = dto.backupRetentionPeriod;
         if (dto.locale.length > 0) existing.locale = dto.locale;
@@ -61,14 +61,14 @@ class ManageConfigurationsUseCase {
         if (dto.sharedBuffersMb > 0) existing.sharedBuffersMb = dto.sharedBuffersMb;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteConfiguration(TenantId tenantId, ConfigurationId id) {
+    UsecaseResult deleteConfiguration(TenantId tenantId, ConfigurationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Configuration not found");
+            return UsecaseResult(false, "", "Configuration not found");
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

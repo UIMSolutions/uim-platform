@@ -22,7 +22,7 @@ class ManageWidgetsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createWidget(CreateWidgetRequest req) {
+  UsecaseResult createWidget(CreateWidgetRequest req) {
     auto w = Widget(req.tenantId);
     w.pageId = req.pageId;
     w.title = req.title;
@@ -35,7 +35,7 @@ class ManageWidgetsUseCase {
     w.config = req.config;
 
     repo.save(w);
-    return CommandResult(true, w.id.value, "");
+    return UsecaseResult(true, w.id.value, "");
   }
 
   Widget getWidget(TenantId tenantId, WidgetId id) {
@@ -51,10 +51,10 @@ class ManageWidgetsUseCase {
     return result;
   }
 
-  CommandResult updateWidget(UpdateWidgetRequest req) {
+  UsecaseResult updateWidget(UpdateWidgetRequest req) {
     auto w = repo.findById(req.tenantId, req.id);
     if (w.isNull)
-      return CommandResult(false, "", "Widget not found");
+      return UsecaseResult(false, "", "Widget not found");
 
     if (req.title.length > 0)
       w.title = req.title;
@@ -67,15 +67,15 @@ class ManageWidgetsUseCase {
     w.updatedAt = currentTimestamp();
 
     repo.update(w);
-    return CommandResult(true, w.id.value, "");
+    return UsecaseResult(true, w.id.value, "");
   }
 
-  CommandResult deleteWidget(TenantId tenantId, WidgetId id) {
+  UsecaseResult deleteWidget(TenantId tenantId, WidgetId id) {
     auto w = repo.findById(tenantId, id);
     if (w.isNull)
-      return CommandResult(false, "", "Widget not found");
+      return UsecaseResult(false, "", "Widget not found");
 
     repo.remove(w);
-    return CommandResult(true, w.id.value, "");
+    return UsecaseResult(true, w.id.value, "");
   }
 }

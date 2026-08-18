@@ -17,12 +17,12 @@ class ManageMedicationRequestsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createMedicationRequest(CreateMedicationOrderRequest r) {
+  UsecaseResult createMedicationRequest(CreateMedicationOrderRequest r) {
     auto err = FhirValidator.validateMedicationRequest(r.medicationRequestId.value);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     if (!repo.findById(r.tenantId, r.medicationRequestId).isNull)
-      return CommandResult(false, "", "MedicationRequest already exists");
+      return UsecaseResult(false, "", "MedicationRequest already exists");
 
     auto mr = MedicationRequest(r.tenantId);
     mr.id                   = r.medicationRequestId;
@@ -40,13 +40,13 @@ class ManageMedicationRequestsUseCase {
     mr.dosageInstructionText_ = r.dosageInstructionText_;
 
     repo.save(mr);
-    return CommandResult(true, mr.id.value, "");
+    return UsecaseResult(true, mr.id.value, "");
   }
 
-  CommandResult updateMedicationRequest(UpdateMedicationOrderRequest r) {
+  UsecaseResult updateMedicationRequest(UpdateMedicationOrderRequest r) {
     auto existing = repo.findById(r.tenantId, r.medicationRequestId);
     if (existing.isNull)
-      return CommandResult(false, "", "MedicationRequest not found");
+      return UsecaseResult(false, "", "MedicationRequest not found");
 
     auto mr = MedicationRequest(r.tenantId);
     mr.id                   = r.medicationRequestId;
@@ -65,7 +65,7 @@ class ManageMedicationRequestsUseCase {
     mr.createdAt            = existing.createdAt;
 
     repo.update(mr);
-    return CommandResult(true, mr.id.value, "");
+    return UsecaseResult(true, mr.id.value, "");
   }
 
   MedicationRequest getMedicationRequest(TenantId tenantId, MedicationRequestId id) {
@@ -80,11 +80,11 @@ class ManageMedicationRequestsUseCase {
     return repo.findByPatient(tenantId, patientRef);
   }
 
-  CommandResult deleteMedicationRequest(TenantId tenantId, MedicationRequestId id) {
+  UsecaseResult deleteMedicationRequest(TenantId tenantId, MedicationRequestId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "MedicationRequest not found");
+      return UsecaseResult(false, "", "MedicationRequest not found");
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

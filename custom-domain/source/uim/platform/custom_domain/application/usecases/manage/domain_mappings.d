@@ -18,22 +18,22 @@ class ManageDomainMappingsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDomainMapping(CreateDomainMappingRequest r) {
+    UsecaseResult createDomainMapping(CreateDomainMappingRequest r) {
         if (r.customDomainId.isEmpty)
-            return CommandResult(false, "", "Custom domain ID is required");
+            return UsecaseResult(false, "", "Custom domain ID is required");
 
         if (r.standardRoute.length == 0)
-            return CommandResult(false, "", "Standard route is required");
+            return UsecaseResult(false, "", "Standard route is required");
         
         if (r.customRoute.length == 0)
-            return CommandResult(false, "", "Custom route is required");
+            return UsecaseResult(false, "", "Custom route is required");
 
         if (repo.existsById(r.tenantId, r.domainMappingId))
-            return CommandResult(false, "", "Domain mapping already exists");
+            return UsecaseResult(false, "", "Domain mapping already exists");
 
         auto byRoute = repo.findByCustomRoute(r.tenantId, r.customRoute);
         if (!byRoute.isNull)
-            return CommandResult(false, "", "Custom route already mapped");
+            return UsecaseResult(false, "", "Custom route already mapped");
 
         auto m = DomainMapping(r.tenantId, r.domainMappingId, r.createdBy);
         m.customDomainId = r.customDomainId;
@@ -45,7 +45,7 @@ class ManageDomainMappingsUseCase {
         m.spaceId = r.spaceId;
 
         repo.save(m);
-        return CommandResult(true, m.id.value, "");
+        return UsecaseResult(true, m.id.value, "");
     }
 
     DomainMapping getDomainMapping(TenantId tenantId, DomainMappingId id) {
@@ -60,13 +60,13 @@ class ManageDomainMappingsUseCase {
         return repo.findByDomain(tenantId, domainId);
     }
 
-    CommandResult deleteDomainMapping(TenantId tenantId, DomainMappingId id) {
+    UsecaseResult deleteDomainMapping(TenantId tenantId, DomainMappingId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Domain mapping not found");
+            return UsecaseResult(false, "", "Domain mapping not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

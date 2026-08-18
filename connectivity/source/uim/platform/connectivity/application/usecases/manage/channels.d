@@ -29,20 +29,20 @@ class ManageChannelsUseCase {
     this.logRepo = logRepo;
   }
 
-  CommandResult createChannel(CreateChannelRequest req) {
+  UsecaseResult createChannel(CreateChannelRequest req) {
     // Validate connector exists
     auto cc = connectorRepo.findById(req.tenantId, req.connectorId);
     if (cc.isNull)
-      return CommandResult(false, "", "Connector not found");
+      return UsecaseResult(false, "", "Connector not found");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Channel name is required");
+      return UsecaseResult(false, "", "Channel name is required");
 
     if (req.virtualHost.length == 0)
-      return CommandResult(false, "", "Virtual host is required");
+      return UsecaseResult(false, "", "Virtual host is required");
       
     if (req.backendHost.length == 0)
-      return CommandResult(false, "", "Backend host is required");
+      return UsecaseResult(false, "", "Backend host is required");
 
     auto ch = ServiceChannel(req.tenantId);
     ch.connectorId = req.connectorId;
@@ -55,20 +55,20 @@ class ManageChannelsUseCase {
     ch.backendPort = req.backendPort;
 
     channels.save(ch);
-    return CommandResult(true, ch.id.value, "");
+    return UsecaseResult(true, ch.id.value, "");
   }
 
-  CommandResult openChannel(TenantId tenantId, ChannelId id) {
+  UsecaseResult openChannel(TenantId tenantId, ChannelId id) {
     auto channel = channels.findById(tenantId, id);
     if (channel.isNull)
-      return CommandResult(false, "", "Channel not found");
+      return UsecaseResult(false, "", "Channel not found");
 
     // Verify connector is connected
     auto connector = connectorRepo.findById(channel.tenantId, channel.connectorId);
     if (connector.isNull)
-      return CommandResult(false, "", "Associated connector not found");
+      return UsecaseResult(false, "", "Associated connector not found");
     if (connector.status != ConnectorStatus.connected)
-      return CommandResult(false, "", "Connector is not connected");
+      return UsecaseResult(false, "", "Connector is not connected");
 
     channel.status = ChannelStatus.open;
     channels.update(channel);
@@ -76,13 +76,13 @@ class ManageChannelsUseCase {
     recordLog(channel.tenantId, ConnectivityEventType.channelOpened, id.value,
         "ServiceChannel", "Channel opened: " ~ channel.name);
 
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
-  CommandResult closeChannel(TenantId tenantId, ChannelId id) {
+  UsecaseResult closeChannel(TenantId tenantId, ChannelId id) {
     auto channel = channels.findById(tenantId, id);
     if (channel.isNull)
-      return CommandResult(false, "", "Channel not found");
+      return UsecaseResult(false, "", "Channel not found");
 
     channel.status = ChannelStatus.closed;
     channels.update(channel);
@@ -90,7 +90,7 @@ class ManageChannelsUseCase {
     recordLog(channel.tenantId, ConnectivityEventType.channelClosed, id.value,
         "ServiceChannel", "Channel closed: " ~ channel.name);
 
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
   ServiceChannel getChannel(TenantId tenantId, ChannelId id) {
@@ -105,13 +105,13 @@ class ManageChannelsUseCase {
     return channels.findByTenant(tenantId);
   }
 
-  CommandResult deleteChannel(TenantId tenantId, ChannelId id) {
+  UsecaseResult deleteChannel(TenantId tenantId, ChannelId id) {
     auto channel = channels.findById(tenantId, id);
     if (channel.isNull)
-      return CommandResult(false, "", "Channel not found");
+      return UsecaseResult(false, "", "Channel not found");
 
     channels.remove(channel);
-    return CommandResult(true, channel.id.value, "");
+    return UsecaseResult(true, channel.id.value, "");
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,

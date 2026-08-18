@@ -27,22 +27,22 @@ class ManageModelsUseCase {
     this.trainer = trainer;
   }
 
-  CommandResult createModelConfig(CreateModelConfigRequest req) {
+  UsecaseResult createModelConfig(CreateModelConfigRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.datasetId.isEmpty)
-      return CommandResult(false, "", "Dataset ID is required");
+      return UsecaseResult(false, "", "Dataset ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Model name is required");
+      return UsecaseResult(false, "", "Model name is required");
 
     // Verify dataset exists
     auto ds = datasetRepo.findById(req.tenantId, req.datasetId);
     if (ds.isNull)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Model configuration with this name already exists");
+      return UsecaseResult(false, "", "Model configuration with this name already exists");
 
     auto config = ModelConfiguration(req.tenantId, req.configId.isNull ? ModelConfigurationId(createId()) : req.configId, req.createdBy); 
     config.datasetId = req.datasetId;
@@ -55,7 +55,7 @@ class ManageModelsUseCase {
     config.status = ModelConfigStatus.draft;
  
     repo.save(config);
-    return CommandResult(true, config.id.value, "");
+    return UsecaseResult(true, config.id.value, "");
   }
 
   ModelConfiguration getModelConfig(TenantId tenantId, ModelConfigurationId id) {
@@ -66,18 +66,18 @@ class ManageModelsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateModelConfig(UpdateModelConfigRequest req) {
+  UsecaseResult updateModelConfig(UpdateModelConfigRequest req) {
     if (req.configId.isNull)
-      return CommandResult(false, "", "Model configuration ID is required");
+      return UsecaseResult(false, "", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.tenantId, req.configId);
     if (existing.isNull)
-      return CommandResult(false, "", "Model configuration not found");
+      return UsecaseResult(false, "", "Model configuration not found");
 
     if (existing.status != ModelConfigStatus.draft)
-      return CommandResult(false, "", "Only draft configurations can be updated");
+      return UsecaseResult(false, "", "Only draft configurations can be updated");
 
     auto updated = existing;
     if (req.name.length > 0)
@@ -94,52 +94,52 @@ class ManageModelsUseCase {
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
   /// Mark a model configuration as ready for training.
-  CommandResult activateConfig(TenantId tenantId, ModelConfigurationId id) {
+  UsecaseResult activateConfig(TenantId tenantId, ModelConfigurationId id) {
     auto config = repo.findById(tenantId, id);
     if (config.isNull)
-      return CommandResult(false, "", "Model configuration not found");
+      return UsecaseResult(false, "", "Model configuration not found");
 
     if (config.status != ModelConfigStatus.draft)
-      return CommandResult(false, "", "Only draft configurations can be activated");
+      return UsecaseResult(false, "", "Only draft configurations can be activated");
 
     if (config.targetColumns.length == 0 || config.featureColumns.length == 0)
-      return CommandResult(false, "", "Target and feature columns must be defined");
+      return UsecaseResult(false, "", "Target and feature columns must be defined");
 
     config.status = ModelConfigStatus.ready;
     config.updatedAt = currentTimestamp();
     
     repo.update(config);
-    return CommandResult(true, config.id.value, "");
+    return UsecaseResult(true, config.id.value, "");
   }
 
   /// Start training on a model configuration.
-  CommandResult startTraining(StartTrainingRequest req) {
+  UsecaseResult startTraining(StartTrainingRequest req) {
     if (req.configId.isEmpty)
-      return CommandResult(false, "", "Model configuration ID is required");
+      return UsecaseResult(false, "", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto job = trainer.startTraining(req.tenantId, req.configId, req.createdBy);
     if (job.isNull)
-      return CommandResult(false, "", "Cannot start training - verify dataset is completed and config is ready");
+      return UsecaseResult(false, "", "Cannot start training - verify dataset is completed and config is ready");
 
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
-  CommandResult deleteModelConfig(TenantId tenantId, ModelConfigurationId id) {
+  UsecaseResult deleteModelConfig(TenantId tenantId, ModelConfigurationId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Model configuration not found");
+      return UsecaseResult(false, "", "Model configuration not found");
 
     if (existing.status == ModelConfigStatus.training)
-      return CommandResult(false, "", "Cannot delete a configuration that is currently training");
+      return UsecaseResult(false, "", "Cannot delete a configuration that is currently training");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }
 

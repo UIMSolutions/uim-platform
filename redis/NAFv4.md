@@ -302,7 +302,7 @@ Stage 2 (runtime): ubuntu:24.04
 }
 ```
 
-**CommandResult (mutation response)**
+**UsecaseResult (mutation response)**
 ```json
 {
   "success": true,

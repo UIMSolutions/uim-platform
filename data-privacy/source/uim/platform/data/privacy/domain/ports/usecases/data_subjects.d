@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageDataSubjectsUseCase {
 
-  CommandResult createSubject(CreateDataSubjectRequest req);
+  UsecaseResult createSubject(CreateDataSubjectRequest req);
   DataSubject getSubject(TenantId tenantId, DataSubjectId id);
   DataSubject[] listSubjects(TenantId tenantId);
   DataSubject[] listByType(TenantId tenantId, DataSubjectType subjectType);
-  CommandResult updateSubject(UpdateDataSubjectRequest req);
-  CommandResult deleteSubject(TenantId tenantId, DataSubjectId id);
+  UsecaseResult updateSubject(UpdateDataSubjectRequest req);
+  UsecaseResult deleteSubject(TenantId tenantId, DataSubjectId id);
   
 }

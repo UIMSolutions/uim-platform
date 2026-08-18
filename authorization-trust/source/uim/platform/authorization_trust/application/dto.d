@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 // ---------------------------------------------------------------------------
-// Shared result type re-exported from base service (CommandResult defined there)
+// Shared result type re-exported from base service (UsecaseResult defined there)
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // OAuth 2.0 Client DTOs

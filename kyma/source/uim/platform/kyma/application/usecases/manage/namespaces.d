@@ -21,15 +21,15 @@ class ManageNamespacesUseCase {
     this.namespaceRepository = namespaceRepository;
   }
 
-  CommandResult createNamespace(CreateNamespaceRequest req) {
+  UsecaseResult createNamespace(CreateNamespaceRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Namespace name is required");
+      return UsecaseResult(false, "", "Namespace name is required");
 
     if (req.environmentId.isEmpty)
-      return CommandResult(false, "", "Environment ID is required");
+      return UsecaseResult(false, "", "Environment ID is required");
 
     if (namespaceRepository.existsByName(req.environmentId, req.name))
-      return CommandResult(false, "", "Namespace '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Namespace '" ~ req.name ~ "' already exists");
 
     auto ns = Namespace(req.tenantId); //, req.createdBy);
     with (ns) {
@@ -49,13 +49,13 @@ class ManageNamespacesUseCase {
     }
 
     namespaceRepository.save(ns);
-    return CommandResult(true, ns.id.value, "");
+    return UsecaseResult(true, ns.id.value, "");
   }
 
-  CommandResult updateNamespace(UpdateNamespaceRequest req) {
+  UsecaseResult updateNamespace(UpdateNamespaceRequest req) {
     auto ns = namespaceRepository.findById(req.tenantId, req.id);
     if (ns.isNull)
-      return CommandResult(false, "", "Namespace not found");
+      return UsecaseResult(false, "", "Namespace not found");
 
     if (req.description.length > 0)
       ns.description = req.description;
@@ -79,7 +79,7 @@ class ManageNamespacesUseCase {
     ns.updatedAt = clockSeconds();
 
     namespaceRepository.update(ns);
-    return CommandResult(true, ns.id.value, "");
+    return UsecaseResult(true, ns.id.value, "");
   }
 
   bool hasNamespace(TenantId tenantId, NamespaceId namespaceId) {
@@ -94,12 +94,12 @@ class ManageNamespacesUseCase {
     return namespaceRepository.findByEnvironment(envId);
   }
 
-  CommandResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId) {
+  UsecaseResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId) {
     auto ns = namespaceRepository.findById(tenantId, namespaceId);
     if (ns.isNull)
-      return CommandResult(false, "", "Namespace not found");
+      return UsecaseResult(false, "", "Namespace not found");
 
     namespaceRepository.remove(ns);
-    return CommandResult(true, ns.id.value, "");
+    return UsecaseResult(true, ns.id.value, "");
   }
 }

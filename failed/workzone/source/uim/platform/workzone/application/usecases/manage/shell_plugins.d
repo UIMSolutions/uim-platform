@@ -22,9 +22,9 @@ class ManageShellPluginsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPlugin(CreateShellPluginRequest req) {
+  UsecaseResult createPlugin(CreateShellPluginRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Plugin name is required");
+      return UsecaseResult(false, "", "Plugin name is required");
 
     auto p = ShellPlugin(req.tenantId);
     p.name = req.name;
@@ -38,7 +38,7 @@ class ManageShellPluginsUseCase {
     p.installedAt = p.createdAt;
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   ShellPlugin getPlugin(TenantId tenantId, ShellPluginId id) {
@@ -49,10 +49,10 @@ class ManageShellPluginsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updatePlugin(UpdateShellPluginRequest req) {
+  UsecaseResult updatePlugin(UpdateShellPluginRequest req) {
     auto p = repo.findById(req.tenantId, req.id);
     if (p.isNull)
-      return CommandResult(false, "", "Plugin not found");
+      return UsecaseResult(false, "", "Plugin not found");
 
     if (req.name.length > 0)
       p.name = req.name;
@@ -64,15 +64,15 @@ class ManageShellPluginsUseCase {
     p.updatedAt = currentTimestamp();
 
     repo.update(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult deletePlugin(TenantId tenantId, ShellPluginId id) {
+  UsecaseResult deletePlugin(TenantId tenantId, ShellPluginId id) {
     auto p = repo.findById(tenantId, id);
     if (p.isNull)
-      return CommandResult(false, "", "Plugin not found");
+      return UsecaseResult(false, "", "Plugin not found");
 
     repo.remove(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 }

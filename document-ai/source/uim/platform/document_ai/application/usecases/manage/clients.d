@@ -21,9 +21,9 @@ class ManageClientsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createClient(CreateClientRequest r) {
+  UsecaseResult createClient(CreateClientRequest r) {
     if (r.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto c = Client(r.tenantId);
     c.id = r.clientId.isNull ? createId() : r.clientId;
@@ -45,16 +45,16 @@ class ManageClientsUseCase {
     c.labels = labels;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
-  CommandResult patchClient(PatchClientRequest r) {
+  UsecaseResult patchClient(PatchClientRequest r) {
     if (r.clientId.isEmpty)
-      return CommandResult(false, "", "Client ID is required");
+      return UsecaseResult(false, "", "Client ID is required");
 
     auto existing = repo.findById(r.clientId);
     if (existing.isNull)
-      return CommandResult(false, "", "Client not found");
+      return UsecaseResult(false, "", "Client not found");
 
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
@@ -78,7 +78,7 @@ class ManageClientsUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   Client getClient(TenantId tenantId, ClientId id) {
@@ -91,13 +91,13 @@ class ManageClientsUseCase {
   size_t countClients(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
-  CommandResult deleteClient(TenantId tenantId, ClientId id) {
+  UsecaseResult deleteClient(TenantId tenantId, ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
-      return CommandResult(false, "", "Client not found");
+      return UsecaseResult(false, "", "Client not found");
 
     repo.remove(client);
-    return CommandResult(true, client.id.value, "");
+    return UsecaseResult(true, client.id.value, "");
   }
 
 

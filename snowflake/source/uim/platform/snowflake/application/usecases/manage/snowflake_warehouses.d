@@ -7,7 +7,7 @@ class ManageSnowflakeWarehousesUseCase {
   protected ISnowflakeWarehouseRepository repo;
   this(ISnowflakeWarehouseRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateWarehouseRequest r) {
+  UsecaseResult create(CreateWarehouseRequest r) {
     
     SnowflakeWarehouse w;
     w.id = SnowflakeWarehouseId(r.id.length > 0 ? r.id : currentTimestamp());
@@ -19,9 +19,9 @@ class ManageSnowflakeWarehousesUseCase {
     w.status = WarehouseStatus.starting;
     initEntity(w);
     auto err = SnowflakeValidator.validateWarehouse(w);
-    if (err !is null) return CommandResult(false, w.id.value, err);
+    if (err !is null) return UsecaseResult(false, w.id.value, err);
     repo.save(w);
-    return CommandResult(true, w.id.value, null);
+    return UsecaseResult(true, w.id.value, null);
   }
 
   SnowflakeWarehouse[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
@@ -32,23 +32,23 @@ class ManageSnowflakeWarehousesUseCase {
     return repo.findById(TenantId(tenantId), SnowflakeWarehouseId(id));
   }
 
-  CommandResult update(UpdateWarehouseRequest r) {
+  UsecaseResult update(UpdateWarehouseRequest r) {
     
     auto w = repo.findById(TenantId(r.tenantId), SnowflakeWarehouseId(r.id));
-    if (w.isNull) return CommandResult(false, r.id, "Warehouse not found");
+    if (w.isNull) return UsecaseResult(false, r.id, "Warehouse not found");
     if (r.size.length > 0) try { w.size = r.size.to!WarehouseSize; } catch(Exception) {}
     if (r.status.length > 0) try { w.status = r.status.to!WarehouseStatus; } catch(Exception) {}
     if (r.comment.length > 0) w.comment = r.comment;
     if (r.autoSuspend > 0) w.autoSuspend = r.autoSuspend;
     w.autoResume = r.autoResume;
     repo.update(w);
-    return CommandResult(true, w.id.value, null);
+    return UsecaseResult(true, w.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto w = repo.findById(TenantId(tenantId), SnowflakeWarehouseId(id));
-    if (w.isNull) return CommandResult(false, id, "Warehouse not found");
+    if (w.isNull) return UsecaseResult(false, id, "Warehouse not found");
     repo.remove(TenantId(tenantId), SnowflakeWarehouseId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

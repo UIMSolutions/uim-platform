@@ -30,7 +30,7 @@ class ManageCustomerSessionsUseCase {
         return repo.findByCustomer(tenantId, customerId);
     }
 
-    CommandResult createSession(CustomerSessionDTO dto) {
+    UsecaseResult createSession(CustomerSessionDTO dto) {
         auto s = CustomerSession(dto.tenantId); //, dto.createdBy);
         s.customerId = dto.customerId;
         s.token = dto.token;
@@ -41,33 +41,33 @@ class ManageCustomerSessionsUseCase {
         s.status = SessionStatus.active;
 
         if (!IdentityValidator.isValidSession(s))
-            return CommandResult(false, "", "Invalid session data");
+            return UsecaseResult(false, "", "Invalid session data");
 
         repo.save(s);
-        return CommandResult(true, s.id.value, "");
+        return UsecaseResult(true, s.id.value, "");
     }
 
-    CommandResult revokeSession(TenantId tenantId, CustomerSessionId id) {
+    UsecaseResult revokeSession(TenantId tenantId, CustomerSessionId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Session not found");
+            return UsecaseResult(false, "", "Session not found");
 
         existing.status = SessionStatus.revoked;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult revokeAllSessions(TenantId tenantId, CustomerId customerId) {
+    UsecaseResult revokeAllSessions(TenantId tenantId, CustomerId customerId) {
         repo.revokeByCustomer(tenantId, customerId);
-        return CommandResult(true, customerId.value, "");
+        return UsecaseResult(true, customerId.value, "");
     }
 
-    CommandResult deleteSession(TenantId tenantId, CustomerSessionId id) {
+    UsecaseResult deleteSession(TenantId tenantId, CustomerSessionId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Session not found");
+            return UsecaseResult(false, "", "Session not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

@@ -17,7 +17,7 @@ class ManageFlexVariantsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createVariant(CreateFlexVariantRequest r) {
+  UsecaseResult createVariant(CreateFlexVariantRequest r) {
     auto v = FlexVariant();
     v.id_ = r.variantId;
     v.tenant_ = r.tenantId;
@@ -34,16 +34,16 @@ class ManageFlexVariantsUseCase {
 
     auto err = FlexValidator.validateFlexVariant(v);
     if (err !is null)
-      return CommandResult(false, null, err);
+      return UsecaseResult(false, null, err);
 
     repo.save(r.tenantId, v);
-    return CommandResult(true, v.id_.value);
+    return UsecaseResult(true, v.id_.value);
   }
 
-  CommandResult updateVariant(UpdateFlexVariantRequest r) {
+  UsecaseResult updateVariant(UpdateFlexVariantRequest r) {
     auto existing = repo.findById(r.tenantId, r.variantId);
     if (existing.isNull)
-      return CommandResult(false, null, "FlexVariant not found");
+      return UsecaseResult(false, null, "FlexVariant not found");
 
     existing.variantName_ = r.variantName_;
     existing.content_ = r.content_;
@@ -52,7 +52,7 @@ class ManageFlexVariantsUseCase {
     existing.updatedAtTicks_ = currentTimestamp();
     
     repo.update(r.tenantId, existing);
-    return CommandResult(true, existing.id_.value, "FlexVariant updated successfully.");
+    return UsecaseResult(true, existing.id_.value, "FlexVariant updated successfully.");
   }
 
   FlexVariant getVariant(TenantId tenantId, FlexVariantId id) {
@@ -75,12 +75,12 @@ class ManageFlexVariantsUseCase {
     return repo.findPublicByApp(tenantId, appId);
   }
 
-  CommandResult deleteVariant(TenantId tenantId, FlexVariantId id) {
+  UsecaseResult deleteVariant(TenantId tenantId, FlexVariantId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, null, "FlexVariant not found");
+      return UsecaseResult(false, null, "FlexVariant not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "FlexVariant deleted successfully.");
+    return UsecaseResult(true, existing.id.value, "FlexVariant deleted successfully.");
   }
 }

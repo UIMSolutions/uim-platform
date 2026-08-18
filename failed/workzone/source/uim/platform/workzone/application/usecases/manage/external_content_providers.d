@@ -22,9 +22,9 @@ class ManageExternalContentProvidersUseCase {
     this.repo = repo;
   }
 
-  CommandResult createProvider(CreateExternalContentProviderRequest req) {
+  UsecaseResult createProvider(CreateExternalContentProviderRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Provider name is required");
+      return UsecaseResult(false, "", "Provider name is required");
 
     auto p = ExternalContentProvider(req.tenantId, req.providerId, req.createdBy);
     p.name = req.name;
@@ -38,7 +38,7 @@ class ManageExternalContentProvidersUseCase {
     p.refreshIntervalSec = req.refreshIntervalSec;
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   ExternalContentProvider getProvider(TenantId tenantId, ExternalContentProviderId id) {
@@ -49,10 +49,10 @@ class ManageExternalContentProvidersUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateProvider(UpdateExternalContentProviderRequest req) {
+  UsecaseResult updateProvider(UpdateExternalContentProviderRequest req) {
     auto p = repo.findById(req.tenantId, req.id);
     if (p.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
 
     if (req.name.length > 0)
       p.name = req.name;
@@ -64,15 +64,15 @@ class ManageExternalContentProvidersUseCase {
     p.updatedAt = currentTimestamp();
 
     repo.update(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult deleteProvider(TenantId tenantId, ExternalContentProviderId id) {
+  UsecaseResult deleteProvider(TenantId tenantId, ExternalContentProviderId id) {
     auto p = repo.findById(tenantId, id);
     if (p.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
 
     repo.remove(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 }

@@ -22,20 +22,20 @@ class DataBlocksService : IDataBlocksApi {
         return usecase.getBlock(TenantId(tenantId), DataBlockId(id));
     }
 
-    override CommandResult createDataBlock(string tenantId, CreateDataBlockRequest request) {
+    override UsecaseResult createDataBlock(string tenantId, CreateDataBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         return usecase.createBlock(req);
     }
 
-    override CommandResult updateDataBlock(string tenantId, string id, UpdateDataBlockRequest request) {
+    override UsecaseResult updateDataBlock(string tenantId, string id, UpdateDataBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         req.blockId = DataBlockId(id);
         return usecase.updateBlock(req);
     }
 
-    override CommandResult deleteDataBlock(string tenantId, string id) {
+    override UsecaseResult deleteDataBlock(string tenantId, string id) {
         return usecase.deleteBlock(TenantId(tenantId), DataBlockId(id));
     }
 }

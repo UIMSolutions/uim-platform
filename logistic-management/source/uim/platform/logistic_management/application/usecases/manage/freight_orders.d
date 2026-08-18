@@ -20,13 +20,13 @@ public:
     _planner = planner;
   }
 
-  CommandResult createFreightOrder(TenantId tenantId, CreateFreightOrderRequest req) {
+  UsecaseResult createFreightOrder(TenantId tenantId, CreateFreightOrderRequest req) {
     if (req.orderNumber.length == 0)
-      return CommandResult(false, "Order number is required");
+      return UsecaseResult(false, "Order number is required");
     if (req.carrierId.length > 0) {
       CarrierId cid = CarrierId(req.carrierId);
       if (!_planner.isCarrierAvailable(tenantId, cid))
-        return CommandResult(false, "Carrier is not available or does not exist");
+        return UsecaseResult(false, "Carrier is not available or does not exist");
     }
 
     FreightOrder fo;
@@ -53,15 +53,15 @@ public:
     fo.createdAt = currentTimestamp();
     fo.updatedAt = fo.createdAt;
     _repo.save(fo);
-    return CommandResult(true, "", fo.id.value);
+    return UsecaseResult(true, "", fo.id.value);
   }
 
-  CommandResult updateFreightOrder(TenantId tenantId, FreightOrderId id, UpdateFreightOrderRequest req) {
+  UsecaseResult updateFreightOrder(TenantId tenantId, FreightOrderId id, UpdateFreightOrderRequest req) {
     auto fo = _repo.findById(tenantId, id);
     if (fo.isNull)
-      return CommandResult(false, "Freight order not found");
+      return UsecaseResult(false, "Freight order not found");
     if (fo.status != FreightOrderStatus.draft && fo.status != FreightOrderStatus.planned)
-      return CommandResult(false, "Cannot update a freight order that is in transit or completed");
+      return UsecaseResult(false, "Cannot update a freight order that is in transit or completed");
 
     FreightOrder updated;
     updated.id = fo.id;
@@ -97,23 +97,23 @@ public:
       updated.transportMode = fo.transportMode;
     }
     _repo.save(updated);
-    return CommandResult(true, "", id.value);
+    return UsecaseResult(true, "", id.value);
   }
 
-  CommandResult transitionFreightOrder(TenantId tenantId, FreightOrderId id, TransitionFreightOrderRequest req) {
+  UsecaseResult transitionFreightOrder(TenantId tenantId, FreightOrderId id, TransitionFreightOrderRequest req) {
     auto fo = _repo.findById(tenantId, id);
     if (fo.isNull)
-      return CommandResult(false, "Freight order not found");
+      return UsecaseResult(false, "Freight order not found");
 
     FreightOrderStatus newStatus;
     try {
       newStatus = req.status.to!FreightOrderStatus;
     } catch (Exception) {
-      return CommandResult(false, "Invalid status value");
+      return UsecaseResult(false, "Invalid status value");
     }
 
     if (!_planner.canTransitionFreightOrder(fo.status, newStatus))
-      return CommandResult(false, "Invalid status transition");
+      return UsecaseResult(false, "Invalid status transition");
 
     FreightOrder updated;
     updated.id = fo.id;
@@ -138,17 +138,17 @@ public:
     updated.createdAt = fo.createdAt;
     updated.updatedAt = currentTimestamp();
     _repo.save(updated);
-    return CommandResult(true, "", id.value);
+    return UsecaseResult(true, "", id.value);
   }
 
-  CommandResult deleteFreightOrder(TenantId tenantId, FreightOrderId id) {
+  UsecaseResult deleteFreightOrder(TenantId tenantId, FreightOrderId id) {
     auto fo = _repo.findById(tenantId, id);
     if (fo.isNull)
-      return CommandResult(false, "Freight order not found");
+      return UsecaseResult(false, "Freight order not found");
     if (fo.status == FreightOrderStatus.inTransit)
-      return CommandResult(false, "Cannot delete a freight order that is in transit");
+      return UsecaseResult(false, "Cannot delete a freight order that is in transit");
     _repo.remove(tenantId, id);
-    return CommandResult(true);
+    return UsecaseResult(true);
   }
 
   FreightOrder getFreightOrder(TenantId tenantId, FreightOrderId id) {

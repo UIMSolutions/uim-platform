@@ -26,15 +26,15 @@ class ManageContentProvidersUseCase {
     this.activityRepo = activityRepo;
   }
 
-  CommandResult registerProvider(RegisterProviderRequest req) {
+  UsecaseResult registerProvider(RegisterProviderRequest req) {
     if (providerRepo.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Provider with name '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Provider with name '" ~ req.name ~ "' already exists");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Provider name is required");
+      return UsecaseResult(false, "", "Provider name is required");
       
     if (req.endpoint.length == 0)
-      return CommandResult(false, "", "Provider endpoint is required");
+      return UsecaseResult(false, "", "Provider endpoint is required");
 
     auto provider = ContentProvider(req.tenantId);
     provider.name = req.name;
@@ -49,13 +49,13 @@ class ManageContentProvidersUseCase {
     recordActivity(req.tenantId, ActivityType.providerRegistered, provider.id.value, req.name,
       "Provider registered", req.registeredBy.value);
 
-    return CommandResult(true, provider.id.value, "");
+    return UsecaseResult(true, provider.id.value, "");
   }
 
-  CommandResult updateProvider(UpdateProviderRequest req) {
+  UsecaseResult updateProvider(UpdateProviderRequest req) {
     auto provider = providerRepo.findById(req.tenantId, req.providerId);
     if (provider.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
 
     if (req.description.length > 0)
       provider.description = req.description;
@@ -65,13 +65,13 @@ class ManageContentProvidersUseCase {
       provider.authToken = req.authToken;
 
     providerRepo.update(provider);
-    return CommandResult(true, provider.id.value, "");
+    return UsecaseResult(true, provider.id.value, "");
   }
 
-  CommandResult deregisterProvider(TenantId tenantId, ContentProviderId id) {
+  UsecaseResult deregisterProvider(TenantId tenantId, ContentProviderId id) {
     auto provider = providerRepo.findById(tenantId, id);
     if (provider.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
 
     provider.status = ProviderStatus.deregistered;
     providerRepo.update(provider);
@@ -79,23 +79,23 @@ class ManageContentProvidersUseCase {
     recordActivity(provider.tenantId, ActivityType.providerDeregistered, provider.id.value,
       provider.name, "Provider deregistered", "");
 
-    return CommandResult(true, provider.id.value, "");
+    return UsecaseResult(true, provider.id.value, "");
   }
 
-  CommandResult syncProvider(TenantId tenantId, ContentProviderId id) {
+  UsecaseResult syncProvider(TenantId tenantId, ContentProviderId id) {
     auto provider = providerRepo.findById(tenantId, id);
     if (provider.isNull)
-      return CommandResult(false, "", "Provider not found");
+      return UsecaseResult(false, "", "Provider not found");
 
     if (provider.status != ProviderStatus.active)
-      return CommandResult(false, "", "Provider is not active");
+      return UsecaseResult(false, "", "Provider is not active");
 
     // In a real implementation, this would call the provider endpoint
     // to discover available content types
     provider.lastSyncAt = clockSeconds();
     providerRepo.update(provider);
 
-    return CommandResult(true, provider.id.value, "");
+    return UsecaseResult(true, provider.id.value, "");
   }
 
   ContentProvider getProvider(TenantId tenantId, ContentProviderId id) {

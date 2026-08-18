@@ -32,27 +32,27 @@ class ManageRoutesUseCase {
 
   // --- Routes ---
 
-  CommandResult createRoute(CreateRouteRequest req) {
+  UsecaseResult createRoute(CreateRouteRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
 
     if (req.domainId.isEmpty)
-      return CommandResult(false, "", "Domain ID is required");
+      return UsecaseResult(false, "", "Domain ID is required");
 
     if (req.host.length == 0)
-      return CommandResult(false, "", "Host is required");
+      return UsecaseResult(false, "", "Host is required");
 
     // Verify domain exists
     auto dom = domains.findById(req.tenantId, req.domainId);
     if (dom.isNull)
-      return CommandResult(false, "", "Domain not found");
+      return UsecaseResult(false, "", "Domain not found");
 
     // Check route availability
     if (!resolver.isRouteAvailable(req.tenantId, req.host, req.domainId))
-      return CommandResult(false, "", "Route host is already taken for this domain");
+      return UsecaseResult(false, "", "Route host is already taken for this domain");
 
     auto route = Route(req.tenantId, req.routeId.isNull ? RouteId(createId) : req.routeId, req.createdBy);
     route.spaceId = req.spaceId;
@@ -63,7 +63,7 @@ class ManageRoutesUseCase {
     route.protocol = req.protocol.toRouteProtocol;
 
     routes.save(route);
-    return CommandResult(true, route.id.value, "");
+    return UsecaseResult(true, route.id.value, "");
   }
 
   Route getRoute(TenantId tenantId, RouteId id) {
@@ -78,52 +78,52 @@ class ManageRoutesUseCase {
     return routes.findBySpace(tenantId, spaceId);
   }
 
-  CommandResult deleteRoute(TenantId tenantId, RouteId id) {
+  UsecaseResult deleteRoute(TenantId tenantId, RouteId id) {
     auto route = routes.findById(tenantId, id);
     if (route.isNull)
-      return CommandResult(false, "", "Route not found");
+      return UsecaseResult(false, "", "Route not found");
 
     routes.remove(route);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   /// Map an application to a route.
-  CommandResult mapRoute(MapRouteRequest req) {
+  UsecaseResult mapRoute(MapRouteRequest req) {
     if (req.routeId.isEmpty)
-      return CommandResult(false, "", "Route ID is required");
+      return UsecaseResult(false, "", "Route ID is required");
     if (req.appId.isEmpty)
-      return CommandResult(false, "", "Application ID is required");
+      return UsecaseResult(false, "", "Application ID is required");
 
     if (!resolver.mapApp(req.tenantId, req.routeId, req.appId))
-      return CommandResult(false, "", "Cannot map application to route");
+      return UsecaseResult(false, "", "Cannot map application to route");
 
-    return CommandResult(true, req.routeId.value, "");
+    return UsecaseResult(true, req.routeId.value, "");
   }
 
   /// Unmap an application from a route.
-  CommandResult unmapRoute(MapRouteRequest req) {
+  UsecaseResult unmapRoute(MapRouteRequest req) {
     if (req.routeId.isEmpty)
-      return CommandResult(false, "", "Route ID is required");
+      return UsecaseResult(false, "", "Route ID is required");
     if (req.appId.isEmpty)
-      return CommandResult(false, "", "Application ID is required");
+      return UsecaseResult(false, "", "Application ID is required");
 
     if (!resolver.unmapApp(req.tenantId, req.routeId, req.appId))
-      return CommandResult(false, "", "Cannot unmap application from route");
+      return UsecaseResult(false, "", "Cannot unmap application from route");
 
-    return CommandResult(true, req.routeId.value, "");
+    return UsecaseResult(true, req.routeId.value, "");
   }
 
   // --- Domains ---
 
-  CommandResult createDomain(CreateDomainRequest req) {
+  UsecaseResult createDomain(CreateDomainRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
       
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Domain name is required");
+      return UsecaseResult(false, "", "Domain name is required");
 
     if (domains.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Domain with this name already exists");
+      return UsecaseResult(false, "", "Domain with this name already exists");
 
     auto d = CfDomain(req.tenantId, req.domainId.isNull ? CfDomainId(generateId) : req.domainId, req.createdBy);
     d.ownerOrgId = req.ownerOrgId;
@@ -132,24 +132,24 @@ class ManageRoutesUseCase {
     d.isInternal = req.isInternal;
 
     domains.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
   CfDomain[] listDomains(TenantId tenantId) {
     return domains.findByTenant(tenantId);
   }
 
-  CommandResult deleteDomain(TenantId tenantId, CfDomainId domainId) {
+  UsecaseResult deleteDomain(TenantId tenantId, CfDomainId domainId) {
     auto domain = domains.findById(tenantId, domainId);
     if (domain.isNull)
-      return CommandResult(false, "", "Domain not found");
+      return UsecaseResult(false, "", "Domain not found");
 
     // Remove all routes on this domain
     auto routesOnDomain = routes.findByDomain(tenantId, domainId);
     routesOnDomain.each!(route => routes.remove(route));
 
     domains.remove(domain);
-    return CommandResult(true, domain.id.value, "");
+    return UsecaseResult(true, domain.id.value, "");
   }
 }
 

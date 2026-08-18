@@ -22,9 +22,9 @@ class ManageTasksUseCase {
     this.repo = repo;
   }
 
-  CommandResult createTask(CreateTaskRequest req) {
+  UsecaseResult createTask(CreateTaskRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "WZTask title is required");
+      return UsecaseResult(false, "", "WZTask title is required");
 
     auto t = WZTask(req.tenantId);
     t.assigneeId = req.assigneeId;
@@ -43,7 +43,7 @@ class ManageTasksUseCase {
     t.dueDate = req.dueDate;
 
     repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   WZTask getTask(TenantId tenantId, TaskId id) {
@@ -62,10 +62,10 @@ class ManageTasksUseCase {
     return repo.findByStatus(tenantId, status, assigneeId);
   }
 
-  CommandResult updateTask(UpdateTaskRequest req) {
+  UsecaseResult updateTask(UpdateTaskRequest req) {
     auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
-      return CommandResult(false, "", "WZTask not found");
+      return UsecaseResult(false, "", "WZTask not found");
 
     if (req.title.length > 0)
       t.title = req.title;
@@ -81,27 +81,27 @@ class ManageTasksUseCase {
       t.completedAt = currentTimestamp();
 
     repo.update(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
-  CommandResult completeTask(TenantId tenantId, TaskId id) {
+  UsecaseResult completeTask(TenantId tenantId, TaskId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
-      return CommandResult(false, "", "WZTask not found");
+      return UsecaseResult(false, "", "WZTask not found");
 
     t.status = TaskStatus.completed;
     t.completedAt = currentTimestamp();
     t.updatedAt = currentTimestamp();
     repo.update(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
-  CommandResult deleteTask(TenantId tenantId, TaskId id) {
+  UsecaseResult deleteTask(TenantId tenantId, TaskId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
-      return CommandResult(false, "", "WZTask not found");
+      return UsecaseResult(false, "", "WZTask not found");
 
     repo.remove(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 }

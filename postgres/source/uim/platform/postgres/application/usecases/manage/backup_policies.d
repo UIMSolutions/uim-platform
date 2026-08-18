@@ -28,7 +28,7 @@ class ManageBackupPoliciesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createBackupPolicy(BackupPolicyDTO dto) {
+    UsecaseResult createBackupPolicy(BackupPolicyDTO dto) {
         auto e = BackupPolicy(dto.tenantId); //, UserId("test-user"));
         e.id = dto.backupPolicyId;
         e.instanceId = dto.instanceId;
@@ -38,29 +38,29 @@ class ManageBackupPoliciesUseCase {
         e.status = BackupStatus.enabled;
 
         if (e.instanceId.value.length == 0)
-            return CommandResult(false, "", "instanceId is required");
+            return UsecaseResult(false, "", "instanceId is required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateBackupPolicy(BackupPolicyDTO dto) {
+    UsecaseResult updateBackupPolicy(BackupPolicyDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.backupPolicyId);
         if (existing.isNull)
-            return CommandResult(false, "", "Backup policy not found");
+            return UsecaseResult(false, "", "Backup policy not found");
         if (dto.retentionPeriod > 0) existing.retentionPeriod = dto.retentionPeriod;
         if (dto.backupWindow.length > 0) existing.backupWindow = dto.backupWindow;
         if (dto.backupLocation.length > 0) existing.backupLocation = dto.backupLocation;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteBackupPolicy(TenantId tenantId, BackupPolicyId id) {
+    UsecaseResult deleteBackupPolicy(TenantId tenantId, BackupPolicyId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Backup policy not found");
+            return UsecaseResult(false, "", "Backup policy not found");
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

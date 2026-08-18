@@ -182,13 +182,13 @@ sequenceDiagram
 
     Client->>PC: POST /prompt-collections { name }
     PC->>PUC: createCollection(dto)
-    PUC-->>PC: CommandResult(true, collectionId)
+    PUC-->>PC: UsecaseResult(true, collectionId)
     PC-->>Client: 201 { id }
 
     Client->>PC: POST /prompts { collectionId, name, content, modelName }
     PC->>PUC: createPrompt(dto)
     PUC->>PR: save(prompt)
-    PUC-->>PC: CommandResult(true, promptId)
+    PUC-->>PC: UsecaseResult(true, promptId)
     PC-->>Client: 201 { id }
 
     Client->>DC: GET /deployments?modelName=gpt-4

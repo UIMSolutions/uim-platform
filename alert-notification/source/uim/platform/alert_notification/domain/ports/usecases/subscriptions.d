@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManageSubscriptionsUseCase {
 
-    CommandResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req);
+    UsecaseResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req);
     QueryResult getSubscription(TenantId tenantId, string id);
 
     QueryResult listSubscriptions(TenantId tenantId);
 
-    CommandResult updateSubscription(TenantId tenantId, SubscriptionId id, UpdateSubscriptionRequest req);
+    UsecaseResult updateSubscription(TenantId tenantId, SubscriptionId id, UpdateSubscriptionRequest req);
 
-    CommandResult deleteSubscription(TenantId tenantId, SubscriptionId id);
+    UsecaseResult deleteSubscription(TenantId tenantId, SubscriptionId id);
 }

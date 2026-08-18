@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 interface IManageObservationsUseCase {
 
-  CommandResult createObservation(CreateObservationRequest r);
+  UsecaseResult createObservation(CreateObservationRequest r);
 
-  CommandResult updateObservation(UpdateObservationRequest r);
+  UsecaseResult updateObservation(UpdateObservationRequest r);
 
   Observation getObservation(TenantId tenantId, ObservationId id);
 
@@ -22,6 +22,6 @@ interface IManageObservationsUseCase {
 
   Observation[] listByPatient(TenantId tenantId, string patientRef);
 
-  CommandResult deleteObservation(TenantId tenantId, ObservationId id);
+  UsecaseResult deleteObservation(TenantId tenantId, ObservationId id);
   
 }

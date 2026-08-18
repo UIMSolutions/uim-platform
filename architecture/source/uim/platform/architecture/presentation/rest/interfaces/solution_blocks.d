@@ -17,13 +17,13 @@ interface ISolutionBlocksApi {
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/") @method(HTTPMethod.POST)
-    CommandResult createSolutionBlock(string tenantId, CreateSolutionBlockRequest request);
+    UsecaseResult createSolutionBlock(string tenantId, CreateSolutionBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.PUT)
-    CommandResult updateSolutionBlock(string tenantId, string _id, UpdateSolutionBlockRequest request);
+    UsecaseResult updateSolutionBlock(string tenantId, string _id, UpdateSolutionBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.DELETE)
-    CommandResult deleteSolutionBlock(string tenantId, string _id);
+    UsecaseResult deleteSolutionBlock(string tenantId, string _id);
 }

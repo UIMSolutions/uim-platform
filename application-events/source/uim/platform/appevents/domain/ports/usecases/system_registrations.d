@@ -16,7 +16,7 @@ interface IManageSystemRegistrationsUseCase {
     SystemRegistration getSystemRegistration(TenantId tenantId, SystemRegistrationId id);
     SystemRegistration[] listSystemRegistrations(TenantId tenantId);
     SystemRegistration[] listByFormation(TenantId tenantId, FormationId formationId);
-    CommandResult registerSystem(SystemRegistrationDTO dto);
-    CommandResult deleteSystemRegistration(TenantId tenantId, SystemRegistrationId id);
+    UsecaseResult registerSystem(SystemRegistrationDTO dto);
+    UsecaseResult deleteSystemRegistration(TenantId tenantId, SystemRegistrationId id);
 
 }

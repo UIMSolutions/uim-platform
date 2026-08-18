@@ -34,7 +34,7 @@ class ManageActivitiesUseCase {
         return repo.findByTechnician(tenantId, technicianId);
     }
 
-    CommandResult createActivity(ActivityDTO dto) {
+    UsecaseResult createActivity(ActivityDTO dto) {
         Activity activity;
         activity.id = dto.activityId;
         activity.tenantId = dto.tenantId;
@@ -50,16 +50,16 @@ class ManageActivitiesUseCase {
         activity.notes = dto.notes;
         activity.createdBy = dto.createdBy;
         if (!FieldServiceValidator.isValidActivity(activity))
-            return CommandResult(false, "", "Invalid activity data");
+            return UsecaseResult(false, "", "Invalid activity data");
 
         repo.save(activity);
-        return CommandResult(true, activity.id.value, "");
+        return UsecaseResult(true, activity.id.value, "");
     }
 
-    CommandResult updateActivity(ActivityDTO dto) {
+    UsecaseResult updateActivity(ActivityDTO dto) {
         auto activity = repo.findById(dto.tenantId, dto.activityId);
         if (activity.isNull)
-            return CommandResult(false, "", "Activity not found");
+            return UsecaseResult(false, "", "Activity not found");
         if (dto.subject.length > 0) activity.subject = dto.subject;
         if (dto.description.length > 0) activity.description = dto.description;
         if (dto.plannedStart.length > 0) activity.plannedStart = dto.plannedStart;
@@ -71,15 +71,15 @@ class ManageActivitiesUseCase {
         if (!dto.updatedBy.isNull) activity.updatedBy = dto.updatedBy;
         
         repo.update(activity);
-        return CommandResult(true, activity.id.value, "");
+        return UsecaseResult(true, activity.id.value, "");
     }
 
-    CommandResult deleteActivity(TenantId tenantId, ActivityId id) {
+    UsecaseResult deleteActivity(TenantId tenantId, ActivityId id) {
         auto activity = repo.findById(tenantId, id);
         if (activity.isNull)
-            return CommandResult(false, "", "Activity not found");
+            return UsecaseResult(false, "", "Activity not found");
             
         repo.remove(activity);
-        return CommandResult(true, activity.id.value, "");
+        return UsecaseResult(true, activity.id.value, "");
     }
 }

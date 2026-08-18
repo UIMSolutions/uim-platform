@@ -30,7 +30,7 @@ class ManageMeshBridgesUseCase {
         return repo.findBySourceBrokerService(tenantId, serviceId);
     }
 
-    CommandResult createBridge(MeshBridgeDTO dto) {
+    UsecaseResult createBridge(MeshBridgeDTO dto) {
         MeshBridge bridge;
         bridge.id = dto.bridgeId;
         bridge.tenantId = dto.tenantId;
@@ -49,16 +49,16 @@ class ManageMeshBridgesUseCase {
         bridge.retryDelay = dto.retryDelay;
         bridge.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidMeshBridge(bridge))
-            return CommandResult(false, "", "Invalid mesh bridge data");
+            return UsecaseResult(false, "", "Invalid mesh bridge data");
 
         repo.save(bridge);
-        return CommandResult(true, bridge.id.value, "");
+        return UsecaseResult(true, bridge.id.value, "");
     }
 
-    CommandResult updateBridge(MeshBridgeDTO dto) {
+    UsecaseResult updateBridge(MeshBridgeDTO dto) {
         auto bridge = repo.findById(dto.tenantId, dto.bridgeId);
         if (bridge.isNull)
-            return CommandResult(false, "", "Mesh bridge not found");
+            return UsecaseResult(false, "", "Mesh bridge not found");
 
         if (dto.name.length > 0) bridge.name = dto.name;
         if (dto.description.length > 0) bridge.description = dto.description;
@@ -68,16 +68,16 @@ class ManageMeshBridgesUseCase {
         if (!dto.updatedBy.isNull) bridge.updatedBy = dto.updatedBy;
 
         repo.update(bridge);
-        return CommandResult(true, bridge.id.value, "");
+        return UsecaseResult(true, bridge.id.value, "");
     }
 
-    CommandResult deleteBridge(TenantId tenantId, MeshBridgeId bridgeId) {
+    UsecaseResult deleteBridge(TenantId tenantId, MeshBridgeId bridgeId) {
         auto bridge = repo.findById(tenantId, bridgeId);
         if (bridge.isNull)
-            return CommandResult(false, "", "Mesh bridge not found");
+            return UsecaseResult(false, "", "Mesh bridge not found");
 
         repo.remove(bridge);
-        return CommandResult(true, bridge.id.value, "");
+        return UsecaseResult(true, bridge.id.value, "");
     }
 }
 

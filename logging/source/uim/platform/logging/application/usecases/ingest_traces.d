@@ -21,7 +21,7 @@ class IngestTracesUseCase {
     this.spanRepo = spanRepo;
   }
 
-  CommandResult ingestSpan(IngestSpanRequest req) {
+  UsecaseResult ingestSpan(IngestSpanRequest req) {
     import std.uuid : randomUUID;
 
     auto s = Span(req.tenantId);
@@ -46,15 +46,15 @@ class IngestTracesUseCase {
     }
 
     if (req.traceId.isEmpty)
-      return CommandResult(false, "", "Trace ID is required");
+      return UsecaseResult(false, "", "Trace ID is required");
     if (req.operationName.isEmpty)
-      return CommandResult(false, "", "Operation name is required");
+      return UsecaseResult(false, "", "Operation name is required");
 
     spanRepo.save(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
-  CommandResult ingestSpanBatch(IngestSpanBatchRequest req) {
+  UsecaseResult ingestSpanBatch(IngestSpanBatchRequest req) {
     int count = 0;
     foreach (spanReq; req.spans) {
       if (spanReq.tenantId.isEmpty)
@@ -63,7 +63,7 @@ class IngestTracesUseCase {
       if (result.success)
         count++;
     }
-    return CommandResult(true, "", format("Ingested %d spans", count));
+    return UsecaseResult(true, "", format("Ingested %d spans", count));
   }
 
   Span[] getTrace(TenantId tenantId, TraceId traceId) {

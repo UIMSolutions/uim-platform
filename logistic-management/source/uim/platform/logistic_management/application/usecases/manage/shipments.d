@@ -18,9 +18,9 @@ public:
     _repo = repo;
   }
 
-  CommandResult createShipment(TenantId tenantId, CreateShipmentRequest req) {
+  UsecaseResult createShipment(TenantId tenantId, CreateShipmentRequest req) {
     if (req.shipmentNumber.length == 0)
-      return CommandResult(false, "Shipment number is required");
+      return UsecaseResult(false, "Shipment number is required");
 
     
     Shipment s;
@@ -41,12 +41,12 @@ public:
     s.createdAt = currentTimestamp();
     s.updatedAt = s.createdAt;
     _repo.save(s);
-    return CommandResult(true, "", s.id.value);
+    return UsecaseResult(true, "", s.id.value);
   }
 
-  CommandResult updateShipment(TenantId tenantId, ShipmentId id, UpdateShipmentRequest req) {
+  UsecaseResult updateShipment(TenantId tenantId, ShipmentId id, UpdateShipmentRequest req) {
     auto s = _repo.findById(tenantId, id);
-    if (s.isNull) return CommandResult(false, "Shipment not found");
+    if (s.isNull) return UsecaseResult(false, "Shipment not found");
 
     
     Shipment updated;
@@ -70,14 +70,14 @@ public:
       updated.status = s.status;
     }
     _repo.save(updated);
-    return CommandResult(true, "", id.value);
+    return UsecaseResult(true, "", id.value);
   }
 
-  CommandResult deleteShipment(TenantId tenantId, ShipmentId id) {
+  UsecaseResult deleteShipment(TenantId tenantId, ShipmentId id) {
     auto s = _repo.findById(tenantId, id);
-    if (s.isNull) return CommandResult(false, "Shipment not found");
+    if (s.isNull) return UsecaseResult(false, "Shipment not found");
     _repo.remove(tenantId, id);
-    return CommandResult(true);
+    return UsecaseResult(true);
   }
 
   Shipment getShipment(TenantId tenantId, ShipmentId id) {

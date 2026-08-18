@@ -17,9 +17,9 @@ import uim.platform.mobile;
 @safe:
 interface IManageClientResourcesUseCase { 
 
-    CommandResult createClientResource(CreateClientResourceRequest r);
+    UsecaseResult createClientResource(CreateClientResourceRequest r);
 
-    CommandResult updateClientResource(UpdateClientResourceRequest r);
+    UsecaseResult updateClientResource(UpdateClientResourceRequest r);
 
     ClientResource getClientResource(TenantId tenantId, ClientResourceId id);
 
@@ -27,7 +27,7 @@ interface IManageClientResourcesUseCase {
 
     ClientResource[] listClientResources(TenantId tenantId, MobileAppId appId);
 
-    CommandResult deleteClientResource(TenantId tenantId, ClientResourceId id);
+    UsecaseResult deleteClientResource(TenantId tenantId, ClientResourceId id);
 
     size_t countClientResourcesByApp(TenantId tenantId, MobileAppId appId);
 

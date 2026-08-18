@@ -17,7 +17,7 @@ interface IManageExecutionsUseCase {
     Execution[] listExecutions(TenantId tenantId);
     Execution[] listExecutions(TenantId tenantId, CommandId commandId);
     Execution[] listExecutions(TenantId tenantId, ExecutionStatus status);
-    CommandResult updateExecution(ExecutionDTO dto);
-    CommandResult deleteExecution(TenantId tenantId, ExecutionId id);
+    UsecaseResult updateExecution(ExecutionDTO dto);
+    UsecaseResult deleteExecution(TenantId tenantId, ExecutionId id);
 
 }

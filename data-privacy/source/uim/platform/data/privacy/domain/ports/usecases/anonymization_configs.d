@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageAnonymizationConfigsUseCase { 
 
-  CommandResult createConfig(CreateAnonymizationConfigRequest req);
+  UsecaseResult createConfig(CreateAnonymizationConfigRequest req);
   AnonymizationConfig getConfig(TenantId tenantId, AnonymizationConfigId id);
   AnonymizationConfig[] listConfigs(TenantId tenantId);
-  CommandResult updateConfig(UpdateAnonymizationConfigRequest req);
-  CommandResult activateConfig(TenantId tenantId, AnonymizationConfigId configId);
-  CommandResult deleteConfig(TenantId tenantId, AnonymizationConfigId configId);
+  UsecaseResult updateConfig(UpdateAnonymizationConfigRequest req);
+  UsecaseResult activateConfig(TenantId tenantId, AnonymizationConfigId configId);
+  UsecaseResult deleteConfig(TenantId tenantId, AnonymizationConfigId configId);
   
 }

@@ -17,8 +17,8 @@ interface IManageDataConnectionsUseCase {
     DataConnection[] listDataConnections(TenantId tenantId);
     DataConnection[] listConnections(TenantId tenantId);
     DataConnection[] listDataConnections(TenantId tenantId, ApplicationId applicationId);
-    CommandResult createDataConnection(DataConnectionDTO dto);
-    CommandResult updateDataConnection(DataConnectionDTO dto);
-    CommandResult deleteDataConnection(TenantId tenantId, DataConnectionId id);
+    UsecaseResult createDataConnection(DataConnectionDTO dto);
+    UsecaseResult updateDataConnection(DataConnectionDTO dto);
+    UsecaseResult deleteDataConnection(TenantId tenantId, DataConnectionId id);
     
 }

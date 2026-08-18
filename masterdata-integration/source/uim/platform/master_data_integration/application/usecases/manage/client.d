@@ -22,9 +22,9 @@ class ManageClientsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createClient(CreateClientRequest req) {
+  UsecaseResult createClient(CreateClientRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Client name is required");
+      return UsecaseResult(false, "", "Client name is required");
 
     auto client = Client(req.tenantId); //, UserId("test-user"));
     client.name = req.name;
@@ -43,13 +43,13 @@ class ManageClientsUseCase {
     client.certificateRef = req.certificateRef;
 
     repo.save(client);
-    return CommandResult(true, client.id.value, "");
+    return UsecaseResult(true, client.id.value, "");
   }
 
-  CommandResult updateClient(UpdateClientRequest req) {
+  UsecaseResult updateClient(UpdateClientRequest req) {
     auto client = repo.findById(req.tenantId, req.clientId);
     if (client.isNull)
-      return CommandResult(false, "", "Client not found");
+      return UsecaseResult(false, "", "Client not found");
 
     if (req.name.length > 0)
       client.name = req.name;
@@ -74,32 +74,32 @@ class ManageClientsUseCase {
     client.updatedAt = clockSeconds();
 
     repo.update(client);
-    return CommandResult(true, client.id.value, "");
+    return UsecaseResult(true, client.id.value, "");
   }
 
-  CommandResult connectClient(TenantId tenantId, ClientId id) {
+  UsecaseResult connectClient(TenantId tenantId, ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
-      return CommandResult(false, "", "Client not found");
+      return UsecaseResult(false, "", "Client not found");
 
     client.status = ClientStatus.connected;
     // TODO:
     // client.lastSyncAt = currentTimestamp;
     // client.updatedAt = client.lastSyncAt;
     repo.update(client);
-    return CommandResult(true, client.id.value, "");
+    return UsecaseResult(true, client.id.value, "");
   }
 
-  CommandResult disconnectClient(TenantId tenantId, ClientId id) {
+  UsecaseResult disconnectClient(TenantId tenantId, ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
-      return CommandResult(false, "", "Client not found");
+      return UsecaseResult(false, "", "Client not found");
 
     client.status = ClientStatus.disconnected;
     client.updatedAt = clockSeconds();
 
     repo.update(client);
-    return CommandResult(true, client.id.value, "");
+    return UsecaseResult(true, client.id.value, "");
   }
 
   Client getClient(TenantId tenantId, ClientId id) {
@@ -118,13 +118,13 @@ class ManageClientsUseCase {
     return repo.findByType(tenantId, toClientType(type));
   }
 
-  CommandResult deleteClient(TenantId tenantId, ClientId id) {
+  UsecaseResult deleteClient(TenantId tenantId, ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
-      return CommandResult(false, "", "Client not found");
+      return UsecaseResult(false, "", "Client not found");
 
     repo.remove(client);
-    return CommandResult(true, client.id.value, "");
+    return UsecaseResult(true, client.id.value, "");
   }
 
 }

@@ -17,7 +17,7 @@ class ManageFlexApplicationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createApplication(CreateFlexApplicationRequest r) {
+  UsecaseResult createApplication(CreateFlexApplicationRequest r) {
     auto a = FlexApplication();
     a.id_          = r.applicationId;
     a.tenant_      = r.tenantId;
@@ -31,15 +31,15 @@ class ManageFlexApplicationsUseCase {
     a.version_     = r.version_;
 
     auto err = FlexValidator.validateFlexApplication(a);
-    if (err !is null) return CommandResult(false, null, err);
+    if (err !is null) return UsecaseResult(false, null, err);
 
     repo.save(r.tenantId, a);
-    return CommandResult(true, a.id_.value);
+    return UsecaseResult(true, a.id_.value);
   }
 
-  CommandResult updateApplication(UpdateFlexApplicationRequest r) {
+  UsecaseResult updateApplication(UpdateFlexApplicationRequest r) {
     auto a = repo.findById(r.tenantId, r.applicationId);
-    if (a.isNull) return CommandResult(false, null, "FlexApplication not found");
+    if (a.isNull) return UsecaseResult(false, null, "FlexApplication not found");
     a.description_ = r.description_;
     a.isActive_    = r.isActive_;
     a.validFrom_   = r.validFrom_;
@@ -47,7 +47,7 @@ class ManageFlexApplicationsUseCase {
     a.owner_       = r.owner_;
     a.version_     = r.version_;
     repo.update(r.tenantId, a);
-    return CommandResult(true, a.id_.value);
+    return UsecaseResult(true, a.id_.value);
   }
 
   FlexApplication getApplication(TenantId tenantId, FlexApplicationId id) {
@@ -66,12 +66,12 @@ class ManageFlexApplicationsUseCase {
     return repo.findActiveByTenant(tenantId);
   }
 
-  CommandResult deleteApplication(TenantId tenantId, FlexApplicationId id) {
+  UsecaseResult deleteApplication(TenantId tenantId, FlexApplicationId id) {
     auto app = repo.findById(tenantId, id);
     if (app.isNull) 
-      return CommandResult(false, null, "FlexApplication not found");
+      return UsecaseResult(false, null, "FlexApplication not found");
  
     repo.remove(app);
-    return CommandResult(true, app.id.value);
+    return UsecaseResult(true, app.id.value);
   }
 }

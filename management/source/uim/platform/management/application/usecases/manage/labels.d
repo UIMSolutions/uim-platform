@@ -21,13 +21,13 @@ class ManageLabelsUseCase {
     this.labels = labels;
   }
 
-  CommandResult createLabel(CreateLabelRequest req) {
+  UsecaseResult createLabel(CreateLabelRequest req) {
     if (req.resourceId.isEmpty)
-      return CommandResult(false, "", "Resource ID is required");
+      return UsecaseResult(false, "", "Resource ID is required");
     if (req.key.length == 0)
-      return CommandResult(false, "", "Label key is required");
+      return UsecaseResult(false, "", "Label key is required");
     if (req.values.length == 0)
-      return CommandResult(false, "", "At least one label value is required");
+      return UsecaseResult(false, "", "At least one label value is required");
 
     auto label = Label(req.tenantId); // , req.createdBy);
     label.resourceType = req.resourceType.to!LabeledResourceType;
@@ -36,18 +36,18 @@ class ManageLabelsUseCase {
     label.values = req.values;
 
     labels.save(label);
-    return CommandResult(true, label.id.value, "");
+    return UsecaseResult(true, label.id.value, "");
   }
 
-  CommandResult updateLabel(TenantId tenantId, LabelId id, UpdateLabelRequest req) {
+  UsecaseResult updateLabel(TenantId tenantId, LabelId id, UpdateLabelRequest req) {
     if (!labels.existsById(tenantId, id))
-      return CommandResult(false, "", "Label not found");
+      return UsecaseResult(false, "", "Label not found");
 
     Label label = labels.findById(tenantId, id);
     label.values = req.values;
     label.updatedAt = clockSeconds();
     labels.update(label);
-    return CommandResult(true, label.id.value, "");
+    return UsecaseResult(true, label.id.value, "");
   }
 
   Label getLabel(TenantId tenantId, LabelId id) {
@@ -62,18 +62,18 @@ class ManageLabelsUseCase {
     return labels.findByKey(tenantId, resourceType.to!LabeledResourceType, key);
   }
 
-  CommandResult deleteLabel(TenantId tenantId, LabelId id) {
+  UsecaseResult deleteLabel(TenantId tenantId, LabelId id) {
     auto label = labels.findById(tenantId, id);
     if (label.isNull)            
-      return CommandResult(false, "", "Label not found");
+      return UsecaseResult(false, "", "Label not found");
 
     labels.remove(label);
-    return CommandResult(true, label.id.value, "");
+    return UsecaseResult(true, label.id.value, "");
   }
 
-  CommandResult deleteByResource(TenantId tenantId, string resourceType, string resourceId) {
+  UsecaseResult deleteByResource(TenantId tenantId, string resourceType, string resourceId) {
     labels.removeByResource(tenantId, resourceType.to!LabeledResourceType, resourceId);
-    return CommandResult(true, "", "");
+    return UsecaseResult(true, "", "");
   }
 
 }

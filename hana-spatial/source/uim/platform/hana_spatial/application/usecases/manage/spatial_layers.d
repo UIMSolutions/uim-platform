@@ -17,11 +17,11 @@ class ManageSpatialLayersUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateSpatialLayerRequest r) {
+  UsecaseResult create(CreateSpatialLayerRequest r) {
     auto err = SpatialValidator.validateId(r.id);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateName(r.name);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto layer = SpatialLayer(r.tenantId); //, UserId("test-user"));
     layer.id = SpatialLayerId(r.id);
@@ -37,13 +37,13 @@ class ManageSpatialLayersUseCase {
     }
 
     repo.save(layer);
-    return CommandResult(true, layer.id.value, "");
+    return UsecaseResult(true, layer.id.value, "");
   }
 
-  CommandResult update(UpdateSpatialLayerRequest r) {
+  UsecaseResult update(UpdateSpatialLayerRequest r) {
     auto existing = repo.findById(r.tenantId, SpatialLayerId(r.id));
     if (existing.isNull)
-      return CommandResult(false, "", "Spatial layer not found");
+      return UsecaseResult(false, "", "Spatial layer not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -51,7 +51,7 @@ class ManageSpatialLayersUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   SpatialLayer getById(TenantId tenantId, string id) {
@@ -62,11 +62,11 @@ class ManageSpatialLayersUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, SpatialLayerId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "Spatial layer not found");
+      return UsecaseResult(false, "", "Spatial layer not found");
     repo.remove(tenantId, SpatialLayerId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

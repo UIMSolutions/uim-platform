@@ -15,12 +15,12 @@ mixin(ShowModule!());
 @safe:
 interface IManagePersonalDataModelsUseCase { 
   
-  CommandResult createModel(CreatePersonalDataModelRequest req);
+  UsecaseResult createModel(CreatePersonalDataModelRequest req);
   PersonalDataModel getModel(TenantId tenantId, PersonalDataModelId id);
   PersonalDataModel[] listModels(TenantId tenantId);
   PersonalDataModel[] listModels(TenantId tenantId, PersonalDataCategory category);
   PersonalDataModel[] listSpecialCategories(TenantId tenantId);
-  CommandResult updateModel(UpdatePersonalDataModelRequest req);
-  CommandResult deleteModel(TenantId tenantId, PersonalDataModelId id);
+  UsecaseResult updateModel(UpdatePersonalDataModelRequest req);
+  UsecaseResult deleteModel(TenantId tenantId, PersonalDataModelId id);
   
 }

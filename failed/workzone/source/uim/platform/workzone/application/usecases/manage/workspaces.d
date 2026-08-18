@@ -22,9 +22,9 @@ class ManageWorkspacesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createWorkspace(CreateWorkspaceRequest req) {
+  UsecaseResult createWorkspace(CreateWorkspaceRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Workspace name is required");
+      return UsecaseResult(false, "", "Workspace name is required");
 
     auto ws = Workspace(req.tenantId);
     ws.name = req.name;
@@ -40,7 +40,7 @@ class ManageWorkspacesUseCase {
     }
 
     repo.save(ws);
-    return CommandResult(true, ws.id.value, "");
+    return UsecaseResult(true, ws.id.value, "");
   }
 
   Workspace getWorkspace(TenantId tenantId, WorkspaceId id) {
@@ -55,10 +55,10 @@ class ManageWorkspacesUseCase {
     return repo.findByMember(tenantId, userId);
   }
 
-  CommandResult updateWorkspace(UpdateWorkspaceRequest req) {
+  UsecaseResult updateWorkspace(UpdateWorkspaceRequest req) {
     auto ws = repo.findById(req.tenantId, req.id);
     if (ws.isNull)
-      return CommandResult(false, "", "Workspace not found");
+      return UsecaseResult(false, "", "Workspace not found");
 
     if (req.name.length > 0)
       ws.name = req.name;
@@ -70,29 +70,29 @@ class ManageWorkspacesUseCase {
     ws.updatedAt = currentTimestamp();
 
     repo.update(ws);
-    return CommandResult(true, ws.id.value, "");
+    return UsecaseResult(true, ws.id.value, "");
   }
 
-  CommandResult addWorkspaceMember(AddMemberRequest req) {
+  UsecaseResult addWorkspaceMember(AddMemberRequest req) {
     auto workspace = repo.findById(req.tenantId, req.workspaceId);
     if (workspace.isNull)
-      return CommandResult(false, "", "Workspace not found");
+      return UsecaseResult(false, "", "Workspace not found");
 
     // Check duplicate
     foreach (m; workspace.members)
       if (m.userId == req.userId)
-        return CommandResult(false, "", "User is already a member");
+        return UsecaseResult(false, "", "User is already a member");
 
     workspace.members ~= WorkspaceMember(req.userId, req.displayName, req.role, Clock.currStdTime());
     workspace.updatedAt = currentTimestamp();
     repo.update(workspace);
-    return CommandResult(true, workspace.id.value, "");
+    return UsecaseResult(true, workspace.id.value, "");
   }
 
-  CommandResult deleteMember(TenantId tenantId, WorkspaceId workspaceId, UserId userId) {
+  UsecaseResult deleteMember(TenantId tenantId, WorkspaceId workspaceId, UserId userId) {
     auto workspace = repo.findById(tenantId, workspaceId);
     if (workspace.isNull)
-      return CommandResult(false, "", "Workspace not found");
+      return UsecaseResult(false, "", "Workspace not found");
 
     // import std.algorithm : remove;
     size_t idx = size_t.max;
@@ -102,30 +102,30 @@ class ManageWorkspacesUseCase {
         break;
       }
     if (idx == size_t.max)
-      return CommandResult(false, "", "Member not found");
+      return UsecaseResult(false, "", "Member not found");
 
     workspace.members = workspace.members.remove(idx);
     workspace.updatedAt = currentTimestamp();
     repo.update(workspace);
-    return CommandResult(true, workspace.id.value, "");
+    return UsecaseResult(true, workspace.id.value, "");
   }
 
-  CommandResult archiveWorkspace(TenantId tenantId, WorkspaceId id) {
+  UsecaseResult archiveWorkspace(TenantId tenantId, WorkspaceId id) {
     auto ws = repo.findById(tenantId, id);
     if (ws.isNull)
-      return CommandResult(false, "", "Workspace not found");
+      return UsecaseResult(false, "", "Workspace not found");
     ws.status = WorkspaceStatus.archived;
     ws.updatedAt = currentTimestamp();
     repo.update(ws);
-    return CommandResult(true, ws.id.value, "");
+    return UsecaseResult(true, ws.id.value, "");
   }
 
-  CommandResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
+  UsecaseResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
     auto workspace = repo.findById(tenantId, id);
     if (workspace.isNull)
-      return CommandResult(false, "", "Workspace not found");
+      return UsecaseResult(false, "", "Workspace not found");
 
     repo.remove(workspace);
-    return CommandResult(true, workspace.id.value, "");
+    return UsecaseResult(true, workspace.id.value, "");
   }
 }

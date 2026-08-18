@@ -34,7 +34,7 @@ class ManageDeploymentsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createDeployment(DeploymentDTO dto) {
+    UsecaseResult createDeployment(DeploymentDTO dto) {
         auto dep = Deployment(dto.tenantId, dto.deploymentId, dto.createdBy);
         dep.mobileApplicationId = dto.applicationId;
         dep.appVersionId = dto.versionId;
@@ -45,32 +45,32 @@ class ManageDeploymentsUseCase {
         dep.notes = dto.notes;
 
         if (!AgentryValidator.isValidDeployment(dep))
-            return CommandResult(false, "", "Invalid deployment data");
+            return UsecaseResult(false, "", "Invalid deployment data");
 
         repo.save(dep);
-        return CommandResult(true, dep.id.value, "");
+        return UsecaseResult(true, dep.id.value, "");
     }
 
-    CommandResult updateDeployment(DeploymentDTO dto) {
+    UsecaseResult updateDeployment(DeploymentDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.deploymentId);
         if (existing.isNull)
-            return CommandResult(false, "", "Deployment not found");
+            return UsecaseResult(false, "", "Deployment not found");
 
         if (dto.notes.length > 0) existing.notes = dto.notes;
         if (dto.scheduledAt > 0) existing.scheduledAt = dto.scheduledAt;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDeployment(TenantId tenantId, DeploymentId id) {
+    UsecaseResult deleteDeployment(TenantId tenantId, DeploymentId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Deployment not found");
+            return UsecaseResult(false, "", "Deployment not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

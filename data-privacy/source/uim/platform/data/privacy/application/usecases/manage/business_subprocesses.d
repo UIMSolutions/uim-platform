@@ -17,15 +17,15 @@ class ManageBusinessSubprocessesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createSubprocess(CreateBusinessSubprocessRequest req) {
+  UsecaseResult createSubprocess(CreateBusinessSubprocessRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.parentProcessId.isEmpty)
-      return CommandResult(false, "", "Parent process ID is required");
+      return UsecaseResult(false, "", "Parent process ID is required");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto sp = BusinessSubprocess(req.tenantId);
     sp.parentProcessId = req.parentProcessId;
@@ -37,7 +37,7 @@ class ManageBusinessSubprocessesUseCase {
     sp.isActive = true;
 
     repo.save(sp);
-    return CommandResult(true, sp.id.value, "");
+    return UsecaseResult(true, sp.id.value, "");
   }
 
   BusinessSubprocess getSubprocess(TenantId tenantId, BusinessSubprocessId id) {
@@ -52,10 +52,10 @@ class ManageBusinessSubprocessesUseCase {
     return repo.findByParentProcess(tenantId, parentId);
   }
 
-  CommandResult updateSubprocess(UpdateBusinessSubprocessRequest req) {
+  UsecaseResult updateSubprocess(UpdateBusinessSubprocessRequest req) {
     auto sp = repo.findById(req.tenantId, req.subprocessId);
     if (sp.isNull)
-      return CommandResult(false, "", "Business subprocess not found");
+      return UsecaseResult(false, "", "Business subprocess not found");
 
     if (req.name.length > 0)
       sp.name = req.name;
@@ -70,15 +70,15 @@ class ManageBusinessSubprocessesUseCase {
     sp.updatedAt = currentTimestamp();
 
     repo.update(sp);
-    return CommandResult(true, sp.id.value, "");
+    return UsecaseResult(true, sp.id.value, "");
   }
 
-  CommandResult deleteSubprocess(TenantId tenantId, BusinessSubprocessId id) {
+  UsecaseResult deleteSubprocess(TenantId tenantId, BusinessSubprocessId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Business subprocess not found");
+      return UsecaseResult(false, "", "Business subprocess not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

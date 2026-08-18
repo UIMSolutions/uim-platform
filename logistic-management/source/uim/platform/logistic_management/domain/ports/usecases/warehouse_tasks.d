@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageWarehouseTasksUseCase {
 
-  CommandResult createWarehouseTask(TenantId tenantId, CreateWarehouseTaskRequest req);
+  UsecaseResult createWarehouseTask(TenantId tenantId, CreateWarehouseTaskRequest req);
 
-  CommandResult confirmTask(TenantId tenantId, WarehouseTaskId id, ConfirmWarehouseTaskRequest req);
+  UsecaseResult confirmTask(TenantId tenantId, WarehouseTaskId id, ConfirmWarehouseTaskRequest req);
 
-  CommandResult deleteWarehouseTask(TenantId tenantId, WarehouseTaskId id);
+  UsecaseResult deleteWarehouseTask(TenantId tenantId, WarehouseTaskId id);
 
   WarehouseTask getWarehouseTask(TenantId tenantId, WarehouseTaskId id);
 

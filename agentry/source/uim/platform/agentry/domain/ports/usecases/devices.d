@@ -15,9 +15,9 @@ interface IManageDevicesUseCase {
 
     Device[] listDevices(TenantId tenantId);
     Device getDevice(TenantId tenantId, DeviceId id);
-    CommandResult enrollDevice(DeviceDTO dto);
-    CommandResult updateDevice(DeviceDTO dto);
-    CommandResult removeDevice(TenantId tenantId, DeviceId id);
+    UsecaseResult enrollDevice(DeviceDTO dto);
+    UsecaseResult updateDevice(DeviceDTO dto);
+    UsecaseResult removeDevice(TenantId tenantId, DeviceId id);
 
     Device[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId);
     Device[] listByStatus(TenantId tenantId, DeviceStatus status);

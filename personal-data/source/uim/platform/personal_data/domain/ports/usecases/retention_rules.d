@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageRetentionRulesUseCase { 
 
-    CommandResult createRetentionRule(CreateRetentionRuleRequest r);
+    UsecaseResult createRetentionRule(CreateRetentionRuleRequest r);
     RetentionRule getRetentionRule(TenantId tenantId, RetentionRuleId id);
     RetentionRule[] listRetentionRules(TenantId tenantId);
-    CommandResult updateRetentionRule(UpdateRetentionRuleRequest r);
-    CommandResult deleteRetentionRule(TenantId tenantId, RetentionRuleId id);
+    UsecaseResult updateRetentionRule(UpdateRetentionRuleRequest r);
+    UsecaseResult deleteRetentionRule(TenantId tenantId, RetentionRuleId id);
 
 }
 

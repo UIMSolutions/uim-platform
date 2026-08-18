@@ -30,7 +30,7 @@ class ManageResponsibilityRulesUseCase {
         return repo.findByContext(tenantId, contextId);
     }
 
-    CommandResult createRule(ResponsibilityRuleDTO dto) {
+    UsecaseResult createRule(ResponsibilityRuleDTO dto) {
         auto r = ResponsibilityRule(dto.tenantId); //, UserId("test-user"));
         r.id = dto.ruleId;
         r.name = dto.name;
@@ -43,15 +43,15 @@ class ManageResponsibilityRulesUseCase {
         r.teamId = dto.teamId;
 
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Rule name is required");
+            return UsecaseResult(false, "", "Rule name is required");
         repo.save(r);
-        return CommandResult(true, r.id.value, "");
+        return UsecaseResult(true, r.id.value, "");
     }
 
-    CommandResult updateRule(ResponsibilityRuleDTO dto) {
+    UsecaseResult updateRule(ResponsibilityRuleDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.ruleId);
         if (existing.isNull)
-            return CommandResult(false, "", "Rule not found");
+            return UsecaseResult(false, "", "Rule not found");
         if (dto.name.length > 0)
             existing.name = dto.name;
         if (dto.description.length > 0)
@@ -63,15 +63,15 @@ class ManageResponsibilityRulesUseCase {
         if (!dto.updatedBy.isNull)
             existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteRule(TenantId tenantId, ResponsibilityRuleId id) {
+    UsecaseResult deleteRule(TenantId tenantId, ResponsibilityRuleId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Rule not found");
+            return UsecaseResult(false, "", "Rule not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
     private static RuleStatus parseRuleStatus(string s) {

@@ -16,9 +16,9 @@ mixin(ShowModule!());
 @safe:
 interface IManageRemoteTablesUseCase { 
 
-  CommandResult createRemoteTable(CreateRemoteTableRequest r);
+  UsecaseResult createRemoteTable(CreateRemoteTableRequest r);
   RemoteTable getRemoteTable(TenantId tenantId, SpaceId spaceId, RemoteTableId id);
   RemoteTable[] listRemoteTables(TenantId tenantId, SpaceId spaceId);
-  CommandResult deleteRemoteTable(TenantId tenantId, SpaceId spaceId, RemoteTableId id);
+  UsecaseResult deleteRemoteTable(TenantId tenantId, SpaceId spaceId, RemoteTableId id);
 
 }

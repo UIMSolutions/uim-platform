@@ -124,11 +124,11 @@ sequenceDiagram
 
     Admin->>EJC: POST /export-jobs { providerId, exportType, packageName }
     EJC->>EUC: createExportJob(dto)
-    EUC-->>EJC: CommandResult(true, jobId)
+    EUC-->>EJC: UsecaseResult(true, jobId)
     EJC-->>Admin: 201 { id }
 
     Admin->>IJC: POST /import-jobs { sourcePackage, targetSystem, importMode=update }
     IJC->>IUC: createImportJob(dto)
-    IUC-->>IJC: CommandResult(true, importId)
+    IUC-->>IJC: UsecaseResult(true, importId)
     IJC-->>Admin: 201 { id }
 ```

@@ -22,7 +22,7 @@ class ManageExecutionsUseCase {
     this.executions = executions;
   }
 
-  CommandResult createExecution(CreateExecutionRequest r) {
+  UsecaseResult createExecution(CreateExecutionRequest r) {
     auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId); // , r.createdBy);
     e.connectionId = r.connectionId;
     e.configurationId = r.configurationId;
@@ -30,7 +30,7 @@ class ManageExecutionsUseCase {
     e.status = ExecutionStatus.pending;
 
     executions.save(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 
   Execution getExecution(TenantId tenantId, ConnectionId connectionId, ExecutionId id) {
@@ -45,10 +45,10 @@ class ManageExecutionsUseCase {
     return executions.findByScenario(tenantId, connectionId, scenarioId);
   }
 
-  CommandResult patchExecution(PatchExecutionRequest r) {
+  UsecaseResult patchExecution(PatchExecutionRequest r) {
     auto e = executions.findById(r.tenantId, r.connectionId, r.executionId);
     if (e.isNull)
-      return CommandResult(false, "", "Execution not found");
+      return UsecaseResult(false, "", "Execution not found");
     e.targetStatus = r.targetStatus;
     if (r.targetStatus == "stopped")
       e.status = ExecutionStatus.stopped;
@@ -57,11 +57,11 @@ class ManageExecutionsUseCase {
     e.updatedAt = currentTimestamp();
 
     executions.save(e);
-    return CommandResult(true, e.id.value, "");
+    return UsecaseResult(true, e.id.value, "");
   }
 
-  CommandResult[] bulkPatchExecution(BulkPatchExecutionRequest r) {
-    CommandResult[] results;
+  UsecaseResult[] bulkPatchExecution(BulkPatchExecutionRequest r) {
+    UsecaseResult[] results;
     foreach (eid; r.executionIds) {
       PatchExecutionRequest pr;
       pr.tenantId = r.tenantId;
@@ -73,12 +73,12 @@ class ManageExecutionsUseCase {
     return results;
   }
 
-  CommandResult deleteExecution(TenantId tenantId, ConnectionId connectionId, ExecutionId id) {
+  UsecaseResult deleteExecution(TenantId tenantId, ConnectionId connectionId, ExecutionId id) {
     auto execution = executions.findById(tenantId, connectionId, id);
     if (execution.isNull)
-      return CommandResult(false, "", "Execution not found");
+      return UsecaseResult(false, "", "Execution not found");
 
     executions.remove(execution);
-    return CommandResult(true, execution.id.value, "");
+    return UsecaseResult(true, execution.id.value, "");
   }
 }

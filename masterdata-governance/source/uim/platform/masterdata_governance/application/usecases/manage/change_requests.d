@@ -38,7 +38,7 @@ class ManageChangeRequestsUseCase {
         return repo.findByRequestedBy(tenantId, userId);
     }
 
-    CommandResult createChangeRequest(ChangeRequestDTO dto) {
+    UsecaseResult createChangeRequest(ChangeRequestDTO dto) {
         auto cr = ChangeRequest(dto.tenantId); //, UserId("test-user"));
         cr.id = dto.changeRequestId;
         cr.businessPartnerId = dto.businessPartnerId;
@@ -55,81 +55,81 @@ class ManageChangeRequestsUseCase {
         cr.status = ChangeRequestStatus.draft;
 
         if (!MasterdataGovernanceValidator.isValidChangeRequest(cr))
-            return CommandResult(false, "", "Invalid change request data");
+            return UsecaseResult(false, "", "Invalid change request data");
 
         repo.save(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 
-    CommandResult submitChangeRequest(TenantId tenantId, ChangeRequestId id, UserId submittedBy) {
+    UsecaseResult submitChangeRequest(TenantId tenantId, ChangeRequestId id, UserId submittedBy) {
         auto cr = repo.findById(tenantId, id);
         if (cr.isNull)
-            return CommandResult(false, "", "Change request not found");
+            return UsecaseResult(false, "", "Change request not found");
         if (cr.status != ChangeRequestStatus.draft && cr.status != ChangeRequestStatus.revisionRequested)
-            return CommandResult(false, "", "Change request cannot be submitted in current status");
+            return UsecaseResult(false, "", "Change request cannot be submitted in current status");
 
         cr.status = ChangeRequestStatus.submitted;
         cr.requestedBy = submittedBy;
         repo.update(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 
-    CommandResult approveChangeRequest(TenantId tenantId, ChangeRequestId id, UserId approvedBy, string reviewerComments) {
+    UsecaseResult approveChangeRequest(TenantId tenantId, ChangeRequestId id, UserId approvedBy, string reviewerComments) {
         auto cr = repo.findById(tenantId, id);
         if (cr.isNull)
-            return CommandResult(false, "", "Change request not found");
+            return UsecaseResult(false, "", "Change request not found");
         if (cr.status != ChangeRequestStatus.submitted && cr.status != ChangeRequestStatus.inReview)
-            return CommandResult(false, "", "Change request cannot be approved in current status");
+            return UsecaseResult(false, "", "Change request cannot be approved in current status");
 
         cr.status = ChangeRequestStatus.approved;
         cr.decidedBy = approvedBy;
         cr.reviewerComments = reviewerComments;
         repo.update(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 
-    CommandResult rejectChangeRequest(TenantId tenantId, ChangeRequestId id, UserId rejectedBy, string reviewerComments) {
+    UsecaseResult rejectChangeRequest(TenantId tenantId, ChangeRequestId id, UserId rejectedBy, string reviewerComments) {
         auto cr = repo.findById(tenantId, id);
         if (cr.isNull)
-            return CommandResult(false, "", "Change request not found");
+            return UsecaseResult(false, "", "Change request not found");
         if (cr.status != ChangeRequestStatus.submitted && cr.status != ChangeRequestStatus.inReview)
-            return CommandResult(false, "", "Change request cannot be rejected in current status");
+            return UsecaseResult(false, "", "Change request cannot be rejected in current status");
 
         cr.status = ChangeRequestStatus.rejected;
         cr.decidedBy = rejectedBy;
         cr.reviewerComments = reviewerComments;
         repo.update(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 
-    CommandResult requestRevision(TenantId tenantId, ChangeRequestId id, UserId reviewedBy, string reviewerComments) {
+    UsecaseResult requestRevision(TenantId tenantId, ChangeRequestId id, UserId reviewedBy, string reviewerComments) {
         auto cr = repo.findById(tenantId, id);
         if (cr.isNull)
-            return CommandResult(false, "", "Change request not found");
+            return UsecaseResult(false, "", "Change request not found");
 
         cr.status = ChangeRequestStatus.revisionRequested;
         cr.reviewedBy = reviewedBy;
         cr.reviewerComments = reviewerComments;
         repo.update(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 
-    CommandResult withdrawChangeRequest(TenantId tenantId, ChangeRequestId id) {
+    UsecaseResult withdrawChangeRequest(TenantId tenantId, ChangeRequestId id) {
         auto cr = repo.findById(tenantId, id);
         if (cr.isNull)
-            return CommandResult(false, "", "Change request not found");
+            return UsecaseResult(false, "", "Change request not found");
 
         cr.status = ChangeRequestStatus.withdrawn;
         repo.update(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 
-    CommandResult deleteChangeRequest(TenantId tenantId, ChangeRequestId id) {
+    UsecaseResult deleteChangeRequest(TenantId tenantId, ChangeRequestId id) {
         auto cr = repo.findById(tenantId, id);
         if (cr.isNull)
-            return CommandResult(false, "", "Change request not found");
+            return UsecaseResult(false, "", "Change request not found");
 
         repo.remove(cr);
-        return CommandResult(true, cr.id.value, "");
+        return UsecaseResult(true, cr.id.value, "");
     }
 }

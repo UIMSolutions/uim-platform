@@ -16,13 +16,13 @@ mixin(ShowModule!());
 @safe:
 interface IManageLegalGroundsUseCase { 
   
-  CommandResult createGround(CreateLegalGroundRequest req);
+  UsecaseResult createGround(CreateLegalGroundRequest req);
   LegalGround getGround(TenantId tenantId, LegalGroundId id);
   LegalGround[] listGrounds(TenantId tenantId);
   LegalGround[] listGrounds(TenantId tenantId, DataSubjectId subjectId);
   LegalGround[] listGrounds(TenantId tenantId, LegalBasis basis);
   LegalGround[] listGrounds(TenantId tenantId, ProcessingPurpose purpose);
-  CommandResult updateGround(UpdateLegalGroundRequest req);
-  CommandResult deleteGround(TenantId tenantId, LegalGroundId id);
+  UsecaseResult updateGround(UpdateLegalGroundRequest req);
+  UsecaseResult deleteGround(TenantId tenantId, LegalGroundId id);
   
 }

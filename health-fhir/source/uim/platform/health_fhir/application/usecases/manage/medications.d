@@ -17,12 +17,12 @@ class ManageMedicationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createMedication(CreateMedicationRequest r) {
+  UsecaseResult createMedication(CreateMedicationRequest r) {
     auto err = FhirValidator.validateMedication(r.medicationId.value);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     if (!repo.findById(r.tenantId, r.medicationId).isNull)
-      return CommandResult(false, "", "Medication already exists");
+      return UsecaseResult(false, "", "Medication already exists");
 
     auto m = Medication(r.tenantId);
     m.id           = r.medicationId;
@@ -34,13 +34,13 @@ class ManageMedicationsUseCase {
     m.ingredient_  = r.ingredient_;
 
     repo.save(m);
-    return CommandResult(true, m.id.value, "");
+    return UsecaseResult(true, m.id.value, "");
   }
 
-  CommandResult updateMedication(UpdateMedicationRequest r) {
+  UsecaseResult updateMedication(UpdateMedicationRequest r) {
     auto existing = repo.findById(r.tenantId, r.medicationId);
     if (existing.isNull)
-      return CommandResult(false, "", "Medication not found");
+      return UsecaseResult(false, "", "Medication not found");
 
     auto m = Medication(r.tenantId);
     m.id           = r.medicationId;
@@ -53,7 +53,7 @@ class ManageMedicationsUseCase {
     m.createdAt    = existing.createdAt;
 
     repo.update(m);
-    return CommandResult(true, m.id.value, "");
+    return UsecaseResult(true, m.id.value, "");
   }
 
   Medication getMedication(TenantId tenantId, MedicationId id) {
@@ -64,11 +64,11 @@ class ManageMedicationsUseCase {
     return repo.findByTenantAll(tenantId);
   }
 
-  CommandResult deleteMedication(TenantId tenantId, MedicationId id) {
+  UsecaseResult deleteMedication(TenantId tenantId, MedicationId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Medication not found");
+      return UsecaseResult(false, "", "Medication not found");
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

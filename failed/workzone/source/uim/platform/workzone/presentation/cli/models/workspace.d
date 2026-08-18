@@ -24,7 +24,7 @@ struct WorkspaceCliModel {
         return _useCase.getWorkspace(_tenantId, WorkspaceId(id));
     }
 
-    CommandResult create(string name, string description,
+    UsecaseResult create(string name, string description,
                          string alias_, string typeStr) {
         CreateWorkspaceRequest req;
         req.tenantId    = _tenantId;
@@ -35,7 +35,7 @@ struct WorkspaceCliModel {
         return _useCase.createWorkspace(req);
     }
 
-    CommandResult remove(string id) {
+    UsecaseResult remove(string id) {
         return _useCase.deleteWorkspace(_tenantId, WorkspaceId(id));
     }
 

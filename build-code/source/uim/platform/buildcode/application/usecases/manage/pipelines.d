@@ -20,10 +20,10 @@ class ManagePipelinesUseCase {
     _quota = QuotaService();
   }
 
-  CommandResult create(TenantId tenantId, CreatePipelineRequest req) {
+  UsecaseResult create(TenantId tenantId, CreatePipelineRequest req) {
     auto existing = _repo.findByProject(tenantId, req.projectId);
     auto qerr = _quota.checkPipelineQuota(existing.length);
-    if (qerr !is null) return CommandResult(false, "", qerr);
+    if (qerr !is null) return UsecaseResult(false, "", qerr);
 
     PipelineStage stage = PipelineStage.full;
     static foreach (member; __traits(allMembers, PipelineStage)) {
@@ -44,7 +44,7 @@ class ManagePipelinesUseCase {
     p.schedule       = req.schedule;
 
     _repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   Pipeline getById(TenantId tenantId, string id) {
@@ -59,9 +59,9 @@ class ManagePipelinesUseCase {
     return _repo.findByProject(tenantId, projectId);
   }
 
-  CommandResult update(TenantId tenantId, string id, UpdatePipelineRequest req) {
+  UsecaseResult update(TenantId tenantId, string id, UpdatePipelineRequest req) {
     auto p = _repo.findById(tenantId, PipelineId(id));
-    if (p.isNull) return CommandResult(false, "", "Pipeline not found");
+    if (p.isNull) return UsecaseResult(false, "", "Pipeline not found");
     if (req.description.length > 0)    p.description    = req.description;
     if (req.branch.length > 0)         p.branch         = req.branch;
     if (req.configFilePath.length > 0) p.configFilePath = req.configFilePath;
@@ -69,13 +69,13 @@ class ManagePipelinesUseCase {
     if (req.schedule.length > 0)       p.schedule       = req.schedule;
     p.isActive = req.isActive;
     _repo.update(p);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto p = _repo.findById(tenantId, PipelineId(id));
-    if (p.isNull) return CommandResult(false, "", "Pipeline not found");
+    if (p.isNull) return UsecaseResult(false, "", "Pipeline not found");
     _repo.remove(tenantId, PipelineId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

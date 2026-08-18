@@ -18,9 +18,9 @@ class ManagePersonalDataRecordsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createPersonalDataRecord(CreatePersonalDataRecordRequest r) {
-        if (r.tenantId.isNull) return CommandResult(false, "", "Tenant ID is required");
-        if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
+    UsecaseResult createPersonalDataRecord(CreatePersonalDataRecordRequest r) {
+        if (r.tenantId.isNull) return UsecaseResult(false, "", "Tenant ID is required");
+        if (r.dataSubjectId.isEmpty) return UsecaseResult(false, "", "Data subject ID is required");
 
         
 
@@ -41,7 +41,7 @@ class ManagePersonalDataRecordsUseCase {
         rec.createdAt = currentTimestamp();
 
         repo.save(rec);
-        return CommandResult(true, rec.id.value, "");
+        return UsecaseResult(true, rec.id.value, "");
     }
 
     PersonalDataRecord getPersonalDataRecord(TenantId tenantId, PersonalDataRecordId id) {
@@ -64,12 +64,12 @@ class ManagePersonalDataRecordsUseCase {
         return repo.findByDataSubjectAndApplication(tenantId, dataSubjectId, appId);
     }
 
-    CommandResult deletePersonalDataRecord(TenantId tenantId, PersonalDataRecordId id) {
+    UsecaseResult deletePersonalDataRecord(TenantId tenantId, PersonalDataRecordId id) {
         auto record = repo.findById(tenantId, id);
         if (record.isNull)
-            return CommandResult(false, "", "Personal data record not found");
+            return UsecaseResult(false, "", "Personal data record not found");
 
         repo.remove(record);
-        return CommandResult(true, record.id.value, "");
+        return UsecaseResult(true, record.id.value, "");
     }
 }

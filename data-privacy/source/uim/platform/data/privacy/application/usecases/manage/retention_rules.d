@@ -20,13 +20,13 @@ class ManageRetentionRulesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRule(CreateRetentionRuleRequest req) {
+  UsecaseResult createRule(CreateRetentionRuleRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Rule name is required");
+      return UsecaseResult(false, "", "Rule name is required");
     if (req.retentionDays <= 0)
-      return CommandResult(false, "", "Retention days must be positive");
+      return UsecaseResult(false, "", "Retention days must be positive");
 
     auto rule = RetentionRule(req.tenantId);
     rule.name = req.name;
@@ -39,7 +39,7 @@ class ManageRetentionRulesUseCase {
     rule.isDefault = req.isDefault;
 
     repo.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   RetentionRule getRule(TenantId tenantId, RetentionRuleId id) {
@@ -54,10 +54,10 @@ class ManageRetentionRulesUseCase {
     return repo.findByPurpose(tenantId, purpose);
   }
 
-  CommandResult updateRule(UpdateRetentionRuleRequest req) {
+  UsecaseResult updateRule(UpdateRetentionRuleRequest req) {
     auto rule = repo.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
-      return CommandResult(false, "", "Retention rule not found");
+      return UsecaseResult(false, "", "Retention rule not found");
 
     if (req.name.length > 0)
       rule.name = req.name;
@@ -73,15 +73,15 @@ class ManageRetentionRulesUseCase {
     rule.updatedAt = currentTimestamp();
 
     repo.update(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult deleteRule(TenantId tenantId, RetentionRuleId id) {
+  UsecaseResult deleteRule(TenantId tenantId, RetentionRuleId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Retention rule not found");
+      return UsecaseResult(false, "", "Retention rule not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

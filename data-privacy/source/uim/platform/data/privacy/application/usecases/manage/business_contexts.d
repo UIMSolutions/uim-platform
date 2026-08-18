@@ -17,11 +17,11 @@ class ManageBusinessContextsUseCase {
     this.businessContexts = businessContexts;
   }
 
-  CommandResult createContext(CreateBusinessContextRequest req) {
+  UsecaseResult createContext(CreateBusinessContextRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto ctx = BusinessContext(req.tenantId);
     ctx.name = req.name;
@@ -35,7 +35,7 @@ class ManageBusinessContextsUseCase {
     ctx.isCrossRoleEnabled = req.isCrossRoleEnabled;
 
     businessContexts.save(ctx);
-    return CommandResult(true, ctx.id.value, "");
+    return UsecaseResult(true, ctx.id.value, "");
   }
 
   BusinessContext getContext(TenantId tenantId, BusinessContextId id) {
@@ -50,10 +50,10 @@ class ManageBusinessContextsUseCase {
     return businessContexts.findByStatus(tenantId, status);
   }
 
-  CommandResult updateContext(UpdateBusinessContextRequest req) {
+  UsecaseResult updateContext(UpdateBusinessContextRequest req) {
     auto ctx = businessContexts.findById(req.tenantId, req.contextId);
     if (ctx.isNull)
-      return CommandResult(false, "", "Business context not found");
+      return UsecaseResult(false, "", "Business context not found");
 
     if (req.name.length > 0) ctx.name = req.name;
     if (req.description.length > 0) ctx.description = req.description;
@@ -64,31 +64,31 @@ class ManageBusinessContextsUseCase {
     ctx.updatedAt = currentTimestamp();
 
     businessContexts.update(ctx);
-    return CommandResult(true, ctx.id.value, "");
+    return UsecaseResult(true, ctx.id.value, "");
   }
 
-  CommandResult activateContext(ActivateBusinessContextRequest req) {
+  UsecaseResult activateContext(ActivateBusinessContextRequest req) {
     auto ctx = businessContexts.findById(req.tenantId, req.contextId);
     if (ctx.isNull)
-      return CommandResult(false, "", "Business context not found");
+      return UsecaseResult(false, "", "Business context not found");
 
     if (ctx.status == BusinessContextStatus.active)
-      return CommandResult(false, "", "Business context already active");
+      return UsecaseResult(false, "", "Business context already active");
 
     ctx.status = BusinessContextStatus.active;
     ctx.activatedAt = currentTimestamp();
     ctx.updatedAt = ctx.activatedAt;
 
     businessContexts.update(ctx);
-    return CommandResult(true, ctx.id.value, "");
+    return UsecaseResult(true, ctx.id.value, "");
   }
 
-  CommandResult deleteContext(TenantId tenantId, BusinessContextId id) {
+  UsecaseResult deleteContext(TenantId tenantId, BusinessContextId id) {
     auto ctx = businessContexts.findById(tenantId, id);
     if (ctx.isNull)
-      return CommandResult(false, "", "Business context not found");
+      return UsecaseResult(false, "", "Business context not found");
 
     businessContexts.remove(ctx);
-    return CommandResult(true, ctx.id.value, "");
+    return UsecaseResult(true, ctx.id.value, "");
   }
 }

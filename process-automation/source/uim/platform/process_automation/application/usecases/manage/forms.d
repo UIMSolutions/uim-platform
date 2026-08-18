@@ -17,15 +17,15 @@ class ManageFormsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createForm(CreateFormRequest r) {
+    UsecaseResult createForm(CreateFormRequest r) {
         if (r.formId.isEmpty)
-            return CommandResult(false, "", "Form ID is required");
+            return UsecaseResult(false, "", "Form ID is required");
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Form name is required");
+            return UsecaseResult(false, "", "Form name is required");
 
         auto existing = repo.findById(r.tenantId, r.formId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Form already exists");
+            return UsecaseResult(false, "", "Form already exists");
 
         auto f = Form(r.tenantId, r.formId, r.createdBy);
         f.projectId = r.projectId;
@@ -36,7 +36,7 @@ class ManageFormsUseCase {
         f.updatedAt = f.createdAt;
 
         repo.save(f);
-        return CommandResult(true, f.id.value, "");
+        return UsecaseResult(true, f.id.value, "");
     }
 
     Form getForm(TenantId tenantId, FormId id) {
@@ -47,10 +47,10 @@ class ManageFormsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateForm(UpdateFormRequest r) {
+    UsecaseResult updateForm(UpdateFormRequest r) {
         auto form = repo.findById(r.tenantId, r.formId);
         if (form.isNull)
-            return CommandResult(false, "", "Form not found");
+            return UsecaseResult(false, "", "Form not found");
 
         form.name = r.name;
         form.description = r.description;
@@ -61,15 +61,15 @@ class ManageFormsUseCase {
         form.updatedAt = currentTimestamp;
 
         repo.update(form);
-        return CommandResult(true, form.id.value, "");
+        return UsecaseResult(true, form.id.value, "");
     }
 
-    CommandResult deleteForm(TenantId tenantId, FormId id) {
+    UsecaseResult deleteForm(TenantId tenantId, FormId id) {
         auto form = repo.findById(tenantId, id);
         if (form.isNull)
-            return CommandResult(false, "", "Form not found");
+            return UsecaseResult(false, "", "Form not found");
 
         repo.remove(form);
-        return CommandResult(true, form.id.value, "");
+        return UsecaseResult(true, form.id.value, "");
     }
 }

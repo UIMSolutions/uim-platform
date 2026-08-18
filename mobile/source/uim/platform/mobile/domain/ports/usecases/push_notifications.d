@@ -17,7 +17,7 @@ import uim.platform.mobile;
 @safe:
 interface IManagePushNotificationsUseCase {
 
-    CommandResult send(SendPushNotificationRequest r);
+    UsecaseResult send(SendPushNotificationRequest r);
 
     PushNotification getNotification(TenantId tenantId, PushNotificationId id);
 
@@ -27,7 +27,7 @@ interface IManagePushNotificationsUseCase {
 
     PushNotification[] listNotifications(TenantId tenantId, MobileAppId appId, string status);
 
-    CommandResult deleteNotification(TenantId tenantId, PushNotificationId id);
+    UsecaseResult deleteNotification(TenantId tenantId, PushNotificationId id);
 
     size_t countByApp(TenantId tenantId, MobileAppId appId);
 

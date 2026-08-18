@@ -27,15 +27,15 @@ class ProcessDocumentsUseCase {
     this.resultRepo = resultRepo;
   }
 
-  CommandResult upload(UploadDocumentRequest r) {
+  UsecaseResult upload(UploadDocumentRequest r) {
     if (r.filename.isEmpty)
-      return CommandResult(false, "", "File name is required");
+      return UsecaseResult(false, "", "File name is required");
     if (r.clientId.isEmpty)
-      return CommandResult(false, "", "Client ID is required");
+      return UsecaseResult(false, "", "Client ID is required");
 
     auto validation = validateFileType(r.fileName);
     if (!validation.valid)
-      return CommandResult(false, "", validation.error);
+      return UsecaseResult(false, "", validation.error);
 
     Document doc;
     doc.initEnty(r.tenantId) ;
@@ -70,18 +70,18 @@ class ProcessDocumentsUseCase {
     // Simulate extraction processing
     processExtraction(doc);
 
-    return CommandResult(true, doc.id.value, "");
+    return UsecaseResult(true, doc.id.value, "");
   }
 
-  CommandResult confirm(ConfirmDocumentRequest r) {
+  UsecaseResult confirm(ConfirmDocumentRequest r) {
     if (r.documentId.isEmpty)
-      return CommandResult(false, "", "Document ID is required");
+      return UsecaseResult(false, "", "Document ID is required");
 
     auto doc = docRepo.findById(r.documentId, r.clientId);
     if (doc.isNull)
-      return CommandResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "Document not found");
     if (doc.status != DocumentStatus.completed)
-      return CommandResult(false, "", "Document must be in completed status to confirm");
+      return UsecaseResult(false, "", "Document must be in completed status to confirm");
 
     doc.status = DocumentStatus.confirmed;
 
@@ -89,7 +89,7 @@ class ProcessDocumentsUseCase {
     doc.updatedAt = currentTimestamp;
 
     docRepo.update(doc);
-    return CommandResult(true, doc.id.value, "");
+    return UsecaseResult(true, doc.id.value, "");
   }
 
   Document getById(DocumentId id, ClientId clientId) {
@@ -108,13 +108,13 @@ class ProcessDocumentsUseCase {
     return docRepo.findByDocumentType(typeId, clientId);
   }
 
-  CommandResult deleteDocument(ClientId clientId, DocumentId id) {
+  UsecaseResult deleteDocument(ClientId clientId, DocumentId id) {
     auto entity = docRepo.findById(id, clientId);
     if (entity.isNull)
-      return CommandResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "Document not found");
 
     docRepo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   ExtractionResult getExtractionResult(DocumentId docId, ClientId clientId) {

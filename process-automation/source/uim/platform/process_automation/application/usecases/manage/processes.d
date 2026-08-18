@@ -17,14 +17,14 @@ class ManageProcessesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createProcess(CreateProcessRequest r) {
+    UsecaseResult createProcess(CreateProcessRequest r) {
         auto err = ProcessValidator.validate(r.tenantId, r.processId, r.name);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         auto existing = repo.findById(r.tenantId, r.processId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Process already exists");
+            return UsecaseResult(false, "", "Process already exists");
 
         auto p = Process(r.tenantId, r.processId, r.createdBy);
         p.projectId = r.projectId;
@@ -34,7 +34,7 @@ class ManageProcessesUseCase {
         p.version_ = r.version_;
 
         repo.save(p);
-        return CommandResult(true, p.id.value, "");
+        return UsecaseResult(true, p.id.value, "");
     }
 
     Process getProcess(TenantId tenantId, ProcessId processId) {
@@ -49,10 +49,10 @@ class ManageProcessesUseCase {
         return repo.findByProject(tenantId, projectId);
     }
 
-    CommandResult updateProcess(UpdateProcessRequest r) {
+    UsecaseResult updateProcess(UpdateProcessRequest r) {
         auto process = repo.findById(r.tenantId, r.processId);
         if (process.isNull)
-            return CommandResult(false, "", "Process not found");
+            return UsecaseResult(false, "", "Process not found");
 
         process.name = r.name;
         process.description = r.description;
@@ -63,13 +63,13 @@ class ManageProcessesUseCase {
         process.updatedAt = currentTimestamp;
 
         repo.update(process);
-        return CommandResult(true, process.id.value, "");
+        return UsecaseResult(true, process.id.value, "");
     }
 
-    CommandResult deployProcess(DeployProcessRequest r) {
+    UsecaseResult deployProcess(DeployProcessRequest r) {
         auto process = repo.findById(r.tenantId, r.processId);
         if (process.isNull)
-            return CommandResult(false, "", "Process not found");
+            return UsecaseResult(false, "", "Process not found");
 
         switch (r.action) {
         case "activate":
@@ -79,22 +79,22 @@ class ManageProcessesUseCase {
             process.status = ProcessStatus.inactive;
             break;
         default:
-            return CommandResult(false, "", "Unknown action: " ~ r.action);
+            return UsecaseResult(false, "", "Unknown action: " ~ r.action);
         }
 
         
         process.updatedAt = currentTimestamp;
 
         repo.update(process);
-        return CommandResult(true, process.id.value, "");
+        return UsecaseResult(true, process.id.value, "");
     }
 
-    CommandResult deleteProcess(TenantId tenantId, ProcessId processId) {
+    UsecaseResult deleteProcess(TenantId tenantId, ProcessId processId) {
         auto process = repo.findById(tenantId, processId);
         if (process.isNull)
-            return CommandResult(false, "", "Process not found");
+            return UsecaseResult(false, "", "Process not found");
 
         repo.remove(process);
-        return CommandResult(true, process.id.value, "");
+        return UsecaseResult(true, process.id.value, "");
     }
 }

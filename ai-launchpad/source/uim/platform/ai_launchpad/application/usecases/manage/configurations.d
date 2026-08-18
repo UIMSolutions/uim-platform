@@ -22,9 +22,9 @@ class ManageConfigurationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createConfiguration(CreateConfigurationRequest r) {
+  UsecaseResult createConfiguration(CreateConfigurationRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Configuration name is required");
+      return UsecaseResult(false, "", "Configuration name is required");
 
     auto c = Configuration(r.tenantId, r.configurationId.isNull ? ConfigurationId(createId()) : r.configurationId); // , r.createdBy);
     c.connectionId = r.connectionId;
@@ -44,7 +44,7 @@ class ManageConfigurationsUseCase {
     }
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   Configuration getConfiguration(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
@@ -59,12 +59,12 @@ class ManageConfigurationsUseCase {
     return repo.findByScenario(tenantId, connectionId, scenarioId);
   }
 
-  CommandResult deleteConfiguration(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
+  UsecaseResult deleteConfiguration(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
     auto config = repo.findById(tenantId, connectionId, id);
     if (config.isNull)
-      return CommandResult(false, "", "Configuration not found");
+      return UsecaseResult(false, "", "Configuration not found");
 
     repo.remove(config);
-    return CommandResult(true, config.id.value, "");
+    return UsecaseResult(true, config.id.value, "");
   }
 }

@@ -32,16 +32,16 @@ class ManageDeterminationLogsUseCase {
         return repo.findByObject(tenantId, objectType, objectId);
     }
 
-    CommandResult deleteLog(TenantId tenantId, DeterminationLogId id) {
+    UsecaseResult deleteLog(TenantId tenantId, DeterminationLogId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Log entry not found");
+            return UsecaseResult(false, "", "Log entry not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult clearLogs(TenantId tenantId) {
+    UsecaseResult clearLogs(TenantId tenantId) {
         repo.removeByTenant(tenantId);
-        return CommandResult(true, "", "");
+        return UsecaseResult(true, "", "");
     }
 }

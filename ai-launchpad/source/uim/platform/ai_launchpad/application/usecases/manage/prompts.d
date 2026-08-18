@@ -19,11 +19,11 @@ class ManagePromptsUseCase {
     this.enricher = enricher;
   }
 
-  CommandResult createPrompt(CreatePromptRequest r) {
+  UsecaseResult createPrompt(CreatePromptRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Prompt name is required");
+      return UsecaseResult(false, "", "Prompt name is required");
     if (r.modelName.isEmpty)
-      return CommandResult(false, "", "Model name is required");
+      return UsecaseResult(false, "", "Model name is required");
 
     auto p = Prompt(r.tenantId, PromptId("")); // , r.createdBy);
     // p.connectionId = r.connectionId;
@@ -54,10 +54,10 @@ class ManagePromptsUseCase {
     enricher.applyDefaults(p);
 
     if (!enricher.validateMessages(p))
-      return CommandResult(false, "", "Prompt must have at least one user message");
+      return UsecaseResult(false, "", "Prompt must have at least one user message");
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   Prompt getPrompt(TenantId tenantId, PromptId id) {
@@ -72,10 +72,10 @@ class ManagePromptsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult patchPrompt(PatchPromptRequest r) {
+  UsecaseResult patchPrompt(PatchPromptRequest r) {
     auto p = repo.findById(r.tenantId, r.promptId);
     if (p.isNull)
-      return CommandResult(false, "", "Prompt not found");
+      return UsecaseResult(false, "", "Prompt not found");
     if (r.name.length > 0)
       p.name = r.name;
     if (r.status == "active")
@@ -103,15 +103,15 @@ class ManagePromptsUseCase {
 
     p.updatedAt = currentTimestamp();
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult deletePrompt(TenantId tenantId, PromptId id) {
+  UsecaseResult deletePrompt(TenantId tenantId, PromptId id) {
     auto prompt = repo.findById(tenantId, id);
     if (prompt.isNull)
-      return CommandResult(false, "", "Prompt not found");
+      return UsecaseResult(false, "", "Prompt not found");
 
     repo.remove(prompt);
-    return CommandResult(true, prompt.id.value, "");
+    return UsecaseResult(true, prompt.id.value, "");
   }
 }

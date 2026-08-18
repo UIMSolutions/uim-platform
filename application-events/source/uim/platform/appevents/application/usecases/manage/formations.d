@@ -28,9 +28,9 @@ class ManageFormationsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createFormation(FormationDTO dto) {
+    UsecaseResult createFormation(FormationDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Formation name already exists");
+            return UsecaseResult(false, "", "Formation name already exists");
             
         auto f = Formation(dto.tenantId, dto.formationId.isNull ? FormationId(createId()) : dto.formationId, dto.createdBy);
         f.name = dto.name;
@@ -40,13 +40,13 @@ class ManageFormationsUseCase {
         f.systemCount = 0;
 
         repo.save(f);
-        return CommandResult(true, f.id.value, "");
+        return UsecaseResult(true, f.id.value, "");
     }
 
-    CommandResult updateFormation(FormationDTO dto) {
+    UsecaseResult updateFormation(FormationDTO dto) {
         auto f = repo.findById(dto.tenantId, dto.formationId);
         if (f.isNull)
-            return CommandResult(false, "", "Formation not found");
+            return UsecaseResult(false, "", "Formation not found");
 
         f.name = dto.name;
         f.description = dto.description;
@@ -56,15 +56,15 @@ class ManageFormationsUseCase {
             f.updatedBy = dto.updatedBy;
 
         repo.update(f);
-        return CommandResult(true, f.id.value, "");
+        return UsecaseResult(true, f.id.value, "");
     }
 
-    CommandResult deleteFormation(TenantId tenantId, FormationId id) {
+    UsecaseResult deleteFormation(TenantId tenantId, FormationId id) {
         auto f = repo.findById(tenantId, id);
         if (f.isNull)
-            return CommandResult(false, "", "Formation not found");
+            return UsecaseResult(false, "", "Formation not found");
 
         repo.remove(f);
-        return CommandResult(true, f.id.value, "");
+        return UsecaseResult(true, f.id.value, "");
     }
 }

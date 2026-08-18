@@ -24,16 +24,16 @@ class ManageDeletionRequestsUseCase {
     this.subjectRepo = subjectRepo;
   }
 
-  CommandResult createRequest(CreateDeletionRequest req) {
+  UsecaseResult createRequest(CreateDeletionRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.dataSubjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
 
     // Verify data subject exists
     auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     auto now = currentTimestamp();
     // Deadline: 30 days from now (GDPR Art. 12(3))
@@ -49,7 +49,7 @@ class ManageDeletionRequestsUseCase {
     request.deadline = deadline;
 
     repo.save(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 
   DeletionRequest getRequest(TenantId tenantId, DeletionRequestId id) {
@@ -68,10 +68,10 @@ class ManageDeletionRequestsUseCase {
     return repo.findByDataSubject(tenantId, subjectId);
   }
 
-  CommandResult updateStatus(UpdateDeletionStatusRequest req) {
+  UsecaseResult updateStatus(UpdateDeletionStatusRequest req) {
     auto request = repo.findById(req.tenantId, req.requestId);
     if (request.isNull)
-      return CommandResult(false, "", "Deletion request not found");
+      return UsecaseResult(false, "", "Deletion request not found");
 
     request.status = req.status.to!DeletionStatus;
     if (req.blockerReason.length > 0)
@@ -80,15 +80,15 @@ class ManageDeletionRequestsUseCase {
       request.completedAt = currentTimestamp();
 
     repo.update(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 
-  CommandResult deleteRequest(TenantId tenantId, DeletionRequestId id) {
+  UsecaseResult deleteRequest(TenantId tenantId, DeletionRequestId id) {
     auto request = repo.findById(tenantId, id);
     if (request.isNull)
-      return CommandResult(false, "", "Deletion request not found");
+      return UsecaseResult(false, "", "Deletion request not found");
 
     repo.remove(request);
-    return CommandResult(true, request.id.value, "");
+    return UsecaseResult(true, request.id.value, "");
   }
 }

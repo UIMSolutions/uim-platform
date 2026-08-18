@@ -182,6 +182,6 @@ sequenceDiagram
     Editor->>CC: POST /content-items { channelId, title, body, contentType=news }
     CC->>CUC: publishContent(dto)
     CUC->>NR: save(notification — recipients=all subscribers)
-    CUC-->>CC: CommandResult(true, itemId)
+    CUC-->>CC: UsecaseResult(true, itemId)
     CC-->>Editor: 201 { id, publishedAt }
 ```

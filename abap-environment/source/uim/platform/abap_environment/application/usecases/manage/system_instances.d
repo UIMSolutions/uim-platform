@@ -18,26 +18,26 @@ class ManageSystemInstancesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createInstance(CreateSystemInstanceRequest req) {
+  UsecaseResult createInstance(CreateSystemInstanceRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "System instance name is required");
+      return UsecaseResult(false, "", "System instance name is required");
 
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.adminEmail.length == 0)
-      return CommandResult(false, "", "Admin email is required");
+      return UsecaseResult(false, "", "Admin email is required");
 
     // Validate SID
     if (req.sapSystemId.length > 0) {
       auto sidResult = SystemLifecycleValidator.validateSid(req.sapSystemId);
       if (!sidResult.valid)
-        return CommandResult(false, "", sidResult.error);
+        return UsecaseResult(false, "", sidResult.error);
     }
 
     // Unique name per tenant
     if (repo.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "System instance '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "System instance '" ~ req.name ~ "' already exists");
 
     auto inst = SystemInstance(req.tenantId);
     inst.subaccountId = req.subaccountId;
@@ -54,13 +54,13 @@ class ManageSystemInstancesUseCase {
     inst.stackVersion = req.stackVersion;
 
     repo.save(inst);
-    return CommandResult(true, inst.id.value, "");
+    return UsecaseResult(true, inst.id.value, "");
   }
 
-  CommandResult updateInstance(UpdateSystemInstanceRequest req) {
+  UsecaseResult updateInstance(UpdateSystemInstanceRequest req) {
     auto inst = repo.findById(req.tenantId, req.systemInstanceId);
     if (inst.isNull)
-      return CommandResult(false, "", "System instance not found");
+      return UsecaseResult(false, "", "System instance not found");
 
     if (req.description.length > 0)
       inst.description = req.description;
@@ -76,7 +76,7 @@ class ManageSystemInstancesUseCase {
       auto newStatus = req.status.to!SystemStatus;
       auto validation = SystemLifecycleValidator.validateTransition(inst.status, newStatus);
       if (!validation.valid)
-        return CommandResult(false, "", validation.error);
+        return UsecaseResult(false, "", validation.error);
       inst.status = newStatus;
     }
 
@@ -84,7 +84,7 @@ class ManageSystemInstancesUseCase {
     inst.updatedAt = currentTimestamp();
 
     repo.update(inst);
-    return CommandResult(true, inst.id.value, "");
+    return UsecaseResult(true, inst.id.value, "");
   }
 
   SystemInstance getInstance(TenantId tenantId, SystemInstanceId id) {
@@ -95,18 +95,18 @@ class ManageSystemInstancesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteInstance(TenantId tenantId, SystemInstanceId id) {
+  UsecaseResult deleteInstance(TenantId tenantId, SystemInstanceId id) {
     auto inst = repo.findById(tenantId, id);
     if (inst.isNull)
-      return CommandResult(false, "", "System instance not found");
+      return UsecaseResult(false, "", "System instance not found");
 
     if (inst.status != SystemStatus.active && inst.status != SystemStatus.error
       && inst.status != SystemStatus.suspended)
-      return CommandResult(false, "", "System must be in active, suspended, or error status to delete");
+      return UsecaseResult(false, "", "System must be in active, suspended, or error status to delete");
 
     inst.status = SystemStatus.deleting;
     repo.update(inst);
-    return CommandResult(true, inst.id.value, "");
+    return UsecaseResult(true, inst.id.value, "");
   }
 }
 

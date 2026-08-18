@@ -114,25 +114,25 @@ classDiagram
 
     %% Application
     class ManageTranslationProjectsUseCase {
-        +createProject(CreateTranslationProjectRequest) CommandResult
+        +createProject(CreateTranslationProjectRequest) UsecaseResult
         +listProjects(TenantId) TranslationProject[]
         +getProject(TenantId, TranslationProjectId) TranslationProject
-        +updateProject(UpdateTranslationProjectRequest) CommandResult
-        +deleteProject(TenantId, TranslationProjectId) CommandResult
+        +updateProject(UpdateTranslationProjectRequest) UsecaseResult
+        +deleteProject(TenantId, TranslationProjectId) UsecaseResult
     }
     class ManageGlossaryEntriesUseCase {
-        +createEntry(CreateGlossaryEntryRequest) CommandResult
+        +createEntry(CreateGlossaryEntryRequest) UsecaseResult
         +listEntries(TenantId) GlossaryEntry[]
         +getEntry(TenantId, GlossaryEntryId) GlossaryEntry
-        +updateEntry(UpdateGlossaryEntryRequest) CommandResult
-        +deleteEntry(TenantId, GlossaryEntryId) CommandResult
+        +updateEntry(UpdateGlossaryEntryRequest) UsecaseResult
+        +deleteEntry(TenantId, GlossaryEntryId) UsecaseResult
     }
     class ManageTranslationJobsUseCase {
-        +submitJob(SubmitTranslationJobRequest) CommandResult
-        +processJob(TenantId, TranslationJobId) CommandResult
+        +submitJob(SubmitTranslationJobRequest) UsecaseResult
+        +processJob(TenantId, TranslationJobId) UsecaseResult
         +listJobs(TenantId) TranslationJob[]
         +getJob(TenantId, TranslationJobId) TranslationJob
-        +cancelJob(TenantId, TranslationJobId) CommandResult
+        +cancelJob(TenantId, TranslationJobId) UsecaseResult
     }
     class PerformTranslationUseCase {
         +translateTexts(TranslateTextRequest) Json
@@ -218,7 +218,7 @@ sequenceDiagram
     Client->>TranslationJobController: POST /api/v1/translation/jobs
     TranslationJobController->>ManageTranslationJobsUseCase: submitJob(request)
     ManageTranslationJobsUseCase->>TranslationJobRepository: save(job{status=pending})
-    ManageTranslationJobsUseCase-->>TranslationJobController: CommandResult(jobId)
+    ManageTranslationJobsUseCase-->>TranslationJobController: UsecaseResult(jobId)
     TranslationJobController-->>Client: 202 Accepted { jobId }
 
     Note over Client: Poll for status...

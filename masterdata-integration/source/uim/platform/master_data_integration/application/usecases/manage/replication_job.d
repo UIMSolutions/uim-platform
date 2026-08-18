@@ -21,11 +21,11 @@ class ManageReplicationJobsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createJob(CreateReplicationJobRequest req) {
+  UsecaseResult createJob(CreateReplicationJobRequest req) {
     if (req.modelId.isEmpty)
-      return CommandResult(false, "", "Distribution model ID is required");
+      return UsecaseResult(false, "", "Distribution model ID is required");
     if (req.sourceClientId.isEmpty)
-      return CommandResult(false, "", "Source client ID is required");
+      return UsecaseResult(false, "", "Source client ID is required");
 
     auto job = ReplicationJob(req.tenantId); //, req.createdBy);
     job.modelId = req.modelId;
@@ -39,27 +39,27 @@ class ManageReplicationJobsUseCase {
     job.isInitialLoad = req.isInitialLoad;
 
     repo.save(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
-  CommandResult startJob(TenantId tenantId, ReplicationJobId id) {
+  UsecaseResult startJob(TenantId tenantId, ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Replication job not found");
+      return UsecaseResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.pending && job.status != ReplicationJobStatus.paused)
-      return CommandResult(false, "", "Job can only be started from pending or paused state");
+      return UsecaseResult(false, "", "Job can only be started from pending or paused state");
 
     job.status = ReplicationJobStatus.running;
     job.startedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
-  CommandResult completeJob(TenantId tenantId, ReplicationJobId id, long successRecords,
+  UsecaseResult completeJob(TenantId tenantId, ReplicationJobId id, long successRecords,
       long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Replication job not found");
+      return UsecaseResult(false, "", "Replication job not found");
 
     job.status = errorRecords > 0 ? ReplicationJobStatus.failed : ReplicationJobStatus.completed;
     job.successRecords = successRecords;
@@ -72,28 +72,28 @@ class ManageReplicationJobsUseCase {
     job.completedAt = clockSeconds();
 
     repo.update(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
-  CommandResult cancelJob(TenantId tenantId, ReplicationJobId id) {
+  UsecaseResult cancelJob(TenantId tenantId, ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Replication job not found");
+      return UsecaseResult(false, "", "Replication job not found");
     job.status = ReplicationJobStatus.cancelled;
     job.completedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
-  CommandResult pauseJob(TenantId tenantId, ReplicationJobId id) {
+  UsecaseResult pauseJob(TenantId tenantId, ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Replication job not found");
+      return UsecaseResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.running)
-      return CommandResult(false, "", "Job can only be paused when running");
+      return UsecaseResult(false, "", "Job can only be paused when running");
     job.status = ReplicationJobStatus.paused;
     repo.update(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
   ReplicationJob getJob(TenantId tenantId, ReplicationJobId id) {
@@ -112,13 +112,13 @@ class ManageReplicationJobsUseCase {
     return repo.findByDistributionModel(tenantId, modelId);
   }
 
-  CommandResult deleteJob(TenantId tenantId, ReplicationJobId id) {
+  UsecaseResult deleteJob(TenantId tenantId, ReplicationJobId id) {
     auto job = repo.findById(tenantId, id);
     if (job.isNull)
-      return CommandResult(false, "", "Replication job not found");
+      return UsecaseResult(false, "", "Replication job not found");
 
     repo.remove(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
 }

@@ -22,9 +22,9 @@ class ManageAppsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createApp(CreateAppRequest req) {
+  UsecaseResult createApp(CreateAppRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "App name is required");
+      return UsecaseResult(false, "", "App name is required");
 
     auto app = AppRegistration(req.tenantId, req.appId, req.createdBy);
     app.name = req.name;
@@ -39,7 +39,7 @@ class ManageAppsUseCase {
     app.appConfig = req.appConfig;
 
     repo.save(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
   AppRegistration getApp(TenantId tenantId, AppId id) {
@@ -54,10 +54,10 @@ class ManageAppsUseCase {
     return repo.findByStatus(tenantId, status);
   }
 
-  CommandResult updateApp(UpdateAppRequest req) {
+  UsecaseResult updateApp(UpdateAppRequest req) {
     auto app = repo.findById(req.tenantId, req.id);
     if (app.isNull)
-      return CommandResult(false, "", "App not found");
+      return UsecaseResult(false, "", "App not found");
 
     if (req.name.length > 0)
       app.name = req.name;
@@ -72,15 +72,15 @@ class ManageAppsUseCase {
     app.updatedAt = currentTimestamp();
 
     repo.update(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
-  CommandResult deleteApp(TenantId tenantId, AppId id) {
+  UsecaseResult deleteApp(TenantId tenantId, AppId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "App not found");
+      return UsecaseResult(false, "", "App not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

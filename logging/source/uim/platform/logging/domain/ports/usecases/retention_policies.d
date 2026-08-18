@@ -15,14 +15,14 @@ mixin(ShowModule!());
 @safe:
 interface IManageRetentionPoliciesUseCase { 
   
-  CommandResult createRetentionPolicy(CreateRetentionPolicyRequest req);
+  UsecaseResult createRetentionPolicy(CreateRetentionPolicyRequest req);
 
-  CommandResult updateRetentionPolicy(UpdateRetentionPolicyRequest req);
+  UsecaseResult updateRetentionPolicy(UpdateRetentionPolicyRequest req);
 
   RetentionPolicy getRetentionPolicy(TenantId tenantId, RetentionPolicyId id);
 
   RetentionPolicy[] listRetentionPolicies(TenantId tenantId);
 
-  CommandResult deleteRetentionPolicy(TenantId tenantId, RetentionPolicyId policyId);
+  UsecaseResult deleteRetentionPolicy(TenantId tenantId, RetentionPolicyId policyId);
 
 }

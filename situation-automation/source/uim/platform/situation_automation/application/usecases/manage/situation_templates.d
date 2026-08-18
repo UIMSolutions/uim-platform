@@ -17,14 +17,14 @@ class ManageSituationTemplatesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createSituationTemplate(CreateSituationTemplateRequest r) {
+    UsecaseResult createSituationTemplate(CreateSituationTemplateRequest r) {
         auto err = SituationEvaluator.validate(r.tenantId, r.situationTemplateId.value, r.name);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         auto existing = repo.findById(r.tenantId, r.situationTemplateId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Situation template already exists");
+            return UsecaseResult(false, "", "Situation template already exists");
 
         auto templ = SituationTemplate(r.tenantId, r.situationTemplateId, r.createdBy);
         templ.name = r.name;
@@ -38,7 +38,7 @@ class ManageSituationTemplatesUseCase {
         templ.escalationTargetUserId = r.escalationTargetUserId;
 
         repo.save(templ);
-        return CommandResult(true, templ.id.value, "");
+        return UsecaseResult(true, templ.id.value, "");
     }
 
     SituationTemplate getSituationTemplate(TenantId tenantId, SituationTemplateId id) {
@@ -53,10 +53,10 @@ class ManageSituationTemplatesUseCase {
         return repo.findByEntityType(tenantId, entityTypeId);
     }
 
-    CommandResult updateSituationTemplate(UpdateSituationTemplateRequest r) {
+    UsecaseResult updateSituationTemplate(UpdateSituationTemplateRequest r) {
         auto templ = repo.findById(r.tenantId, r.situationTemplateId);
         if (templ.isNull)
-            return CommandResult(false, "", "Situation template not found");
+            return UsecaseResult(false, "", "Situation template not found");
 
         templ.updatedAt = currentTimestamp();
         templ.name = r.name;
@@ -67,15 +67,15 @@ class ManageSituationTemplatesUseCase {
         templ.escalationTargetUserId = r.escalationTargetUserId;
 
         repo.update(templ);
-        return CommandResult(true, templ.id.value, "");
+        return UsecaseResult(true, templ.id.value, "");
     }
 
-    CommandResult deleteSituationTemplate(TenantId tenantId, SituationTemplateId id) {
+    UsecaseResult deleteSituationTemplate(TenantId tenantId, SituationTemplateId id) {
         auto templ = repo.findById(tenantId, id);
         if (templ.isNull)
-            return CommandResult(false, "", "Situation template not found");
+            return UsecaseResult(false, "", "Situation template not found");
 
         repo.remove(templ);
-        return CommandResult(true, templ.id.value, "");
+        return UsecaseResult(true, templ.id.value, "");
     }
 }

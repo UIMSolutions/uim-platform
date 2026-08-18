@@ -23,12 +23,12 @@ interface IManageFoldersUseCase {
 
     Folder[] listRootFolders(TenantId tenantId, RepositoryId repositoryId);
 
-    CommandResult createFolder(FolderDTO dto);
+    UsecaseResult createFolder(FolderDTO dto);
 
-    CommandResult updateFolder(FolderDTO dto);
+    UsecaseResult updateFolder(FolderDTO dto);
 
-    CommandResult moveFolder(TenantId tenantId, FolderId id, FolderId targetParentId, UserId userId);
+    UsecaseResult moveFolder(TenantId tenantId, FolderId id, FolderId targetParentId, UserId userId);
 
-    CommandResult deleteFolder(TenantId tenantId, FolderId id);
+    UsecaseResult deleteFolder(TenantId tenantId, FolderId id);
 
 }

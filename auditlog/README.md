@@ -56,7 +56,7 @@ auditlog/
 │   │       ├── audit_filter_service.d              #     Paginated search, correlation lookup, counts
 │   │       └── retention_enforcer.d                #     Purge expired entries across all log types
 │   ├── application/                                #   Application layer (use cases)
-│   │   ├── dto.d                                   #     Request DTOs & CommandResult
+│   │   ├── dto.d                                   #     Request DTOs & UsecaseResult
 │   │   └── usecases/                              #     Application services
 │   │       ├── write_audit_log.d                   #       Write audit entry with config checks
 │   │       ├── retrieve_audit_logs.d               #       Query, getById, getByCategory/User/Correlation
@@ -296,7 +296,7 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
   skinparam packageBackgroundColor APPLICATION_COLOR
 
   @safe: class WriteAuditLogUseCase << (U,#FF7043) >> {
-    + writeLog(req) : CommandResult
+    + writeLog(req) : UsecaseResult
   }
 
   @safe: class RetrieveAuditLogsUseCase << (U,#FF7043) >> {
@@ -309,38 +309,38 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
   }
 
   @safe: class ManageRetentionUseCase << (U,#FF7043) >> {
-    + createPolicy(req) : CommandResult
+    + createPolicy(req) : UsecaseResult
     + getPolicy(tenantId, id) : RetentionPolicy*
     + listPolicies(tenantId) : RetentionPolicy[]
-    + updatePolicy(req) : CommandResult
+    + updatePolicy(req) : UsecaseResult
     + deletePolicy(tenantId, id) : void
   }
 
   @safe: class ManageAuditConfigUseCase << (U,#FF7043) >> {
-    + createConfig(req) : CommandResult
+    + createConfig(req) : UsecaseResult
     + getConfig(tenantId) : AuditConfig*
     + listConfigs() : AuditConfig[]
-    + updateConfig(req) : CommandResult
+    + updateConfig(req) : UsecaseResult
     + deleteConfig(tenantId, id) : void
   }
 
   @safe: class ManageExportsUseCase << (U,#FF7043) >> {
-    + createExport(req) : CommandResult
+    + createExport(req) : UsecaseResult
     + getExport(tenantId, id) : ExportJob*
     + listExports(tenantId) : ExportJob[]
     + deleteExport(tenantId, id) : void
   }
 
   @safe: class WriteSecurityEventUseCase << (U,#FF7043) >> {
-    + writeEvent(req) : CommandResult
+    + writeEvent(req) : UsecaseResult
   }
 
   @safe: class WriteDataAccessLogUseCase << (U,#FF7043) >> {
-    + writeLog(req) : CommandResult
+    + writeLog(req) : UsecaseResult
   }
 
   @safe: class WriteConfigChangeUseCase << (U,#FF7043) >> {
-    + writeChange(req) : CommandResult
+    + writeChange(req) : UsecaseResult
   }
 }
 

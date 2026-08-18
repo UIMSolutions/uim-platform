@@ -13,9 +13,9 @@ mixin(ShowModule!());
 /// Application service for transport request lifecycle management.
 interface IManageTransportRequestsUseCase { 
   
-  CommandResult createTransportRequest(CreateTransportRequest req);
-  CommandResult releaseTransport(ReleaseTransportRequest req);
-  CommandResult cancelTransport(TenantId tenantId, TransportRequestId requestId);
+  UsecaseResult createTransportRequest(CreateTransportRequest req);
+  UsecaseResult releaseTransport(ReleaseTransportRequest req);
+  UsecaseResult cancelTransport(TenantId tenantId, TransportRequestId requestId);
   TransportRequest getTransportRequest(TenantId tenantId, TransportRequestId id);
   TransportRequest[] listTransportRequests(TenantId tenantId);
   TransportRequest[] listByStatus(TenantId tenantId, string statusStr);

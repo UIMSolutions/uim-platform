@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageTriggersUseCase { 
 
-    CommandResult createTrigger(CreateTriggerRequest r);
+    UsecaseResult createTrigger(CreateTriggerRequest r);
     Trigger getTrigger(TenantId tenantId, TriggerId triggerId);
     Trigger[] listTriggers(TenantId tenantId);
     Trigger[] listTriggers(TenantId tenantId, ProcessId processId);
-    CommandResult updateTrigger(UpdateTriggerRequest r);
-    CommandResult deleteTrigger(TenantId tenantId, TriggerId triggerId);
+    UsecaseResult updateTrigger(UpdateTriggerRequest r);
+    UsecaseResult deleteTrigger(TenantId tenantId, TriggerId triggerId);
 
 }

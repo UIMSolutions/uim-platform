@@ -22,10 +22,10 @@ class ManageAppConfigurationsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createAppConfiguration(CreateAppConfigRequest r) {
+    UsecaseResult createAppConfiguration(CreateAppConfigRequest r) {
         auto existing = repo.findByKey(r.tenantId, r.appId, r.key);
         if (!existing.isNull)
-            return CommandResult(false, "", "Configuration with this key already exists");
+            return UsecaseResult(false, "", "Configuration with this key already exists");
 
         auto config = AppConfiguration(r.tenantId); //, UserId("test-user"));
         config.appId = r.appId;
@@ -36,13 +36,13 @@ class ManageAppConfigurationsUseCase {
         config.isSecret = r.isSecret;
 
         repo.save(config);
-        return CommandResult(true, config.id.value, "");
+        return UsecaseResult(true, config.id.value, "");
     }
 
-    CommandResult updateAppConfiguration(UpdateAppConfigRequest r) {
+    UsecaseResult updateAppConfiguration(UpdateAppConfigRequest r) {
         auto config = repo.findById(r.tenantId, r.configId);
         if (config.isNull)
-            return CommandResult(false, "", "Configuration not found");
+            return UsecaseResult(false, "", "Configuration not found");
 
         if (r.value.length > 0)
             config.value = r.value;
@@ -51,7 +51,7 @@ class ManageAppConfigurationsUseCase {
         config.updatedAt = currentTimestamp();
         config.updatedBy = r.updatedBy;
         repo.update(config);
-        return CommandResult(true, config.id.value, "");
+        return UsecaseResult(true, config.id.value, "");
     }
 
     AppConfiguration getAppConfiguration(TenantId tenantId, AppConfigurationId id) {
@@ -70,13 +70,13 @@ class ManageAppConfigurationsUseCase {
         return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteAppConfiguration(TenantId tenantId, AppConfigurationId id) {
+    UsecaseResult deleteAppConfiguration(TenantId tenantId, AppConfigurationId id) {
         auto config = repo.findById(tenantId, id);
         if (config.isNull)
-            return CommandResult(false, "", "Configuration not found");
+            return UsecaseResult(false, "", "Configuration not found");
 
         repo.remove(config);
-        return CommandResult(true, config.id.value, "");
+        return UsecaseResult(true, config.id.value, "");
     }
 
     size_t countAppConfigurationsByApp(TenantId tenantId, MobileAppId appId) {

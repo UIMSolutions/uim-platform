@@ -13,10 +13,10 @@ mixin(ShowModule!());
 
 interface IManageServiceBindingsUseCase {
 
-  CommandResult create(TenantId tenantId, CreateServiceBindingRequest req);
+  UsecaseResult create(TenantId tenantId, CreateServiceBindingRequest req);
   ServiceBinding getById(TenantId tenantId, string id);
   ServiceBinding[] list(TenantId tenantId);
   ServiceBinding[] listByProject(TenantId tenantId, string projectId);
-  CommandResult remove(TenantId tenantId, string id);
+  UsecaseResult remove(TenantId tenantId, string id);
 
 }

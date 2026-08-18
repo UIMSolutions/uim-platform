@@ -21,7 +21,7 @@ class ManageMessageBindingsUseCase {
     MessageBinding[] listByClient(TenantId tenantId, MessageClientId clientId) { return repo.findByClient(tenantId, clientId); }
     MessageBinding[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 
-    CommandResult createBinding(MessageBindingDTO dto) {
+    UsecaseResult createBinding(MessageBindingDTO dto) {
         MessageBinding mb;
         mb.id = dto.bindingId;
         mb.tenantId = dto.tenantId;
@@ -34,26 +34,26 @@ class ManageMessageBindingsUseCase {
         mb.bindingType = dto.bindingType;
         mb.createdBy = dto.createdBy;
         if (!EventsValidator.isValidMessageBinding(mb))
-            return CommandResult(false, "", "Invalid message binding data");
+            return UsecaseResult(false, "", "Invalid message binding data");
         repo.save(mb);
-        return CommandResult(true, mb.id.value, "");
+        return UsecaseResult(true, mb.id.value, "");
     }
 
-    CommandResult updateBinding(MessageBindingDTO dto) {
+    UsecaseResult updateBinding(MessageBindingDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.bindingId);
-        if (existing.isNull) return CommandResult(false, "", "Message binding not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Message binding not found");
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.bindingType.length > 0) existing.bindingType = dto.bindingType;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteBinding(TenantId tenantId, MessageBindingId id) {
+    UsecaseResult deleteBinding(TenantId tenantId, MessageBindingId id) {
         auto mb = repo.findById(tenantId, id);
-        if (mb.isNull) return CommandResult(false, "", "Message binding not found");
+        if (mb.isNull) return UsecaseResult(false, "", "Message binding not found");
         repo.remove(mb);
-        return CommandResult(true, mb.id.value, "");
+        return UsecaseResult(true, mb.id.value, "");
     }
 }
 

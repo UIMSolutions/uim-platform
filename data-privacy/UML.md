@@ -138,6 +138,6 @@ sequenceDiagram
     PDR-->>IUC: personalDataRecords[]
     IUC->>IR: save(report — status=pending)
     IUC->>IR: update(status=completed, downloadUrl)
-    IUC-->>IC: CommandResult(true, reportId)
+    IUC-->>IC: UsecaseResult(true, reportId)
     IC-->>DataSubject: 201 { id, downloadUrl }
 ```

@@ -34,7 +34,7 @@ class ManageDocumentVersionsUseCase {
         return repo.findLatestVersions(tenantId, documentId);
     }
 
-    CommandResult createDocumentVersion(DocumentVersionDTO dto) {
+    UsecaseResult createDocumentVersion(DocumentVersionDTO dto) {
         DocumentVersion ver;
         ver.id = dto.documentVersionId;
         ver.tenantId = dto.tenantId;
@@ -53,19 +53,19 @@ class ManageDocumentVersionsUseCase {
         ver.isLatestVersion = true;
         ver.createdBy = dto.createdBy;
         if (!DmsValidator.isValidDocumentVersion(ver))
-            return CommandResult(false, "", "Invalid document version: documentId and versionLabel are required");
+            return UsecaseResult(false, "", "Invalid document version: documentId and versionLabel are required");
         repo.save(ver);
-        return CommandResult(true, ver.id.value, "");
+        return UsecaseResult(true, ver.id.value, "");
     }
 
-    CommandResult deleteDocumentVersion(TenantId tenantId, DocumentVersionId id) {
+    UsecaseResult deleteDocumentVersion(TenantId tenantId, DocumentVersionId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Document version not found");
+            return UsecaseResult(false, "", "Document version not found");
         if (existing.isLatestVersion)
-            return CommandResult(false, "", "Cannot delete the latest version");
+            return UsecaseResult(false, "", "Cannot delete the latest version");
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }
 

@@ -22,15 +22,15 @@ class ManageBuildpacksUseCase {
     this.buildpacks = buildpacks;
   }
 
-  CommandResult createBuildpack(CreateBuildpackRequest req) {
+  UsecaseResult createBuildpack(CreateBuildpackRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Buildpack name is required");
+      return UsecaseResult(false, "", "Buildpack name is required");
 
     if (buildpacks.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Buildpack with this name already exists");
+      return UsecaseResult(false, "", "Buildpack with this name already exists");
 
     auto buildpack = Buildpack(req.tenantId, req.packId.isNull ? BuildpackId(createId()) : req.packId, req.createdBy);
     buildpack.name = req.name;
@@ -42,7 +42,7 @@ class ManageBuildpacksUseCase {
     buildpack.locked = false;
 
     buildpacks.save(buildpack);
-    return CommandResult(true, buildpack.id.value, "");
+    return UsecaseResult(true, buildpack.id.value, "");
   }
 
   Buildpack getBuildpack(TenantId tenantId, BuildpackId buildpackId) {
@@ -57,15 +57,15 @@ class ManageBuildpacksUseCase {
     return buildpacks.findEnabled(tenantId);
   }
 
-  CommandResult updateBuildpack(UpdateBuildpackRequest req) {
+  UsecaseResult updateBuildpack(UpdateBuildpackRequest req) {
     if (req.packId.isNull)
-      return CommandResult(false, "", "Buildpack ID is required");
+      return UsecaseResult(false, "", "Buildpack ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto buildpack = buildpacks.findById(req.tenantId, req.packId);
     if (buildpack.isNull)
-      return CommandResult(false, "", "Buildpack not found");
+      return UsecaseResult(false, "", "Buildpack not found");
 
     auto updated = buildpack;
     if (req.name.length > 0)
@@ -81,19 +81,19 @@ class ManageBuildpacksUseCase {
     updated.updatedAt = currentTimestamp();
 
     buildpacks.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
-  CommandResult deleteBuildpack(TenantId tenantId, BuildpackId buildpackId) {
+  UsecaseResult deleteBuildpack(TenantId tenantId, BuildpackId buildpackId) {
     auto buildpack = buildpacks.findById(tenantId, buildpackId);
     if (buildpack.isNull)
-      return CommandResult(false, "", "Buildpack not found");
+      return UsecaseResult(false, "", "Buildpack not found");
 
     if (buildpack.locked)
-      return CommandResult(false, "", "Cannot delete a locked buildpack");
+      return UsecaseResult(false, "", "Cannot delete a locked buildpack");
 
     buildpacks.remove(buildpack);
-    return CommandResult(true, buildpack.id.value, "");
+    return UsecaseResult(true, buildpack.id.value, "");
   }
 }
 

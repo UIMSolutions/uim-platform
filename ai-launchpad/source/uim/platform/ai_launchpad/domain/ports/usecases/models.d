@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 interface IManageModelsUseCase { 
 
-  CommandResult registerModel(RegisterModelRequest r);
+  UsecaseResult registerModel(RegisterModelRequest r);
 
   Model getModel(TenantId tenantId, ConnectionId connectionId, ModelId id);
 
@@ -20,8 +20,8 @@ interface IManageModelsUseCase {
 
   Model[] listModels(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
 
-  CommandResult patchModel(PatchModelRequest r);
+  UsecaseResult patchModel(PatchModelRequest r);
 
-  CommandResult deleteModel(TenantId tenantId, ConnectionId connectionId, ModelId id);
+  UsecaseResult deleteModel(TenantId tenantId, ConnectionId connectionId, ModelId id);
   
 }

@@ -30,9 +30,9 @@ class ManageCustomersUseCase {
         return repo.findByEmail(tenantId, email);
     }
 
-    CommandResult registerCustomer(CustomerDTO dto) {
+    UsecaseResult registerCustomer(CustomerDTO dto) {
         if (repo.emailExists(dto.tenantId, dto.email))
-            return CommandResult(false, "", "Email already registered");
+            return UsecaseResult(false, "", "Email already registered");
 
         auto c = Customer(dto.tenantId); //, dto.createdBy);
         c.id = dto.customerId.value.length > 0 ? dto.customerId : CustomerId(c.id.value);
@@ -48,16 +48,16 @@ class ManageCustomersUseCase {
         c.status = CustomerStatus.pending;
 
         if (!IdentityValidator.isValidCustomer(c))
-            return CommandResult(false, "", "Invalid customer data");
+            return UsecaseResult(false, "", "Invalid customer data");
 
         repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 
-    CommandResult updateCustomer(CustomerDTO dto) {
+    UsecaseResult updateCustomer(CustomerDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.customerId);
         if (existing.isNull)
-            return CommandResult(false, "", "Customer not found");
+            return UsecaseResult(false, "", "Customer not found");
 
         if (dto.firstName.length > 0) existing.firstName = dto.firstName;
         if (dto.lastName.length > 0) existing.lastName = dto.lastName;
@@ -70,36 +70,36 @@ class ManageCustomersUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult activateCustomer(TenantId tenantId, CustomerId id) {
+    UsecaseResult activateCustomer(TenantId tenantId, CustomerId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Customer not found");
+            return UsecaseResult(false, "", "Customer not found");
 
         existing.status = CustomerStatus.active;
         existing.emailVerified = true;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult lockCustomer(TenantId tenantId, CustomerId id) {
+    UsecaseResult lockCustomer(TenantId tenantId, CustomerId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Customer not found");
+            return UsecaseResult(false, "", "Customer not found");
 
         existing.status = CustomerStatus.locked;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCustomer(TenantId tenantId, CustomerId id) {
+    UsecaseResult deleteCustomer(TenantId tenantId, CustomerId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Customer not found");
+            return UsecaseResult(false, "", "Customer not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

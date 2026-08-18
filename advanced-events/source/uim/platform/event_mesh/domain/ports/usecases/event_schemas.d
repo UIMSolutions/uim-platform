@@ -16,8 +16,8 @@ interface IManageEventSchemasUseCase {
     EventSchema getSchema(TenantId tenantId, EventSchemaId schemaId);
     EventSchema[] listSchemas(TenantId tenantId);
     EventSchema[] listSchemas(TenantId tenantId, SchemaFormat format);
-    CommandResult createSchema(EventSchemaDTO dto);
-    CommandResult updateSchema(EventSchemaDTO dto);
-    CommandResult deleteSchema(TenantId tenantId, EventSchemaId schemaId);
+    UsecaseResult createSchema(EventSchemaDTO dto);
+    UsecaseResult updateSchema(EventSchemaDTO dto);
+    UsecaseResult deleteSchema(TenantId tenantId, EventSchemaId schemaId);
 }
 

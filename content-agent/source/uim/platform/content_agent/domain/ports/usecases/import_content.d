@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Application service for importing content packages.
 interface IImportContentUseCase { 
 
-  CommandResult startImport(StartImportRequest req);
+  UsecaseResult startImport(StartImportRequest req);
   ImportJob getImportJob(TenantId tenantId, ImportJobId id);
   ImportJob[] listImportJobs(TenantId tenantId);
   ImportJob[] listByPackage(TenantId tenantId, ContentPackageId packageId);

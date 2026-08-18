@@ -31,7 +31,7 @@ class ManageSystemRegistrationsUseCase {
         return repo.findByFormation(tenantId, formationId);
     }
 
-    CommandResult registerSystem(SystemRegistrationDTO dto) {
+    UsecaseResult registerSystem(SystemRegistrationDTO dto) {
         auto reg = SystemRegistration(dto.tenantId, dto.registrationId, dto.registrationId);
         reg.formationId = dto.formationId;
         reg.systemId = dto.systemId;
@@ -40,13 +40,13 @@ class ManageSystemRegistrationsUseCase {
         reg.status = dto.status;
         reg.registeredAt = Clock.currStdTime();
         repo.save(reg);
-        return CommandResult(true, reg.id.value, "");
+        return UsecaseResult(true, reg.id.value, "");
     }
 
-    CommandResult deleteSystemRegistration(TenantId tenantId, SystemRegistrationId id) {
+    UsecaseResult deleteSystemRegistration(TenantId tenantId, SystemRegistrationId id) {
         auto reg = repo.findById(tenantId, id);
-        if (reg.isNull) return CommandResult(false, "", "System registration not found");
+        if (reg.isNull) return UsecaseResult(false, "", "System registration not found");
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

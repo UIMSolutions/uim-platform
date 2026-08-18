@@ -18,16 +18,16 @@ class ManageDnsRecordsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDnsRecord(CreateDnsRecordRequest r) {
+    UsecaseResult createDnsRecord(CreateDnsRecordRequest r) {
         if (r.dnsRecordId.isEmpty)
-            return CommandResult(false, "", "DNS record ID is required");
+            return UsecaseResult(false, "", "DNS record ID is required");
         if (r.hostname.isEmpty)
-            return CommandResult(false, "", "Hostname is required");
+            return UsecaseResult(false, "", "Hostname is required");
         if (r.value.length == 0)
-            return CommandResult(false, "", "Value is required");
+            return UsecaseResult(false, "", "Value is required");
 
         if (repo.existsById(r.tenantId, r.dnsRecordId))
-            return CommandResult(false, "", "DNS record already exists");
+            return UsecaseResult(false, "", "DNS record already exists");
 
         auto rec = DnsRecord(r.tenantId);
         rec.id = r.dnsRecordId;
@@ -40,7 +40,7 @@ class ManageDnsRecordsUseCase {
 
 
         repo.save(rec);
-        return CommandResult(true, rec.id.value, "");
+        return UsecaseResult(true, rec.id.value, "");
     }
 
     DnsRecord getDnsRecord(TenantId tenantId, DnsRecordId id) {
@@ -55,10 +55,10 @@ class ManageDnsRecordsUseCase {
         return repo.findByDomain(tenantId, domainId);
     }
 
-    CommandResult updateDnsRecord(UpdateDnsRecordRequest r) {
+    UsecaseResult updateDnsRecord(UpdateDnsRecordRequest r) {
         auto record = repo.findById(r.tenantId, r.dnsRecordId);
         if (record.isNull)
-            return CommandResult(false, "", "DNS record not found");
+            return UsecaseResult(false, "", "DNS record not found");
 
         if (r.value.length > 0)
             record.value = r.value;
@@ -69,16 +69,16 @@ class ManageDnsRecordsUseCase {
         record.updatedAt = currentTimestamp;
 
         repo.update(record);
-        return CommandResult(true, record.id.value, "");
+        return UsecaseResult(true, record.id.value, "");
     }
 
-    CommandResult deleteDnsRecord(TenantId tenantId, DnsRecordId id) {
+    UsecaseResult deleteDnsRecord(TenantId tenantId, DnsRecordId id) {
         auto record = repo.findById(tenantId, id);
         if (record.isNull)
-            return CommandResult(false, "", "DNS record not found");
+            return UsecaseResult(false, "", "DNS record not found");
 
         repo.remove(record);
-        return CommandResult(true, record.id.value, "");
+        return UsecaseResult(true, record.id.value, "");
     }
 }
 

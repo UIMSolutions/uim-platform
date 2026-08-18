@@ -34,7 +34,7 @@ class ManageSubscriptionsUseCase {
         return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult createSubscription(SubscriptionDTO dto) {
+    UsecaseResult createSubscription(SubscriptionDTO dto) {
         EventSubscription subscription;
         subscription.id = dto.subscriptionId;
         subscription.tenantId = dto.tenantId;
@@ -50,16 +50,16 @@ class ManageSubscriptionsUseCase {
         subscription.maxTtl = dto.maxTtl;
         subscription.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidSubscription(subscription))
-            return CommandResult(false, "", "Invalid subscription data");
+            return UsecaseResult(false, "", "Invalid subscription data");
 
         repo.save(subscription);
-        return CommandResult(true, subscription.id.value, "");
+        return UsecaseResult(true, subscription.id.value, "");
     }
 
-    CommandResult updateSubscription(SubscriptionDTO dto) {
+    UsecaseResult updateSubscription(SubscriptionDTO dto) {
         auto subscription = repo.findById(dto.tenantId, dto.subscriptionId);
         if (subscription.isNull)
-            return CommandResult(false, "", "Subscription not found");
+            return UsecaseResult(false, "", "Subscription not found");
 
         if (dto.name.length > 0) subscription.name = dto.name;
         if (dto.description.length > 0) subscription.description = dto.description;
@@ -68,16 +68,16 @@ class ManageSubscriptionsUseCase {
         if (!dto.updatedBy.isNull) subscription.updatedBy = dto.updatedBy;
 
         repo.update(subscription);
-        return CommandResult(true, dto.subscriptionId.value, "");
+        return UsecaseResult(true, dto.subscriptionId.value, "");
     }
 
-    CommandResult deleteSubscription(TenantId tenantId, EventSubscriptionId id) {
+    UsecaseResult deleteSubscription(TenantId tenantId, EventSubscriptionId id) {
         auto subscription = repo.findById(tenantId, id);
         if (subscription.isNull)
-            return CommandResult(false, "", "Subscription not found");
+            return UsecaseResult(false, "", "Subscription not found");
 
         repo.remove(subscription);
-        return CommandResult(true, subscription.id.value, "");
+        return UsecaseResult(true, subscription.id.value, "");
     }
 }
 

@@ -17,15 +17,15 @@ import uim.platform.mobile;
 
 interface IManageMobileAppsUseCase { 
 
-    CommandResult createMobileApp(CreateMobileAppRequest r);
+    UsecaseResult createMobileApp(CreateMobileAppRequest r);
 
-    CommandResult updateMobileApp(UpdateMobileAppRequest r);
+    UsecaseResult updateMobileApp(UpdateMobileAppRequest r);
 
     MobileApp getMobileApp(TenantId tenantId, MobileAppId id);
 
     MobileApp[] listMobileApps(TenantId tenantId);
 
-    CommandResult deleteMobileApp(TenantId tenantId, MobileAppId id);
+    UsecaseResult deleteMobileApp(TenantId tenantId, MobileAppId id);
 
     size_t countMobileAppsByTenant(TenantId tenantId);
 

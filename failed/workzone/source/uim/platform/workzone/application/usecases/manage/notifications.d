@@ -22,9 +22,9 @@ class ManageNotificationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createNotification(CreateNotificationRequest req) {
+  UsecaseResult createNotification(CreateNotificationRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Notification title is required");
+      return UsecaseResult(false, "", "Notification title is required");
 
     auto n = Notification(req.tenantId, req.recipientId);
     n.recipientId = req.recipientId;
@@ -39,7 +39,7 @@ class ManageNotificationsUseCase {
     n.expiresAt = req.expiresAt;
 
     repo.save(n);
-    return CommandResult(true, n.id.value, "");
+    return UsecaseResult(true, n.id.value, "");
   }
 
   Notification getNotification(TenantId tenantId, NotificationId id) {
@@ -54,33 +54,33 @@ class ManageNotificationsUseCase {
     return repo.findUnread(tenantId, recipientId);
   }
 
-  CommandResult markNotificationAsRead(TenantId tenantId, NotificationId id) {
+  UsecaseResult markNotificationAsRead(TenantId tenantId, NotificationId id) {
     auto n = repo.findById(tenantId, id);
     if (n.isNull)
-      return CommandResult(false, "", "Notification not found");
+      return UsecaseResult(false, "", "Notification not found");
 
     n.status = NotificationStatus.read_;
     n.readAt = currentTimestamp();
     repo.update(n);
-    return CommandResult(true, n.id.value, "");
+    return UsecaseResult(true, n.id.value, "");
   }
 
-  CommandResult dismissNotification(TenantId tenantId, NotificationId id) {
+  UsecaseResult dismissNotification(TenantId tenantId, NotificationId id) {
     auto n = repo.findById(tenantId, id);
     if (n.isNull)
-      return CommandResult(false, "", "Notification not found");
+      return UsecaseResult(false, "", "Notification not found");
 
     n.status = NotificationStatus.dismissed;
     repo.update(n);
-    return CommandResult(true, n.id.value, "");
+    return UsecaseResult(true, n.id.value, "");
   }
 
-  CommandResult deleteNotification(TenantId tenantId, NotificationId id) {
+  UsecaseResult deleteNotification(TenantId tenantId, NotificationId id) {
     auto n = repo.findById(tenantId, id);
     if (n.isNull)
-      return CommandResult(false, "", "Notification not found");
+      return UsecaseResult(false, "", "Notification not found");
 
     repo.remove(n);
-    return CommandResult(true, n.id.value, "");
+    return UsecaseResult(true, n.id.value, "");
   }
 }

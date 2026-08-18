@@ -38,7 +38,7 @@ class ManageDataQualityScoresUseCase {
         return repo.findBelowScore(tenantId, threshold);
     }
 
-    CommandResult createDataQualityScore(DataQualityScoreDTO dto) {
+    UsecaseResult createDataQualityScore(DataQualityScoreDTO dto) {
         auto score = DataQualityScore(dto.tenantId); //, UserId("test-user"));
         score.id = dto.scoreId;
         score.businessPartnerId = dto.businessPartnerId;
@@ -55,16 +55,16 @@ class ManageDataQualityScoresUseCase {
         else score.qualityStatus = QualityStatus.poor;
 
         if (!MasterdataGovernanceValidator.isValidDataQualityScore(score))
-            return CommandResult(false, "", "Invalid data quality score data");
+            return UsecaseResult(false, "", "Invalid data quality score data");
 
         repo.save(score);
-        return CommandResult(true, score.id.value, "");
+        return UsecaseResult(true, score.id.value, "");
     }
 
-    CommandResult updateDataQualityScore(DataQualityScoreDTO dto) {
+    UsecaseResult updateDataQualityScore(DataQualityScoreDTO dto) {
         auto score = repo.findById(dto.tenantId, dto.scoreId);
         if (score.isNull)
-            return CommandResult(false, "", "Data quality score not found");
+            return UsecaseResult(false, "", "Data quality score not found");
 
         score.overallScore = dto.overallScore;
         score.completenessScore = dto.completenessScore;
@@ -80,15 +80,15 @@ class ManageDataQualityScoresUseCase {
         else score.qualityStatus = QualityStatus.poor;
 
         repo.update(score);
-        return CommandResult(true, score.id.value, "");
+        return UsecaseResult(true, score.id.value, "");
     }
 
-    CommandResult deleteDataQualityScore(TenantId tenantId, DataQualityScoreId id) {
+    UsecaseResult deleteDataQualityScore(TenantId tenantId, DataQualityScoreId id) {
         auto score = repo.findById(tenantId, id);
         if (score.isNull)
-            return CommandResult(false, "", "Data quality score not found");
+            return UsecaseResult(false, "", "Data quality score not found");
 
         repo.remove(score);
-        return CommandResult(true, score.id.value, "");
+        return UsecaseResult(true, score.id.value, "");
     }
 }

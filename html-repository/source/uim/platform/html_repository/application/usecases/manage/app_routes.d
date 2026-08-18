@@ -24,9 +24,9 @@ class ManageAppRoutesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createAppRoute(CreateAppRouteRequest request) {
+    UsecaseResult createAppRoute(CreateAppRouteRequest request) {
         if (!DeploymentValidator.validatePathPrefix(request.pathPrefix))
-            return CommandResult(false, "", "Invalid path prefix");
+            return UsecaseResult(false, "", "Invalid path prefix");
 
         auto route = AppRoute(request.tenantId); //, request.createdBy);
         with (route) {
@@ -45,13 +45,13 @@ class ManageAppRoutesUseCase {
         }
 
         repo.save(route);
-        return CommandResult(true, route.id.value, "");
+        return UsecaseResult(true, route.id.value, "");
     }
 
-    CommandResult updateAppRoute(UpdateAppRouteRequest request) {
+    UsecaseResult updateAppRoute(UpdateAppRouteRequest request) {
         auto route = repo.findById(request.tenantId, request.routeId);
         if (route.isNull)
-            return CommandResult(false, "", "Route not found");
+            return UsecaseResult(false, "", "Route not found");
 
         if (request.pathPrefix.length > 0)
             route.pathPrefix = request.pathPrefix;
@@ -63,7 +63,7 @@ class ManageAppRoutesUseCase {
         route.updatedBy = request.updatedBy;
 
         repo.update(route);
-        return CommandResult(true, route.id.value, "");
+        return UsecaseResult(true, route.id.value, "");
     }
 
     AppRoute getAppRoute(TenantId tenantId, AppRouteId routeId) {
@@ -78,13 +78,13 @@ class ManageAppRoutesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deleteAppRoute(TenantId tenantId, AppRouteId routeId) {
+    UsecaseResult deleteAppRoute(TenantId tenantId, AppRouteId routeId) {
         auto route = repo.findById(tenantId, routeId);
         if (route.isNull)          
-            return CommandResult(false, "", "Route not found");
+            return UsecaseResult(false, "", "Route not found");
 
         repo.remove(route);
-        return CommandResult(true, route.id.value, "");
+        return UsecaseResult(true, route.id.value, "");
     }
 
     size_t countAppRoutes(TenantId tenantId, HtmlAppId appId) {

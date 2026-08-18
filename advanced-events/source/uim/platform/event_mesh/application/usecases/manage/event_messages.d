@@ -34,7 +34,7 @@ class ManageEventMessagesUseCase {
         return repo.findByQueue(tenantId, queueId);
     }
 
-    CommandResult publishMessage(EventMessageDTO dto) {
+    UsecaseResult publishMessage(EventMessageDTO dto) {
         EventMessage message;
 
         message.id = dto.messageId;
@@ -51,30 +51,30 @@ class ManageEventMessagesUseCase {
         message.timeToLive = dto.timeToLive;
         message.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidEventMessage(message))
-            return CommandResult(false, "", "Invalid event message data");
+            return UsecaseResult(false, "", "Invalid event message data");
 
         repo.save(message);
-        return CommandResult(true, message.id.value, "");
+        return UsecaseResult(true, message.id.value, "");
     }
 
-    CommandResult acknowledgeMessage(TenantId tenantId, EventMessageId messageId) {
+    UsecaseResult acknowledgeMessage(TenantId tenantId, EventMessageId messageId) {
         auto message = repo.findById(tenantId, messageId);
         if (message.isNull)
-            return CommandResult(false, "", "Event message not found");
+            return UsecaseResult(false, "", "Event message not found");
 
         message.status = MessageStatus.acknowledged;
 
         repo.update(message);
-        return CommandResult(true, message.id.value, "");
+        return UsecaseResult(true, message.id.value, "");
     }
 
-    CommandResult deleteMessage(TenantId tenantId, EventMessageId messageId) {
+    UsecaseResult deleteMessage(TenantId tenantId, EventMessageId messageId) {
         auto message = repo.findById(tenantId, messageId);
         if (message.isNull)
-            return CommandResult(false, "", "Event message not found");
+            return UsecaseResult(false, "", "Event message not found");
 
         repo.remove(message);
-        return CommandResult(true, message.id.value, "");
+        return UsecaseResult(true, message.id.value, "");
     }
 }
 

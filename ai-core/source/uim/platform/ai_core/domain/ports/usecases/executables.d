@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageExecutablesUseCase { 
 
-    CommandResult createExecutable(CreateExecutableRequest r);
+    UsecaseResult createExecutable(CreateExecutableRequest r);
     Executable getExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id);
     Executable[] listExecutables(TenantId tenantId, ResourceGroupId resourceGroupId, ScenarioId scenarioId);
     Executable[] listExecutables(TenantId tenantId, ResourceGroupId resourceGroupId);
-    CommandResult deleteExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id);
+    UsecaseResult deleteExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id);
 
 }

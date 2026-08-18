@@ -18,17 +18,17 @@ class ManageTrustedCertificatesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createCertificate(CreateTrustedCertificateRequest r) {
+    UsecaseResult createCertificate(CreateTrustedCertificateRequest r) {
         if (r.trustedCertificateId.isEmpty)
-            return CommandResult(false, "", "ID is required");
+            return UsecaseResult(false, "", "ID is required");
         if (r.certificatePem.length == 0)
-            return CommandResult(false, "", "Certificate PEM is required");
+            return UsecaseResult(false, "", "Certificate PEM is required");
         if (r.customDomainId.isEmpty)
-            return CommandResult(false, "", "Custom domain ID is required");
+            return UsecaseResult(false, "", "Custom domain ID is required");
 
         auto existing = repo.findById(r.tenantId, r.trustedCertificateId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Trusted certificate already exists");
+            return UsecaseResult(false, "", "Trusted certificate already exists");
 
         auto c = TrustedCertificate(r.tenantId, r.trustedCertificateId, r.createdBy);
         c.customDomainId = r.customDomainId;
@@ -36,7 +36,7 @@ class ManageTrustedCertificatesUseCase {
         c.status = TrustedCertificateStatus.active;
 
         repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 
     TrustedCertificate getCertificate(TenantId tenantId, TrustedCertificateId id) {
@@ -51,13 +51,13 @@ class ManageTrustedCertificatesUseCase {
         return repo.findByCustomDomain(tenantId, domainId);
     }
 
-    CommandResult deleteCertificate(TenantId tenantId, TrustedCertificateId id) {
+    UsecaseResult deleteCertificate(TenantId tenantId, TrustedCertificateId id) {
         auto certificate = repo.findById(tenantId, id);
         if (certificate.isNull)
-            return CommandResult(false, "", "Trusted certificate not found");
+            return UsecaseResult(false, "", "Trusted certificate not found");
 
         repo.remove(certificate);
-        return CommandResult(true, certificate.id.value, "");
+        return UsecaseResult(true, certificate.id.value, "");
     }
 }
 

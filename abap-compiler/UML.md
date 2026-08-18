@@ -123,11 +123,11 @@ classDiagram
 
     class ManageProgramsUseCase {
         -AbapProgramRepository repo
-        +CommandResult createProgram(CreateProgramRequest)
+        +UsecaseResult createProgram(CreateProgramRequest)
         +AbapProgram getProgram(tenantId, id)
         +AbapProgram[] listPrograms(tenantId)
-        +CommandResult updateProgram(UpdateProgramRequest)
-        +CommandResult deleteProgram(tenantId, id)
+        +UsecaseResult updateProgram(UpdateProgramRequest)
+        +UsecaseResult deleteProgram(tenantId, id)
         +size_t countPrograms(tenantId)
     }
 
@@ -136,7 +136,7 @@ classDiagram
         +CompilationJob getJob(tenantId, id)
         +CompilationJob[] listJobs(tenantId)
         +CompilationJob[] listJobsForProgram(tenantId, pid)
-        +CommandResult deleteJob(tenantId, id)
+        +UsecaseResult deleteJob(tenantId, id)
     }
 
     CompileUseCase --> AbapProgramRepository : reads source

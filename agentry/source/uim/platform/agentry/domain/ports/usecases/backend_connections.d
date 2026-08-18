@@ -17,8 +17,8 @@ interface IManageBackendConnectionsUseCase {
     BackendConnection[] listBackendConnections(TenantId tenantId);
     BackendConnection[] listByBackendType(TenantId tenantId, BackendType backendType);
     BackendConnection[] listByStatus(TenantId tenantId, ConnectionStatus status);
-    CommandResult createBackendConnection(BackendConnectionDTO dto);
-    CommandResult updateBackendConnection(BackendConnectionDTO dto);
-    CommandResult deleteBackendConnection(TenantId tenantId, BackendConnectionId id);
+    UsecaseResult createBackendConnection(BackendConnectionDTO dto);
+    UsecaseResult updateBackendConnection(BackendConnectionDTO dto);
+    UsecaseResult deleteBackendConnection(TenantId tenantId, BackendConnectionId id);
 
 }

@@ -17,9 +17,9 @@ class ManagePageTemplatesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createTemplate(CreatePageTemplateRequest req) {
+  UsecaseResult createTemplate(CreatePageTemplateRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Page template name is required");
+      return UsecaseResult(false, "", "Page template name is required");
 
     auto t = PageTemplate(req.tenantId);
     t.name = req.name;
@@ -30,7 +30,7 @@ class ManagePageTemplatesUseCase {
     t.isPublic = req.isPublic;
 
     repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   PageTemplate getTemplate(TenantId tenantId, PageTemplateId id) {
@@ -41,10 +41,10 @@ class ManagePageTemplatesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateTemplate(UpdatePageTemplateRequest req) {
+  UsecaseResult updateTemplate(UpdatePageTemplateRequest req) {
     auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
-      return CommandResult(false, "", "Page template not found");
+      return UsecaseResult(false, "", "Page template not found");
 
     if (req.name.length > 0)
       t.name = req.name;
@@ -56,15 +56,15 @@ class ManagePageTemplatesUseCase {
     t.updatedAt = currentTimestamp();
 
     repo.update(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
-  CommandResult deleteTemplate(TenantId tenantId, PageTemplateId id) {
+  UsecaseResult deleteTemplate(TenantId tenantId, PageTemplateId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
-      return CommandResult(false, "", "Page template not found");
+      return UsecaseResult(false, "", "Page template not found");
 
     repo.remove(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 }

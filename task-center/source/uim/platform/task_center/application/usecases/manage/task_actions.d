@@ -30,7 +30,7 @@ class ManageTaskActionsUseCase {
         return repo.findByPerformer(tenantId, byPerformerId);
     }
 
-    CommandResult createAction(PerformTaskActionRequest req) {
+    UsecaseResult createAction(PerformTaskActionRequest req) {
         auto action = TaskAction(req.tenantId, req.actionId); // , req.createdBy);
         action.taskId = req.taskId;
         action.performedBy = req.performedBy;
@@ -38,15 +38,15 @@ class ManageTaskActionsUseCase {
         action.comment = req.comment;
 
         repo.save(action);
-        return CommandResult(true, action.id.value, "");
+        return UsecaseResult(true, action.id.value, "");
     }
 
-    CommandResult deleteAction(TenantId tenantId, TaskActionId id) {
+    UsecaseResult deleteAction(TenantId tenantId, TaskActionId id) {
         auto action = repo.findById(tenantId, id);
         if (action.isNull)
-            return CommandResult(false, "", "Task action not found");
+            return UsecaseResult(false, "", "Task action not found");
 
         repo.remove(action);
-        return CommandResult(true, action.id.value, "");
+        return UsecaseResult(true, action.id.value, "");
     }
 }

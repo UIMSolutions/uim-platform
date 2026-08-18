@@ -34,34 +34,34 @@ class ManageExecutionsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createExecution(ExecutionDTO dto) {
+    UsecaseResult createExecution(ExecutionDTO dto) {
         auto e = Execution(dto.tenantId, dto.executionId.isNull ? ExecutionId(createId) : dto.executionId, dto.triggeredBy);
         e.commandId = dto.commandId;
         e.inputValues = dto.inputValues;
         e.triggeredBy = dto.triggeredBy;
         if (!AutomationValidator.isValidExecution(e))
-            return CommandResult(false, "", "Invalid execution data");
+            return UsecaseResult(false, "", "Invalid execution data");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateExecution(ExecutionDTO dto) {
+    UsecaseResult updateExecution(ExecutionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.executionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Execution not found");
+            return UsecaseResult(false, "", "Execution not found");
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteExecution(TenantId tenantId, ExecutionId id) {
+    UsecaseResult deleteExecution(TenantId tenantId, ExecutionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Execution not found");
+            return UsecaseResult(false, "", "Execution not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

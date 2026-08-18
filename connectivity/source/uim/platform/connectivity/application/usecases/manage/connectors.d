@@ -25,10 +25,10 @@ class ManageConnectorsUseCase {
     this.logRepo = logRepo;
   }
 
-  CommandResult registerConnector(RegisterConnectorRequest req) {
+  UsecaseResult registerConnector(RegisterConnectorRequest req) {
     // Check for duplicate location ID within subaccount
     if (repo.existsByLocation(req.tenantId, req.subaccountId, req.locationId))
-      return CommandResult(false, "",
+      return UsecaseResult(false, "",
           "Connector with locationId '" ~ req.locationId ~ "' already registered");
 
     auto cc = CloudConnector(req.tenantId);
@@ -46,26 +46,26 @@ class ManageConnectorsUseCase {
     recordLog(req.tenantId, ConnectivityEventType.connectionEstablished, cc.id.value,
         "CloudConnector", "Connector registered: " ~ req.locationId);
 
-    return CommandResult(true, cc.id.value, "");
+    return UsecaseResult(true, cc.id.value, "");
   }
 
-  CommandResult heartbeat(TenantId tenantId, ConnectorId id, HeartbeatRequest req) {
+  UsecaseResult heartbeat(TenantId tenantId, ConnectorId id, HeartbeatRequest req) {
     auto cc = repo.findById(tenantId, id);
     if (cc.isNull)
-      return CommandResult(false, "", "Connector not found");
+      return UsecaseResult(false, "", "Connector not found");
 
     cc.status = ConnectorStatus.connected;
     if (req.connectorVersion.length > 0)
       cc.connectorVersion = req.connectorVersion;
 
     repo.update(cc);
-    return CommandResult(true, cc.id.value, "");
+    return UsecaseResult(true, cc.id.value, "");
   }
 
-  CommandResult disconnect(TenantId tenantId, ConnectorId id) {
+  UsecaseResult disconnect(TenantId tenantId, ConnectorId id) {
     auto connector = repo.findById(tenantId, id);
     if (connector.isNull)
-      return CommandResult(false, "", "Connector not found");
+      return UsecaseResult(false, "", "Connector not found");
 
     connector.status = ConnectorStatus.disconnected;
     repo.update(connector);
@@ -73,7 +73,7 @@ class ManageConnectorsUseCase {
     recordLog(connector.tenantId, ConnectivityEventType.connectionLost, connector.id.value,
         "CloudConnector", "Connector disconnected: " ~ connector.locationId);
 
-    return CommandResult(true, connector.id.value, "");
+    return UsecaseResult(true, connector.id.value, "");
   }
   
   CloudConnector getConnector(TenantId tenantId, ConnectorId id) {
@@ -87,17 +87,17 @@ class ManageConnectorsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult unregister(TenantId tenantId, ConnectorId id) {
+  UsecaseResult unregister(TenantId tenantId, ConnectorId id) {
     auto connector = repo.findById(tenantId, id);
     if (connector.isNull)
-      return CommandResult(false, "", "Connector not found");
+      return UsecaseResult(false, "", "Connector not found");
 
     repo.remove(connector);
 
     recordLog(connector.tenantId, ConnectivityEventType.connectionLost, id.value,
         "CloudConnector", "Connector unregistered: " ~ connector.locationId);
 
-    return CommandResult(true, connector.id.value, "");
+    return UsecaseResult(true, connector.id.value, "");
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,

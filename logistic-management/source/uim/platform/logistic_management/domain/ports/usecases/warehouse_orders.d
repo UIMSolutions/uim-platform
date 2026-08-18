@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageWarehouseOrdersUseCase {
 
-  CommandResult createWarehouseOrder(TenantId tenantId, CreateWarehouseOrderRequest req);
+  UsecaseResult createWarehouseOrder(TenantId tenantId, CreateWarehouseOrderRequest req);
 
-  CommandResult updateWarehouseOrder(TenantId tenantId, WarehouseOrderId id, UpdateWarehouseOrderRequest req);
+  UsecaseResult updateWarehouseOrder(TenantId tenantId, WarehouseOrderId id, UpdateWarehouseOrderRequest req);
 
-  CommandResult deleteWarehouseOrder(TenantId tenantId, WarehouseOrderId id);
+  UsecaseResult deleteWarehouseOrder(TenantId tenantId, WarehouseOrderId id);
 
   WarehouseOrder getWarehouseOrder(TenantId tenantId, WarehouseOrderId id);
 

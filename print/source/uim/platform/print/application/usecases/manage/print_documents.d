@@ -26,7 +26,7 @@ class ManagePrintDocumentsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createPrintDocument(PrintDocumentDTO dto) {
+    UsecaseResult createPrintDocument(PrintDocumentDTO dto) {
         auto  doc = PrintDocument(dto.tenantId, dto.documentId, dto.createdBy);
         doc.fileName = dto.fileName;
         doc.mimeType = dto.mimeType;
@@ -41,17 +41,17 @@ class ManagePrintDocumentsUseCase {
         }
 
         if (!PrintValidator.isValidPrintDocument(doc))
-            return CommandResult(false, "", "Invalid document: fileName and mimeType are required");
+            return UsecaseResult(false, "", "Invalid document: fileName and mimeType are required");
 
         repo.save(doc);
-        return CommandResult(true, doc.id.value, "");
+        return UsecaseResult(true, doc.id.value, "");
     }
 
-    CommandResult deletePrintDocument(TenantId tenantId, PrintDocumentId id) {
+    UsecaseResult deletePrintDocument(TenantId tenantId, PrintDocumentId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "Document not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

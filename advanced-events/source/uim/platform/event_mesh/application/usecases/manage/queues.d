@@ -30,7 +30,7 @@ class ManageQueuesUseCase {
         return repo.findByBrokerService(tenantId, serviceId);
     }
 
-    CommandResult createQueue(QueueDTO dto) {
+    UsecaseResult createQueue(QueueDTO dto) {
         Queue queue;
 
         queue.id = dto.queueId;
@@ -50,16 +50,16 @@ class ManageQueuesUseCase {
         queue.ingressEnabled = dto.ingressEnabled;
         queue.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidQueue(queue))
-            return CommandResult(false, "", "Invalid queue data");
+            return UsecaseResult(false, "", "Invalid queue data");
             
         repo.save(queue);
-        return CommandResult(true, queue.id.value, "");
+        return UsecaseResult(true, queue.id.value, "");
     }
 
-    CommandResult updateQueue(QueueDTO dto) {
+    UsecaseResult updateQueue(QueueDTO dto) {
         auto queue = repo.findById(dto.tenantId, dto.queueId);
         if (queue.isNull)
-            return CommandResult(false, "", "Queue not found");
+            return UsecaseResult(false, "", "Queue not found");
 
         if (dto.name.length > 0) queue.name = dto.name;
         if (dto.description.length > 0) queue.description = dto.description;
@@ -69,16 +69,16 @@ class ManageQueuesUseCase {
         if (!dto.updatedBy.isNull) queue.updatedBy = dto.updatedBy;
 
         repo.update(queue);
-        return CommandResult(true, queue.id.value, "");
+        return UsecaseResult(true, queue.id.value, "");
     }
 
-    CommandResult deleteQueue(TenantId tenantId, QueueId queueId) {
+    UsecaseResult deleteQueue(TenantId tenantId, QueueId queueId) {
         auto queue = repo.findById(tenantId, queueId);
         if (queue.isNull)
-            return CommandResult(false, "", "Queue not found");
+            return UsecaseResult(false, "", "Queue not found");
 
         repo.remove(queue);
-        return CommandResult(true, queue.id.value, "");
+        return UsecaseResult(true, queue.id.value, "");
     }
 }
 

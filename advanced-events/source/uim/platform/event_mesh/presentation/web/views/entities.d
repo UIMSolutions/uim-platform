@@ -55,7 +55,7 @@ protected string renderJsonPage(string title, Json payload) {
     return html.data;
 }
 
-protected string renderMutationPage(string title, CommandResult result) {
+protected string renderMutationPage(string title, UsecaseResult result) {
     auto payload = Json.emptyObject
         .set("success", !result.hasError)
         .set("id", result.id)
@@ -75,7 +75,7 @@ class WebBrokerServiceView {
         return renderJsonPage("Broker Service Details", entity.toJson);
     }
 
-    string renderMutation(CommandResult result) const {
+    string renderMutation(UsecaseResult result) const {
         return renderMutationPage("Broker Service Command Result", result);
     }
 }
@@ -92,7 +92,7 @@ class WebQueueView {
         return renderJsonPage("Queue Details", entity.toJson);
     }
 
-    string renderMutation(CommandResult result) const {
+    string renderMutation(UsecaseResult result) const {
         return renderMutationPage("Queue Command Result", result);
     }
 }
@@ -109,7 +109,7 @@ class WebTopicView {
         return renderJsonPage("Topic Details", entity.toJson);
     }
 
-    string renderMutation(CommandResult result) const {
+    string renderMutation(UsecaseResult result) const {
         return renderMutationPage("Topic Command Result", result);
     }
 }
@@ -126,7 +126,7 @@ class WebSubscriptionView {
         return renderJsonPage("Subscription Details", entity.toJson);
     }
 
-    string renderMutation(CommandResult result) const {
+    string renderMutation(UsecaseResult result) const {
         return renderMutationPage("Subscription Command Result", result);
     }
 }
@@ -143,7 +143,7 @@ class WebEventMessageView {
         return renderJsonPage("Event Message Details", entity.toJson);
     }
 
-    string renderMutation(CommandResult result) const {
+    string renderMutation(UsecaseResult result) const {
         return renderMutationPage("Event Message Command Result", result);
     }
 }
@@ -160,7 +160,7 @@ class WebEventSchemaView {
         return renderJsonPage("Event Schema Details", entity.toJson);
     }
 
-    string renderMutation(CommandResult result) const {
+    string renderMutation(UsecaseResult result) const {
         return renderMutationPage("Event Schema Command Result", result);
     }
 }
@@ -177,7 +177,7 @@ class WebEventApplicationView {
         return renderJsonPage("Event Application Details", entity.toJson);
     }
 
-    string renderMutation(CommandResult result) const {
+    string renderMutation(UsecaseResult result) const {
         return renderMutationPage("Event Application Command Result", result);
     }
 }
@@ -194,7 +194,7 @@ class WebMeshBridgeView {
         return renderJsonPage("Mesh Bridge Details", entity.toJson);
     }
 
-    string renderMutation(CommandResult result) const {
+    string renderMutation(UsecaseResult result) const {
         return renderMutationPage("Mesh Bridge Command Result", result);
     }
 }

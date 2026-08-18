@@ -10,9 +10,9 @@ interface IManageTechnologyBlocksUseCase {
 
     TechnologyBlock[] listBlocks(TenantId tenantId);
     TechnologyBlock[] listBlocks(TenantId tenantId, LifecycleStatus status);
-    CommandResult createBlock(CreateTechnologyBlockRequest req);
+    UsecaseResult createBlock(CreateTechnologyBlockRequest req);
     TechnologyBlock getBlock(TenantId tenantId, TechnologyBlockId id);
-    CommandResult updateBlock(UpdateTechnologyBlockRequest req);
-    CommandResult deleteBlock(TenantId tenantId, TechnologyBlockId id);
+    UsecaseResult updateBlock(UpdateTechnologyBlockRequest req);
+    UsecaseResult deleteBlock(TenantId tenantId, TechnologyBlockId id);
 
 }

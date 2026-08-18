@@ -13,11 +13,11 @@ import uim.platform.abap_environment;
 /// Application service for software component lifecycle (clone, pull, manage).
 interface IManageSoftwareComponentsUseCase { 
 
-  CommandResult createSoftwareComponent(CreateSoftwareComponentRequest req);
-  CommandResult cloneSoftwareComponent(CloneSoftwareComponentRequest req);
-  CommandResult pullSoftwareComponent(PullSoftwareComponentRequest req);
+  UsecaseResult createSoftwareComponent(CreateSoftwareComponentRequest req);
+  UsecaseResult cloneSoftwareComponent(CloneSoftwareComponentRequest req);
+  UsecaseResult pullSoftwareComponent(PullSoftwareComponentRequest req);
   SoftwareComponent getSoftwareComponent(TenantId tenantId, SoftwareComponentId id);
   SoftwareComponent[] listSoftwareComponents(TenantId tenantId, SystemInstanceId systemId);
-  CommandResult deleteSoftwareComponent(TenantId tenantId, SoftwareComponentId id);
+  UsecaseResult deleteSoftwareComponent(TenantId tenantId, SoftwareComponentId id);
 
 }

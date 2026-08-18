@@ -16,9 +16,9 @@ interface IManageEventSubscriptionsUseCase {
     EventSubscription getEventSubscription(TenantId tenantId, EventSubscriptionId id);
     EventSubscription[] listEventSubscriptions(TenantId tenantId);
     EventSubscription[] listByStatus(TenantId tenantId, SubscriptionStatus status);
-    CommandResult createEventSubscription(EventSubscriptionDTO dto);
-    CommandResult updateEventSubscription(EventSubscriptionDTO dto);
-    CommandResult deleteEventSubscription(TenantId tenantId, EventSubscriptionId id);
+    UsecaseResult createEventSubscription(EventSubscriptionDTO dto);
+    UsecaseResult updateEventSubscription(EventSubscriptionDTO dto);
+    UsecaseResult deleteEventSubscription(TenantId tenantId, EventSubscriptionId id);
 
 }
 

@@ -128,49 +128,49 @@ classDiagram
 classDiagram
     class ManageIntegrationPackagesUseCase {
         -IntegrationPackageRepository _repo
-        +create(CreatePackageRequest) CommandResult
-        +getAll(tenantId) CommandResult
-        +getById(tenantId, id) CommandResult
-        +update(UpdatePackageRequest) CommandResult
-        +remove(tenantId, id) CommandResult
+        +create(CreatePackageRequest) UsecaseResult
+        +getAll(tenantId) UsecaseResult
+        +getById(tenantId, id) UsecaseResult
+        +update(UpdatePackageRequest) UsecaseResult
+        +remove(tenantId, id) UsecaseResult
     }
     class ManageIntegrationFlowsUseCase {
         -IntegrationFlowRepository _repo
-        +create(CreateFlowRequest) CommandResult
-        +getAll(tenantId) CommandResult
-        +getById(tenantId, id) CommandResult
-        +update(UpdateFlowRequest) CommandResult
-        +deploy(DeployFlowRequest) CommandResult
-        +remove(tenantId, id) CommandResult
+        +create(CreateFlowRequest) UsecaseResult
+        +getAll(tenantId) UsecaseResult
+        +getById(tenantId, id) UsecaseResult
+        +update(UpdateFlowRequest) UsecaseResult
+        +deploy(DeployFlowRequest) UsecaseResult
+        +remove(tenantId, id) UsecaseResult
     }
     class ManageApiProxiesUseCase {
         -ApiProxyRepository _repo
-        +create(CreateApiProxyRequest) CommandResult
-        +getAll(tenantId) CommandResult
-        +getById(tenantId, id) CommandResult
-        +update(UpdateApiProxyRequest) CommandResult
-        +publish(tenantId, id) CommandResult
-        +remove(tenantId, id) CommandResult
+        +create(CreateApiProxyRequest) UsecaseResult
+        +getAll(tenantId) UsecaseResult
+        +getById(tenantId, id) UsecaseResult
+        +update(UpdateApiProxyRequest) UsecaseResult
+        +publish(tenantId, id) UsecaseResult
+        +remove(tenantId, id) UsecaseResult
     }
     class ManageApiProductsUseCase {
         -ApiProductRepository _repo
-        +create(CreateApiProductRequest) CommandResult
-        +getAll(tenantId) CommandResult
-        +publish(tenantId, id) CommandResult
-        +remove(tenantId, id) CommandResult
+        +create(CreateApiProductRequest) UsecaseResult
+        +getAll(tenantId) UsecaseResult
+        +publish(tenantId, id) UsecaseResult
+        +remove(tenantId, id) UsecaseResult
     }
     class ManageMessageQueuesUseCase {
         -MessageQueueRepository _repo
-        +create(CreateQueueRequest) CommandResult
-        +update(UpdateQueueRequest) CommandResult
-        +remove(tenantId, id) CommandResult
+        +create(CreateQueueRequest) UsecaseResult
+        +update(UpdateQueueRequest) UsecaseResult
+        +remove(tenantId, id) UsecaseResult
     }
     class ManageTopicSubscriptionsUseCase {
         -TopicSubscriptionRepository _repo
-        +create(CreateSubscriptionRequest) CommandResult
-        +listByQueue(tenantId, queueId) CommandResult
-        +update(UpdateSubscriptionRequest) CommandResult
-        +remove(tenantId, id) CommandResult
+        +create(CreateSubscriptionRequest) UsecaseResult
+        +listByQueue(tenantId, queueId) UsecaseResult
+        +update(UpdateSubscriptionRequest) UsecaseResult
+        +remove(tenantId, id) UsecaseResult
     }
 ```
 
@@ -222,7 +222,7 @@ sequenceDiagram
     UseCase->>UseCase: set status=deployed, deploymentStatus=running
     UseCase->>+Repo: update(tenantId, flow)
     Repo-->>-UseCase: ok
-    UseCase-->>-Controller: CommandResult(true, flow.toJson())
+    UseCase-->>-Controller: UsecaseResult(true, flow.toJson())
     Controller-->>-Client: 200 OK { flow JSON }
 ```
 
@@ -244,7 +244,7 @@ sequenceDiagram
     UC->>UC: set status = published
     UC->>+Repo: update(tenantId, proxy)
     Repo-->>-UC: ok
-    UC-->>-Ctrl: CommandResult(true, proxy.toJson())
+    UC-->>-Ctrl: UsecaseResult(true, proxy.toJson())
     Ctrl-->>-Client: 200 OK { proxy JSON }
 ```
 

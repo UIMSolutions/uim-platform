@@ -36,32 +36,32 @@ class ManageAppSubscriptionsUseCase {
     }
 
     /// Subscribe a consumer tenant to an application via the SubscriptionEngine.
-    CommandResult subscribeConsumer(TenantId tenantId, string appName, SubscribeRequest req) {
+    UsecaseResult subscribeConsumer(TenantId tenantId, string appName, SubscribeRequest req) {
         auto job = engine.beginSubscribe(tenantId, appName,
                                          req.subscriberTenantId,
                                          req.subdomain,
                                          req.subscribedBy);
-        if (job.isNull) return CommandResult(false, "", "Application not found");
-        return CommandResult(true, job.subscriptionId, "");
+        if (job.isNull) return UsecaseResult(false, "", "Application not found");
+        return UsecaseResult(true, job.subscriptionId, "");
     }
 
     /// Unsubscribe a consumer tenant from an application.
-    CommandResult unsubscribeConsumer(TenantId tenantId, AppSubscriptionId id, UserId requestedBy) {
+    UsecaseResult unsubscribeConsumer(TenantId tenantId, AppSubscriptionId id, UserId requestedBy) {
         auto job = engine.beginUnsubscribe(tenantId, id.value, requestedBy);
-        if (job.isNull) return CommandResult(false, "", "Subscription not found");
-        return CommandResult(true, id.value, "");
+        if (job.isNull) return UsecaseResult(false, "", "Subscription not found");
+        return UsecaseResult(true, id.value, "");
     }
 
-    CommandResult updateSubscription(TenantId tenantId, AppSubscriptionId id,
+    UsecaseResult updateSubscription(TenantId tenantId, AppSubscriptionId id,
                                       UpdateSubscriptionRequest req) {
         auto sub = subRepo.findById(tenantId, id);
-        if (sub.isNull) return CommandResult(false, "", "Subscription not found");
+        if (sub.isNull) return UsecaseResult(false, "", "Subscription not found");
 
         long now  = MonoTime.currTime.ticks;
         sub.state     = req.state;
         sub.error     = req.error;
         sub.updatedAt = now;
         subRepo.update(sub);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

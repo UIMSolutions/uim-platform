@@ -26,7 +26,7 @@ class ManageUIComponentsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createUIComponent(UIComponentDTO dto) {
+    UsecaseResult createUIComponent(UIComponentDTO dto) {
         UIComponent e;
         e.id = dto.componentId;
         e.tenantId = dto.tenantId;
@@ -42,15 +42,15 @@ class ManageUIComponentsUseCase {
         e.previewUrl = dto.previewUrl;
         e.createdBy = dto.createdBy;
         if (!BuildAppsValidator.isValidUIComponent(e))
-            return CommandResult(false, "", "Invalid UI component data");
+            return UsecaseResult(false, "", "Invalid UI component data");
         repo.save(e);
-        return CommandResult(true, dto.componentId.value, "");
+        return UsecaseResult(true, dto.componentId.value, "");
     }
 
-    CommandResult updateUIComponent(UIComponentDTO dto) {
+    UsecaseResult updateUIComponent(UIComponentDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.componentId);
         if (existing.isNull)
-            return CommandResult(false, "", "UI component not found");
+            return UsecaseResult(false, "", "UI component not found");
             
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -58,16 +58,16 @@ class ManageUIComponentsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, dto.componentId.value, "");
+        return UsecaseResult(true, dto.componentId.value, "");
     }
 
-    CommandResult deleteUIComponent(TenantId tenantId, UIComponentId id) {
+    UsecaseResult deleteUIComponent(TenantId tenantId, UIComponentId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "UI component not found");
+            return UsecaseResult(false, "", "UI component not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

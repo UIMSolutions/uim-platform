@@ -21,13 +21,13 @@ class ManageDataLakesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDataLake(CreateDataLakeRequest r) {
+  UsecaseResult createDataLake(CreateDataLakeRequest r) {
     if (r.isNull || r.name.isEmpty)
-      return CommandResult(false, "", "Data lake ID and name are required");
+      return UsecaseResult(false, "", "Data lake ID and name are required");
 
     auto datalake = repo.findById(r.tenantId, r.id);
     if (!datalake.isNull)
-      return CommandResult(false, "", "Data lake already exists");
+      return UsecaseResult(false, "", "Data lake already exists");
 
     auto d = DataLake(r.tenantId, r.createdBy);
     d.id = r.datalakeId;
@@ -38,7 +38,7 @@ class ManageDataLakesUseCase {
     d.computeNodes = r.computeNodes;
 
     repo.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
   DataLake getDataLake(DataLakeId id) {
@@ -49,10 +49,10 @@ class ManageDataLakesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateDataLake(UpdateDataLakeRequest r) {
+  UsecaseResult updateDataLake(UpdateDataLakeRequest r) {
     auto existing = repo.findById(r.id);
     if (existing.isNull)
-      return CommandResult(false, "", "Data lake not found");
+      return UsecaseResult(false, "", "Data lake not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -62,16 +62,16 @@ class ManageDataLakesUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteDataLake(DataLakeId id) {
+  UsecaseResult deleteDataLake(DataLakeId id) {
     auto lake = repo.findById(tenantId, id);
     if (lake.isNull)
-      return CommandResult(false, "", "Data lake not found");
+      return UsecaseResult(false, "", "Data lake not found");
 
     repo.remove(lake);
-    return CommandResult(true, lake.id.value, "");
+    return UsecaseResult(true, lake.id.value, "");
   }
 
   size_t countDataLakes(TenantId tenantId) {

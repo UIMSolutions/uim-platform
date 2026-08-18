@@ -26,16 +26,16 @@ class ManageServiceBindingsUseCase {
     this.resolver  = resolver;
   }
 
-  CommandResult createBinding(CreateServiceBindingRequest req) {
+  UsecaseResult createBinding(CreateServiceBindingRequest req) {
     auto inst = instances.findById(req.tenantId, req.instanceId);
     if (inst.id.value.length == 0)
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
     if (inst.status != InstanceStatus.ready)
-      return CommandResult(false, "", "Service instance is not ready");
+      return UsecaseResult(false, "", "Service instance is not ready");
 
     auto ep = resolver.resolveForInstance(req.tenantId, req.instanceId);
     if (ep.id.value.length == 0)
-      return CommandResult(false, "", "No ready private endpoint found for this instance");
+      return UsecaseResult(false, "", "No ready private endpoint found for this instance");
 
     auto binding = ServiceBinding();
     binding.id = ServiceBindingId(generateId());
@@ -49,15 +49,15 @@ class ManageServiceBindingsUseCase {
     binding.createdAt = currentTimestamp();
 
     bindings.save(binding);
-    return CommandResult(true, binding.id.value, "Service binding created");
+    return UsecaseResult(true, binding.id.value, "Service binding created");
   }
 
-  CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
+  UsecaseResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
     auto binding = bindings.findById(tenantId, id);
     if (binding.id.value.length == 0)
-      return CommandResult(false, "", "Service binding not found");
+      return UsecaseResult(false, "", "Service binding not found");
     bindings.remove(binding);
-    return CommandResult(true, id.value, "Service binding deleted");
+    return UsecaseResult(true, id.value, "Service binding deleted");
   }
 
   ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {

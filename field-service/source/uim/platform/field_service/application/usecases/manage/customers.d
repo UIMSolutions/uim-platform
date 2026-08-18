@@ -30,7 +30,7 @@ class ManageCustomersUseCase {
         return repo.findByType(tenantId, customerType);
     }
 
-    CommandResult createCustomer(CustomerDTO dto) {
+    UsecaseResult createCustomer(CustomerDTO dto) {
         auto customer = Customer(dto.tenantId, dto.customerId, dto.createdBy);
         customer.name = dto.name;
         customer.description = dto.description;
@@ -44,15 +44,15 @@ class ManageCustomersUseCase {
         customer.industry = dto.industry;
         customer.accountNumber = dto.accountNumber;
         if (!FieldServiceValidator.isValidCustomer(customer))
-            return CommandResult(false, "", "Invalid customer data");
+            return UsecaseResult(false, "", "Invalid customer data");
         repo.save(customer);
-        return CommandResult(true, customer.id.value, "");
+        return UsecaseResult(true, customer.id.value, "");
     }
 
-    CommandResult updateCustomer(CustomerDTO dto) {
+    UsecaseResult updateCustomer(CustomerDTO dto) {
         auto customer = repo.findById(dto.tenantId, dto.customerId);
         if (customer.isNull)
-            return CommandResult(false, "", "Customer not found");
+            return UsecaseResult(false, "", "Customer not found");
 
         if (dto.name.length > 0)
             customer.name = dto.name;
@@ -80,15 +80,15 @@ class ManageCustomersUseCase {
             customer.updatedBy = dto.updatedBy;
             
         repo.update(customer);
-        return CommandResult(true, customer.id.value, "");
+        return UsecaseResult(true, customer.id.value, "");
     }
 
-    CommandResult deleteCustomer(TenantId tenantId, CustomerId id) {
+    UsecaseResult deleteCustomer(TenantId tenantId, CustomerId id) {
         auto customer = repo.findById(tenantId, id);
         if (customer.isNull)
-            return CommandResult(false, "", "Customer not found");
+            return UsecaseResult(false, "", "Customer not found");
 
         repo.remove(customer);
-        return CommandResult(true, customer.id.value, "");
+        return UsecaseResult(true, customer.id.value, "");
     }
 }

@@ -18,13 +18,13 @@ class ManageTranslationProjectsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createProject(CreateTranslationProjectRequest r) {
+    UsecaseResult createProject(CreateTranslationProjectRequest r) {
         if (r.name.isEmpty)
-            return CommandResult(false, "", "Project name is required");
+            return UsecaseResult(false, "", "Project name is required");
         if (r.sourceLanguage.length == 0)
-            return CommandResult(false, "", "Source language is required");
+            return UsecaseResult(false, "", "Source language is required");
         if (r.targetLanguages.length == 0)
-            return CommandResult(false, "", "At least one target language is required");
+            return UsecaseResult(false, "", "At least one target language is required");
 
         auto p = TranslationProject(r.tenantId, r.projectId); // , r.createdBy);
         p.name = r.name;
@@ -44,7 +44,7 @@ class ManageTranslationProjectsUseCase {
         p.abapSystemId = r.abapSystemId;
 
         repo.save(p);
-        return CommandResult(true, p.id.value, "");
+        return UsecaseResult(true, p.id.value, "");
     }
 
     TranslationProject[] listProjects(TenantId tenantId) {
@@ -55,10 +55,10 @@ class ManageTranslationProjectsUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult updateProject(UpdateTranslationProjectRequest r) {
+    UsecaseResult updateProject(UpdateTranslationProjectRequest r) {
         auto existing = repo.findById(r.tenantId, r.projectId);
         if (existing.isNull)
-            return CommandResult(false, "", "Translation project not found");
+            return UsecaseResult(false, "", "Translation project not found");
 
         if (r.name.length > 0)   existing.name = r.name;
         if (r.description.length > 0) existing.description = r.description;
@@ -76,15 +76,15 @@ class ManageTranslationProjectsUseCase {
         }
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProject(TenantId tenantId, TranslationProjectId id) {
+    UsecaseResult deleteProject(TenantId tenantId, TranslationProjectId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Translation project not found");
+            return UsecaseResult(false, "", "Translation project not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

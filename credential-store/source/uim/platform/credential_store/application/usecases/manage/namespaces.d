@@ -23,31 +23,31 @@ class ManageNamespacesUseCase {
     this.namespaces = namespaces;
   }
 
-  CommandResult createNamespace(CreateNamespaceRequest r) {
+  UsecaseResult createNamespace(CreateNamespaceRequest r) {
     if (!CredentialValidator.validateNamespaceName(r.name))
-      return CommandResult(false, "", "Invalid namespace name (1-100 chars, allowed: letters, digits, _ - . : ! ~)");
+      return UsecaseResult(false, "", "Invalid namespace name (1-100 chars, allowed: letters, digits, _ - . : ! ~)");
 
     if (namespaces.existsByName(r.tenantId, r.name))
-      return CommandResult(false, "", "Namespace already exists");
+      return UsecaseResult(false, "", "Namespace already exists");
 
     auto ns = Namespace(r.tenantId, r.namespaceId.isNull ? NamespaceId(createId()) : r.namespaceId, r.createdBy);
     ns.name = r.name;
     ns.description = r.description;
 
     namespaces.save(ns);
-    return CommandResult(true, ns.id.value, "");
+    return UsecaseResult(true, ns.id.value, "");
   }
 
-  CommandResult updateNamespace(UpdateNamespaceRequest r) {
+  UsecaseResult updateNamespace(UpdateNamespaceRequest r) {
     auto ns = namespaces.findById(r.tenantId, r.namespaceId);
     if (ns.isNull)
-      return CommandResult(false, "", "Namespace not found");
+      return UsecaseResult(false, "", "Namespace not found");
 
     ns.description = r.description;
     ns.updatedAt = currentTimestamp();
 
     namespaces.update(ns);
-    return CommandResult(true, ns.id.value, "");
+    return UsecaseResult(true, ns.id.value, "");
   }
 
   bool hasNamespace(TenantId tenantId, NamespaceId id) {
@@ -66,13 +66,13 @@ class ManageNamespacesUseCase {
     return namespaces.findByTenant(tenantId);
   }
 
-  CommandResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId) {
+  UsecaseResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId) {
     auto namespace = namespaces.findById(tenantId, namespaceId);
     if (namespace.isNull)
-      return CommandResult(false, "", "Namespace not found");
+      return UsecaseResult(false, "", "Namespace not found");
 
     namespaces.remove(namespace);
-    return CommandResult(true, namespace.id.value, "");
+    return UsecaseResult(true, namespace.id.value, "");
   }
 
   size_t countNamespaces(TenantId tenantId) {

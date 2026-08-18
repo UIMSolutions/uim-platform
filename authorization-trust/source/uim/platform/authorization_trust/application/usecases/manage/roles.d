@@ -18,11 +18,11 @@ class ManageRolesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRole(CreateRoleRequest r) {
+  UsecaseResult createRole(CreateRoleRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Role name is required");
+      return UsecaseResult(false, "", "Role name is required");
     if (repo.existsByName(r.tenantId, r.name, r.appId))
-      return CommandResult(false, "", "A role with this name already exists for the application");
+      return UsecaseResult(false, "", "A role with this name already exists for the application");
 
     auto role = RoleEntity(r.tenantId);
     role.name            = r.name;
@@ -31,29 +31,29 @@ class ManageRolesUseCase {
     role.appId           = r.appId;
 
     repo.save(role);
-    return CommandResult(true, role.id.value, "");
+    return UsecaseResult(true, role.id.value, "");
   }
 
-  CommandResult updateRole(UpdateRoleRequest r) {
+  UsecaseResult updateRole(UpdateRoleRequest r) {
     auto role = repo.findById(r.tenantId, r.roleId);
     if (role.isNull )
-      return CommandResult(false, "", "Role not found");
+      return UsecaseResult(false, "", "Role not found");
 
     if (r.description.length > 0)     role.description = r.description;
     if (r.scopeReferences.length > 0) role.scopeReferences = r.scopeReferences.dup;
     role.updatedAt = currentTimestamp();
 
     repo.update(role);
-    return CommandResult(true, role.id.value, "");
+    return UsecaseResult(true, role.id.value, "");
   }
 
-  CommandResult deleteRole(TenantId tenantId, RoleId id) {
+  UsecaseResult deleteRole(TenantId tenantId, RoleId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Role not found");
+      return UsecaseResult(false, "", "Role not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   RoleEntity getRole(TenantId tenantId, RoleId id) {

@@ -26,7 +26,7 @@ class ManagePrintClientsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult registerPrintClient(PrintClientDTO dto) {
+    UsecaseResult registerPrintClient(PrintClientDTO dto) {
         auto client = PrintClient(dto.tenantId); //, UserId("test-user"));
         client.id = dto.clientId;
         client.name = dto.name;
@@ -44,16 +44,16 @@ class ManagePrintClientsUseCase {
         client.authToken = sha256Of(client.id.value ~ client.hostName).toHexString.to!string;
 
         if (!PrintValidator.isValidPrintClient(client))
-            return CommandResult(false, "", "Invalid print client: name and hostName are required");
+            return UsecaseResult(false, "", "Invalid print client: name and hostName are required");
 
         repo.save(client);
-        return CommandResult(true, client.id.value, "");
+        return UsecaseResult(true, client.id.value, "");
     }
 
-    CommandResult updatePrintClient(PrintClientDTO dto) {
+    UsecaseResult updatePrintClient(PrintClientDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.clientId);
         if (existing.isNull)
-            return CommandResult(false, "", "Print client not found");
+            return UsecaseResult(false, "", "Print client not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -65,14 +65,14 @@ class ManagePrintClientsUseCase {
         existing.lastSeenAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePrintClient(TenantId tenantId, PrintClientId id) {
+    UsecaseResult deletePrintClient(TenantId tenantId, PrintClientId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Print client not found");
+            return UsecaseResult(false, "", "Print client not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

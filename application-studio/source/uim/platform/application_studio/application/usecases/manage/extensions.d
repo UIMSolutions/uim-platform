@@ -26,7 +26,7 @@ class ManageExtensionsUseCase {
         return extensions.findByTenant(tenantId);
     }
 
-    CommandResult createExtension(ExtensionDTO dto) {
+    UsecaseResult createExtension(ExtensionDTO dto) {
         auto e = Extension(dto.tenantId); //, dto.createdBy);        
         e.id = dto.extensionId;
         e.name = dto.name;
@@ -38,31 +38,31 @@ class ManageExtensionsUseCase {
         e.capabilities = dto.capabilities;
         e.iconUrl = dto.iconUrl;
         if (!StudioValidator.isValidExtension(e))
-            return CommandResult(false, "", "Invalid extension data");
+            return UsecaseResult(false, "", "Invalid extension data");
 
         extensions.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateExtension(ExtensionDTO dto) {
+    UsecaseResult updateExtension(ExtensionDTO dto) {
         auto existing = extensions.findById(dto.tenantId, dto.extensionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Extension not found");
+            return UsecaseResult(false, "", "Extension not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.version_.length > 0) existing.version_ = dto.version_;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         extensions.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteExtension(TenantId tenantId, ExtensionId id) {
+    UsecaseResult deleteExtension(TenantId tenantId, ExtensionId id) {
         auto extension = extensions.findById(tenantId, id);
         if (extension.isNull)
-            return CommandResult(false, "", "Extension not found");
+            return UsecaseResult(false, "", "Extension not found");
 
         extensions.remove(extension);
-        return CommandResult(true, extension.id.value, "");
+        return UsecaseResult(true, extension.id.value, "");
     }
 }

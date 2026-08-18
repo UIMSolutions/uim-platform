@@ -132,16 +132,16 @@ sequenceDiagram
 
     Client->>TJC: POST /training-jobs { configId }
     TJC->>TUC: createTrainingJob(dto)
-    TUC-->>TJC: CommandResult(true, jobId)
+    TUC-->>TJC: UsecaseResult(true, jobId)
     TJC-->>Client: 201 { id }
 
     Client->>TJC: POST /training-jobs/{id}/start
     TJC->>TUC: startTrainingJob(id)
-    TUC-->>TJC: CommandResult(true, id)
+    TUC-->>TJC: UsecaseResult(true, id)
     TJC-->>Client: 200 { id, status=running }
 
     Client->>MDC: POST /model-deployments { trainingJobId }
     MDC->>DUC: createDeployment(dto)
-    DUC-->>MDC: CommandResult(true, deploymentId)
+    DUC-->>MDC: UsecaseResult(true, deploymentId)
     MDC-->>Client: 201 { id }
 ```

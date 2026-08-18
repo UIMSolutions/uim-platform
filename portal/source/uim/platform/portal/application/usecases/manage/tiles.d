@@ -67,9 +67,9 @@ class ManageTilesUseCase {
     return tileRepo.search(tenantId, query, offset, limit);
   }
 
-  CommandResult updateTile(UpdateTileRequest req) {
+  UsecaseResult updateTile(UpdateTileRequest req) {
     if (!tileRepo.existsById(req.tileId))
-      return CommandResult(false, "", "Tile not found") ;
+      return UsecaseResult(false, "", "Tile not found") ;
 
     auto tile = tileRepo.findById(req.tileId);
     with (tile) {
@@ -89,15 +89,15 @@ class ManageTilesUseCase {
       updatedAt = currentTimestamp();
     }
     tileRepo.update(tile);
-    return CommandResult(true, tile.tileId.value, "Tile updated successfully.");
+    return UsecaseResult(true, tile.tileId.value, "Tile updated successfully.");
   }
 
-  CommandResult deleteTile(TileId id) {
+  UsecaseResult deleteTile(TileId id) {
     auto tile = tileRepo.findById(id);
     if (tile.isNull)
-      return CommandResult(false, "", "Tile not found");
+      return UsecaseResult(false, "", "Tile not found");
 
     tileRepo.remove(tile);
-    return CommandResult(true, id.value, "Tile deleted successfully.");
+    return UsecaseResult(true, id.value, "Tile deleted successfully.");
   }
 }

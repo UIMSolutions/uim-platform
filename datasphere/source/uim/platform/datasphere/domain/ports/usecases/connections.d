@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageConnectionsUseCase {
 
-  CommandResult createConnection(CreateConnectionRequest r);
+  UsecaseResult createConnection(CreateConnectionRequest r);
   Connection getConnection(TenantId tenantId, ConnectionId id, SpaceId spaceId);
   Connection[]  listConnections(TenantId tenantId, SpaceId spaceId);
-  CommandResult updateConnection(UpdateConnectionRequest r);
-  CommandResult deleteConnection(TenantId tenantId, ConnectionId id, SpaceId spaceId);
+  UsecaseResult updateConnection(UpdateConnectionRequest r);
+  UsecaseResult deleteConnection(TenantId tenantId, ConnectionId id, SpaceId spaceId);
 
 }

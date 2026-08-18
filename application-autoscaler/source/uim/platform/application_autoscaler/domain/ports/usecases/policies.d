@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 interface IManageScalingPoliciesUseCase {
 
-  CommandResult createPolicy(CreateScalingPolicyRequest r);
-  CommandResult updatePolicy(UpdateScalingPolicyRequest r);
-  CommandResult deletePolicy(TenantId tenantId, ScalingPolicyId id);
+  UsecaseResult createPolicy(CreateScalingPolicyRequest r);
+  UsecaseResult updatePolicy(UpdateScalingPolicyRequest r);
+  UsecaseResult deletePolicy(TenantId tenantId, ScalingPolicyId id);
   ScalingPolicyEntity getPolicy(TenantId tenantId, ScalingPolicyId id);
   ScalingPolicyEntity getPolicyByApp(TenantId tenantId, AppBindingId appId);
   ScalingPolicyEntity[] listPolicies(TenantId tenantId);

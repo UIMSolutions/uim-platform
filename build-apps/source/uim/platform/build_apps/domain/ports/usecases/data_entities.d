@@ -16,8 +16,8 @@ interface IManageDataEntitiesUseCase {
     DataEntity getDataEntity(TenantId tenantId, DataEntityId id);
     DataEntity[] listDataEntities(TenantId tenantId);
     DataEntity[] listDataEntities(TenantId tenantId, ApplicationId applicationId);
-    CommandResult createDataEntity(DataEntityDTO dto);
-    CommandResult updateDataEntity(DataEntityDTO dto);
-    CommandResult deleteDataEntity(TenantId tenantId, DataEntityId id);
+    UsecaseResult createDataEntity(DataEntityDTO dto);
+    UsecaseResult updateDataEntity(DataEntityDTO dto);
+    UsecaseResult deleteDataEntity(TenantId tenantId, DataEntityId id);
     
 }

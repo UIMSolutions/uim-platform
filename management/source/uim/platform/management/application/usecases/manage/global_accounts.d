@@ -25,11 +25,11 @@ class ManageGlobalAccountsUseCase {
     this.eventRepo = eventRepo;
   }
 
-  CommandResult createAccount(CreateGlobalAccountRequest req) {
+  UsecaseResult createAccount(CreateGlobalAccountRequest req) {
     if (req.displayName.isEmpty)
-      return CommandResult(false, "", "Display name is required");
+      return UsecaseResult(false, "", "Display name is required");
     if (req.region.length == 0)
-      return CommandResult(false, "", "Region is required");
+      return UsecaseResult(false, "", "Region is required");
 
     auto globalAccount = GlobalAccount(req.tenantId); //, req.createdBy);
     globalAccount.displayName = req.displayName;
@@ -48,13 +48,13 @@ class ManageGlobalAccountsUseCase {
     emitEvent(eventRepo, globalAccount.id.value, "", EnvironmentEventCategory.globalAccountChange,
       "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, globalAccount.id.value, "");
+    return UsecaseResult(true, globalAccount.id.value, "");
   }
 
-  CommandResult updateAccount(UpdateGlobalAccountRequest req) {
+  UsecaseResult updateAccount(UpdateGlobalAccountRequest req) {
     auto globalAccount = repo.findById(req.tenantId, req.accountId);
     if (globalAccount.isNull)
-      return CommandResult(false, "", "Global account not found");
+      return UsecaseResult(false, "", "Global account not found");
 
     if (req.displayName.length > 0)
       globalAccount.displayName = req.displayName;
@@ -69,16 +69,16 @@ class ManageGlobalAccountsUseCase {
     globalAccount.updatedAt = clockSeconds();
 
     repo.update(globalAccount);
-    return CommandResult(true, globalAccount.id.value, "");
+    return UsecaseResult(true, globalAccount.id.value, "");
   }
 
-  CommandResult suspendAccount(TenantId tenantId, GlobalAccountId accountId) {
+  UsecaseResult suspendAccount(TenantId tenantId, GlobalAccountId accountId) {
     auto globalAccount = repo.findById(tenantId, accountId);
     if (globalAccount.isNull)
-      return CommandResult(false, "", "Global account not found");
+      return UsecaseResult(false, "", "Global account not found");
 
     if (globalAccount.status != GlobalAccountStatus.active)
-      return CommandResult(false, "", "Only active accounts can be suspended");
+      return UsecaseResult(false, "", "Only active accounts can be suspended");
 
     globalAccount.status = GlobalAccountStatus.suspended;
     globalAccount.updatedAt = clockSeconds();
@@ -86,16 +86,16 @@ class ManageGlobalAccountsUseCase {
 
     emitEvent(eventRepo, accountId.value, "", EnvironmentEventCategory.globalAccountChange,
       "globalAccount.suspended", "Global account suspended", UserId("system"));
-    return CommandResult(true, accountId.value, "");
+    return UsecaseResult(true, accountId.value, "");
   }
 
-  CommandResult reactivateAccount(TenantId tenantId,  GlobalAccountId accountId) {
+  UsecaseResult reactivateAccount(TenantId tenantId,  GlobalAccountId accountId) {
     auto globalAccount = repo.findById(tenantId, accountId);
     if (globalAccount.isNull)
-      return CommandResult(false, "", "Global account not found");
+      return UsecaseResult(false, "", "Global account not found");
 
     if (globalAccount.status != GlobalAccountStatus.suspended)
-      return CommandResult(false, "", "Only suspended accounts can be reactivated");
+      return UsecaseResult(false, "", "Only suspended accounts can be reactivated");
 
     globalAccount.status = GlobalAccountStatus.active;
     globalAccount.updatedAt = clockSeconds();
@@ -103,7 +103,7 @@ class ManageGlobalAccountsUseCase {
     repo.update(globalAccount);
     emitEvent(eventRepo, accountId.value, "", EnvironmentEventCategory.globalAccountChange,
       "globalAccount.reactivated", "Global account reactivated", UserId("system")); 
-    return CommandResult(true, accountId.value, "");
+    return UsecaseResult(true, accountId.value, "");
   }
 
   bool existsAccount(TenantId tenantId, GlobalAccountId accountId) {
@@ -122,13 +122,13 @@ class ManageGlobalAccountsUseCase {
     return repo.findByStatus(tenantId, status.to!GlobalAccountStatus);
   }
 
-  CommandResult deleteAccount(TenantId tenantId, GlobalAccountId accountId) {
+  UsecaseResult deleteAccount(TenantId tenantId, GlobalAccountId accountId) {
     auto entity = repo.findById(tenantId, accountId);
     if (entity.isNull)
-      return CommandResult(false, "", "Global account not found");
+      return UsecaseResult(false, "", "Global account not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
 }

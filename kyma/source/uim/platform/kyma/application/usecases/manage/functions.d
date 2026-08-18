@@ -24,14 +24,14 @@ class ManageFunctionsUseCase {
     this.validator = validator;
   }
 
-  CommandResult createFunction(CreateFunctionRequest request) {
+  UsecaseResult createFunction(CreateFunctionRequest request) {
     if (request.name.isEmpty)
-      return CommandResult(false, "", "Function name is required");
+      return UsecaseResult(false, "", "Function name is required");
     if (request.namespaceId.isEmpty)
-      return CommandResult(false, "", "Namespace ID is required");
+      return UsecaseResult(false, "", "Namespace ID is required");
 
     if (functionRepository.existsByName(request.namespaceId, request.name))
-      return CommandResult(false, "",
+      return UsecaseResult(false, "",
           "Function '" ~ request.name ~ "' already exists in this namespace");
 
     auto serverlessFunction = ServerlessFunction(request.tenantId); //, request.createdBy);
@@ -57,16 +57,16 @@ class ManageFunctionsUseCase {
 
     auto validationErr = validator.validate(serverlessFunction);
     if (validationErr.length > 0)
-      return CommandResult(false, "", validationErr);
+      return UsecaseResult(false, "", validationErr);
 
     functionRepository.save(serverlessFunction);
-    return CommandResult(true, serverlessFunction.id.value, "");
+    return UsecaseResult(true, serverlessFunction.id.value, "");
   }
 
-  CommandResult updateFunction(UpdateFunctionRequest req) {
+  UsecaseResult updateFunction(UpdateFunctionRequest req) {
     auto fn = functionRepository.findById(req.tenantId, req.functionId);
     if (fn.isNull)
-      return CommandResult(false, "", "Function not found");
+      return UsecaseResult(false, "", "Function not found");
 
     if (req.description.length > 0)
       fn.description = req.description;
@@ -101,10 +101,10 @@ class ManageFunctionsUseCase {
 
     auto validationErr = validator.validate(fn);
     if (validationErr.length > 0)
-      return CommandResult(false, "", validationErr);
+      return UsecaseResult(false, "", validationErr);
 
     functionRepository.update(fn);
-    return CommandResult(true, fn.id.value, "");
+    return UsecaseResult(true, fn.id.value, "");
   }
   
   bool hasFunction(TenantId tenantId, ServerlessFunctionId functionId) {
@@ -123,13 +123,13 @@ class ManageFunctionsUseCase {
     return functionRepository.findByEnvironment(tenantId, environmentId);
   }
 
-  CommandResult deleteFunction(TenantId tenantId, ServerlessFunctionId functionId) {
+  UsecaseResult deleteFunction(TenantId tenantId, ServerlessFunctionId functionId) {
     auto fn = functionRepository.findById(tenantId, functionId);
     if (fn.isNull)
-      return CommandResult(false, "", "Function not found");
+      return UsecaseResult(false, "", "Function not found");
 
     functionRepository.remove(fn);
-    return CommandResult(true, fn.id.value, "");
+    return UsecaseResult(true, fn.id.value, "");
   }
 }
 

@@ -24,7 +24,7 @@ class ManageResponsibilityContextsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createContext(ResponsibilityContextDTO dto) {
+    UsecaseResult createContext(ResponsibilityContextDTO dto) {
         auto c = ResponsibilityContext(dto.tenantId); //, UserId("test-user"));
         c.id          = dto.contextId;
         c.name        = dto.name;
@@ -33,28 +33,28 @@ class ManageResponsibilityContextsUseCase {
         c.namespace_  = dto.namespace_;
         c.status      = parseContextStatus(dto.status);
         if (c.name.isEmpty)
-            return CommandResult(false, "", "Context name is required");
+            return UsecaseResult(false, "", "Context name is required");
         repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 
-    CommandResult updateContext(ResponsibilityContextDTO dto) {
+    UsecaseResult updateContext(ResponsibilityContextDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.contextId);
         if (existing.isNull)
-            return CommandResult(false, "", "Context not found");
+            return UsecaseResult(false, "", "Context not found");
         if (dto.name.length > 0)        existing.name        = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.objectType.length > 0)  existing.objectType  = dto.objectType;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteContext(TenantId tenantId, ResponsibilityContextId id) {
+    UsecaseResult deleteContext(TenantId tenantId, ResponsibilityContextId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Context not found");
+            return UsecaseResult(false, "", "Context not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
     private static ContextStatus parseContextStatus(string s) {

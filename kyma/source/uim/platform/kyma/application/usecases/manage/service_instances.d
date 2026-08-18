@@ -21,16 +21,16 @@ class ManageServiceInstancesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createServiceInstance(CreateServiceInstanceRequest req) {
+  UsecaseResult createServiceInstance(CreateServiceInstanceRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Service instance name is required");
+      return UsecaseResult(false, "", "Service instance name is required");
     if (req.serviceOfferingname.isEmpty)
-      return CommandResult(false, "", "Service offering name is required");
+      return UsecaseResult(false, "", "Service offering name is required");
     if (req.servicePlanname.isEmpty)
-      return CommandResult(false, "", "Service plan name is required");
+      return UsecaseResult(false, "", "Service plan name is required");
 
     if (repo.existsByName(req.namespaceId, req.name))
-      return CommandResult(false, "", "Service instance '" ~ req.name ~ "' already exists");
+      return UsecaseResult(false, "", "Service instance '" ~ req.name ~ "' already exists");
 
     auto inst = ServiceInstance(req.tenantId); //, UserId("test-user"));
     inst.namespaceId = req.namespaceId;
@@ -46,13 +46,13 @@ class ManageServiceInstancesUseCase {
     inst.labels = req.labels;
 
     repo.save(inst);
-    return CommandResult(true, inst.id.value, "");
+    return UsecaseResult(true, inst.id.value, "");
   }
 
-  CommandResult updateServiceInstance(UpdateServiceInstanceRequest req) {
+  UsecaseResult updateServiceInstance(UpdateServiceInstanceRequest req) {
     auto inst = repo.findById(req.tenantId, req.id);
     if (inst.isNull)
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
 
     if (req.description.length > 0)
       inst.description = req.description;
@@ -68,7 +68,7 @@ class ManageServiceInstancesUseCase {
     inst.updatedAt = clockSeconds();
 
     repo.update(inst);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   bool hasServiceInstance(TenantId tenantId, ServiceInstanceId id) {
@@ -87,13 +87,13 @@ class ManageServiceInstancesUseCase {
     return repo.findByEnvironment(tenantId, envId);
   }
 
-  CommandResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
+  UsecaseResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
     auto inst = repo.findById(tenantId, id);
     if (inst.isNull)
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
       
     repo.remove(inst);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 }
 

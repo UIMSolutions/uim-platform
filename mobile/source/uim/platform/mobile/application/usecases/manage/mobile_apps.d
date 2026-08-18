@@ -22,10 +22,10 @@ class ManageMobileAppsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createMobileApp(CreateMobileAppRequest r) {
+    UsecaseResult createMobileApp(CreateMobileAppRequest r) {
         auto existing = repo.findByBundleId(r.tenantId, r.bundleId);
         if (!existing.isNull)
-            return CommandResult(false, "", "App with this bundle ID already exists");
+            return UsecaseResult(false, "", "App with this bundle ID already exists");
         
         auto app = MobileApp(r.tenantId); //, UserId("test-user"));
         app.name = r.name;
@@ -40,13 +40,13 @@ class ManageMobileAppsUseCase {
         app.iconUrl = r.iconUrl;
 
         repo.save(app);
-        return CommandResult(true, app.id.value, "");
+        return UsecaseResult(true, app.id.value, "");
     }
 
-    CommandResult updateMobileApp(UpdateMobileAppRequest r) {
+    UsecaseResult updateMobileApp(UpdateMobileAppRequest r) {
         auto app = repo.findById(r.tenantId, r.appId);
         if (app.isNull)
-            return CommandResult(false, "", "App not found");
+            return UsecaseResult(false, "", "App not found");
 
         if (r.description.length > 0) app.description = r.description;
         if (r.securityConfig.length > 0) app.securityConfig = r.securityConfig;
@@ -57,7 +57,7 @@ class ManageMobileAppsUseCase {
         app.updatedAt = currentTimestamp();
         app.updatedBy = r.updatedBy;
         repo.update(app);
-        return CommandResult(true, app.id.value, "");
+        return UsecaseResult(true, app.id.value, "");
     }
 
     MobileApp getMobileApp(TenantId tenantId, MobileAppId id) {
@@ -68,13 +68,13 @@ class ManageMobileAppsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deleteMobileApp(TenantId tenantId, MobileAppId id) {
+    UsecaseResult deleteMobileApp(TenantId tenantId, MobileAppId id) {
         auto app = repo.findById(tenantId, id);
         if (app.isNull)
-            return CommandResult(false, "", "App not found");
+            return UsecaseResult(false, "", "App not found");
 
         repo.remove(app);
-        return CommandResult(true, app.id.value, "");
+        return UsecaseResult(true, app.id.value, "");
     }
 
     size_t countMobileAppsByTenant(TenantId tenantId) {

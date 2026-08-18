@@ -13,11 +13,11 @@ import uim.platform.abap_environment;
 /// Application service for application job scheduling and management.
 interface IManageApplicationJobsUseCase { 
 
-  CommandResult createApplicationJob(CreateApplicationJobRequest request);
-  CommandResult updateApplicationJob(UpdateApplicationJobRequest request);
-  CommandResult cancelApplicationJob(TenantId tenantId, ApplicationJobId id);
+  UsecaseResult createApplicationJob(CreateApplicationJobRequest request);
+  UsecaseResult updateApplicationJob(UpdateApplicationJobRequest request);
+  UsecaseResult cancelApplicationJob(TenantId tenantId, ApplicationJobId id);
   ApplicationJob getApplicationJob(TenantId tenantId, ApplicationJobId id);
   ApplicationJob[] listApplicationJobs(TenantId tenantId, SystemInstanceId systemId);
-  CommandResult deleteApplicationJob(TenantId tenantId, ApplicationJobId id);
+  UsecaseResult deleteApplicationJob(TenantId tenantId, ApplicationJobId id);
   
 }

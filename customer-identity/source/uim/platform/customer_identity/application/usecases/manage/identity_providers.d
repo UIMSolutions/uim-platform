@@ -30,7 +30,7 @@ class ManageIdentityProvidersUseCase {
         return repo.findActive(tenantId);
     }
 
-    CommandResult createIdentityProvider(IdentityProviderDTO dto) {
+    UsecaseResult createIdentityProvider(IdentityProviderDTO dto) {
         auto ip = IdentityProvider(dto.tenantId);
         ip.name = dto.name;
         ip.description = dto.description;
@@ -45,19 +45,19 @@ class ManageIdentityProvidersUseCase {
 
         
         try { ip.providerType = dto.providerType.to!IdentityProviderType; }
-        catch (Exception) { return CommandResult(false, "", "Invalid provider type"); }
+        catch (Exception) { return UsecaseResult(false, "", "Invalid provider type"); }
 
         if (!IdentityValidator.isValidIdentityProvider(ip))
-            return CommandResult(false, "", "Invalid identity provider data");
+            return UsecaseResult(false, "", "Invalid identity provider data");
 
         repo.save(ip);
-        return CommandResult(true, ip.id.value, "");
+        return UsecaseResult(true, ip.id.value, "");
     }
 
-    CommandResult updateIdentityProvider(IdentityProviderDTO dto) {
+    UsecaseResult updateIdentityProvider(IdentityProviderDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.providerId);
         if (existing.isNull)
-            return CommandResult(false, "", "Identity provider not found");
+            return UsecaseResult(false, "", "Identity provider not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -69,15 +69,15 @@ class ManageIdentityProvidersUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteIdentityProvider(TenantId tenantId, IdentityProviderId id) {
+    UsecaseResult deleteIdentityProvider(TenantId tenantId, IdentityProviderId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Identity provider not found");
+            return UsecaseResult(false, "", "Identity provider not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 interface IManageDestructionRequestsUseCase { 
 
-  CommandResult createRequest(CreateDestructionRequest req);
+  UsecaseResult createRequest(CreateDestructionRequest req);
   DestructionRequest getRequest(TenantId tenantId, DestructionRequestId id);
   DestructionRequest[] listRequests(TenantId tenantId);
   DestructionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId);
-  CommandResult updateStatus(UpdateDestructionStatusRequest req);
-  CommandResult deleteRequest(TenantId tenantId, DestructionRequestId requestId);
+  UsecaseResult updateStatus(UpdateDestructionStatusRequest req);
+  UsecaseResult deleteRequest(TenantId tenantId, DestructionRequestId requestId);
   
 }
 

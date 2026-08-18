@@ -16,9 +16,9 @@ mixin(ShowModule!());
 @safe:
 interface IManagePipelinesUseCase { 
 
-  CommandResult createPipeline(CreatePipelineRequest req);
+  UsecaseResult createPipeline(CreatePipelineRequest req);
 
-  CommandResult updatePipeline(UpdatePipelineRequest req);
+  UsecaseResult updatePipeline(UpdatePipelineRequest req);
 
   bool hasPipeline(TenantId tenantId, PipelineId id);
 
@@ -28,6 +28,6 @@ interface IManagePipelinesUseCase {
 
   Pipeline[] listActivePipelines(TenantId tenantId);
 
-  CommandResult deletePipeline(TenantId tenantId, PipelineId id);
+  UsecaseResult deletePipeline(TenantId tenantId, PipelineId id);
 
 }

@@ -17,12 +17,12 @@ mixin(ShowModule!());
 @safe:
 interface IManageDeletionRequestsUseCase { 
 
-  CommandResult createRequest(CreateDeletionRequest req);
+  UsecaseResult createRequest(CreateDeletionRequest req);
   DeletionRequest getRequest(TenantId tenantId, DeletionRequestId id);
   DeletionRequest[] listRequests(TenantId tenantId);
   DeletionRequest[] listByStatus(TenantId tenantId, DeletionStatus status);
   DeletionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId);
-  CommandResult updateStatus(UpdateDeletionStatusRequest req);
-  CommandResult deleteRequest(TenantId tenantId, DeletionRequestId id);
+  UsecaseResult updateStatus(UpdateDeletionStatusRequest req);
+  UsecaseResult deleteRequest(TenantId tenantId, DeletionRequestId id);
   
 }

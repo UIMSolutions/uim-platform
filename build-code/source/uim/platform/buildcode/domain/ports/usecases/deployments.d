@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageDeploymentsUseCase {
 
-  CommandResult create(TenantId tenantId, CreateDeploymentRequest req);
+  UsecaseResult create(TenantId tenantId, CreateDeploymentRequest req);
   Deployment getById(TenantId tenantId, DeploymentId id);
   Deployment[] list(TenantId tenantId);
   Deployment[] listByProject(TenantId tenantId, string projectId);
   Deployment[] listByEnvironment(TenantId tenantId, string envStr);
-  CommandResult updateStatus(TenantId tenantId, string id, string statusStr, string url = "");
+  UsecaseResult updateStatus(TenantId tenantId, string id, string statusStr, string url = "");
   
 }

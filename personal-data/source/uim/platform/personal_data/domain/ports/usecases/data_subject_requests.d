@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManageDataSubjectRequestsUseCase { 
 
-    CommandResult createDataSubjectRequest(CreateDataSubjectRequestRequest r);
+    UsecaseResult createDataSubjectRequest(CreateDataSubjectRequestRequest r);
     DataSubjectRequest getDataSubjectRequest(TenantId tenantId, DataSubjectRequestId id);
     DataSubjectRequest[] listDataSubjectRequests(TenantId tenantId);
     DataSubjectRequest[] listDataSubjectRequests(TenantId tenantId, DataSubjectId dataSubjectId);
     DataSubjectRequest[] listDataSubjectRequests(TenantId tenantId, RequestStatus status);
-    CommandResult updateDataSubjectRequest(UpdateDataSubjectRequestRequest r);
-    CommandResult deleteDataSubjectRequest(TenantId tenantId, DataSubjectRequestId id);
+    UsecaseResult updateDataSubjectRequest(UpdateDataSubjectRequestRequest r);
+    UsecaseResult deleteDataSubjectRequest(TenantId tenantId, DataSubjectRequestId id);
 
 }

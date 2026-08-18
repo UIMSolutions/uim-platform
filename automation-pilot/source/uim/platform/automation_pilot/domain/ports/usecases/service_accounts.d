@@ -15,8 +15,8 @@ interface IManageServiceAccountsUseCase {
     
     ServiceAccount getServiceAccount(TenantId tenantId, ServiceAccountId id);
     ServiceAccount[] listServiceAccounts(TenantId tenantId);
-    CommandResult createServiceAccount(ServiceAccountDTO dto);
-    CommandResult updateServiceAccount(ServiceAccountDTO dto);
-    CommandResult deleteServiceAccount(TenantId tenantId, ServiceAccountId id);
+    UsecaseResult createServiceAccount(ServiceAccountDTO dto);
+    UsecaseResult updateServiceAccount(ServiceAccountDTO dto);
+    UsecaseResult deleteServiceAccount(TenantId tenantId, ServiceAccountId id);
 
 }

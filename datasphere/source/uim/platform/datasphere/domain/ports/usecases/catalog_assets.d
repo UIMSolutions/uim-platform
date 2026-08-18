@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageCatalogAssetsUseCase { 
   
-  CommandResult createCatalogAsset(CreateCatalogAssetRequest r);
+  UsecaseResult createCatalogAsset(CreateCatalogAssetRequest r);
   CatalogAsset getCatalogAssetById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id);
   CatalogAsset[] listCatalogAssets(TenantId tenantId, SpaceId spaceId);
   CatalogAsset[] searchCatalogAssets(SpaceId spaceId, string query);
-  CommandResult updateCatalogAsset(UpdateCatalogAssetRequest r);
-  CommandResult deleteCatalogAsset(TenantId tenantId, SpaceId spaceId, CatalogAssetId id);
+  UsecaseResult updateCatalogAsset(UpdateCatalogAssetRequest r);
+  UsecaseResult deleteCatalogAsset(TenantId tenantId, SpaceId spaceId, CatalogAssetId id);
 
 }

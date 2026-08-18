@@ -166,11 +166,11 @@ sequenceDiagram
     User->>PIC: POST /process-instances { processId, triggeredBy=user-1, context }
     PIC->>PIUC: startProcess(dto)
     PIUC->>TUC: createTask(instanceId, name=Approve, assigneeId)
-    PIUC-->>PIC: CommandResult(true, instanceId)
+    PIUC-->>PIC: UsecaseResult(true, instanceId)
     PIC-->>User: 201 { id }
 
     User->>TC: POST /tasks/{id}/complete { result=approved }
     TC->>TUC: completeTask(id, result)
-    TUC-->>TC: CommandResult(true, id)
+    TUC-->>TC: UsecaseResult(true, id)
     TC-->>User: 200 { id, status=completed }
 ```

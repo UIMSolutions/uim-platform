@@ -145,8 +145,8 @@ classDiagram
         -SaasApplicationRepository appRepo
         -AppSubscriptionRepository subRepo
         -SubscriptionJobRepository jobRepo
-        +beginSubscribe(providerTenantId, appName, subscriberTenantId, subdomain, subscribedBy) CommandResult
-        +beginUnsubscribe(providerTenantId, subscriptionId, requestedBy) CommandResult
+        +beginSubscribe(providerTenantId, appName, subscriberTenantId, subdomain, subscribedBy) UsecaseResult
+        +beginUnsubscribe(providerTenantId, subscriptionId, requestedBy) UsecaseResult
     }
 
     SubscriptionEngine --> SaasApplicationRepository
@@ -159,9 +159,9 @@ classDiagram
         +listApplications(tenantId) SaasApplication[]
         +getApplication(tenantId, id) SaasApplication
         +getApplicationByName(tenantId, name) SaasApplication
-        +registerApplication(tenantId, dto) CommandResult
-        +updateApplication(tenantId, id, dto) CommandResult
-        +deregisterApplication(tenantId, id) CommandResult
+        +registerApplication(tenantId, dto) UsecaseResult
+        +updateApplication(tenantId, id, dto) UsecaseResult
+        +deregisterApplication(tenantId, id) UsecaseResult
     }
     class ManageAppSubscriptionsUseCase {
         -AppSubscriptionRepository repo
@@ -169,9 +169,9 @@ classDiagram
         +listForApp(tenantId, appName) AppSubscription[]
         +listAll(tenantId) AppSubscription[]
         +getSubscription(tenantId, id) AppSubscription
-        +subscribeConsumer(tenantId, dto) CommandResult
-        +unsubscribeConsumer(tenantId, id, requestedBy) CommandResult
-        +updateSubscription(tenantId, id, dto) CommandResult
+        +subscribeConsumer(tenantId, dto) UsecaseResult
+        +unsubscribeConsumer(tenantId, id, requestedBy) UsecaseResult
+        +updateSubscription(tenantId, id, dto) UsecaseResult
     }
     class ManageSubscriptionJobsUseCase {
         -SubscriptionJobRepository repo
@@ -259,8 +259,8 @@ sequenceDiagram
     AppRepo-->>Engine: SaasApplication
     Engine->>SubRepo: save(newSubscription)
     Engine->>JobRepo: save(newJob)
-    Engine-->>SubUC: CommandResult(success, subscriptionId, "")
-    SubUC-->>AppSubController: CommandResult
+    Engine-->>SubUC: UsecaseResult(success, subscriptionId, "")
+    SubUC-->>AppSubController: UsecaseResult
     AppSubController-->>Client: 201 Created { id, jobId }
 ```
 
@@ -282,8 +282,8 @@ sequenceDiagram
     SubRepo-->>Engine: AppSubscription
     Engine->>SubRepo: save(updatedSubscription [state=in_process])
     Engine->>JobRepo: save(newJob [type=unsubscribe])
-    Engine-->>SubUC: CommandResult(success, jobId, "")
-    SubUC-->>AppSubController: CommandResult
+    Engine-->>SubUC: UsecaseResult(success, jobId, "")
+    SubUC-->>AppSubController: UsecaseResult
     AppSubController-->>Client: 200 OK { jobId }
 ```
 
@@ -300,7 +300,7 @@ sequenceDiagram
     AppCtrl->>UC: registerApplication(tenantId, RegisterAppRequest)
     UC->>Repo: save(newApp)
     Repo-->>UC: ok
-    UC-->>AppCtrl: CommandResult(success, appId, "")
+    UC-->>AppCtrl: UsecaseResult(success, appId, "")
     AppCtrl-->>Client: 201 Created { id }
 ```
 

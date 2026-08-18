@@ -151,6 +151,6 @@ sequenceDiagram
     MC->>MUC: recordMetric(dto)
     MUC->>ARUC: evaluateRules(metric)
     ARUC->>AR: save(alert — ruleId, severity=warning)
-    MUC-->>MC: CommandResult(true, metricId)
+    MUC-->>MC: UsecaseResult(true, metricId)
     MC-->>Agent: 201 { id }
 ```

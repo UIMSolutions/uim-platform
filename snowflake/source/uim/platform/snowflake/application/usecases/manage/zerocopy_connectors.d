@@ -7,7 +7,7 @@ class ManageZerocopyConnectorsUseCase {
   protected IZerocopyConnectorRepository repo;
   this(IZerocopyConnectorRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateConnectorRequest r) {
+  UsecaseResult create(CreateConnectorRequest r) {
     ZerocopyConnector c;
     c.id = ZerocopyConnectorId(r.id.length > 0 ? r.id : currentTimestamp());
     c.tenantId = TenantId(r.tenantId);
@@ -18,9 +18,9 @@ class ManageZerocopyConnectorsUseCase {
     c.metadata = r.metadata;
     initEntity(c);
     auto err = SnowflakeValidator.validateConnector(c);
-    if (err !is null) return CommandResult(false, c.id.value, err);
+    if (err !is null) return UsecaseResult(false, c.id.value, err);
     repo.save(c);
-    return CommandResult(true, c.id.value, null);
+    return UsecaseResult(true, c.id.value, null);
   }
 
   ZerocopyConnector[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
@@ -31,30 +31,30 @@ class ManageZerocopyConnectorsUseCase {
     return repo.findById(TenantId(tenantId), ZerocopyConnectorId(id));
   }
 
-  CommandResult enroll(EnrollConnectorRequest r) {
+  UsecaseResult enroll(EnrollConnectorRequest r) {
     auto c = repo.findById(TenantId(r.tenantId), ZerocopyConnectorId(r.connectorId));
-    if (c.isNull) return CommandResult(false, r.connectorId, "Connector not found");
+    if (c.isNull) return UsecaseResult(false, r.connectorId, "Connector not found");
     c.status = ConnectorStatus.active;
     c.bdcTenantId = r.bdcTenantId;
     c.enrolledAt = currentTimestamp();
     repo.update(c);
-    return CommandResult(true, r.connectorId, null);
+    return UsecaseResult(true, r.connectorId, null);
   }
 
-  CommandResult update(UpdateConnectorRequest r) {
+  UsecaseResult update(UpdateConnectorRequest r) {
     auto c = repo.findById(TenantId(r.tenantId), ZerocopyConnectorId(r.id));
-    if (c.isNull) return CommandResult(false, r.id, "Connector not found");
+    if (c.isNull) return UsecaseResult(false, r.id, "Connector not found");
     if (r.name.length > 0) c.name = r.name;
     if (r.description.length > 0) c.description = r.description;
     if (r.status.length > 0) {  try { c.status = r.status.to!ConnectorStatus; } catch(Exception) {} }
     repo.update(c);
-    return CommandResult(true, c.id.value, null);
+    return UsecaseResult(true, c.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto c = repo.findById(TenantId(tenantId), ZerocopyConnectorId(id));
-    if (c.isNull) return CommandResult(false, id, "Connector not found");
+    if (c.isNull) return UsecaseResult(false, id, "Connector not found");
     repo.remove(TenantId(tenantId), ZerocopyConnectorId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

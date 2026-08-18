@@ -15,7 +15,7 @@ class ManageDataSourceConfigsUseCase {
 
   this(IDataSourceConfigRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateDataSourceConfigRequest r) {
+  UsecaseResult create(CreateDataSourceConfigRequest r) {
     auto cfg = DataSourceConfig.init(r.tenantId);
     cfg.id = DataSourceConfigId(r.id.length > 0 ? r.id : currentTimestamp());
     cfg.dataProductId = DataProductId(r.dataProductId);
@@ -28,10 +28,10 @@ class ManageDataSourceConfigsUseCase {
     cfg.disabledRuleIds = r.disabledRuleIds;
 
     auto err = ComposerValidator.validateDataSourceConfig(cfg);
-    if (err !is null) return CommandResult(false, cfg.id.value, err);
+    if (err !is null) return UsecaseResult(false, cfg.id.value, err);
 
     repo.save(cfg);
-    return CommandResult(true, cfg.id.value, null);
+    return UsecaseResult(true, cfg.id.value, null);
   }
 
   DataSourceConfig[] list(TenantId tenantId) {
@@ -46,9 +46,9 @@ class ManageDataSourceConfigsUseCase {
     return repo.findById(TenantId(tenantId), DataSourceConfigId(id));
   }
 
-  CommandResult update(UpdateDataSourceConfigRequest r) {
+  UsecaseResult update(UpdateDataSourceConfigRequest r) {
     auto cfg = repo.findById(TenantId(r.tenantId), DataSourceConfigId(r.id));
-    if (cfg.isNull) return CommandResult(false, r.id, "Config not found");
+    if (cfg.isNull) return UsecaseResult(false, r.id, "Config not found");
 
     if (r.qualityRank.length > 0) cfg.qualityRank = cast(DataQualityRank) r.qualityRank;
     cfg.timestampConfig = TimestampConfig(r.timestampFormat, r.timestampField, r.timestampCustomPattern);
@@ -56,12 +56,12 @@ class ManageDataSourceConfigsUseCase {
     cfg.disabledRuleIds = r.disabledRuleIds;
 
     repo.update(cfg);
-    return CommandResult(true, cfg.id.value, null);
+    return UsecaseResult(true, cfg.id.value, null);
   }
 
-  CommandResult addIdentifierMapping(AddIdentifierMappingRequest r) {
+  UsecaseResult addIdentifierMapping(AddIdentifierMappingRequest r) {
     auto cfg = repo.findById(TenantId(r.tenantId), DataSourceConfigId(r.configId));
-    if (cfg.isNull) return CommandResult(false, r.configId, "Config not found");
+    if (cfg.isNull) return UsecaseResult(false, r.configId, "Config not found");
 
     IdentifierMapping m;
     m.ruleId = r.ruleId;
@@ -74,13 +74,13 @@ class ManageDataSourceConfigsUseCase {
     cfg.identifierMappings = updated;
 
     repo.update(cfg);
-    return CommandResult(true, r.configId, null);
+    return UsecaseResult(true, r.configId, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto cfg = repo.findById(TenantId(tenantId), DataSourceConfigId(id));
-    if (cfg.isNull) return CommandResult(false, id, "Config not found");
+    if (cfg.isNull) return UsecaseResult(false, id, "Config not found");
     repo.remove(TenantId(tenantId), DataSourceConfigId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

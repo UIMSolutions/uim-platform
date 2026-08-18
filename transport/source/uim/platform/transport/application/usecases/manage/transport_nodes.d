@@ -34,7 +34,7 @@ class ManageTransportNodesUseCase {
         return repo.findByType(tenantId, nodeType);
     }
 
-    CommandResult createNode(TransportNodeDTO dto) {
+    UsecaseResult createNode(TransportNodeDTO dto) {
         TransportNode node;
         node.id = dto.nodeId;
         node.tenantId = dto.tenantId;
@@ -56,15 +56,15 @@ class ManageTransportNodesUseCase {
         }
         node.status = NodeStatus.enabled;
         if (!TransportValidator.isValidNode(node))
-            return CommandResult(false, "", "Invalid node: name is required");
+            return UsecaseResult(false, "", "Invalid node: name is required");
         repo.save(node);
-        return CommandResult(true, node.id.value, "");
+        return UsecaseResult(true, node.id.value, "");
     }
 
-    CommandResult updateNode(TransportNodeDTO dto) {
+    UsecaseResult updateNode(TransportNodeDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.nodeId);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport node not found");
+            return UsecaseResult(false, "", "Transport node not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.region.length > 0) existing.region = dto.region;
@@ -74,32 +74,32 @@ class ManageTransportNodesUseCase {
         existing.autoImportSchedule = dto.autoImportSchedule;
         existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult enableNode(TenantId tenantId, TransportNodeId id) {
+    UsecaseResult enableNode(TenantId tenantId, TransportNodeId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport node not found");
+            return UsecaseResult(false, "", "Transport node not found");
         existing.status = NodeStatus.enabled;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult disableNode(TenantId tenantId, TransportNodeId id) {
+    UsecaseResult disableNode(TenantId tenantId, TransportNodeId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport node not found");
+            return UsecaseResult(false, "", "Transport node not found");
         existing.status = NodeStatus.disabled;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteNode(TenantId tenantId, TransportNodeId id) {
+    UsecaseResult deleteNode(TenantId tenantId, TransportNodeId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport node not found");
+            return UsecaseResult(false, "", "Transport node not found");
         repo.remove(existing);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

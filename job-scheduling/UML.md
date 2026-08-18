@@ -101,11 +101,11 @@ sequenceDiagram
 
     Client->>JC: POST /jobs { name, action=http-call, actionConfig }
     JC->>JUC: createJob(dto)
-    JUC-->>JC: CommandResult(true, jobId)
+    JUC-->>JC: UsecaseResult(true, jobId)
     JC-->>Client: 201 { id }
 
     Client->>SC: POST /schedules { jobId, scheduleType=cron, cronExpression=0 * * * * }
     SC->>SUC: createSchedule(dto)
-    SUC-->>SC: CommandResult(true, schedId)
+    SUC-->>SC: UsecaseResult(true, schedId)
     SC-->>Client: 201 { id, nextRun }
 ```

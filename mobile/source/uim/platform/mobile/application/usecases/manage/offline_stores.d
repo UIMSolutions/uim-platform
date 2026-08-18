@@ -23,9 +23,9 @@ class ManageOfflineStoresUseCase {
         this.repo = repo;
     }
 
-    CommandResult createOfflineStore(CreateOfflineStoreRequest r) {
+    UsecaseResult createOfflineStore(CreateOfflineStoreRequest r) {
         if (!OfflineSyncService.validateStoreName(r.name))
-            return CommandResult(false, "", "Invalid store name");
+            return UsecaseResult(false, "", "Invalid store name");
 
         auto store = OfflineStore(r.tenantId); //, UserId("test-user"));
         store.appId = r.appId;
@@ -40,13 +40,13 @@ class ManageOfflineStoresUseCase {
         // TODO: ? store.status = OfflineStoreStatus.active;
 
         repo.save(store);
-        return CommandResult(true, store.id.value, "");
+        return UsecaseResult(true, store.id.value, "");
     }
 
-    CommandResult updateOfflineStore(UpdateOfflineStoreRequest r) {
+    UsecaseResult updateOfflineStore(UpdateOfflineStoreRequest r) {
         auto store = repo.findById(r.tenantId, r.storeId);
         if (store.isNull)
-            return CommandResult(false, "", "Offline store not found");
+            return UsecaseResult(false, "", "Offline store not found");
 
         // TODO: ? if (r.description.length > 0) store.description = r.description;
         // TODO: ? if (r.syncPolicy.length > 0) store.syncPolicy = r.syncPolicy;
@@ -56,7 +56,7 @@ class ManageOfflineStoresUseCase {
         store.updatedAt = currentTimestamp();
         // TODO: ? store.updatedBy = r.updatedBy;
         repo.update(store);
-        return CommandResult(true, store.id.value, "");
+        return UsecaseResult(true, store.id.value, "");
     }
 
     OfflineStore getOfflineStore(TenantId tenantId, OfflineStoreId id) {
@@ -71,13 +71,13 @@ class ManageOfflineStoresUseCase {
         return repo.findByApp(tenantId, appId);
     }
 
-    CommandResult deleteOfflineStore(TenantId tenantId, OfflineStoreId id) {
+    UsecaseResult deleteOfflineStore(TenantId tenantId, OfflineStoreId id) {
         auto store = repo.findById(tenantId, id);
         if (store.isNull)
-            return CommandResult(false, "", "Offline store not found");
+            return UsecaseResult(false, "", "Offline store not found");
             
         repo.remove(store);
-        return CommandResult(true, store.id.value, "");
+        return UsecaseResult(true, store.id.value, "");
     }
 
     size_t countOfflineStoresByApp(TenantId tenantId, MobileAppId appId) {

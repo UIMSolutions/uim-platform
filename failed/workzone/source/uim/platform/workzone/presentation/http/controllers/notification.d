@@ -86,7 +86,7 @@ class NotificationController : ManageHttpController {
       return precheck;
 
     auto status = precheck.data.getString("status", "");
-    CommandResult result;
+    UsecaseResult result;
     if (status == "read")
       result = useCase.markNotificationAsRead(precheck.tenantId, NotificationId(precheck.id));
     else if (status == "dismissed")

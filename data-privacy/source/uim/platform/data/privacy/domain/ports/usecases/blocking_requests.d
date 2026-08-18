@@ -17,11 +17,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageBlockingRequestsUseCase { 
 
-  CommandResult createRequest(CreateBlockingRequest req);
+  UsecaseResult createRequest(CreateBlockingRequest req);
   BlockingRequest getRequest(TenantId tenantId, BlockingRequestId id);
   BlockingRequest[] listRequests(TenantId tenantId);
   BlockingRequest[] listByStatus(TenantId tenantId, BlockingStatus status);
-  CommandResult updateStatus(UpdateBlockingStatusRequest req);
-  CommandResult deleteRequest(TenantId tenantId, BlockingRequestId id);
+  UsecaseResult updateStatus(UpdateBlockingStatusRequest req);
+  UsecaseResult deleteRequest(TenantId tenantId, BlockingRequestId id);
   
 }

@@ -18,13 +18,13 @@ class ManageCustomMetricsUseCase {
     this.repo = repo;
   }
 
-  CommandResult submit(SubmitCustomMetricRequest r) {
+  UsecaseResult submit(SubmitCustomMetricRequest r) {
     import std.random : uniform;
 
     if (r.metricname.isEmpty)
-      return CommandResult(false, "", "metricName is required");
+      return UsecaseResult(false, "", "metricName is required");
     if (r.appId.length == 0)
-      return CommandResult(false, "", "appId is required");
+      return UsecaseResult(false, "", "appId is required");
 
     auto id  = "cm-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
     auto now = r.timestamp > 0 ? r.timestamp : currentTimestamp;
@@ -38,7 +38,7 @@ class ManageCustomMetricsUseCase {
     m.timestamp  = now;
 
     repo.save(m);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 
   CustomMetricEntity[] getMetrics(AppBindingId appId, string metricName = "") {

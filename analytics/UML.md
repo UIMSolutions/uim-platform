@@ -83,12 +83,12 @@ classDiagram
   class ManageAssetsUseCase {
     -AssetRepository repository
     -AnalyticsValidator validator
-    +CommandResult createAsset(CreateAssetRequest)
+    +UsecaseResult createAsset(CreateAssetRequest)
     +InsightAsset[] listAssets(string tenantId)
     +InsightAsset getAsset(string tenantId, string id)
-    +CommandResult updateAsset(UpdateAssetRequest)
-    +CommandResult deleteAsset(string tenantId, string id)
-    +CommandResult publishAsset(string tenantId, string id)
+    +UsecaseResult updateAsset(UpdateAssetRequest)
+    +UsecaseResult deleteAsset(string tenantId, string id)
+    +UsecaseResult publishAsset(string tenantId, string id)
   }
 
   class AssetRepository
@@ -119,7 +119,7 @@ sequenceDiagram
   V-->>UC: ok
   UC->>R: save(asset)
   R-->>UC: id
-  UC-->>C: CommandResult(success,id)
+  UC-->>C: UsecaseResult(success,id)
   C-->>U: 201 Created + JSON
 ```
 

@@ -28,9 +28,9 @@ class ManageServicePlansUseCase {
         return repo.findAvailable(tenantId);
     }
 
-    CommandResult createServicePlan(ServicePlanDTO dto) {
+    UsecaseResult createServicePlan(ServicePlanDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Plan name already exists");
+            return UsecaseResult(false, "", "Plan name already exists");
 
         auto e = ServicePlan(dto.tenantId); //, UserId("test-user"));
         e.id = dto.servicePlanId;
@@ -45,29 +45,29 @@ class ManageServicePlansUseCase {
         e.pricingUnit = dto.pricingUnit;
 
         if (e.name.isEmpty)
-            return CommandResult(false, "", "name is required");
+            return UsecaseResult(false, "", "name is required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateServicePlan(ServicePlanDTO dto) {
+    UsecaseResult updateServicePlan(ServicePlanDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.servicePlanId);
         if (existing.isNull)
-            return CommandResult(false, "", "Plan not found");
+            return UsecaseResult(false, "", "Plan not found");
         if (dto.description.length > 0) existing.description = dto.description;
         existing.available = dto.available;
         if (dto.memoryGb > 0) existing.memoryGb = dto.memoryGb;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
+    UsecaseResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Plan not found");
+            return UsecaseResult(false, "", "Plan not found");
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

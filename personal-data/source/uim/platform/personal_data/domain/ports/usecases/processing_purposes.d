@@ -13,10 +13,10 @@ mixin(ShowModule!());
 
 interface IManageProcessingPurposesUseCase { 
 
-    CommandResult createProcessingPurpose(CreateProcessingPurposeRequest r);
+    UsecaseResult createProcessingPurpose(CreateProcessingPurposeRequest r);
     ProcessingPurpose getProcessingPurpose(TenantId tenantId, ProcessingPurposeId id);
     ProcessingPurpose[] listProcessingPurposes(TenantId tenantId);
-    CommandResult updateProcessingPurpose(UpdateProcessingPurposeRequest r);
-    CommandResult deleteProcessingPurpose(TenantId tenantId, ProcessingPurposeId id);
+    UsecaseResult updateProcessingPurpose(UpdateProcessingPurposeRequest r);
+    UsecaseResult deleteProcessingPurpose(TenantId tenantId, ProcessingPurposeId id);
 
 }

@@ -19,16 +19,16 @@ class ManageDeploymentsUseCase {
     this.configurations = configurations;
   }
 
-  CommandResult createDeployment(CreateDeploymentRequest r) {
+  UsecaseResult createDeployment(CreateDeploymentRequest r) {
     if (r.configurationId.isEmpty)
-      return CommandResult(false, "", "Configuration ID is required");
+      return UsecaseResult(false, "", "Configuration ID is required");
       
     if (r.resourceGroupId.isEmpty)
-      return CommandResult(false, "", "Resource group ID is required");
+      return UsecaseResult(false, "", "Resource group ID is required");
 
     auto conf = configurations.findById(r.tenantId, r.resourceGroupId, r.configurationId);
     if (conf.isNull)
-      return CommandResult(false, "", "Configuration not found");
+      return UsecaseResult(false, "", "Configuration not found");
 
     auto d = Deployment(r.tenantId, r.deploymentId.isNull ? DeploymentId(createId()) : r.deploymentId); // , r.createdBy);
     d.resourceGroupId = r.resourceGroupId;
@@ -40,13 +40,13 @@ class ManageDeploymentsUseCase {
     d.ttl = r.ttl;
 
     deployments.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
-  CommandResult patchDeployment(PatchDeploymentRequest request) {
+  UsecaseResult patchDeployment(PatchDeploymentRequest request) {
     auto d = deployments.findById(request.tenantId, request.resourceGroupId, request.deploymentId);
     if (d.isNull)
-      return CommandResult(false, "", "Deployment not found");
+      return UsecaseResult(false, "", "Deployment not found");
 
     if (request.targetStatus.length > 0) {
       TargetStatus target;
@@ -57,10 +57,10 @@ class ManageDeploymentsUseCase {
       else if (request.targetStatus == "deleted")
         target = TargetStatus.deleted_;
       else
-        return CommandResult(false, "", "Invalid target status");
+        return UsecaseResult(false, "", "Invalid target status");
 
       if (!ExecutionScheduler.canTransitionDeployment(d.status, target))
-        return CommandResult(false, "", "Cannot transition to target status from current status");
+        return UsecaseResult(false, "", "Cannot transition to target status from current status");
 
       d.targetStatus = target;
       if (target == TargetStatus.stopped)
@@ -82,7 +82,7 @@ class ManageDeploymentsUseCase {
     d.updatedAt = currentTimestamp;
 
     deployments.update(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
   Deployment getDeployment(TenantId tenantId, ResourceGroupId rgId, DeploymentId deploymentId) {
@@ -101,13 +101,13 @@ class ManageDeploymentsUseCase {
     return deployments.findByStatus(tenantId, rgId, status);
   }
 
-  CommandResult deleteDeployment(TenantId tenantId, ResourceGroupId rgId, DeploymentId deploymentId) {
+  UsecaseResult deleteDeployment(TenantId tenantId, ResourceGroupId rgId, DeploymentId deploymentId) {
     auto entity = deployments.findById(tenantId, rgId, deploymentId);
     if (entity.isNull)
-      return CommandResult(false, "", "Deployment not found");
+      return UsecaseResult(false, "", "Deployment not found");
 
     deployments.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t count(TenantId tenantId, ResourceGroupId rgId) {

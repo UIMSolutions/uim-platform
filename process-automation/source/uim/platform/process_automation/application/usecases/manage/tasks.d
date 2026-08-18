@@ -17,10 +17,10 @@ class ManageTasksUseCase {
         this.repo = repo;
     }
 
-    CommandResult createTask(CreateTaskRequest r) {
+    UsecaseResult createTask(CreateTaskRequest r) {
         auto err = ProcessValidator.validateTask(r.tenantId, r.taskId, r.name, r.assignee);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         auto t = repo.findById(r.tenantId, r.taskId);
         t.id = r.taskId;
@@ -35,7 +35,7 @@ class ManageTasksUseCase {
         t.dueDate = r.dueDate;
 
         repo.save(t);
-        return CommandResult(true, t.id.value, "");
+        return UsecaseResult(true, t.id.value, "");
     }
 
     PATask getTask(TenantId tenantId, TaskId id) {
@@ -54,25 +54,25 @@ class ManageTasksUseCase {
         return repo.findByProcessInstance(tenantId, instanceId);
     }
 
-    CommandResult claimTask(ClaimTaskRequest r) {
+    UsecaseResult claimTask(ClaimTaskRequest r) {
         auto existing = repo.findById(r.tenantId, r.taskId);
         if (existing.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         if (existing.status != TaskStatus.ready)
-            return CommandResult(false, "", "Task cannot be claimed in current state");
+            return UsecaseResult(false, "", "Task cannot be claimed in current state");
 
         existing.assignee = r.userId.value;
         existing.status = TaskStatus.reserved;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult completeTask(CompleteTaskRequest r) {
+    UsecaseResult completeTask(CompleteTaskRequest r) {
         auto existing = repo.findById(r.tenantId, r.taskId);
         if (existing.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         existing.status = TaskStatus.completed;
         existing.completedBy = r.completedBy;
@@ -83,13 +83,13 @@ class ManageTasksUseCase {
         existing.completedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult updateTask(UpdateTaskRequest r) {
+    UsecaseResult updateTask(UpdateTaskRequest r) {
         auto task = repo.findById(r.tenantId, r.taskId);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         task.name = r.name;
         task.description = r.description;
@@ -97,15 +97,15 @@ class ManageTasksUseCase {
         task.dueDate = r.dueDate;
 
         repo.update(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 
-    CommandResult deleteTask(TenantId tenantId, TaskId taskId) {
+    UsecaseResult deleteTask(TenantId tenantId, TaskId taskId) {
         auto task = repo.findById(tenantId, taskId);
         if (task.isNull)
-            return CommandResult(false, "", "Task not found");
+            return UsecaseResult(false, "", "Task not found");
 
         repo.remove(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 }

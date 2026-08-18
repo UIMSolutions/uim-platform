@@ -22,12 +22,12 @@ class ManageBuildJobsUseCase {
     _pipelineRepo = pipelineRepo;
   }
 
-  CommandResult trigger(TenantId tenantId, TriggerBuildRequest req) {
+  UsecaseResult trigger(TenantId tenantId, TriggerBuildRequest req) {
     auto pipeline = _pipelineRepo.findById(tenantId, PipelineId(req.pipelineId));
     if (pipeline.isNull)
-      return CommandResult(false, "", "Pipeline not found");
+      return UsecaseResult(false, "", "Pipeline not found");
     if (!pipeline.isActive)
-      return CommandResult(false, "", "Pipeline is not active");
+      return UsecaseResult(false, "", "Pipeline is not active");
 
     auto job = BuildJob(tenantId);
     job.pipelineId   = PipelineId(req.pipelineId);
@@ -40,7 +40,7 @@ class ManageBuildJobsUseCase {
     job.triggeredBy  = req.triggeredBy;
 
     _repo.save(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
   BuildJob getById(TenantId tenantId, string id) {
@@ -59,14 +59,14 @@ class ManageBuildJobsUseCase {
     return _repo.findByProject(tenantId, projectId);
   }
 
-  CommandResult updateStatus(TenantId tenantId, string id, string statusStr) {
+  UsecaseResult updateStatus(TenantId tenantId, string id, string statusStr) {
     auto job = _repo.findById(tenantId, BuildJobId(id));
-    if (job.isNull) return CommandResult(false, "", "Build job not found");
+    if (job.isNull) return UsecaseResult(false, "", "Build job not found");
     static foreach (member; __traits(allMembers, JobStatus)) {
       if (statusStr == mixin("JobStatus." ~ member ~ ".to!string"))
         job.status = mixin("JobStatus." ~ member);
     }
     _repo.update(job);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

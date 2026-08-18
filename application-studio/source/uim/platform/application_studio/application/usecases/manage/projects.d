@@ -30,7 +30,7 @@ class ManageProjectsUseCase {
         return projects.findByDevSpace(tenantId, devSpaceId);
     }
 
-    CommandResult createProject(ProjectDTO dto) {
+    UsecaseResult createProject(ProjectDTO dto) {
         Project e;
 
         e.id = dto.projectId;
@@ -45,16 +45,16 @@ class ManageProjectsUseCase {
         e.namespace_ = dto.namespace_;
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidProject(e))
-            return CommandResult(false, "", "Invalid project data");
+            return UsecaseResult(false, "", "Invalid project data");
 
         projects.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateProject(ProjectDTO dto) {
+    UsecaseResult updateProject(ProjectDTO dto) {
         auto existing = projects.findById(dto.tenantId, dto.projectId);
         if (existing.isNull)
-            return CommandResult(false, "", "Project not found");
+            return UsecaseResult(false, "", "Project not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -63,15 +63,15 @@ class ManageProjectsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         projects.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProject(TenantId tenantId, ProjectId id) {
+    UsecaseResult deleteProject(TenantId tenantId, ProjectId id) {
         auto project = projects.findById(tenantId, id);
         if (project.isNull)
-            return CommandResult(false, "", "Project not found");
+            return UsecaseResult(false, "", "Project not found");
 
         projects.remove(project);
-        return CommandResult(true, project.id.value, "");
+        return UsecaseResult(true, project.id.value, "");
     }
 }

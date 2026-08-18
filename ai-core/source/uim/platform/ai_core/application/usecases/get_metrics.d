@@ -20,11 +20,11 @@ class GetMetricsUseCase {
     this.repo = repo;
   }
 
-  CommandResult patchMetric(PatchMetricsRequest r) {
+  UsecaseResult patchMetric(PatchMetricsRequest r) {
     if (r.executionId.isEmpty)
-      return CommandResult(false, "", "Execution ID is required");
+      return UsecaseResult(false, "", "Execution ID is required");
     if (r.resourceGroupId.isEmpty)
-      return CommandResult(false, "", "Resource group ID is required");
+      return UsecaseResult(false, "", "Resource group ID is required");
 
     auto metric = Metric(r.tenantId);
     metric.resourceGroupId = r.resourceGroupId;
@@ -68,7 +68,7 @@ class GetMetricsUseCase {
     metric.customInfo = info;
 
     repo.save(metric);
-    return CommandResult(true,  metric.id.value, "");
+    return UsecaseResult(true,  metric.id.value, "");
   }
 
   Metric[] listMetrics(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId) {
@@ -79,13 +79,13 @@ class GetMetricsUseCase {
     return repo.findById(tenantId, rgId, id);
   }
 
-  CommandResult deleteMetric(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
+  UsecaseResult deleteMetric(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
     auto metric = repo.findById(tenantId, rgId, id);
     if (metric.isNull)
-      return CommandResult(false, "", "Metric not found");
+      return UsecaseResult(false, "", "Metric not found");
 
     repo.remove(metric);
-    return CommandResult(true, metric.id.value, "");
+    return UsecaseResult(true, metric.id.value, "");
   }
 }
 

@@ -7,7 +7,7 @@ class ManageSnowflakeRolesUseCase {
   protected ISnowflakeRoleRepository repo;
   this(ISnowflakeRoleRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateRoleRequest r) {
+  UsecaseResult create(CreateRoleRequest r) {
     SnowflakeRole role;
     role.id = SnowflakeRoleId(r.id.length > 0 ? r.id : currentTimestamp());
     role.tenantId = TenantId(r.tenantId);
@@ -16,9 +16,9 @@ class ManageSnowflakeRolesUseCase {
     role.privileges = r.privileges; role.active = true;
     initEntity(role);
     auto err = SnowflakeValidator.validateRole(role);
-    if (err !is null) return CommandResult(false, role.id.value, err);
+    if (err !is null) return UsecaseResult(false, role.id.value, err);
     repo.save(role);
-    return CommandResult(true, role.id.value, null);
+    return UsecaseResult(true, role.id.value, null);
   }
 
   SnowflakeRole[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
@@ -29,20 +29,20 @@ class ManageSnowflakeRolesUseCase {
     return repo.findById(TenantId(tenantId), SnowflakeRoleId(id));
   }
 
-  CommandResult update(UpdateRoleRequest r) {
+  UsecaseResult update(UpdateRoleRequest r) {
     auto role = repo.findById(TenantId(r.tenantId), SnowflakeRoleId(r.id));
-    if (role.isNull) return CommandResult(false, r.id, "Role not found");
+    if (role.isNull) return UsecaseResult(false, r.id, "Role not found");
     if (r.description.length > 0) role.description = r.description;
     if (r.privileges.length > 0) role.privileges = r.privileges;
     role.active = r.active;
     repo.update(role);
-    return CommandResult(true, role.id.value, null);
+    return UsecaseResult(true, role.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto role = repo.findById(TenantId(tenantId), SnowflakeRoleId(id));
-    if (role.isNull) return CommandResult(false, id, "Role not found");
+    if (role.isNull) return UsecaseResult(false, id, "Role not found");
     repo.remove(TenantId(tenantId), SnowflakeRoleId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

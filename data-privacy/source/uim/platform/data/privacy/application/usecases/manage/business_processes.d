@@ -17,11 +17,11 @@ class ManageBusinessProcessesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createProcess(CreateBusinessProcessRequest req) {
+  UsecaseResult createProcess(CreateBusinessProcessRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto p = BusinessProcess(req.tenantId);
     p.name = req.name;
@@ -33,7 +33,7 @@ class ManageBusinessProcessesUseCase {
     p.isActive = true;
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   BusinessProcess getProcess(TenantId tenantId, BusinessProcessId id) {
@@ -44,10 +44,10 @@ class ManageBusinessProcessesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateProcess(UpdateBusinessProcessRequest req) {
+  UsecaseResult updateProcess(UpdateBusinessProcessRequest req) {
     auto p = repo.findById(req.tenantId, req.processId);
     if (p.isNull)
-      return CommandResult(false, "", "Business process not found");
+      return UsecaseResult(false, "", "Business process not found");
 
     if (req.name.length > 0)
       p.name = req.name;
@@ -62,15 +62,15 @@ class ManageBusinessProcessesUseCase {
     p.updatedAt = currentTimestamp();
 
     repo.update(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult deleteProcess(TenantId tenantId, BusinessProcessId id) {
+  UsecaseResult deleteProcess(TenantId tenantId, BusinessProcessId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Business process not found");
+      return UsecaseResult(false, "", "Business process not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }

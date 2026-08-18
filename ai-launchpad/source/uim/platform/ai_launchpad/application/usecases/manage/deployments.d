@@ -21,7 +21,7 @@ class ManageDeploymentsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDeployment(CreateDeploymentRequest r) {
+  UsecaseResult createDeployment(CreateDeploymentRequest r) {
     auto d = Deployment(r.tenantId);
     d.connectionId = r.connectionId;
     d.configurationId = r.configurationId;
@@ -30,7 +30,7 @@ class ManageDeploymentsUseCase {
     d.status = DeploymentStatus.pending;
 
     repo.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
   Deployment getDeployment(TenantId tenantId, ConnectionId connectionId, DeploymentId id) {
@@ -45,10 +45,10 @@ class ManageDeploymentsUseCase {
     return repo.findByScenario(tenantId, connectionId, scenarioId);
   }
 
-  CommandResult patchDeployment(PatchDeploymentRequest r) {
+  UsecaseResult patchDeployment(PatchDeploymentRequest r) {
     auto d = repo.findById(r.tenantId, r.connectionId, r.deploymentId);
     if (d.isNull)
-      return CommandResult(false, "", "Deployment not found");
+      return UsecaseResult(false, "", "Deployment not found");
 
     d.targetStatus = r.targetStatus;
     if (r.targetStatus == "stopped")
@@ -62,11 +62,11 @@ class ManageDeploymentsUseCase {
     d.updatedAt = currentTimestamp();
 
     repo.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
-  CommandResult[] bulkPatchDeployments(BulkPatchDeploymentRequest r) {
-    CommandResult[] results;
+  UsecaseResult[] bulkPatchDeployments(BulkPatchDeploymentRequest r) {
+    UsecaseResult[] results;
     foreach (did; r.deploymentIds) {
       PatchDeploymentRequest pr;
       pr.tenantId = r.tenantId;
@@ -78,12 +78,12 @@ class ManageDeploymentsUseCase {
     return results;
   }
 
-  CommandResult deleteDeployment(TenantId tenantId, ConnectionId connectionId, DeploymentId id) {
+  UsecaseResult deleteDeployment(TenantId tenantId, ConnectionId connectionId, DeploymentId id) {
     auto deployment = repo.findById(tenantId, connectionId, id);
     if (deployment.isNull)
-      return CommandResult(false, "", "Deployment not found");
+      return UsecaseResult(false, "", "Deployment not found");
 
     repo.remove(deployment);
-    return CommandResult(true, deployment.id.value, "");
+    return UsecaseResult(true, deployment.id.value, "");
   }
 }

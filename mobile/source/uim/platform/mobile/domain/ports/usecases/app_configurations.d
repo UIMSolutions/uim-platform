@@ -18,12 +18,12 @@ import uim.platform.mobile;
 interface IManageAppConfigurationsUseCase { 
 
     /// Creates a new app configuration for the specified tenant and app.
-    /// Returns a CommandResult indicating the success or failure of the operation.
-    CommandResult createAppConfiguration(CreateAppConfigRequest r);
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
+    UsecaseResult createAppConfiguration(CreateAppConfigRequest r);
 
     /// Updates an existing app configuration for the specified tenant and app.
-    /// Returns a CommandResult indicating the success or failure of the operation.
-    CommandResult updateAppConfiguration(UpdateAppConfigRequest r);
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
+    UsecaseResult updateAppConfiguration(UpdateAppConfigRequest r);
 
     /// Gets an app configuration by its ID for the specified tenant.
     /// Returns the AppConfiguration if found, or null if not found.
@@ -42,11 +42,11 @@ interface IManageAppConfigurationsUseCase {
     AppConfiguration[] listAppConfigurations(TenantId tenantId, MobileAppId appId);
 
     /// Deletes an app configuration by its ID for the specified tenant.
-    /// Returns a CommandResult indicating the success or failure of the operation.
-    CommandResult deleteAppConfiguration(TenantId tenantId, AppConfigurationId id);
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
+    UsecaseResult deleteAppConfiguration(TenantId tenantId, AppConfigurationId id);
 
     /// Deletes an app configuration by its key for the specified tenant and app.
-    /// Returns a CommandResult indicating the success or failure of the operation.
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
     size_t countAppConfigurationsByApp(TenantId tenantId, MobileAppId appId);
 
 }

@@ -17,11 +17,11 @@ class ManageRetentionRulesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createRetentionRule(CreateRetentionRuleRequest req) {
+    UsecaseResult createRetentionRule(CreateRetentionRuleRequest req) {
         import std.uuid : randomUUID;
 
         if (req.duration <= 0)
-            return CommandResult(false, "", "Duration must be positive");
+            return UsecaseResult(false, "", "Duration must be positive");
 
         RetentionRule rr;
         rr.id = RetentionRuleId(generateId);
@@ -36,13 +36,13 @@ class ManageRetentionRulesUseCase {
         rr.createdAt = clockSeconds();
 
         repo.save(rr);
-        return CommandResult(true, rr.id.value, "");
+        return UsecaseResult(true, rr.id.value, "");
     }
 
-    CommandResult updateRetentionRule(UpdateRetentionRuleRequest req) {
+    UsecaseResult updateRetentionRule(UpdateRetentionRuleRequest req) {
         auto rule = repo.findById(req.tenantId, req.ruleId);
         if (rule.isNull)
-            return CommandResult(false, "", "Retention rule not found");
+            return UsecaseResult(false, "", "Retention rule not found");
 
         if (req.duration > 0)
             rule.duration = req.duration;
@@ -54,7 +54,7 @@ class ManageRetentionRulesUseCase {
         rule.updatedAt = clockSeconds();
 
         repo.update(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
     bool hasById(TenantId tenantId, RetentionRuleId id) {
@@ -73,13 +73,13 @@ class ManageRetentionRulesUseCase {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
 
-    CommandResult deleteRetentionRule(TenantId tenantId, RetentionRuleId id) {
+    UsecaseResult deleteRetentionRule(TenantId tenantId, RetentionRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
-            return CommandResult(false, "", "Retention rule not found");
+            return UsecaseResult(false, "", "Retention rule not found");
 
         repo.remove(rule);
-        return CommandResult(true, rule.id.value, "");
+        return UsecaseResult(true, rule.id.value, "");
     }
 
     private static DeletionActionType toDeletionActionType(string s) {

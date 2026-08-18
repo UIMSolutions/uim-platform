@@ -18,7 +18,7 @@ class ManageAppBindingsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createBinding(CreateAppBindingRequest r) {    
+  UsecaseResult createBinding(CreateAppBindingRequest r) {    
     import std.random : uniform;
     auto id  = "bind-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
 
@@ -31,41 +31,41 @@ class ManageAppBindingsUseCase {
     binding.boundAt           = binding.createdAt;
 
     repo.save(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 
-  CommandResult updateBinding(UpdateAppBindingRequest r) {
+  UsecaseResult updateBinding(UpdateAppBindingRequest r) {
     auto existing = repo.findById(r.tenamtId, r.bindingId);
     if (existing.isNull)
-      return CommandResult(false, "", "Binding not found");
+      return UsecaseResult(false, "", "Binding not found");
 
     existing.currentInstances = r.currentInstances;
     existing.updatedAt        = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteBinding(TenantId tenantId, AppBindingId id) {
+  UsecaseResult deleteBinding(TenantId tenantId, AppBindingId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Binding not found");
+      return UsecaseResult(false, "", "Binding not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult attachPolicy(TenantId tenantId, AppBindingId bindingId, ScalingPolicyId policyId) {
+  UsecaseResult attachPolicy(TenantId tenantId, AppBindingId bindingId, ScalingPolicyId policyId) {
     auto existing = repo.findById(tenantId, bindingId);
     if (existing.isNull)
-      return CommandResult(false, "", "Binding not found");
+      return UsecaseResult(false, "", "Binding not found");
 
     
     existing.policyId   = policyId;
     existing.updatedAt  = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   AppBinding getBinding(TenantId tenantId, AppBindingId id) {

@@ -20,11 +20,11 @@ class ManageCleansingJobsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createCleansingJob(CreateCleansingJobRequest req) {
+  UsecaseResult createCleansingJob(CreateCleansingJobRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.datasetId.isEmpty)
-      return CommandResult(false, "", "Dataset ID is required");
+      return UsecaseResult(false, "", "Dataset ID is required");
 
     auto job = CleansingJob(req.tenantId);
     job.datasetId = req.datasetId;
@@ -33,7 +33,7 @@ class ManageCleansingJobsUseCase {
     job.ruleIds = req.ruleIds;
 
     repo.save(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
   CleansingJob getCleansingJob(TenantId tenantId, CleansingJobId jobId) {

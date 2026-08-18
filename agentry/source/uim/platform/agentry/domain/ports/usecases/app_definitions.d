@@ -18,8 +18,8 @@ interface IManageAppDefinitionsUseCase {
     AppDefinition[] listDefinitions(TenantId tenantId, MobileApplicationId appId);
     AppDefinition[] listByStatus(TenantId tenantId, DefinitionStatus status);
     AppDefinition getDefinition(TenantId tenantId, AppDefinitionId id);
-    CommandResult createDefinition(AppDefinitionDTO dto);
-    CommandResult updateDefinition(AppDefinitionDTO dto);
-    CommandResult deleteDefinition(TenantId tenantId, AppDefinitionId id);
+    UsecaseResult createDefinition(AppDefinitionDTO dto);
+    UsecaseResult updateDefinition(AppDefinitionDTO dto);
+    UsecaseResult deleteDefinition(TenantId tenantId, AppDefinitionId id);
 
 }

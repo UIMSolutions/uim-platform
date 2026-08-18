@@ -38,7 +38,7 @@ class ManageDevicesUseCase {
         return repo.findByGroup(tenantId, groupName);
     }
 
-    CommandResult enrollDevice(DeviceDTO dto) {
+    UsecaseResult enrollDevice(DeviceDTO dto) {
         auto device = Device(dto.tenantId, dto.deviceId, dto.createdBy);
         device.mobileApplicationId = dto.applicationId;
         device.deviceName = dto.deviceName;
@@ -54,16 +54,16 @@ class ManageDevicesUseCase {
         device.mdmDeviceId = dto.mdmDeviceId;
 
         if (!AgentryValidator.isValidDevice(device))
-            return CommandResult(false, "", "Invalid device data");
+            return UsecaseResult(false, "", "Invalid device data");
 
         repo.save(device);
-        return CommandResult(true, device.id.value, "");
+        return UsecaseResult(true, device.id.value, "");
     }
 
-    CommandResult updateDevice(DeviceDTO dto) {
+    UsecaseResult updateDevice(DeviceDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.deviceId);
         if (existing.isNull)
-            return CommandResult(false, "", "Device not found");
+            return UsecaseResult(false, "", "Device not found");
 
         if (dto.appVersionInstalled.length > 0) existing.appVersionInstalled = dto.appVersionInstalled;
         if (dto.osVersion.length > 0) existing.osVersion = dto.osVersion;
@@ -72,16 +72,16 @@ class ManageDevicesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult removeDevice(TenantId tenantId, DeviceId id) {
+    UsecaseResult removeDevice(TenantId tenantId, DeviceId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Device not found");
+            return UsecaseResult(false, "", "Device not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

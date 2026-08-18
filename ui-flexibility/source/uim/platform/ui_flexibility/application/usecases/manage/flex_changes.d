@@ -17,7 +17,7 @@ class ManageFlexChangesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createChange(CreateFlexChangeRequest r) {
+  UsecaseResult createChange(CreateFlexChangeRequest r) {
     auto c = FlexChange();
     c.id_ = r.changeId;
     c.tenant_ = r.tenantId;
@@ -38,16 +38,16 @@ class ManageFlexChangesUseCase {
 
     auto err = FlexValidator.validateFlexChange(c);
     if (err !is null)
-      return CommandResult(false, null, err);
+      return UsecaseResult(false, null, err);
 
     repo.save(r.tenantId, c);
-    return CommandResult(true, c.id_.value, "FlexChange created successfully.");
+    return UsecaseResult(true, c.id_.value, "FlexChange created successfully.");
   }
 
-  CommandResult updateChange(UpdateFlexChangeRequest r) {
+  UsecaseResult updateChange(UpdateFlexChangeRequest r) {
     auto existing = repo.findById(r.tenantId, r.changeId);
     if (existing.isNull)
-      return CommandResult(false, null, "FlexChange not found");
+      return UsecaseResult(false, null, "FlexChange not found");
     existing.selector_ = r.selector_;
     existing.content_ = r.content_;
     existing.reference_ = r.reference_;
@@ -55,7 +55,7 @@ class ManageFlexChangesUseCase {
     existing.isActive_ = r.isActive_;
     existing.updatedAtTicks_ = MonoTime.currTime.ticks;
     repo.update(r.tenantId, existing);
-    return CommandResult(true, existing.id_.value, "FlexChange updated successfully.");
+    return UsecaseResult(true, existing.id_.value, "FlexChange updated successfully.");
   }
 
   FlexChange getChange(TenantId tenantId, FlexChangeId id) {
@@ -74,13 +74,13 @@ class ManageFlexChangesUseCase {
     return repo.findByLayer(tenantId, appId, layer);
   }
 
-  CommandResult deleteChange(TenantId tenantId, FlexChangeId id) {
+  UsecaseResult deleteChange(TenantId tenantId, FlexChangeId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, null, "FlexChange not found");
+      return UsecaseResult(false, null, "FlexChange not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id_.value, "FlexChange deleted successfully.");
+    return UsecaseResult(true, existing.id_.value, "FlexChange deleted successfully.");
   }
 
   long countChanges(TenantId tenantId) {

@@ -214,7 +214,7 @@ participant "IaaS Provider\n(Azure/AWS/GCP)" as IaaS
 Admin -> Ctrl : POST /api/v1/service-instances\n{name, resourceId, iaasProvider}
 Ctrl -> UC : createInstance(req)
 UC -> IR : save(ServiceInstance{status=pending})
-UC --> Ctrl : CommandResult{id}
+UC --> Ctrl : UsecaseResult{id}
 Ctrl --> Admin : 201 Created {id}
 
 == Create Private Endpoint ==
@@ -224,7 +224,7 @@ UC -> IR : findById(serviceInstanceId)
 IR --> UC : ServiceInstance
 UC -> ER : save(PrivateEndpoint{status=pendingAcceptance})
 UC -> IR : update(instance{status=provisioning})
-UC --> Ctrl : CommandResult{endpointId}
+UC --> Ctrl : UsecaseResult{endpointId}
 Ctrl --> Admin : 201 Created {id}
 
 == IaaS Approves Connection ==
@@ -232,7 +232,7 @@ IaaS -> Ctrl : POST /api/v1/private-endpoints/:id/approve\n{providerEndpointId, 
 Ctrl -> UC : approveEndpoint(req)
 UC -> ER : update(endpoint{status=approved, hostname, ip, port})
 UC -> IR : update(instance{status=ready})
-UC --> Ctrl : CommandResult
+UC --> Ctrl : UsecaseResult
 Ctrl --> IaaS : 200 OK
 
 == Application Creates Binding ==
@@ -241,7 +241,7 @@ Ctrl -> UC : createBinding(req)
 UC -> IR : findById(serviceInstanceId) → ready
 UC -> ER : resolveForInstance → hostname + ip
 UC -> ER : save(ServiceBinding{hostname, ip, status=active})
-UC --> Ctrl : CommandResult{bindingId}
+UC --> Ctrl : UsecaseResult{bindingId}
 Ctrl --> Admin : 201 Created {id, hostname, privateIpAddress}
 
 @enduml

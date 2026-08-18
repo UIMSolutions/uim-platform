@@ -101,7 +101,7 @@ class ReplicationController : ManageHttpController {
         auto id = ReplicationId(precheck.id);
         auto action = data.getString("action");
 
-        CommandResult result;
+        UsecaseResult result;
         if (action == "cancel") {
             result = usecase.cancelReplication(tenantId, id);
         } else {

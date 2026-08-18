@@ -34,13 +34,13 @@ class WorkspaceGuiController {
     }
 
     /// Delegate a create request from the view.
-    CommandResult createWorkspace(string name, string description,
+    UsecaseResult createWorkspace(string name, string description,
                                   string alias_, WorkspaceType type) {
         return _workspaceModel.createWorkspace(name, description, alias_, type);
     }
 
     /// Delegate a remove request from the view.
-    CommandResult removeWorkspace(string id) {
+    UsecaseResult removeWorkspace(string id) {
         return _workspaceModel.removeWorkspace(id);
     }
 }

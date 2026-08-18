@@ -144,7 +144,7 @@ sequenceDiagram
 
     Ops->>RJC: POST /replication-jobs { distributionModelId, jobType=full }
     RJC->>RJUC: createJob(dto)
-    RJUC-->>RJC: CommandResult(true, jobId)
+    RJUC-->>RJC: UsecaseResult(true, jobId)
     RJC-->>Ops: 201 { id }
 
     Ops->>RJC: POST /replication-jobs/{id}/start
@@ -152,6 +152,6 @@ sequenceDiagram
     RJUC->>MDOR: findByModelId(modelId)
     MDOR-->>RJUC: objects[]
     RJUC->>CLR: save(changeEntry — op=replicate)
-    RJUC-->>RJC: CommandResult(true, id)
+    RJUC-->>RJC: UsecaseResult(true, id)
     RJC-->>Ops: 200 { id, status=completed }
 ```

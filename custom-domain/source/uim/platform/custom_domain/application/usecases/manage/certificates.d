@@ -18,15 +18,15 @@ class ManageCertificatesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createCertificate(CreateCertificateRequest r) {
+    UsecaseResult createCertificate(CreateCertificateRequest r) {
         if (r.certificateId.isEmpty)
-            return CommandResult(false, "", "ID is required");
+            return UsecaseResult(false, "", "ID is required");
         if (r.keyId.isEmpty)
-            return CommandResult(false, "", "Key ID is required");
+            return UsecaseResult(false, "", "Key ID is required");
 
         auto existing = repo.findById(r.tenantId, r.certificateId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Certificate already exists");
+            return UsecaseResult(false, "", "Certificate already exists");
 
         Certificate c;
         c.id = r.certificateId;
@@ -39,29 +39,29 @@ class ManageCertificatesUseCase {
         c.createdAt = currentTimestamp;
 
         repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 
-    CommandResult uploadCertificateChain(UploadCertificateChainRequest r) {
+    UsecaseResult uploadCertificateChain(UploadCertificateChainRequest r) {
         auto existing = repo.findById(r.tenantId, r.certificateId);
         if (existing.isNull)
-            return CommandResult(false, "", "Certificate not found");
+            return UsecaseResult(false, "", "Certificate not found");
         if (r.certificatePem.length == 0)
-            return CommandResult(false, "", "Certificate PEM is required");
+            return UsecaseResult(false, "", "Certificate PEM is required");
 
         existing.certificatePem = r.certificatePem;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult activateCertificate(ActivateCertificateRequest r) {
+    UsecaseResult activateCertificate(ActivateCertificateRequest r) {
         auto existing = repo.findById(r.tenantId, r.certificateId);
          if (existing.isNull)
-            return CommandResult(false, "", "Certificate not found");
+            return UsecaseResult(false, "", "Certificate not found");
         if (existing.certificatePem.length == 0)
-            return CommandResult(false, "", "Certificate PEM is required");
+            return UsecaseResult(false, "", "Certificate PEM is required");
         if (existing.isNull)
-            return CommandResult(false, "", "Certificate not found");
+            return UsecaseResult(false, "", "Certificate not found");
 
         existing.status = CertificateStatus.active;
         existing.activatedDomains = r.domains;
@@ -70,17 +70,17 @@ class ManageCertificatesUseCase {
         existing.activatedAt = currentTimestamp;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deactivateCertificate(TenantId tenantId, CertificateId id) {
+    UsecaseResult deactivateCertificate(TenantId tenantId, CertificateId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Certificate not found");
+            return UsecaseResult(false, "", "Certificate not found");
 
         existing.status = CertificateStatus.deactivated;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
     Certificate getCertificate(TenantId tenantId, CertificateId id) {
@@ -99,13 +99,13 @@ class ManageCertificatesUseCase {
         return repo.findExpiring(tenantId, beforeTimestamp);
     }
 
-    CommandResult deleteCertificate(TenantId tenantId, CertificateId id) {
+    UsecaseResult deleteCertificate(TenantId tenantId, CertificateId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Certificate not found");
+            return UsecaseResult(false, "", "Certificate not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

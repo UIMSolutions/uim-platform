@@ -18,9 +18,9 @@ import uim.platform.mobile;
 @safe:
 interface IManageOfflineStoresUseCase { 
     
-    CommandResult createOfflineStore(CreateOfflineStoreRequest r);
+    UsecaseResult createOfflineStore(CreateOfflineStoreRequest r);
 
-    CommandResult updateOfflineStore(UpdateOfflineStoreRequest r);
+    UsecaseResult updateOfflineStore(UpdateOfflineStoreRequest r);
 
     OfflineStore getOfflineStore(TenantId tenantId, OfflineStoreId id);
 
@@ -28,7 +28,7 @@ interface IManageOfflineStoresUseCase {
 
     OfflineStore[] listOfflineStores(TenantId tenantId, MobileAppId appId);
 
-    CommandResult deleteOfflineStore(TenantId tenantId, OfflineStoreId id);
+    UsecaseResult deleteOfflineStore(TenantId tenantId, OfflineStoreId id);
 
     size_t countOfflineStoresByApp(TenantId tenantId, MobileAppId appId);
 

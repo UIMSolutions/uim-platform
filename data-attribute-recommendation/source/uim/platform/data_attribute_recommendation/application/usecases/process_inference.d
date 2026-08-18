@@ -29,16 +29,16 @@ class ProcessInferenceUseCase {
   }
 
   /// Submit an inference request and get immediate prediction.
-  CommandResult submitInference(SubmitInferenceRequest req) {
+  UsecaseResult submitInference(SubmitInferenceRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.deploymentId.isEmpty)
-      return CommandResult(false, "", "Deployment ID is required");
+      return UsecaseResult(false, "", "Deployment ID is required");
     if (req.inputData.length == 0)
-      return CommandResult(false, "", "Input data is required");
+      return UsecaseResult(false, "", "Input data is required");
 
     if (!engine.isDeploymentReady(req.tenantId, req.deploymentId))
-      return CommandResult(false, "", "Deployment is not active");
+      return UsecaseResult(false, "", "Deployment is not active");
 
     auto request = InferenceRequest(req.tenantId);
     // request.createdBy = req.createdBy;
@@ -50,9 +50,9 @@ class ProcessInferenceUseCase {
     // Process immediately
     auto result = engine.predict(req.tenantId, request.id);
     if (result.isNull)
-      return CommandResult(false, "", "Inference processing failed");
+      return UsecaseResult(false, "", "Inference processing failed");
 
-    return CommandResult(true, result.id.value, "");
+    return UsecaseResult(true, result.id.value, "");
   }
 
   InferenceResult getInferenceResult(TenantId tenantId, InferenceResultId id) {

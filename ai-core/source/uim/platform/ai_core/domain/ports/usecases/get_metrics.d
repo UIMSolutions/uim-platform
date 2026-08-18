@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 interface GetMetricsUseCase { 
 
-  CommandResult patchMetric(PatchMetricsRequest r);
+  UsecaseResult patchMetric(PatchMetricsRequest r);
   Metric[] listMetrics(TenantId tenantId, ResourceGroupId rgId, ExecutionId execId);
   Metric getMetric(TenantId tenantId, ResourceGroupId rgId, MetricId id);
-  CommandResult deleteMetric(TenantId tenantId, ResourceGroupId rgId, MetricId id);
+  UsecaseResult deleteMetric(TenantId tenantId, ResourceGroupId rgId, MetricId id);
 
 }

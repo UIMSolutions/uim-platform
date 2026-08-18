@@ -18,19 +18,19 @@ class ManageCustomDomainsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDomain(CreateCustomDomainRequest r) {
+    UsecaseResult createDomain(CreateCustomDomainRequest r) {
         auto err = DomainValidator.validateDomainName(r.domainName);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         if (r.customDomainId.isNull)
-            return CommandResult(false, "", "Domain ID is required");
+            return UsecaseResult(false, "", "Domain ID is required");
 
         if (repo.existsById(r.tenantId, r.customDomainId))
-            return CommandResult(false, "", "Domain already exists");
+            return UsecaseResult(false, "", "Domain already exists");
 
         if (repo.existsByDomainName(r.tenantId, r.domainName))
-            return CommandResult(false, "", "Domain name already registered");
+            return UsecaseResult(false, "", "Domain name already registered");
 
         auto d = CustomDomain(r.tenantId);
         d.id = r.customDomainId;
@@ -40,7 +40,7 @@ class ManageCustomDomainsUseCase {
         d.status = DomainStatus.pending;
 
         repo.save(d);
-        return CommandResult(true, d.id.value, "");
+        return UsecaseResult(true, d.id.value, "");
     }
 
     CustomDomain getDomain(TenantId tenantId, CustomDomainId id) {
@@ -51,10 +51,10 @@ class ManageCustomDomainsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateDomain(UpdateCustomDomainRequest r) {
+    UsecaseResult updateDomain(UpdateCustomDomainRequest r) {
         auto domain = repo.findById(r.tenantId, r.customDomainId);
         if (domain.isNull)
-            return CommandResult(false, "", "Custom domain not found");
+            return UsecaseResult(false, "", "Custom domain not found");
 
         domain.activeCertificateId = r.activeCertificateId;
         domain.tlsConfigurationId = r.tlsConfigurationId;
@@ -67,42 +67,42 @@ class ManageCustomDomainsUseCase {
         domain.updatedAt = currentTimestamp;
 
         repo.update(domain);
-        return CommandResult(true, domain.id.value, "");
+        return UsecaseResult(true, domain.id.value, "");
     }
 
-    CommandResult activateDomain(TenantId tenantId, CustomDomainId id) {
+    UsecaseResult activateDomain(TenantId tenantId, CustomDomainId id) {
         auto domain = repo.findById(tenantId, id);
         if (domain.isNull)
-            return CommandResult(false, "", "Custom domain not found");
+            return UsecaseResult(false, "", "Custom domain not found");
         domain.status = DomainStatus.active;
 
         
         domain.updatedAt = currentTimestamp;
 
         repo.update(domain);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
-    CommandResult deactivateDomain(TenantId tenantId, CustomDomainId id) {
+    UsecaseResult deactivateDomain(TenantId tenantId, CustomDomainId id) {
         auto domain = repo.findById(tenantId, id);
         if (domain.isNull)
-            return CommandResult(false, "", "Custom domain not found");
+            return UsecaseResult(false, "", "Custom domain not found");
         domain.status = DomainStatus.deactivated;
 
         
         domain.updatedAt = currentTimestamp;
 
         repo.update(domain);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
-    CommandResult deleteDomain(TenantId tenantId, CustomDomainId id) {
+    UsecaseResult deleteDomain(TenantId tenantId, CustomDomainId id) {
         auto domain = repo.findById(tenantId, id);
         if (domain.isNull)
-            return CommandResult(false, "", "Custom domain not found");
+            return UsecaseResult(false, "", "Custom domain not found");
 
         repo.remove(domain);
-        return CommandResult(true, domain.id.value, "");
+        return UsecaseResult(true, domain.id.value, "");
     }
 }
 

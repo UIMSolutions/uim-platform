@@ -151,7 +151,7 @@ Client           FlexChangesController     ManageFlexChangesUseCase    FlexChang
   │                     │                           │ repo.save(tenantId, c)  │
   │                     │                           │────────────────────────>│
   │                     │                           │<────────────────────────│
-  │                     │ CommandResult(true, id)   │                         │
+  │                     │ UsecaseResult(true, id)   │                         │
   │                     │<──────────────────────────│                         │
   │ 201 {id, status}    │                           │                         │
   │<────────────────────│                           │                         │
@@ -174,7 +174,7 @@ Client              FlexVersionsController    ManageFlexVersionsUseCase    FlexV
   │                        │                           │────────────────────────>│
   │                        │                           │ update(v→active)        │
   │                        │                           │────────────────────────>│
-  │                        │ CommandResult(true, id)   │                         │
+  │                        │ UsecaseResult(true, id)   │                         │
   │                        │<──────────────────────────│                         │
   │ 200 {id, activated}    │                           │                         │
   │<───────────────────────│                           │                         │
@@ -190,7 +190,7 @@ Client             FlexPersonalizationsController    ManageFlexPersonalizationsU
   │                            │ resetUserPersonalizations(...)  │
   │                            │────────────────────────────────>│
   │                            │                                 │ repo.removeByUser(...)
-  │                            │ CommandResult(true, userId)     │
+  │                            │ UsecaseResult(true, userId)     │
   │                            │<────────────────────────────────│
   │ 204 No Content             │                                 │
   │<───────────────────────────│                                 │

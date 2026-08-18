@@ -151,6 +151,6 @@ sequenceDiagram
     UA->>TC: POST /tokens { userId, applicationId, tokenType=access }
     TC->>TUC: issueToken(dto)
     TUC->>SUC: createSession(userId, applicationId)
-    TUC-->>TC: CommandResult(true, tokenId)
+    TUC-->>TC: UsecaseResult(true, tokenId)
     TC-->>UA: 201 { value, expiresAt }
 ```

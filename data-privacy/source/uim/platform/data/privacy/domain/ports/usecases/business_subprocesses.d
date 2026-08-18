@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageBusinessSubprocessesUseCase { 
 
-  CommandResult createSubprocess(CreateBusinessSubprocessRequest req);
+  UsecaseResult createSubprocess(CreateBusinessSubprocessRequest req);
   BusinessSubprocess getSubprocess(TenantId tenantId, BusinessSubprocessId id);
   BusinessSubprocess[] listSubprocesses(TenantId tenantId);
   BusinessSubprocess[] listByParentProcess(TenantId tenantId, BusinessProcessId parentId);
-  CommandResult updateSubprocess(UpdateBusinessSubprocessRequest req);
-  CommandResult deleteSubprocess(TenantId tenantId, BusinessSubprocessId id);
+  UsecaseResult updateSubprocess(UpdateBusinessSubprocessRequest req);
+  UsecaseResult deleteSubprocess(TenantId tenantId, BusinessSubprocessId id);
   
 }

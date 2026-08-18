@@ -19,9 +19,9 @@ class ManageAlertRulesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createAlertRule(CreateAlertRuleRequest req) {
+  UsecaseResult createAlertRule(CreateAlertRuleRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Alert rule name is required");
+      return UsecaseResult(false, "", "Alert rule name is required");
 
     auto rule = AlertRule(req.tenantId); //, req.createdBy);
     rule.name = req.name;
@@ -38,13 +38,13 @@ class ManageAlertRulesUseCase {
     rule.isEnabled = true;
 
     repo.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult updateAlertRule(UpdateAlertRuleRequest req) {
+  UsecaseResult updateAlertRule(UpdateAlertRuleRequest req) {
     auto rule = repo.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
-      return CommandResult(false, "", "Alert rule not found");
+      return UsecaseResult(false, "", "Alert rule not found");
 
     if (req.description.length > 0)
       rule.description = req.description;
@@ -70,7 +70,7 @@ class ManageAlertRulesUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   bool hasRule(TenantId tenantId, AlertRuleId id) {
@@ -89,13 +89,13 @@ class ManageAlertRulesUseCase {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult deleteAlertRule(TenantId tenantId, AlertRuleId id) {
+  UsecaseResult deleteAlertRule(TenantId tenantId, AlertRuleId id) {
     auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "Alert rule not found");
+      return UsecaseResult(false, "", "Alert rule not found");
 
     repo.remove(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
   
 }

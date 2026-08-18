@@ -18,9 +18,9 @@ class ManageDataProcessingLogsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createProcessingLog(CreateDataProcessingLogRequest r) {
+    UsecaseResult createProcessingLog(CreateDataProcessingLogRequest r) {
         if (r.tenantId.isNull)
-            return CommandResult(false, "", "Request is null");
+            return UsecaseResult(false, "", "Request is null");
 
         DataProcessingLog entry = DataProcessingLog(r.tenantId);
         entry.id = r.logId;
@@ -38,7 +38,7 @@ class ManageDataProcessingLogsUseCase {
         entry.createdAt = currentTimestamp();
 
         repo.save(entry);
-        return CommandResult(true, entry.id.value, "");
+        return UsecaseResult(true, entry.id.value, "");
     }
 
     bool hasProcessingLog(TenantId tenantId, DataProcessingLogId id) {
@@ -61,13 +61,13 @@ class ManageDataProcessingLogsUseCase {
         return repo.findByRequest(tenantId, requestId);
     }
 
-    CommandResult deleteProcessingLog(TenantId tenantId, DataProcessingLogId id) {
+    UsecaseResult deleteProcessingLog(TenantId tenantId, DataProcessingLogId id) {
         auto log = repo.findById(tenantId, id);
         if (log.isNull)
-            return CommandResult(false, "", "Log entry not found");
+            return UsecaseResult(false, "", "Log entry not found");
 
         repo.remove(log);
-        return CommandResult(true, log.id.value, "");
+        return UsecaseResult(true, log.id.value, "");
     }
 
 }

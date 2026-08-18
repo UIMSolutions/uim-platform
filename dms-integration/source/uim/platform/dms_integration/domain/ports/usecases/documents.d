@@ -27,22 +27,22 @@ interface IManageDocumentsUseCase {
 
     Document[] searchDocumentsByName(TenantId tenantId, string searchTerm);
 
-    CommandResult createDocument(DocumentDTO dto);
+    UsecaseResult createDocument(DocumentDTO dto);
 
-    CommandResult updateDocument(DocumentDTO dto);
+    UsecaseResult updateDocument(DocumentDTO dto);
 
-    CommandResult checkoutDocument(TenantId tenantId, DocumentId id, UserId userId);
+    UsecaseResult checkoutDocument(TenantId tenantId, DocumentId id, UserId userId);
 
-    CommandResult checkinDocument(TenantId tenantId, DocumentId id, UserId userId, bool isMajor, string comment);
+    UsecaseResult checkinDocument(TenantId tenantId, DocumentId id, UserId userId, bool isMajor, string comment);
 
-    CommandResult cancelCheckout(TenantId tenantId, DocumentId id, UserId userId);
+    UsecaseResult cancelCheckout(TenantId tenantId, DocumentId id, UserId userId);
 
-    CommandResult moveDocument(TenantId tenantId, DocumentId id, FolderId targetFolderId, UserId userId);
+    UsecaseResult moveDocument(TenantId tenantId, DocumentId id, FolderId targetFolderId, UserId userId);
 
-    CommandResult publishDocument(TenantId tenantId, DocumentId id);
+    UsecaseResult publishDocument(TenantId tenantId, DocumentId id);
 
-    CommandResult archiveDocument(TenantId tenantId, DocumentId id);
+    UsecaseResult archiveDocument(TenantId tenantId, DocumentId id);
 
-    CommandResult deleteDocument(TenantId tenantId, DocumentId id);
+    UsecaseResult deleteDocument(TenantId tenantId, DocumentId id);
 
 }

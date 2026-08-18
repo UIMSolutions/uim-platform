@@ -34,7 +34,7 @@ class ManageTransportRequestsUseCase {
         return repo.findBySourceNode(tenantId, nodeId);
     }
 
-    CommandResult createRequest(TransportRequestDTO dto) {
+    UsecaseResult createRequest(TransportRequestDTO dto) {
         TransportRequest req;
         req.id = dto.requestId;
         req.tenantId = dto.tenantId;
@@ -55,25 +55,25 @@ class ManageTransportRequestsUseCase {
         }
         req.status = RequestStatus.initial;
         if (!TransportValidator.isValidRequest(req))
-            return CommandResult(false, "", "Invalid transport request: name is required");
+            return UsecaseResult(false, "", "Invalid transport request: name is required");
         repo.save(req);
-        return CommandResult(true, req.id.value, "");
+        return UsecaseResult(true, req.id.value, "");
     }
 
-    CommandResult updateRequestStatus(TenantId tenantId, TransportRequestId id, RequestStatus status) {
+    UsecaseResult updateRequestStatus(TenantId tenantId, TransportRequestId id, RequestStatus status) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport request not found");
+            return UsecaseResult(false, "", "Transport request not found");
         existing.status = status;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteRequest(TenantId tenantId, TransportRequestId id) {
+    UsecaseResult deleteRequest(TenantId tenantId, TransportRequestId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport request not found");
+            return UsecaseResult(false, "", "Transport request not found");
         repo.remove(existing);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

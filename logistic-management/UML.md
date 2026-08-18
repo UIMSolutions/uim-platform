@@ -175,7 +175,7 @@ repo --> uc : Delivery(status=created)
 uc -> planner : canTransitionDelivery(created, picking)
 planner --> uc : true
 uc -> repo  : save(updated delivery)
-uc --> ctrl : CommandResult(success=true)
+uc --> ctrl : UsecaseResult(success=true)
 ctrl --> op : HTTP 200 { id, statusCode: 200 }
 @enduml
 ```
@@ -200,7 +200,7 @@ repo --> uc : WarehouseTask(status=inProgress)
 uc -> planner : canTransitionTask(inProgress, confirmed)
 planner --> uc : true
 uc -> repo : save(task, status=confirmed, confirmedAt=now)
-uc --> ctrl : CommandResult(success=true)
+uc --> ctrl : UsecaseResult(success=true)
 ctrl --> worker : HTTP 200 { id, statusCode: 200 }
 @enduml
 ```

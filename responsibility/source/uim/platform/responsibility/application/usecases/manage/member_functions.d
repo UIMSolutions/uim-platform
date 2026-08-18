@@ -24,7 +24,7 @@ class ManageMemberFunctionsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createFunction(MemberFunctionDTO dto) {
+    UsecaseResult createFunction(MemberFunctionDTO dto) {
         auto f = MemberFunction(dto.tenantId); //, UserId("test-user"));
         f.id          = dto.functionId;
         f.name        = dto.name;
@@ -32,28 +32,28 @@ class ManageMemberFunctionsUseCase {
         f.code        = dto.code;
         f.status      = parseFunctionStatus(dto.status);
         if (f.name.isEmpty)
-            return CommandResult(false, "", "Function name is required");
+            return UsecaseResult(false, "", "Function name is required");
         repo.save(f);
-        return CommandResult(true, f.id.value, "");
+        return UsecaseResult(true, f.id.value, "");
     }
 
-    CommandResult updateFunction(MemberFunctionDTO dto) {
+    UsecaseResult updateFunction(MemberFunctionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.functionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Function not found");
+            return UsecaseResult(false, "", "Function not found");
         if (dto.name.length > 0)        existing.name        = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.code.length > 0)        existing.code        = dto.code;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteFunction(TenantId tenantId, MemberFunctionId id) {
+    UsecaseResult deleteFunction(TenantId tenantId, MemberFunctionId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Function not found");
+            return UsecaseResult(false, "", "Function not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
     private static FunctionStatus parseFunctionStatus(string s) {

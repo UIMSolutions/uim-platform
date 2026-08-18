@@ -23,17 +23,17 @@ class ManageConsentRecordsUseCase {
     this.subjectRepo = subjectRepo;
   }
 
-  CommandResult grantConsent(CreateConsentRecordRequest req) {
+  UsecaseResult grantConsent(CreateConsentRecordRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.dataSubjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
     if (req.consentText.length == 0)
-      return CommandResult(false, "", "Consent text is required");
+      return UsecaseResult(false, "", "Consent text is required");
 
     auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
     if (subject.isNull)
-      return CommandResult(false, "", "Data subject not found");
+      return UsecaseResult(false, "", "Data subject not found");
 
     auto record = ConsentRecord(req.tenantId);
     record.dataSubjectId = req.dataSubjectId;
@@ -48,7 +48,7 @@ class ManageConsentRecordsUseCase {
     record.expiresAt = req.expiresAt;
 
     repo.save(record);
-    return CommandResult(true, record.id.value, "");
+    return UsecaseResult(true, record.id.value, "");
   }
 
   ConsentRecord getConsent(TenantId tenantId, ConsentRecordId id) {
@@ -75,26 +75,26 @@ class ManageConsentRecordsUseCase {
     return repo.findActiveConsents(tenantId);
   }
 
-  CommandResult revokeConsent(RevokeConsentRequest req) {
+  UsecaseResult revokeConsent(RevokeConsentRequest req) {
     auto record = repo.findById(req.tenantId, req.recordId);
     if (record.isNull)
-      return CommandResult(false, "", "Consent record not found");
+      return UsecaseResult(false, "", "Consent record not found");
     if (record.status == ConsentStatus.revoked)
-      return CommandResult(false, "", "Consent already revoked");
+      return UsecaseResult(false, "", "Consent already revoked");
 
     record.status = ConsentStatus.revoked;
     record.revokedAt = currentTimestamp();
 
     repo.update(record);
-    return CommandResult(true, record.id.value, "");
+    return UsecaseResult(true, record.id.value, "");
   }
 
-  CommandResult deleteConsent(TenantId tenantId, ConsentRecordId id) {
+  UsecaseResult deleteConsent(TenantId tenantId, ConsentRecordId id) {
     auto record = repo.findById(tenantId, id);
     if (record.isNull)
-      return CommandResult(false, "", "Consent record not found");
+      return UsecaseResult(false, "", "Consent record not found");
 
     repo.remove(record);
-    return CommandResult(true, record.id.value, "");
+    return UsecaseResult(true, record.id.value, "");
   }
 }

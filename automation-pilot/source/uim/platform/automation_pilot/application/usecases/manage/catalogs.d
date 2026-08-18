@@ -30,7 +30,7 @@ class ManageCatalogsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createCatalog(CatalogDTO dto) {
+    UsecaseResult createCatalog(CatalogDTO dto) {
         auto c = Catalog(dto.tenantId, dto.catalogId.isNull ? CatalogId(createId) : dto.catalogId, dto.createdBy);
         c.name = dto.name;
         c.description = dto.description;
@@ -38,15 +38,15 @@ class ManageCatalogsUseCase {
         c.version_ = dto.version_;
         
         if (!AutomationValidator.isValidCatalog(c))
-            return CommandResult(false, "", "Invalid catalog data");
+            return UsecaseResult(false, "", "Invalid catalog data");
         repo.save(c);
-        return CommandResult(true, dto.catalogId.value, "");
+        return UsecaseResult(true, dto.catalogId.value, "");
     }
 
-    CommandResult updateCatalog(CatalogDTO dto) {
+    UsecaseResult updateCatalog(CatalogDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.catalogId);
         if (existing.isNull)
-            return CommandResult(false, "", "Catalog not found");
+            return UsecaseResult(false, "", "Catalog not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -54,16 +54,16 @@ class ManageCatalogsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCatalog(TenantId tenantId, CatalogId id) {
+    UsecaseResult deleteCatalog(TenantId tenantId, CatalogId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Catalog not found");
+            return UsecaseResult(false, "", "Catalog not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

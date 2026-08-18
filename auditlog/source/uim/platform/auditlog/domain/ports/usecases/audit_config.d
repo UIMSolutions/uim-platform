@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageAuditConfigUseCase {
 
-  CommandResult createAuditConfig(CreateAuditConfigRequest req);
+  UsecaseResult createAuditConfig(CreateAuditConfigRequest req);
   bool existsAuditConfig(TenantId tenantId);
   AuditConfig getAuditConfig(TenantId tenantId);
   AuditConfig[] listAuditConfigs(TenantId tenantId);
-  CommandResult updateAuditConfig(UpdateAuditConfigRequest req);
-  CommandResult deleteAuditConfig(TenantId tenantId, AuditConfigId id);
+  UsecaseResult updateAuditConfig(UpdateAuditConfigRequest req);
+  UsecaseResult deleteAuditConfig(TenantId tenantId, AuditConfigId id);
 
 }

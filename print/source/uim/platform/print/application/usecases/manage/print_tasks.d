@@ -34,7 +34,7 @@ class ManagePrintTasksUseCase {
         return repo.findPendingByQueue(tenantId, queueId);
     }
 
-    CommandResult createPrintTask(PrintTaskDTO dto) {
+    UsecaseResult createPrintTask(PrintTaskDTO dto) {
         auto task = PrintTask(dto.tenantId); //, UserId("test-user"));
         task.id = dto.taskId;
         task.queueId = PrintQueueId(dto.queueId);
@@ -49,16 +49,16 @@ class ManagePrintTasksUseCase {
         task.status = PrintTaskStatus.pending;
 
         if (!PrintValidator.isValidPrintTask(task))
-            return CommandResult(false, "", "Invalid print task: queueId and documentId are required");
+            return UsecaseResult(false, "", "Invalid print task: queueId and documentId are required");
 
         repo.save(task);
-        return CommandResult(true, task.id.value, "");
+        return UsecaseResult(true, task.id.value, "");
     }
 
-    CommandResult updatePrintTask(TenantId tenantId, PrintTaskId id, string status, string errorMessage) {
+    UsecaseResult updatePrintTask(TenantId tenantId, PrintTaskId id, string status, string errorMessage) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Print task not found");
+            return UsecaseResult(false, "", "Print task not found");
 
         if (status.length > 0) {
             
@@ -67,14 +67,14 @@ class ManagePrintTasksUseCase {
         if (errorMessage.length > 0) existing.errorMessage = errorMessage;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePrintTask(TenantId tenantId, PrintTaskId id) {
+    UsecaseResult deletePrintTask(TenantId tenantId, PrintTaskId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Print task not found");
+            return UsecaseResult(false, "", "Print task not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

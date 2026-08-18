@@ -17,12 +17,12 @@ class ManagePractitionersUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPractitioner(CreatePractitionerRequest r) {
+  UsecaseResult createPractitioner(CreatePractitionerRequest r) {
     auto err = FhirValidator.validatePractitioner(r.practitionerId.value);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     if (!repo.findById(r.tenantId, r.practitionerId).isNull)
-      return CommandResult(false, "", "Practitioner already exists");
+      return UsecaseResult(false, "", "Practitioner already exists");
 
     auto p = Practitioner(r.tenantId);
     p.id             = r.practitionerId;
@@ -35,13 +35,13 @@ class ManagePractitionersUseCase {
     p.qualification_ = r.qualification_;
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult updatePractitioner(UpdatePractitionerRequest r) {
+  UsecaseResult updatePractitioner(UpdatePractitionerRequest r) {
     auto existing = repo.findById(r.tenantId, r.practitionerId);
     if (existing.isNull)
-      return CommandResult(false, "", "Practitioner not found");
+      return UsecaseResult(false, "", "Practitioner not found");
 
     auto p = Practitioner(r.tenantId); //, r.createdBy);
     p.id             = r.practitionerId;
@@ -55,7 +55,7 @@ class ManagePractitionersUseCase {
     p.createdAt      = existing.createdAt;
 
     repo.update(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   Practitioner getPractitioner(TenantId tenantId, PractitionerId id) {
@@ -66,12 +66,12 @@ class ManagePractitionersUseCase {
     return repo.findByTenantAll(tenantId);
   }
 
-  CommandResult deletePractitioner(TenantId tenantId, PractitionerId id) {
+  UsecaseResult deletePractitioner(TenantId tenantId, PractitionerId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Practitioner not found");
+      return UsecaseResult(false, "", "Practitioner not found");
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t countPractitioners(TenantId tenantId) {

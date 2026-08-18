@@ -22,11 +22,11 @@ class ManageScenariosUseCase {
     this.repo = repo;
   }
 
-  CommandResult createScenario(CreateScenarioRequest req) {
+  UsecaseResult createScenario(CreateScenarioRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Scenario name is required");
+      return UsecaseResult(false, "", "Scenario name is required");
 
     auto scenario = IntegrationScenario(req.tenantId); //, req.createdBy);
     scenario.name = req.name;
@@ -40,7 +40,7 @@ class ManageScenariosUseCase {
     scenario.stepTemplates = req.stepTemplates;
 
     repo.save(scenario);
-    return CommandResult(true, scenario.id.value, "");
+    return UsecaseResult(true, scenario.id.value, "");
   }
 
   IntegrationScenario getScenario(TenantId tenantId, ScenarioId id) {
@@ -59,15 +59,15 @@ class ManageScenariosUseCase {
     return repo.findByStatus(tenantId, ScenarioStatus.active);
   }
 
-  CommandResult updateScenario(UpdateScenarioRequest req) {
+  UsecaseResult updateScenario(UpdateScenarioRequest req) {
     if (req.scenarioId.isNull)
-      return CommandResult(false, "", "Scenario ID is required");
+      return UsecaseResult(false, "", "Scenario ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.tenantId, req.scenarioId);
     if (existing.isNull)
-      return CommandResult(false, "", "Scenario not found");
+      return UsecaseResult(false, "", "Scenario not found");
 
     auto updated = existing;
     if (req.name.length > 0)
@@ -87,15 +87,15 @@ class ManageScenariosUseCase {
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
-  CommandResult deleteScenario(TenantId tenantId, ScenarioId id) {
+  UsecaseResult deleteScenario(TenantId tenantId, ScenarioId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Scenario not found");
+      return UsecaseResult(false, "", "Scenario not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }

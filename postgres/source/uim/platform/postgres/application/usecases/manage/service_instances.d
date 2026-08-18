@@ -32,9 +32,9 @@ class ManageServiceInstancesUseCase {
         return repo.findByStatus(tenantId, InstanceStatus.active);
     }
 
-    CommandResult createServiceInstance(ServiceInstanceDTO dto) {
+    UsecaseResult createServiceInstance(ServiceInstanceDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Service instance name already exists");
+            return UsecaseResult(false, "", "Service instance name already exists");
 
         auto e = ServiceInstance(dto.tenantId); //, UserId("test-user"));
         e.id = dto.serviceInstanceId;
@@ -52,16 +52,16 @@ class ManageServiceInstancesUseCase {
         e.port  = 5432;
 
         if (e.name.isEmpty || e.planId.value.length == 0)
-            return CommandResult(false, "", "name and planId are required");
+            return UsecaseResult(false, "", "name and planId are required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateServiceInstance(ServiceInstanceDTO dto) {
+    UsecaseResult updateServiceInstance(ServiceInstanceDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.serviceInstanceId);
         if (existing.isNull)
-            return CommandResult(false, "", "Service instance not found");
+            return UsecaseResult(false, "", "Service instance not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -71,16 +71,16 @@ class ManageServiceInstancesUseCase {
         existing.multiAz = dto.multiAz;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
+    UsecaseResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Service instance not found");
+            return UsecaseResult(false, "", "Service instance not found");
         existing.status = InstanceStatus.deleting;
         repo.update(existing);
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

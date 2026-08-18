@@ -132,12 +132,12 @@ sequenceDiagram
 
     Dev->>AVC: POST /app-versions { appId, version, packageUrl }
     AVC->>AVUC: createAppVersion(dto)
-    AVUC-->>AVC: CommandResult(true, versionId)
+    AVUC-->>AVC: UsecaseResult(true, versionId)
     AVC-->>Dev: 201 { id }
 
     Dev->>AVC: POST /app-versions/{id}/deploy
     AVC->>AVUC: deployAppVersion(id)
     AVUC->>DRUC: createDeploymentRecord(versionId, op=deploy)
-    AVUC-->>AVC: CommandResult(true, id)
+    AVUC-->>AVC: UsecaseResult(true, id)
     AVC-->>Dev: 200 { id, status=deployed }
 ```

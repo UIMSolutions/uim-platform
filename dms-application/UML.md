@@ -139,11 +139,11 @@ sequenceDiagram
 
     User->>DC: POST /documents { repositoryId, folderId, name, mimeType }
     DC->>DUC: createDocument(dto)
-    DUC-->>DC: CommandResult(true, docId)
+    DUC-->>DC: UsecaseResult(true, docId)
     DC-->>User: 201 { id }
 
     User->>SC: POST /shares { resourceId=docId, recipientIds, accessLevel=read }
     SC->>SUC: createShare(dto)
-    SUC-->>SC: CommandResult(true, shareId)
+    SUC-->>SC: UsecaseResult(true, shareId)
     SC-->>User: 201 { id }
 ```

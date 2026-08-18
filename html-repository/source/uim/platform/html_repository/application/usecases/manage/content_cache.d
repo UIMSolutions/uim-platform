@@ -24,7 +24,7 @@ class ManageContentCacheUseCase {
         this.repo = repo;
     }
 
-    CommandResult cacheContent(CacheContentRequest r) {
+    UsecaseResult cacheContent(CacheContentRequest r) {
         auto entry = ContentCache(r.tenantId);
         entry.appId = r.appId;
         entry.fileId = r.fileId;
@@ -39,7 +39,7 @@ class ManageContentCacheUseCase {
         entry.status = CacheStatus.active;
 
         repo.save(entry);
-        return CommandResult(true, entry.id.value, "");
+        return UsecaseResult(true, entry.id.value, "");
     }
 
     ContentCache getContent(TenantId tenantId, ContentCacheId id) {

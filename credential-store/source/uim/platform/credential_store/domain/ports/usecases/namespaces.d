@@ -12,13 +12,13 @@ mixin(ShowModule!());
 @safe:
 interface IManageNamespacesUseCase { 
 
-  CommandResult createNamespace(CreateNamespaceRequest r);
-  CommandResult updateNamespace(UpdateNamespaceRequest r);
+  UsecaseResult createNamespace(CreateNamespaceRequest r);
+  UsecaseResult updateNamespace(UpdateNamespaceRequest r);
   bool hasNamespace(TenantId tenantId, NamespaceId id);
   Namespace getNamespace(TenantId tenantId, NamespaceId id);
   Namespace getNamespace(TenantId tenantId, string name);
   Namespace[] listNamespaces(TenantId tenantId);
-  CommandResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId);
+  UsecaseResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId);
   size_t countNamespaces(TenantId tenantId);
 
 }

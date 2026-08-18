@@ -13,14 +13,14 @@ mixin(ShowModule!());
 /// Use case: manage global account lifecycle.
 interface IManageGlobalAccountsUseCase { 
 
-  CommandResult createAccount(CreateGlobalAccountRequest req);
-  CommandResult updateAccount(UpdateGlobalAccountRequest req);
-  CommandResult suspendAccount(TenantId tenantId, GlobalAccountId accountId);
-  CommandResult reactivateAccount(TenantId tenantId,  GlobalAccountId accountId);
+  UsecaseResult createAccount(CreateGlobalAccountRequest req);
+  UsecaseResult updateAccount(UpdateGlobalAccountRequest req);
+  UsecaseResult suspendAccount(TenantId tenantId, GlobalAccountId accountId);
+  UsecaseResult reactivateAccount(TenantId tenantId,  GlobalAccountId accountId);
   bool existsAccount(TenantId tenantId, GlobalAccountId accountId);
   GlobalAccount getAccount(TenantId tenantId, GlobalAccountId accountId);
   GlobalAccount[] listAccounts(TenantId tenantId);
   GlobalAccount[] listAccounts(TenantId tenantId, string status);
-  CommandResult deleteAccount(TenantId tenantId, GlobalAccountId accountId);
+  UsecaseResult deleteAccount(TenantId tenantId, GlobalAccountId accountId);
 
 }

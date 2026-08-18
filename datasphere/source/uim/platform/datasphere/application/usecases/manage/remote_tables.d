@@ -21,13 +21,13 @@ class ManageRemoteTablesUseCase {
     this.tables = tables;
   }
 
-  CommandResult createRemoteTable(CreateRemoteTableRequest r) {
+  UsecaseResult createRemoteTable(CreateRemoteTableRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Remote table name is required");
+      return UsecaseResult(false, "", "Remote table name is required");
     if (r.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
     if (r.connectionId.isEmpty)
-      return CommandResult(false, "", "Connection ID is required");
+      return UsecaseResult(false, "", "Connection ID is required");
 
     import std.uuid : randomUUID;
 
@@ -41,7 +41,7 @@ class ManageRemoteTablesUseCase {
     rt.replicationMode = ReplicationMode.none;
 
     tables.save(rt);
-    return CommandResult(true, rt.id.value, "");
+    return UsecaseResult(true, rt.id.value, "");
   }
 
   RemoteTable getRemoteTable(TenantId tenantId, SpaceId spaceId, RemoteTableId id) {
@@ -52,12 +52,12 @@ class ManageRemoteTablesUseCase {
     return tables.findBySpace(tenantId, spaceId);
   }
 
-  CommandResult deleteRemoteTable(TenantId tenantId, SpaceId spaceId, RemoteTableId id) {
+  UsecaseResult deleteRemoteTable(TenantId tenantId, SpaceId spaceId, RemoteTableId id) {
     auto table = tables.findById(tenantId, spaceId, id);
     if (table.isNull)
-      return CommandResult(false, "", "Remote table not found");
+      return UsecaseResult(false, "", "Remote table not found");
 
     tables.remove(table);
-    return CommandResult(true, table.id.value, "");
+    return UsecaseResult(true, table.id.value, "");
   }
 }

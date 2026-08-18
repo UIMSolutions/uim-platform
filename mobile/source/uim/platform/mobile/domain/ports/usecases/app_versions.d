@@ -18,12 +18,12 @@ import uim.platform.mobile;
 interface IManageAppVersionsUseCase { 
 
     /// Creates a new app version for the specified tenant and app.
-    /// Returns a CommandResult indicating the success or failure of the operation.
-    CommandResult createAppVersion(CreateAppVersionRequest r);
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
+    UsecaseResult createAppVersion(CreateAppVersionRequest r);
 
     /// Updates an existing app version for the specified tenant and app.
-    /// Returns a CommandResult indicating the success or failure of the operation.
-    CommandResult updateAppVersion(UpdateAppVersionRequest r);
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
+    UsecaseResult updateAppVersion(UpdateAppVersionRequest r);
 
     /// Gets an app version by its ID for the specified tenant.
     /// Returns the AppVersion if found, or null if not found.
@@ -38,8 +38,8 @@ interface IManageAppVersionsUseCase {
     AppVersion[] listAppVersions(TenantId tenantId, MobileAppId id);
 
     /// Deletes an app version by its ID for the specified tenant.
-    /// Returns a CommandResult indicating the success or failure of the operation.
-    CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id);
+    /// Returns a UsecaseResult indicating the success or failure of the operation.
+    UsecaseResult deleteAppVersion(TenantId tenantId, AppVersionId id);
 
     /// Counts the number of app versions for the specified tenant and app.
     /// Returns the count as a size_t value.

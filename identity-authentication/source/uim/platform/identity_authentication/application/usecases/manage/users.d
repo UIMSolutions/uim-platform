@@ -62,10 +62,10 @@ class ManageUsersUseCase {
   }
 
   /// Update user profile.
-  CommandResult updateUser(UpdateUserRequest req) {
+  UsecaseResult updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return UsecaseResult(false, "", "User not found");
 
     if (req.firstName.length > 0)
       user.firstName = req.firstName;
@@ -76,34 +76,34 @@ class ManageUsersUseCase {
 
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
-    return CommandResult(true, user.id.value, "User updated successfully.");
+    return UsecaseResult(true, user.id.value, "User updated successfully.");
   }
 
   /// Deactivate (soft-delete) a user.
-  CommandResult deactivateUser(TenantId tenantId, UserId id) {
+  UsecaseResult deactivateUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return UsecaseResult(false, "", "User not found");
 
     user.status = UserStatus.inactive;
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
-    return CommandResult(true, user.id.value, "User deactivated successfully.");
+    return UsecaseResult(true, user.id.value, "User deactivated successfully.");
   }
 
   /// Change password.
-  CommandResult changePassword(ChangePasswordRequest req) {
+  UsecaseResult changePassword(ChangePasswordRequest req) {
     auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return UsecaseResult(false, "", "User not found");
 
     if (!passwordSvc.verifyPassword(req.oldPassword, user.passwordHash))
-      return CommandResult(false, "", "Current password is incorrect");
+      return UsecaseResult(false, "", "Current password is incorrect");
 
     user.passwordHash = passwordSvc.hashPassword(req.newPassword);
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
-    return CommandResult(true, user.id.value, "Password changed successfully.");
+    return UsecaseResult(true, user.id.value, "Password changed successfully.");
   }
 }
 

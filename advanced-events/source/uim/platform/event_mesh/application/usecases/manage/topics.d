@@ -30,7 +30,7 @@ class ManageTopicsUseCase {
         return repo.findByBrokerService(tenantId, serviceId);
     }
 
-    CommandResult createTopic(TopicDTO dto) {
+    UsecaseResult createTopic(TopicDTO dto) {
         Topic t;
         t.id = dto.topicId;
         t.tenantId = dto.tenantId;
@@ -43,16 +43,16 @@ class ManageTopicsUseCase {
         t.subscribeEnabled = dto.subscribeEnabled;
         t.createdBy = dto.createdBy;
         if (!EventMeshValidator.isValidTopic(t))
-            return CommandResult(false, "", "Invalid topic data");
+            return UsecaseResult(false, "", "Invalid topic data");
 
         repo.save(t);
-        return CommandResult(true, dto.topicId.value, "");
+        return UsecaseResult(true, dto.topicId.value, "");
     }
 
-    CommandResult updateTopic(TopicDTO dto) {
+    UsecaseResult updateTopic(TopicDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.topicId);
         if (existing.isNull)
-            return CommandResult(false, "", "Topic not found");
+            return UsecaseResult(false, "", "Topic not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -60,16 +60,16 @@ class ManageTopicsUseCase {
         if (dto.maxMessageSize.length > 0) existing.maxMessageSize = dto.maxMessageSize;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, dto.topicId.value, "");
+        return UsecaseResult(true, dto.topicId.value, "");
     }
 
-    CommandResult deleteTopic(TenantId tenantId, TopicId topicId) {
+    UsecaseResult deleteTopic(TenantId tenantId, TopicId topicId) {
         auto entity = repo.findById(tenantId, topicId);
         if (entity.isNull)
-            return CommandResult(false, "", "Topic not found");
+            return UsecaseResult(false, "", "Topic not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

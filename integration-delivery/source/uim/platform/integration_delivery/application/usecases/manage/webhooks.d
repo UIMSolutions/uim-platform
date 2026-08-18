@@ -30,7 +30,7 @@ class ManageWebhooksUseCase {
         return repo.findByRepository(tenantId, repositoryId);
     }
 
-    CommandResult createWebhook(WebhookDTO dto) {
+    UsecaseResult createWebhook(WebhookDTO dto) {
         auto w = Webhook(dto.tenantId); //, UserId("test-user"));
         w.id = dto.webhookId;
         w.repositoryId = dto.repositoryId;
@@ -41,30 +41,30 @@ class ManageWebhooksUseCase {
         w.status = WebhookStatus.active;
 
         if (!CicdValidator.isValidWebhook(w))
-            return CommandResult(false, "", "Invalid webhook data: repositoryId and jobId required");
+            return UsecaseResult(false, "", "Invalid webhook data: repositoryId and jobId required");
 
         repo.save(w);
-        return CommandResult(true, w.id.value, "");
+        return UsecaseResult(true, w.id.value, "");
     }
 
-    CommandResult updateWebhook(WebhookDTO dto) {
+    UsecaseResult updateWebhook(WebhookDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.webhookId);
         if (existing.isNull)
-            return CommandResult(false, "", "Webhook not found");
+            return UsecaseResult(false, "", "Webhook not found");
 
         if (dto.callbackUrl.length > 0) existing.callbackUrl = dto.callbackUrl;
         if (dto.secret.length > 0) existing.secret = dto.secret;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteWebhook(TenantId tenantId, WebhookId id) {
+    UsecaseResult deleteWebhook(TenantId tenantId, WebhookId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Webhook not found");
+            return UsecaseResult(false, "", "Webhook not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

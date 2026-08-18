@@ -48,7 +48,7 @@ final class WorkspaceGuiModel {
     }
 
     // ── Mutations ─────────────────────────────────────────────────────────
-    CommandResult createWorkspace(string name, string description,
+    UsecaseResult createWorkspace(string name, string description,
                                   string alias_, WorkspaceType type) {
         CreateWorkspaceRequest req;
         req.tenantId    = _tenantId;
@@ -61,7 +61,7 @@ final class WorkspaceGuiModel {
         return result;
     }
 
-    CommandResult removeWorkspace(string id) {
+    UsecaseResult removeWorkspace(string id) {
         auto result = _useCase.deleteWorkspace(_tenantId, WorkspaceId(id));
         if (result.success) refresh();
         return result;

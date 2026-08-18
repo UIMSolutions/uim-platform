@@ -15,7 +15,7 @@ class ManageAttributeMappingsUseCase {
 
   this(IAttributeMappingRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateAttributeMappingRequest r) {
+  UsecaseResult create(CreateAttributeMappingRequest r) {
     AttributeMapping m;
     m.id = AttributeMappingId(r.id.length > 0 ? r.id : currentTimestamp());
     m.tenantId = TenantId(r.tenantId);
@@ -30,10 +30,10 @@ class ManageAttributeMappingsUseCase {
     initEntity(m);
 
     auto err = ComposerValidator.validateAttributeMapping(m);
-    if (err !is null) return CommandResult(false, m.id.value, err);
+    if (err !is null) return UsecaseResult(false, m.id.value, err);
 
     repo.save(m);
-    return CommandResult(true, m.id.value, null);
+    return UsecaseResult(true, m.id.value, null);
   }
 
   AttributeMapping[] list(TenantId tenantId) {
@@ -48,9 +48,9 @@ class ManageAttributeMappingsUseCase {
     return repo.findById(TenantId(tenantId), AttributeMappingId(id));
   }
 
-  CommandResult update(UpdateAttributeMappingRequest r) {
+  UsecaseResult update(UpdateAttributeMappingRequest r) {
     auto m = repo.findById(TenantId(r.tenantId), AttributeMappingId(r.id));
-    if (m.isNull) return CommandResult(false, r.id, "Mapping not found");
+    if (m.isNull) return UsecaseResult(false, r.id, "Mapping not found");
 
     if (r.sourceAttributeName.length > 0) m.sourceAttributeName = r.sourceAttributeName;
     if (r.sourceDataType.length > 0)      m.sourceDataType = r.sourceDataType;
@@ -61,13 +61,13 @@ class ManageAttributeMappingsUseCase {
     m.active = r.active;
 
     repo.update(m);
-    return CommandResult(true, m.id.value, null);
+    return UsecaseResult(true, m.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto m = repo.findById(TenantId(tenantId), AttributeMappingId(id));
-    if (m.isNull) return CommandResult(false, id, "Mapping not found");
+    if (m.isNull) return UsecaseResult(false, id, "Mapping not found");
     repo.remove(TenantId(tenantId), AttributeMappingId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

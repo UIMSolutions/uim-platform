@@ -20,7 +20,7 @@ class ManageQueuesUseCase {
     Queue[] listQueues(TenantId tenantId) { return repo.findByTenant(tenantId); }
     Queue[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 
-    CommandResult createQueue(QueueDTO dto) {
+    UsecaseResult createQueue(QueueDTO dto) {
         Queue q;
         q.id = dto.queueId;
         q.tenantId = dto.tenantId;
@@ -40,14 +40,14 @@ class ManageQueuesUseCase {
         q.ingressEnabled = dto.ingressEnabled;
         q.createdBy = dto.createdBy;
         if (!EventsValidator.isValidQueue(q))
-            return CommandResult(false, "", "Invalid queue data");
+            return UsecaseResult(false, "", "Invalid queue data");
         repo.save(q);
-        return CommandResult(true, q.id.value, "");
+        return UsecaseResult(true, q.id.value, "");
     }
 
-    CommandResult updateQueue(QueueDTO dto) {
+    UsecaseResult updateQueue(QueueDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.queueId);
-        if (existing.isNull) return CommandResult(false, "", "Queue not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Queue not found");
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.maxMessageSizeBytes.length > 0) existing.maxMessageSizeBytes = dto.maxMessageSizeBytes;
         if (dto.maxQueueSizeBytes.length > 0) existing.maxQueueSizeBytes = dto.maxQueueSizeBytes;
@@ -56,14 +56,14 @@ class ManageQueuesUseCase {
         if (dto.maxRedeliveryCount.length > 0) existing.maxRedeliveryCount = dto.maxRedeliveryCount;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteQueue(TenantId tenantId, QueueId id) {
+    UsecaseResult deleteQueue(TenantId tenantId, QueueId id) {
         auto q = repo.findById(tenantId, id);
-        if (q.isNull) return CommandResult(false, "", "Queue not found");
+        if (q.isNull) return UsecaseResult(false, "", "Queue not found");
         repo.remove(q);
-        return CommandResult(true, q.id.value, "");
+        return UsecaseResult(true, q.id.value, "");
     }
 }
 

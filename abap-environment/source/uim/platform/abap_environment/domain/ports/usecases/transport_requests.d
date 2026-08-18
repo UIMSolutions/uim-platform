@@ -13,13 +13,13 @@ import uim.platform.abap_environment;
 /// Application service for transport request management (CTS-like).
 interface IManageTransportRequestsUseCase { 
 
-  CommandResult createTransportRequest(CreateTransportRequestRequest req);
-  CommandResult addTransportTask(AddTransportTaskRequest req);
-  CommandResult releaseTransportTask(TenantId tenantId, TransportRequestId requestId, TransportTaskId taskId);
-  CommandResult releaseTransportRequest(TenantId tenantId, TransportRequestId id);
+  UsecaseResult createTransportRequest(CreateTransportRequestRequest req);
+  UsecaseResult addTransportTask(AddTransportTaskRequest req);
+  UsecaseResult releaseTransportTask(TenantId tenantId, TransportRequestId requestId, TransportTaskId taskId);
+  UsecaseResult releaseTransportRequest(TenantId tenantId, TransportRequestId id);
   TransportRequest getTransportRequest(TenantId tenantId, TransportRequestId id);
   TransportRequest[] listTransportRequests(TenantId tenantId, SystemInstanceId systemId);
   TransportRequest[] listTransportRequests(TenantId tenantId, SystemInstanceId systemId, TransportStatus status);
-  CommandResult deleteTransportRequest(TenantId tenantId, TransportRequestId id);
+  UsecaseResult deleteTransportRequest(TenantId tenantId, TransportRequestId id);
 
 }

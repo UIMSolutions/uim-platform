@@ -18,10 +18,10 @@ mixin(ShowModule!());
 //     @headerParam("tenantId", "X-Tenant-ID")
 //     MarketRate getMarketRate(string tenantId, string id); 
 
-//     CommandResult uploadMarketRates(string tenantId, MarketRate[] rates);
-//     CommandResult downloadMarketRates(string tenantId);
+//     UsecaseResult uploadMarketRates(string tenantId, MarketRate[] rates);
+//     UsecaseResult downloadMarketRates(string tenantId);
 
-//     CommandResult deleteMarketRates(string tenantId);
+//     UsecaseResult deleteMarketRates(string tenantId);
 
 //     // Provider management
 //     @headerParam("tenantId", "X-Tenant-ID")
@@ -30,7 +30,7 @@ mixin(ShowModule!());
 //     @headerParam("tenantId", "X-Tenant-ID")
 //     MarketRateProvider getProvider(string tenantId, string id);
 
-//     CommandResult createProvider(string tenantId, MarketRateProvider provider);
-//     CommandResult updateProvider(string tenantId, string id, MarketRateProvider provider);
-//     CommandResult deleteProvider(string tenantId, string id);
+//     UsecaseResult createProvider(string tenantId, MarketRateProvider provider);
+//     UsecaseResult updateProvider(string tenantId, string id, MarketRateProvider provider);
+//     UsecaseResult deleteProvider(string tenantId, string id);
 //   }

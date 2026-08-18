@@ -12,11 +12,11 @@ mixin(ShowModule!());
 
 interface IManageLegalEntitiesUseCase { 
     
-    CommandResult createLegalEntity(CreateLegalEntityRequest req);
-    CommandResult updateLegalEntity(UpdateLegalEntityRequest req);
+    UsecaseResult createLegalEntity(CreateLegalEntityRequest req);
+    UsecaseResult updateLegalEntity(UpdateLegalEntityRequest req);
     bool hasLegalEntity(TenantId tenantId, LegalEntityId id);
     LegalEntity getLegalEntity(TenantId tenantId, LegalEntityId id);
     LegalEntity[] listLegalEntities(TenantId tenantId);
-    CommandResult deleteLegalEntity(TenantId tenantId, LegalEntityId id);
+    UsecaseResult deleteLegalEntity(TenantId tenantId, LegalEntityId id);
 
 }

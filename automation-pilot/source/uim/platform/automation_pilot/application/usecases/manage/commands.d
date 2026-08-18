@@ -30,7 +30,7 @@ class ManageCommandsUseCase {
         return repo.findByCatalog(tenantId, catalogId);
     }
 
-    CommandResult createCommand(CommandDTO dto) {
+    UsecaseResult createCommand(CommandDTO dto) {
         auto cmd = Command(dto.tenantId, dto.commandId.isNull ? CommandId(createId) : dto.commandId, dto.createdBy);
         cmd.catalogId = dto.catalogId;
         cmd.name = dto.name;
@@ -43,16 +43,16 @@ class ManageCommandsUseCase {
         cmd.retryCount = dto.retryCount;
         cmd.tags = dto.tags;
         if (!AutomationValidator.isValidCommand(cmd))
-            return CommandResult(false, "", "Invalid command data");
+            return UsecaseResult(false, "", "Invalid command data");
 
         repo.save(cmd);
-        return CommandResult(true, cmd.id.value, "");
+        return UsecaseResult(true, cmd.id.value, "");
     }
 
-    CommandResult updateCommand(CommandDTO dto) {
+    UsecaseResult updateCommand(CommandDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.commandId);
         if (existing.isNull)
-            return CommandResult(false, "", "Command not found");
+            return UsecaseResult(false, "", "Command not found");
             
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -62,16 +62,16 @@ class ManageCommandsUseCase {
         if (dto.timeout.length > 0) existing.timeout = dto.timeout;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCommand(TenantId tenantId, CommandId id) {
+    UsecaseResult deleteCommand(TenantId tenantId, CommandId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Command not found");
+            return UsecaseResult(false, "", "Command not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

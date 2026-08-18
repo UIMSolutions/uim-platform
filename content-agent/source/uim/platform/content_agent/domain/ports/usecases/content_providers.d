@@ -13,10 +13,10 @@ mixin(ShowModule!());
 /// Application service for content provider registration and management.
 interface IManageContentProvidersUseCase { 
 
-  CommandResult registerProvider(RegisterProviderRequest req);
-  CommandResult updateProvider(UpdateProviderRequest req);
-  CommandResult deregisterProvider(TenantId tenantId, ContentProviderId id);
-  CommandResult syncProvider(TenantId tenantId, ContentProviderId id);
+  UsecaseResult registerProvider(RegisterProviderRequest req);
+  UsecaseResult updateProvider(UpdateProviderRequest req);
+  UsecaseResult deregisterProvider(TenantId tenantId, ContentProviderId id);
+  UsecaseResult syncProvider(TenantId tenantId, ContentProviderId id);
   ContentProvider getProvider(TenantId tenantId, ContentProviderId id);
   ContentProvider[] listProviders(TenantId tenantId);
   ContentProvider[] listActiveProviders(TenantId tenantId);

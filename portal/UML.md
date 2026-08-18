@@ -159,16 +159,16 @@ sequenceDiagram
 
     Admin->>SC: POST /sites { name, siteType=portal }
     SC->>SUC: createSite(dto)
-    SUC-->>SC: CommandResult(true, siteId)
+    SUC-->>SC: UsecaseResult(true, siteId)
     SC-->>Admin: 201 { id }
 
     Admin->>CC: POST /catalogs { name=My Apps }
     CC->>CUC: createCatalog(dto)
-    CUC-->>CC: CommandResult(true, catalogId)
+    CUC-->>CC: UsecaseResult(true, catalogId)
     CC-->>Admin: 201 { id }
 
     Admin->>SC: PUT /sites/{id}/status { status=active }
     SC->>SUC: publishSite(id)
-    SUC-->>SC: CommandResult(true, id)
+    SUC-->>SC: UsecaseResult(true, id)
     SC-->>Admin: 200 { id, status=active }
 ```

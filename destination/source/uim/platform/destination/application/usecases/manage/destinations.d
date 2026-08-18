@@ -21,16 +21,16 @@ class ManageDestinationsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDestination(CreateDestinationRequest req) {
+  UsecaseResult createDestination(CreateDestinationRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Destination name is required");
+      return UsecaseResult(false, "", "Destination name is required");
 
     if (req.url.length == 0 && req.destinationType != "rfc")
-      return CommandResult(false, "", "URL is required for non-RFC destinations");
+      return UsecaseResult(false, "", "URL is required for non-RFC destinations");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "",
+      return UsecaseResult(false, "",
           "Destination '" ~ req.name ~ "' already exists in this subaccount");
 
     auto d = Destination(req.tenantId, DestinationId(createId), req.createdBy);
@@ -74,13 +74,13 @@ class ManageDestinationsUseCase {
       d.fragmentIds ~= DestinationFragmentId(s);
 
     repo.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
-  CommandResult updateDestination(UpdateDestinationRequest req) {
+  UsecaseResult updateDestination(UpdateDestinationRequest req) {
     auto d = repo.findById(req.tenantId, req.destinationId);
     if (d.isNull)
-      return CommandResult(false, "", "Destination not found");
+      return UsecaseResult(false, "", "Destination not found");
 
     if (req.description.length > 0)
       d.description = req.description;
@@ -128,7 +128,7 @@ class ManageDestinationsUseCase {
     d.updatedAt = clockSeconds();
 
     repo.update(d);
-    return CommandResult(true,  d.id.value, "");
+    return UsecaseResult(true,  d.id.value, "");
   }
 
   Destination getDestination(TenantId tenantId, DestinationId id) {
@@ -147,13 +147,13 @@ class ManageDestinationsUseCase {
     return repo.findByName(tenantId, subaccountId, name);
   }
 
-  CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
+  UsecaseResult deleteDestination(TenantId tenantId, DestinationId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Destination not found");
+      return UsecaseResult(false, "", "Destination not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 }
 

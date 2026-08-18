@@ -15,8 +15,8 @@ interface IManageEventFiltersUseCase {
 
     EventFilter getEventFilter(TenantId tenantId, EventFilterId id);
     EventFilter[] listEventFilters(TenantId tenantId);
-    CommandResult createEventFilter(EventFilterDTO dto);
-    CommandResult updateEventFilter(EventFilterDTO dto);
-    CommandResult deleteEventFilter(TenantId tenantId, EventFilterId id);
+    UsecaseResult createEventFilter(EventFilterDTO dto);
+    UsecaseResult updateEventFilter(EventFilterDTO dto);
+    UsecaseResult deleteEventFilter(TenantId tenantId, EventFilterId id);
 
 }

@@ -34,7 +34,7 @@ class ManageSkillsUseCase {
         return repo.findByCategory(tenantId, category);
     }
 
-    CommandResult createSkill(SkillDTO dto) {
+    UsecaseResult createSkill(SkillDTO dto) {
         Skill s;
         s.id = dto.skillId;
         s.tenantId = dto.tenantId;
@@ -47,15 +47,15 @@ class ManageSkillsUseCase {
         s.issuingAuthority = dto.issuingAuthority;
         s.createdBy = dto.createdBy;
         if (!FieldServiceValidator.isValidSkill(s))
-            return CommandResult(false, "", "Invalid skill data");
+            return UsecaseResult(false, "", "Invalid skill data");
         repo.save(s);
-        return CommandResult(true, s.id.value, "");
+        return UsecaseResult(true, s.id.value, "");
     }
 
-    CommandResult updateSkill(SkillDTO dto) {
+    UsecaseResult updateSkill(SkillDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.skillId);
         if (existing.isNull)
-            return CommandResult(false, "", "Skill not found");
+            return UsecaseResult(false, "", "Skill not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.certificationDate.length > 0) existing.certificationDate = dto.certificationDate;
@@ -64,15 +64,15 @@ class ManageSkillsUseCase {
         if (dto.issuingAuthority.length > 0) existing.issuingAuthority = dto.issuingAuthority;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSkill(TenantId tenantId, SkillId id) {
+    UsecaseResult deleteSkill(TenantId tenantId, SkillId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Skill not found");
+            return UsecaseResult(false, "", "Skill not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }

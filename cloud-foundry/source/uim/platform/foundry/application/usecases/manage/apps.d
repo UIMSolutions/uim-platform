@@ -25,17 +25,17 @@ class ManageAppsUseCase {
     this.lifecycle = lifecycle;
   }
 
-  CommandResult createApp(CreateAppRequest req) {
+  UsecaseResult createApp(CreateAppRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Application name is required");
+      return UsecaseResult(false, "", "Application name is required");
 
     // Unique name within space
     if (apps.existsByName(req.tenantId, req.spaceId, req.name))
-      return CommandResult(false, "", "Application with this name already exists in space");
+      return UsecaseResult(false, "", "Application with this name already exists in space");
 
     auto now = currentTimestamp();
     auto app = Application(req.tenantId, req.appId.isNull ? AppId(createId()) : req.appId, req.createdBy);
@@ -55,7 +55,7 @@ class ManageAppsUseCase {
     app.dockerImage = req.dockerImage;
 
     apps.save(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
   Application getApp(TenantId tenantId, AppId id) {
@@ -70,16 +70,16 @@ class ManageAppsUseCase {
     return apps.findBySpace(tenantId, spaceId);
   }
 
-  CommandResult updateApp(UpdateAppRequest req) {
+  UsecaseResult updateApp(UpdateAppRequest req) {
     if (req.appId.isNull)
-      return CommandResult(false, "", "Application ID is required");
+      return UsecaseResult(false, "", "Application ID is required");
 
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto app = apps.findById(req.tenantId, req.appId);
     if (app.isNull)
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
 
     if (req.name.length > 0)
       app.name = req.name;
@@ -107,53 +107,53 @@ class ManageAppsUseCase {
     app.updatedAt = currentTimestamp();
 
     apps.update(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
   /// Start an application (stage then start).
-  CommandResult startApp(TenantId tenantId, AppId id) {
+  UsecaseResult startApp(TenantId tenantId, AppId id) {
     auto app = apps.findById(tenantId, id);
     if (app.isNull)
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
       
     if (app.state == AppState.started)
-      return CommandResult(false, "", "Application is already started");
+      return UsecaseResult(false, "", "Application is already started");
 
     lifecycle.stageApp(tenantId, id);
     if (!lifecycle.startApp(tenantId, id))
-      return CommandResult(false, "", "Failed to start application");
+      return UsecaseResult(false, "", "Failed to start application");
 
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult stopApp(TenantId tenantId, AppId id) {
+  UsecaseResult stopApp(TenantId tenantId, AppId id) {
     auto app = apps.findById(tenantId, id);
     if (app.isNull)
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
     if (app.state == AppState.stopped)
-      return CommandResult(false, "", "Application is already stopped");
+      return UsecaseResult(false, "", "Application is already stopped");
 
     if (!lifecycle.stopApp(tenantId, id))
-      return CommandResult(false, "", "Cannot stop application");
+      return UsecaseResult(false, "", "Cannot stop application");
 
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult restartApp(TenantId tenantId, AppId id) {
+  UsecaseResult restartApp(TenantId tenantId, AppId id) {
     if (!lifecycle.restartApp(tenantId, id))
-      return CommandResult(false, "", "Cannot restart application");
+      return UsecaseResult(false, "", "Cannot restart application");
 
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult scaleApp(ScaleAppRequest req) {
+  UsecaseResult scaleApp(ScaleAppRequest req) {
     if (req.appId.isNull)
-      return CommandResult(false, "", "Application ID is required");
+      return UsecaseResult(false, "", "Application ID is required");
 
     if (!lifecycle.scaleApp(req.tenantId, req.appId, req.instances, req.memoryMb, req.diskMb))
-      return CommandResult(false, "", "Cannot scale application — check quota limits");
+      return UsecaseResult(false, "", "Cannot scale application — check quota limits");
 
-    return CommandResult(true, req.appId.value, "");
+    return UsecaseResult(true, req.appId.value, "");
   }
 
   /// Get environment variables for an application.
@@ -165,25 +165,25 @@ class ManageAppsUseCase {
   }
 
   /// Set environment variables for an application.
-  CommandResult setEnvironment(TenantId tenantId, AppId id, string envJson) {
+  UsecaseResult setEnvironment(TenantId tenantId, AppId id, string envJson) {
     if (!apps.existsById(tenantId, id))
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
 
     auto app = apps.findById(tenantId, id);
     app.environmentVariables = envJson;
     app.updatedAt = currentTimestamp();
     apps.update(app);
    
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
-  CommandResult deleteApp(TenantId tenantId, AppId appId) {
+  UsecaseResult deleteApp(TenantId tenantId, AppId appId) {
     auto app = apps.findById(tenantId, appId);
     if (app.isNull)
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
 
     apps.remove(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 }
 

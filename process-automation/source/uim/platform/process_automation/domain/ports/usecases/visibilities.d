@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageVisibilitiesUseCase {
     
-    CommandResult createVisibility(CreateVisibilityRequest r);
+    UsecaseResult createVisibility(CreateVisibilityRequest r);
     Visibility getVisibility(TenantId tenantId, VisibilityId visibilityId);
     Visibility[] listVisibilities(TenantId tenantId);
-    CommandResult updateVisibility(UpdateVisibilityRequest r);
-    CommandResult deleteVisibility(TenantId tenantId, VisibilityId visibilityId);
+    UsecaseResult updateVisibility(UpdateVisibilityRequest r);
+    UsecaseResult deleteVisibility(TenantId tenantId, VisibilityId visibilityId);
 
 }

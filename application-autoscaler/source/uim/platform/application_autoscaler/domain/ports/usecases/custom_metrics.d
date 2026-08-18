@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 interface IManageCustomMetricsUseCase {
 
-  CommandResult submit(SubmitCustomMetricRequest r);
+  UsecaseResult submit(SubmitCustomMetricRequest r);
   CustomMetricEntity[] getMetrics(AppBindingId appId, string metricName = "");
   
 }

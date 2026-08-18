@@ -16,9 +16,9 @@ import uim.platform.mobile;
 @safe:
 interface IManageDeviceRegistrationsUseCase { 
     
-    CommandResult register(RegisterDeviceRequest r);
+    UsecaseResult register(RegisterDeviceRequest r);
 
-    CommandResult updateStatus(TenantId tenantId, DeviceRegistrationId id, string status);
+    UsecaseResult updateStatus(TenantId tenantId, DeviceRegistrationId id, string status);
 
     DeviceRegistration getDeviceRegistration(TenantId tenantId, DeviceRegistrationId id);
 
@@ -28,7 +28,7 @@ interface IManageDeviceRegistrationsUseCase {
 
     DeviceRegistration[] listByTenant(TenantId tenantId);
 
-    CommandResult deleteDeviceRegistration(TenantId tenantId, DeviceRegistrationId id);
+    UsecaseResult deleteDeviceRegistration(TenantId tenantId, DeviceRegistrationId id);
 
     size_t countByApp(TenantId tenantId, MobileAppId appId);
 

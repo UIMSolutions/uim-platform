@@ -34,7 +34,7 @@ class ManageAppVersionsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createAppVersion(AppVersionDTO dto) {
+    UsecaseResult createAppVersion(AppVersionDTO dto) {
         auto ver = AppVersion(dto.tenantId, dto.versionId, dto.createdBy);
         ver.mobileApplicationId = dto.applicationId;
         ver.definitionId = dto.definitionId;
@@ -47,16 +47,16 @@ class ManageAppVersionsUseCase {
         ver.isMandatoryUpdate = dto.isMandatoryUpdate;
 
         if (!AgentryValidator.isValidAppVersion(ver))
-            return CommandResult(false, "", "Invalid app version data");
+            return UsecaseResult(false, "", "Invalid app version data");
 
         repo.save(ver);
-        return CommandResult(true, ver.id.value, "");
+        return UsecaseResult(true, ver.id.value, "");
     }
 
-    CommandResult updateAppVersion(AppVersionDTO dto) {
+    UsecaseResult updateAppVersion(AppVersionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.versionId);
         if (existing.isNull)
-            return CommandResult(false, "", "App version not found");
+            return UsecaseResult(false, "", "App version not found");
 
         if (dto.releaseNotes.length > 0) existing.releaseNotes = dto.releaseNotes;
         if (dto.artifactUrl.length > 0) existing.artifactUrl = dto.artifactUrl;
@@ -64,16 +64,16 @@ class ManageAppVersionsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
+    UsecaseResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "App version not found");
+            return UsecaseResult(false, "", "App version not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

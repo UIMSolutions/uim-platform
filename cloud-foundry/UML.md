@@ -151,17 +151,17 @@ sequenceDiagram
     Client->>AC: POST /apps { name, spaceId, buildpack, memory=512 }
     AC->>AUC: createApplication(dto)
     AUC->>AR: save(app — state=stopped)
-    AUC-->>AC: CommandResult(true, appId)
+    AUC-->>AC: UsecaseResult(true, appId)
     AC-->>Client: 201 { id }
 
     Client->>AC: POST /apps/start/{id}
     AC->>AUC: startApplication(id)
     AUC->>AR: update(state=started)
-    AUC-->>AC: CommandResult(true, id)
+    AUC-->>AC: UsecaseResult(true, id)
     AC-->>Client: 200 { id }
 
     Client->>RC: POST /routes/map/{routeId} { appId }
     RC->>RUC: mapRoute(routeId, appId)
-    RUC-->>RC: CommandResult(true, routeId)
+    RUC-->>RC: UsecaseResult(true, routeId)
     RC-->>Client: 200 { id }
 ```

@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManageRegisteredApplicationsUseCase { 
 
-    CommandResult createApplication(CreateRegisteredApplicationRequest r);
+    UsecaseResult createApplication(CreateRegisteredApplicationRequest r);
     RegisteredApplication getApplication(TenantId tenantId, RegisteredApplicationId id);
     RegisteredApplication[] listApplications(TenantId tenantId);
-    CommandResult updateApplication(UpdateRegisteredApplicationRequest r);
-    CommandResult activateApplication(TenantId tenantId, RegisteredApplicationId id);
-    CommandResult suspendApplication(TenantId tenantId, RegisteredApplicationId id);
-    CommandResult deleteApplication(TenantId tenantId, RegisteredApplicationId id);
+    UsecaseResult updateApplication(UpdateRegisteredApplicationRequest r);
+    UsecaseResult activateApplication(TenantId tenantId, RegisteredApplicationId id);
+    UsecaseResult suspendApplication(TenantId tenantId, RegisteredApplicationId id);
+    UsecaseResult deleteApplication(TenantId tenantId, RegisteredApplicationId id);
 
 }

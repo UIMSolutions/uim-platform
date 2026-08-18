@@ -22,12 +22,12 @@ class ManageAlertRulesUseCase {
     this.alertRules = alertRules;
   }
 
-  CommandResult createRule(CreateAlertRuleRequest req) {
+  UsecaseResult createRule(CreateAlertRuleRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Rule name is required");
+      return UsecaseResult(false, "", "Rule name is required");
 
     if (req.metricName.isEmpty)
-      return CommandResult(false, "", "Metric name is required");
+      return UsecaseResult(false, "", "Metric name is required");
 
     auto rule = AlertRule(req.tenantId); //, UserId("test-user"));
     rule.resourceId = req.resourceId;
@@ -46,13 +46,13 @@ class ManageAlertRulesUseCase {
     rule.channelIds = req.channelIds;
 
     alertRules.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(UpdateAlertRuleRequest req) {
+  UsecaseResult updateRule(UpdateAlertRuleRequest req) {
     auto rule = alertRules.findById(req.tenantId, req.alertRuleId);
     if (rule.isNull)
-      return CommandResult(false, "", "Alert rule not found");
+      return UsecaseResult(false, "", "Alert rule not found");
 
     if (req.description.length > 0)
       rule.description = req.description;
@@ -72,7 +72,7 @@ class ManageAlertRulesUseCase {
     rule.updatedAt = clockSeconds();
 
     alertRules.update(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   AlertRule getRule(TenantId tenantId, AlertRuleId id) {
@@ -91,13 +91,13 @@ class ManageAlertRulesUseCase {
     return alertRules.findEnabled(tenantId);
   }
 
-  CommandResult deleteRule(TenantId tenantId, AlertRuleId id) {
+  UsecaseResult deleteRule(TenantId tenantId, AlertRuleId id) {
     auto rule = alertRules.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "Alert rule not found");
+      return UsecaseResult(false, "", "Alert rule not found");
 
     alertRules.remove(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   private static ThresholdOperator parseOperator(string thresholdOperator) {

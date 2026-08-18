@@ -17,10 +17,10 @@ class ManageProcessInstancesUseCase {
         this.repo = repo;
     }
 
-    CommandResult startProcessInstance(StartProcessInstanceRequest r) {
+    UsecaseResult startProcessInstance(StartProcessInstanceRequest r) {
         auto err = ProcessValidator.validateInstance(r.tenantId, r.processId, r.startedBy);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         ProcessInstance i;
         i.id = r.processInstanceId;
@@ -34,7 +34,7 @@ class ManageProcessInstancesUseCase {
         i.startedAt = currentTimestamp;
 
         repo.save(i);
-        return CommandResult(true, i.id.value, "");
+        return UsecaseResult(true, i.id.value, "");
     }
 
     ProcessInstance getProcessInstance(TenantId tenantId, ProcessInstanceId id) {
@@ -53,10 +53,10 @@ class ManageProcessInstancesUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult performProcessInstanceAction(ProcessInstanceActionRequest r) {
+    UsecaseResult performProcessInstanceAction(ProcessInstanceActionRequest r) {
         auto existing = repo.findById(r.tenantId, r.processInstanceId);
         if (existing.isNull)
-            return CommandResult(false, "", "Process instance not found");
+            return UsecaseResult(false, "", "Process instance not found");
 
         switch (r.action) {
         case "suspend":
@@ -75,19 +75,19 @@ class ManageProcessInstancesUseCase {
             existing.retryCount = existing.retryCount + 1;
             break;
         default:
-            return CommandResult(false, "", "Unknown action: " ~ r.action);
+            return UsecaseResult(false, "", "Unknown action: " ~ r.action);
         }
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProcessInstance(TenantId tenantId, ProcessInstanceId id) {
+    UsecaseResult deleteProcessInstance(TenantId tenantId, ProcessInstanceId id) {
         auto instance = repo.findById(tenantId, id);
         if (instance.isNull)
-            return CommandResult(false, "", "Process instance not found");
+            return UsecaseResult(false, "", "Process instance not found");
 
         repo.remove(instance);
-        return CommandResult(true, instance.id.value, "");
+        return UsecaseResult(true, instance.id.value, "");
     }
 }

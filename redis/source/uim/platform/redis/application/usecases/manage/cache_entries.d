@@ -32,9 +32,9 @@ class ManageCacheEntriesUseCase {
         return repo.findByType(tenantId, instanceId, entryType);
     }
 
-    CommandResult createCacheEntry(CacheEntryDTO dto) {
+    UsecaseResult createCacheEntry(CacheEntryDTO dto) {
         if (repo.keyExists(dto.tenantId, dto.instanceId, dto.key))
-            return CommandResult(false, "", "Cache key already exists in this instance");
+            return UsecaseResult(false, "", "Cache key already exists in this instance");
 
         auto e = CacheEntry(dto.tenantId, dto.cacheEntryId, dto.createdBy);
         e.instanceId = dto.instanceId;
@@ -44,30 +44,30 @@ class ManageCacheEntriesUseCase {
         e.ttl = dto.ttl == 0 ? -1 : dto.ttl;
 
         if (!RedisValidator.isValidCacheEntry(e))
-            return CommandResult(false, "", "Invalid cache entry: instanceId and key required");
+            return UsecaseResult(false, "", "Invalid cache entry: instanceId and key required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateCacheEntry(CacheEntryDTO dto) {
+    UsecaseResult updateCacheEntry(CacheEntryDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.cacheEntryId);
         if (existing.isNull)
-            return CommandResult(false, "", "Cache entry not found");
+            return UsecaseResult(false, "", "Cache entry not found");
 
         if (dto.value.length > 0) existing.value = dto.value;
         existing.ttl = dto.ttl == 0 ? -1 : dto.ttl;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCacheEntry(TenantId tenantId, CacheEntryId id) {
+    UsecaseResult deleteCacheEntry(TenantId tenantId, CacheEntryId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Cache entry not found");
+            return UsecaseResult(false, "", "Cache entry not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

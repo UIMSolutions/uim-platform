@@ -26,7 +26,7 @@ class ManageServiceBrokersUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createBroker(CreateServiceBrokerRequest dto) {
+    UsecaseResult createBroker(CreateServiceBrokerRequest dto) {
         auto broker = ServiceBroker(dto.tenantId);
         broker.id = ServiceBrokerId(currentTimestamp.to!string);
         broker.name = dto.name;
@@ -34,18 +34,18 @@ class ManageServiceBrokersUseCase {
         broker.brokerUrl = dto.brokerUrl;
 
         if (dto.name.isEmpty)
-            return CommandResult(false, "", "Service broker name is required");
+            return UsecaseResult(false, "", "Service broker name is required");
         if (dto.brokerUrl.length == 0)
-            return CommandResult(false, "", "Broker URL is required");
+            return UsecaseResult(false, "", "Broker URL is required");
 
         repo.save(broker);
-        return CommandResult(true, broker.id.value, "");
+        return UsecaseResult(true, broker.id.value, "");
     }
 
-    CommandResult updateBroker(UpdateServiceBrokerRequest dto) {
+    UsecaseResult updateBroker(UpdateServiceBrokerRequest dto) {
         auto broker = repo.findById(dto.tenantId, dto.brokerId);
         if (broker.isNull)
-            return CommandResult(false, "", "Service broker not found");
+            return UsecaseResult(false, "", "Service broker not found");
 
         if (dto.name.length > 0)
             broker.name = dto.name;
@@ -56,16 +56,16 @@ class ManageServiceBrokersUseCase {
         broker.updatedAt = currentTimestamp;
 
         repo.update(broker);
-        return CommandResult(true, broker.id.value, "");
+        return UsecaseResult(true, broker.id.value, "");
     }
 
-    CommandResult deleteBroker(TenantId tenantId, ServiceBrokerId id) {
+    UsecaseResult deleteBroker(TenantId tenantId, ServiceBrokerId id) {
         auto broker = repo.findById(tenantId, id);
         if (broker.isNull)
-            return CommandResult(false, "", "Service broker not found");
+            return UsecaseResult(false, "", "Service broker not found");
 
         repo.remove(broker);
-        return CommandResult(true, broker.id.value, "");
+        return UsecaseResult(true, broker.id.value, "");
     }
 }
 

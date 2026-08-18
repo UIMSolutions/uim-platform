@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 interface IManageEncountersUseCase {
 
-  CommandResult createEncounter(CreateEncounterRequest r);
+  UsecaseResult createEncounter(CreateEncounterRequest r);
 
-  CommandResult updateEncounter(UpdateEncounterRequest r);
+  UsecaseResult updateEncounter(UpdateEncounterRequest r);
 
   Encounter getEncounter(TenantId tenantId, EncounterId id);
 
@@ -22,6 +22,6 @@ interface IManageEncountersUseCase {
 
   Encounter[] listByPatient(TenantId tenantId, string patientRef);
 
-  CommandResult deleteEncounter(TenantId tenantId, EncounterId id);
+  UsecaseResult deleteEncounter(TenantId tenantId, EncounterId id);
   
 }

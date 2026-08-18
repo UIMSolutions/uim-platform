@@ -22,13 +22,13 @@ class ManageTagsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createTag(CreateTagRequest req) {
+  UsecaseResult createTag(CreateTagRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Tag name is required");
+      return UsecaseResult(false, "", "Tag name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Tag with this name already exists");
+      return UsecaseResult(false, "", "Tag with this name already exists");
 
     auto t = Tag(req.tenantId);
     t.name = req.name;
@@ -37,7 +37,7 @@ class ManageTagsUseCase {
     t.parentTagId = req.parentTagId;
 
     repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   Tag getTag(TenantId tenantId, TagId id) {
@@ -48,10 +48,10 @@ class ManageTagsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateTag(UpdateTagRequest req) {
+  UsecaseResult updateTag(UpdateTagRequest req) {
     auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
-      return CommandResult(false, "", "Tag not found");
+      return UsecaseResult(false, "", "Tag not found");
 
     if (req.name.length > 0)
       t.name = req.name;
@@ -61,15 +61,15 @@ class ManageTagsUseCase {
       t.color = req.color;
 
     repo.update(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
-  CommandResult deleteTag(TenantId tenantId, TagId id) {
+  UsecaseResult deleteTag(TenantId tenantId, TagId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
-      return CommandResult(false, "", "Tag not found");
+      return UsecaseResult(false, "", "Tag not found");
 
     repo.remove(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 }

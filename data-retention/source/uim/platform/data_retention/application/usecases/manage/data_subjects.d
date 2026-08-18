@@ -17,9 +17,9 @@ class ManageDataSubjectsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createDataSubject(CreateDataSubjectRequest req) {
+    UsecaseResult createDataSubject(CreateDataSubjectRequest req) {
         if (req.externalId.isEmpty)
-            return CommandResult(false, "", "External ID is required");
+            return UsecaseResult(false, "", "External ID is required");
 
         auto ds = DataSubject(req.tenantId, DataSubjectId(createId), req.createdBy);
         ds.roleId = DataSubjectRoleId(req.roleId);
@@ -29,13 +29,13 @@ class ManageDataSubjectsUseCase {
         ds.createdAt = clockSeconds();
 
         repo.save(ds);
-        return CommandResult(true, ds.id.value, "");
+        return UsecaseResult(true, ds.id.value, "");
     }
 
-    CommandResult updateDataSubject(UpdateDataSubjectRequest req) {
+    UsecaseResult updateDataSubject(UpdateDataSubjectRequest req) {
         auto ds = repo.findById(req.tenantId, req.subjectId);
         if (ds.isNull)
-            return CommandResult(false, "", "Data subject not found");
+            return UsecaseResult(false, "", "Data subject not found");
 
         if (req.lifecycleStatus.length > 0)
             ds.lifecycleStatus = req.lifecycleStatus.toDataLifecycleStatus;
@@ -46,20 +46,20 @@ class ManageDataSubjectsUseCase {
         ds.updatedAt = currentTimestamp;
 
         repo.update(ds);
-        return CommandResult(true, ds.id.value, "");
+        return UsecaseResult(true, ds.id.value, "");
     }
 
-    CommandResult blockDataSubject(TenantId tenantId, DataSubjectId id) {
+    UsecaseResult blockDataSubject(TenantId tenantId, DataSubjectId id) {
         auto ds = repo.findById(tenantId, id);
         if (ds.isNull)
-            return CommandResult(false, "", "Data subject not found");
+            return UsecaseResult(false, "", "Data subject not found");
 
         ds.lifecycleStatus = DataLifecycleStatus.blocked;
         ds.blockedAt = currentTimestamp();
         ds.updatedAt = currentTimestamp();
 
         repo.update(ds);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
     bool hasDataSubjectById(TenantId tenantId, DataSubjectId id) {
@@ -78,12 +78,12 @@ class ManageDataSubjectsUseCase {
         return repo.findByLifecycleStatus(tenantId, status);
     }
 
-    CommandResult deleteDataSubject(TenantId tenantId, DataSubjectId id) {
+    UsecaseResult deleteDataSubject(TenantId tenantId, DataSubjectId id) {
         auto subject = repo.findById(tenantId, id);
         if (subject.isNull)
-            return CommandResult(false, "", "Data subject not found");
+            return UsecaseResult(false, "", "Data subject not found");
 
         repo.remove(subject);
-        return CommandResult(true, subject.id.value, "");
+        return UsecaseResult(true, subject.id.value, "");
     }
 }

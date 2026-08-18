@@ -17,12 +17,12 @@ class ManageConsentPurposesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createPurpose(CreateConsentPurposeRequest req) {
+  UsecaseResult createPurpose(CreateConsentPurposeRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
       
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Name is required");
+      return UsecaseResult(false, "", "Name is required");
 
     auto cp = ConsentPurpose(req.tenantId);
     cp.controllerId = req.controllerId;
@@ -38,7 +38,7 @@ class ManageConsentPurposesUseCase {
     cp.validUntil = req.validUntil;
 
     repo.save(cp);
-    return CommandResult(true, cp.id.value, "");
+    return UsecaseResult(true, cp.id.value, "");
   }
 
   ConsentPurpose getPurpose(TenantId tenantId, ConsentPurposeId id) {
@@ -53,10 +53,10 @@ class ManageConsentPurposesUseCase {
     return repo.findByController(tenantId, controllerId);
   }
 
-  CommandResult updatePurpose(UpdateConsentPurposeRequest req) {
+  UsecaseResult updatePurpose(UpdateConsentPurposeRequest req) {
     auto cp = repo.findById(req.tenantId, req.purposeId);
     if (cp.isNull)
-      return CommandResult(false, "", "Consent purpose not found");
+      return UsecaseResult(false, "", "Consent purpose not found");
 
     if (req.name.length > 0)
       cp.name = req.name;
@@ -70,15 +70,15 @@ class ManageConsentPurposesUseCase {
     cp.updatedAt = currentTimestamp();
 
     repo.update(cp);
-    return CommandResult(true, cp.id.value, "");
+    return UsecaseResult(true, cp.id.value, "");
   }
 
-  CommandResult deletePurpose(TenantId tenantId, ConsentPurposeId id) {
+  UsecaseResult deletePurpose(TenantId tenantId, ConsentPurposeId id) {
     auto cp = repo.findById(tenantId, id);
     if (cp.isNull)
-      return CommandResult(false, "", "Consent purpose not found");
+      return UsecaseResult(false, "", "Consent purpose not found");
 
     repo.remove(cp);
-    return CommandResult(true, cp.id.value, "");
+    return UsecaseResult(true, cp.id.value, "");
   }
 }

@@ -13,13 +13,13 @@ mixin(ShowModule!());
 /// Use case: manage service plan entitlements and quota assignments.
 interface IManageEntitlementsUseCase {
 
-  CommandResult assignEntitlement(AssignEntitlementRequest request);
-  CommandResult updateEntitlementQuota(UpdateEntitlementQuotaRequest request);
-  CommandResult revokeEntitlement(TenantId tenantId, EntitlementId id);
+  UsecaseResult assignEntitlement(AssignEntitlementRequest request);
+  UsecaseResult updateEntitlementQuota(UpdateEntitlementQuotaRequest request);
+  UsecaseResult revokeEntitlement(TenantId tenantId, EntitlementId id);
   Entitlement getEntitlement(TenantId tenantId, EntitlementId id);
   Entitlement[] listEntitlements(TenantId tenantId, GlobalAccountId gaId);
   Entitlement[] listEntitlements(TenantId tenantId, SubaccountId subId);
   Entitlement[] listEntitlements(TenantId tenantId, DirectoryId dirId);
-  CommandResult deleteEntitlement(TenantId tenantId, EntitlementId id);
+  UsecaseResult deleteEntitlement(TenantId tenantId, EntitlementId id);
 
 }

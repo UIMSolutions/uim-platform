@@ -21,9 +21,9 @@ class ManageArchitectureBlocksUseCase {
         return repository.findByStatus(tenantId, status);
     }
 
-    CommandResult createBlock(CreateArchitectureBlockRequest req) {
+    UsecaseResult createBlock(CreateArchitectureBlockRequest req) {
         if (req.title.isEmpty)
-            return CommandResult(false, "", "Title is required");
+            return UsecaseResult(false, "", "Title is required");
 
         auto block = ArchitectureBlock(req.tenantId, req.blockId);
         block.title = req.title;
@@ -31,31 +31,31 @@ class ManageArchitectureBlocksUseCase {
         block.owner = req.owner;
 
         repository.save(block);
-        return CommandResult(true, block.id.value, "Architecture block created");
+        return UsecaseResult(true, block.id.value, "Architecture block created");
     }
 
     ArchitectureBlock getBlock(TenantId tenantId, ArchitectureBlockId blockId) {
         return repository.findById(tenantId, blockId);
     }
 
-    CommandResult updateBlock(UpdateArchitectureBlockRequest req) {
+    UsecaseResult updateBlock(UpdateArchitectureBlockRequest req) {
         auto block = repository.findById(req.tenantId, req.blockId);
         if (block.id.value.length == 0)
-            return CommandResult(false, "", "Architecture block not found");
+            return UsecaseResult(false, "", "Architecture block not found");
 
         block.updatedAt = currentTimestamp();
 
         repository.update(block);
-        return CommandResult(true, block.id.value, "Architecture block updated");
+        return UsecaseResult(true, block.id.value, "Architecture block updated");
     }
 
-    CommandResult deleteBlock(TenantId tenantId, ArchitectureBlockId blockId) {
+    UsecaseResult deleteBlock(TenantId tenantId, ArchitectureBlockId blockId) {
         auto block = repository.findById(tenantId, blockId);
         if (block.id.value.length == 0)
-            return CommandResult(false, "", "Architecture block not found");
+            return UsecaseResult(false, "", "Architecture block not found");
 
         repository.remove(block);
-        return CommandResult(true, blockId.value, "Architecture block deleted");
+        return UsecaseResult(true, blockId.value, "Architecture block deleted");
     }
 }
 ///

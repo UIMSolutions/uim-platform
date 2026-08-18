@@ -13,12 +13,12 @@ mixin(ShowModule!());
 /// Use case: manage labels (tags) on BTP resources.
 interface IManageLabelsUseCase { 
 
-  CommandResult createLabel(CreateLabelRequest req);
-  CommandResult updateLabel(TenantId tenantId, LabelId id, UpdateLabelRequest req);
+  UsecaseResult createLabel(CreateLabelRequest req);
+  UsecaseResult updateLabel(TenantId tenantId, LabelId id, UpdateLabelRequest req);
   Label getLabel(TenantId tenantId, LabelId id);
   Label[] listLabels(TenantId tenantId, string resourceType, string resourceId);
   Label[] listLabelsByKey(TenantId tenantId, string resourceType, string key);
-  CommandResult deleteLabel(TenantId tenantId, LabelId id);
-  CommandResult deleteByResource(TenantId tenantId, string resourceType, string resourceId);
+  UsecaseResult deleteLabel(TenantId tenantId, LabelId id);
+  UsecaseResult deleteByResource(TenantId tenantId, string resourceType, string resourceId);
 
 }

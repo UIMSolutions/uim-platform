@@ -154,20 +154,20 @@ class ManageMarketRatesUseCase {
     return rateRepo.findById(tenantId, id);
   }
 
-  CommandResult deleteRate(DeleteRatesRequest req) {
+  UsecaseResult deleteRate(DeleteRatesRequest req) {
     if (req.fromDate.length > 0 || req.toDate.length > 0) {
       rateRepo.removeByDateRange(req.tenantId, req.fromDate, req.toDate);
     } else if (req.providerCode.length > 0) {
       rateRepo.removeByProvider(req.tenantId, req.providerCode);
     } else {
-      return CommandResult(false, "", "Either providerCode or date range is required for deletion");
+      return UsecaseResult(false, "", "Either providerCode or date range is required for deletion");
     }
 
     logAudit(req.tenantId, req.requestedBy, AuditOperation.delete_,
              req.providerCode, MarketDataCategory.exchangeRates,
              OperationStatus.success, "Deleted", 0, req.fromDate, req.toDate);
 
-    return CommandResult(true, "", "");
+    return UsecaseResult(true, "", "");
   }
 
   // ---------------------------------------------------------------------------

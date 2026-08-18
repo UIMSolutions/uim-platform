@@ -17,13 +17,13 @@ interface IDataBlocksApi {
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/") @method(HTTPMethod.POST)
-    CommandResult createDataBlock(string tenantId, CreateDataBlockRequest request);
+    UsecaseResult createDataBlock(string tenantId, CreateDataBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.PUT)
-    CommandResult updateDataBlock(string tenantId, string _id, UpdateDataBlockRequest request);
+    UsecaseResult updateDataBlock(string tenantId, string _id, UpdateDataBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.DELETE)
-    CommandResult deleteDataBlock(string tenantId, string _id);
+    UsecaseResult deleteDataBlock(string tenantId, string _id);
 }

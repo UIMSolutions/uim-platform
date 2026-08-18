@@ -18,11 +18,11 @@ class ManageRoleCollectionsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRoleCollection(CreateRoleCollectionRequest r) {
+  UsecaseResult createRoleCollection(CreateRoleCollectionRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Role collection name is required");
+      return UsecaseResult(false, "", "Role collection name is required");
     if (repo.existsByName(r.tenantId, r.name))
-      return CommandResult(false, "", "A role collection with this name already exists");
+      return UsecaseResult(false, "", "A role collection with this name already exists");
 
     import std.uuid : randomUUID;
 
@@ -32,13 +32,13 @@ class ManageRoleCollectionsUseCase {
     rc.roleReferences = r.roleReferences.dup;
 
     repo.save(rc);
-    return CommandResult(true, rc.id.value, "");
+    return UsecaseResult(true, rc.id.value, "");
   }
 
-  CommandResult updateRoleCollection(UpdateRoleCollectionRequest r) {
+  UsecaseResult updateRoleCollection(UpdateRoleCollectionRequest r) {
     auto rc = repo.findById(r.tenantId, r.collectionId);
     if (rc.isNull)
-      return CommandResult(false, "", "Role collection not found");
+      return UsecaseResult(false, "", "Role collection not found");
 
     if (r.description.length > 0)
       rc.description = r.description;
@@ -47,16 +47,16 @@ class ManageRoleCollectionsUseCase {
     rc.updatedAt = currentTimestamp();
 
     repo.update(rc);
-    return CommandResult(true, rc.id.value, "");
+    return UsecaseResult(true, rc.id.value, "");
   }
 
-  CommandResult deleteRoleCollection(TenantId tenantId, RoleCollectionId id) {
+  UsecaseResult deleteRoleCollection(TenantId tenantId, RoleCollectionId id) {
     auto rc = repo.findById(tenantId, id);
     if (rc.isNull)
-      return CommandResult(false, "", "Role collection not found");
+      return UsecaseResult(false, "", "Role collection not found");
 
     repo.remove(rc);
-    return CommandResult(true, rc.id.value, "");
+    return UsecaseResult(true, rc.id.value, "");
   }
 
   RoleCollectionEntity getRoleCollection(TenantId tenantId, RoleCollectionId id) {

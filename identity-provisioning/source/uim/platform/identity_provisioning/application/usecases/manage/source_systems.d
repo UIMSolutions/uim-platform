@@ -21,15 +21,15 @@ class ManageSourceSystemsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createSourceSystem(CreateSourceSystemRequest req) {
+  UsecaseResult createSourceSystem(CreateSourceSystemRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "System name is required");
+      return UsecaseResult(false, "", "System name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Source system with this name already exists");
+      return UsecaseResult(false, "", "Source system with this name already exists");
 
     auto sys = SourceSystem(req.tenantId); //, req.createdBy);
     sys.name = req.name;
@@ -39,7 +39,7 @@ class ManageSourceSystemsUseCase {
     sys.status = SystemStatus.configuring;
 
     repo.save(sys);
-    return CommandResult(true, sys.id.value, "");
+    return UsecaseResult(true, sys.id.value, "");
   }
 
   SourceSystem getSourceSystem(TenantId tenantId, SourceSystemId id) {
@@ -50,15 +50,15 @@ class ManageSourceSystemsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateSourceSystem(UpdateSourceSystemRequest req) {
+  UsecaseResult updateSourceSystem(UpdateSourceSystemRequest req) {
     if (req.systemId.isNull)
-      return CommandResult(false, "", "System ID is required");
+      return UsecaseResult(false, "", "System ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.tenantId, req.systemId);
     if (existing.isNull)
-      return CommandResult(false, "", "Source system not found");
+      return UsecaseResult(false, "", "Source system not found");
 
     auto updated = existing;
     if (req.name.length > 0)
@@ -70,43 +70,43 @@ class ManageSourceSystemsUseCase {
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
   /// Activate a source system for provisioning.
-  CommandResult activateSystem(TenantId tenantId, SourceSystemId id) {
+  UsecaseResult activateSystem(TenantId tenantId, SourceSystemId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
-      return CommandResult(false, "", "Source system not found");
+      return UsecaseResult(false, "", "Source system not found");
 
     if (sys.connectionConfig.length == 0)
-      return CommandResult(false, "", "Connection configuration is required before activation");
+      return UsecaseResult(false, "", "Connection configuration is required before activation");
 
     sys.status = SystemStatus.active;
     sys.updatedAt = currentTimestamp();
     repo.update(sys);
-    return CommandResult(true, sys.id.value, "");
+    return UsecaseResult(true, sys.id.value, "");
   }
 
   /// Deactivate a source system.
-  CommandResult deactivateSystem(TenantId tenantId, SourceSystemId id) {
+  UsecaseResult deactivateSystem(TenantId tenantId, SourceSystemId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
-      return CommandResult(false, "", "Source system not found");
+      return UsecaseResult(false, "", "Source system not found");
 
     sys.status = SystemStatus.inactive;
     sys.updatedAt = currentTimestamp();
     repo.update(sys);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult deleteSourceSystem(TenantId tenantId, SourceSystemId id) {
+  UsecaseResult deleteSourceSystem(TenantId tenantId, SourceSystemId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Source system not found");
+      return UsecaseResult(false, "", "Source system not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }
 

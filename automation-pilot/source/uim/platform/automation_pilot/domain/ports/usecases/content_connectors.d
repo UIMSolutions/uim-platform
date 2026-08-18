@@ -15,8 +15,8 @@ interface IManageContentConnectorsUseCase {
 
     ContentConnector getContentConnector(TenantId tenantId, ContentConnectorId id);
     ContentConnector[] listContentConnectors(TenantId tenantId);
-    CommandResult createContentConnector(ContentConnectorDTO dto);
-    CommandResult updateContentConnector(ContentConnectorDTO dto);
-    CommandResult deleteContentConnector(TenantId tenantId, ContentConnectorId id);
+    UsecaseResult createContentConnector(ContentConnectorDTO dto);
+    UsecaseResult updateContentConnector(ContentConnectorDTO dto);
+    UsecaseResult deleteContentConnector(TenantId tenantId, ContentConnectorId id);
 
 }

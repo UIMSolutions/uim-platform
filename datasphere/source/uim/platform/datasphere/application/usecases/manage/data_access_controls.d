@@ -21,11 +21,11 @@ class ManageDataAccessControlsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDataAccessControl(CreateDataAccessControlRequest r) {
+  UsecaseResult createDataAccessControl(CreateDataAccessControlRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Data access control name is required");
+      return UsecaseResult(false, "", "Data access control name is required");
     if (r.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
 
     auto dac = DataAccessControl(r.tenantId, r.controlId);
     dac.spaceId = r.spaceId;
@@ -36,7 +36,7 @@ class ManageDataAccessControlsUseCase {
     dac.isEnabled = true;
 
     repo.save(dac);
-    return CommandResult(true, dac.id.value, "");
+    return UsecaseResult(true, dac.id.value, "");
   }
 
   DataAccessControl getDataAccessControl(TenantId tenantId, SpaceId spaceId, DataAccessControlId id) {
@@ -47,10 +47,10 @@ class ManageDataAccessControlsUseCase {
     return repo.findBySpace(tenantId, spaceId);
   }
 
-  CommandResult updateDataAccessControl(UpdateDataAccessControlRequest r) {
+  UsecaseResult updateDataAccessControl(UpdateDataAccessControlRequest r) {
     auto control = repo.findById(r.tenantId, r.spaceId, r.controlId);
     if (control.isNull)
-      return CommandResult(false, "", "Data access control not found");
+      return UsecaseResult(false, "", "Data access control not found");
 
     control.name = r.name;
     control.description = r.description;
@@ -62,15 +62,15 @@ class ManageDataAccessControlsUseCase {
     control.updatedAt = currentTimestamp;
 
     repo.update(control);
-    return CommandResult(true, control.id.value, "");
+    return UsecaseResult(true, control.id.value, "");
   }
 
-  CommandResult deleteDataAccessControl(TenantId tenantId, SpaceId spaceId, DataAccessControlId id) {
+  UsecaseResult deleteDataAccessControl(TenantId tenantId, SpaceId spaceId, DataAccessControlId id) {
     auto control = repo.findById(tenantId, spaceId, id);
     if (control.isNull)
-      return CommandResult(false, "", "Data access control not found");
+      return UsecaseResult(false, "", "Data access control not found");
 
     repo.remove(control);
-    return CommandResult(true, control.id.value, "");
+    return UsecaseResult(true, control.id.value, "");
   }
 }

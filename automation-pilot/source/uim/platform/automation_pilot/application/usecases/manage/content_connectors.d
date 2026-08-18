@@ -26,7 +26,7 @@ class ManageContentConnectorsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createContentConnector(ContentConnectorDTO dto) {
+    UsecaseResult createContentConnector(ContentConnectorDTO dto) {
         ContentConnector cc;
         cc.id = dto.connectorId;
         cc.tenantId = dto.tenantId;
@@ -37,15 +37,15 @@ class ManageContentConnectorsUseCase {
         cc.path = dto.path;
         cc.createdBy = dto.createdBy;
         if (!AutomationValidator.isValidContentConnector(cc))
-            return CommandResult(false, "", "Invalid content connector data");
+            return UsecaseResult(false, "", "Invalid content connector data");
         repo.save(cc);
-        return CommandResult(true, cc.id.value, "");
+        return UsecaseResult(true, cc.id.value, "");
     }
 
-    CommandResult updateContentConnector(ContentConnectorDTO dto) {
+    UsecaseResult updateContentConnector(ContentConnectorDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.connectorId);
         if (existing.isNull)
-            return CommandResult(false, "", "Content connector not found");
+            return UsecaseResult(false, "", "Content connector not found");
 
         if (dto.name.length > 0)
             existing.name = dto.name;
@@ -61,16 +61,16 @@ class ManageContentConnectorsUseCase {
             existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteContentConnector(TenantId tenantId, ContentConnectorId id) {
+    UsecaseResult deleteContentConnector(TenantId tenantId, ContentConnectorId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Content connector not found");
+            return UsecaseResult(false, "", "Content connector not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

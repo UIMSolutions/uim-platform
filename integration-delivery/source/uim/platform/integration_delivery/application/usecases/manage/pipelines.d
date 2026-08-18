@@ -30,7 +30,7 @@ class ManagePipelinesUseCase {
         return repo.findByStatus(tenantId, PipelineStatus.active);
     }
 
-    CommandResult createPipeline(PipelineDTO dto) {
+    UsecaseResult createPipeline(PipelineDTO dto) {
         auto p = Pipeline(dto.tenantId); //, dto.createdBy);
         p.id = dto.pipelineId;
         p.name = dto.name;
@@ -40,16 +40,16 @@ class ManagePipelinesUseCase {
         p.status = PipelineStatus.active;
 
         if (!CicdValidator.isValidPipeline(p))
-            return CommandResult(false, "", "Invalid pipeline data");
+            return UsecaseResult(false, "", "Invalid pipeline data");
 
         repo.save(p);
-        return CommandResult(true, p.id.value, "");
+        return UsecaseResult(true, p.id.value, "");
     }
 
-    CommandResult updatePipeline(PipelineDTO dto) {
+    UsecaseResult updatePipeline(PipelineDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.pipelineId);
         if (existing.isNull)
-            return CommandResult(false, "", "Pipeline not found");
+            return UsecaseResult(false, "", "Pipeline not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -58,14 +58,14 @@ class ManagePipelinesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePipeline(TenantId tenantId, PipelineId id) {
+    UsecaseResult deletePipeline(TenantId tenantId, PipelineId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Pipeline not found");
+            return UsecaseResult(false, "", "Pipeline not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

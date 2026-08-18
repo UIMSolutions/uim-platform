@@ -133,17 +133,17 @@ sequenceDiagram
 
     Client->>DC: POST /dashboards { name, visibility=public }
     DC->>DUC: createDashboard(dto)
-    DUC-->>DC: CommandResult(true, dashboardId)
+    DUC-->>DC: UsecaseResult(true, dashboardId)
     DC-->>Client: 201 { id }
 
     Client->>WC: POST /widgets { dashboardId, chartType=bar, datasetId }
     WC->>WUC: createWidget(dto)
-    WUC-->>WC: CommandResult(true, widgetId)
+    WUC-->>WC: UsecaseResult(true, widgetId)
     WC-->>Client: 201 { id }
 
     Client->>DC: POST /dashboards/{id}/publish
     DC->>DUC: publishDashboard(id)
-    DUC-->>DC: CommandResult(true, id)
+    DUC-->>DC: UsecaseResult(true, id)
     DC-->>Client: 200 { id }
 ```
 
@@ -161,12 +161,12 @@ sequenceDiagram
     Client->>PC: POST /predictions { datasetId, modelType=regression, targetColumn }
     PC->>PUC: createPrediction(dto)
     PUC->>PR: save(prediction — status=created)
-    PUC-->>PC: CommandResult(true, id)
+    PUC-->>PC: UsecaseResult(true, id)
     PC-->>Client: 201 { id }
 
     Client->>PC: POST /predictions/{id}/train
     PC->>PUC: trainPrediction(id)
     PUC->>PR: update(status=training)
-    PUC-->>PC: CommandResult(true, id)
+    PUC-->>PC: UsecaseResult(true, id)
     PC-->>Client: 200 { id }
 ```

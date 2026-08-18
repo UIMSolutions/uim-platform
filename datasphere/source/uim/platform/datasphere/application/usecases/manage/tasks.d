@@ -23,12 +23,12 @@ class ManageTasksUseCase {
     this.tasks = tasks;
   }
 
-  CommandResult createTask(CreateTaskRequest r) {
+  UsecaseResult createTask(CreateTaskRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Task name is required");
+      return UsecaseResult(false, "", "Task name is required");
 
     if (r.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
 
     auto t = DSTask(r.tenantId);
     t.spaceId = r.spaceId;
@@ -40,7 +40,7 @@ class ManageTasksUseCase {
     t.maxRetries = r.maxRetries;
 
     tasks.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   DSTask getTask(TenantId tenantId, SpaceId spaceId, TaskId id) {
@@ -51,24 +51,24 @@ class ManageTasksUseCase {
     return tasks.findBySpace(tenantId, spaceId);
   }
 
-  CommandResult patchTask(PatchTaskRequest r) {
+  UsecaseResult patchTask(PatchTaskRequest r) {
     auto task = tasks.findById(r.tenantId, r.spaceId, r.taskId);
     if (task.isNull)
-      return CommandResult(false, "", "Task not found");
+      return UsecaseResult(false, "", "Task not found");
 
     
     task.updatedAt = currentTimestamp;
 
     tasks.update(task);
-    return CommandResult(true, task.id.value, "");
+    return UsecaseResult(true, task.id.value, "");
   }
 
-  CommandResult deleteTask(TenantId tenantId, SpaceId spaceId, TaskId id) {
+  UsecaseResult deleteTask(TenantId tenantId, SpaceId spaceId, TaskId id) {
     auto task = tasks.findById(tenantId, spaceId, id);
     if (task.isNull)
-      return CommandResult(false, "", "Task not found");
+      return UsecaseResult(false, "", "Task not found");
 
     tasks.remove(task);
-    return CommandResult(true, task.id.value, "");
+    return UsecaseResult(true, task.id.value, "");
   }
 }

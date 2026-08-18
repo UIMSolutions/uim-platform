@@ -30,7 +30,7 @@ class ManageServiceBindingsUseCase {
         return serviceBindings.findByDevSpace(tenantId, devSpaceId);
     }
 
-    CommandResult createServiceBinding(ServiceBindingDTO dto) {
+    UsecaseResult createServiceBinding(ServiceBindingDTO dto) {
         ServiceBinding e;
         e.id = dto.bindingId;
         e.tenantId = dto.tenantId;
@@ -44,15 +44,15 @@ class ManageServiceBindingsUseCase {
         e.systemAlias = dto.systemAlias;
         e.createdBy = dto.createdBy;
         if (!StudioValidator.isValidServiceBinding(e))
-            return CommandResult(false, "", "Invalid service binding data");
+            return UsecaseResult(false, "", "Invalid service binding data");
         serviceBindings.save(e);
-        return CommandResult(true, dto.bindingId.value, "");
+        return UsecaseResult(true, dto.bindingId.value, "");
     }
 
-    CommandResult updateServiceBinding(ServiceBindingDTO dto) {
+    UsecaseResult updateServiceBinding(ServiceBindingDTO dto) {
         auto existing = serviceBindings.findById(dto.tenantId, dto.bindingId);
         if (existing.isNull)
-            return CommandResult(false, "", "Service binding not found");
+            return UsecaseResult(false, "", "Service binding not found");
 
         if (dto.name.length > 0)
             existing.name = dto.name;
@@ -64,15 +64,15 @@ class ManageServiceBindingsUseCase {
             existing.updatedBy = dto.updatedBy;
 
         serviceBindings.update(existing);
-        return CommandResult(true, dto.bindingId.value, "");
+        return UsecaseResult(true, dto.bindingId.value, "");
     }
 
-    CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
+    UsecaseResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
         auto binding = serviceBindings.findById(tenantId, id);
         if (binding.isNull)
-            return CommandResult(false, "", "Service binding not found");
+            return UsecaseResult(false, "", "Service binding not found");
             
         serviceBindings.remove(binding);
-        return CommandResult(true, binding.id.value, "");
+        return UsecaseResult(true, binding.id.value, "");
     }
 }

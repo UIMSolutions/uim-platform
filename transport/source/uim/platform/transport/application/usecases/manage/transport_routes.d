@@ -34,7 +34,7 @@ class ManageTransportRoutesUseCase {
         return repo.findByDestinationNode(tenantId, nodeId);
     }
 
-    CommandResult createRoute(TransportRouteDTO dto) {
+    UsecaseResult createRoute(TransportRouteDTO dto) {
         TransportRoute route;
         route.id = dto.routeId;
         route.tenantId = dto.tenantId;
@@ -50,47 +50,47 @@ class ManageTransportRoutesUseCase {
             try { route.status = dto.status.to!RouteStatus; } catch (Exception) {}
         }
         if (!TransportValidator.isValidRoute(route))
-            return CommandResult(false, "", "Invalid route: name, source and destination node are required and must differ");
+            return UsecaseResult(false, "", "Invalid route: name, source and destination node are required and must differ");
         repo.save(route);
-        return CommandResult(true, route.id.value, "");
+        return UsecaseResult(true, route.id.value, "");
     }
 
-    CommandResult updateRoute(TransportRouteDTO dto) {
+    UsecaseResult updateRoute(TransportRouteDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.routeId);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport route not found");
+            return UsecaseResult(false, "", "Transport route not found");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         existing.isSequential = dto.isSequential;
         existing.sequence = dto.sequence;
         existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult enableRoute(TenantId tenantId, TransportRouteId id) {
+    UsecaseResult enableRoute(TenantId tenantId, TransportRouteId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport route not found");
+            return UsecaseResult(false, "", "Transport route not found");
         existing.status = RouteStatus.enabled;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult disableRoute(TenantId tenantId, TransportRouteId id) {
+    UsecaseResult disableRoute(TenantId tenantId, TransportRouteId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport route not found");
+            return UsecaseResult(false, "", "Transport route not found");
         existing.status = RouteStatus.disabled;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteRoute(TenantId tenantId, TransportRouteId id) {
+    UsecaseResult deleteRoute(TenantId tenantId, TransportRouteId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport route not found");
+            return UsecaseResult(false, "", "Transport route not found");
         repo.remove(existing);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

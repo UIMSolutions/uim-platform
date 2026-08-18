@@ -32,20 +32,20 @@ class ManageCustomerProfilesUseCase {
   }
 
   /// Used internally by composition runs to persist a unified profile.
-  CommandResult upsert(CustomerProfile profile) {
+  UsecaseResult upsert(CustomerProfile profile) {
     auto existing = repo.findById(profile.tenantId, profile.id);
     if (existing.isNull) {
       repo.save(profile);
     } else {
       repo.update(profile);
     }
-    return CommandResult(true, profile.id.value, null);
+    return UsecaseResult(true, profile.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto p = repo.findById(TenantId(tenantId), CustomerProfileId(id));
-    if (p.isNull) return CommandResult(false, id, "Profile not found");
+    if (p.isNull) return UsecaseResult(false, id, "Profile not found");
     repo.remove(TenantId(tenantId), CustomerProfileId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

@@ -26,7 +26,7 @@ class ManageCommandInputsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createCommandInput(CommandInputDTO dto) {
+    UsecaseResult createCommandInput(CommandInputDTO dto) {
         auto ci = CommandInput(dto.tenantId, dto.inputId.isNull ? CommandInputId(createId) : dto.inputId, dto.createdBy);
         ci.name = dto.name;
         ci.description = dto.description;
@@ -35,16 +35,16 @@ class ManageCommandInputsUseCase {
         ci.version_ = dto.version_;
         ci.commandId = dto.commandId;
         if (!AutomationValidator.isValidCommandInput(ci))
-            return CommandResult(false, "", "Invalid command input data");
+            return UsecaseResult(false, "", "Invalid command input data");
 
         repo.save(ci);
-        return CommandResult(true, ci.id.value, "");
+        return UsecaseResult(true, ci.id.value, "");
     }
 
-    CommandResult updateCommandInput(CommandInputDTO dto) {
+    UsecaseResult updateCommandInput(CommandInputDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.inputId);
         if (existing.isNull)
-            return CommandResult(false, "", "Command input not found");
+            return UsecaseResult(false, "", "Command input not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -53,16 +53,16 @@ class ManageCommandInputsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCommandInput(TenantId tenantId, CommandInputId id) {
+    UsecaseResult deleteCommandInput(TenantId tenantId, CommandInputId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Command input not found");
+            return UsecaseResult(false, "", "Command input not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

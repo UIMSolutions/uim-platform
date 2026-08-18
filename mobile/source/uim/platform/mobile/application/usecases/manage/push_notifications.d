@@ -22,10 +22,10 @@ class ManagePushNotificationsUseCase {
         this.repo = repo;
     }
 
-    CommandResult send(SendPushNotificationRequest r) {
+    UsecaseResult send(SendPushNotificationRequest r) {
         auto provider = r.provider.toPushProvider;
         if (!PushDeliveryService.validatePayloadSize(r.payload, provider))
-            return CommandResult(false, "", "Payload exceeds maximum size for provider");
+            return UsecaseResult(false, "", "Payload exceeds maximum size for provider");
         
         auto notif = PushNotification(r.tenantId);
         notif.appId = r.appId;
@@ -41,7 +41,7 @@ class ManagePushNotificationsUseCase {
         notif.expiresAt = r.expiresAt;
 
         repo.save(notif);
-        return CommandResult(true, notif.id.value, "");
+        return UsecaseResult(true, notif.id.value, "");
     }
 
     PushNotification getNotification(TenantId tenantId, PushNotificationId id) {
@@ -60,13 +60,13 @@ class ManagePushNotificationsUseCase {
         return repo.findByStatus(tenantId, appId, status.toNotificationStatus);
     }
 
-    CommandResult deleteNotification(TenantId tenantId, PushNotificationId id) {
+    UsecaseResult deleteNotification(TenantId tenantId, PushNotificationId id) {
         auto notif = repo.findById(tenantId, id);
         if (notif.isNull)
-            return CommandResult(false, "", "Notification not found");
+            return UsecaseResult(false, "", "Notification not found");
 
         repo.remove(notif);
-        return CommandResult(true, notif.id.value, "");
+        return UsecaseResult(true, notif.id.value, "");
     }
 
     size_t countByApp(TenantId tenantId, MobileAppId appId) {

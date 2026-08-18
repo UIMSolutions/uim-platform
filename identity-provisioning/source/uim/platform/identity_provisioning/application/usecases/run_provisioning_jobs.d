@@ -35,21 +35,21 @@ class RunProvisioningJobsUseCase {
     this.engine = engine;
   }
 
-  CommandResult createJob(CreateProvisioningJobRequest req) {
+  UsecaseResult createJob(CreateProvisioningJobRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.sourceSystemId.isEmpty)
-      return CommandResult(false, "", "Source system ID is required");
+      return UsecaseResult(false, "", "Source system ID is required");
     if (req.targetSystemId.isEmpty)
-      return CommandResult(false, "", "Target system ID is required");
+      return UsecaseResult(false, "", "Target system ID is required");
 
     // Verify systems exist
     auto src = sourceRepo.findById(req.tenantId, req.sourceSystemId);
     if (src.isNull)
-      return CommandResult(false, "", "Source system not found");
+      return UsecaseResult(false, "", "Source system not found");
     auto tgt = targetRepo.findById(req.tenantId, req.targetSystemId);
     if (tgt.isNull)
-      return CommandResult(false, "", "Target system not found");
+      return UsecaseResult(false, "", "Target system not found");
 
     auto job = ProvisioningJob(req.tenantId); //, req.createdBy);
     job.sourceSystemId = req.sourceSystemId;
@@ -59,23 +59,23 @@ class RunProvisioningJobsUseCase {
     job.schedule = req.schedule;
 
     repo.save(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
   /// Run a previously created job.
-  CommandResult runJob(TenantId tenantId, ProvisioningJobId id) {
+  UsecaseResult runJob(TenantId tenantId, ProvisioningJobId id) {
     if (!engine.canRun(tenantId, id))
-      return CommandResult(false, "", "Job cannot be started - verify systems are active and job is scheduled");
+      return UsecaseResult(false, "", "Job cannot be started - verify systems are active and job is scheduled");
 
     auto result = engine.runJob(tenantId, id);
     if (result.isNull)
-      return CommandResult(false, "", "Failed to execute provisioning job");
+      return UsecaseResult(false, "", "Failed to execute provisioning job");
 
-    return CommandResult(true, result.id.value, "");
+    return UsecaseResult(true, result.id.value, "");
   }
 
   /// Create and immediately run a job.
-  CommandResult createAndRunJob(CreateProvisioningJobRequest req) {
+  UsecaseResult createAndRunJob(CreateProvisioningJobRequest req) {
     auto createResult = createJob(req);
     if (!createResult.isSuccess)
       return createResult;
@@ -83,11 +83,11 @@ class RunProvisioningJobsUseCase {
     return runJob(req.tenantId, ProvisioningJobId(createResult.id));
   }
 
-  CommandResult cancelJob(TenantId tenantId, ProvisioningJobId id) {
+  UsecaseResult cancelJob(TenantId tenantId, ProvisioningJobId id) {
     if (!engine.cancelJob(tenantId, id))
-      return CommandResult(false, "", "Job cannot be cancelled");
+      return UsecaseResult(false, "", "Job cannot be cancelled");
 
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   ProvisioningJob getJob(TenantId tenantId, ProvisioningJobId id) {
@@ -102,19 +102,19 @@ class RunProvisioningJobsUseCase {
     return repo.findByStatus(tenantId, status);
   }
 
-  CommandResult deleteJob(TenantId tenantId, ProvisioningJobId id) {
+  UsecaseResult deleteJob(TenantId tenantId, ProvisioningJobId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Provisioning job not found");
+      return UsecaseResult(false, "", "Provisioning job not found");
 
     if (existing.status == JobStatus.running)
-      return CommandResult(false, "", "Cannot delete a running job");
+      return UsecaseResult(false, "", "Cannot delete a running job");
 
     // Cascade delete logs
     logRepo.removeByJob(tenantId, id);
     
     repo.remove(existing);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 }
 

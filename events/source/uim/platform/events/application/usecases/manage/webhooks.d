@@ -21,7 +21,7 @@ class ManageWebhooksUseCase {
     Webhook[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
     Webhook[] listBySubscription(TenantId tenantId, QueueSubscriptionId subscriptionId) { return repo.findBySubscription(tenantId, subscriptionId); }
 
-    CommandResult createWebhook(WebhookDTO dto) {
+    UsecaseResult createWebhook(WebhookDTO dto) {
         Webhook wh;
         wh.id = dto.webhookId;
         wh.tenantId = dto.tenantId;
@@ -39,14 +39,14 @@ class ManageWebhooksUseCase {
         wh.maxParallelity = dto.maxParallelity;
         wh.createdBy = dto.createdBy;
         if (!EventsValidator.isValidWebhook(wh))
-            return CommandResult(false, "", "Invalid webhook data");
+            return UsecaseResult(false, "", "Invalid webhook data");
         repo.save(wh);
-        return CommandResult(true, wh.id.value, "");
+        return UsecaseResult(true, wh.id.value, "");
     }
 
-    CommandResult updateWebhook(WebhookDTO dto) {
+    UsecaseResult updateWebhook(WebhookDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.webhookId);
-        if (existing.isNull) return CommandResult(false, "", "Webhook not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Webhook not found");
         if (dto.url.length > 0) existing.url = dto.url;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.headers.length > 0) existing.headers = dto.headers;
@@ -54,14 +54,14 @@ class ManageWebhooksUseCase {
         if (dto.maxParallelity.length > 0) existing.maxParallelity = dto.maxParallelity;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteWebhook(TenantId tenantId, WebhookId id) {
+    UsecaseResult deleteWebhook(TenantId tenantId, WebhookId id) {
         auto wh = repo.findById(tenantId, id);
-        if (wh.isNull) return CommandResult(false, "", "Webhook not found");
+        if (wh.isNull) return UsecaseResult(false, "", "Webhook not found");
         repo.remove(wh);
-        return CommandResult(true, wh.id.value, "");
+        return UsecaseResult(true, wh.id.value, "");
     }
 }
 

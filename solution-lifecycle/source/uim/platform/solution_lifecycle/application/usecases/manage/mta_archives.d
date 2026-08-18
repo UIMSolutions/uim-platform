@@ -18,12 +18,12 @@ class ManageMtaArchivesUseCase {
         this.repo = repo;
     }
 
-    CommandResult uploadArchive(UploadMtaArchiveRequest r) {
+    UsecaseResult uploadArchive(UploadMtaArchiveRequest r) {
         
         
 
         auto err = (new DeploymentEngine()).validateArchive(r.mtaId, r.mtaVersion, r.targetPlatforms);
-        if (err.length > 0) return CommandResult(false, "", err);
+        if (err.length > 0) return UsecaseResult(false, "", err);
 
         auto archive = new MtaArchive();
         archive.id           = MtaArchiveId(MonoTime.currTime.ticks.to!string);
@@ -41,7 +41,7 @@ class ManageMtaArchivesUseCase {
         archive.updatedAt    = archive.createdAt;
 
         repo.save(archive);
-        return CommandResult(true, archive.id.value, "");
+        return UsecaseResult(true, archive.id.value, "");
     }
 
     MtaArchive[] listArchives(TenantId tenantId) {
@@ -55,10 +55,10 @@ class ManageMtaArchivesUseCase {
         return new MtaArchive();
     }
 
-    CommandResult deleteArchive(TenantId tenantId, MtaArchiveId id) {
+    UsecaseResult deleteArchive(TenantId tenantId, MtaArchiveId id) {
         auto a = getArchive(tenantId, id);
-        if (a.isNull) return CommandResult(false, "", "MTA archive not found");
+        if (a.isNull) return UsecaseResult(false, "", "MTA archive not found");
         repo.remove(id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

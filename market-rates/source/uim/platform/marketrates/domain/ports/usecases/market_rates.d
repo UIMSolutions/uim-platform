@@ -16,6 +16,6 @@ interface IManageMarketRatesUseCase {
   DownloadRatesResponse downloadRates(DownloadRatesRequest req);
   MarketRate[] queryRates(QueryRatesRequest req);
   MarketRate getRate(TenantId tenantId, MarketRateId id);
-  CommandResult deleteRate(DeleteRatesRequest req);
+  UsecaseResult deleteRate(DeleteRatesRequest req);
 
 }

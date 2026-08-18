@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 interface IManageProcessInstancesUseCase { 
 
-    CommandResult startProcessInstance(StartProcessInstanceRequest r);
+    UsecaseResult startProcessInstance(StartProcessInstanceRequest r);
     ProcessInstance getProcessInstance(TenantId tenantId, ProcessInstanceId id);
     ProcessInstance[] listProcessInstances(TenantId tenantId);
     ProcessInstance[] listProcessInstances(TenantId tenantId, ProcessId processId);
     ProcessInstance[] listProcessInstances(TenantId tenantId, InstanceStatus status);
-    CommandResult performProcessInstanceAction(ProcessInstanceActionRequest r);
-    CommandResult deleteProcessInstance(TenantId tenantId, ProcessInstanceId id);
+    UsecaseResult performProcessInstanceAction(ProcessInstanceActionRequest r);
+    UsecaseResult deleteProcessInstance(TenantId tenantId, ProcessInstanceId id);
 
 }

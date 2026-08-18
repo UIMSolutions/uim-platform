@@ -30,7 +30,7 @@ class ManageScreenSetsUseCase {
         return repo.findActive(tenantId);
     }
 
-    CommandResult createScreenSet(ScreenSetDTO dto) {
+    UsecaseResult createScreenSet(ScreenSetDTO dto) {
         auto ss = ScreenSet(dto.tenantId); //, dto.createdBy);
         ss.name = dto.name;
         ss.description = dto.description;
@@ -43,19 +43,19 @@ class ManageScreenSetsUseCase {
 
         
         try { ss.flowType = dto.flowType.to!ScreenSetFlowType; }
-        catch (Exception) { return CommandResult(false, "", "Invalid flow type"); }
+        catch (Exception) { return UsecaseResult(false, "", "Invalid flow type"); }
 
         if (!IdentityValidator.isValidScreenSet(ss))
-            return CommandResult(false, "", "Invalid screen set data");
+            return UsecaseResult(false, "", "Invalid screen set data");
 
         repo.save(ss);
-        return CommandResult(true, ss.id.value, "");
+        return UsecaseResult(true, ss.id.value, "");
     }
 
-    CommandResult updateScreenSet(ScreenSetDTO dto) {
+    UsecaseResult updateScreenSet(ScreenSetDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.screenSetId);
         if (existing.isNull)
-            return CommandResult(false, "", "Screen set not found");
+            return UsecaseResult(false, "", "Screen set not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -67,15 +67,15 @@ class ManageScreenSetsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteScreenSet(TenantId tenantId, ScreenSetId id) {
+    UsecaseResult deleteScreenSet(TenantId tenantId, ScreenSetId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Screen set not found");
+            return UsecaseResult(false, "", "Screen set not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

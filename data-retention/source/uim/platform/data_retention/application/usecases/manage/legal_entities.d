@@ -17,11 +17,11 @@ class ManageLegalEntitiesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createLegalEntity(CreateLegalEntityRequest req) {
+    UsecaseResult createLegalEntity(CreateLegalEntityRequest req) {
         import std.uuid : randomUUID;
 
         if (req.name.isEmpty)
-            return CommandResult(false, "", "Legal entity name is required");
+            return UsecaseResult(false, "", "Legal entity name is required");
 
         LegalEntity le;
         le.id = LegalEntityId(generateId);
@@ -35,13 +35,13 @@ class ManageLegalEntitiesUseCase {
         le.createdAt = clockSeconds();
 
         repo.save(le);
-        return CommandResult(true, le.id.value, "");
+        return UsecaseResult(true, le.id.value, "");
     }
 
-    CommandResult updateLegalEntity(UpdateLegalEntityRequest req) {
+    UsecaseResult updateLegalEntity(UpdateLegalEntityRequest req) {
         auto entity = repo.findById(req.tenantId, req.entityId);
         if (entity.isNull)
-            return CommandResult(false, "", "Legal entity not found");
+            return UsecaseResult(false, "", "Legal entity not found");
 
         if (req.name.length > 0)
             entity.name = req.name;
@@ -55,7 +55,7 @@ class ManageLegalEntitiesUseCase {
         entity.updatedAt = clockSeconds();
 
         repo.update(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 
     bool hasLegalEntity(TenantId tenantId, LegalEntityId id) {
@@ -70,12 +70,12 @@ class ManageLegalEntitiesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deleteLegalEntity(TenantId tenantId, LegalEntityId id) {
+    UsecaseResult deleteLegalEntity(TenantId tenantId, LegalEntityId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Legal entity not found");
+            return UsecaseResult(false, "", "Legal entity not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }

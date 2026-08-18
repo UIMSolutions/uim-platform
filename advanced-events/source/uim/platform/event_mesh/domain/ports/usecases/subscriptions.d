@@ -21,10 +21,10 @@ interface IManageSubscriptionsUseCase {
 
     EventSubscription[] listSubscriptions(TenantId tenantId, EventApplicationId applicationId);
 
-    CommandResult createSubscription(SubscriptionDTO dto);
+    UsecaseResult createSubscription(SubscriptionDTO dto);
 
-    CommandResult updateSubscription(SubscriptionDTO dto);
+    UsecaseResult updateSubscription(SubscriptionDTO dto);
 
-    CommandResult deleteSubscription(TenantId tenantId, EventSubscriptionId id);
+    UsecaseResult deleteSubscription(TenantId tenantId, EventSubscriptionId id);
 }
 

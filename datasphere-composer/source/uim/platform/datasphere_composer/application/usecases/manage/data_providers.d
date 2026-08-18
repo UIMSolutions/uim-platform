@@ -15,9 +15,9 @@ class ManageDataProvidersUseCase {
 
   this(IDataProviderRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateDataProviderRequest r) {
+  UsecaseResult create(CreateDataProviderRequest r) {
     auto err = ComposerValidator.validateDataProvider(DataProvider(  DataProviderId(r.id), TenantId(r.tenantId), r.name, r.description));
-    if (err !is null) return CommandResult(false, r.id, err);
+    if (err !is null) return UsecaseResult(false, r.id, err);
 
     DataProvider p;
     p.id = DataProviderId(r.id.length > 0 ? r.id : currentTimestamp());
@@ -32,7 +32,7 @@ class ManageDataProvidersUseCase {
     initEntity(p);
 
     repo.save(p);
-    return CommandResult(true, p.id.value, null);
+    return UsecaseResult(true, p.id.value, null);
   }
 
   DataProvider[] list(TenantId tenantId) {
@@ -43,9 +43,9 @@ class ManageDataProvidersUseCase {
     return repo.findById(TenantId(tenantId), DataProviderId(id));
   }
 
-  CommandResult update(UpdateDataProviderRequest r) {
+  UsecaseResult update(UpdateDataProviderRequest r) {
     auto p = repo.findById(TenantId(r.tenantId), DataProviderId(r.id));
-    if (p.isNull) return CommandResult(false, r.id, "Provider not found");
+    if (p.isNull) return UsecaseResult(false, r.id, "Provider not found");
 
     if (r.name.length > 0)          p.name = r.name;
     if (r.description.length > 0)   p.description = r.description;
@@ -57,13 +57,13 @@ class ManageDataProvidersUseCase {
     }
 
     repo.update(p);
-    return CommandResult(true, p.id.value, null);
+    return UsecaseResult(true, p.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto p = repo.findById(TenantId(tenantId), DataProviderId(id));
-    if (p.isNull) return CommandResult(false, id, "Provider not found");
+    if (p.isNull) return UsecaseResult(false, id, "Provider not found");
     repo.remove(TenantId(tenantId), DataProviderId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

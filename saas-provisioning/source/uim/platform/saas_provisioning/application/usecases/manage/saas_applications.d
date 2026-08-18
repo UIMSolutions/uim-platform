@@ -33,7 +33,7 @@ class ManageSaasApplicationsUseCase {
         return repo.findByAppName(tenantId, appName);
     }
 
-    CommandResult registerApplication(TenantId tenantId, RegisterAppRequest req) {
+    UsecaseResult registerApplication(TenantId tenantId, RegisterAppRequest req) {
         long   now   = MonoTime.currTime.ticks;
         string newId = now.to!string ~ "-app-" ~ req.appName;
 
@@ -56,12 +56,12 @@ class ManageSaasApplicationsUseCase {
         app.updatedAt                   = now;
 
         repo.add(app);
-        return CommandResult(true, newId, "");
+        return UsecaseResult(true, newId, "");
     }
 
-    CommandResult updateApplication(TenantId tenantId, SaasApplicationId id, UpdateAppRequest req) {
+    UsecaseResult updateApplication(TenantId tenantId, SaasApplicationId id, UpdateAppRequest req) {
         auto app = repo.findById(tenantId, id);
-        if (app.isNull) return CommandResult(false, "", "Application not found");
+        if (app.isNull) return UsecaseResult(false, "", "Application not found");
 
         long now = MonoTime.currTime.ticks;
         app.displayName                 = req.displayName;
@@ -75,13 +75,13 @@ class ManageSaasApplicationsUseCase {
         app.updatedAt                   = now;
 
         repo.update(app);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
-    CommandResult deregisterApplication(TenantId tenantId, SaasApplicationId id) {
+    UsecaseResult deregisterApplication(TenantId tenantId, SaasApplicationId id) {
         auto app = repo.findById(tenantId, id);
-        if (app.isNull) return CommandResult(false, "", "Application not found");
+        if (app.isNull) return UsecaseResult(false, "", "Application not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

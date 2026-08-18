@@ -16,9 +16,9 @@ class ManageConditionsUseCase {
 
     this(IConditionRepository repo) { this.repo = repo; }
 
-    CommandResult createCondition(TenantId tenantId, CreateConditionRequest req) {
+    UsecaseResult createCondition(TenantId tenantId, CreateConditionRequest req) {
         if (repo.existsByName(tenantId, req.name))
-            return CommandResult(false, "", "Condition '" ~ req.name ~ "' already exists");
+            return UsecaseResult(false, "", "Condition '" ~ req.name ~ "' already exists");
 
         auto cond = Condition(tenantId);
         cond.name      = req.name;
@@ -30,7 +30,7 @@ class ManageConditionsUseCase {
         cond.labels       = req.labels.dup;
 
         repo.save(cond);
-        return CommandResult(true, cond.id.toString(), cond.toJson().toString());
+        return UsecaseResult(true, cond.id.toString(), cond.toJson().toString());
     }
 
     QueryResult getCondition(TenantId tenantId, string id) {
@@ -47,10 +47,10 @@ class ManageConditionsUseCase {
         return QueryResult(true, "", arr);
     }
 
-    CommandResult updateCondition(TenantId tenantId, string id, UpdateConditionRequest req) {
+    UsecaseResult updateCondition(TenantId tenantId, string id, UpdateConditionRequest req) {
         auto cond = repo.findById(tenantId, ConditionId(id));
         if (cond.isNull())
-            return CommandResult(false, "", "Condition not found");
+            return UsecaseResult(false, "", "Condition not found");
 
         if (req.description.length)  cond.description  = req.description;
         if (req.propertyKey.length)  cond.propertyKey   = req.propertyKey.to!PropertyKey;
@@ -60,14 +60,14 @@ class ManageConditionsUseCase {
         if (req.labels.length) cond.labels = req.labels.dup;
 
         repo.save(cond);
-        return CommandResult(true, cond.id.toString(), cond.toJson().toString());
+        return UsecaseResult(true, cond.id.toString(), cond.toJson().toString());
     }
 
-    CommandResult deleteCondition(TenantId tenantId, string id) {
+    UsecaseResult deleteCondition(TenantId tenantId, string id) {
         auto cond = repo.findById(tenantId, ConditionId(id));
         if (cond is null || cond.isNull())
-            return CommandResult(false, "", "Condition not found");
+            return UsecaseResult(false, "", "Condition not found");
         repo.removeById(tenantId, ConditionId(id));
-        return CommandResult(true, id, "Condition deleted");
+        return UsecaseResult(true, id, "Condition deleted");
     }
 }

@@ -28,10 +28,10 @@ class ManageBackupPoliciesUseCase {
         return repo.findByInstance(tenantId, instanceId);
     }
 
-    CommandResult createBackupPolicy(BackupPolicyDTO dto) {
+    UsecaseResult createBackupPolicy(BackupPolicyDTO dto) {
         auto existing = repo.findByInstance(dto.tenantId, dto.instanceId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Backup policy already exists for this instance");
+            return UsecaseResult(false, "", "Backup policy already exists for this instance");
 
         auto e = BackupPolicy(dto.tenantId, dto.backupPolicyId, dto.createdBy);
         e.instanceId = dto.instanceId;
@@ -42,16 +42,16 @@ class ManageBackupPoliciesUseCase {
         e.status = dto.enabled ? BackupStatus.enabled : BackupStatus.disabled_;
 
         if (!RedisValidator.isValidBackupPolicy(e))
-            return CommandResult(false, "", "Invalid backup policy: instanceId, intervalHours and retentionDays required");
+            return UsecaseResult(false, "", "Invalid backup policy: instanceId, intervalHours and retentionDays required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult updateBackupPolicy(BackupPolicyDTO dto) {
+    UsecaseResult updateBackupPolicy(BackupPolicyDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.backupPolicyId);
         if (existing.isNull)
-            return CommandResult(false, "", "Backup policy not found");
+            return UsecaseResult(false, "", "Backup policy not found");
 
         existing.enabled = dto.enabled;
         if (dto.intervalHours > 0) existing.intervalHours = dto.intervalHours;
@@ -61,14 +61,14 @@ class ManageBackupPoliciesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteBackupPolicy(TenantId tenantId, BackupPolicyId id) {
+    UsecaseResult deleteBackupPolicy(TenantId tenantId, BackupPolicyId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Backup policy not found");
+            return UsecaseResult(false, "", "Backup policy not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

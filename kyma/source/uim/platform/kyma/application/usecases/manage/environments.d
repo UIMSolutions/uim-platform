@@ -21,13 +21,13 @@ class ManageEnvironmentsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createEnvironment(CreateEnvironmentRequest req) {
+  UsecaseResult createEnvironment(CreateEnvironmentRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Environment name is required");
+      return UsecaseResult(false, "", "Environment name is required");
     if (req.plan.length == 0)
-      return CommandResult(false, "", "Plan is required");
+      return UsecaseResult(false, "", "Plan is required");
     if (req.region.length == 0)
-      return CommandResult(false, "", "Region is required");
+      return UsecaseResult(false, "", "Region is required");
 
     auto env = KymaEnvironment(req.tenantId); //, req.createdBy);
     env.subaccountId = req.subaccountId;
@@ -48,13 +48,13 @@ class ManageEnvironmentsUseCase {
     env.administrators = req.administrators;
 
     repo.save(env);
-    return CommandResult(true, env.id.value, "");
+    return UsecaseResult(true, env.id.value, "");
   }
 
-  CommandResult updateEnvironment(TenantId tenantId, KymaEnvironmentId id, UpdateEnvironmentRequest req) {
+  UsecaseResult updateEnvironment(TenantId tenantId, KymaEnvironmentId id, UpdateEnvironmentRequest req) {
     auto env = repo.findById(tenantId, id);
     if (env.isNull)
-      return CommandResult(false, "", "Environment not found");
+      return UsecaseResult(false, "", "Environment not found");
 
     if (req.description.length > 0)
       env.description = req.description;
@@ -75,7 +75,7 @@ class ManageEnvironmentsUseCase {
     env.updatedAt = clockSeconds();
 
     repo.update(env);
-    return CommandResult(true, env.id.value, "");
+    return UsecaseResult(true, env.id.value, "");
   }
 
   bool hasEnvironment(TenantId tenantId, KymaEnvironmentId id) {
@@ -94,13 +94,13 @@ class ManageEnvironmentsUseCase {
     return repo.findBySubaccount(tenantId, subId);
   }
 
-  CommandResult deleteEnvironment(TenantId tenantId, KymaEnvironmentId id) {
+  UsecaseResult deleteEnvironment(TenantId tenantId, KymaEnvironmentId id) {
     auto env = repo.findById(tenantId, id);
     if (env.isNull)
-      return CommandResult(false, "", "Environment not found");
+      return UsecaseResult(false, "", "Environment not found");
 
     repo.remove(env);
-    return CommandResult(true, env.id.value, "");
+    return UsecaseResult(true, env.id.value, "");
   }
 
 }

@@ -22,11 +22,11 @@ class ManageDocumentTypesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDocumentType(CreateDocumentTypeRequest r) {
+  UsecaseResult createDocumentType(CreateDocumentTypeRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Document type name is required");
+      return UsecaseResult(false, "", "Document type name is required");
     if (r.clientId.isEmpty)
-      return CommandResult(false, "", "Client ID is required");
+      return UsecaseResult(false, "", "Client ID is required");
 
     auto dt = DocumentType(r.tenantId);
     dt.clientId = r.clientId;
@@ -37,16 +37,16 @@ class ManageDocumentTypesUseCase {
     dt.category = parseCategory(r.category);
 
     repo.save(dt);
-    return CommandResult(true, dt.id.value, "");
+    return UsecaseResult(true, dt.id.value, "");
   }
 
-  CommandResult updateDocumentType(UpdateDocumentTypeRequest r) {
+  UsecaseResult updateDocumentType(UpdateDocumentTypeRequest r) {
     if (r.documentTypeId.isEmpty)
-      return CommandResult(false, "", "Document type ID is required");
+      return UsecaseResult(false, "", "Document type ID is required");
 
     auto existing = repo.findById(r.documentTypeId, r.clientId);
     if (existing.isNull)
-      return CommandResult(false, "", "Document type not found");
+      return UsecaseResult(false, "", "Document type not found");
 
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
@@ -57,7 +57,7 @@ class ManageDocumentTypesUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   DocumentType getDocumentType(DocumentTypeId id, ClientId clientId) {
@@ -72,13 +72,13 @@ class ManageDocumentTypesUseCase {
     return repo.findByCategory(category, clientId);
   }
 
-  CommandResult deleteDocumentType(ClientId clientId, DocumentTypeId id) {
+  UsecaseResult deleteDocumentType(ClientId clientId, DocumentTypeId id) {
     auto entity = repo.findById(clientId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Document type not found");
+      return UsecaseResult(false, "", "Document type not found");
 
     repo.remove(entity);
-    return CommandResult(true, entity.id.value, "");
+    return UsecaseResult(true, entity.id.value, "");
   }
 
   size_t count(ClientId clientId) {

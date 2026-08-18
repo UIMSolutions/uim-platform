@@ -19,11 +19,11 @@ class ManageGeofenceZonesUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateGeofenceZoneRequest r) {
+  UsecaseResult create(CreateGeofenceZoneRequest r) {
     auto err = SpatialValidator.validateId(r.id);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateName(r.name);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto zone = GeofenceZone(r.tenantId); //, r.createdBy);
     zone.id = GeofenceZoneId(r.id);
@@ -41,13 +41,13 @@ class ManageGeofenceZonesUseCase {
     }
 
     repo.save(zone);
-    return CommandResult(true, zone.id.value, "");
+    return UsecaseResult(true, zone.id.value, "");
   }
 
-  CommandResult update(UpdateGeofenceZoneRequest r) {
+  UsecaseResult update(UpdateGeofenceZoneRequest r) {
     auto existing = repo.findById(r.tenantId, GeofenceZoneId(r.id));
     if (existing.isNull)
-      return CommandResult(false, "", "Geofence zone not found");
+      return UsecaseResult(false, "", "Geofence zone not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -57,7 +57,7 @@ class ManageGeofenceZonesUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   // Simple Haversine-based point-in-circle check
@@ -84,12 +84,12 @@ class ManageGeofenceZonesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, GeofenceZoneId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "Geofence zone not found");
+      return UsecaseResult(false, "", "Geofence zone not found");
     repo.remove(tenantId, GeofenceZoneId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 
   private bool isInsideCircle(double centerLat, double centerLon, double radiusM,

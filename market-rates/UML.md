@@ -155,7 +155,7 @@ POST /providers        MarketRateController   ManageProvidersUseCase   ProviderR
         │                      │                       │──codeExists()────────►│
         │                      │                       │◄──false───────────────│
         │                      │                       │──save(provider)──────►│
-        │                      │◄──CommandResult(ok)───│                       │
+        │                      │◄──UsecaseResult(ok)───│                       │
         │◄──201 { id }─────────│                       │                       │
 ```
 

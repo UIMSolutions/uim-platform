@@ -13,13 +13,13 @@ mixin(ShowModule!());
 
 interface IManageTemplatesUseCase {
   
-  CommandResult createTemplate(CreateTemplateRequest r);
-  CommandResult updateTemplate(UpdateTemplateRequest r);
+  UsecaseResult createTemplate(CreateTemplateRequest r);
+  UsecaseResult updateTemplate(UpdateTemplateRequest r);
   Template getTemplate(ClientId clientId, TemplateId id);
   Template[] listTemplates(ClientId clientId);
   Template[] listTemplates(ClientId clientId, SchemaId schemaId);
   Template[] listTemplates(ClientId clientId, DocumentTypeId typeId);
   size_t countTemplates(ClientId clientId);
-  CommandResult deleteTemplate(ClientId clientId, TemplateId id);
+  UsecaseResult deleteTemplate(ClientId clientId, TemplateId id);
 
 }

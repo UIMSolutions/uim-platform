@@ -17,13 +17,13 @@ class ManageRoutesUseCase {
     this.repo = repo;
   }
 
-  CommandResult calculateRoute(CalculateRouteRequest r) {
+  UsecaseResult calculateRoute(CalculateRouteRequest r) {
     auto err = SpatialValidator.validateCoordinate(r.originLat, r.originLon);
-    if (err.length > 0) return CommandResult(false, "", "Origin: " ~ err);
+    if (err.length > 0) return UsecaseResult(false, "", "Origin: " ~ err);
     err = SpatialValidator.validateCoordinate(r.destinationLat, r.destinationLon);
-    if (err.length > 0) return CommandResult(false, "", "Destination: " ~ err);
+    if (err.length > 0) return UsecaseResult(false, "", "Destination: " ~ err);
     err = SpatialValidator.validateId(r.id);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto route = Route(r.tenantId); //, r.createdBy);
     route.id = RouteId(r.id);
@@ -47,7 +47,7 @@ class ManageRoutesUseCase {
     }
 
     repo.save(route);
-    return CommandResult(true, route.id.value, "");
+    return UsecaseResult(true, route.id.value, "");
   }
 
   Route getById(TenantId tenantId, string id) {
@@ -58,11 +58,11 @@ class ManageRoutesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, RouteId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "Route not found");
+      return UsecaseResult(false, "", "Route not found");
     repo.remove(tenantId, RouteId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

@@ -17,9 +17,9 @@ class ManageBusinessPurposesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createBusinessPurpose(CreateBusinessPurposeRequest req) {
+    UsecaseResult createBusinessPurpose(CreateBusinessPurposeRequest req) {
         if (req.name.isEmpty)
-            return CommandResult(false, "", "Business purpose name is required");
+            return UsecaseResult(false, "", "Business purpose name is required");
 
         auto bp = BusinessPurpose(req.tenantId);
         bp.name = req.name;
@@ -31,13 +31,13 @@ class ManageBusinessPurposesUseCase {
         bp.status = BusinessPurposeStatus.inactive;
 
         repo.save(bp);
-        return CommandResult(true, bp.id.value, "");
+        return UsecaseResult(true, bp.id.value, "");
     }
 
-    CommandResult updateBusinessPurpose(UpdateBusinessPurposeRequest req) {
+    UsecaseResult updateBusinessPurpose(UpdateBusinessPurposeRequest req) {
         auto bp = repo.findById(req.tenantId, req.purposeId);
         if (bp.isNull)
-            return CommandResult(false, "", "Business purpose not found");
+            return UsecaseResult(false, "", "Business purpose not found");
 
         if (req.name.length > 0)
             bp.name = req.name;
@@ -55,18 +55,18 @@ class ManageBusinessPurposesUseCase {
         bp.updatedAt = clockSeconds();
 
         repo.update(bp);
-        return CommandResult(true, bp.id.value, "");
+        return UsecaseResult(true, bp.id.value, "");
     }
 
-    CommandResult activateBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
+    UsecaseResult activateBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
         auto bp = repo.findById(tenantId, id);
         if (bp.isNull)
-            return CommandResult(false, "", "Business purpose not found");
+            return UsecaseResult(false, "", "Business purpose not found");
 
         bp.status = BusinessPurposeStatus.active;
         bp.updatedAt = clockSeconds();
         repo.update(bp);
-        return CommandResult(true, bp.id.value, "");
+        return UsecaseResult(true, bp.id.value, "");
     }
 
     bool hasBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
@@ -85,15 +85,15 @@ class ManageBusinessPurposesUseCase {
         return repo.findByApplicationGroup(tenantId, groupId);
     }
 
-    CommandResult deleteBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
+    UsecaseResult deleteBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
         auto purpose = repo.findById(tenantId, id);
         if (purpose.isNull)
-            return CommandResult(false, "", "Business purpose not found");
+            return UsecaseResult(false, "", "Business purpose not found");
         
         if (purpose.status == BusinessPurposeStatus.active)
-            return CommandResult(false, "", "Cannot delete an active business purpose");
+            return UsecaseResult(false, "", "Cannot delete an active business purpose");
         
         repo.remove(purpose);
-        return CommandResult(true, purpose.id.value, "");
+        return UsecaseResult(true, purpose.id.value, "");
     }
 }

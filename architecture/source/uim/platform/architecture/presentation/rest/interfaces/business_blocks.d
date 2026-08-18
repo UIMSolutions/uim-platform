@@ -17,13 +17,13 @@ interface IBusinessBlocksApi {
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/") @method(HTTPMethod.POST)
-    CommandResult createBusinessBlock(string tenantId, CreateBusinessBlockRequest request);
+    UsecaseResult createBusinessBlock(string tenantId, CreateBusinessBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.PUT)
-    CommandResult updateBusinessBlock(string tenantId, string _id, UpdateBusinessBlockRequest request);
+    UsecaseResult updateBusinessBlock(string tenantId, string _id, UpdateBusinessBlockRequest request);
 
     @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.DELETE)
-    CommandResult deleteBusinessBlock(string tenantId, string _id);
+    UsecaseResult deleteBusinessBlock(string tenantId, string _id);
 }

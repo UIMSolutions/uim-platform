@@ -30,10 +30,10 @@ class ImportContentUseCase {
     this.activityRepo = activityRepo;
   }
 
-  CommandResult startImport(StartImportRequest req) {
+  UsecaseResult startImport(StartImportRequest req) {
     auto pkg = packageRepo.findById(req.tenantId, req.packageId);
     if (pkg.isNull)
-      return CommandResult(false, "", "Package not found");
+      return UsecaseResult(false, "", "Package not found");
 
     auto job = ImportJob(req.tenantId, req.jobId.isNull ? ImportJobId(createId()) : req.jobId, req.startedBy);
     job.packageId = req.packageId;
@@ -69,7 +69,7 @@ class ImportContentUseCase {
     recordActivity(req.tenantId, ActivityType.importCompleted, pkg.id.value, pkg.name,
         "Import completed for package: " ~ pkg.name, req.startedBy.value);
 
-    return CommandResult(true,  pkg.id.value, "");
+    return UsecaseResult(true,  pkg.id.value, "");
   }
 
   ImportJob getImportJob(TenantId tenantId, ImportJobId id) {

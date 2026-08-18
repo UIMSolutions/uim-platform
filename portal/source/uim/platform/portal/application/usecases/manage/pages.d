@@ -70,9 +70,9 @@ class ManagePagesUseCase {
     return pageRepo.findBySite(siteId, offset, limit);
   }
 
-  CommandResult updatePage(UpdatePageRequest req) {
+  UsecaseResult updatePage(UpdatePageRequest req) {
     if (!pageRepo.existsById(req.pageId))
-      return CommandResult(false, "", "Page not found");
+      return UsecaseResult(false, "", "Page not found");
 
     auto page = pageRepo.findById(req.pageId);
     with (page) {
@@ -86,12 +86,12 @@ class ManagePagesUseCase {
       updatedAt = currentTimestamp();
     }
     pageRepo.update(page);
-    return CommandResult(true, page.id.value, "Page updated successfully.");
+    return UsecaseResult(true, page.id.value, "Page updated successfully.");
   }
 
-  CommandResult deletePage(PageId pageId, SiteId siteId) {
+  UsecaseResult deletePage(PageId pageId, SiteId siteId) {
     if (!pageRepo.existsById(pageId))
-      return CommandResult(false, "", "Page not found");
+      return UsecaseResult(false, "", "Page not found");
 
     pageRepo.remove(pageId);
 
@@ -103,6 +103,6 @@ class ManagePagesUseCase {
       siteRepo.update(site);
     }
 
-    return CommandResult(true, pageId.value, "Page deleted successfully.");
+    return UsecaseResult(true, pageId.value, "Page deleted successfully.");
   }
 }

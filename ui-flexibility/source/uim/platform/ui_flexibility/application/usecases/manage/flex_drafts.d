@@ -17,10 +17,10 @@ class ManageFlexDraftsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDraft(CreateFlexDraftRequest r) {
+  UsecaseResult createDraft(CreateFlexDraftRequest r) {
     // Only one draft per app per tenant
     if (repo.hasDraft(r.tenantId, r.appId))
-      return CommandResult(false, null, "An active draft already exists for this application");
+      return UsecaseResult(false, null, "An active draft already exists for this application");
 
     auto d = FlexDraft();
     d.id_            = r.draftId;
@@ -33,21 +33,21 @@ class ManageFlexDraftsUseCase {
     d.changeCount_   = 0;
 
     auto err = FlexValidator.validateFlexDraft(d);
-    if (err !is null) return CommandResult(false, null, err);
+    if (err !is null) return UsecaseResult(false, null, err);
 
     repo.save(r.tenantId, d);
-    return CommandResult(true, d.id_.value);
+    return UsecaseResult(true, d.id_.value);
   }
 
-  CommandResult updateDraft(UpdateFlexDraftRequest r) {
+  UsecaseResult updateDraft(UpdateFlexDraftRequest r) {
     auto d = repo.findById(r.tenantId, r.draftId);
-    if (d.isNull) return CommandResult(false, null, "FlexDraft not found");
+    if (d.isNull) return UsecaseResult(false, null, "FlexDraft not found");
     d.changeIds_   = r.changeIds_.dup;
     d.changeCount_ = cast(long) r.changeIds_.length;
     d.updatedBy_   = r.updatedBy_;
     d.updatedAt_   = "";
     repo.update(r.tenantId, d);
-    return CommandResult(true, d.id_.value);
+    return UsecaseResult(true, d.id_.value);
   }
 
   FlexDraft getDraft(TenantId tenantId, FlexDraftId id) {
@@ -62,12 +62,12 @@ class ManageFlexDraftsUseCase {
     return repo.findByTenantAll(tenantId);
   }
 
-  CommandResult discardDraft(TenantId tenantId, FlexDraftId id) {
+  UsecaseResult discardDraft(TenantId tenantId, FlexDraftId id) {
     auto draft = repo.findById(tenantId, id);
     if (draft.isNull)
-      return CommandResult(false, null, "FlexDraft not found");
+      return UsecaseResult(false, null, "FlexDraft not found");
 
     repo.remove(draft);
-    return CommandResult(true, draft.id.value);
+    return UsecaseResult(true, draft.id.value);
   }
 }

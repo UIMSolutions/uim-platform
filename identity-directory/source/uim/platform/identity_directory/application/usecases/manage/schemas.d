@@ -26,9 +26,9 @@ class ManageSchemasUseCase {
   }
 
   /// Create a new custom schema.
-  CommandResult createSchema(CreateSchemaRequest req) {
+  UsecaseResult createSchema(CreateSchemaRequest req) {
     if (schemaRepo.existsByName(req.tenantId, req.name))
-      return CommandResult(false, "", "Schema with this name already exists", 409);
+      return UsecaseResult(false, "", "Schema with this name already exists", 409);
 
     auto schemaUrn = "urn:sap:cloud:scim:schemas:extension:custom:2.0:" ~ req.name;
     auto schema = Schema(req.tenantId);
@@ -48,7 +48,7 @@ class ManageSchemasUseCase {
     event.description = "Schema created: " ~ req.name;
     auditRepo.save(event);
 
-    return CommandResult(true, schema.id.value, schemaUrn, 200);
+    return UsecaseResult(true, schema.id.value, schemaUrn, 200);
   }
 
   /// Get schema by ID.
@@ -62,10 +62,10 @@ class ManageSchemasUseCase {
   }
 
   /// Update a schema.
-  CommandResult updateSchema(UpdateSchemaRequest req) {
+  UsecaseResult updateSchema(UpdateSchemaRequest req) {
     auto schema = schemaRepo.findById(req.tenantId, req.schemaId);
     if (schema.isNull)
-      return CommandResult(false, "", "Schema not found", 404);
+      return UsecaseResult(false, "", "Schema not found", 404);
 
     if (req.name.length > 0)
       schema.name = req.name;
@@ -87,14 +87,14 @@ class ManageSchemasUseCase {
     event.description = "Schema updated: " ~ schema.name;
     auditRepo.save(event);
 
-    return CommandResult(true, schema.id.value, "", 200);
+    return UsecaseResult(true, schema.id.value, "", 200);
   }
 
   /// Delete a schema.
-  CommandResult deleteSchema(TenantId tenantId, SchemaId id) {
+  UsecaseResult deleteSchema(TenantId tenantId, SchemaId id) {
     auto schema = schemaRepo.findById(tenantId, id);
     if (schema.isNull)
-      return CommandResult(false, "", "Schema not found", 404);
+      return UsecaseResult(false, "", "Schema not found", 404);
 
     schemaRepo.remove(schema);
 
@@ -108,7 +108,7 @@ class ManageSchemasUseCase {
     event.description = "Schema deleted: " ~ schema.name; 
     auditRepo.save(event);
 
-    return CommandResult(true, schema.id.value, "", 200);
+    return UsecaseResult(true, schema.id.value, "", 200);
   }
 }
 

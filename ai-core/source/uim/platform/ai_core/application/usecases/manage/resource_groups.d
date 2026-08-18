@@ -20,14 +20,14 @@ class ManageResourceGroupsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createResourceGroup(CreateResourceGroupRequest r) {
+  UsecaseResult createResourceGroup(CreateResourceGroupRequest r) {
     if (r.resourceGroupId.isEmpty)
-      return CommandResult(false, "", "Resource group ID is required");
+      return UsecaseResult(false, "", "Resource group ID is required");
     if (r.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     if (repo.existsById(r.tenantId, r.resourceGroupId))
-      return CommandResult(false, "", "Resource group already exists");
+      return UsecaseResult(false, "", "Resource group already exists");
 
     auto rg = ResourceGroup(r.tenantId);
     rg.id = r.resourceGroupId;
@@ -47,13 +47,13 @@ class ManageResourceGroupsUseCase {
     rg.createdAt = currentTimestamp;
 
     repo.save(rg);
-    return CommandResult(true, rg.id.value, "");
+    return UsecaseResult(true, rg.id.value, "");
   }
 
-  CommandResult patchResourceGroup(PatchResourceGroupRequest r) {
+  UsecaseResult patchResourceGroup(PatchResourceGroupRequest r) {
     auto rg = repo.findById(r.tenantId, r.resourceGroupId);
     if (rg.isNull)
-      return CommandResult(false, "", "Resource group not found");
+      return UsecaseResult(false, "", "Resource group not found");
 
     ResourceGroupLabel[] labels;
     foreach (pair; r.labels.filter!(p => p.length >= 2)) {
@@ -65,7 +65,7 @@ class ManageResourceGroupsUseCase {
     rg.labels = labels;
 
     repo.update(rg);
-    return CommandResult(true, rg.id.value, "");
+    return UsecaseResult(true, rg.id.value, "");
   }
 
   ResourceGroup getResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId) {
@@ -80,13 +80,13 @@ class ManageResourceGroupsUseCase {
     return repo.countByTenant(tenantId);
   }
 
-  CommandResult deleteResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId) {
+  UsecaseResult deleteResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId) {
     auto group = repo.findById(tenantId, resourceGroupId);
     if (group.isNull)
-      return CommandResult(false, "", "Resource group not found");
+      return UsecaseResult(false, "", "Resource group not found");
 
     repo.remove(group);
-    return CommandResult(true, group.id.value, "");
+    return UsecaseResult(true, group.id.value, "");
   }
 
 }

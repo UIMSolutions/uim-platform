@@ -7,7 +7,7 @@ class ManageSnowflakeDatabasesUseCase {
   protected ISnowflakeDatabaseRepository repo;
   this(ISnowflakeDatabaseRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateDatabaseRequest r) {
+  UsecaseResult create(CreateDatabaseRequest r) {
     SnowflakeDatabase db;
     db.id = SnowflakeDatabaseId(r.id.length > 0 ? r.id : currentTimestamp());
     db.tenantId = TenantId(r.tenantId);
@@ -16,9 +16,9 @@ class ManageSnowflakeDatabasesUseCase {
     db.comment = r.comment; db.status = DatabaseStatus.active;
     initEntity(db);
     auto err = SnowflakeValidator.validateDatabase(db);
-    if (err !is null) return CommandResult(false, db.id.value, err);
+    if (err !is null) return UsecaseResult(false, db.id.value, err);
     repo.save(db);
-    return CommandResult(true, db.id.value, null);
+    return UsecaseResult(true, db.id.value, null);
   }
 
   SnowflakeDatabase[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
@@ -29,21 +29,21 @@ class ManageSnowflakeDatabasesUseCase {
     return repo.findById(TenantId(tenantId), SnowflakeDatabaseId(id));
   }
 
-  CommandResult update(UpdateDatabaseRequest r) {
+  UsecaseResult update(UpdateDatabaseRequest r) {
     
     auto db = repo.findById(TenantId(r.tenantId), SnowflakeDatabaseId(r.id));
-    if (db.isNull) return CommandResult(false, r.id, "Database not found");
+    if (db.isNull) return UsecaseResult(false, r.id, "Database not found");
     if (r.retentionDays > 0) db.retentionDays = r.retentionDays;
     if (r.status.length > 0) try { db.status = r.status.to!DatabaseStatus; } catch(Exception) {}
     if (r.comment.length > 0) db.comment = r.comment;
     repo.update(db);
-    return CommandResult(true, db.id.value, null);
+    return UsecaseResult(true, db.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto db = repo.findById(TenantId(tenantId), SnowflakeDatabaseId(id));
-    if (db.isNull) return CommandResult(false, id, "Database not found");
+    if (db.isNull) return UsecaseResult(false, id, "Database not found");
     repo.remove(TenantId(tenantId), SnowflakeDatabaseId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

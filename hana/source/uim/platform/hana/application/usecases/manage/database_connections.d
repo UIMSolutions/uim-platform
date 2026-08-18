@@ -21,12 +21,12 @@ class ManageDatabaseConnectionsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDatabaseConnection(CreateDatabaseConnectionRequest r) {
+  UsecaseResult createDatabaseConnection(CreateDatabaseConnectionRequest r) {
     if (r.isNull || r.name.isEmpty)
-      return CommandResult(false, "", "Connection ID and name are required");
+      return UsecaseResult(false, "", "Connection ID and name are required");
 
     if (repo.existsById(r.id))
-      return CommandResult(false, "", "Database connection already exists");
+      return UsecaseResult(false, "", "Database connection already exists");
 
      auto c = DatabaseConnection(r.tenantId); //, r.createdBy);
     c.id = r.connectionId;
@@ -45,7 +45,7 @@ class ManageDatabaseConnectionsUseCase {
     c.poolConfig.maxConnections = r.maxConnections;
 
     repo.save(c);
-    return CommandResult(true, c.id.value, "");
+    return UsecaseResult(true, c.id.value, "");
   }
 
   DatabaseConnection getDatabaseConnection(TenantId tenantId, DatabaseConnectionId id) {
@@ -56,10 +56,10 @@ class ManageDatabaseConnectionsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateDatabaseConnection(UpdateDatabaseConnectionRequest r) {
+  UsecaseResult updateDatabaseConnection(UpdateDatabaseConnectionRequest r) {
     auto existing = repo.findById(r.tenantId, r.id);
     if (existing.isNull)
-      return CommandResult(false, "", "Database connection not found");
+      return UsecaseResult(false, "", "Database connection not found");
 
     existing.name = r.name;
     existing.description = r.description;
@@ -77,16 +77,16 @@ class ManageDatabaseConnectionsUseCase {
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteDatabaseConnection(TenantId tenantId, DatabaseConnectionId id) {
+  UsecaseResult deleteDatabaseConnection(TenantId tenantId, DatabaseConnectionId id) {
     auto connection = repo.findById(tenantId, id);
     if (connection.isNull)
-      return CommandResult(false, "", "Database connection not found");
+      return UsecaseResult(false, "", "Database connection not found");
 
     repo.remove(connection);
-    return CommandResult(true, connection.id.value, "");
+    return UsecaseResult(true, connection.id.value, "");
   }
 
   size_t countDatabaseConnections(TenantId tenantId) {

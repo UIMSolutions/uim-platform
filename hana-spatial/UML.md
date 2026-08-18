@@ -217,8 +217,8 @@ sequenceDiagram
     Client->>GeocodingController: POST /api/v1/spatial/geocode
     GeocodingController->>ManageGeocodingResultsUseCase: geocode(GeocodeAddressRequest)
     ManageGeocodingResultsUseCase->>GeocodingResultRepository: save(GeocodingResult)
-    GeocodingResultRepository-->>ManageGeocodingResultsUseCase: CommandResult
-    ManageGeocodingResultsUseCase-->>GeocodingController: CommandResult{id, success}
+    GeocodingResultRepository-->>ManageGeocodingResultsUseCase: UsecaseResult
+    ManageGeocodingResultsUseCase-->>GeocodingController: UsecaseResult{id, success}
     GeocodingController-->>Client: 201 {id, message}
 ```
 

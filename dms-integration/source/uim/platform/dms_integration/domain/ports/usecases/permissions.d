@@ -23,10 +23,10 @@ interface IManagePermissionsUseCase {
 
     Permission[] listPermissionsByPrincipal(TenantId tenantId, string principalId);
 
-    CommandResult grantPermission(PermissionDTO dto);
+    UsecaseResult grantPermission(PermissionDTO dto);
 
-    CommandResult revokePermission(TenantId tenantId, PermissionId id);
+    UsecaseResult revokePermission(TenantId tenantId, PermissionId id);
 
-    CommandResult deletePermission(TenantId tenantId, PermissionId id);
+    UsecaseResult deletePermission(TenantId tenantId, PermissionId id);
 
 }

@@ -13,11 +13,11 @@ mixin(ShowModule!());
 /// Use case: manage directory hierarchy within global accounts.
 interface IManageDirectoriesUseCase { 
 
-  CommandResult createDirectory(CreateDirectoryRequest request);
-  CommandResult updateDirectory(UpdateDirectoryRequest request);
+  UsecaseResult createDirectory(CreateDirectoryRequest request);
+  UsecaseResult updateDirectory(UpdateDirectoryRequest request);
   Directory getDirectory(TenantId tenantId, DirectoryId id);
   Directory[] listDirectories(TenantId tenantId, GlobalAccountId gaId);
   Directory[] listDirectories(TenantId tenantId, DirectoryId parentId);
-  CommandResult deleteDirectory(TenantId tenantId, DirectoryId id);
+  UsecaseResult deleteDirectory(TenantId tenantId, DirectoryId id);
 
 }

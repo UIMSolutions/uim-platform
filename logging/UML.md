@@ -167,6 +167,6 @@ sequenceDiagram
     LEC->>LEUC: createLogEntry(dto)
     LEUC->>ARUC: evaluateAlertRules(entry)
     ARUC->>AR: save(alert — ruleId, severity=critical)
-    LEUC-->>LEC: CommandResult(true, entryId)
+    LEUC-->>LEC: UsecaseResult(true, entryId)
     LEC-->>App: 201 { id }
 ```

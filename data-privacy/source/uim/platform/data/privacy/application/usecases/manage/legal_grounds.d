@@ -21,13 +21,13 @@ class ManageLegalGroundsUseCase {
     this.legalGrounds = legalGrounds;
   }
 
-  CommandResult createGround(CreateLegalGroundRequest req) {
+  UsecaseResult createGround(CreateLegalGroundRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.dataSubjectId.isEmpty)
-      return CommandResult(false, "", "Data subject ID is required");
+      return UsecaseResult(false, "", "Data subject ID is required");
     if (req.description.length == 0)
-      return CommandResult(false, "", "Description is required");
+      return UsecaseResult(false, "", "Description is required");
 
     auto ground = LegalGround(req.tenantId);
     ground.dataSubjectId = req.dataSubjectId;
@@ -41,7 +41,7 @@ class ManageLegalGroundsUseCase {
     ground.validUntil = req.validUntil;
 
     legalGrounds.save(ground);
-    return CommandResult(true, ground.id.value, "");
+    return UsecaseResult(true, ground.id.value, "");
   }
 
   LegalGround getGround(TenantId tenantId, LegalGroundId id) {
@@ -64,10 +64,10 @@ class ManageLegalGroundsUseCase {
     return legalGrounds.findByPurpose(tenantId, purpose);
   }
 
-  CommandResult updateGround(UpdateLegalGroundRequest req) {
+  UsecaseResult updateGround(UpdateLegalGroundRequest req) {
     auto ground = legalGrounds.findById(req.tenantId, req.id);
     if (ground.isNull)
-      return CommandResult(false, "", "Legal ground not found");
+      return UsecaseResult(false, "", "Legal ground not found");
 
     if (req.description.length > 0)
       ground.description = req.description;
@@ -80,15 +80,15 @@ class ManageLegalGroundsUseCase {
       ground.validUntil = req.validUntil;
 
     legalGrounds.update(ground);
-    return CommandResult(true, ground.id.value, "");
+    return UsecaseResult(true, ground.id.value, "");
   }
 
-  CommandResult deleteGround(TenantId tenantId, LegalGroundId id) {
+  UsecaseResult deleteGround(TenantId tenantId, LegalGroundId id) {
     auto ground = legalGrounds.findById(tenantId, id);
     if (ground.isNull)
-      return CommandResult(false, "", "Legal ground not found");
+      return UsecaseResult(false, "", "Legal ground not found");
 
     legalGrounds.remove(ground);
-    return CommandResult(true, ground.id.value, "");
+    return UsecaseResult(true, ground.id.value, "");
   }
 }

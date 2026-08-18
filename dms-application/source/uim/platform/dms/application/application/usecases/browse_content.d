@@ -73,11 +73,11 @@ class BrowseContentUseCase {
   }
 
   /// Add a favorite.
-  CommandResult addFavorite(CreateFavoriteRequest r) {
+  UsecaseResult addFavorite(CreateFavoriteRequest r) {
     // Check for duplicate
     auto fav = favorites.findByUserAndResource(r.tenantId, r.userId, r.resourceId);
     if (!fav.isNull)      
-      return CommandResult(true, fav.id.value, "");
+      return UsecaseResult(true, fav.id.value, "");
 
     fav = Favorite(r.tenantId);
     fav.userId = r.userId;
@@ -85,7 +85,7 @@ class BrowseContentUseCase {
     fav.resourceType = r.resourceType;
 
     favorites.save(fav);
-    return CommandResult(true, fav.id.value, "");
+    return UsecaseResult(true, fav.id.value, "");
   }
 
   /// Get user favorites.
@@ -97,13 +97,13 @@ struct FolderContents {
   Document[] documents;
 }
   /// Remove a favorite.
-  CommandResult deleteFavorite(TenantId tenantId, FavoriteId favoriteId) {
+  UsecaseResult deleteFavorite(TenantId tenantId, FavoriteId favoriteId) {
     auto favorite = favorites.findById(tenantId, favoriteId);
     if (favorite.isNull)
-      return CommandResult(false, "", "Favorite not found");
+      return UsecaseResult(false, "", "Favorite not found");
 
     favorites.remove(favorite);
-    return CommandResult(true, favorite.id.value, "");
+    return UsecaseResult(true, favorite.id.value, "");
   }
 }
 

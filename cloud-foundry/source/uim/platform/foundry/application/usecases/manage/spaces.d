@@ -26,24 +26,24 @@ class ManageSpacesUseCase {
     this.orgRepo = orgRepo;
   }
 
-  CommandResult createSpace(CreateSpaceRequest req) {
+  UsecaseResult createSpace(CreateSpaceRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.orgId.isEmpty)
-      return CommandResult(false, "", "Organization ID is required");
+      return UsecaseResult(false, "", "Organization ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Space name is required");
+      return UsecaseResult(false, "", "Space name is required");
 
     // Validate org exists
     auto org = orgRepo.findById(req.tenantId, req.orgId);
     if (org.isNull)
-      return CommandResult(false, "", "Organization not found");
+      return UsecaseResult(false, "", "Organization not found");
     if (org.status == OrgStatus.suspended)
-      return CommandResult(false, "", "Organization is suspended");
+      return UsecaseResult(false, "", "Organization is suspended");
 
     // Unique name within org
     if (repo.existsByName(req.tenantId, req.orgId, req.name))
-      return CommandResult(false, "", "Space with this name already exists in org");
+      return UsecaseResult(false, "", "Space with this name already exists in org");
 
     auto space = Space(req.tenantId, req.spaceId.isNull ? SpaceId(createId) : req.spaceId, req.createdBy);
     space.orgId = req.orgId;
@@ -52,7 +52,7 @@ class ManageSpacesUseCase {
     space.allowSsh = req.allowSsh;
 
     repo.save(space);
-    return CommandResult(true, space.id.value, "");
+    return UsecaseResult(true, space.id.value, "");
   }
 
   Space getSpace(TenantId tenantId, SpaceId spaceId) {
@@ -67,15 +67,15 @@ class ManageSpacesUseCase {
     return repo.findByOrg(tenantId, orgId);
   }
 
-  CommandResult updateSpace(UpdateSpaceRequest req) {
+  UsecaseResult updateSpace(UpdateSpaceRequest req) {
     if (req.spaceId.isNull)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto space = repo.findById(req.tenantId, req.spaceId);
     if (space.isNull)
-      return CommandResult(false, "", "Space not found");
+      return UsecaseResult(false, "", "Space not found");
 
     if (req.name.length > 0)
       space.name = req.name;
@@ -84,16 +84,16 @@ class ManageSpacesUseCase {
     space.updatedAt = currentTimestamp();
 
     repo.update(space);
-    return CommandResult(true, space.id.value, "");
+    return UsecaseResult(true, space.id.value, "");
   }
 
-  CommandResult deleteSpace(TenantId tenantId, SpaceId id) {
+  UsecaseResult deleteSpace(TenantId tenantId, SpaceId id) {
     auto space = repo.findById(tenantId, id);
     if (space.isNull)
-      return CommandResult(false, "", "Space not found");
+      return UsecaseResult(false, "", "Space not found");
 
     repo.remove(space);
-    return CommandResult(true, space.id.value, "");
+    return UsecaseResult(true, space.id.value, "");
   }
 }
 

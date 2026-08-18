@@ -34,7 +34,7 @@ class ManageJobsUseCase {
         return repo.findByRepository(tenantId, repositoryId);
     }
 
-    CommandResult createJob(JobDTO dto) {
+    UsecaseResult createJob(JobDTO dto) {
         auto j = Job(dto.tenantId, dto.createdBy);
         j.id = dto.jobId;
         j.name = dto.name;
@@ -51,16 +51,16 @@ class ManageJobsUseCase {
         j.status = JobStatus.active;
 
         if (!CicdValidator.isValidJob(j))
-            return CommandResult(false, "", "Invalid job data: name, pipelineId and repositoryId required");
+            return UsecaseResult(false, "", "Invalid job data: name, pipelineId and repositoryId required");
 
         repo.save(j);
-        return CommandResult(true, j.id.value, "");
+        return UsecaseResult(true, j.id.value, "");
     }
 
-    CommandResult updateJob(JobDTO dto) {
+    UsecaseResult updateJob(JobDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.jobId);
         if (existing.isNull)
-            return CommandResult(false, "", "Job not found");
+            return UsecaseResult(false, "", "Job not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -72,14 +72,14 @@ class ManageJobsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteJob(TenantId tenantId, JobId id) {
+    UsecaseResult deleteJob(TenantId tenantId, JobId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Job not found");
+            return UsecaseResult(false, "", "Job not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

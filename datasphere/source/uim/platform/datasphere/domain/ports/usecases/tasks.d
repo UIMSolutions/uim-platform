@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 interface IManageTasksUseCase { 
   
-  CommandResult createTask(CreateTaskRequest r);
+  UsecaseResult createTask(CreateTaskRequest r);
   DSTask getTask(TenantId tenantId, SpaceId spaceId, TaskId id);
   DSTask[] listTasks(TenantId tenantId, SpaceId spaceId);
-  CommandResult patchTask(PatchTaskRequest r);
-  CommandResult deleteTask(TenantId tenantId, SpaceId spaceId, TaskId id);
+  UsecaseResult patchTask(PatchTaskRequest r);
+  UsecaseResult deleteTask(TenantId tenantId, SpaceId spaceId, TaskId id);
 
 }

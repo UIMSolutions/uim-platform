@@ -40,7 +40,7 @@ Service Library
 │   └── C1.2.2  In-memory CRUD mixin (RepositoryMixin)
 │
 ├── C1.3  Application Layer Helpers
-│   ├── C1.3.1  CommandResult / QueryResult DTOs
+│   ├── C1.3.1  UsecaseResult / QueryResult DTOs
 │   ├── C1.3.2  IdUseCase base
 │   └── C1.3.3  TenantUseCase base
 │
@@ -74,7 +74,7 @@ Service Library
 | Interfaces | `interfaces/` | IEntity, IRepository, IService, IConfig, IStore, ITenantEntity |
 | Mixins | `mixins/` | ObjMixin, DomainMixin, RepositoryMixin, StoreMixin, ServiceMixin, ConfigMixin |
 | Entity bases | `mixins/entities/` | GlobalEntity, IdEntity, ResourceEntity |
-| Application | `application/` | CommandResult, QueryResult, IdUseCase, TenantUseCase |
+| Application | `application/` | UsecaseResult, QueryResult, IdUseCase, TenantUseCase |
 | Exceptions | `exceptions/` | UIMException, ValidationException, AuthorizationException, ConfigException |
 | Tests | `tests/` | Shared test helpers |
 
@@ -106,7 +106,7 @@ Service Library
 | `IRepository~T~` | Generic CRUD interface |
 | `IService` | Server start/stop lifecycle |
 | `IConfig` | host / port configuration contract |
-| `CommandResult` | success flag + id + errorMessage |
+| `UsecaseResult` | success flag + id + errorMessage |
 | `TenantUseCase` | Filter operations by tenantId |
 
 ---
@@ -134,4 +134,4 @@ dub.sdl consumers add:
 | AD-2 | Mixin-based scaffolding | Single source of truth for CRUD boilerplate |
 | AD-3 | In-memory repository mixin | Enables test-first development per service |
 | AD-4 | Strong-typed Id wrappers | Prevents id confusion across aggregate roots |
-| AD-5 | Shared CommandResult / QueryResult DTOs | Uniform application layer API surface |
+| AD-5 | Shared UsecaseResult / QueryResult DTOs | Uniform application layer API surface |

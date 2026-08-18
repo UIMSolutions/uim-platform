@@ -17,7 +17,7 @@ class ManageFlexVersionsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createVersion(CreateFlexVersionRequest r) {
+  UsecaseResult createVersion(CreateFlexVersionRequest r) {
     auto v = FlexVersion();
     v.id_ = r.versionId;
     v.tenant_ = r.tenantId;
@@ -32,16 +32,16 @@ class ManageFlexVersionsUseCase {
 
     auto err = FlexValidator.validateFlexVersion(v);
     if (err !is null)
-      return CommandResult(false, null, err);
+      return UsecaseResult(false, null, err);
 
     repo.save(r.tenantId, v);
-    return CommandResult(true, v.id_.value);
+    return UsecaseResult(true, v.id_.value);
   }
 
-  CommandResult activateVersion(ActivateVersionRequest r) {
+  UsecaseResult activateVersion(ActivateVersionRequest r) {
     auto v = repo.findById(r.tenantId, r.versionId);
     if (v.isNull)
-      return CommandResult(false, null, "FlexVersion not found");
+      return UsecaseResult(false, null, "FlexVersion not found");
 
     // Archive currently active version for this app
     auto current = repo.findActiveByApp(r.tenantId, r.appId);
@@ -55,19 +55,19 @@ class ManageFlexVersionsUseCase {
     v.activatedAt_ = ""; // Caller fills with ISO timestamp
 
     repo.update(r.tenantId, v);
-    return CommandResult(true, v.id_.value, "FlexVersion activated successfully.");
+    return UsecaseResult(true, v.id_.value, "FlexVersion activated successfully.");
   }
 
-  CommandResult updateVersion(UpdateFlexVersionRequest r) {
+  UsecaseResult updateVersion(UpdateFlexVersionRequest r) {
     auto v = repo.findById(r.tenantId, r.versionId);
     if (v.isNull)
-      return CommandResult(false, null, "FlexVersion not found");
+      return UsecaseResult(false, null, "FlexVersion not found");
 
     v.displayName_ = r.displayName_;
     v.description_ = r.description_;
     v.status_ = r.status_;
     repo.update(r.tenantId, v);
-    return CommandResult(true, v.id_.value, "FlexVersion updated successfully.");
+    return UsecaseResult(true, v.id_.value, "FlexVersion updated successfully.");
   }
 
   FlexVersion getVersion(TenantId tenantId, FlexVersionId id) {
@@ -86,12 +86,12 @@ class ManageFlexVersionsUseCase {
     return repo.findActiveByApp(tenantId, appId);
   }
 
-  CommandResult deleteVersion(TenantId tenantId, FlexVersionId id) {
+  UsecaseResult deleteVersion(TenantId tenantId, FlexVersionId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, null, "FlexVersion not found");
+      return UsecaseResult(false, null, "FlexVersion not found");
 
     repo.removeById(tenantId, id);
-    return CommandResult(true, existing.id_.value, "FlexVersion deleted successfully.");
+    return UsecaseResult(true, existing.id_.value, "FlexVersion deleted successfully.");
   }
 }

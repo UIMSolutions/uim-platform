@@ -21,9 +21,9 @@ class ManageSolutionBlocksUseCase {
         return repository.findByStatus(tenantId, status);
     }
 
-    CommandResult createBlock(CreateSolutionBlockRequest req) {
+    UsecaseResult createBlock(CreateSolutionBlockRequest req) {
         if (req.title.isEmpty)
-            return CommandResult(false, "", "Title is required");
+            return UsecaseResult(false, "", "Title is required");
 
         auto block = SolutionBlock(req.tenantId, req.blockId);
         block.title = req.title;
@@ -31,30 +31,30 @@ class ManageSolutionBlocksUseCase {
         block.owner = req.owner;
 
         repository.save(block);
-        return CommandResult(true, block.id.value, "Solution block created");
+        return UsecaseResult(true, block.id.value, "Solution block created");
     }
 
     SolutionBlock getBlock(TenantId tenantId, SolutionBlockId blockId) {
         return repository.findById(tenantId, blockId);
     }
 
-    CommandResult updateBlock(UpdateSolutionBlockRequest req) {
+    UsecaseResult updateBlock(UpdateSolutionBlockRequest req) {
         auto block = repository.findById(req.tenantId, req.blockId);
         if (block.id.value.length == 0)
-            return CommandResult(false, "", "Solution block not found");
+            return UsecaseResult(false, "", "Solution block not found");
 
         block.updatedAt = currentTimestamp();
 
         repository.update(block);
-        return CommandResult(true, block.id.value, "Solution block updated");
+        return UsecaseResult(true, block.id.value, "Solution block updated");
     }
 
-    CommandResult deleteBlock(TenantId tenantId, SolutionBlockId blockId) {
+    UsecaseResult deleteBlock(TenantId tenantId, SolutionBlockId blockId) {
         auto block = repository.findById(tenantId, blockId);
         if (block.id.value.length == 0)
-            return CommandResult(false, "", "Solution block not found");
+            return UsecaseResult(false, "", "Solution block not found");
 
         repository.remove(block);
-        return CommandResult(true, blockId.value, "Solution block deleted");
+        return UsecaseResult(true, blockId.value, "Solution block deleted");
     }
 }

@@ -265,7 +265,7 @@ PLR --> MBJU : Pipeline
 MBJU -> MBJU : validate pipeline active
 MBJU -> BJR  : save(BuildJob{status=queued})
 BJR --> MBJU : ok
-MBJU --> BJC : CommandResult{success, id}
+MBJU --> BJC : UsecaseResult{success, id}
 BJC --> Developer : 201 Created {id}
 
 @enduml
@@ -290,7 +290,7 @@ MAIU -> PV  : validatePrompt(prompt)
 PV --> MAIU : [] (no errors)
 MAIU -> AIR : save(AIRequest{status=pending, modelUsed="Joule"})
 AIR --> MAIU : ok
-MAIU --> AIC : CommandResult{success, id}
+MAIU --> AIC : UsecaseResult{success, id}
 AIC --> Developer : 202 Accepted {id}
 
 note over Developer, AIR

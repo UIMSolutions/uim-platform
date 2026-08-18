@@ -53,7 +53,7 @@ final class TaskGuiModel {
         if (onChanged !is null) onChanged();
     }
 
-    CommandResult completeTask(string id) {
+    UsecaseResult completeTask(string id) {
         auto result = _useCase.completeTask(_tenantId, TaskId(id));
         if (result.success) refresh();
         return result;

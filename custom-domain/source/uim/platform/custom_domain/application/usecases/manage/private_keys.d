@@ -18,16 +18,16 @@ class ManagePrivateKeysUseCase {
         this.repo = repo;
     }
 
-    CommandResult createPrivateKey(CreatePrivateKeyRequest r) {
+    UsecaseResult createPrivateKey(CreatePrivateKeyRequest r) {
         if (r.privateKeyId.isEmpty)
-            return CommandResult(false, "", "ID is required");
+            return UsecaseResult(false, "", "ID is required");
         if (r.subject.length == 0)
-            return CommandResult(false, "", "Subject is required");
+            return UsecaseResult(false, "", "Subject is required");
         if (r.domains.length == 0)
-            return CommandResult(false, "", "At least one domain is required");
+            return UsecaseResult(false, "", "At least one domain is required");
 
         if (repo.existsById(r.tenantId, r.privateKeyId))
-            return CommandResult(false, "", "Key already exists");
+            return UsecaseResult(false, "", "Key already exists");
 
         auto k = PrivateKey(r.tenantId, r.privateKeyId, r.createdBy);
         k.subject = r.subject;
@@ -36,7 +36,7 @@ class ManagePrivateKeysUseCase {
         k.status = KeyStatus.active;
 
         repo.save(k);
-        return CommandResult(true, k.id.value, "");
+        return UsecaseResult(true, k.id.value, "");
     }
 
     PrivateKey getPrivateKey(TenantId tenantId, PrivateKeyId id) {
@@ -47,13 +47,13 @@ class ManagePrivateKeysUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deletePrivateKey(TenantId tenantId, PrivateKeyId id) {
+    UsecaseResult deletePrivateKey(TenantId tenantId, PrivateKeyId id) {
         auto key = repo.findById(tenantId, id);
         if (key.isNull)
-            return CommandResult(false, "", "Key not found");
+            return UsecaseResult(false, "", "Key not found");
 
         repo.remove(key);
-        return CommandResult(true, key.id.value, "");
+        return UsecaseResult(true, key.id.value, "");
     }
 }
 

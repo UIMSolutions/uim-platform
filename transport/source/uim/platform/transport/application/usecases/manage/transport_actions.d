@@ -38,7 +38,7 @@ class ManageTransportActionsUseCase {
         return repo.findByStatus(tenantId, actionStatus);
     }
 
-    CommandResult recordAction(TransportActionDTO dto) {
+    UsecaseResult recordAction(TransportActionDTO dto) {
         TransportAction action;
         action.id = dto.actionId;
         action.tenantId = dto.tenantId;
@@ -54,18 +54,18 @@ class ManageTransportActionsUseCase {
         }
         action.actionStatus = ActionStatus.initial;
         if (!TransportValidator.isValidAction(action))
-            return CommandResult(false, "", "Invalid action: requestId and performedBy are required");
+            return UsecaseResult(false, "", "Invalid action: requestId and performedBy are required");
         repo.save(action);
-        return CommandResult(true, action.id.value, "");
+        return UsecaseResult(true, action.id.value, "");
     }
 
-    CommandResult updateActionStatus(TenantId tenantId, TransportActionId id, ActionStatus status, string errorMessage = "") {
+    UsecaseResult updateActionStatus(TenantId tenantId, TransportActionId id, ActionStatus status, string errorMessage = "") {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Transport action not found");
+            return UsecaseResult(false, "", "Transport action not found");
         existing.actionStatus = status;
         if (errorMessage.length > 0) existing.errorMessage = errorMessage;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

@@ -22,20 +22,20 @@ class BusinessBlocksService : IBusinessBlocksApi {
         return usecase.getBlock(TenantId(tenantId), BusinessBlockId(id));
     }
 
-    override CommandResult createBusinessBlock(string tenantId, CreateBusinessBlockRequest request) {
+    override UsecaseResult createBusinessBlock(string tenantId, CreateBusinessBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         return usecase.createBlock(req);
     }
 
-    override CommandResult updateBusinessBlock(string tenantId, string id, UpdateBusinessBlockRequest request) {
+    override UsecaseResult updateBusinessBlock(string tenantId, string id, UpdateBusinessBlockRequest request) {
         auto req = request;
         req.tenantId = TenantId(tenantId);
         req.blockId = BusinessBlockId(id);
         return usecase.updateBlock(req);
     }
 
-    override CommandResult deleteBusinessBlock(string tenantId, string id) {
+    override UsecaseResult deleteBusinessBlock(string tenantId, string id) {
         return usecase.deleteBlock(TenantId(tenantId), BusinessBlockId(id));
     }
 }

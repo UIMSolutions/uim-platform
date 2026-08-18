@@ -20,13 +20,13 @@ class ManagePersonalDataModelsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createModel(CreatePersonalDataModelRequest req) {
+  UsecaseResult createModel(CreatePersonalDataModelRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     // if (req.fieldname.isEmpty)
-    //   return CommandResult(false, "", "Field name is required");
+    //   return UsecaseResult(false, "", "Field name is required");
     if (req.sourceSystem.length == 0)
-      return CommandResult(false, "", "Source system is required");
+      return UsecaseResult(false, "", "Source system is required");
 
     auto model = PersonalDataModel(req.tenantId);
     model.fieldName = req.fieldName;
@@ -40,7 +40,7 @@ class ManagePersonalDataModelsUseCase {
     model.legalReference = req.legalReference;
 
     repo.save(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
   PersonalDataModel getModel(TenantId tenantId, PersonalDataModelId id) {
@@ -59,10 +59,10 @@ class ManagePersonalDataModelsUseCase {
     return repo.findSpecialCategories(tenantId);
   }
 
-  CommandResult updateModel(UpdatePersonalDataModelRequest req) {
+  UsecaseResult updateModel(UpdatePersonalDataModelRequest req) {
     auto model = repo.findById(req.tenantId, req.id);
     if (model.isNull)
-      return CommandResult(false, "", "Personal data model not found");
+      return UsecaseResult(false, "", "Personal data model not found");
 
     if (req.fieldName.length > 0)
       model.fieldName = req.fieldName;
@@ -82,15 +82,15 @@ class ManagePersonalDataModelsUseCase {
     model.updatedAt = currentTimestamp();
 
     repo.update(model);
-    return CommandResult(true, model.id.value, "");
+    return UsecaseResult(true, model.id.value, "");
   }
 
-  CommandResult deleteModel(TenantId tenantId, PersonalDataModelId id) {
+  UsecaseResult deleteModel(TenantId tenantId, PersonalDataModelId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Personal data model not found");
+      return UsecaseResult(false, "", "Personal data model not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }

@@ -29,21 +29,21 @@ class ManageServicesUseCase {
 
   // --- Service Instances ---
 
-  CommandResult createInstance(CreateServiceInstanceRequest req) {
+  UsecaseResult createInstance(CreateServiceInstanceRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.spaceId.isEmpty)
-      return CommandResult(false, "", "Space ID is required");
+      return UsecaseResult(false, "", "Space ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Service instance name is required");
+      return UsecaseResult(false, "", "Service instance name is required");
     if (req.serviceName.isEmpty)
-      return CommandResult(false, "", "Service name is required");
+      return UsecaseResult(false, "", "Service name is required");
     if (req.servicePlanName.isEmpty)
-      return CommandResult(false, "", "Service plan name is required");
+      return UsecaseResult(false, "", "Service plan name is required");
 
     auto instance = instances.findByName(req.tenantId, req.spaceId, req.name);
     if (!instance.isNull)
-      return CommandResult(false, "", "Service instance with this name already exists in space");
+      return UsecaseResult(false, "", "Service instance with this name already exists in space");
 
     auto srvInstance = ServiceInstance(req.tenantId, req.instanceId.isNull ? ServiceInstanceId(createId()) : req.instanceId, req.createdBy);
     srvInstance.spaceId = req.spaceId;
@@ -55,7 +55,7 @@ class ManageServicesUseCase {
     srvInstance.tags = req.tags;
 
     instances.save(srvInstance);
-    return CommandResult(true, srvInstance.id.value, "");
+    return UsecaseResult(true, srvInstance.id.value, "");
   }
 
   ServiceInstance getInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
@@ -70,15 +70,15 @@ class ManageServicesUseCase {
     return instances.findBySpace(tenantId, spaceId);
   }
 
-  CommandResult updateInstance(UpdateServiceInstanceRequest req) {
+  UsecaseResult updateInstance(UpdateServiceInstanceRequest req) {
     if (req.instanceId.isEmpty)
-      return CommandResult(false, "", "Service instance ID is required");
+      return UsecaseResult(false, "", "Service instance ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto instance = instances.findById(req.tenantId, req.instanceId);
     if (instance.isNull)
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
 
     if (req.name.length > 0)
       instance.name = req.name;
@@ -89,36 +89,36 @@ class ManageServicesUseCase {
     instance.updatedAt = currentTimestamp();
 
     instances.update(instance);
-    return CommandResult(true, instance.id.value, "");
+    return UsecaseResult(true, instance.id.value, "");
   }
 
-  CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
+  UsecaseResult deleteInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
     auto instance = instances.findById(tenantId, serviceInstanceId);
     if (instance.isNull )
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
 
     // Remove all bindings for this instance
     auto instanceBindings = bindings.findByServiceInstance(tenantId, serviceInstanceId);
     instanceBindings.each!(b => bindings.remove(b));
 
     instances.remove(instance);
-    return CommandResult(true, instance.id.value, "");
+    return UsecaseResult(true, instance.id.value, "");
   }
 
   // --- Service Bindings ---
 
-  CommandResult createBinding(CreateServiceBindingRequest request) {
+  UsecaseResult createBinding(CreateServiceBindingRequest request) {
     if (request.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (request.appId.isEmpty)
-      return CommandResult(false, "", "Application ID is required");
+      return UsecaseResult(false, "", "Application ID is required");
     if (request.instanceId.isEmpty)
-      return CommandResult(false, "", "Service instance ID is required");
+      return UsecaseResult(false, "", "Service instance ID is required");
 
     // Verify instance exists
     auto instance = instances.findById(request.tenantId, request.instanceId);
     if (instance.isNull)
-      return CommandResult(false, "", "Service instance not found");
+      return UsecaseResult(false, "", "Service instance not found");
 
     auto binding = ServiceBinding(request.tenantId, request.bindingId.isNull ? ServiceBindingId(createId) : request.bindingId, request.createdBy);
     binding.appId = request.appId;
@@ -129,7 +129,7 @@ class ManageServicesUseCase {
     binding.bindingOptions = request.bindingOptions;
 
     bindings.save(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 
   ServiceBinding[] listBindings(TenantId tenantId) {
@@ -140,13 +140,13 @@ class ManageServicesUseCase {
     return bindings.findByApp(tenantId, appId);
   }
 
-  CommandResult deleteBinding(TenantId tenantId, ServiceBindingId bindingId) {
+  UsecaseResult deleteBinding(TenantId tenantId, ServiceBindingId bindingId) {
     auto binding = bindings.findById(tenantId, bindingId);
     if (binding.isNull)
-      return CommandResult(false, "", "Service binding not found");
+      return UsecaseResult(false, "", "Service binding not found");
 
     bindings.remove(binding);
-    return CommandResult(true, binding.id.value, "");
+    return UsecaseResult(true, binding.id.value, "");
   }
 }
 

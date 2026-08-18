@@ -30,9 +30,9 @@ class ManageCredentialsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createCredential(CredentialDTO dto) {
+    UsecaseResult createCredential(CredentialDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Credential name already exists");
+            return UsecaseResult(false, "", "Credential name already exists");
 
         auto c = Credential(dto.tenantId, dto.createdBy);
         c.id = dto.credentialId;
@@ -45,16 +45,16 @@ class ManageCredentialsUseCase {
         c.status = CredentialStatus.active;
 
         if (!CicdValidator.isValidCredential(c))
-            return CommandResult(false, "", "Invalid credential data");
+            return UsecaseResult(false, "", "Invalid credential data");
 
         repo.save(c);
-        return CommandResult(true, c.id.value, "");
+        return UsecaseResult(true, c.id.value, "");
     }
 
-    CommandResult updateCredential(CredentialDTO dto) {
+    UsecaseResult updateCredential(CredentialDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.credentialId);
         if (existing.isNull)
-            return CommandResult(false, "", "Credential not found");
+            return UsecaseResult(false, "", "Credential not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -63,14 +63,14 @@ class ManageCredentialsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
+    UsecaseResult deleteCredential(TenantId tenantId, CredentialId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Credential not found");
+            return UsecaseResult(false, "", "Credential not found");
         repo.remove(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

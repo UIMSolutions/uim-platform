@@ -25,19 +25,19 @@ class ManageSubaccountsUseCase {
     this.eventRepo = eventRepo;
   }
 
-  CommandResult createSubaccount(CreateSubaccountRequest req) {
+  UsecaseResult createSubaccount(CreateSubaccountRequest req) {
     if (req.globalAccountId.isEmpty)
-      return CommandResult(false, "", "Global account ID is required");
+      return UsecaseResult(false, "", "Global account ID is required");
     if (req.displayName.isEmpty)
-      return CommandResult(false, "", "Display name is required");
+      return UsecaseResult(false, "", "Display name is required");
     if (req.subdomain.length == 0)
-      return CommandResult(false, "", "Subdomain is required");
+      return UsecaseResult(false, "", "Subdomain is required");
     if (req.region.length == 0)
-      return CommandResult(false, "", "Region is required");
+      return UsecaseResult(false, "", "Region is required");
 
     // Check subdomain uniqueness
     if (repository.existsBySubdomain(req.tenantId, req.subdomain))
-      return CommandResult(false, "", "Subdomain '" ~ req.subdomain ~ "' is already taken");
+      return UsecaseResult(false, "", "Subdomain '" ~ req.subdomain ~ "' is already taken");
 
     auto subaccount = Subaccount(req.tenantId); //, req.createdBy);
     subaccount.globalAccountId = req.globalAccountId;
@@ -64,13 +64,13 @@ class ManageSubaccountsUseCase {
     emitEvent(subaccount.tenantId, subaccount.globalAccountId.value, subaccount.id.value, EnvironmentEventCategory.subaccountLifecycle,
         "subaccount.created", "Subaccount created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, subaccount.id.value, "");
+    return UsecaseResult(true, subaccount.id.value, "");
   }
 
-  CommandResult updateSubaccount(UpdateSubaccountRequest req) {
+  UsecaseResult updateSubaccount(UpdateSubaccountRequest req) {
     auto subaccount = repository.findById(req.tenantId, req.subaccountId);
     if (subaccount.isNull)
-      return CommandResult(false, "", "Subaccount not found");
+      return UsecaseResult(false, "", "Subaccount not found");
 
     if (req.displayName.length > 0)
         subaccount.displayName = req.displayName;
@@ -87,16 +87,16 @@ class ManageSubaccountsUseCase {
     subaccount.updatedAt = clockSeconds();
 
     repository.update(subaccount);
-    return CommandResult(true, subaccount.id.value, "");
+    return UsecaseResult(true, subaccount.id.value, "");
   }
 
-  CommandResult moveSubaccount(TenantId tenantId, SubaccountId id, MoveSubaccountRequest req) {
+  UsecaseResult moveSubaccount(TenantId tenantId, SubaccountId id, MoveSubaccountRequest req) {
     if (!repository.existsById(tenantId, id))
-      return CommandResult(false, "", "Subaccount not found");
+      return UsecaseResult(false, "", "Subaccount not found");
 
     auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.active)
-      return CommandResult(false, "", "Subaccount must be active to move");
+      return UsecaseResult(false, "", "Subaccount must be active to move");
 
     subaccount.status = SubaccountStatus.moveInProgress;
     subaccount.parentDirectoryId = req.targetDirectoryId;
@@ -106,35 +106,35 @@ class ManageSubaccountsUseCase {
     // Complete move
     subaccount.status = SubaccountStatus.active;
     repository.update(subaccount);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult suspendSubaccount(TenantId tenantId, SubaccountId id) {
+  UsecaseResult suspendSubaccount(TenantId tenantId, SubaccountId id) {
     if (!repository.existsById(tenantId, id))
-      return CommandResult(false, "", "Subaccount not found");
+      return UsecaseResult(false, "", "Subaccount not found");
 
     auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.active)
-      return CommandResult(false, "", "Only active subaccounts can be suspended");
+      return UsecaseResult(false, "", "Only active subaccounts can be suspended");
 
     subaccount.status = SubaccountStatus.suspended;
     subaccount.updatedAt = clockSeconds();
     repository.update(subaccount);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult reactivateSubaccount(TenantId tenantId, SubaccountId id) {
+  UsecaseResult reactivateSubaccount(TenantId tenantId, SubaccountId id) {
     if (!repository.existsById(tenantId, id))
-      return CommandResult(false, "", "Subaccount not found");
+      return UsecaseResult(false, "", "Subaccount not found");
 
     auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.suspended)
-      return CommandResult(false, "", "Only suspended subaccounts can be reactivated");
+      return UsecaseResult(false, "", "Only suspended subaccounts can be reactivated");
 
     subaccount.status = SubaccountStatus.active;
     subaccount.updatedAt = clockSeconds();
     repository.update(subaccount);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   Subaccount getSubaccount(TenantId tenantId, SubaccountId id) {
@@ -153,18 +153,18 @@ class ManageSubaccountsUseCase {
     return repository.findByRegion(tenantId, gaId, region);
   }
 
-  CommandResult deleteSubaccount(TenantId tenantId, SubaccountId id) {
+  UsecaseResult deleteSubaccount(TenantId tenantId, SubaccountId id) {
     auto subaccount = repository.findById(tenantId, id);
     if (subaccount.isNull)
-      return CommandResult(false, "", "Subaccount not found");
+      return UsecaseResult(false, "", "Subaccount not found");
 
     if (subaccount.status == SubaccountStatus.deleting)
-      return CommandResult(false, "", "Subaccount is already being deleted");
+      return UsecaseResult(false, "", "Subaccount is already being deleted");
 
     repository.remove(subaccount);
     emitEvent(tenantId, subaccount.globalAccountId.value, id.value, EnvironmentEventCategory.subaccountLifecycle,
         "subaccount.deleted", "Subaccount deleted: " ~ subaccount.displayName, UserId("system"));
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
   private void emitEvent(TenantId tenantId, string gaId, string subId, EnvironmentEventCategory cat,

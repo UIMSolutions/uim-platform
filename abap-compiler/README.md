@@ -43,7 +43,7 @@ abap-compiler/
 │       │   ├── ports/repositories/    #   AbapProgramRepository, CompilationJobRepository
 │       │   └── services/              #   AbapLexer, AbapParser, SemanticAnalyser, CodeGenerator
 │       ├── application/               # Use cases — orchestrate domain
-│       │   ├── dto.d                  #   Request/Response DTOs, CommandResult
+│       │   ├── dto.d                  #   Request/Response DTOs, UsecaseResult
 │       │   └── usecases/
 │       │       ├── compile.d          #   CompileUseCase (full 4-stage pipeline)
 │       │       └── manage/

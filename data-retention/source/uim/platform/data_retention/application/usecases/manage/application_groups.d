@@ -17,11 +17,11 @@ class ManageApplicationGroupsUseCase {
         this.appGroupRepository = appGroupRepository;
     }
 
-    CommandResult createApplicationGroup(CreateApplicationGroupRequest req) {
+    UsecaseResult createApplicationGroup(CreateApplicationGroupRequest req) {
         import std.uuid : randomUUID;
 
         if (req.name.isEmpty)
-            return CommandResult(false, "", "Application group name is required");
+            return UsecaseResult(false, "", "Application group name is required");
 
         ApplicationGroup ag;
         ag.id = ApplicationGroupId(generateId);
@@ -35,13 +35,13 @@ class ManageApplicationGroupsUseCase {
         ag.createdAt = clockSeconds();
 
         appGroupRepository.save(ag);
-        return CommandResult(true, ag.id.value, "");
+        return UsecaseResult(true, ag.id.value, "");
     }
 
-    CommandResult updateApplicationGroup(UpdateApplicationGroupRequest req) {
+    UsecaseResult updateApplicationGroup(UpdateApplicationGroupRequest req) {
         auto ag = appGroupRepository.findById(req.tenantId, req.groupId);
         if (ag.isNull)
-            return CommandResult(false, "", "Application group not found");
+            return UsecaseResult(false, "", "Application group not found");
 
         if (req.name.length > 0)
             ag.name = req.name;
@@ -55,7 +55,7 @@ class ManageApplicationGroupsUseCase {
         ag.updatedAt = clockSeconds();
 
         appGroupRepository.update(ag);
-        return CommandResult(true, ag.id.value, "");
+        return UsecaseResult(true, ag.id.value, "");
     }
 
     bool hasApplicationGroup(TenantId tenantId, ApplicationGroupId id) {
@@ -70,13 +70,13 @@ class ManageApplicationGroupsUseCase {
         return appGroupRepository.findByTenant(tenantId);
     }
 
-    CommandResult deleteApplicationGroup(TenantId tenantId, ApplicationGroupId id) {
+    UsecaseResult deleteApplicationGroup(TenantId tenantId, ApplicationGroupId id) {
         auto group = appGroupRepository.findById(tenantId, id);
         if (group.isNull)
-            return CommandResult(false, "", "Application group not found");
+            return UsecaseResult(false, "", "Application group not found");
 
         appGroupRepository.remove(group);
-        return CommandResult(true, group.id.value, "");
+        return UsecaseResult(true, group.id.value, "");
     }
 
 }

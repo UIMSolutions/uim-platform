@@ -28,9 +28,9 @@ class ManageDatabaseExtensionsUseCase {
         return repo.findByInstance(tenantId, instanceId);
     }
 
-    CommandResult createDatabaseExtension(DatabaseExtensionDTO dto) {
+    UsecaseResult createDatabaseExtension(DatabaseExtensionDTO dto) {
         if (repo.extensionExists(dto.tenantId, dto.instanceId, dto.extensionName))
-            return CommandResult(false, "", "Extension already enabled on this instance");
+            return UsecaseResult(false, "", "Extension already enabled on this instance");
 
         auto e = DatabaseExtension(dto.tenantId); //, UserId("test-user"));
         e.id = dto.databaseExtensionId;
@@ -41,17 +41,17 @@ class ManageDatabaseExtensionsUseCase {
         e.status = ExtensionStatus.enabled;
 
         if (e.instanceId.value.length == 0 || e.extensionname.isEmpty)
-            return CommandResult(false, "", "instanceId and extensionName are required");
+            return UsecaseResult(false, "", "instanceId and extensionName are required");
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
-    CommandResult deleteDatabaseExtension(TenantId tenantId, DatabaseExtensionId id) {
+    UsecaseResult deleteDatabaseExtension(TenantId tenantId, DatabaseExtensionId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Extension not found");
+            return UsecaseResult(false, "", "Extension not found");
         repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

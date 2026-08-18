@@ -157,7 +157,7 @@ User -> C : POST /api/v1/composer/runs
 C -> UC : start(StartCompositionRunRequest)
 UC -> R : save(CompositionRun{status=pending})
 R --> UC : ok
-UC --> C : CommandResult(id)
+UC --> C : UsecaseResult(id)
 C --> User : 201 Created {id}
 
 User -> C : POST /api/v1/composer/runs/{id}/action {action: "cancel"}
@@ -165,7 +165,7 @@ C -> UC : performAction(CompositionRunActionRequest)
 UC -> R : findById(tenantId, id)
 R --> UC : CompositionRun
 UC -> R : update(run{status=cancelled})
-UC --> C : CommandResult(ok)
+UC --> C : UsecaseResult(ok)
 C --> User : 200 OK
 @enduml
 ```

@@ -7,7 +7,7 @@ class ManageSnowflakeTenantUsersUseCase {
   protected ISnowflakeTenantUserRepository repo;
   this(ISnowflakeTenantUserRepository repo) { this.repo = repo; }
 
-  CommandResult create(CreateTenantUserRequest r) {
+  UsecaseResult create(CreateTenantUserRequest r) {
     
     SnowflakeTenantUser u;
     u.id = SnowflakeTenantUserId(r.id.length > 0 ? r.id : currentTimestamp());
@@ -17,9 +17,9 @@ class ManageSnowflakeTenantUsersUseCase {
     try { u.role = r.role.to!TenantUserRole; } catch(Exception) { u.role = TenantUserRole.viewer; }
     initEntity(u);
     auto err = SnowflakeValidator.validateTenantUser(u);
-    if (err !is null) return CommandResult(false, u.id.value, err);
+    if (err !is null) return UsecaseResult(false, u.id.value, err);
     repo.save(u);
-    return CommandResult(true, u.id.value, null);
+    return UsecaseResult(true, u.id.value, null);
   }
 
   SnowflakeTenantUser[] list(TenantId tenantId) { return repo.findByTenant(TenantId(tenantId)); }
@@ -33,22 +33,22 @@ class ManageSnowflakeTenantUsersUseCase {
     return repo.findById(TenantId(tenantId), SnowflakeTenantUserId(id));
   }
 
-  CommandResult update(UpdateTenantUserRequest r) {
+  UsecaseResult update(UpdateTenantUserRequest r) {
     
     auto u = repo.findById(TenantId(r.tenantId), SnowflakeTenantUserId(r.id));
-    if (u.isNull) return CommandResult(false, r.id, "User not found");
+    if (u.isNull) return UsecaseResult(false, r.id, "User not found");
     if (r.firstName.length > 0) u.firstName = r.firstName;
     if (r.lastName.length > 0) u.lastName = r.lastName;
     if (r.role.length > 0) try { u.role = r.role.to!TenantUserRole; } catch(Exception) {}
     u.active = r.active;
     repo.update(u);
-    return CommandResult(true, u.id.value, null);
+    return UsecaseResult(true, u.id.value, null);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto u = repo.findById(TenantId(tenantId), SnowflakeTenantUserId(id));
-    if (u.isNull) return CommandResult(false, id, "User not found");
+    if (u.isNull) return UsecaseResult(false, id, "User not found");
     repo.remove(TenantId(tenantId), SnowflakeTenantUserId(id));
-    return CommandResult(true, id, null);
+    return UsecaseResult(true, id, null);
   }
 }

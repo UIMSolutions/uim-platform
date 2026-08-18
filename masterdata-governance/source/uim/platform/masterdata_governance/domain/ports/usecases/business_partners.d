@@ -19,8 +19,8 @@ interface IManageBusinessPartnersUseCase {
     BusinessPartner[] listPartners(TenantId tenantId, BPStatus status);
     BusinessPartner[] listPartners(TenantId tenantId, string country);
     BusinessPartner[] searchPartners(TenantId tenantId, string searchTerm);
-    CommandResult createPartner(BusinessPartnerDTO dto);
-    CommandResult updatePartner(BusinessPartnerDTO dto);
-    CommandResult deletePartner(TenantId tenantId, BusinessPartnerId id);
+    UsecaseResult createPartner(BusinessPartnerDTO dto);
+    UsecaseResult updatePartner(BusinessPartnerDTO dto);
+    UsecaseResult deletePartner(TenantId tenantId, BusinessPartnerId id);
 
 }

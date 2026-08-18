@@ -20,10 +20,10 @@ class ManageDevSpacesUseCase {
     _quota = QuotaService();
   }
 
-  CommandResult create(TenantId tenantId, CreateDevSpaceRequest req) {
+  UsecaseResult create(TenantId tenantId, CreateDevSpaceRequest req) {
     auto existing = _repo.findByProject(tenantId, req.projectId);
     auto qerr = _quota.checkDevSpaceQuota(existing.length);
-    if (qerr !is null) return CommandResult(false, "", qerr);
+    if (qerr !is null) return UsecaseResult(false, "", qerr);
 
     auto ds = DevSpace(tenantId); // , DevSpaceId(createId), req.createdBy);
     ds.projectId     = ProjectId(req.projectId);
@@ -35,7 +35,7 @@ class ManageDevSpacesUseCase {
     ds.ramGiB        = req.ramGiB    > 0 ? req.ramGiB    : 4;
 
     _repo.save(ds);
-    return CommandResult(true, ds.id.value, "");
+    return UsecaseResult(true, ds.id.value, "");
   }
 
   DevSpace getById(TenantId tenantId, string id) {
@@ -50,9 +50,9 @@ class ManageDevSpacesUseCase {
     return _repo.findByTenant(tenantId);
   }
 
-  CommandResult setStatus(TenantId tenantId, string id, string statusStr) {
+  UsecaseResult setStatus(TenantId tenantId, string id, string statusStr) {
     auto ds = _repo.findById(tenantId, DevSpaceId(id));
-    if (ds.isNull) return CommandResult(false, "", "Dev space not found");
+    if (ds.isNull) return UsecaseResult(false, "", "Dev space not found");
     DevSpaceStatus st = DevSpaceStatus.stopped;
     static foreach (member; __traits(allMembers, DevSpaceStatus)) {
       if (statusStr == mixin("DevSpaceStatus." ~ member ~ ".to!string"))
@@ -60,13 +60,13 @@ class ManageDevSpacesUseCase {
     }
     ds.status = st;
     _repo.update(ds);
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto ds = _repo.findById(tenantId, DevSpaceId(id));
-    if (ds.isNull) return CommandResult(false, "", "Dev space not found");
+    if (ds.isNull) return UsecaseResult(false, "", "Dev space not found");
     _repo.remove(tenantId, DevSpaceId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

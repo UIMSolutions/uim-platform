@@ -21,9 +21,9 @@ class ManageDatasetsUseCase {
     this.repo = repo;
   }
 
-  CommandResult registerDataset(RegisterDatasetRequest r) {
+  UsecaseResult registerDataset(RegisterDatasetRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Dataset name is required");
+      return UsecaseResult(false, "", "Dataset name is required");
 
     auto d = Dataset(r.tenantId);
     d.connectionId = r.connectionId;
@@ -36,7 +36,7 @@ class ManageDatasetsUseCase {
     d.labels = r.labels;
 
     repo.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
   Dataset getDataset(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
@@ -51,10 +51,10 @@ class ManageDatasetsUseCase {
     return repo.findByScenario(tenantId, connectionId, scenarioId);
   }
 
-  CommandResult patchDataset(PatchDatasetRequest r) {
+  UsecaseResult patchDataset(PatchDatasetRequest r) {
     auto d = repo.findById(r.tenantId, r.connectionId, r.datasetId);
     if (d.isNull)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
     if (r.description.length > 0)
       d.description = r.description;
     if (r.status == "archived")
@@ -62,15 +62,15 @@ class ManageDatasetsUseCase {
     d.updatedAt = currentTimestamp;
 
     repo.save(d);
-    return CommandResult(true, d.id.value, "");
+    return UsecaseResult(true, d.id.value, "");
   }
 
-  CommandResult deleteDataset(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
+  UsecaseResult deleteDataset(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
     auto dataset = repo.findById(tenantId, connectionId, id);
     if (dataset.isNull)
-      return CommandResult(false, "", "Dataset not found");
+      return UsecaseResult(false, "", "Dataset not found");
       
     repo.remove(dataset);
-    return CommandResult(true, dataset.id.value, "");
+    return UsecaseResult(true, dataset.id.value, "");
   }
 }

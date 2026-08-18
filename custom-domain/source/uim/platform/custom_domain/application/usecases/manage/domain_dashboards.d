@@ -29,9 +29,9 @@ class ManageDomainDashboardsUseCase {
         return dashboardRepo.get(tenantId);
     }
 
-    CommandResult refreshDashboard(RefreshDashboardRequest r) {
+    UsecaseResult refreshDashboard(RefreshDashboardRequest r) {
         if (r.tenantId.isEmpty)
-            return CommandResult(false, "", "Tenant ID is required");
+            return UsecaseResult(false, "", "Tenant ID is required");
 
         auto domains = domainRepo.findByTenant(r.tenantId);
         auto certs = certRepo.findByTenant(r.tenantId);
@@ -85,7 +85,7 @@ class ManageDomainDashboardsUseCase {
         else
             dashboardRepo.update(dashboard);
 
-        return CommandResult(true, dashboard.id.value, "");
+        return UsecaseResult(true, dashboard.id.value, "");
     }
 }
 

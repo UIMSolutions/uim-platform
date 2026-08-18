@@ -172,7 +172,7 @@ UC -> Repo : findByEmail(tenantId, email)
 Repo --> UC : null (not found)
 UC -> Repo : add(customer)
 Repo --> UC : ok
-UC --> CC : CommandResult(success=true, id)
+UC --> CC : UsecaseResult(success=true, id)
 CC --> Client : 201 Created {id}
 
 @enduml
@@ -197,7 +197,7 @@ UC -> Repo : findByProviderAndUser(tenantId, provider, providerUserId)
 Repo --> UC : null (not yet linked)
 UC -> Repo : add(socialIdentity)
 Repo --> UC : ok
-UC --> SIC : CommandResult(success=true, id)
+UC --> SIC : UsecaseResult(success=true, id)
 SIC --> Client : 201 Created {id}
 
 @enduml
@@ -217,7 +217,7 @@ Client -> CRC : POST /api/v1/customer-identity/consents\n{customerId, consentTyp
 CRC -> UC : grantConsent(dto)
 UC -> Repo : add(consentRecord)
 Repo --> UC : ok
-UC --> CRC : CommandResult(success=true, id)
+UC --> CRC : UsecaseResult(success=true, id)
 CRC --> Client : 201 Created {id}
 
 @enduml

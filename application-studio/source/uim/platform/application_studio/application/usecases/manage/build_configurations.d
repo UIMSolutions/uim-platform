@@ -30,7 +30,7 @@ class ManageBuildConfigurationsUseCase {
         return configurations.findByProject(tenantId, projectId);
     }
 
-    CommandResult createBuildConfiguration(BuildConfigurationDTO dto) {
+    UsecaseResult createBuildConfiguration(BuildConfigurationDTO dto) {
         auto e = BuildConfiguration(dto.tenantId, dto.configId.isNull ? BuildConfigurationId(createId()) : dto.configId, dto.createdBy);
         e.projectId = dto.projectId;
         e.name = dto.name;
@@ -40,16 +40,16 @@ class ManageBuildConfigurationsUseCase {
         e.artifactPath = dto.artifactPath;
         e.mtaDescriptor = dto.mtaDescriptor;
         if (!StudioValidator.isValidBuildConfiguration(e))
-            return CommandResult(false, "", "Invalid build configuration data");
+            return UsecaseResult(false, "", "Invalid build configuration data");
 
         configurations.save(e);
-        return CommandResult(true, dto.configId.value, "");
+        return UsecaseResult(true, dto.configId.value, "");
     }
 
-    CommandResult updateBuildConfiguration(BuildConfigurationDTO dto) {
+    UsecaseResult updateBuildConfiguration(BuildConfigurationDTO dto) {
         auto existing = configurations.findById(dto.tenantId, dto.configId);
         if (existing.isNull)
-            return CommandResult(false, "", "Build configuration not found");
+            return UsecaseResult(false, "", "Build configuration not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -58,15 +58,15 @@ class ManageBuildConfigurationsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         configurations.update(existing);
-        return CommandResult(true, dto.configId.value, "");
+        return UsecaseResult(true, dto.configId.value, "");
     }
 
-    CommandResult deleteBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {
+    UsecaseResult deleteBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {
         auto config = configurations.findById(tenantId, id);
         if (config.isNull)
-            return CommandResult(false, "", "Build configuration not found");
+            return UsecaseResult(false, "", "Build configuration not found");
 
         configurations.remove(config);
-        return CommandResult(true, config.id.value, "");
+        return UsecaseResult(true, config.id.value, "");
     }
 }

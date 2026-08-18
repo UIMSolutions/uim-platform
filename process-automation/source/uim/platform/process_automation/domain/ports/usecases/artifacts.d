@@ -12,11 +12,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageArtifactsUseCase { 
     
-    CommandResult createArtifact(CreateArtifactRequest r);
+    UsecaseResult createArtifact(CreateArtifactRequest r);
     Artifact getArtifact(TenantId tenantId, ArtifactId id);
     Artifact[] listArtifacts(TenantId tenantId);
     Artifact[] listArtifacts(TenantId tenantId, ArtifactType type);
-    CommandResult updateArtifact(UpdateArtifactRequest r);
-    CommandResult deleteArtifact(TenantId tenantId, ArtifactId id);
+    UsecaseResult updateArtifact(UpdateArtifactRequest r);
+    UsecaseResult deleteArtifact(TenantId tenantId, ArtifactId id);
 
 }

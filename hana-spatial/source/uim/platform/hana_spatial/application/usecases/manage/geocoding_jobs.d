@@ -17,11 +17,11 @@ class ManageGeocodingJobsUseCase {
     this.repo = repo;
   }
 
-  CommandResult create(CreateGeocodingJobRequest r) {
+  UsecaseResult create(CreateGeocodingJobRequest r) {
     auto err = SpatialValidator.validateId(r.id);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
     err = SpatialValidator.validateName(r.name);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0) return UsecaseResult(false, "", err);
 
     auto job = GeocodingJob(r.tenantId);
     job.id = GeocodingJobId(r.id);
@@ -44,13 +44,13 @@ class ManageGeocodingJobsUseCase {
     }
 
     repo.save(job);
-    return CommandResult(true, job.id.value, "");
+    return UsecaseResult(true, job.id.value, "");
   }
 
-  CommandResult performAction(GeocodingJobActionRequest r) {
+  UsecaseResult performAction(GeocodingJobActionRequest r) {
     auto existing = repo.findById(r.tenantId, GeocodingJobId(r.id));
     if (existing.isNull)
-      return CommandResult(false, "", "Geocoding job not found");
+      return UsecaseResult(false, "", "Geocoding job not found");
 
     switch (r.action) {
       case "start":
@@ -61,12 +61,12 @@ class ManageGeocodingJobsUseCase {
         existing.status = SpatialJobStatus.cancelled;
         break;
       default:
-        return CommandResult(false, "", "Unknown action: " ~ r.action);
+        return UsecaseResult(false, "", "Unknown action: " ~ r.action);
     }
 
     existing.updatedAt = currentTimestamp;
     repo.update(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 
   GeocodingJob getById(TenantId tenantId, string id) {
@@ -77,11 +77,11 @@ class ManageGeocodingJobsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto existing = repo.findById(tenantId, GeocodingJobId(id));
     if (existing.isNull)
-      return CommandResult(false, "", "Geocoding job not found");
+      return UsecaseResult(false, "", "Geocoding job not found");
     repo.remove(tenantId, GeocodingJobId(id));
-    return CommandResult(true, id, "");
+    return UsecaseResult(true, id, "");
   }
 }

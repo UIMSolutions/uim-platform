@@ -20,19 +20,19 @@ class ManageBusinessUsersUseCase {
     this.roleRepo = roleRepo;
   }
 
-  CommandResult createBusinessUser(CreateBusinessUserRequest req) {
+  UsecaseResult createBusinessUser(CreateBusinessUserRequest req) {
     if (req.username.isEmpty)
-      return CommandResult(false, "", "Username is required");
+      return UsecaseResult(false, "", "Username is required");
     if (req.email.length == 0)
-      return CommandResult(false, "", "Email is required");
+      return UsecaseResult(false, "", "Email is required");
     if (req.systemInstanceId.isEmpty)
-      return CommandResult(false, "", "System instance ID is required");
+      return UsecaseResult(false, "", "System instance ID is required");
 
     if (repo.existsByUsername(req.tenantId, req.systemInstanceId, req.username))
-      return CommandResult(false, "", "Username '" ~ req.username ~ "' already exists");
+      return UsecaseResult(false, "", "Username '" ~ req.username ~ "' already exists");
 
     if (repo.existsByEmail(req.tenantId, req.systemInstanceId, req.email))
-      return CommandResult(false, "", "Email '" ~ req.email ~ "' already in use");
+      return UsecaseResult(false, "", "Email '" ~ req.email ~ "' already in use");
 
     auto user = BusinessUser(req.tenantId);
     user.systemInstanceId = req.systemInstanceId;
@@ -54,13 +54,13 @@ class ManageBusinessUsersUseCase {
     }
 
     repo.save(user);
-    return CommandResult(true, user.id.value, "");
+    return UsecaseResult(true, user.id.value, "");
   }
 
-  CommandResult updateBusinessUser(UpdateBusinessUserRequest req) {
+  UsecaseResult updateBusinessUser(UpdateBusinessUserRequest req) {
     auto user = repo.findById(req.tenantId, req.businessUserId);
     if (user.isNull)
-      return CommandResult(false, "", "Business user not found");
+      return UsecaseResult(false, "", "Business user not found");
 
     if (req.firstName.length > 0)
       user.firstName = req.firstName;
@@ -90,7 +90,7 @@ class ManageBusinessUsersUseCase {
     user.updatedAt = currentTimestamp();
 
     repo.update(user);
-    return CommandResult(true, user.id.value, "");
+    return UsecaseResult(true, user.id.value, "");
   }
 
   BusinessUser getBusinessUser(TenantId tenantId, BusinessUserId id) {
@@ -101,13 +101,13 @@ class ManageBusinessUsersUseCase {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteBusinessUser(TenantId tenantId, BusinessUserId id) {
+  UsecaseResult deleteBusinessUser(TenantId tenantId, BusinessUserId id) {
       auto user = repo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "Business user not found");
+      return UsecaseResult(false, "", "Business user not found");
 
     repo.remove(user);
-    return CommandResult(true, user.id.value, "");
+    return UsecaseResult(true, user.id.value, "");
   }
 }
 

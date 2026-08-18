@@ -30,7 +30,7 @@ class ManageProjectMembersUseCase {
         return repo.findByApplication(tenantId, applicationId);
     }
 
-    CommandResult createProjectMember(ProjectMemberDTO dto) {
+    UsecaseResult createProjectMember(ProjectMemberDTO dto) {
         auto member = ProjectMember(dto.tenantId, dto.memberId.isNull ? ProjectMemberId(createId()) : dto.memberId, dto.createdBy);
         member.applicationId = dto.applicationId;
         member.userId = dto.userId;
@@ -40,16 +40,16 @@ class ManageProjectMembersUseCase {
         member.permissions = dto.permissions;
 
         if (!BuildAppsValidator.isValidProjectMember(member))
-            return CommandResult(false, "", "Invalid project member data");
+            return UsecaseResult(false, "", "Invalid project member data");
 
         repo.save(member);
-        return CommandResult(true, member.id.value, "");
+        return UsecaseResult(true, member.id.value, "");
     }
 
-    CommandResult updateProjectMember(ProjectMemberDTO dto) {
+    UsecaseResult updateProjectMember(ProjectMemberDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.memberId);
         if (existing.isNull)
-            return CommandResult(false, "", "Project member not found");
+            return UsecaseResult(false, "", "Project member not found");
 
         if (dto.displayName.length > 0) existing.displayName = dto.displayName;
         if (dto.email.length > 0) existing.email = dto.email;
@@ -57,16 +57,16 @@ class ManageProjectMembersUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteProjectMember(TenantId tenantId, ProjectMemberId id) {
+    UsecaseResult deleteProjectMember(TenantId tenantId, ProjectMemberId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Project member not found");
+            return UsecaseResult(false, "", "Project member not found");
             
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

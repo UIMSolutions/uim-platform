@@ -16,8 +16,8 @@ interface IManageProjectMembersUseCase {
     ProjectMember getProjectMember(TenantId tenantId, ProjectMemberId id);
     ProjectMember[] listProjectMembers(TenantId tenantId);
     ProjectMember[] listByApplication(TenantId tenantId, ApplicationId applicationId);
-    CommandResult createProjectMember(ProjectMemberDTO dto);
-    CommandResult updateProjectMember(ProjectMemberDTO dto);
-    CommandResult deleteProjectMember(TenantId tenantId, ProjectMemberId id);
+    UsecaseResult createProjectMember(ProjectMemberDTO dto);
+    UsecaseResult updateProjectMember(ProjectMemberDTO dto);
+    UsecaseResult deleteProjectMember(TenantId tenantId, ProjectMemberId id);
     
 }

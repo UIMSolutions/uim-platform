@@ -25,17 +25,17 @@ class ManageSubscriptionsUseCase {
     this.eventRepo = eventRepo;
   }
 
-  CommandResult createSubscription(CreateSubscriptionRequest request) {
+  UsecaseResult createSubscription(CreateSubscriptionRequest request) {
     if (request.subaccountId.isEmpty)
-      return CommandResult(false, "", "Subaccount ID is required");
+      return UsecaseResult(false, "", "Subaccount ID is required");
     if (request.appName.isEmpty)
-      return CommandResult(false, "", "Application name is required");
+      return UsecaseResult(false, "", "Application name is required");
 
     // Check for existing subscription to same app
     auto existing = repo.findByApp(request.tenantId, request.subaccountId, request.appName);
     foreach (e; existing) {
       if (e.status == SubscriptionStatus.subscribed || e.status == SubscriptionStatus.subscribing)
-        return CommandResult(false, "", "Already subscribed to application '" ~ request.appName ~ "'");
+        return UsecaseResult(false, "", "Already subscribed to application '" ~ request.appName ~ "'");
     }
 
     auto subscription = Subscription(request.tenantId);
@@ -62,15 +62,15 @@ class ManageSubscriptionsUseCase {
     emitEvent(eventRepo, request.globalAccountId.value, request.subaccountId.value, EnvironmentEventCategory.subscriptionLifecycle,
       "subscription.created", "Subscribed to " ~ request.appName, request.subscribedBy);
 
-    return CommandResult(true, subscription.id.value, "");
+    return UsecaseResult(true, subscription.id.value, "");
   }
 
-  CommandResult unsubscribeSubscription(TenantId tenantId, SubscriptionId id) {
+  UsecaseResult unsubscribeSubscription(TenantId tenantId, SubscriptionId id) {
     auto subscription = repo.findById(tenantId, id);
     if (subscription.isNull)
-      return CommandResult(false, "", "Subscription not found");
+      return UsecaseResult(false, "", "Subscription not found");
     if (subscription.status != SubscriptionStatus.subscribed)
-      return CommandResult(false, "", "Subscription must be in subscribed status");
+      return UsecaseResult(false, "", "Subscription must be in subscribed status");
 
     subscription.status = SubscriptionStatus.unsubscribing;
     subscription.updatedAt = clockSeconds();
@@ -83,13 +83,13 @@ class ManageSubscriptionsUseCase {
     emitEvent(eventRepo, subscription.globalAccountId.value, subscription.subaccountId.value, EnvironmentEventCategory.subscriptionLifecycle,
       "subscription.deleted", "Unsubscribed from " ~ subscription.appName, UserId("system"));
 
-    return CommandResult(true, subscription.id.value, "");
+    return UsecaseResult(true, subscription.id.value, "");
   }
 
-  CommandResult updateSubscriptionPlan(UpdateSubscriptionRequest req) {
+  UsecaseResult updateSubscriptionPlan(UpdateSubscriptionRequest req) {
     auto subscription = repo.findById(req.tenantId, req.subscriptionId);
     if (subscription.isNull)
-      return CommandResult(false, "", "Subscription not found");
+      return UsecaseResult(false, "", "Subscription not found");
 
     if (req.planName.length > 0)
       subscription.planName = req.planName;
@@ -98,7 +98,7 @@ class ManageSubscriptionsUseCase {
     subscription.updatedAt = clockSeconds();
 
     repo.update(subscription);
-    return CommandResult(true, subscription.id.value, "");
+    return UsecaseResult(true, subscription.id.value, "");
   }
 
   Subscription getSubscription(TenantId tenantId, SubscriptionId id) {

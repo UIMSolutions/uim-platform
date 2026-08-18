@@ -32,12 +32,12 @@ class ManageJobsUseCase {
             .array;
     }
 
-    CommandResult deleteJob(TenantId tenantId, CompilationJobId id) {
+    UsecaseResult deleteJob(TenantId tenantId, CompilationJobId id) {
         auto job = repo.findById(tenantId, id);
         if (job.isNull)
-            return CommandResult(false, "", "Job '" ~ id.toString ~ "' not found");
+            return UsecaseResult(false, "", "Job '" ~ id.toString ~ "' not found");
         repo.remove(job);
-        return CommandResult(true, id.toString, "");
+        return UsecaseResult(true, id.toString, "");
     }
 }
 

@@ -24,7 +24,7 @@ class ManageApplicationsUseCase {
     this.appRepo = appRepo;
   }
 
-  CommandResult createApplication(CreateAppRequest req) {
+  UsecaseResult createApplication(CreateAppRequest req) {
     auto app = Application(req.tenantId);
     app.name = req.name;
     app.description = req.description;
@@ -38,7 +38,7 @@ class ManageApplicationsUseCase {
     app.active = true;
 
     appRepo.save(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
   Application getApplication(TenantId tenantId, ApplicationId id) {
@@ -49,10 +49,10 @@ class ManageApplicationsUseCase {
     return appRepo.findByTenant(tenantId, offset, limit);
   }
 
-  CommandResult updateApplication(UpdateAppRequest req) {
+  UsecaseResult updateApplication(UpdateAppRequest req) {
     auto app = appRepo.findById(req.tenantId, req.applicationId);
     if (app.isNull)
-      return CommandResult(false, "", "Application not found");
+      return UsecaseResult(false, "", "Application not found");
 
     if (req.name.length > 0)
       app.name = req.name;
@@ -64,16 +64,16 @@ class ManageApplicationsUseCase {
     app.updatedAt = currentTimestamp();
 
     appRepo.update(app);
-    return CommandResult(true, app.id.value, "");
+    return UsecaseResult(true, app.id.value, "");
   }
 
-  CommandResult deleteApplication(TenantId tenantId, ApplicationId id) {
+  UsecaseResult deleteApplication(TenantId tenantId, ApplicationId id) {
     auto app = appRepo.findById(tenantId, id);
     if (app.isNull)      
-      return CommandResult(false, "", "Application not found.");
+      return UsecaseResult(false, "", "Application not found.");
 
     appRepo.remove(app);
-    return CommandResult(true, app.id.value, "Application deleted successfully.");
+    return UsecaseResult(true, app.id.value, "Application deleted successfully.");
   }
 }
 

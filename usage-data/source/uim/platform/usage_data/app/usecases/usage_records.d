@@ -57,10 +57,10 @@ class UsageRecordUseCases {
     return result;
   }
 
-  CommandResult deleteRecord(TenantId tenantId, UsageRecordId id) {
+  UsecaseResult deleteRecord(TenantId tenantId, UsageRecordId id) {
     auto r = repo.findById(tenantId, id);
-    if (r.isNull) return CommandResult(false, "", "Usage record not found");
+    if (r.isNull) return UsecaseResult(false, "", "Usage record not found");
     repo.remove(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 }

@@ -23,9 +23,9 @@ class ManageUserProfilesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createUserProfile(CreateUserProfileRequest req) {
+  UsecaseResult createUserProfile(CreateUserProfileRequest req) {
     if (req.displayname.isEmpty)
-      return CommandResult(false, "", "Display name is required");
+      return UsecaseResult(false, "", "Display name is required");
 
     auto p = UserProfile(req.tenantId);
     p.userId = req.userId;
@@ -40,7 +40,7 @@ class ManageUserProfilesUseCase {
     p.active = true;
 
     repo.save(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
   UserProfile getUserProfile(TenantId tenantId, UserProfileId id) {
@@ -55,10 +55,10 @@ class ManageUserProfilesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateUserProfile(UpdateUserProfileRequest req) {
+  UsecaseResult updateUserProfile(UpdateUserProfileRequest req) {
     auto p = repo.findById(req.tenantId, req.id);
     if (p.isNull)
-      return CommandResult(false, "", "User profile not found");
+      return UsecaseResult(false, "", "User profile not found");
 
     if (req.displayName.length > 0)
       p.displayName = req.displayName;
@@ -71,15 +71,15 @@ class ManageUserProfilesUseCase {
     p.updatedAt = currentTimestamp();
 
     repo.update(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 
-  CommandResult deleteUserProfile(TenantId tenantId, UserProfileId id) {
+  UsecaseResult deleteUserProfile(TenantId tenantId, UserProfileId id) {
     auto p = repo.findById(tenantId, id);
     if (p.isNull)
-      return CommandResult(false, "", "User profile not found");
+      return UsecaseResult(false, "", "User profile not found");
 
     repo.remove(p);
-    return CommandResult(true, p.id.value, "");
+    return UsecaseResult(true, p.id.value, "");
   }
 }

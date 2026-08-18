@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 interface IManageAppBindingsUseCase {
 
-  CommandResult createBinding(CreateAppBindingRequest r);
-  CommandResult updateBinding(UpdateAppBindingRequest r);
-  CommandResult deleteBinding(TenantId tenantId, AppBindingId id);
-  CommandResult attachPolicy(TenantId tenantId, AppBindingId bindingId, ScalingPolicyId policyId);
+  UsecaseResult createBinding(CreateAppBindingRequest r);
+  UsecaseResult updateBinding(UpdateAppBindingRequest r);
+  UsecaseResult deleteBinding(TenantId tenantId, AppBindingId id);
+  UsecaseResult attachPolicy(TenantId tenantId, AppBindingId bindingId, ScalingPolicyId policyId);
   
 }

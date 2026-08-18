@@ -42,10 +42,10 @@ class ManageTenantsUseCase {
     return tenantRepo.findAll(offset, limit);
   }
 
-  CommandResult updateTenant(UpdateTenantRequest req) {
+  UsecaseResult updateTenant(UpdateTenantRequest req) {
     auto tenant = tenantRepo.findById(req.tenantId);
     if (tenant.isNull)
-      return CommandResult(false, "", "Tenant not found");
+      return UsecaseResult(false, "", "Tenant not found");
 
     if (req.name.length > 0)
       tenant.name = req.name;
@@ -54,6 +54,6 @@ class ManageTenantsUseCase {
 
     tenant.updatedAt = currentTimestamp();
     tenantRepo.update(tenant);
-    return CommandResult(true, tenant.id.value, "");
+    return UsecaseResult(true, tenant.id.value, "");
   }
 }

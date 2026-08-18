@@ -30,7 +30,7 @@ class ManagePrintersUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createPrinter(PrinterDTO dto) {
+    UsecaseResult createPrinter(PrinterDTO dto) {
         auto printer = Printer(dto.tenantId, dto.printerId, dto.createdBy);
         printer.name = dto.name;
         printer.description = dto.description;
@@ -49,16 +49,16 @@ class ManagePrintersUseCase {
         }
 
         if (!PrintValidator.isValidPrinter(printer))
-            return CommandResult(false, "", "Invalid printer: name and host are required");
+            return UsecaseResult(false, "", "Invalid printer: name and host are required");
 
         repo.save(printer);
-        return CommandResult(true, printer.id.value, "");
+        return UsecaseResult(true, printer.id.value, "");
     }
 
-    CommandResult updatePrinter(PrinterDTO dto) {
+    UsecaseResult updatePrinter(PrinterDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.printerId);
         if (existing.isNull)
-            return CommandResult(false, "", "Printer not found");
+            return UsecaseResult(false, "", "Printer not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -71,14 +71,14 @@ class ManagePrintersUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deletePrinter(TenantId tenantId, PrinterId id) {
+    UsecaseResult deletePrinter(TenantId tenantId, PrinterId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Printer not found");
+            return UsecaseResult(false, "", "Printer not found");
         repo.remove(entity);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 }

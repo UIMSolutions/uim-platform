@@ -13,12 +13,12 @@ mixin(ShowModule!());
 
 interface IManageSchemasUseCase { 
 
-  CommandResult createSchema(CreateSchemaRequest r);
-  CommandResult updateSchema(UpdateSchemaRequest r);
+  UsecaseResult createSchema(CreateSchemaRequest r);
+  UsecaseResult updateSchema(UpdateSchemaRequest r);
   Schema getSchema(SchemaId id, ClientId clientId);
   Schema[] listSchemas(ClientId clientId);
   Schema[] listSchemas(DocumentTypeId typeId, ClientId clientId);
-  CommandResult deleteSchema(SchemaId id, ClientId clientId);
+  UsecaseResult deleteSchema(SchemaId id, ClientId clientId);
   size_t countSchemas(ClientId clientId);
 
 }

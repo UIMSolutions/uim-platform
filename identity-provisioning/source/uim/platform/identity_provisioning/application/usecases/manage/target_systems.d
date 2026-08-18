@@ -21,15 +21,15 @@ class ManageTargetSystemsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createTargetSystem(CreateTargetSystemRequest req) {
+  UsecaseResult createTargetSystem(CreateTargetSystemRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "System name is required");
+      return UsecaseResult(false, "", "System name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Target system with this name already exists");
+      return UsecaseResult(false, "", "Target system with this name already exists");
 
     auto sys = TargetSystem(req.tenantId); //, req.createdBy);
     sys.name = req.name;
@@ -39,7 +39,7 @@ class ManageTargetSystemsUseCase {
     sys.status = SystemStatus.configuring;
 
     repo.save(sys);
-    return CommandResult(true, sys.id.value, "");
+    return UsecaseResult(true, sys.id.value, "");
   }
 
   TargetSystem getTargetSystem(TenantId tenantId, TargetSystemId id) {
@@ -50,16 +50,16 @@ class ManageTargetSystemsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateTargetSystem(UpdateTargetSystemRequest req) {
+  UsecaseResult updateTargetSystem(UpdateTargetSystemRequest req) {
     if (req.systemId.isEmpty)
-      return CommandResult(false, "", "System ID is required");
+      return UsecaseResult(false, "", "System ID is required");
 
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.tenantId, req.systemId);
     if (existing.isNull)
-      return CommandResult(false, "", "Target system not found");
+      return UsecaseResult(false, "", "Target system not found");
 
     auto updated = existing;
     if (req.name.length > 0)
@@ -71,41 +71,41 @@ class ManageTargetSystemsUseCase {
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    return UsecaseResult(true, updated.id.value, "");
   }
 
-  CommandResult activateSystem(TenantId tenantId, TargetSystemId id) {
+  UsecaseResult activateSystem(TenantId tenantId, TargetSystemId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
-      return CommandResult(false, "", "Target system not found");
+      return UsecaseResult(false, "", "Target system not found");
 
     if (sys.connectionConfig.length == 0)
-      return CommandResult(false, "", "Connection configuration is required before activation");
+      return UsecaseResult(false, "", "Connection configuration is required before activation");
 
     sys.status = SystemStatus.active;
     sys.updatedAt = currentTimestamp();
     repo.update(sys);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult deactivateSystem(TenantId tenantId, TargetSystemId id) {
+  UsecaseResult deactivateSystem(TenantId tenantId, TargetSystemId id) {
     auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
-      return CommandResult(false, "", "Target system not found");
+      return UsecaseResult(false, "", "Target system not found");
 
     sys.status = SystemStatus.inactive;
     sys.updatedAt = currentTimestamp();
     repo.update(sys);
-    return CommandResult(true, id.value, "");
+    return UsecaseResult(true, id.value, "");
   }
 
-  CommandResult deleteTargetSystem(TenantId tenantId, TargetSystemId id) {
+  UsecaseResult deleteTargetSystem(TenantId tenantId, TargetSystemId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
-      return CommandResult(false, "", "Target system not found");
+      return UsecaseResult(false, "", "Target system not found");
 
     repo.remove(existing);
-    return CommandResult(true, existing.id.value, "");
+    return UsecaseResult(true, existing.id.value, "");
   }
 }
 

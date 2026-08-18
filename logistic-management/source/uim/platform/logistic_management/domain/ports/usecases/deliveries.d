@@ -11,11 +11,11 @@ mixin(ShowModule!());
 @safe:
 interface IManageDeliveriesUseCase {
 
-  CommandResult createDelivery(TenantId tenantId, CreateDeliveryRequest req);
+  UsecaseResult createDelivery(TenantId tenantId, CreateDeliveryRequest req);
 
-  CommandResult updateDeliveryStatus(TenantId tenantId, DeliveryId id, UpdateDeliveryRequest req);
+  UsecaseResult updateDeliveryStatus(TenantId tenantId, DeliveryId id, UpdateDeliveryRequest req);
 
-  CommandResult deleteDelivery(TenantId tenantId, DeliveryId id);
+  UsecaseResult deleteDelivery(TenantId tenantId, DeliveryId id);
 
   Delivery getDelivery(TenantId tenantId, DeliveryId id);
 

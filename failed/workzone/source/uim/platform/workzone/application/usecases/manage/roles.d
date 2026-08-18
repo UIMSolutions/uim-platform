@@ -22,9 +22,9 @@ class ManageRolesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createRole(CreateRoleRequest req) {
+  UsecaseResult createRole(CreateRoleRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Role name is required");
+      return UsecaseResult(false, "", "Role name is required");
 
     auto now = currentTimestamp();
     auto r = Role(req.tenantId);
@@ -34,7 +34,7 @@ class ManageRolesUseCase {
     r.isDefault = req.isDefault;
     
     repo.save(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
   Role getRole(TenantId tenantId, RoleId id) {
@@ -45,10 +45,10 @@ class ManageRolesUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateRole(UpdateRoleRequest req) {
+  UsecaseResult updateRole(UpdateRoleRequest req) {
     auto r = repo.findById(req.tenantId, req.id);
     if (r.isNull)
-      return CommandResult(false, "", "Role not found");
+      return UsecaseResult(false, "", "Role not found");
 
     if (req.name.length > 0)
       r.name = req.name;
@@ -58,15 +58,15 @@ class ManageRolesUseCase {
     r.updatedAt = currentTimestamp();
 
     repo.update(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
-  CommandResult deleteRole(TenantId tenantId, RoleId id) {
+  UsecaseResult deleteRole(TenantId tenantId, RoleId id) {
     auto r = repo.findById(tenantId, id);
     if (r.isNull)
-      return CommandResult(false, "", "Role not found");
+      return UsecaseResult(false, "", "Role not found");
 
     repo.remove(r);
-    return CommandResult(true, r.id.value, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 }

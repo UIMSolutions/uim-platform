@@ -15,9 +15,9 @@ interface IManageAppVersionsUseCase {
     
     AppVersion[] listAppVersions(TenantId tenantId);
     AppVersion getAppVersion(TenantId tenantId, AppVersionId id);
-    CommandResult createAppVersion(AppVersionDTO dto);
-    CommandResult updateAppVersion(AppVersionDTO dto);
-    CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id);
+    UsecaseResult createAppVersion(AppVersionDTO dto);
+    UsecaseResult updateAppVersion(AppVersionDTO dto);
+    UsecaseResult deleteAppVersion(TenantId tenantId, AppVersionId id);
 
     AppVersion[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId);
     AppVersion[] listByStatus(TenantId tenantId, AppVersionStatus status);

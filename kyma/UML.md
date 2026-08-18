@@ -158,11 +158,11 @@ sequenceDiagram
 
     Dev->>FnC: POST /serverless-functions { namespaceId, name, runtime=nodejs20, source }
     FnC->>FnUC: createFunction(dto)
-    FnUC-->>FnC: CommandResult(true, fnId)
+    FnUC-->>FnC: UsecaseResult(true, fnId)
     FnC-->>Dev: 201 { id }
 
     Dev->>ARC: POST /api-rules { namespaceId, name, serviceName, servicePort }
     ARC->>ARUC: createApiRule(dto)
-    ARUC-->>ARC: CommandResult(true, ruleId)
+    ARUC-->>ARC: UsecaseResult(true, ruleId)
     ARC-->>Dev: 201 { id }
 ```

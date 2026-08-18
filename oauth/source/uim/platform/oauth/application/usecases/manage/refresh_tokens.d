@@ -30,7 +30,7 @@ class ManageRefreshTokensUseCase {
         return repo.findByTokenValue(tenantId, tokenValue);
     }
 
-    CommandResult createToken(RefreshTokenDTO dto) {
+    UsecaseResult createToken(RefreshTokenDTO dto) {
         RefreshToken token;
         token.id = dto.tokenId;
         token.tenantId = dto.tenantId;
@@ -42,29 +42,29 @@ class ManageRefreshTokensUseCase {
         token.expiresAt = dto.expiresAt;
         auto error = OAuthValidator.validateRefreshToken(token);
         if (error.length > 0)
-            return CommandResult(false, "", error);
+            return UsecaseResult(false, "", error);
 
         repo.save(token);
-        return CommandResult(true, token.id.value, "");
+        return UsecaseResult(true, token.id.value, "");
     }
 
-    CommandResult revokeToken(TenantId tenantId, RefreshTokenId id) {
+    UsecaseResult revokeToken(TenantId tenantId, RefreshTokenId id) {
         auto token = repo.findById(tenantId, id);
         if (token.isNull)
-            return CommandResult(false, "", "Refresh token not found");
+            return UsecaseResult(false, "", "Refresh token not found");
 
         token.status = TokenStatus.revoked;
         repo.update(token);
-        return CommandResult(true, token.id.value, "");
+        return UsecaseResult(true, token.id.value, "");
     }
 
-    CommandResult deleteToken(TenantId tenantId, RefreshTokenId id) {
+    UsecaseResult deleteToken(TenantId tenantId, RefreshTokenId id) {
         auto token = repo.findById(tenantId, id);
         if (token.isNull)
-            return CommandResult(false, "", "Refresh token not found");
+            return UsecaseResult(false, "", "Refresh token not found");
 
         repo.remove(token);
-        return CommandResult(true, token.id.value, "");
+        return UsecaseResult(true, token.id.value, "");
     }
 }
 

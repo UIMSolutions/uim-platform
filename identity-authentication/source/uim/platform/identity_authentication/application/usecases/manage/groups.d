@@ -46,16 +46,16 @@ class ManageGroupsUseCase {
     return groupRepo.findByTenant(tenantId, offset, limit);
   }
 
-  CommandResult addMember(TenantId tenantId, GroupId groupId, UserId userId) {
+  UsecaseResult addMember(TenantId tenantId, GroupId groupId, UserId userId) {
     import uim.platform.identity_authentication.domain.entities.user : IAUser;
 
     auto group = groupRepo.findById(tenantId, groupId);
     if (group.isNull)
-      return CommandResult(false, "", "IAGroup not found");
+      return UsecaseResult(false, "", "IAGroup not found");
 
     auto user = userRepo.findById(tenantId, userId);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return UsecaseResult(false, "", "User not found");
 
     if (!group.memberUserIds.hasUserId(userId)) {
       group.memberUserIds ~= userId;
@@ -68,13 +68,13 @@ class ManageGroupsUseCase {
         userRepo.update(user);
       }
     }
-    return CommandResult(true, group.id.value, "");
+    return UsecaseResult(true, group.id.value, "");
   }
 
-  CommandResult removeMember(TenantId tenantId, GroupId groupId, UserId userId) {
+  UsecaseResult removeMember(TenantId tenantId, GroupId groupId, UserId userId) {
     auto group = groupRepo.findById(tenantId, groupId);
     if (group.isNull)
-      return CommandResult(false, "", "IAGroup not found");
+      return UsecaseResult(false, "", "IAGroup not found");
 
     UserId[] updated;
     foreach (mid; group.memberUserIds) {
@@ -84,16 +84,16 @@ class ManageGroupsUseCase {
     group.memberUserIds = updated;
     group.updatedAt = currentTimestamp();
     groupRepo.update(group);
-    return CommandResult(true, group.id.value, "");
+    return UsecaseResult(true, group.id.value, "");
   }
 
-  CommandResult deleteGroup(TenantId tenantId, GroupId id) {
+  UsecaseResult deleteGroup(TenantId tenantId, GroupId id) {
     auto group = groupRepo.findById(tenantId, id);
     if (group.isNull)
-      return CommandResult(false, "", "IAGroup not found");  
+      return UsecaseResult(false, "", "IAGroup not found");  
 
     groupRepo.remove(group);
-    return CommandResult(true, group.id.value, "");
+    return UsecaseResult(true, group.id.value, "");
   }
 }
 

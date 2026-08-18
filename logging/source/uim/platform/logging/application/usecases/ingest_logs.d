@@ -25,7 +25,7 @@ class IngestLogsUseCase {
     this.streamRepo = streamRepo;
   }
 
-  CommandResult ingest(IngestLogRequest req) {
+  UsecaseResult ingest(IngestLogRequest req) {
     import std.uuid : randomUUID;
 
     auto entry = LogEntry(req.tenantId);
@@ -51,14 +51,14 @@ class IngestLogsUseCase {
       string msg;
       foreach (e; validation.errors)
         msg ~= e ~ "; ";
-      return CommandResult(false, "", msg);
+      return UsecaseResult(false, "", msg);
     }
 
     logRepo.save(entry);
-    return CommandResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "");
   }
 
-  CommandResult ingestBatch(IngestLogBatchRequest req) {
+  UsecaseResult ingestBatch(IngestLogBatchRequest req) {
     int count = 0;
     foreach (entryReq; req.entries) {
       if (entryReq.tenantId.isEmpty)
@@ -67,7 +67,7 @@ class IngestLogsUseCase {
       if (result.success)
         count++;
     }
-    return CommandResult(true, "", format("Ingested %d log entries", count));
+    return UsecaseResult(true, "", format("Ingested %d log entries", count));
   }
 }
 

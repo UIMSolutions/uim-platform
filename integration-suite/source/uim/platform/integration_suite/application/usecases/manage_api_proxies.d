@@ -11,7 +11,7 @@ private:
 public:
   this(IApiProxyRepository repo) { _repo = repo; }
 
-  CommandResult create(CreateApiProxyRequest req) {
+  UsecaseResult create(CreateApiProxyRequest req) {
     auto proxy = ApiProxy(req.tenantId, req.proxyId);
     proxy.name           = req.name;
     proxy.description    = req.description;
@@ -23,27 +23,27 @@ public:
     proxy.status         = ApiProxyStatus.draft;
     proxy.metadata       = req.metadata;
     auto err = IntegrationValidator.validateApiProxy(proxy);
-    if (err !is null) return CommandResult(false, err);
+    if (err !is null) return UsecaseResult(false, err);
     _repo.add(getTenantId(req.tenantId), proxy);
-    return CommandResult(true, proxy.toJson());
+    return UsecaseResult(true, proxy.toJson());
   }
 
-  CommandResult getAll(TenantId tenantId) {
+  UsecaseResult getAll(TenantId tenantId) {
     auto items = _repo.getAll(getTenantId(tenantId));
     auto arr = Json.emptyArray;
     foreach (p; items) arr ~= p.toJson();
-    return CommandResult(true, arr);
+    return UsecaseResult(true, arr);
   }
 
-  CommandResult getById(TenantId tenantId, string id) {
+  UsecaseResult getById(TenantId tenantId, string id) {
     auto proxy = _repo.getById(getTenantId(tenantId), ApiProxyId(id));
-    if (proxy.isNull) return CommandResult(false, "API proxy not found");
-    return CommandResult(true, proxy.toJson());
+    if (proxy.isNull) return UsecaseResult(false, "API proxy not found");
+    return UsecaseResult(true, proxy.toJson());
   }
 
-  CommandResult update(UpdateApiProxyRequest req) {
+  UsecaseResult update(UpdateApiProxyRequest req) {
     auto proxy = _repo.getById(getTenantId(req.tenantId), ApiProxyId(req.id));
-    if (proxy.isNull) return CommandResult(false, "API proxy not found");
+    if (proxy.isNull) return UsecaseResult(false, "API proxy not found");
     if (req.name.length > 0)           proxy.name           = req.name;
     if (req.description.length > 0)    proxy.description    = req.description;
     if (req.targetEndpoint.length > 0) proxy.targetEndpoint = req.targetEndpoint;
@@ -52,21 +52,21 @@ public:
     if (req.status.length > 0)         proxy.status         = req.status.to!ApiProxyStatus;
     foreach (k, v; req.metadata)       proxy.metadata[k]    = v;
     _repo.update(getTenantId(req.tenantId), proxy);
-    return CommandResult(true, proxy.toJson());
+    return UsecaseResult(true, proxy.toJson());
   }
 
-  CommandResult publish(TenantId tenantId, string id) {
+  UsecaseResult publish(TenantId tenantId, string id) {
     auto proxy = _repo.getById(getTenantId(tenantId), ApiProxyId(id));
-    if (proxy.isNull) return CommandResult(false, "API proxy not found");
+    if (proxy.isNull) return UsecaseResult(false, "API proxy not found");
     proxy.status = ApiProxyStatus.published;
     _repo.update(getTenantId(tenantId), proxy);
-    return CommandResult(true, proxy.toJson());
+    return UsecaseResult(true, proxy.toJson());
   }
 
-  CommandResult remove(TenantId tenantId, string id) {
+  UsecaseResult remove(TenantId tenantId, string id) {
     auto proxy = _repo.getById(getTenantId(tenantId), ApiProxyId(id));
-    if (proxy.isNull) return CommandResult(false, "API proxy not found");
+    if (proxy.isNull) return UsecaseResult(false, "API proxy not found");
     _repo.remove(getTenantId(tenantId), ApiProxyId(id));
-    return CommandResult(true, "API proxy deleted");
+    return UsecaseResult(true, "API proxy deleted");
   }
 }

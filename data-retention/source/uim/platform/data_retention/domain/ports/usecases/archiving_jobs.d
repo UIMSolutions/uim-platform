@@ -12,13 +12,13 @@ mixin(ShowModule!());
 
 interface IManageArchivingJobsUseCase { 
     
-    CommandResult createArchivingJob(CreateArchivingJobRequest req);
-    CommandResult updateArchivingJob(UpdateArchivingJobRequest req);
+    UsecaseResult createArchivingJob(CreateArchivingJobRequest req);
+    UsecaseResult updateArchivingJob(UpdateArchivingJobRequest req);
     bool hasArchivingJob(TenantId tenantId, ArchivingJobId id);
     ArchivingJob getArchivingJob(TenantId tenantId, ArchivingJobId id);
     ArchivingJob[] listArchivingJobs(TenantId tenantId);
     ArchivingJob[] listArchivingJobs(TenantId tenantId, ArchivingJobStatus status);
-    CommandResult deleteArchivingJob(TenantId tenantId, ArchivingJobId id);
+    UsecaseResult deleteArchivingJob(TenantId tenantId, ArchivingJobId id);
 
 }
 

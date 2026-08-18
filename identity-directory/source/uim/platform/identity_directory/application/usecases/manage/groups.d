@@ -81,10 +81,10 @@ class ManageGroupsUseCase {
   }
 
   /// Update group metadata.
-  CommandResult updateGroup(UpdateGroupRequest req) {
+  UsecaseResult updateGroup(UpdateGroupRequest req) {
     auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "Group not found");
+      return UsecaseResult(false, "", "Group not found");
 
     if (req.displayName.length > 0)
       group.displayName = req.displayName;
@@ -109,18 +109,18 @@ class ManageGroupsUseCase {
 
     auditRepo.save(event);
 
-    return CommandResult(true, req.groupId.value, "");
+    return UsecaseResult(true, req.groupId.value, "");
   }
 
   /// Add a member to a group.
-  CommandResult addMember(AddMemberRequest req) {
+  UsecaseResult addMember(AddMemberRequest req) {
     auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "Group not found");
+      return UsecaseResult(false, "", "Group not found");
 
     // Check if already a member
     if (group.hasMember(req.memberId))
-      return CommandResult(false, "", "Already a member");
+      return UsecaseResult(false, "", "Already a member");
 
     group.members ~= GroupMember(req.memberId, req.memberType, req.display);
     group.updatedAt = currentTimestamp();
@@ -149,18 +149,18 @@ class ManageGroupsUseCase {
 
     auditRepo.save(event);
 
-    return CommandResult(true, req.groupId.value, "Member added successfully.");
+    return UsecaseResult(true, req.groupId.value, "Member added successfully.");
   }
 
   /// Remove a member from a group.
-  CommandResult removeMember(RemoveMemberRequest req) {
+  UsecaseResult removeMember(RemoveMemberRequest req) {
     auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "Group not found");
+      return UsecaseResult(false, "", "Group not found");
 
     auto newMembers = group.members.filter!(m => m.value != req.memberId).array;
     if (newMembers.length == group.members.length)
-      return CommandResult(false, "", "Member not found in group");
+      return UsecaseResult(false, "", "Member not found in group");
 
     group.members = newMembers;
     group.updatedAt = currentTimestamp();
@@ -186,14 +186,14 @@ class ManageGroupsUseCase {
     event.timestamp = event.createdAt;
 
     auditRepo.save(event);
-    return CommandResult(true, req.groupId.value, "Member removed successfully.");
+    return UsecaseResult(true, req.groupId.value, "Member removed successfully.");
   }
 
   /// Delete a group.
-  CommandResult deleteGroup(TenantId tenantId, GroupId id) {
+  UsecaseResult deleteGroup(TenantId tenantId, GroupId id) {
     auto group = groupRepo.findById(tenantId, id);
     if (group.isNull)
-      return CommandResult(false, "", "Group not found");
+      return UsecaseResult(false, "", "Group not found");
 
     // Remove group from all member users
     foreach (m; group.members) {
@@ -221,7 +221,7 @@ class ManageGroupsUseCase {
     event.timestamp = event.createdAt;
 
     auditRepo.save(event);
-    return CommandResult(true, id.value, "Group deleted successfully.");
+    return UsecaseResult(true, id.value, "Group deleted successfully.");
   }
 }
 

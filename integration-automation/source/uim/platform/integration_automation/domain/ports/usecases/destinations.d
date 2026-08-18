@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 interface IManageDestinationsUseCase { 
 
-  CommandResult createDestination(CreateDestinationRequest req);
+  UsecaseResult createDestination(CreateDestinationRequest req);
 
   Destination getDestination(TenantId tenantId, DestinationId id);
 
@@ -24,8 +24,8 @@ interface IManageDestinationsUseCase {
 
   Destination[] listEnabled(TenantId tenantId);
 
-  CommandResult updateDestination(UpdateDestinationRequest req);
+  UsecaseResult updateDestination(UpdateDestinationRequest req);
 
-  CommandResult deleteDestination(TenantId tenantId, DestinationId id);
+  UsecaseResult deleteDestination(TenantId tenantId, DestinationId id);
   
 }

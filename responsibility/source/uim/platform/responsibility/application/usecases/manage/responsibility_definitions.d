@@ -28,7 +28,7 @@ class ManageResponsibilityDefinitionsUseCase {
         return repo.findByContext(tenantId, contextId);
     }
 
-    CommandResult createDefinition(ResponsibilityDefinitionDTO dto) {
+    UsecaseResult createDefinition(ResponsibilityDefinitionDTO dto) {
         auto d = ResponsibilityDefinition(dto.tenantId, dto.definitionId, dto.createdBy);
         d.name        = dto.name;
         d.description = dto.description;
@@ -41,33 +41,33 @@ class ManageResponsibilityDefinitionsUseCase {
         d.validTo     = dto.validTo;
 
         if (d.name.isEmpty)
-            return CommandResult(false, "", "Definition name is required");
+            return UsecaseResult(false, "", "Definition name is required");
 
         if (d.contextId.length == 0)
-            return CommandResult(false, "", "contextId is required");
+            return UsecaseResult(false, "", "contextId is required");
 
         repo.save(d);
-        return CommandResult(true, d.id.value, "");
+        return UsecaseResult(true, d.id.value, "");
     }
 
-    CommandResult updateDefinition(ResponsibilityDefinitionDTO dto) {
+    UsecaseResult updateDefinition(ResponsibilityDefinitionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.definitionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Definition not found");
+            return UsecaseResult(false, "", "Definition not found");
         if (dto.name.length > 0)        existing.name        = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.teamId.length > 0)      existing.teamId      = dto.teamId;
         if (dto.ruleId.length > 0)      existing.ruleId      = dto.ruleId;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteDefinition(TenantId tenantId, ResponsibilityDefinitionId id) {
+    UsecaseResult deleteDefinition(TenantId tenantId, ResponsibilityDefinitionId id) {
         auto e = repo.findById(tenantId, id);
         if (e.isNull)
-            return CommandResult(false, "", "Definition not found");
+            return UsecaseResult(false, "", "Definition not found");
         repo.remove(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
     private static DefinitionStatus parseDefStatus(string s) {

@@ -24,17 +24,17 @@ class ManageModulesUseCase {
     this.depResolver = depResolver;
   }
 
-  CommandResult enableModule(EnableModuleRequest request) {
+  UsecaseResult enableModule(EnableModuleRequest request) {
     if (request.name.isEmpty)
-      return CommandResult(false, "", "Module name is required");
+      return UsecaseResult(false, "", "Module name is required");
 
     if (request.environmentId.isEmpty)
-      return CommandResult(false, "", "Environment ID is required");
+      return UsecaseResult(false, "", "Environment ID is required");
 
     auto existing = moduleRepository.findByName(request.tenantId, request.environmentId, request.name);
     if (existing.id.value.length > 0 && existing.status == ModuleStatus
       .enabled)
-      return CommandResult(false, "", "Module '" ~ request.name ~ "' is already enabled");
+      return UsecaseResult(false, "", "Module '" ~ request.name ~ "' is already enabled");
 
     KymaModule mod;
     with (mod) {
@@ -60,43 +60,43 @@ class ManageModulesUseCase {
     if (!depResolver.canEnable(mod, allModules)) {
       auto missing = depResolver.getUnsatisfiedDependencies(mod, allModules);
       // import std.array : join;
-      return CommandResult(false, "", "Missing required modules: " ~ missing.join(", "));
+      return UsecaseResult(false, "", "Missing required modules: " ~ missing.join(", "));
     }
 
     if (!existing.isNull)
       moduleRepository.update(mod);
     else
       moduleRepository.save(mod);
-    return CommandResult(true, mod.id.value, "");
+    return UsecaseResult(true, mod.id.value, "");
   }
 
-  CommandResult disableModule(TenantId tenantId, KymaModuleId moduleId) {
+  UsecaseResult disableModule(TenantId tenantId, KymaModuleId moduleId) {
     if (!moduleRepository.existsById(tenantId, moduleId))
-      return CommandResult(false, "", "Module not found");
+      return UsecaseResult(false, "", "Module not found");
 
     auto mod = moduleRepository.findById(tenantId, moduleId);
     if (mod.status == ModuleStatus.disabled)
-      return CommandResult(false, "", "Module is already disabled");
+      return UsecaseResult(false, "", "Module is already disabled");
 
     // Check for dependents
     auto allModules = moduleRepository.findByEnvironment(tenantId, mod.environmentId);
     auto dependents = depResolver.findDependents(mod.name, allModules);
     if (dependents.length > 0) {
       // import std.array : join;
-      return CommandResult(false, "",
+      return UsecaseResult(false, "",
         "Cannot disable: modules depend on it: " ~ dependents.join(", "));
     }
 
     mod.status = ModuleStatus.uninstalling;
     mod.updatedAt = clockSeconds();
     moduleRepository.update(mod);
-    return CommandResult(true, mod.id.value, "");
+    return UsecaseResult(true, mod.id.value, "");
   }
 
-  CommandResult updateModule(UpdateModuleRequest request) {
+  UsecaseResult updateModule(UpdateModuleRequest request) {
     auto mod = moduleRepository.findById(request.tenantId, request.moduleId);
     if (mod.isNull)
-      return CommandResult(false, "", "Module not found");
+      return UsecaseResult(false, "", "Module not found");
 
     if (request.version_.length > 0)
       mod.version_ = request.version_;
@@ -109,7 +109,7 @@ class ManageModulesUseCase {
     mod.updatedAt = clockSeconds();
 
     moduleRepository.update(mod);
-    return CommandResult(true, mod.id.value, "");
+    return UsecaseResult(true, mod.id.value, "");
   }
 
   bool hasModule(TenantId tenantId, KymaModuleId moduleId) {
@@ -124,12 +124,12 @@ class ManageModulesUseCase {
     return moduleRepository.findByEnvironment(tenantId, environmentId);
   }
 
-  CommandResult deleteModule(TenantId tenantId, KymaModuleId moduleId) {
+  UsecaseResult deleteModule(TenantId tenantId, KymaModuleId moduleId) {
     auto mod = moduleRepository.findById(tenantId, moduleId);
     if (mod.isNull)
-      return CommandResult(false, "", "Module not found");
+      return UsecaseResult(false, "", "Module not found");
 
     moduleRepository.remove(mod);
-    return CommandResult(true, mod.id.value, "");
+    return UsecaseResult(true, mod.id.value, "");
   }
 }

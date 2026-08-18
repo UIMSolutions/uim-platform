@@ -18,13 +18,13 @@ class ManageValidationRulesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createValidationRule(CreateValidationRuleRequest req) {
+  UsecaseResult createValidationRule(CreateValidationRuleRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Rule name is required");
+      return UsecaseResult(false, "", "Rule name is required");
     if (req.fieldname.isEmpty)
-      return CommandResult(false, "", "Field name is required");
+      return UsecaseResult(false, "", "Field name is required");
 
     auto rule = ValidationRule(req.tenantId);
     rule.name = req.name;
@@ -45,19 +45,19 @@ class ManageValidationRulesUseCase {
     rule.priority = req.priority;
 
     repo.save(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
-  CommandResult updateValidationRule(UpdateValidationRuleRequest req) {
+  UsecaseResult updateValidationRule(UpdateValidationRuleRequest req) {
     if (req.ruleId.isEmpty)
-      return CommandResult(false, "", "Rule ID is required");
+      return UsecaseResult(false, "", "Rule ID is required");
 
     auto rule = repo.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
-      return CommandResult(false, "", "Validation rule not found");
+      return UsecaseResult(false, "", "Validation rule not found");
       
     if (rule.tenantId != req.tenantId)
-      return CommandResult(false, "", "Tenant mismatch");
+      return UsecaseResult(false, "", "Tenant mismatch");
 
     rule.name = req.name;
     rule.description = req.description;
@@ -78,7 +78,7 @@ class ManageValidationRulesUseCase {
     rule.updatedAt = currentTimestamp();
 
     repo.update(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 
   ValidationRule getValidationRule(TenantId tenantId, ValidationRuleId id) {
@@ -93,12 +93,12 @@ class ManageValidationRulesUseCase {
     return repo.findActive(tenantId);
   }
 
-  CommandResult deleteValidationRule(TenantId tenantId, ValidationRuleId id) {
+  UsecaseResult deleteValidationRule(TenantId tenantId, ValidationRuleId id) {
     auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
-      return CommandResult(false, "", "Validation rule not found");
+      return UsecaseResult(false, "", "Validation rule not found");
 
     repo.remove(rule);
-    return CommandResult(true, rule.id.value, "");
+    return UsecaseResult(true, rule.id.value, "");
   }
 }

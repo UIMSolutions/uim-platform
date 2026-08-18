@@ -17,11 +17,11 @@ class ManageArchivingJobsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createArchivingJob(CreateArchivingJobRequest req) {
+    UsecaseResult createArchivingJob(CreateArchivingJobRequest req) {
         import std.uuid : randomUUID;
 
         if (req.groupId.isNull)
-            return CommandResult(false, "", "Application group ID is required");
+            return UsecaseResult(false, "", "Application group ID is required");
 
         auto aj = ArchivingJob(req.tenantId, ArchivingJobId(generateId), req.createdBy);
         aj.groupId = req.groupId;
@@ -31,13 +31,13 @@ class ManageArchivingJobsUseCase {
         aj.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : clockSeconds();
 
         repo.save(aj);
-        return CommandResult(true, aj.id.value, "");
+        return UsecaseResult(true, aj.id.value, "");
     }
 
-    CommandResult updateArchivingJob(UpdateArchivingJobRequest req) {
+    UsecaseResult updateArchivingJob(UpdateArchivingJobRequest req) {
         auto aj = repo.findById(req.tenantId, req.jobId);
         if (aj.isNull)
-            return CommandResult(false, "", "Archiving job not found");
+            return UsecaseResult(false, "", "Archiving job not found");
 
         if (req.status.length > 0)
             aj.status = toArchivingJobStatus(req.status);
@@ -54,7 +54,7 @@ class ManageArchivingJobsUseCase {
         aj.updatedAt = currentTimestamp();
 
         repo.update(aj);
-        return CommandResult(true, aj.id.value, "");
+        return UsecaseResult(true, aj.id.value, "");
     }
 
     bool hasArchivingJob(TenantId tenantId, ArchivingJobId id) {
@@ -73,13 +73,13 @@ class ManageArchivingJobsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult deleteArchivingJob(TenantId tenantId, ArchivingJobId id) {
+    UsecaseResult deleteArchivingJob(TenantId tenantId, ArchivingJobId id) {
         auto job = repo.findById(tenantId, id);
         if (job.isNull)
-            return CommandResult(false, "", "Archiving job not found");
+            return UsecaseResult(false, "", "Archiving job not found");
 
         repo.remove(job);
-        return CommandResult(true, job.id.value, "");
+        return UsecaseResult(true, job.id.value, "");
     }
 
 }

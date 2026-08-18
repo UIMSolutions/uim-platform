@@ -18,11 +18,11 @@ class ManageScopesUseCase {
     this.repo = repo;
   }
 
-  CommandResult createScope(CreateScopeRequest r) {
+  UsecaseResult createScope(CreateScopeRequest r) {
     if (r.name.isEmpty)
-      return CommandResult(false, "", "Scope name is required");
+      return UsecaseResult(false, "", "Scope name is required");
     if (repo.existsByName(r.tenantId, r.name))
-      return CommandResult(false, "", "A scope with this name already exists");
+      return UsecaseResult(false, "", "A scope with this name already exists");
 
     import std.uuid : randomUUID;
     ScopeEntity s;
@@ -35,28 +35,28 @@ class ManageScopesUseCase {
     s.updatedAt   = s.createdAt;
 
     repo.save(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
-  CommandResult updateScope(UpdateScopeRequest r) {
+  UsecaseResult updateScope(UpdateScopeRequest r) {
     auto s = repo.findById(r.tenantId, r.scopeId);
     if (s.isNull)
-      return CommandResult(false, "", "Scope not found");
+      return UsecaseResult(false, "", "Scope not found");
 
     if (r.description.length > 0) s.description = r.description;
     s.updatedAt = currentTimestamp();
 
     repo.update(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
-  CommandResult deleteScope(TenantId tenantId, ScopeId id) {
+  UsecaseResult deleteScope(TenantId tenantId, ScopeId id) {
     auto s = repo.findById(tenantId, id);
     if (s.isNull)
-      return CommandResult(false, "", "Scope not found");
+      return UsecaseResult(false, "", "Scope not found");
 
     repo.remove(s);
-    return CommandResult(true, s.id.value, "");
+    return UsecaseResult(true, s.id.value, "");
   }
 
   ScopeEntity getScope(TenantId tenantId, ScopeId id) {

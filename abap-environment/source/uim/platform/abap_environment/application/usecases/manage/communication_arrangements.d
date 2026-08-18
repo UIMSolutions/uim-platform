@@ -18,13 +18,13 @@ class ManageCommunicationArrangementsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createArrangement(CreateCommunicationArrangementRequest req) {
+  UsecaseResult createArrangement(CreateCommunicationArrangementRequest req) {
     if (req.name.isEmpty)
-      return CommandResult(false, "", "Arrangement name is required");
+      return UsecaseResult(false, "", "Arrangement name is required");
     if (req.scenarioId.isEmpty)
-      return CommandResult(false, "", "Communication scenario ID is required");
+      return UsecaseResult(false, "", "Communication scenario ID is required");
     if (req.systemInstanceId.isEmpty)
-      return CommandResult(false, "", "System instance ID is required");
+      return UsecaseResult(false, "", "System instance ID is required");
 
     auto arr = CommunicationArrangement(req.tenantId);
     arr.systemInstanceId = req.systemInstanceId;
@@ -44,13 +44,13 @@ class ManageCommunicationArrangementsUseCase {
     arr.outboundServices = req.outboundServices;
 
     repo.save(arr);
-    return CommandResult(true, arr.id.value, "");
+    return UsecaseResult(true, arr.id.value, "");
   }
 
-  CommandResult updateArrangement(UpdateCommunicationArrangementRequest req) {
+  UsecaseResult updateArrangement(UpdateCommunicationArrangementRequest req) {
     auto arr = repo.findById(req.tenantId, req.communicationArrangementId);
     if (arr.isNull)
-      return CommandResult(false, "", "Communication arrangement not found");
+      return UsecaseResult(false, "", "Communication arrangement not found");
 
     if (req.description.length > 0)
       arr.description = req.description;
@@ -75,7 +75,7 @@ class ManageCommunicationArrangementsUseCase {
     arr.updatedAt = currentTimestamp();
 
     repo.update(arr);
-    return CommandResult(true, arr.id.value, "");
+    return UsecaseResult(true, arr.id.value, "");
   }
 
   CommunicationArrangement getArrangement(TenantId tenantId, CommunicationArrangementId id) {
@@ -86,13 +86,13 @@ class ManageCommunicationArrangementsUseCase {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  CommandResult deleteArrangement(TenantId tenantId, CommunicationArrangementId id) {
+  UsecaseResult deleteArrangement(TenantId tenantId, CommunicationArrangementId id) {
     auto arrangement = repo.findById(tenantId, id);
     if (arrangement.isNull)      
-      return CommandResult(false, "", "Communication arrangement not found");
+      return UsecaseResult(false, "", "Communication arrangement not found");
 
     repo.remove(arrangement);
-    return CommandResult(true, arrangement.id.value, "");
+    return UsecaseResult(true, arrangement.id.value, "");
   }
 }
 

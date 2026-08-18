@@ -126,31 +126,31 @@ classDiagram
 ```mermaid
 classDiagram
     class ManageConditionsUseCase {
-        +createCondition(tenantId, req) CommandResult
+        +createCondition(tenantId, req) UsecaseResult
         +getCondition(tenantId, id) QueryResult
         +listConditions(tenantId) QueryResult
-        +updateCondition(tenantId, id, req) CommandResult
-        +deleteCondition(tenantId, id) CommandResult
+        +updateCondition(tenantId, id, req) UsecaseResult
+        +deleteCondition(tenantId, id) UsecaseResult
     }
 
     class ManageActionsUseCase {
-        +createAction(tenantId, req) CommandResult
+        +createAction(tenantId, req) UsecaseResult
         +getAction(tenantId, id) QueryResult
         +listActions(tenantId) QueryResult
-        +updateAction(tenantId, id, req) CommandResult
-        +deleteAction(tenantId, id) CommandResult
+        +updateAction(tenantId, id, req) UsecaseResult
+        +deleteAction(tenantId, id) UsecaseResult
     }
 
     class ManageSubscriptionsUseCase {
-        +createSubscription(tenantId, req) CommandResult
+        +createSubscription(tenantId, req) UsecaseResult
         +getSubscription(tenantId, id) QueryResult
         +listSubscriptions(tenantId) QueryResult
-        +updateSubscription(tenantId, id, req) CommandResult
-        +deleteSubscription(tenantId, id) CommandResult
+        +updateSubscription(tenantId, id, req) UsecaseResult
+        +deleteSubscription(tenantId, id) UsecaseResult
     }
 
     class ProduceEventsUseCase {
-        +postEvent(tenantId, req) CommandResult
+        +postEvent(tenantId, req) UsecaseResult
     }
 
     class ConsumeMatchedEventsUseCase {
@@ -203,7 +203,7 @@ sequenceDiagram
             end
         end
     end
-    ProduceEventsUseCase-->>AlertEventController: CommandResult(success)
+    ProduceEventsUseCase-->>AlertEventController: UsecaseResult(success)
     AlertEventController-->>Producer: 202 Accepted
 ```
 

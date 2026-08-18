@@ -18,8 +18,8 @@ interface IManageMobileApplicationsUseCase {
     MobileApplication[] listByStatus(TenantId tenantId, AppStatus status);
     MobileApplication[] listByPlatform(TenantId tenantId, AppPlatform platform);
 
-    CommandResult createMobileApplication(MobileApplicationDTO dto);
-    CommandResult updateMobileApplication(MobileApplicationDTO dto);
-    CommandResult deleteMobileApplication(TenantId tenantId, MobileApplicationId id);
+    UsecaseResult createMobileApplication(MobileApplicationDTO dto);
+    UsecaseResult updateMobileApplication(MobileApplicationDTO dto);
+    UsecaseResult deleteMobileApplication(TenantId tenantId, MobileApplicationId id);
 
 }

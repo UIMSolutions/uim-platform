@@ -18,15 +18,15 @@ class ManageGlossaryEntriesUseCase {
         this.repo = repo;
     }
 
-    CommandResult createEntry(CreateGlossaryEntryRequest r) {
+    UsecaseResult createEntry(CreateGlossaryEntryRequest r) {
         if (r.sourceTerm.length == 0)
-            return CommandResult(false, "", "Source term is required");
+            return UsecaseResult(false, "", "Source term is required");
 
         if (r.targetTerm.length == 0)
-            return CommandResult(false, "", "Target term is required");
+            return UsecaseResult(false, "", "Target term is required");
 
         if (r.sourceLanguage.length == 0 || r.targetLanguage.length == 0)
-            return CommandResult(false, "", "Source and target languages are required");
+            return UsecaseResult(false, "", "Source and target languages are required");
 
         auto e = GlossaryEntry(r.tenantId, r.entryId); // , r.createdBy);
         e.sourceLanguage = r.sourceLanguage;
@@ -38,7 +38,7 @@ class ManageGlossaryEntriesUseCase {
         e.mandatory = r.mandatory;
 
         repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        return UsecaseResult(true, e.id.value, "");
     }
 
     GlossaryEntry[] listEntries(TenantId tenantId) {
@@ -49,10 +49,10 @@ class ManageGlossaryEntriesUseCase {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult updateEntry(UpdateGlossaryEntryRequest r) {
+    UsecaseResult updateEntry(UpdateGlossaryEntryRequest r) {
         auto existing = repo.findById(r.tenantId, r.entryId);
         if (existing.isNull)
-            return CommandResult(false, "", "Glossary entry not found");
+            return UsecaseResult(false, "", "Glossary entry not found");
 
         if (r.targetTerm.length > 0)   existing.targetTerm = r.targetTerm;
         if (r.domainName.length > 0)   existing.domainName = r.domainName;
@@ -60,15 +60,15 @@ class ManageGlossaryEntriesUseCase {
         existing.mandatory = r.mandatory;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteEntry(TenantId tenantId, GlossaryEntryId id) {
+    UsecaseResult deleteEntry(TenantId tenantId, GlossaryEntryId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Glossary entry not found");
+            return UsecaseResult(false, "", "Glossary entry not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

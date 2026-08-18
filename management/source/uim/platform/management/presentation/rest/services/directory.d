@@ -49,7 +49,7 @@ class DirectoryApi : IDirectoryApi {
         return result;
     }
 
-    override CommandResult createDirectory(string tenantId, CreateDirectoryRequest request) {
+    override UsecaseResult createDirectory(string tenantId, CreateDirectoryRequest request) {
         // Hier hast du Zugriff auf die tenantId
         logInfo("Anfrage für Tenant-ID: %s, CreateDirectoryRequest: %s", tenantId, request);
 

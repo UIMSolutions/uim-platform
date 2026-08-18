@@ -17,14 +17,14 @@ class ManageSituationActionsUseCase {
         this.repo = repo;
     }
 
-    CommandResult createSituationAction(CreateSituationActionRequest r) {
+    UsecaseResult createSituationAction(CreateSituationActionRequest r) {
         auto err = SituationEvaluator.validate(r.tenantId, r.situationActionId.value, r.name);
         if (err.length > 0)
-            return CommandResult(false, "", err);
+            return UsecaseResult(false, "", err);
 
         auto existing = repo.findById(r.tenantId, r.situationActionId);
         if (!existing.isNull)
-            return CommandResult(false, "", "Situation action already exists");
+            return UsecaseResult(false, "", "Situation action already exists");
 
         auto action = SituationAction(r.tenantId, r.situationActionId);
         action.createdBy = r.createdBy;
@@ -40,7 +40,7 @@ class ManageSituationActionsUseCase {
         action.apiConfig.destinationName = r.destinationName;
 
         repo.save(action);
-        return CommandResult(true, action.id.value, "");
+        return UsecaseResult(true, action.id.value, "");
     }
 
     SituationAction getSituationAction(TenantId tenantId, SituationActionId id) {
@@ -51,10 +51,10 @@ class ManageSituationActionsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updateSituationAction(UpdateSituationActionRequest r) {
+    UsecaseResult updateSituationAction(UpdateSituationActionRequest r) {
         auto action = repo.findById(r.tenantId, r.situationActionId);
         if (action.isNull)
-            return CommandResult(false, "", "Situation action not found");
+            return UsecaseResult(false, "", "Situation action not found");
 
         action.updatedAt = currentTimestamp();
         action.updatedBy = r.updatedBy;
@@ -68,15 +68,15 @@ class ManageSituationActionsUseCase {
         action.emailTemplate = r.emailTemplate;
 
         repo.update(action);
-        return CommandResult(true, action.id.value, "");
+        return UsecaseResult(true, action.id.value, "");
     }
 
-    CommandResult deleteSituationAction(TenantId tenantId, SituationActionId id) {
+    UsecaseResult deleteSituationAction(TenantId tenantId, SituationActionId id) {
         auto action = repo.findById(tenantId, id);
         if (action.isNull)
-            return CommandResult(false, "", "Situation action not found");
+            return UsecaseResult(false, "", "Situation action not found");
 
         repo.remove(action);
-        return CommandResult(true, action.id.value, "");
+        return UsecaseResult(true, action.id.value, "");
     }
 }

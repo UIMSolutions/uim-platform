@@ -16,13 +16,13 @@ class ManageAuditConfigUseCase { // } {
     this.configs = configs;
   }
 
-  CommandResult createAuditConfig(CreateAuditConfigRequest req) {
+  UsecaseResult createAuditConfig(CreateAuditConfigRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult(false, "", "Tenant ID is required");
+      return UsecaseResult(false, "", "Tenant ID is required");
 
     // Only one config per tenant
     if (configs.existsByTenant(req.tenantId))
-      return CommandResult(false, "", "Audit configuration already exists for this tenant");
+      return UsecaseResult(false, "", "Audit configuration already exists for this tenant");
 
     auto config = AuditConfig(req.tenantId);
     config.name = req.name.length > 0 ? req.name : "Default";
@@ -38,7 +38,7 @@ class ManageAuditConfigUseCase { // } {
     config.rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond : 8;
     
     configs.save(config);
-    return CommandResult(true, config.id.value, "");
+    return UsecaseResult(true, config.id.value, "");
   }
 
   bool existsAuditConfig(TenantId tenantId) {
@@ -53,23 +53,23 @@ class ManageAuditConfigUseCase { // } {
     return configs.findByTenant(tenantId);
   }
 
-  CommandResult updateAuditConfig(UpdateAuditConfigRequest req) {
+  UsecaseResult updateAuditConfig(UpdateAuditConfigRequest req) {
     auto cfg = configs.findById(req.tenantId, req.id);
     if (cfg.isNull)
-      return CommandResult(false, "", "Audit config not found");
+      return UsecaseResult(false, "", "Audit config not found");
 
     cfg.updateFromRequest(req);
     configs.update(cfg);
-    return CommandResult(true, cfg.id.value, "");
+    return UsecaseResult(true, cfg.id.value, "");
   }
 
-  CommandResult deleteAuditConfig(TenantId tenantId, AuditConfigId id) {
+  UsecaseResult deleteAuditConfig(TenantId tenantId, AuditConfigId id) {
     auto entity = configs.findById(tenantId, id);
     if (entity.isNull)
-      return CommandResult(false, "", "Audit config not found");
+      return UsecaseResult(false, "", "Audit config not found");
 
     configs.remove(entity);
-    return CommandResult(true, entity.id.value, ""); 
+    return UsecaseResult(true, entity.id.value, ""); 
   }
 }
 

@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageTaskChainsUseCase { 
   
-  CommandResult createTaskChain(CreateTaskChainRequest r);
+  UsecaseResult createTaskChain(CreateTaskChainRequest r);
   TaskChain getTaskChain(TenantId tenantId, SpaceId spaceId, TaskChainId id);
   TaskChain[] listTaskChains(TenantId tenantId, SpaceId spaceId);
-  CommandResult patchTaskChain(PatchTaskChainRequest r);
-  CommandResult deleteTaskChain(TenantId tenantId, SpaceId spaceId, TaskChainId id);
+  UsecaseResult patchTaskChain(PatchTaskChainRequest r);
+  UsecaseResult deleteTaskChain(TenantId tenantId, SpaceId spaceId, TaskChainId id);
 
 }

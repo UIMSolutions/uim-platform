@@ -32,15 +32,15 @@ class ManageMtaOperationsUseCase {
     }
 
     /// Poll/advance an operation one step forward (mock simulation).
-    CommandResult pollOperation(TenantId tenantId, MtaOperationId id) {
+    UsecaseResult pollOperation(TenantId tenantId, MtaOperationId id) {
         
 
         auto op = getOperation(tenantId, id);
-        if (op is null || op.isNull) return CommandResult(false, "", "Operation not found");
+        if (op is null || op.isNull) return UsecaseResult(false, "", "Operation not found");
         if (op.operationStatus == OperationStatus.finished
                 || op.operationStatus == OperationStatus.failed
                 || op.operationStatus == OperationStatus.aborted)
-            return CommandResult(true, id.value, "");
+            return UsecaseResult(true, id.value, "");
 
         int newPct;
         auto newStatus = engine.advanceOperation(op.operationStatus, op.progressPercent, newPct);
@@ -51,25 +51,25 @@ class ManageMtaOperationsUseCase {
             op.finishedAt = MonoTime.currTime.ticks;
         op.updatedAt = MonoTime.currTime.ticks;
         repo.update(op);
-        return CommandResult(true, id.value, "");
+        return UsecaseResult(true, id.value, "");
     }
 
     /// Abort a running operation.
-    CommandResult abortOperation(AbortOperationRequest r) {
+    UsecaseResult abortOperation(AbortOperationRequest r) {
         
 
         auto op = getOperation(r.tenantId, MtaOperationId(r.operationId));
-        if (op is null || op.isNull) return CommandResult(false, "", "Operation not found");
+        if (op is null || op.isNull) return UsecaseResult(false, "", "Operation not found");
         if (op.operationStatus == OperationStatus.finished
                 || op.operationStatus == OperationStatus.aborted)
-            return CommandResult(false, "", "Operation is already " ~ op.operationStatus.to!string);
+            return UsecaseResult(false, "", "Operation is already " ~ op.operationStatus.to!string);
 
         op.operationStatus = OperationStatus.aborted;
         op.progressMessage = "Aborted by " ~ r.abortedBy;
         op.finishedAt      = MonoTime.currTime.ticks;
         op.updatedAt       = op.finishedAt;
         repo.update(op);
-        return CommandResult(true, r.operationId, "");
+        return UsecaseResult(true, r.operationId, "");
     }
 
     /// Retrieve streaming log lines for an operation.

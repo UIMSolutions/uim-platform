@@ -52,7 +52,7 @@ integration-automation/
 │   │       ├── workflow_engine.d              #     Workflow advancement & limit enforcement
 │   │       └── step_executor.d                #     Step lifecycle transitions & logging
 │   ├── application/                           #   Application layer (use cases)
-│   │   ├── dto.d                              #     Request / Response DTOs & CommandResult
+│   │   ├── dto.d                              #     Request / Response DTOs & UsecaseResult
 │   │   └── usecases/                         #     Application services
 │   │       ├── manage.scenarios.d
 │   │       ├── manage.workflows.d

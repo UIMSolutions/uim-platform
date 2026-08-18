@@ -22,9 +22,9 @@ class ManageForumTopicsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createForumTopic(CreateForumTopicRequest req) {
+  UsecaseResult createForumTopic(CreateForumTopicRequest req) {
     if (req.title.length == 0)
-      return CommandResult(false, "", "Forum topic title is required");
+      return UsecaseResult(false, "", "Forum topic title is required");
 
     auto t = ForumTopic(req.tenantId);
     t.workspaceId = req.workspaceId;
@@ -36,7 +36,7 @@ class ManageForumTopicsUseCase {
     t.tags = req.tags;
 
     repo.save(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
   ForumTopic getForumTopic(TenantId tenantId, ForumTopicId id) {
@@ -47,10 +47,10 @@ class ManageForumTopicsUseCase {
     return repo.findByWorkspace(tenantId, workspaceId);
   }
 
-  CommandResult updateForumTopic(UpdateForumTopicRequest req) {
+  UsecaseResult updateForumTopic(UpdateForumTopicRequest req) {
     auto t = repo.findById(req.tenantId, req.id);
     if (t.isNull)
-      return CommandResult(false, "", "Forum topic not found");
+      return UsecaseResult(false, "", "Forum topic not found");
 
     if (req.title.length > 0)
       t.title = req.title;
@@ -62,15 +62,15 @@ class ManageForumTopicsUseCase {
     t.updatedAt = currentTimestamp();
 
     repo.update(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 
-  CommandResult deleteForumTopic(TenantId tenantId, ForumTopicId id) {
+  UsecaseResult deleteForumTopic(TenantId tenantId, ForumTopicId id) {
     auto t = repo.findById(tenantId, id);
     if (t.isNull)
-      return CommandResult(false, "", "Forum topic not found");
+      return UsecaseResult(false, "", "Forum topic not found");
 
     repo.remove(t);
-    return CommandResult(true, t.id.value, "");
+    return UsecaseResult(true, t.id.value, "");
   }
 }

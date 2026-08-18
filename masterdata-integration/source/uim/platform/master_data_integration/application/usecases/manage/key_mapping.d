@@ -25,11 +25,11 @@ class ManageKeyMappingsUseCase {
     this.resolver = resolver;
   }
 
-  CommandResult createMapping(CreateKeyMappingRequest req) {
+  UsecaseResult createMapping(CreateKeyMappingRequest req) {
     if (req.objectId.isEmpty)
-      return CommandResult(false, "", "Master data object ID is required");
+      return UsecaseResult(false, "", "Master data object ID is required");
     if (req.entries.length == 0)
-      return CommandResult(false, "", "At least one key mapping entry is required");
+      return UsecaseResult(false, "", "At least one key mapping entry is required");
 
     auto mapping = KeyMapping(req.tenantId);
     mapping.masterDataObjectId = req.objectId;
@@ -38,27 +38,27 @@ class ManageKeyMappingsUseCase {
     mapping.entries = toEntries(req.entries);
 
     if (!resolver.isValid(mapping))
-      return CommandResult(false, "",
+      return UsecaseResult(false, "",
           "Key mapping must have exactly one primary entry and all entries must have local keys");
 
     repo.save(mapping);
-    return CommandResult(true, mapping.id.value, "");
+    return UsecaseResult(true, mapping.id.value, "");
   }
 
-  CommandResult updateMapping(UpdateKeyMappingRequest req) {
+  UsecaseResult updateMapping(UpdateKeyMappingRequest req) {
     auto mapping = repo.findById(req.tenantId, req.mappingId);
     if (mapping.isNull)
-      return CommandResult(false, "", "Key mapping not found");
+      return UsecaseResult(false, "", "Key mapping not found");
 
     if (req.entries.length > 0)
       mapping.entries = toEntries(req.entries);
     mapping.updatedAt = clockSeconds();
 
     if (!resolver.isValid(mapping))
-      return CommandResult(false, "", "Invalid key mapping: must have exactly one primary entry");
+      return UsecaseResult(false, "", "Invalid key mapping: must have exactly one primary entry");
 
     repo.update(mapping);
-    return CommandResult(true, mapping.id.value, "");
+    return UsecaseResult(true, mapping.id.value, "");
   }
 
   /// Lookup: given a source client+key, find the target client's key.
@@ -86,13 +86,13 @@ class ManageKeyMappingsUseCase {
     return repo.findByCategory(tenantId, category.to!MasterDataCategory);
   }
 
-  CommandResult deleteMapping(TenantId tenantId, KeyMappingId id) {
+  UsecaseResult deleteMapping(TenantId tenantId, KeyMappingId id) {
     auto mapping = repo.findById(tenantId, id);
     if (mapping.isNull)
-      return CommandResult(false, "", "Key mapping not found");
+      return UsecaseResult(false, "", "Key mapping not found");
 
     repo.remove(mapping);
-    return CommandResult(true, mapping.id.value, "");
+    return UsecaseResult(true, mapping.id.value, "");
   }
 
   private KeyMappingEntry[] toEntries(KeyMappingEntryDto[] dtos) {

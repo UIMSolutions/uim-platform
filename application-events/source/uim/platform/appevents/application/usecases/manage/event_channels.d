@@ -26,9 +26,9 @@ class ManageEventChannelsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createEventChannel(EventChannelDTO dto) {
+    UsecaseResult createEventChannel(EventChannelDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
-            return CommandResult(false, "", "Channel name already exists");
+            return UsecaseResult(false, "", "Channel name already exists");
             
         auto ch = EventChannel(dto.tenantId);
         if (!dto.channelId.isNull) ch.id = dto.channelId;
@@ -41,12 +41,12 @@ class ManageEventChannelsUseCase {
         ch.maxSizeBytes = dto.maxSizeBytes;
 
         repo.save(ch);
-        return CommandResult(true, ch.id.value, "");
+        return UsecaseResult(true, ch.id.value, "");
     }
 
-    CommandResult updateEventChannel(EventChannelDTO dto) {
+    UsecaseResult updateEventChannel(EventChannelDTO dto) {
         auto ch = repo.findById(dto.tenantId, dto.channelId);
-        if (ch.isNull) return CommandResult(false, "", "Channel not found");
+        if (ch.isNull) return UsecaseResult(false, "", "Channel not found");
         ch.name = dto.name;
         ch.topicId = dto.topicId;
         ch.channelType = dto.channelType;
@@ -56,14 +56,14 @@ class ManageEventChannelsUseCase {
         ch.maxSizeBytes = dto.maxSizeBytes;
         if (!dto.updatedBy.isNull) ch.updatedBy = dto.updatedBy;
         repo.update(ch);
-        return CommandResult(true, ch.id.value, "");
+        return UsecaseResult(true, ch.id.value, "");
     }
 
-    CommandResult deleteEventChannel(TenantId tenantId, EventChannelId id) {
+    UsecaseResult deleteEventChannel(TenantId tenantId, EventChannelId id) {
         auto ch = repo.findById(tenantId, id);
-        if (ch.isNull) return CommandResult(false, "", "Channel not found");
+        if (ch.isNull) return UsecaseResult(false, "", "Channel not found");
 
         repo.remove(ch);
-        return CommandResult(true, ch.id.value, "");
+        return UsecaseResult(true, ch.id.value, "");
     }
 }

@@ -26,7 +26,7 @@ class ManageSitePoliciesUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult createSitePolicy(SitePolicyDTO dto) {
+    UsecaseResult createSitePolicy(SitePolicyDTO dto) {
         auto sp = SitePolicy(dto.tenantId); //, dto.createdBy);
         sp.name = dto.name;
         sp.description = dto.description;
@@ -43,23 +43,23 @@ class ManageSitePoliciesUseCase {
         sp.version_ = dto.version_;
         
         try { sp.policyType = dto.policyType.to!PolicyType; }
-        catch (Exception) { return CommandResult(false, "", "Invalid policy type"); }
+        catch (Exception) { return UsecaseResult(false, "", "Invalid policy type"); }
         try { sp.passwordComplexity = dto.passwordComplexity.to!PasswordComplexity; }
         catch (Exception) { sp.passwordComplexity = PasswordComplexity.medium; }
         try { sp.mfaMethod = dto.mfaMethod.to!MfaMethod; }
         catch (Exception) { sp.mfaMethod = MfaMethod.none; }
 
         if (!IdentityValidator.isValidSitePolicy(sp))
-            return CommandResult(false, "", "Invalid site policy data");
+            return UsecaseResult(false, "", "Invalid site policy data");
 
         repo.save(sp);
-        return CommandResult(true, sp.id.value, "");
+        return UsecaseResult(true, sp.id.value, "");
     }
 
-    CommandResult updateSitePolicy(SitePolicyDTO dto) {
+    UsecaseResult updateSitePolicy(SitePolicyDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.policyId);
         if (existing.isNull)
-            return CommandResult(false, "", "Site policy not found");
+            return UsecaseResult(false, "", "Site policy not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -72,15 +72,15 @@ class ManageSitePoliciesUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSitePolicy(TenantId tenantId, SitePolicyId id) {
+    UsecaseResult deleteSitePolicy(TenantId tenantId, SitePolicyId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return CommandResult(false, "", "Site policy not found");
+            return UsecaseResult(false, "", "Site policy not found");
 
         repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 }

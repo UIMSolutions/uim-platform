@@ -16,8 +16,8 @@ interface IManageAppBuildsUseCase {
     AppBuild getAppBuild(TenantId tenantId, AppBuildId id);
     AppBuild[] listAppBuilds(TenantId tenantId);
     AppBuild[] listAppBuilds(TenantId tenantId, ApplicationId applicationId);
-    CommandResult createAppBuild(AppBuildDTO dto);
-    CommandResult updateAppBuild(AppBuildDTO dto);
-    CommandResult deleteAppBuild(TenantId tenantId, AppBuildId id);
+    UsecaseResult createAppBuild(AppBuildDTO dto);
+    UsecaseResult updateAppBuild(AppBuildDTO dto);
+    UsecaseResult deleteAppBuild(TenantId tenantId, AppBuildId id);
     
 }

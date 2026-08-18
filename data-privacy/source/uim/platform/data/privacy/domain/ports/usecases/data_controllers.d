@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 interface IManageDataControllersUseCase { 
 
-  CommandResult createController(CreateDataControllerRequest req);
+  UsecaseResult createController(CreateDataControllerRequest req);
   DataController getController(TenantId tenantId, DataControllerId id);
   DataController[] listControllers(TenantId tenantId);
-  CommandResult updateController(UpdateDataControllerRequest req);
-  CommandResult deleteController(TenantId tenantId, DataControllerId id);
+  UsecaseResult updateController(UpdateDataControllerRequest req);
+  UsecaseResult deleteController(TenantId tenantId, DataControllerId id);
   
 }

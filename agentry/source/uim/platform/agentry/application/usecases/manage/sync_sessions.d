@@ -34,7 +34,7 @@ class ManageSyncSessionsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createSyncSession(SyncSessionDTO dto) {
+    UsecaseResult createSyncSession(SyncSessionDTO dto) {
         auto session = SyncSession(dto.tenantId, dto.sessionId, dto.createdBy);
         session.deviceId = dto.deviceId;
         session.applicationId = dto.applicationId;
@@ -43,16 +43,16 @@ class ManageSyncSessionsUseCase {
         session.clientAppVersion = dto.clientAppVersion;
 
         if (!AgentryValidator.isValidSyncSession(session))
-            return CommandResult(false, "", "Invalid sync session data");
+            return UsecaseResult(false, "", "Invalid sync session data");
 
         repo.save(session);
-        return CommandResult(true, session.id.value, "");
+        return UsecaseResult(true, session.id.value, "");
     }
 
-    CommandResult updateSyncSession(SyncSessionDTO dto) {
+    UsecaseResult updateSyncSession(SyncSessionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.sessionId);
         if (existing.isNull)
-            return CommandResult(false, "", "Sync session not found");
+            return UsecaseResult(false, "", "Sync session not found");
 
         if (dto.status.length > 0) {
             
@@ -61,16 +61,16 @@ class ManageSyncSessionsUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSyncSession(TenantId tenantId, SyncSessionId id) {
+    UsecaseResult deleteSyncSession(TenantId tenantId, SyncSessionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return CommandResult(false, "", "Sync session not found");
+            return UsecaseResult(false, "", "Sync session not found");
 
         repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        return UsecaseResult(true, entity.id.value, "");
     }
 }
 

@@ -12,6 +12,6 @@ mixin(ShowModule!());
 @safe:
 interface WriteConfigChangeUseCase { 
 
-  CommandResult writeChange(WriteConfigChangeLogRequest req);
+  UsecaseResult writeChange(WriteConfigChangeLogRequest req);
 
 }

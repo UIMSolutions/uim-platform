@@ -21,7 +21,7 @@ class ManageDeviceRegistrationsUseCase {
         this.repo = repo;
     }
 
-    CommandResult register(RegisterDeviceRequest r) {
+    UsecaseResult register(RegisterDeviceRequest r) {
         auto existing = repo.findByDeviceToken(r.tenantId, r.deviceToken);
         if (!existing.isNull) {
             existing.osVersion = r.osVersion;
@@ -29,7 +29,7 @@ class ManageDeviceRegistrationsUseCase {
             existing.lastConnectedAt = currentTimestamp();
             existing.updatedAt = currentTimestamp();
             repo.update(existing);
-            return CommandResult(true, existing.id.value, "");
+            return UsecaseResult(true, existing.id.value, "");
         }
         auto reg = DeviceRegistration(r.tenantId);
         reg.appId = r.appId;
@@ -45,13 +45,13 @@ class ManageDeviceRegistrationsUseCase {
         reg.updatedAt = reg.registeredAt;
 
         repo.save(reg);
-        return CommandResult(true, reg.id.value, "");
+        return UsecaseResult(true, reg.id.value, "");
     }
 
-    CommandResult updateStatus(TenantId tenantId, DeviceRegistrationId id, string status) {
+    UsecaseResult updateStatus(TenantId tenantId, DeviceRegistrationId id, string status) {
         auto reg = repo.findById(tenantId, id);
         if (reg.isNull)
-            return CommandResult(false, "", "Device not found");
+            return UsecaseResult(false, "", "Device not found");
 
         switch (status) {
             case "locked": reg.status = DeviceStatus.locked; break;
@@ -61,7 +61,7 @@ class ManageDeviceRegistrationsUseCase {
         }
         reg.updatedAt = currentTimestamp();
         repo.update(reg);
-        return CommandResult(true, reg.id.value, "");
+        return UsecaseResult(true, reg.id.value, "");
     }
 
     DeviceRegistration getDeviceRegistration(TenantId tenantId, DeviceRegistrationId id) {
@@ -80,13 +80,13 @@ class ManageDeviceRegistrationsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deleteDeviceRegistration(TenantId tenantId, DeviceRegistrationId id) {
+    UsecaseResult deleteDeviceRegistration(TenantId tenantId, DeviceRegistrationId id) {
         auto reg = repo.findById(tenantId, id);
         if (reg.isNull)
-            return CommandResult(false, "", "Device not found");
+            return UsecaseResult(false, "", "Device not found");
 
         repo.remove(reg);
-        return CommandResult(true, reg.id.value, "Device deleted successfully.");
+        return UsecaseResult(true, reg.id.value, "Device deleted successfully.");
     }
 
     size_t countByApp(TenantId tenantId, MobileAppId appId) {

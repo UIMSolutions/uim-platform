@@ -21,7 +21,7 @@ class ManageQueueSubscriptionsUseCase {
     QueueSubscription[] listByQueue(TenantId tenantId, QueueId queueId) { return repo.findByQueue(tenantId, queueId); }
     QueueSubscription[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 
-    CommandResult createSubscription(QueueSubscriptionDTO dto) {
+    UsecaseResult createSubscription(QueueSubscriptionDTO dto) {
         QueueSubscription qs;
         qs.id = dto.subscriptionId;
         qs.tenantId = dto.tenantId;
@@ -33,27 +33,27 @@ class ManageQueueSubscriptionsUseCase {
         qs.namespace = dto.namespace;
         qs.createdBy = dto.createdBy;
         if (!EventsValidator.isValidQueueSubscription(qs))
-            return CommandResult(false, "", "Invalid queue subscription data");
+            return UsecaseResult(false, "", "Invalid queue subscription data");
         repo.save(qs);
-        return CommandResult(true, qs.id.value, "");
+        return UsecaseResult(true, qs.id.value, "");
     }
 
-    CommandResult updateSubscription(QueueSubscriptionDTO dto) {
+    UsecaseResult updateSubscription(QueueSubscriptionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.subscriptionId);
-        if (existing.isNull) return CommandResult(false, "", "Queue subscription not found");
+        if (existing.isNull) return UsecaseResult(false, "", "Queue subscription not found");
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.topicPattern.length > 0) existing.topicPattern = dto.topicPattern;
         if (dto.namespace.length > 0) existing.namespace = dto.namespace;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        return UsecaseResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteSubscription(TenantId tenantId, QueueSubscriptionId id) {
+    UsecaseResult deleteSubscription(TenantId tenantId, QueueSubscriptionId id) {
         auto qs = repo.findById(tenantId, id);
-        if (qs.isNull) return CommandResult(false, "", "Queue subscription not found");
+        if (qs.isNull) return UsecaseResult(false, "", "Queue subscription not found");
         repo.remove(qs);
-        return CommandResult(true, qs.id.value, "");
+        return UsecaseResult(true, qs.id.value, "");
     }
 }
 

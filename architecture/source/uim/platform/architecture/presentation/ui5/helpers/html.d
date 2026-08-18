@@ -10,7 +10,7 @@ void writeHtml(scope HTTPServerResponse res, string html) {
     res.writeBody(html, cast(int)HTTPStatus.ok, "text/html; charset=utf-8");
 }
 
-void writeJson(scope HTTPServerResponse res, int status, CommandResult result) {
+void writeJson(scope HTTPServerResponse res, int status, UsecaseResult result) {
     auto payload = Json.emptyObject;
     payload["success"] = Json(result.success);
     payload["id"] = Json(result.id);
