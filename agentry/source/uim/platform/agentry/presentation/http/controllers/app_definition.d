@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 /// Controller for managing app definitions via HTTP requests.
 class AppDefinitionController : ManageHttpController {
-    private ManageAppDefinitionsUseCase usecase;
+    protected ManageAppDefinitionsUseCase usecase;
 
     this(ManageAppDefinitionsUseCase usecase) {
         this.usecase = usecase;

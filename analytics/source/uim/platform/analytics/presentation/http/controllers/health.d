@@ -13,7 +13,7 @@ class AnalyticsHealthController {
     router.get("/api/v1/health", &handleHealth);
   }
 
-  private void handleHealth(HTTPServerRequest req, HTTPServerResponse res) {
+  protected void handleHealth(HTTPServerRequest req, HTTPServerResponse res) {
     auto payload = Json.emptyObject;
     payload["status"] = Json("UP");
     payload["service"] = Json("Analytics");

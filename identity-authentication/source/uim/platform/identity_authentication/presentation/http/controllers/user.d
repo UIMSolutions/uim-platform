@@ -138,12 +138,3 @@ class UserController : ManageHttpController {
 
   mixin(HandleTemplate!("handleChangePassword", "changePasswordHandler"));
 }
-
-private string extractIdFromPath(string path) {
-  // import std.string : lastIndexOf;
-
-  auto idx = path.lastIndexOf('/');
-  if (idx >= 0 && idx + 1 < path.length)
-    return path[idx + 1 .. $];
-  return "";
-}

@@ -21,8 +21,8 @@ mixin(ShowModule!());
 ///   help               — show available commands
 ///   exit | quit        — terminate CLI
 struct AbapCliRunner {
-    private CompileUseCase  compileUseCase;
-    private string          tenantId;
+    protected CompileUseCase  compileUseCase;
+    protected string          tenantId;
 
     this(CompileUseCase uc, string tid) {
         compileUseCase = uc;

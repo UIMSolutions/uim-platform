@@ -5,7 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.web.controllers;
 
-public {
+public:
 	import uim.platform.event_mesh.presentation.web.controllers.entities;
-}
+	import uim.platform.event_mesh.presentation.web.controllers.subscription;
+	import uim.platform.event_mesh.presentation.web.controllers.topic;
+
 

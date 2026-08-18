@@ -9,8 +9,8 @@ import uim.platform.analytics.application.dto;
 import uim.platform.analytics.domain;
 
 class ManageAssetsUseCase {
-  private AssetRepository repository;
-  private AnalyticsValidator validator;
+  protected AssetRepository repository;
+  protected AnalyticsValidator validator;
 
   this(AssetRepository repository) {
     this.repository = repository;
@@ -19,7 +19,8 @@ class ManageAssetsUseCase {
 
   CommandResult createAsset(CreateAssetRequest req) {
     auto err = validator.validateCreate(req);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0)
+      return CommandResult(false, "", err);
 
     auto now = MonoTime.currTime.ticks;
 
@@ -32,8 +33,8 @@ class ManageAssetsUseCase {
     asset.dimensions = req.dimensions.dup;
     asset.measures = req.measures.dup;
     asset.published = false;
-    asset.createdAt = cast(long) now;
-    asset.updatedAt = cast(long) now;
+    asset.createdAt = cast(long)now;
+    asset.updatedAt = cast(long)now;
 
     auto id = repository.save(asset);
     return CommandResult(true, id, "Created");
@@ -49,17 +50,19 @@ class ManageAssetsUseCase {
 
   CommandResult updateAsset(UpdateAssetRequest req) {
     auto err = validator.validateUpdate(req);
-    if (err.length > 0) return CommandResult(false, "", err);
+    if (err.length > 0)
+      return CommandResult(false, "", err);
 
     auto existing = repository.findById(req.tenantId, req.id);
-    if (existing.isNull) return CommandResult(false, "", "Asset not found");
+    if (existing.isNull)
+      return CommandResult(false, "", "Asset not found");
 
     existing.name = req.name;
     existing.kind = req.kind;
     existing.sourceSystem = req.sourceSystem;
     existing.dimensions = req.dimensions.dup;
     existing.measures = req.measures.dup;
-    existing.updatedAt = cast(long) MonoTime.currTime.ticks;
+    existing.updatedAt = cast(long)MonoTime.currTime.ticks;
 
     if (!repository.update(existing))
       return CommandResult(false, "", "Update failed");
@@ -75,10 +78,11 @@ class ManageAssetsUseCase {
 
   CommandResult publishAsset(TenantId tenantId, AssetId id) {
     auto existing = repository.findById(tenantId, id);
-    if (existing.isNull) return CommandResult(false, "", "Asset not found");
+    if (existing.isNull)
+      return CommandResult(false, "", "Asset not found");
 
     existing.published = true;
-    existing.updatedAt = cast(long) MonoTime.currTime.ticks;
+    existing.updatedAt = cast(long)MonoTime.currTime.ticks;
     if (!repository.update(existing))
       return CommandResult(false, "", "Publish failed");
 

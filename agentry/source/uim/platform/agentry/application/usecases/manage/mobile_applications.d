@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMobileApplicationsUseCase {
-    private IMobileApplicationRepository repo;
+    protected IMobileApplicationRepository repo;
 
     this(IMobileApplicationRepository repo) {
         this.repo = repo;

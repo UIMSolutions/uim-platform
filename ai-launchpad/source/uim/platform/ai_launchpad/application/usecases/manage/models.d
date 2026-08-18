@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageModelsUseCase { // TODO: UIMUseCase {
-  private IModelRepository models;
+  protected IModelRepository models;
 
   this(IModelRepository models) {
     this.models = models;

@@ -7,6 +7,7 @@ module uim.platform.service;
 
 public {
   import uim.framework;
+  import uim.services;
 
   import uim.platform.service.application;
   import uim.platform.service.classes;

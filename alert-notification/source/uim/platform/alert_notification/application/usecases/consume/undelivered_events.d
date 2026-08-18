@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ConsumeUndeliveredEventsUseCase {
-    private IUndeliveredEventRepository repo;
+    protected IUndeliveredEventRepository repo;
 
     this(IUndeliveredEventRepository repo) { this.repo = repo; }
 

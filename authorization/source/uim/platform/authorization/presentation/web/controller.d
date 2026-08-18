@@ -64,7 +64,7 @@ class AuthorizationWebController : ManageHttpController {
     }
 
     auto tenantId = precheck.tenantId.to!string;
-    auto html = view.renderDashboard(  tenantId,
+    auto html = view.renderDashboard(tenantId,
       model.listApplications(tenantId).length,
       model.listPolicies(tenantId).length,
       model.listAssignments(tenantId).length
@@ -155,7 +155,8 @@ class AuthorizationWebController : ManageHttpController {
       respond(res, errorResponse(result.message, 404));
       return;
     }
-    respond(res, successResponse("Application deleted", "Deleted", 200, Json(["id": Json(result.id)])));
+    respond(res, successResponse("Application deleted", "Deleted", 200, Json(
+        ["id": Json(result.id)])));
   }
 
   void handleListApis(HTTPServerRequest req, HTTPServerResponse res) {
@@ -234,12 +235,14 @@ class AuthorizationWebController : ManageHttpController {
       respond(res, precheck);
       return;
     }
-    auto result = model.appsUseCase().deleteApplicationApi(precheck.tenantId.to!string, precheck.id);
+    auto result = model.appsUseCase()
+      .deleteApplicationApi(precheck.tenantId.to!string, precheck.id);
     if (!result.ok) {
       respond(res, errorResponse(result.message, 404));
       return;
     }
-    respond(res, successResponse("Application API deleted", "Deleted", 200, Json(["id": Json(result.id)])));
+    respond(res, successResponse("Application API deleted", "Deleted", 200, Json(
+        ["id": Json(result.id)])));
   }
 
   void handleListPolicies(HTTPServerRequest req, HTTPServerResponse res) {
@@ -248,7 +251,8 @@ class AuthorizationWebController : ManageHttpController {
       respond(res, precheck);
       return;
     }
-    auto items = model.listPolicies(precheck.tenantId.to!string).map!(p => p.toJson()).array.toJson();
+    auto items = model.listPolicies(precheck.tenantId.to!string)
+      .map!toJson.array.toJson();
     respond(res, view.listResponse("Policy", items));
   }
 
@@ -258,7 +262,8 @@ class AuthorizationWebController : ManageHttpController {
       respond(res, precheck);
       return;
     }
-    auto items = model.listBasePolicies(precheck.tenantId.to!string).map!(p => p.toJson()).array.toJson();
+    auto items = model.listBasePolicies(precheck.tenantId.to!string)
+      .map!(p => p.toJson()).array.toJson();
     respond(res, view.listResponse("Base policy", items));
   }
 
@@ -308,7 +313,8 @@ class AuthorizationWebController : ManageHttpController {
     auto applicationId = data.getString("applicationId");
     if (applicationId.length == 0) {
       auto appName = data.getString("applicationName");
-      if (appName.length == 0) appName = "authorization-management";
+      if (appName.length == 0)
+        appName = "authorization-management";
 
       foreach (app; model.appsUseCase().listApplications(tenantId)) {
         if (app.name == appName) {
@@ -322,7 +328,8 @@ class AuthorizationWebController : ManageHttpController {
         createReq.tenantId = tenantId;
         createReq.name = appName;
         createReq.organizationId = data.getString("organizationId");
-        if (createReq.organizationId.length == 0) createReq.organizationId = "global";
+        if (createReq.organizationId.length == 0)
+          createReq.organizationId = "global";
         createReq.description = "Auto-created during base policy seeding";
 
         auto created = model.appsUseCase().createApplication(createReq);
@@ -337,10 +344,10 @@ class AuthorizationWebController : ManageHttpController {
     auto seeded = model.policiesUseCase().seedBasePolicies(tenantId, applicationId);
     auto items = seeded.map!(p => p.toJson()).array.toJson();
 
-    auto payload = Json.emptyObject;
-    payload["applicationId"] = Json(applicationId);
-    payload["items"] = items;
-    payload["totalCount"] = Json(cast(int) seeded.length);
+    auto payload = Json.emptyObject
+      .set("applicationId", applicationId)
+      .set("items", items)
+      .set("totalCount", seeded.length);
 
     respond(res, successResponse("Base policies seeded", "Created", 201, payload));
   }
@@ -401,7 +408,9 @@ class AuthorizationWebController : ManageHttpController {
       respond(res, errorResponse(result.message, 404));
       return;
     }
-    respond(res, successResponse("Policy deleted", "Deleted", 200, Json(["id": Json(result.id)])));
+    respond(res, successResponse("Policy deleted", "Deleted", 200, Json([
+          "id": Json(result.id)
+        ])));
   }
 
   void handleListAssignments(HTTPServerRequest req, HTTPServerResponse res) {
@@ -410,7 +419,8 @@ class AuthorizationWebController : ManageHttpController {
       respond(res, precheck);
       return;
     }
-    auto items = model.listAssignments(precheck.tenantId.to!string).map!(a => a.toJson()).array.toJson();
+    auto items = model.listAssignments(precheck.tenantId.to!string)
+      .map!(a => a.toJson()).array.toJson();
     respond(res, view.listResponse("Policy assignment", items));
   }
 
@@ -456,12 +466,15 @@ class AuthorizationWebController : ManageHttpController {
       respond(res, precheck);
       return;
     }
-    auto result = model.assignmentsUseCase().deleteAssignment(precheck.tenantId.to!string, precheck.id);
+    auto result = model.assignmentsUseCase()
+      .deleteAssignment(precheck.tenantId.to!string, precheck.id);
     if (!result.ok) {
       respond(res, errorResponse(result.message, 404));
       return;
     }
-    respond(res, successResponse("Assignment deleted", "Deleted", 200, Json(["id": Json(result.id)])));
+    respond(res, successResponse("Assignment deleted", "Deleted", 200, Json([
+          "id": Json(result.id)
+        ])));
   }
 
   void handleEvaluateAuthorization(HTTPServerRequest req, HTTPServerResponse res) {

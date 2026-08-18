@@ -123,36 +123,18 @@ class BuildingBlockUi5View {
         return html.data;
     }
 
-    private string pageStart(string title) {
+     string pageStart(string title) {
         return "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
             ~ "<title>" ~ escapeHtml(title) ~ "</title>"
             ~ "<script id='sap-ui-bootstrap' src='https://sdk.openui5.org/resources/sap-ui-core.js' data-sap-ui-theme='sap_horizon' data-sap-ui-libs='sap.m,sap.ui.layout' data-sap-ui-compatVersion='edge' data-sap-ui-async='true'></script>"
             ~ "</head><body class='sapUiBody'><div id='content'></div>";
     }
 
-    private string navItem(string title, string href) {
+     string navItem(string title, string href) {
         return "list.addItem(new sap.m.StandardListItem({title:'" ~ escapeJs(title) ~ "',type:'Navigation',press:function(){window.location='" ~ escapeJs(href) ~ "';}}));";
     }
 
-    private string field(string label, string propertyName) {
+     string field(string label, string propertyName) {
         return "new sap.m.Label({text:'" ~ escapeJs(label) ~ "'}),new sap.m.Text({text:'{" ~ escapeJs(propertyName) ~ "}'})";
-    }
-
-    private string escapeHtml(string value) {
-        return value
-            .replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
-            .replace("\"", "&quot;")
-            .replace("'", "&#39;");
-    }
-
-    private string escapeJs(string value) {
-        return value
-            .replace("\\", "\\\\")
-            .replace("'", "\\'")
-            .replace("\n", "\\n")
-            .replace("\r", "\\r")
-            .replace("</", "<\\/");
     }
 }

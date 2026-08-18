@@ -39,7 +39,7 @@ class EventMatcher {
         return true;
     }
 
-    private Condition findCondition(Condition[] list, string name) {
+    protected Condition findCondition(Condition[] list, string name) {
         foreach (c; list)
             if (c.name == name) return c;
         return null;

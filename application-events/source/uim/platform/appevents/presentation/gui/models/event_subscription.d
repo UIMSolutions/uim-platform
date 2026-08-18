@@ -16,11 +16,11 @@ mixin(ShowModule!());
 
 
 class GuiEventSubscriptionModel {
-    private EventSubscription[] _items;
-    private EventSubscription   _selected;
-    private bool                _hasSelected;
-    private string              _errorMessage;
-    private string              _successMessage;
+    protected EventSubscription[] _items;
+    protected EventSubscription   _selected;
+    protected bool                _hasSelected;
+    protected string              _errorMessage;
+    protected string              _successMessage;
 
     void delegate() @safe onChanged;
 

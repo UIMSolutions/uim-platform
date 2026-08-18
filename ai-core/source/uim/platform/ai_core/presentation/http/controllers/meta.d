@@ -21,7 +21,6 @@ class MetaController : HttpController {
 
     auto tenantId = precheck.tenantId;
 
-    auto j = Json.emptyObject;
 
     auto logs = Json.emptyObject
       .set("executions", true)
@@ -54,13 +53,14 @@ class MetaController : HttpController {
       .set("limits", limits)
       .set("version", Json("2.18.0"));
 
-    j["aiApi"] = aiApi;
+    auto j = Json.emptyObject
+      .set("aiApi", aiApi);
 
     // Extensions
     auto ext = Json.emptyObject;
 
-    auto analytics = Json.emptyObject;
-    analytics["version"] = Json("1.0.0");
+    auto analytics = Json.emptyObject
+      .set("version", "1.0.0");
     ext["analytics"] = analytics;
 
     auto metrics = Json.emptyObject;

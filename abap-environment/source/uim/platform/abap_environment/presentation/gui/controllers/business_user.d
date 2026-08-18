@@ -12,9 +12,9 @@ import uim.platform.abap_environment.presentation.gui.models.business_user;
 // mixin(ShowModule!());
 
 class BusinessUserGuiController {
-  private ManageBusinessUsersUseCase usecase;
-  private BusinessUserWindow view;
-  private BusinessUserGuiModel model;
+  protected ManageBusinessUsersUseCase usecase;
+  protected BusinessUserWindow view;
+  protected BusinessUserGuiModel model;
 
   this(ManageBusinessUsersUseCase usecase, BusinessUserWindow view, BusinessUserGuiModel model) {
     this.usecase = usecase;
@@ -23,6 +23,6 @@ class BusinessUserGuiController {
     connectSignals();
   }
 
-  private void connectSignals() {
+  protected void connectSignals() {
   }
 }

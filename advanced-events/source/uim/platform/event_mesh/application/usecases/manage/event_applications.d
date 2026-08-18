@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
-    private IEventApplicationRepository repo;
+    protected IEventApplicationRepository repo;
 
     this(IEventApplicationRepository repo) {
         this.repo = repo;

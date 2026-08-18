@@ -18,18 +18,18 @@ mixin(ShowModule!());
 @safe:
 
 class FileBrokerServiceRepository : BrokerServiceRepository {
-    private string basePath;
-    private bool[TenantId] loadedTenants;
+    protected string basePath;
+    protected bool[TenantId] loadedTenants;
 
     this(string basePath = "build/data/event-mesh") {
         this.basePath = basePath;
     }
 
-    private string filePath(TenantId tenantId) const {
+    protected string filePath(TenantId tenantId) const {
         return buildPath(basePath, tenantId.value, "broker_services.json");
     }
 
-    private void ensureLoaded(TenantId tenantId) {
+    protected void ensureLoaded(TenantId tenantId) {
         if (tenantId in loadedTenants)
             return;
 
@@ -37,7 +37,7 @@ class FileBrokerServiceRepository : BrokerServiceRepository {
         loadTenant(tenantId);
     }
 
-    private void loadTenant(TenantId tenantId) @trusted {
+    protected void loadTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         if (!fileExists(fp))
             return;

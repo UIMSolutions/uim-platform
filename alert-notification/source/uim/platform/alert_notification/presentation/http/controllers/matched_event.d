@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MatchedEventController : HttpController {
-    private ConsumeMatchedEventsUseCase usecase;
+    protected ConsumeMatchedEventsUseCase usecase;
 
     this(ConsumeMatchedEventsUseCase usecase) { this.usecase = usecase; }
 
@@ -22,13 +22,13 @@ class MatchedEventController : HttpController {
         router.get("/api/v1/alert-notification/matched-events/*", &handleGet);
     }
 
-    private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
+    protected void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto result   = usecase.listMatchedEvents(tenantId);
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
-    private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
+    protected void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.getMatchedEvent(tenantId, id);

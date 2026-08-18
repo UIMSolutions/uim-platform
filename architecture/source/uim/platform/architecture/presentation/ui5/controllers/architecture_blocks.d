@@ -9,8 +9,8 @@ mixin(ShowModule!());
 @safe:
 
 class ArchitectureBlockUi5Controller {
-    private ArchitectureBlockUi5Model model;
-    private ArchitectureBlockUi5View view;
+    protected ArchitectureBlockUi5Model model;
+    protected ArchitectureBlockUi5View view;
 
     this(ArchitectureBlockUi5Model model, ArchitectureBlockUi5View view) {
         this.model = model;
@@ -18,6 +18,8 @@ class ArchitectureBlockUi5Controller {
     }
 
     void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.get("/ui5/architecture/architecture2", &handleArchitectureList);
         router.get("/ui5/architecture/architecture2/:id", &handleArchitectureDetail);
         router.post("/ui5/architecture/architecture2/create", &handleArchitectureCreate);

@@ -11,8 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePromptsUseCase { // TODO: UIMUseCase {
-  private IPromptRepository repo;
-  private PromptEnricher enricher;
+  protected IPromptRepository repo;
+  protected PromptEnricher enricher;
 
   this(IPromptRepository repo, PromptEnricher enricher) {
     this.repo = repo;

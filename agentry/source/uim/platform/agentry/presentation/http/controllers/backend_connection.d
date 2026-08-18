@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class BackendConnectionController : ManageHttpController {
-    private ManageBackendConnectionsUseCase usecase;
+    protected ManageBackendConnectionsUseCase usecase;
 
     this(ManageBackendConnectionsUseCase usecase) {
         this.usecase = usecase;

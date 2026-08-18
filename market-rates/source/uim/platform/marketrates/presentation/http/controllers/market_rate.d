@@ -113,9 +113,9 @@ class MarketRateController : ManageHttpController {
     if (instrJson.isArray) {
       foreach (i; instrJson.byValue) {
         DownloadInstrument instr;
-        instr.key1 = jsonStr(i, "key1");
-        instr.key2 = jsonStr(i, "key2");
-        instr.category = jsonStr(i, "category");
+        instr.key1 = i.getString("key1");
+        instr.key2 = i.getString("key2");
+        instr.category = i.getString("category");
         ucReq.instruments ~= instr;
       }
     }
@@ -126,10 +126,10 @@ class MarketRateController : ManageHttpController {
     foreach (r; result.rates)
       ratesArr ~= r.toJson();
 
-    auto j = Json.emptyObject;
-    j["status"] = Json(result.status.to!string);
-    j["totalCount"] = Json(result.totalCount);
-    j["rates"] = ratesArr;
+    auto j = Json.emptyObject
+      .set("status", Json(result.status.to!string))
+      .set("totalCount", Json(result.totalCount))
+      .set("rates", ratesArr);
 
     return successResponse("Download completed", 200, j);
   }
@@ -163,13 +163,12 @@ class MarketRateController : ManageHttpController {
 
     auto rates = ratesUC.query(ucReq);
 
-    auto arr = Json.emptyArray;
-    foreach (r; rates)
-      arr ~= r.toJson();
+    auto arr = rates.map!toJson.array.toJson;
 
-    auto j = Json.emptyObject;
-    j["data"] = arr;
-    j["count"] = Json(cast(int)rates.length);
+    auto j = Json.emptyObject
+      .set("data", arr)
+      .set("count", rates.length);
+
     return successResponse(j, "Rates retrieved successfully", 200);
   }
 
@@ -187,9 +186,9 @@ class MarketRateController : ManageHttpController {
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
     auto rate = ratesUC.getById(tenantId, MarketRateId(id));
 
-    if (rate.isNull) {
+    if (rate.isNull) 
       return errorResponse("Market rate not found", 404);
-    }
+    
     return successResponse(rate.toJson(), "Market rate retrieved successfully", 200);
   }
 
@@ -220,9 +219,8 @@ class MarketRateController : ManageHttpController {
 
     auto result = ratesUC.deleteRate(ucReq);
 
-    if (!result.success) {
+    if (!result.success)
       return errorResponse(result.message, 422);
-    }
 
     auto j = Json.emptyObject.set("deleted", true);
     return successResponse(j, "Rates deleted successfully", 200);
@@ -270,9 +268,8 @@ class MarketRateController : ManageHttpController {
     ucReq.contactEmail = data.getString("contactEmail");
 
     auto result = providersUC.createProvider(ucReq);
-    if (!result.success) {
+    if (!result.success)
       return errorResponse(result.message, 422);
-    }
 
     auto j = Json.emptyObject.set("id", result.id).set("created", true);
     return successResponse(j, "Provider created successfully", 201);
@@ -315,17 +312,14 @@ class MarketRateController : ManageHttpController {
     ucReq.isActive = jsonBool(data, "isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);
-    if (!result.success) {
+    if (!result.success)
       return errorResponse(result.message, 422);
-    }
 
     auto j = Json.emptyObject.set("updated", true);
     return successResponse(j, "Provider updated successfully", 200);
   }
 
   mixin(HandleTemplate!("handleUpdateProvider", "updateProviderHandler"));
-
-
 
   protected Json deleteProviderHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -336,9 +330,8 @@ class MarketRateController : ManageHttpController {
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
 
     auto result = providersUC.deleteProvider(tenantId, ProviderId(id));
-    if (!result.success) {
+    if (!result.success)
       return errorResponse(result.message, 404);
-    }
 
     auto j = Json.emptyObject.set("deleted", true);
     return successResponse(j, "Provider deleted successfully", 200);

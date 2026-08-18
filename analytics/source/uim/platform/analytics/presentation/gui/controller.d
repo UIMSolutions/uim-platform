@@ -8,8 +8,8 @@ import uim.platform.analytics.presentation.gui.model;
 import uim.platform.analytics.presentation.gui.view;
 
 class GuiController {
-  private ManageAssetsUseCase useCase;
-  private GuiView view;
+  protected ManageAssetsUseCase useCase;
+  protected GuiView view;
 
   this(ManageAssetsUseCase useCase) {
     this.useCase = useCase;
@@ -20,7 +20,7 @@ class GuiController {
     router.get("/gui", &handleGui);
   }
 
-  private void handleGui(HTTPServerRequest req, HTTPServerResponse res) {
+  protected void handleGui(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
     auto assets = useCase.listAssets(tenantId);
 

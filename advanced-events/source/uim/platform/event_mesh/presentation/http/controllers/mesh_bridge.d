@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class MeshBridgeController : ManageHttpController {
-    private ManageMeshBridgesUseCase usecase;
+    protected ManageMeshBridgesUseCase usecase;
 
     this(ManageMeshBridgesUseCase usecase) {
         this.usecase = usecase;

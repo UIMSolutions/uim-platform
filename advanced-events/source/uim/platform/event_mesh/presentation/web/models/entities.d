@@ -14,12 +14,8 @@ mixin(ShowModule!());
 
 @safe:
 
-private string newId() {
-    return randomUUID().to!string;
-}
-
 class WebBrokerServiceModel {
-    private ManageBrokerServicesUseCase usecase;
+    protected ManageBrokerServicesUseCase usecase;
 
     this(ManageBrokerServicesUseCase usecase) {
         this.usecase = usecase;

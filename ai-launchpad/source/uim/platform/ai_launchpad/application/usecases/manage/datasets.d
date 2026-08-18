@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDatasetsUseCase { // TODO: UIMUseCase {
-  private IDatasetRepository repo;
+  protected IDatasetRepository repo;
 
   this(IDatasetRepository repo) {
     this.repo = repo;

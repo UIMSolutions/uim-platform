@@ -19,8 +19,8 @@ mixin(ShowModule!());
 
 /*
 class FileSubscriptionRepository : TenantRepository!(), ISubscriptionRepository {
-    private string basePath;
-    private bool[TenantId] loadedTenants;
+    protected string basePath;
+    protected bool[TenantId] loadedTenants;
 
     this(string basePath = "build/data/event-mesh") {
         this.basePath = basePath;

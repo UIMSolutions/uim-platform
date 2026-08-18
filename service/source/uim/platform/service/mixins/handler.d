@@ -20,6 +20,6 @@ string handleTemplate(string handleName, string handlerMethod) {
     }`;
 }
 
-template HandleTemplate(string handleName, string handlerMethod) {
-  const char[] HandleTemplate = handleTemplate(handleName, handlerMethod);
-}
+// template HandleTemplate(string handleName, string handlerMethod) {
+//   const char[] HandleTemplate = handleTemplate(handleName, handlerMethod);
+// }

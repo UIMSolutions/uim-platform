@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageSyncSessionsUseCase {
-    private ISyncSessionRepository repo;
+    protected ISyncSessionRepository repo;
 
     this(ISyncSessionRepository repo) {
         this.repo = repo;

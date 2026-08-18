@@ -12,9 +12,9 @@ import uim.platform.abap_environment.presentation.gui.models.service_binding;
 // mixin(ShowModule!());
 
 class ServiceBindingGuiController {
-  private ManageServiceBindingsUseCase usecase;
-  private ServiceBindingWindow view;
-  private ServiceBindingGuiModel model;
+  protected ManageServiceBindingsUseCase usecase;
+  protected ServiceBindingWindow view;
+  protected ServiceBindingGuiModel model;
 
   this(ManageServiceBindingsUseCase usecase, ServiceBindingWindow view, ServiceBindingGuiModel model) {
     this.usecase = usecase;
@@ -23,6 +23,6 @@ class ServiceBindingGuiController {
     connectSignals();
   }
 
-  private void connectSignals() {
+  protected void connectSignals() {
   }
 }

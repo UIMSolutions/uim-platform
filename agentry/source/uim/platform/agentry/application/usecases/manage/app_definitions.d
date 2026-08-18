@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 /// Use case for managing app definitions.
 class ManageAppDefinitionsUseCase {
-    private IAppDefinitionRepository repo;
+    protected IAppDefinitionRepository repo;
 
     this(IAppDefinitionRepository repo) {
         this.repo = repo;

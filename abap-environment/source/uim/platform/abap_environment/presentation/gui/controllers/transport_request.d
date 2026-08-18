@@ -12,9 +12,9 @@ import uim.platform.abap_environment.presentation.gui.models.transport_request;
 // mixin(ShowModule!());
 
 class TransportRequestGuiController {
-  private ManageTransportRequestsUseCase usecase;
-  private TransportRequestWindow view;
-  private TransportRequestGuiModel model;
+  protected ManageTransportRequestsUseCase usecase;
+  protected TransportRequestWindow view;
+  protected TransportRequestGuiModel model;
 
   this(ManageTransportRequestsUseCase usecase, TransportRequestWindow view, TransportRequestGuiModel model) {
     this.usecase = usecase;

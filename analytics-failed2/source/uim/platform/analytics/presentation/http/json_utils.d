@@ -28,12 +28,6 @@ string extractAssetId(scope HTTPServerRequest req) {
   return remainder;
 }
 
-void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto payload = Json.emptyObject;
-  payload["error"] = Json(message);
-  res.writeJsonBody(payload, status);
-}
-
 string[] readStringArray(Json obj, string key) {
   string[] values;
   if (!(key in obj)) return values;

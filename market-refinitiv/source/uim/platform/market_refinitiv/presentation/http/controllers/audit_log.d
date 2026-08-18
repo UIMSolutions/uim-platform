@@ -6,7 +6,6 @@
 module uim.platform.market_refinitiv.presentation.http.controllers.audit_log;
 import uim.platform.market_refinitiv;
 
-
 mixin(ShowModule!());
 
 @safe:
@@ -19,32 +18,35 @@ class AuditLogController : SAPController {
   }
 
   override void registerRoutes(URLRouter router) {
-    router.get("/api/v1/market_refinitiv/auditlogs",   &handleList);
+    super.registerRoutes(router);
+    
+    router.get("/api/v1/market_refinitiv/auditlogs", &handleList);
     router.get("/api/v1/market_refinitiv/auditlogs/*", &handleGet);
   }
 
   private void handleList(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto logs     = uc.list(tenantId);
+    auto logs = uc.list(tenantId);
 
-    auto arr = Json.emptyArray;
-    foreach (l; logs) arr ~= l.toJson();
+    auto arr = logs.map!toJson.array.toJson();
 
-    auto j = Json.emptyObject;
-    j["data"]  = arr;
-    j["count"] = Json(cast(int) logs.length);
+    auto j = Json.emptyObject
+      .set("data", arr)
+      .set("count", logs.length);
+
     res.writeJsonBody(j, 200);
   }
 
   private void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = precheck.id;
+    auto id = precheck.id;
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto entry    = uc.getById(tenantId, AuditLogId(id));
+    auto entry = uc.getById(tenantId, AuditLogId(id));
 
     if (entry.isNull) {
       writeError(res, 404, "Audit log entry not found");
       return;
     }
+
     res.writeJsonBody(entry.toJson(), 200);
   }
 }

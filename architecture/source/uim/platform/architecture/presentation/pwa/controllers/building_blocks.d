@@ -9,8 +9,8 @@ mixin(ShowModule!());
 @safe:
 
 class BuildingBlockPwaController {
-    private BuildingBlockPwaModel model;
-    private BuildingBlockPwaView view;
+    protected BuildingBlockPwaModel model;
+    protected BuildingBlockPwaView view;
 
     this(BuildingBlockPwaModel model, BuildingBlockPwaView view) {
         this.model = model;

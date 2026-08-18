@@ -46,12 +46,7 @@ class SoftwareComponentController : ManageHttpController {
     auto items = usecase.listSoftwareComponents(tenantId, systemId);
     auto arr = items.map!(comp => comp.toJson).array.toJson;
 
-    return Json.emptyObject
-      .set("status", 200)
-      .set("items", arr)
-      .set("totalCount", items.length)
-      .set("message", "Software components retrieved successfully")
-      .set("statusCode", 200);
+    return successResponse("Software components retrieved successfully", "Retrieved", 200, arr);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -74,19 +69,10 @@ class SoftwareComponentController : ManageHttpController {
     request.namespace = data.getString("namespace");
 
     auto result = usecase.createSoftwareComponent(request);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", 400)
-        .set("statusCode", 400)
-        .set("error", result.message)
-        .set("message", "Failed to create software component");
-    }
+    if (result.hasError())
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
-      .set("id", result.id)
-      .set("status", 201)
-      .set("statusCode", 201)
-      .set("message", "Software component created");
+    return successResponse("Software component created successfully", "Created", 201, Json.emptyObject.set("id", result.id));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -96,21 +82,15 @@ class SoftwareComponentController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = SoftwareComponentId(precheck.id);
+    if (id.isNull) 
+      return errorResponse("Invalid software component ID", 400);
+    
 
     auto comp = usecase.getSoftwareComponent(tenantId, id);
-    if (comp.isNull) {
-      return Json.emptyObject
-        .set("status", 404)
-        .set("statusCode", 404)
-        .set("error", "Software component not found")
-        .set("message", "Software component not found");
-    }
-
-    return Json.emptyObject
-      .set("status", 200)
-      .set("statusCode", 200)
-      .set("item", comp.toJson)
-      .set("message", "Software component retrieved successfully");
+    if (comp.isNull) 
+      return errorResponse("Software component not found", 404);
+    
+    return successResponse("Software component retrieved successfully", "Retrieved", 200, comp.toJson());
   }
 
   protected Json cloneHandler(HTTPServerRequest req) {
@@ -173,6 +153,8 @@ class SoftwareComponentController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = SoftwareComponentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid software component ID", 400);
 
     auto result = usecase.deleteSoftwareComponent(tenantId, id);
     if (result.hasError)

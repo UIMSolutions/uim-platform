@@ -54,8 +54,6 @@ class FileTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
          }
      }
 
-    TEntity 
-
     TEntity[TId] getEntities(TenantId tenantId) {
         TEntity[TId] results;
         // Implementation would typically iterate files in directory

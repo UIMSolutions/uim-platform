@@ -24,17 +24,17 @@ mixin(ShowModule!());
 @safe:
 
 class FileEventSubscriptionRepository : MemoryEventSubscriptionRepository, EventSubscriptionRepository {
-    private string _basePath;
+    protected string _basePath;
 
     this(string basePath) @safe {
-        _basePath = basePath;
+        this._basePath = basePath;
     }
 
-    private string filePath(TenantId tenantId) @safe {
+    protected string filePath(TenantId tenantId) @safe {
         return buildPath(_basePath, tenantId.value, "event_subscriptions.json");
     }
 
-    private void persistTenant(TenantId tenantId) @trusted {
+    protected void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
         auto items = findByTenant(tenantId);
@@ -44,7 +44,7 @@ class FileEventSubscriptionRepository : MemoryEventSubscriptionRepository, Event
         write(fp, arr.toString());
     }
 
-    private void loadTenant(TenantId tenantId) @trusted {
+    protected void loadTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         if (!exists(fp))
             return;

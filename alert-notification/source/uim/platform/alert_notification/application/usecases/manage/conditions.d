@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageConditionsUseCase {
-    private IConditionRepository repo;
+    protected IConditionRepository repo;
 
     this(IConditionRepository repo) { this.repo = repo; }
 
@@ -49,7 +49,7 @@ class ManageConditionsUseCase {
 
     CommandResult updateCondition(TenantId tenantId, string id, UpdateConditionRequest req) {
         auto cond = repo.findById(tenantId, ConditionId(id));
-        if (cond is null || cond.isNull())
+        if (cond.isNull())
             return CommandResult(false, "", "Condition not found");
 
         if (req.description.length)  cond.description  = req.description;

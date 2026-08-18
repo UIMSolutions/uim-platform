@@ -12,21 +12,23 @@ mixin(ShowModule!());
 @safe:
 
 class ManageSubscriptionsUseCase {
-    private ISubscriptionRepository repo;
+    protected ISubscriptionRepository repo;
 
-    this(ISubscriptionRepository repo) { this.repo = repo; }
+    this(ISubscriptionRepository repo) {
+        this.repo = repo;
+    }
 
     CommandResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req) {
         if (repo.existsByName(tenantId, req.name))
             return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
         auto sub = Subscription(tenantId);
-        sub.name        = req.name;
+        sub.name = req.name;
         sub.description = req.description;
-        sub.conditions  = req.conditions.dup;
-        sub.actions     = req.actions.dup;
-        sub.state       = req.state.length ? req.state.to!ResourceState : ResourceState.enabled;
-        sub.labels      = req.labels.dup;
+        sub.conditions = req.conditions.dup;
+        sub.actions = req.actions.dup;
+        sub.state = req.state.length ? req.state.to!ResourceState : ResourceState.enabled;
+        sub.labels = req.labels.dup;
 
         repo.save(sub);
         return CommandResult(true, sub.id.value, sub.toJson().toString());
@@ -34,28 +36,32 @@ class ManageSubscriptionsUseCase {
 
     QueryResult getSubscription(TenantId tenantId, string id) {
         auto sub = repo.findById(tenantId, SubscriptionId(id));
-        if (sub is null || sub.isNull())
+        if (sub.isNull())
             return QueryResult(false, "Subscription not found", Json.emptyObject);
         return QueryResult(true, "", sub.toJson());
     }
 
     QueryResult listSubscriptions(TenantId tenantId) {
         auto items = repo.findByTenant(tenantId);
-        auto arr   = Json.emptyArray;
-        foreach (s; items) arr ~= s.toJson();
+        auto arr = items.map!(s => s.toJson()).array.toJson;
         return QueryResult(true, "", arr);
     }
 
     CommandResult updateSubscription(TenantId tenantId, SubscriptionId id, UpdateSubscriptionRequest req) {
         auto sub = repo.findById(tenantId, id);
-        if (sub is null || sub.isNull())
+        if (sub.isNull())
             return CommandResult(false, "", "Subscription not found");
 
-        if (req.description.length) sub.description = req.description;
-        if (req.conditions.length)  sub.conditions  = req.conditions.dup;
-        if (req.actions.length)     sub.actions     = req.actions.dup;
-        if (req.state.length)       sub.state       = req.state.to!ResourceState;
-        if (req.labels.length)      sub.labels      = req.labels.dup;
+        if (req.description.length)
+            sub.description = req.description;
+        if (req.conditions.length)
+            sub.conditions = req.conditions.dup;
+        if (req.actions.length)
+            sub.actions = req.actions.dup;
+        if (req.state.length)
+            sub.state = req.state.to!ResourceState;
+        if (req.labels.length)
+            sub.labels = req.labels.dup;
 
         repo.save(sub);
         return CommandResult(true, sub.id.value, sub.toJson().toString());
@@ -63,10 +69,10 @@ class ManageSubscriptionsUseCase {
 
     CommandResult deleteSubscription(TenantId tenantId, SubscriptionId id) {
         auto sub = repo.findById(tenantId, id);
-        if (sub is null || sub.isNull())
+        if (sub.isNull())
             return CommandResult(false, "", "Subscription not found");
 
-        repo.removeB(sub);
+        repo.removeBy(sub);
         return CommandResult(true, sub.id.value, "Subscription deleted");
     }
 }

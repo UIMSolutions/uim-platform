@@ -12,9 +12,9 @@ import uim.platform.abap_environment.presentation.gui.models.system_instance;
 // mixin(ShowModule!());
 
 class SystemInstanceGuiController {
-  private ManageSystemInstancesUseCase usecase;
-  private SystemInstanceWindow view;
-  private SystemInstanceGuiModel model;
+  protected ManageSystemInstancesUseCase usecase;
+  protected SystemInstanceWindow view;
+  protected SystemInstanceGuiModel model;
 
   this(ManageSystemInstancesUseCase usecase, SystemInstanceWindow view, SystemInstanceGuiModel model) {
     this.usecase = usecase;
@@ -23,6 +23,6 @@ class SystemInstanceGuiController {
     connectSignals();
   }
 
-  private void connectSignals() {
+  protected void connectSignals() {
   }
 }

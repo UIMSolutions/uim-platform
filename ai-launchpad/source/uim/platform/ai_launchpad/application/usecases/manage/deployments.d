@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDeploymentsUseCase { // TODO: UIMUseCase {
-  private IDeploymentRepository repo;
+  protected IDeploymentRepository repo;
 
   this(IDeploymentRepository repo) {
     this.repo = repo;

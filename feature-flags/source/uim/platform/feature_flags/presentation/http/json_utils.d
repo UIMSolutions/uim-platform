@@ -63,46 +63,27 @@ string[string] getStringMap(Json j, string key) {
 }
 
 // ---------------------------------------------------------------------------
-// Path extraction
+// Standard  helpers
 // ---------------------------------------------------------------------------
-
-/// Extract the last path segment after the final '/'.
-string extractIdFromPath(string path) {
-    import std.string : lastIndexOf;
-    auto idx = path.lastIndexOf('/');
-    if (idx < 0 || idx + 1 >= path.length) return "";
-    return path[idx + 1 .. $];
-}
-
-// ---------------------------------------------------------------------------
-// Standard response helpers
-// ---------------------------------------------------------------------------
-
-void writeError(HTTPServerResponse res, int status, string message) @safe {
-    auto j = Json.emptyObject;
-    j["error"]   = message;
-    j["status"]  = status;
-    res.writeJsonBody(j, status);
-}
 
 // ---------------------------------------------------------------------------
 // Domain entity -> JSON serialisers
 // ---------------------------------------------------------------------------
 
 Json toJson(FeatureFlag f) {
-    auto j = Json.emptyObject;
-    j["id"]             = f.id.value;
-    j["tenantId"]       = f.tenantId;
-    j["name"]           = f.name;
-    j["description"]    = f.description;
-    j["type"]           = cast(string) f.type_;
-    j["state"]          = cast(string) f.state_;
-    j["instanceId"]     = f.instanceId.value;
-    j["defaultVariant"] = f.defaultVariant;
-    j["createdAt"]      = f.createdAt;
-    j["updatedAt"]      = f.updatedAt;
-    j["createdBy"]      = f.createdBy;
-    j["updatedBy"]      = f.updatedBy;
+    auto j = Json.emptyObject
+    .set("id", f.id.value)
+    .set("tenantId", f.tenantId)
+    .set("name", f.name)
+    .set("description", f.description)
+    .set("type", cast(string) f.type_)
+    .set("state", cast(string) f.state_)
+    .set("instanceId", f.instanceId.value)
+    .set("defaultVariant", f.defaultVariant)
+    .set("createdAt", f.createdAt)
+    .set("updatedAt", f.updatedAt)
+    .set("createdBy", f.createdBy)
+    .set("updatedBy", f.updatedBy);
 
     auto varArr = Json.emptyArray;
     foreach (v; f.variants) varArr ~= toJson(v);

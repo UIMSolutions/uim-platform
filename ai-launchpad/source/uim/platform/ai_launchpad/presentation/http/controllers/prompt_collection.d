@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 
 class PromptCollectionController : ManageHttpController {
-  private ManagePromptCollectionsUseCase usecase;
+  protected ManagePromptCollectionsUseCase usecase;
 
   this(ManagePromptCollectionsUseCase usecase) {
     this.usecase = usecase;

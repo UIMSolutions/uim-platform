@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageBackendConnectionsUseCase {
-    private IBackendConnectionRepository repo;
+    protected IBackendConnectionRepository repo;
 
     this(IBackendConnectionRepository repo) {
         this.repo = repo;

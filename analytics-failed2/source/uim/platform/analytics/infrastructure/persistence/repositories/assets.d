@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:  
 class AssetRepository : AssetRepository {
-  private InsightAsset[][TenantId] byTenant;
+  protected InsightAsset[][TenantId] byTenant;
 
   AssetId save(InsightAsset asset) {
     byTenant[asset.tenantId] ~= asset;

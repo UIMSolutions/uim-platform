@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.analytics.presentation.web.controller;
 
 import vibe.http.router : URLRouter;
@@ -7,8 +12,8 @@ import uim.platform.analytics.presentation.web.model;
 import uim.platform.analytics.presentation.web.view;
 
 class WebController {
-  private ManageAssetsUseCase useCase;
-  private WebView view;
+  protected ManageAssetsUseCase useCase;
+  protected WebView view;
 
   this(ManageAssetsUseCase useCase) {
     this.useCase = useCase;
@@ -19,7 +24,7 @@ class WebController {
     router.get("/web", &handleDashboard);
   }
 
-  private void handleDashboard(HTTPServerRequest req, HTTPServerResponse res) {
+  protected void handleDashboard(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
     auto assets = useCase.listAssets(tenantId);
 

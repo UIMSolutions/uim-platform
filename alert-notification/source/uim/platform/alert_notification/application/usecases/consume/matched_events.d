@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ConsumeMatchedEventsUseCase {
-    private IMatchedEventRepository repo;
+    protected IMatchedEventRepository repo;
 
     this(IMatchedEventRepository repo) {
         this.repo = repo;

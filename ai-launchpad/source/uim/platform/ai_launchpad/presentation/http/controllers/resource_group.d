@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.resource_group;
 
-// import uim.platform.ai_launchpad.application.usecases.manage.resource_groups;
-// import uim.platform.ai_launchpad.application.dto;
-
 import uim.platform.ai_launchpad;
 
 mixin(ShowModule!());
@@ -15,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ResourceGroupController : ManageHttpController {
-  private ManageResourceGroupsUseCase usecase;
+  protected ManageResourceGroupsUseCase usecase;
 
   this(ManageResourceGroupsUseCase usecase) {
     this.usecase = usecase;
@@ -23,6 +20,7 @@ class ResourceGroupController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/admin/resource-groups", &handleCreate);
     router.get("/api/v1/admin/resource-groups", &handleList);
     router.get("/api/v1/admin/resource-groups/*", &handleGet);

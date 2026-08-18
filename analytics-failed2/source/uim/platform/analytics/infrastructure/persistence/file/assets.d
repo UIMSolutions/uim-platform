@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 // @safe:  
 // class FileAssetRepository : AssetRepository {
-//   private InsightAsset[][TenantId] byTenant;
-//   private string filePath;
+//   protected InsightAsset[][TenantId] byTenant;
+//   protected string filePath;
 
 //   this(string dataPath) {
 //     if (!exists(dataPath)) mkdirRecurse(dataPath);

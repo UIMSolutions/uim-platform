@@ -5,17 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.deployment;
 
-// import uim.platform.ai_launchpad.application.usecases.manage.deployments;
-// import uim.platform.ai_launchpad.application.dto;
-
 import uim.platform.ai_launchpad;
 
 mixin(ShowModule!());
 
 @safe:
-
 class DeploymentController : ManageHttpController {
-  private ManageDeploymentsUseCase usecase;
+  protected ManageDeploymentsUseCase usecase;
 
   this(ManageDeploymentsUseCase usecase) {
     this.usecase = usecase;
@@ -85,6 +81,9 @@ class DeploymentController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto id = DeploymentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Deployment ID is required", 400);
+
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     auto deployment = usecase.getDeployment(tenantId, connectionId, id);
@@ -102,6 +101,9 @@ class DeploymentController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = DeploymentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Deployment ID is required", 400);
+      
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
     auto data = precheck.data;
 

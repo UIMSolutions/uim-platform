@@ -20,8 +20,8 @@ import gtk.ToolButton;
 // mixin(ShowModule!());
 
 class SystemInstanceWindow : ApplicationWindow {
-  private ManageSystemInstancesUseCase usecase;
-  private TreeView treeView;
+  protected ManageSystemInstancesUseCase usecase;
+  protected TreeView treeView;
 
   this(Application app, ManageSystemInstancesUseCase usecase) {
     super(app);

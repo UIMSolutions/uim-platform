@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-private string renderListPage(string title, string[] rows) {
+protected string renderListPage(string title, string[] rows) {
     auto html = appender!string();
     html.put("<!doctype html><html><head><meta charset=\"utf-8\">");
     html.put("<title>");
@@ -38,7 +38,7 @@ private string renderListPage(string title, string[] rows) {
     return html.data;
 }
 
-private string renderJsonPage(string title, Json payload) {
+protected string renderJsonPage(string title, Json payload) {
     auto html = appender!string();
     html.put("<!doctype html><html><head><meta charset=\"utf-8\">");
     html.put("<title>");
@@ -55,7 +55,7 @@ private string renderJsonPage(string title, Json payload) {
     return html.data;
 }
 
-private string renderMutationPage(string title, CommandResult result) {
+protected string renderMutationPage(string title, CommandResult result) {
     auto payload = Json.emptyObject
         .set("success", !result.hasError)
         .set("id", result.id)

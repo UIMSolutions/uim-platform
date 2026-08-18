@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDevicesUseCase {
-    private IDeviceRepository repo;
+    protected IDeviceRepository repo;
 
     this(IDeviceRepository repo) {
         this.repo = repo;

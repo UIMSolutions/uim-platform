@@ -15,9 +15,9 @@ import uim.platform.appevents.presentation.cli.views.event_channel;
 @safe:
 
 class CliEventChannelController {
-    private CliEventChannelModel        _model;
-    private CliEventChannelView         _view;
-    private ManageEventChannelsUseCase  _useCase;
+    protected CliEventChannelModel        _model;
+    protected CliEventChannelView         _view;
+    protected ManageEventChannelsUseCase  _useCase;
 
     this(ManageEventChannelsUseCase useCase) {
         _useCase = useCase;

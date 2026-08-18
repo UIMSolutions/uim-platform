@@ -16,11 +16,11 @@ mixin(ShowModule!());
 
 
 class GuiEventTopicModel {
-    private EventTopic[] _items;
-    private EventTopic   _selected;
-    private bool         _hasSelected;
-    private string       _errorMessage;
-    private string       _successMessage;
+    protected EventTopic[] _items;
+    protected EventTopic   _selected;
+    protected bool         _hasSelected;
+    protected string       _errorMessage;
+    protected string       _successMessage;
 
     void delegate() @safe onChanged;
 

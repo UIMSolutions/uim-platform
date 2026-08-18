@@ -26,15 +26,15 @@ class FileEventFilterRepository
     : MemoryEventFilterRepository
     , EventFilterRepository
 {
-    private string _basePath;
+    protected string _basePath;
 
-    this(string basePath) @safe { _basePath = basePath; }
+    this(string basePath) @safe { this._basePath = basePath; }
 
-    private string filePath(TenantId tenantId) @safe {
+    protected string filePath(TenantId tenantId) @safe {
         return buildPath(_basePath, tenantId.value, "event_filters.json");
     }
 
-    private void persistTenant(TenantId tenantId) @trusted {
+    protected void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
         auto items = findByTenant(tenantId);
@@ -43,7 +43,7 @@ class FileEventFilterRepository
         write(fp, arr.toString());
     }
 
-    private void loadTenant(TenantId tenantId) @trusted {
+    protected void loadTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         if (!exists(fp)) return;
         auto text = readText(fp);

@@ -10,14 +10,6 @@ mixin(ShowModule!());
 
 @safe:
 
-// Safe string extraction from JSON
-string jsonStr(Json j, string key, string def = "") {
-  if (j.type != Json.Type.object) return def;
-  auto v = j[key];
-  if (v.isString) return v.get!string;
-  return def;
-}
-
 bool jsonBool(Json j, string key, bool def = false) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
@@ -51,22 +43,3 @@ string[] jsonStrArray(Json j, string key) {
   return result;
 }
 
-// Extract the last path segment (used as an ID)
-string extractIdFromPath(HTTPServerRequest req) {
-  
-  auto p = req.requestPath.to!string;
-  import std.algorithm : findSplitBefore;
-  import std.string : lastIndexOf;
-  auto idx = lastIndexOf(p, '/');
-  if (idx < 0) return p;
-  return p[idx + 1 .. $];
-}
-// 
-// Standard error response
-// void writeError(HTTPServerResponse res, int status, string message) {
-  // auto j = Json.emptyObject;
-  // j["error"]   = Json(message);
-  // j["status"]  = Json(status);
-  // res.writeJsonBody(j, cast(int) status);
-// }
-// 

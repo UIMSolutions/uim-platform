@@ -14,7 +14,7 @@ import uim.platform.appevents.application.dto;
 @safe:
 
 class ManageFormationsUseCase {
-    private IFormationRepository repo;
+    protected IFormationRepository repo;
 
     this(IFormationRepository repo) {
         this.repo = repo;

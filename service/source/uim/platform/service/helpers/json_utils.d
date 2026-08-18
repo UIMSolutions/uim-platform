@@ -93,13 +93,6 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
   res.writeJsonBody(error, status);
 }
 
-/* void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto j = Json.emptyObject;
-  j["error"] = Json.emptyObject;
-  j["error"]["message"] = Json(message);
-  j["error"]["code"] = Json(status);
-  res.writeJsonBody(j, status);
-} */
 ///
 unittest {
   assert(extractIdFromPath("/v1/tenants/abc123") == "abc123");
@@ -513,7 +506,13 @@ Json toJsonObject(const(string[string]) map) {
 ushort getUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort)jsonLong(j, key, default_);
 }
-//// Extract the last path segment from a URI (for wildcard routes).
+
+// Extract the last path segment (used as an ID)
+string extractIdFromPath(HTTPServerRequest req) {  
+  return req.requestPath.to!string.extractIdFromPath;
+}
+
+// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
   // Strip query string
   // import std.string : indexOf;
@@ -529,6 +528,13 @@ string extractIdFromPath(string uri) {
   if (spos >= 0 && spos + 1 < path.length)
     return path[spos + 1 .. $];
   return path;
+}
+///
+unittest {
+  assert(extractIdFromPath("/v1/tenants/abc123") == "abc123");
+  assert(extractIdFromPath("/v1/tenants/abc123/") == "abc123");
+  assert(extractIdFromPath("/v1/tenants/abc123?foo=bar") == "abc123");
+  assert(extractIdFromPath("single") == "single");
 }
 // --- Enum parsers ---
 

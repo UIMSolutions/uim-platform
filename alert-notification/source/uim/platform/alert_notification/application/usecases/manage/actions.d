@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageActionsUseCase {
-    private IActionRepository repo;
+    protected IActionRepository repo;
 
     this(IActionRepository repo) { this.repo = repo; }
 

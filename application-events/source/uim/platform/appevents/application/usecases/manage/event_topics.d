@@ -14,7 +14,7 @@ import uim.platform.appevents.application.dto;
 @safe:
 
 class ManageEventTopicsUseCase {
-    private IEventTopicRepository repo;
+    protected IEventTopicRepository repo;
 
     this(IEventTopicRepository repo) {
         this.repo = repo;

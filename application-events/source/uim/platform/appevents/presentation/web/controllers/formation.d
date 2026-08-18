@@ -15,9 +15,9 @@ import uim.platform.appevents.presentation.web.views.formation;
 @safe:
 
 class WebFormationController {
-    private WebFormationModel        _model;
-    private WebFormationView         _view;
-    private ManageFormationsUseCase  _useCase;
+    protected WebFormationModel        _model;
+    protected WebFormationView         _view;
+    protected ManageFormationsUseCase  _useCase;
 
     this(ManageFormationsUseCase useCase) {
         _useCase = useCase;

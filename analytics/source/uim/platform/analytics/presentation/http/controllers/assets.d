@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.analytics.presentation.http.controllers.assets;
 
 import std.array : array;
@@ -16,7 +21,7 @@ mixin(ShowModule!());
 
 @safe:
 class AnalyticsAssetsController : ManageHttpController {
-  private ManageAssetsUseCase useCase;
+  protected ManageAssetsUseCase useCase;
 
   this(ManageAssetsUseCase useCase) {
     this.useCase = useCase;
@@ -139,7 +144,7 @@ class AnalyticsAssetsController : ManageHttpController {
     return successResponse("Asset deleted successfully", 200, responseData);
   }
 
-  private void handlePublish(HTTPServerRequest req, HTTPServerResponse res) {
+  protected void handlePublish(HTTPServerRequest req, HTTPServerResponse res) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError) {
       res.writeJsonBody(precheck, precheck.code);

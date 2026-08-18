@@ -12,9 +12,9 @@ import uim.platform.abap_environment.presentation.gui.models.application_job;
 // mixin(ShowModule!());
 
 class ApplicationJobGuiController {
-  private ManageApplicationJobsUseCase usecase;
-  private ApplicationJobWindow view;
-  private ApplicationJobGuiModel model;
+  protected ManageApplicationJobsUseCase usecase;
+  protected ApplicationJobWindow view;
+  protected ApplicationJobGuiModel model;
 
   this(ManageApplicationJobsUseCase usecase, ApplicationJobWindow view, ApplicationJobGuiModel model) {
     this.usecase = usecase;

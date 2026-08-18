@@ -27,10 +27,6 @@ class FlexApplicationsController : ManageHttpController {
     router.delete_("/api/v2/applications/*",   &handleDelete);
   }
 
-  private static void writeError(scope HTTPServerResponse res, int status, string msg) {
-    res.writeJsonBody(Json.emptyObject.set("error", msg).set("status", status), status);
-  }
-
   override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 
 class ExecutionController : ManageHttpController {
-  private ManageExecutionsUseCase usecase;
+  protected ManageExecutionsUseCase usecase;
 
   this(ManageExecutionsUseCase usecase) {
     this.usecase = usecase;
@@ -88,6 +88,7 @@ class ExecutionController : ManageHttpController {
     auto id = ExecutionId(precheck.id);
     if (id.isNull)
       return errorResponse("Execution ID is required", 400);
+      
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     auto ex = usecase.getExecution(tenantId, connectionId, id);

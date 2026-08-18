@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 class ManageConnectionsUseCase { // TODO: UIMUseCase {
-  private IConnectionRepository repo;
-  private ConnectionValidator validator;
+  protected IConnectionRepository repo;
+  protected ConnectionValidator validator;
 
   this(IConnectionRepository repo, ConnectionValidator validator) {
     this.repo = repo;

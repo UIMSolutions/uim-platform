@@ -15,9 +15,9 @@ import uim.platform.appevents.presentation.web.views.system_registration;
 @safe:
 
 class WebSystemRegistrationController {
-    private WebSystemRegistrationModel        _model;
-    private WebSystemRegistrationView         _view;
-    private ManageSystemRegistrationsUseCase  _useCase;
+    protected WebSystemRegistrationModel        _model;
+    protected WebSystemRegistrationView         _view;
+    protected ManageSystemRegistrationsUseCase  _useCase;
 
     this(ManageSystemRegistrationsUseCase useCase) {
         _useCase = useCase;

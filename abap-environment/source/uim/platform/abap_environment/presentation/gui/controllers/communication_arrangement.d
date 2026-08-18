@@ -12,9 +12,9 @@ import uim.platform.abap_environment.presentation.gui.models.communication_arran
 // mixin(ShowModule!());
 
 class CommunicationArrangementGuiController {
-  private ManageCommunicationArrangementsUseCase usecase;
-  private CommunicationArrangementWindow view;
-  private CommunicationArrangementGuiModel model;
+  protected ManageCommunicationArrangementsUseCase usecase;
+  protected CommunicationArrangementWindow view;
+  protected CommunicationArrangementGuiModel model;
 
   this(ManageCommunicationArrangementsUseCase usecase, CommunicationArrangementWindow view, CommunicationArrangementGuiModel model) {
     this.usecase = usecase;

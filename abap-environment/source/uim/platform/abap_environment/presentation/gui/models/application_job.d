@@ -11,7 +11,7 @@ import gobject.c.types : GType;
 mixin template ShowModule() { }
 
 class ApplicationJobGuiModel {
-  private ListStore store;
+  protected ListStore store;
 
   this() {
     store = new ListStore([GType.STRING, GType.STRING, GType.STRING, GType.STRING]);
