@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class RoleController : ManageHttpController {
-  private ManageRolesUseCase usecase;
+  protected ManageRolesUseCase usecase;
 
   this(ManageRolesUseCase usecase) {
     this.usecase = usecase;

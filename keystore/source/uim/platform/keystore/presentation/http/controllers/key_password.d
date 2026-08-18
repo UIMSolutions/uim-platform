@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class KeyPasswordController : ManageHttpController {
-  private ManageKeyPasswordsUseCase usecase;
+  protected ManageKeyPasswordsUseCase usecase;
 
   this(ManageKeyPasswordsUseCase usecase) {
     this.usecase = usecase;

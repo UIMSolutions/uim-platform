@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class GeofenceController : ManageHttpController {
-  private ManageGeofenceZonesUseCase usecase;
+  protected ManageGeofenceZonesUseCase usecase;
 
   this(ManageGeofenceZonesUseCase usecase) {
     this.usecase = usecase;

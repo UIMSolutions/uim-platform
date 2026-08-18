@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class KnowledgeBaseArticleController : ManageHttpController {
-  private ManageKnowledgeBaseArticlesUseCase useCase;
+  protected ManageKnowledgeBaseArticlesUseCase useCase;
 
   this(ManageKnowledgeBaseArticlesUseCase useCase) {
     this.useCase = useCase;

@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 class ContentController : ManageHttpController {
-  private ManageAppFilesUseCase fileUc;
+  protected ManageAppFilesUseCase fileUc;
   private ManageContentCacheUseCase cacheUc;
 
   this(ManageAppFilesUseCase fileUc, ManageContentCacheUseCase cacheUc) {

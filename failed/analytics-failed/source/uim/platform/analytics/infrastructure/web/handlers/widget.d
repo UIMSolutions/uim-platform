@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class WidgetHandler {
-  private WidgetUseCases useCases;
+  protected WidgetUseCases useCases;
 
   this(WidgetUseCases useCases) {
     this.useCases = useCases;

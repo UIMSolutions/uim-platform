@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class TemplateRepository : TemplateRepository {
-  private Template[][string] store;
+  protected Template[][string] store;
 
   bool existsById(ClientId clientId, TemplateId id) {
     return clientId in store ? store[clientId].any!(t => t.id == id) : false;

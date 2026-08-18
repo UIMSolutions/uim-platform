@@ -21,7 +21,7 @@ mixin(ShowModule!());
 /// Adapter: JWT-like token generation service.
 /// In production, use proper JWT signing with RS256/ES256.
 class JwtTokenService : ITokenService {
-  private string signingSecret;
+  protected string signingSecret;
 
   this(string signingSecret) {
     this.signingSecret = signingSecret;

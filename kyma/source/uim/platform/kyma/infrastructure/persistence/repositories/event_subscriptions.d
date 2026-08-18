@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class EventSubscriptionRepository : EventSubscriptionRepository {
-  private EventSubscription[EventSubscriptionId] store;
+  protected EventSubscription[EventSubscriptionId] store;
 
   bool existsById(EventSubscriptionId id) {
     return (id in store) ? true : false;

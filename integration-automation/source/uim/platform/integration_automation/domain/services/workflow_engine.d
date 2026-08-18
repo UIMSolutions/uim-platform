@@ -17,7 +17,7 @@ mixin(ShowModule!());
 /// Domain service that orchestrates workflow progression —
 /// advances to the next step, checks dependencies, and updates status.
 class WorkflowEngine {
-  private IWorkflowRepository workflowRepo;
+  protected IWorkflowRepository workflowRepo;
   private IStepRepository stepRepo;
 
   this(IWorkflowRepository workflowRepo, IStepRepository stepRepo) {

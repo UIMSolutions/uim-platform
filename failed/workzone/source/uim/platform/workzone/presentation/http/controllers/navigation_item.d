@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class NavigationItemController : ManageHttpController {
-  private ManageNavigationItemsUseCase useCase;
+  protected ManageNavigationItemsUseCase useCase;
 
   this(ManageNavigationItemsUseCase useCase) {
     this.useCase = useCase;

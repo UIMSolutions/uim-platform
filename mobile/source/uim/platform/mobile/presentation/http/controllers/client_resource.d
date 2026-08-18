@@ -15,7 +15,7 @@ import uim.platform.mobile;
 @safe:
 
 class ClientResourceController : ManageHttpController {
-  private ManageClientResourcesUseCase usecase;
+  protected ManageClientResourcesUseCase usecase;
 
   this(ManageClientResourcesUseCase usecase) {
     this.usecase = usecase;

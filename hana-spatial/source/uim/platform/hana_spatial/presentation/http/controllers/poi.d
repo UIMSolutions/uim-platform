@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class PoiController : ManageHttpController {
-  private ManagePointsOfInterestUseCase usecase;
+  protected ManagePointsOfInterestUseCase usecase;
 
   this(ManagePointsOfInterestUseCase usecase) {
     this.usecase = usecase;

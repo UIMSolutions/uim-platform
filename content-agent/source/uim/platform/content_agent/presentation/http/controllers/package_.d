@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class PackageController : ManageHttpController {
-  private ManageContentPackagesUseCase usecase;
+  protected ManageContentPackagesUseCase usecase;
 
   this(ManageContentPackagesUseCase usecase) {
     this.usecase = usecase;

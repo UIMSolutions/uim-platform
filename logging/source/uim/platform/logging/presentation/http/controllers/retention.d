@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class RetentionController : ManageHttpController {
-  private ManageRetentionPoliciesUseCase usecase;
+  protected ManageRetentionPoliciesUseCase usecase;
 
   this(ManageRetentionPoliciesUseCase usecase) {
     this.usecase = usecase;

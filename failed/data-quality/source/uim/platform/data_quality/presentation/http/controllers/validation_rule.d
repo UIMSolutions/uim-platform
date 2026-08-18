@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 class ValidationRuleController : ManageHttpController {
-  private ManageValidationRulesUseCase usecase;
+  protected ManageValidationRulesUseCase usecase;
 
   this(ManageValidationRulesUseCase usecase) {
     this.usecase = usecase;

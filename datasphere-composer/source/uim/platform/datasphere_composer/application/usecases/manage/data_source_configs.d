@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataSourceConfigsUseCase {
-  private IDataSourceConfigRepository repo;
+  protected IDataSourceConfigRepository repo;
 
   this(IDataSourceConfigRepository repo) { this.repo = repo; }
 

@@ -4,7 +4,7 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageSnowflakeWarehousesUseCase {
-  private ISnowflakeWarehouseRepository repo;
+  protected ISnowflakeWarehouseRepository repo;
   this(ISnowflakeWarehouseRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateWarehouseRequest r) {

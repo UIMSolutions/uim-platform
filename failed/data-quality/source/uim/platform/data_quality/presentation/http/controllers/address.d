@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 class AddressController : HttpController {
-  private CleanseAddressesUseCase usecase;
+  protected CleanseAddressesUseCase usecase;
 
   this(CleanseAddressesUseCase usecase) {
     this.usecase = usecase;

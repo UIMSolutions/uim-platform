@@ -14,7 +14,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 @safe:
 class AuditLogController : HttpController {
-  private WriteAuditLogUseCase writeUsecase;
+  protected WriteAuditLogUseCase writeUsecase;
   private RetrieveAuditLogsUseCase retrieveUsecase;
 
   this(WriteAuditLogUseCase writeUsecase, RetrieveAuditLogsUseCase retrieveUsecase) {

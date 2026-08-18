@@ -14,7 +14,7 @@ mixin(ShowModule!());
 // Handles upload, download, query and delete of market rates,
 // and provider CRUD – the primary HTTP driving adapter.
 class MarketRateController : ManageHttpController {
-  private ManageMarketRatesUseCase ratesUC;
+  protected ManageMarketRatesUseCase ratesUC;
   private ManageProvidersUseCase providersUC;
 
   this(ManageMarketRatesUseCase ratesUC, ManageProvidersUseCase providersUC) {

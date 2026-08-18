@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class OAuthClientController : ManageHttpController {
-  private ManageOAuthClientsUseCase usecase;
+  protected ManageOAuthClientsUseCase usecase;
 
   this(ManageOAuthClientsUseCase usecase) {
     this.usecase = usecase;

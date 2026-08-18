@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageScalingHistoryUseCase {
-  private IScalingHistoryRepository repo;
+  protected IScalingHistoryRepository repo;
 
   this(IScalingHistoryRepository repo) {
     this.repo = repo;

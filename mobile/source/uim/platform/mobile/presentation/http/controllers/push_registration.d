@@ -15,7 +15,7 @@ import uim.platform.mobile;
 @safe:
 
 class PushRegistrationController : ManageHttpController {
-  private ManagePushRegistrationsUseCase usecase;
+  protected ManagePushRegistrationsUseCase usecase;
 
   this(ManagePushRegistrationsUseCase usecase) {
     this.usecase = usecase;

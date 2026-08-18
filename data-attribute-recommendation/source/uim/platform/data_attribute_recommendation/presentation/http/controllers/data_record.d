@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 
 class DataRecordController : ManageHttpController {
-  private ManageDataRecordsUseCase usecase;
+  protected ManageDataRecordsUseCase usecase;
 
   this(ManageDataRecordsUseCase usecase) {
     this.usecase = usecase;

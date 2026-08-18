@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 /// Domain service: resolves hostname/IP for a service instance's private endpoint.
 class EndpointResolver {
-  private PrivateEndpointRepository endpoints;
+  protected PrivateEndpointRepository endpoints;
 
   this(PrivateEndpointRepository endpoints) {
     this.endpoints = endpoints;

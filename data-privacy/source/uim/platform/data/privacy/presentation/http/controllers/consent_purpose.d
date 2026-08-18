@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class ConsentPurposeController : ManageHttpController {
-  private ManageConsentPurposesUseCase usecase;
+  protected ManageConsentPurposesUseCase usecase;
 
   this(ManageConsentPurposesUseCase usecase) {
     this.usecase = usecase;

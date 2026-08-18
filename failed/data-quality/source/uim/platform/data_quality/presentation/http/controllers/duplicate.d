@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 class DuplicateController : HttpController {
-  private DetectDuplicatesUseCase usecase;
+  protected DetectDuplicatesUseCase usecase;
 
   this(DetectDuplicatesUseCase usecase) {
     this.usecase = usecase;

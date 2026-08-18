@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class DistributionController : ManageHttpController {
-  private ManageDistributionModelsUseCase usecase;
+  protected ManageDistributionModelsUseCase usecase;
 
   this(ManageDistributionModelsUseCase usecase) {
     this.usecase = usecase;

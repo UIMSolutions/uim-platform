@@ -4,7 +4,7 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageSnowflakeTenantUsersUseCase {
-  private ISnowflakeTenantUserRepository repo;
+  protected ISnowflakeTenantUserRepository repo;
   this(ISnowflakeTenantUserRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateTenantUserRequest r) {

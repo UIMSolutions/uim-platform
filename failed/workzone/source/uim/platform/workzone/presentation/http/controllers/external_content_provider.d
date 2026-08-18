@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class ExternalContentProviderController : ManageHttpController {
-  private ManageExternalContentProvidersUseCase useCase;
+  protected ManageExternalContentProvidersUseCase useCase;
 
   this(ManageExternalContentProvidersUseCase useCase) {
     this.useCase = useCase;

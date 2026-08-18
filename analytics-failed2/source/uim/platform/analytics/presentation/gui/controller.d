@@ -8,7 +8,7 @@ import uim.platform.analytics.presentation.gui.model;
 import uim.platform.analytics.presentation.gui.view;
 
 class GuiController {
-  private ManageAssetsUseCase useCase;
+  protected ManageAssetsUseCase useCase;
   private GuiView view;
 
   this(ManageAssetsUseCase useCase) {

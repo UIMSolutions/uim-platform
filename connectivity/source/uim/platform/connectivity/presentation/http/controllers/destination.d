@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class DestinationController : ManageHttpController {
-  private ManageDestinationsUseCase usecase;
+  protected ManageDestinationsUseCase usecase;
 
   this(ManageDestinationsUseCase usecase) {
     this.usecase = usecase;

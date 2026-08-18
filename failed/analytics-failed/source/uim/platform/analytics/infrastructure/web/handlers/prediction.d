@@ -12,7 +12,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 class PredictionHandler {
-  private PredictionUseCases useCases;
+  protected PredictionUseCases useCases;
 
   this(PredictionUseCases useCases) {
     this.useCases = useCases;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ScalingHistoryController : ManageHttpController {
-  private ManageScalingHistoryUseCase usecase;
+  protected ManageScalingHistoryUseCase usecase;
 
   this(ManageScalingHistoryUseCase usecase) {
     this.usecase = usecase;

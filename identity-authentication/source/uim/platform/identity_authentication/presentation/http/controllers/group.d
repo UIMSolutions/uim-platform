@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for group management API.
 class GroupController : ManageHttpController {
-  private ManageGroupsUseCase useCase;
+  protected ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase) {
     this.useCase = useCase;

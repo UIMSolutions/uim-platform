@@ -16,7 +16,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 class WidgetUseCases {
-  private IWidgetRepository repo;
+  protected IWidgetRepository repo;
 
   this(IWidgetRepository repo) {
     this.repo = repo;

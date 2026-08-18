@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class AccessRuleController : ManageHttpController {
-  private ManageAccessRulesUseCase usecase;
+  protected ManageAccessRulesUseCase usecase;
 
   this(ManageAccessRulesUseCase usecase) {
     this.usecase = usecase;

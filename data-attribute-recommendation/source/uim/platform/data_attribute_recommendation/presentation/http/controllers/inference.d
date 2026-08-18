@@ -18,7 +18,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 class InferenceController : HttpController {
-  private ProcessInferenceUseCase usecase;
+  protected ProcessInferenceUseCase usecase;
 
   this(ProcessInferenceUseCase usecase) {
     this.usecase = usecase;

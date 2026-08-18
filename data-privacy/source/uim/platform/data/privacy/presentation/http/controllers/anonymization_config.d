@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class AnonymizationConfigController : ManageHttpController {
-  private ManageAnonymizationConfigsUseCase usecase;
+  protected ManageAnonymizationConfigsUseCase usecase;
 
   this(ManageAnonymizationConfigsUseCase usecase) {
     this.usecase = usecase;

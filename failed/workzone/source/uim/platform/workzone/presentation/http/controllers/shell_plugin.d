@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class ShellPluginController : ManageHttpController {
-  private ManageShellPluginsUseCase useCase;
+  protected ManageShellPluginsUseCase useCase;
 
   this(ManageShellPluginsUseCase useCase) {
     this.useCase = useCase;

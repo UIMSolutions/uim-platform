@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class HealthController : SAPController {
-  private string serviceName;
+  protected string serviceName;
 
   this(string serviceName) {
     this.serviceName = serviceName;

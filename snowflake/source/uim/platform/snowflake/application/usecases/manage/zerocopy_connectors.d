@@ -4,7 +4,7 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageZerocopyConnectorsUseCase {
-  private IZerocopyConnectorRepository repo;
+  protected IZerocopyConnectorRepository repo;
   this(IZerocopyConnectorRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateConnectorRequest r) {

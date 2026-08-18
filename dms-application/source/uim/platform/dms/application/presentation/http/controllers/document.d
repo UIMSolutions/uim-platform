@@ -17,7 +17,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class DocumentController : ManageHttpController {
-  private ManageDocumentsUseCase usecase;
+  protected ManageDocumentsUseCase usecase;
 
   this(ManageDocumentsUseCase usecase) {
     this.usecase = usecase;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class SpatialFeatureController : ManageHttpController {
-  private ManageSpatialFeaturesUseCase usecase;
+  protected ManageSpatialFeaturesUseCase usecase;
 
   this(ManageSpatialFeaturesUseCase usecase) {
     this.usecase = usecase;

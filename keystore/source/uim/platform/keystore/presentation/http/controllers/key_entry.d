@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class KeyEntryController : ManageHttpController {
-  private ManageKeyEntriesUseCase usecase;
+  protected ManageKeyEntriesUseCase usecase;
 
   this(ManageKeyEntriesUseCase usecase) {
     this.usecase = usecase;

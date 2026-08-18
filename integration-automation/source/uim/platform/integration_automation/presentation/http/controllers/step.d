@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class StepController : ManageHttpController {
-  private ManageStepsUseCase useCase;
+  protected ManageStepsUseCase useCase;
 
   this(ManageStepsUseCase useCase) {
     this.useCase = useCase;

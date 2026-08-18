@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class ServicePlanController : ManageHttpController {
-  private ManageServicePlansUseCase usecase;
+  protected ManageServicePlansUseCase usecase;
 
   this(ManageServicePlansUseCase usecase) {
     this.usecase = usecase;

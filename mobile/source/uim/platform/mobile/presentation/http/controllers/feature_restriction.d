@@ -15,7 +15,7 @@ import uim.platform.mobile;
 @safe:
 
 class FeatureRestrictionController : ManageHttpController {
-  private ManageFeatureRestrictionsUseCase usecase;
+  protected ManageFeatureRestrictionsUseCase usecase;
 
   this(ManageFeatureRestrictionsUseCase usecase) {
     this.usecase = usecase;

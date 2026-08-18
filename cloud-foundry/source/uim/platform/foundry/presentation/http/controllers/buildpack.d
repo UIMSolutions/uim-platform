@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 
 class BuildpackController : ManageHttpController {
-  private ManageBuildpacksUseCase useCase;
+  protected ManageBuildpacksUseCase useCase;
 
   this(ManageBuildpacksUseCase useCase) {
     this.useCase = useCase;

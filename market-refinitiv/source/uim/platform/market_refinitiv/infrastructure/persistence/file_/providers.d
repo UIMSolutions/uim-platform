@@ -11,7 +11,7 @@ import std.array : array;
 @safe:
 
 class FileProviderRepository : ProviderRepository {
-  private string basePath;
+  protected string basePath;
 
   this(string rootPath) {
     basePath = buildPath(rootPath, "providers");

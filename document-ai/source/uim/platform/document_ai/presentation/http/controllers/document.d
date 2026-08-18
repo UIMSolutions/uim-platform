@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 
 class DocumentController : HttpController {
-  private ProcessDocumentsUseCase usecase;
+  protected ProcessDocumentsUseCase usecase;
 
   this(ProcessDocumentsUseCase usecase) {
     this.usecase = usecase;

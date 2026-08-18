@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAppBindingsUseCase {
-  private IAppBindingRepository repo;
+  protected IAppBindingRepository repo;
 
   this(IAppBindingRepository repo) {
     this.repo = repo;

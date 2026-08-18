@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ChangeLogController : HttpController {
-  private QueryChangeLogUseCase changeLogs;
+  protected QueryChangeLogUseCase changeLogs;
 
   this(QueryChangeLogUseCase changeLogs) {
     this.changeLogs = changeLogs;

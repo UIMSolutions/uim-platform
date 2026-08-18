@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 /// In-memory adapter for tenant persistence.
 class TenantRepository : IdMTenantRepository {
-  private IdMTenant[IdMTenantId] store;
+  protected IdMTenant[IdMTenantId] store;
 
   bool existsById(IdMTenantId id) {
     return (id in store) ? true : false;

@@ -22,7 +22,7 @@ struct LegalBasisEvaluation {
 }
 /// Domain service — evaluates whether processing has a valid legal basis.
 class LegalBasisEvaluator {
-  private LegalGroundRepository groundRepo;
+  protected LegalGroundRepository groundRepo;
   private ConsentRecordRepository consentRepo;
 
   this(LegalGroundRepository groundRepo, ConsentRecordRepository consentRepo) {

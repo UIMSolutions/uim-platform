@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class SpatialLayerController : ManageHttpController {
-  private ManageSpatialLayersUseCase usecase;
+  protected ManageSpatialLayersUseCase usecase;
 
   this(ManageSpatialLayersUseCase usecase) {
     this.usecase = usecase;

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class DocumentRepository : DocumentRepository {
-  private Document[][string] store;
+  protected Document[][string] store;
 
   bool existsById(DocumentId id, ClientId clientId) {
     return clientId in store ? store[clientId].any!(d => d.id == id) : false;

@@ -12,7 +12,7 @@ import std.path : buildPath;
 import uim.platform.analytics.domain;
 
 class FileAssetRepository : AssetRepository {
-  private InsightAsset[][TenantId] byTenant;
+  protected InsightAsset[][TenantId] byTenant;
   private string filePath;
 
   this(string dataPath) {

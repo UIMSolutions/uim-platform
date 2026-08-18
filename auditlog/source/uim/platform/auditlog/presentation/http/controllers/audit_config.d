@@ -14,7 +14,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 @safe:
 class AuditConfigController : ManageHttpController {
-  private ManageAuditConfigUseCase useCase;
+  protected ManageAuditConfigUseCase useCase;
 
   this(ManageAuditConfigUseCase useCase) {
     this.useCase = useCase;

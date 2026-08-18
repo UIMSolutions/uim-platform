@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class CleansingRuleController : ManageHttpController {
-  private ManageCleansingRulesUseCase usecase;
+  protected ManageCleansingRulesUseCase usecase;
 
   this(ManageCleansingRulesUseCase usecase) {
     this.usecase = usecase;

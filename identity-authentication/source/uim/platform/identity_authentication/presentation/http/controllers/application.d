@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for application (service provider) management.
 class ApplicationController : ManageHttpController {
-  private ManageApplicationsUseCase useCase;
+  protected ManageApplicationsUseCase useCase;
 
   this(ManageApplicationsUseCase useCase) {
     this.useCase = useCase;

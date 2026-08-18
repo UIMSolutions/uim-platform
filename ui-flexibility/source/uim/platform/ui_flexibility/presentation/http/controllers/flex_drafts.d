@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 /// Routes: /keyuser/v2/drafts
 class FlexDraftsController : ManageHttpController {
-  private ManageFlexDraftsUseCase usecase;
+  protected ManageFlexDraftsUseCase usecase;
 
   this(ManageFlexDraftsUseCase usecase) {
     this.usecase = usecase;

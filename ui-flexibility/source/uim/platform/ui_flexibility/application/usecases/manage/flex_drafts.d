@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageFlexDraftsUseCase {
-  private IFlexDraftRepository repo;
+  protected IFlexDraftRepository repo;
 
   this(IFlexDraftRepository repo) {
     this.repo = repo;

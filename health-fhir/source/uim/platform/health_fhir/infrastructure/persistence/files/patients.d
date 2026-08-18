@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 /// File-backed Patient repository — stores one JSON file per resource
 class FilePatientRepository : PatientRepository {
-  private string basePath;
+  protected string basePath;
 
   this(string basePath) {
     this.basePath = basePath;

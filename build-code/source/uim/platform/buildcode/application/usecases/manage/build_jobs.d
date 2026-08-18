@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageBuildJobsUseCase {
-  private IBuildJobRepository   _repo;
+  protected IBuildJobRepository   _repo;
   private PipelineRepository   _pipelineRepo;
 
   this(IBuildJobRepository repo, PipelineRepository pipelineRepo) {

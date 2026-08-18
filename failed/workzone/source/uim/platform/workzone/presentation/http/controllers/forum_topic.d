@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class ForumTopicController : ManageHttpController {
-  private ManageForumTopicsUseCase useCase;
+  protected ManageForumTopicsUseCase useCase;
 
   this(ManageForumTopicsUseCase useCase) {
     this.useCase = useCase;

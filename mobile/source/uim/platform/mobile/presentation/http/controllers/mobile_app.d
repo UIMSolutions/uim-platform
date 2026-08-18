@@ -15,7 +15,7 @@ import uim.platform.mobile;
 @safe:
 
 class MobileAppController : ManageHttpController {
-  private ManageMobileAppsUseCase usecase;
+  protected ManageMobileAppsUseCase usecase;
 
   this(ManageMobileAppsUseCase usecase) {
     this.usecase = usecase;

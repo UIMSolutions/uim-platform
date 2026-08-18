@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManagePractitionersUseCase {
-  private IPractitionerRepository repo;
+  protected IPractitionerRepository repo;
 
   this(IPractitionerRepository repo) {
     this.repo = repo;

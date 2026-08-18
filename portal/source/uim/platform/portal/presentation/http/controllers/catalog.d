@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 class CatalogController : ManageHttpController {
-  private ManageCatalogsUseCase useCase;
+  protected ManageCatalogsUseCase useCase;
 
   this(ManageCatalogsUseCase useCase) {
     this.useCase = useCase;

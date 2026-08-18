@@ -19,7 +19,7 @@ mixin(ShowModule!());
 
 @safe:
 class PageController : ManageHttpController {
-  private ManagePagesUseCase useCase;
+  protected ManagePagesUseCase useCase;
 
   this(ManagePagesUseCase useCase) {
     this.useCase = useCase;

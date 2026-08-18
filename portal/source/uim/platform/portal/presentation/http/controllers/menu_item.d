@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 class MenuItemController : ManageHttpController {
-  private ManageMenuItemsUseCase useCase;
+  protected ManageMenuItemsUseCase useCase;
 
   this(ManageMenuItemsUseCase useCase) {
     this.useCase = useCase;

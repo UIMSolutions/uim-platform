@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTemplatesUseCase {
-  private TemplateRepository _repo;
+  protected TemplateRepository _repo;
 
   this(TemplateRepository repo) { _repo = repo; }
 

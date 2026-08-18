@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAuditLogsUseCase {
-  private IAuditLogRepository repo;
+  protected IAuditLogRepository repo;
 
   this(IAuditLogRepository repo) {
     this.repo = repo;

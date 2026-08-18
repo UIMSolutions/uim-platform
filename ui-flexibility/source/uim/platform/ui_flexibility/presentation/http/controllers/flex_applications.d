@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 /// Routes: /api/v2/applications
 class FlexApplicationsController : ManageHttpController {
-  private ManageFlexApplicationsUseCase usecase;
+  protected ManageFlexApplicationsUseCase usecase;
 
   this(ManageFlexApplicationsUseCase usecase) {
     this.usecase = usecase;

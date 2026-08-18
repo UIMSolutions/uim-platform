@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 
 class VersionController : ManageHttpController {
-  private ManageVersionsUseCase usecase;
+  protected ManageVersionsUseCase usecase;
 
   this(ManageVersionsUseCase usecase) {
     this.usecase = usecase;

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class InformationReportController : ManageHttpController {
-  private ManageInformationReportsUseCase usecase;
+  protected ManageInformationReportsUseCase usecase;
 
   this(ManageInformationReportsUseCase usecase) {
     this.usecase = usecase;

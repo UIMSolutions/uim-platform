@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageFlexApplicationsUseCase {
-  private IFlexApplicationRepository repo;
+  protected IFlexApplicationRepository repo;
 
   this(IFlexApplicationRepository repo) {
     this.repo = repo;

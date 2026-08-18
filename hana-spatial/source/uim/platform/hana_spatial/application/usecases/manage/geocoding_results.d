@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageGeocodingResultsUseCase {
-  private IGeocodingResultRepository repo;
+  protected IGeocodingResultRepository repo;
 
   this(IGeocodingResultRepository repo) {
     this.repo = repo;

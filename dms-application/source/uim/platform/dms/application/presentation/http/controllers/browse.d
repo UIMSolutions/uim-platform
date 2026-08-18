@@ -20,7 +20,7 @@ mixin(ShowModule!());
 @safe:
 
 class BrowseController : HttpController {
-  private BrowseContentUseCase usecase;
+  protected BrowseContentUseCase usecase;
 
   this(BrowseContentUseCase usecase) {
     this.usecase = usecase;

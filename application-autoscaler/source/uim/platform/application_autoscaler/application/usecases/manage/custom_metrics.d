@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageCustomMetricsUseCase {
-  private ICustomMetricRepository repo;
+  protected ICustomMetricRepository repo;
 
   this(ICustomMetricRepository repo) {
     this.repo = repo;

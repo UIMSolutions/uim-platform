@@ -6,7 +6,7 @@ import vibe.http.router;
 mixin(ShowModule!());
 @safe:
 class SnowflakeWarehouseController : ManageHttpController {
-  private ManageSnowflakeWarehousesUseCase usecase;
+  protected ManageSnowflakeWarehousesUseCase usecase;
   this(ManageSnowflakeWarehousesUseCase usecase) {
     this.usecase = usecase;
   }

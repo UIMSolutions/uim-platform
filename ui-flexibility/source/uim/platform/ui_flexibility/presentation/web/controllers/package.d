@@ -12,7 +12,7 @@ import uim.platform.ui_flexibility;
 
 /// Web MVC controller serving HTML views for Flex Changes.
 class FlexChangesWebController : ManageHttpController {
-  private ManageFlexChangesUseCase usecase;
+  protected ManageFlexChangesUseCase usecase;
 
   this(ManageFlexChangesUseCase usecase) {
     this.usecase = usecase;
@@ -37,7 +37,7 @@ class FlexChangesWebController : ManageHttpController {
 
 /// Web MVC controller serving HTML views for Flex Variants.
 class FlexVariantsWebController : ManageHttpController {
-  private ManageFlexVariantsUseCase usecase;
+  protected ManageFlexVariantsUseCase usecase;
 
   this(ManageFlexVariantsUseCase usecase) {
     this.usecase = usecase;

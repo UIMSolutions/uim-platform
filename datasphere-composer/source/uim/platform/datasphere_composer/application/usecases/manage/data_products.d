@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataProductsUseCase {
-  private IDataProductRepository repo;
+  protected IDataProductRepository repo;
 
   this(IDataProductRepository repo) { this.repo = repo; }
 

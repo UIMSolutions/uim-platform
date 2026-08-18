@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class DataRetrievalController : ManageHttpController {
-  private ManageDataRetrievalsUseCase usecase;
+  protected ManageDataRetrievalsUseCase usecase;
 
   this(ManageDataRetrievalsUseCase usecase) {
     this.usecase = usecase;

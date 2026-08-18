@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class ArchiveRequestController : ManageHttpController {
-  private ManageArchiveRequestsUseCase usecase;
+  protected ManageArchiveRequestsUseCase usecase;
 
   this(ManageArchiveRequestsUseCase usecase) {
     this.usecase = usecase;

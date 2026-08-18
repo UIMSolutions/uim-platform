@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class AutomationRuleController : ManageHttpController {
-  private ManageAutomationRulesUseCase usecase;
+  protected ManageAutomationRulesUseCase usecase;
 
   this(ManageAutomationRulesUseCase usecase) {
     this.usecase = usecase;

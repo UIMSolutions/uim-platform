@@ -5,7 +5,7 @@ import uim.platform.market_refinitiv;
 @safe:
 
 class MarketRateCliCommand {
-  private ManageMarketRatesUseCase ratesUC;
+  protected ManageMarketRatesUseCase ratesUC;
   private ManageProvidersUseCase providersUC;
   private ManageAuditLogsUseCase auditUC;
 

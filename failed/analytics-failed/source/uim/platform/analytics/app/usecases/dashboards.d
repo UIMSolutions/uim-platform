@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 /// Application service: dashboard use cases.
 class DashboardUseCases {
-  private IDashboardRepository repo;
+  protected IDashboardRepository repo;
 
   this(IDashboardRepository repo) {
     this.repo = repo;

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for authentication endpoints.
 class AuthController : HttpController {
-  private AuthenticateUserUseCase authUseCase;
+  protected AuthenticateUserUseCase authUseCase;
   private IssueTokenUseCase tokenUseCase;
 
   this(AuthenticateUserUseCase authUseCase, IssueTokenUseCase tokenUseCase) {

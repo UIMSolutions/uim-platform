@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageMarketRatesUseCase {
-  private IMarketRateRepository rateRepo;
+  protected IMarketRateRepository rateRepo;
   private IAuditLogRepository   auditRepo;
 
   this(IMarketRateRepository rateRepo, IAuditLogRepository auditRepo) {

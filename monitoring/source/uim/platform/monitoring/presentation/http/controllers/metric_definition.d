@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 class MetricDefinitionController : ManageHttpController {
-  private ManageMetricsUseCase usecase;
+  protected ManageMetricsUseCase usecase;
 
   this(ManageMetricsUseCase usecase) {
     this.usecase = usecase;

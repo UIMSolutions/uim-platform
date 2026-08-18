@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 class LifecycleRuleController : ManageHttpController {
-  private ManageLifecycleRulesUseCase usecase;
+  protected ManageLifecycleRulesUseCase usecase;
 
   this(ManageLifecycleRulesUseCase usecase) {
     this.usecase = usecase;

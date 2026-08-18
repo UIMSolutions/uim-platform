@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class DataSourceConfigController : ManageHttpController {
-  private ManageDataSourceConfigsUseCase usecase;
+  protected ManageDataSourceConfigsUseCase usecase;
 
   this(ManageDataSourceConfigsUseCase usecase) {
     this.usecase = usecase;

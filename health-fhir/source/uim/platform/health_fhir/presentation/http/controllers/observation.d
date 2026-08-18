@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ObservationController : ManageHttpController {
-  private ManageObservationsUseCase usecase;
+  protected ManageObservationsUseCase usecase;
 
   this(ManageObservationsUseCase usecase) {
     this.usecase = usecase;

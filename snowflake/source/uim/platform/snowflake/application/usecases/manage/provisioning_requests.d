@@ -4,7 +4,7 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageProvisioningRequestsUseCase {
-  private IProvisioningRequestRepository repo;
+  protected IProvisioningRequestRepository repo;
   this(IProvisioningRequestRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateProvisioningRequest r) {

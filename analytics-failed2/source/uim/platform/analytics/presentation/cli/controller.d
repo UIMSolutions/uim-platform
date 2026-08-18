@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:  
 class CliController {
-  private ManageAssetsUseCase useCase;
+  protected ManageAssetsUseCase useCase;
   private CliView view;
 
   this(ManageAssetsUseCase useCase) {

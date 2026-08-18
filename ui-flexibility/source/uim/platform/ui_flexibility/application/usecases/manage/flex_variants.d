@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageFlexVariantsUseCase {
-  private IFlexVariantRepository repo;
+  protected IFlexVariantRepository repo;
 
   this(IFlexVariantRepository repo) {
     this.repo = repo;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class IdentityProviderController : ManageHttpController {
-  private ManageIdentityProvidersUseCase usecase;
+  protected ManageIdentityProvidersUseCase usecase;
 
   this(ManageIdentityProvidersUseCase usecase) {
     this.usecase = usecase;

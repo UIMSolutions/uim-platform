@@ -26,7 +26,7 @@ mixin(ShowModule!());
   * Each endpoint requires tenant authentication and appropriate permissions. The controller interacts with the ManageDataLakesUseCase to perform business logic and returns JSON responses with appropriate HTTP status codes.
   */
 class DataLakeController : ManageHttpController {
-  private ManageDataLakesUseCase usecase;
+  protected ManageDataLakesUseCase usecase;
 
   this(ManageDataLakesUseCase usecase) {
     this.usecase = usecase;

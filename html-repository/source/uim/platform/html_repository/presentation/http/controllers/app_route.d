@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class AppRouteController : ManageHttpController {
-  private ManageAppRoutesUseCase usecase;
+  protected ManageAppRoutesUseCase usecase;
 
   this(ManageAppRoutesUseCase usecase) {
     this.usecase = usecase;

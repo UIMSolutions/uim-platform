@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class BackupController : ManageHttpController {
-  private ManageBackupsUseCase usecase;
+  protected ManageBackupsUseCase usecase;
 
   this(ManageBackupsUseCase usecase) {
     this.usecase = usecase;

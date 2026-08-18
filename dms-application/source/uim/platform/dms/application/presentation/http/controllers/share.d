@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 
 class ShareController : ManageHttpController {
-  private ManageSharesUseCase usecase;
+  protected ManageSharesUseCase usecase;
 
   this(ManageSharesUseCase usecase) {
     this.usecase = usecase;

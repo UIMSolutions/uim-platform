@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceBindingsUseCase {
-  private IServiceBindingRepository  _repo;
+  protected IServiceBindingRepository  _repo;
 
   this(IServiceBindingRepository repo) { _repo = repo; }
 

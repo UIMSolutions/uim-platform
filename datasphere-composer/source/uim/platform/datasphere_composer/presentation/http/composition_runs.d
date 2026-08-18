@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class CompositionRunController : ManageHttpController {
-  private ManageCompositionRunsUseCase usecase;
+  protected ManageCompositionRunsUseCase usecase;
 
   this(ManageCompositionRunsUseCase usecase) { this.usecase = usecase; }
 

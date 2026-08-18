@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 class TileController : ManageHttpController {
-  private ManageTilesUseCase useCase;
+  protected ManageTilesUseCase useCase;
 
   this(ManageTilesUseCase useCase) {
     this.useCase = useCase;

@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class PageTemplateController : ManageHttpController {
-  private ManagePageTemplatesUseCase useCase;
+  protected ManagePageTemplatesUseCase useCase;
 
   this(ManagePageTemplatesUseCase useCase) {
     this.useCase = useCase;

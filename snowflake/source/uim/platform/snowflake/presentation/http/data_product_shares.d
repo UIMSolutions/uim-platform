@@ -6,7 +6,7 @@ import vibe.http.router;
 mixin(ShowModule!());
 @safe:
 class DataProductShareController : ManageHttpController {
-  private ManageDataProductSharesUseCase usecase;
+  protected ManageDataProductSharesUseCase usecase;
   this(ManageDataProductSharesUseCase usecase) { this.usecase = usecase; }
 
   override void registerRoutes(URLRouter router) {

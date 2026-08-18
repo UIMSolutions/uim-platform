@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ProvisioningJobController : ManageHttpController {
-  private RunProvisioningJobsUseCase usecase;
+  protected RunProvisioningJobsUseCase usecase;
 
   this(RunProvisioningJobsUseCase usecase) {
     this.usecase = usecase;

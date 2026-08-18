@@ -24,7 +24,7 @@ mixin(ShowModule!());
  * - ConnectivityLogEntry[] listBySource(TenantId tenantId, SourceId sourceId) 
  */
 class MonitoringController : HttpController {
-  private MonitorConnectivityUseCase usecase;
+  protected MonitorConnectivityUseCase usecase;
 
   this(MonitorConnectivityUseCase usecase) {
     this.usecase = usecase;

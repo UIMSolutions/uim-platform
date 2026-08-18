@@ -20,7 +20,7 @@ mixin(ShowModule!());
 /// Domain service that handles route resolution —
 /// validates host/domain uniqueness and manages app-to-route mappings.
 class RouteResolver {
-  private IRouteRepository routes;
+  protected IRouteRepository routes;
   private IDomainRepository domains;
 
   this(IRouteRepository routes, IDomainRepository domains) {

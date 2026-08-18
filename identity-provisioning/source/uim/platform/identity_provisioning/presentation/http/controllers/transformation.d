@@ -17,7 +17,7 @@ mixin(ShowModule!());
 import uim.platform.identity_provisioning;
 
 class TransformationController : ManageHttpController {
-  private ManageTransformationsUseCase usecase;
+  protected ManageTransformationsUseCase usecase;
 
   this(ManageTransformationsUseCase usecase) {
     this.usecase = usecase;

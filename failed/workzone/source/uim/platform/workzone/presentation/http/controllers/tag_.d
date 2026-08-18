@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class TagController : ManageHttpController {
-  private ManageTagsUseCase useCase;
+  protected ManageTagsUseCase useCase;
 
   this(ManageTagsUseCase useCase) {
     this.useCase = useCase;

@@ -4,7 +4,7 @@ import uim.platform.snowflake;
 mixin(ShowModule!());
 @safe:
 class ManageSnowflakeRolesUseCase {
-  private ISnowflakeRoleRepository repo;
+  protected ISnowflakeRoleRepository repo;
   this(ISnowflakeRoleRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateRoleRequest r) {

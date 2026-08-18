@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 class PushNotificationController : ManageHttpController {
-  private ManagePushNotificationsUseCase usecase;
+  protected ManagePushNotificationsUseCase usecase;
 
   this(ManagePushNotificationsUseCase usecase) {
     this.usecase = usecase;

@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class FeedController : ManageHttpController {
-  private ManageFeedsUseCase useCase;
+  protected ManageFeedsUseCase useCase;
 
   this(ManageFeedsUseCase useCase) {
     this.useCase = useCase;

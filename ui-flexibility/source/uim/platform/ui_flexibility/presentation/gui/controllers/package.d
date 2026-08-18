@@ -12,7 +12,7 @@ import uim.platform.ui_flexibility;
 
 /// GUI controller: wires UI events to use cases and updates models.
 class FlexChangeGuiController {
-  private ManageFlexChangesUseCase usecase;
+  protected ManageFlexChangesUseCase usecase;
   private FlexChangeGuiModel model_;
 
   this(ManageFlexChangesUseCase usecase) {
@@ -31,7 +31,7 @@ class FlexChangeGuiController {
 
 /// GUI controller for FlexVariant list panel.
 class FlexVariantGuiController {
-  private ManageFlexVariantsUseCase usecase;
+  protected ManageFlexVariantsUseCase usecase;
   private FlexVariantListGuiModel model_;
 
   this(ManageFlexVariantsUseCase usecase) {

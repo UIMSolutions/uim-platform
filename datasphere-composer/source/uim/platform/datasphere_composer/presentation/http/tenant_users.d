@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class TenantUserController : ManageHttpController {
-  private ManageTenantUsersUseCase usecase;
+  protected ManageTenantUsersUseCase usecase;
 
   this(ManageTenantUsersUseCase usecase) {
     this.usecase = usecase;

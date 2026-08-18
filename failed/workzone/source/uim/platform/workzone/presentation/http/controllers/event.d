@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class EventController : ManageHttpController {
-  private ManageEventsUseCase useCase;
+  protected ManageEventsUseCase useCase;
 
   this(ManageEventsUseCase useCase) {
     this.useCase = useCase;

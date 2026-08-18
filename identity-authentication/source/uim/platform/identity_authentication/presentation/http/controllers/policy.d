@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for authorization policy management.
 class PolicyController : ManageHttpController {
-  private ManagePoliciesUseCase useCase;
+  protected ManagePoliciesUseCase useCase;
 
   this(ManagePoliciesUseCase useCase) {
     this.useCase = useCase;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 /*
 class UIMTenantMiddleware {
-  private SAPTenantRepository tenantRepository;
+  protected SAPTenantRepository tenantRepository;
 
   this(SAPTenantRepository tenantRepository) {
   this.tenantRepository = tenantRepository;

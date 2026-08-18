@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ScenarioController : ManageHttpController {
-  private ManageScenariosUseCase useCase;
+  protected ManageScenariosUseCase useCase;
 
   this(ManageScenariosUseCase useCase) {
     this.useCase = useCase;

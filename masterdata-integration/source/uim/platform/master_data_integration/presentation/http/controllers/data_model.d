@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class DataModelController : ManageHttpController {
-  private ManageDataModelsUseCase usecase;
+  protected ManageDataModelsUseCase usecase;
 
   this(ManageDataModelsUseCase usecase) {
     this.usecase = usecase;

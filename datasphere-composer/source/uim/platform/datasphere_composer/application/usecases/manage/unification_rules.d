@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageUnificationRulesUseCase {
-  private IUnificationRuleRepository repo;
+  protected IUnificationRuleRepository repo;
 
   this(IUnificationRuleRepository repo) { this.repo = repo; }
 

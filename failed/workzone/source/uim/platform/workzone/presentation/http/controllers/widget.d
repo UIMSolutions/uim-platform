@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class WidgetController : ManageHttpController {
-  private ManageWidgetsUseCase useCase;
+  protected ManageWidgetsUseCase useCase;
 
   this(ManageWidgetsUseCase useCase) {
     this.useCase = useCase;

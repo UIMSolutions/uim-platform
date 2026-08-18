@@ -6,7 +6,7 @@ import vibe.http.router;
 mixin(ShowModule!());
 @safe:
 class SnowflakeDatabaseController : ManageHttpController {
-  private ManageSnowflakeDatabasesUseCase usecase;
+  protected ManageSnowflakeDatabasesUseCase usecase;
   this(ManageSnowflakeDatabasesUseCase usecase) { this.usecase = usecase; }
 
   override void registerRoutes(URLRouter router) {

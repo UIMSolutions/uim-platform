@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAIRequestsUseCase {
-  private AIRequestRepository  _repo;
+  protected AIRequestRepository  _repo;
   private ProjectValidator     _validator;
   private QuotaService         _quota;
 

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class ConnectorController : ManageHttpController {
-  private ManageConnectorsUseCase usecase;
+  protected ManageConnectorsUseCase usecase;
 
   this(ManageConnectorsUseCase usecase) {
     this.usecase = usecase;

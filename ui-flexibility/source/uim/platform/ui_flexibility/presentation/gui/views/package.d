@@ -12,7 +12,7 @@ import uim.platform.ui_flexibility;
 
 /// Widget stub rendering a FlexChange detail panel (placeholder for real GUI toolkit).
 class FlexChangeDetailView {
-  private FlexChangeGuiModel model_;
+  protected FlexChangeGuiModel model_;
 
   this(FlexChangeGuiModel model) {
     model_ = model;
@@ -31,7 +31,7 @@ class FlexChangeDetailView {
 
 /// Widget stub rendering a FlexVariant list view.
 class FlexVariantListView {
-  private FlexVariantListGuiModel model_;
+  protected FlexVariantListGuiModel model_;
 
   this(FlexVariantListGuiModel model) {
     model_ = model;

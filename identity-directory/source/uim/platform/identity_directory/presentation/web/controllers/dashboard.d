@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 
 class IdentityDirectoryWebController {
-  private ManageApiClientsUseCase apiClients;
+  protected ManageApiClientsUseCase apiClients;
   private QueryAuditLogUseCase auditLog;
   private ManageUsersUseCase users;
   private ManageGroupsUseCase groups;

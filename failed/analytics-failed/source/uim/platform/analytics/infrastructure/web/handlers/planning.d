@@ -13,7 +13,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 class PlanningHandler {
-  private PlanningUseCases useCases;
+  protected PlanningUseCases useCases;
 
   this(PlanningUseCases useCases) {
     this.useCases = useCases;

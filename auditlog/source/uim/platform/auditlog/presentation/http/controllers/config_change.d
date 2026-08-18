@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 class ConfigChangeController : HttpController {
-  private WriteConfigChangeUseCase useCase;
+  protected WriteConfigChangeUseCase useCase;
 
   this(WriteConfigChangeUseCase useCase) {
     this.useCase = useCase;

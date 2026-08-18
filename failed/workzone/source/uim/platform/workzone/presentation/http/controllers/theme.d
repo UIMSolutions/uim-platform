@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class ThemeController : ManageHttpController {
-  private ManageThemesUseCase useCase;
+  protected ManageThemesUseCase useCase;
 
   this(ManageThemesUseCase useCase) {
     this.useCase = useCase;

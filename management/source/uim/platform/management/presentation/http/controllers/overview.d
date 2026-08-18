@@ -13,7 +13,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class OverviewController : HttpController {
-  private GetAccountOverviewUseCase usecase;
+  protected GetAccountOverviewUseCase usecase;
 
   this(GetAccountOverviewUseCase usecase) {
     this.usecase = usecase;

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class CatalogAssetController : ManageHttpController {
-  private ManageCatalogAssetsUseCase assets;
+  protected ManageCatalogAssetsUseCase assets;
 
   this(ManageCatalogAssetsUseCase assets) {
     this.assets = assets;

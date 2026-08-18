@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class DeploymentController : ManageHttpController {
-  private DeployApplicationUseCase deployApp;
+  protected DeployApplicationUseCase deployApp;
   private GetDeploymentHistoryUseCase getHistory;
 
   this(DeployApplicationUseCase deployApp, GetDeploymentHistoryUseCase getHistory) {

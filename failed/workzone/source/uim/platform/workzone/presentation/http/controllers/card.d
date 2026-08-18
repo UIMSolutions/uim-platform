@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class CardController : ManageHttpController {
-  private ManageCardsUseCase useCase;
+  protected ManageCardsUseCase useCase;
 
   this(ManageCardsUseCase useCase) {
     this.useCase = useCase;

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ChannelController : ManageHttpController {
-  private ManageNotificationChannelsUseCase usecase;
+  protected ManageNotificationChannelsUseCase usecase;
 
   this(ManageNotificationChannelsUseCase usecase) {
     this.usecase = usecase;

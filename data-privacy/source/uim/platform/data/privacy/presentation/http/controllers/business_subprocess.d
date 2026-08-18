@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class BusinessSubprocessController : ManageHttpController {
-  private ManageBusinessSubprocessesUseCase usecase;
+  protected ManageBusinessSubprocessesUseCase usecase;
 
   this(ManageBusinessSubprocessesUseCase usecase) {
     this.usecase = usecase;

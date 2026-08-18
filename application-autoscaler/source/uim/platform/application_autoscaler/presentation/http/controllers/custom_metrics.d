@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class CustomMetricController : ManageHttpController {
-  private ManageCustomMetricsUseCase usecase;
+  protected ManageCustomMetricsUseCase usecase;
 
   this(ManageCustomMetricsUseCase usecase) {
     this.usecase = usecase;

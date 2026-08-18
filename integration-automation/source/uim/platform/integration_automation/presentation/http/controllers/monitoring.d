@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class MonitoringController : ManageHttpController {
-  private MonitorExecutionsUseCase useCase;
+  protected MonitorExecutionsUseCase useCase;
 
   this(MonitorExecutionsUseCase useCase) {
     this.useCase = useCase;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManagePipelinesUseCase {
-  private IPipelineRepository  _repo;
+  protected IPipelineRepository  _repo;
   private QuotaService        _quota;
 
   this(IPipelineRepository repo) {

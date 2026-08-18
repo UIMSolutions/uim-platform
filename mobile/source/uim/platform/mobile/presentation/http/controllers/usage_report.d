@@ -15,7 +15,7 @@ import uim.platform.mobile;
 @safe:
 
 class UsageReportController : ManageHttpController {
-  private ManageUsageReportsUseCase usecase;
+  protected ManageUsageReportsUseCase usecase;
 
   this(ManageUsageReportsUseCase usecase) {
     this.usecase = usecase;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageKeyEntriesUseCase {
-  private IKeyEntryRepository repo;
+  protected IKeyEntryRepository repo;
 
   this(IKeyEntryRepository repo) {
     this.repo = repo;

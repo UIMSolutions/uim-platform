@@ -10,7 +10,7 @@ import uim.platform.analytics.application.dto;
 import uim.platform.analytics.domain;
 
 class ManageAssetsUseCase {
-  private AssetRepository repository;
+  protected AssetRepository repository;
   private AnalyticsValidator validator;
 
   this(AssetRepository repository) {

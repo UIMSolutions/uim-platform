@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 class TranslationController : ManageHttpController {
-  private ManageTranslationsUseCase useCase;
+  protected ManageTranslationsUseCase useCase;
 
   this(ManageTranslationsUseCase useCase) {
     this.useCase = useCase;

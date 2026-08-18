@@ -15,7 +15,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 class DataSourceUseCases {
-  private IDataSourceRepository repo;
+  protected IDataSourceRepository repo;
   private DataConnector connector;
 
   this(IDataSourceRepository repo, DataConnector connector) {

@@ -15,7 +15,7 @@ import uim.platform.mobile;
 @safe:
 
 class OfflineStoreController : ManageHttpController {
-  private ManageOfflineStoresUseCase usecase;
+  protected ManageOfflineStoresUseCase usecase;
 
   this(ManageOfflineStoresUseCase usecase) {
     this.usecase = usecase;

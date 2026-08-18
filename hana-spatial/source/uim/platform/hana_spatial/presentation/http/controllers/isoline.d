@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class IsolineController : ManageHttpController {
-  private ManageIsolinesUseCase usecase;
+  protected ManageIsolinesUseCase usecase;
 
   this(ManageIsolinesUseCase usecase) {
     this.usecase = usecase;

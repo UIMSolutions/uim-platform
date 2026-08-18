@@ -7,7 +7,7 @@ import uim.platform.analytics.presentation.web.model;
 import uim.platform.analytics.presentation.web.view;
 
 class WebController {
-  private ManageAssetsUseCase useCase;
+  protected ManageAssetsUseCase useCase;
   private WebView view;
 
   this(ManageAssetsUseCase useCase) {

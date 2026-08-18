@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class DestructionRequestController : ManageHttpController {
-  private ManageDestructionRequestsUseCase usecase;
+  protected ManageDestructionRequestsUseCase usecase;
 
   this(ManageDestructionRequestsUseCase usecase) {
     this.usecase = usecase;

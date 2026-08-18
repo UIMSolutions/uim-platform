@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class LegalGroundController : ManageHttpController {
-  private ManageLegalGroundsUseCase usecase;
+  protected ManageLegalGroundsUseCase usecase;
 
   this(ManageLegalGroundsUseCase usecase) {
     this.usecase = usecase;

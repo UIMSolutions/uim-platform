@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class ServiceBindingRepository : ServiceBindingRepository {
-  private ServiceBinding[ServiceBindingId] store;
+  protected ServiceBinding[ServiceBindingId] store;
 
   bool existsById(ServiceBindingId id) {
     return (id in store) ? true : false;

@@ -18,7 +18,7 @@ mixin(ShowModule!());
 /// Domain service that handles step execution —
 /// completing manual steps, invoking automated steps, recording execution logs.
 class StepExecutor {
-  private StepRepository stepRepo;
+  protected StepRepository stepRepo;
   private ExecutionLogRepository logRepo;
 
   this(StepRepository stepRepo, ExecutionLogRepository logRepo) {

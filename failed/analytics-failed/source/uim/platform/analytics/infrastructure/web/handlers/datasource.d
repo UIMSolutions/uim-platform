@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class DataSourceHandler {
-  private DataSourceUseCases useCases;
+  protected DataSourceUseCases useCases;
 
   this(DataSourceUseCases useCases) {
     this.useCases = useCases;

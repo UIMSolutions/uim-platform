@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class WorkflowController : ManageHttpController {
-  private ManageWorkflowsUseCase useCase;
+  protected ManageWorkflowsUseCase useCase;
 
   this(ManageWorkflowsUseCase useCase) {
     this.useCase = useCase;

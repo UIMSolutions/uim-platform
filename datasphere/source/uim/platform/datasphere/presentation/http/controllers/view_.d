@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class ViewController : ManageHttpController {
-  private ManageViewsUseCase usecase;
+  protected ManageViewsUseCase usecase;
 
   this(ManageViewsUseCase usecase) {
     this.usecase = usecase;

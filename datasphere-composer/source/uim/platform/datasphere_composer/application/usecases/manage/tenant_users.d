@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageTenantUsersUseCase {
-  private ITenantUserRepository repo;
+  protected ITenantUserRepository repo;
 
   this(ITenantUserRepository repo) { this.repo = repo; }
 

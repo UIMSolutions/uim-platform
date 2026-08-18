@@ -13,7 +13,7 @@ import uim.platform.ui_flexibility;
 /// CLI controller for FlexChange management commands.
 /// Usage: uim-ui-flexibility-platform-service changes list [--tenant=T] [--appId=A]
 class FlexChangeCliController {
-  private ManageFlexChangesUseCase usecase;
+  protected ManageFlexChangesUseCase usecase;
 
   this(ManageFlexChangesUseCase usecase) {
     this.usecase = usecase;
@@ -41,7 +41,7 @@ class FlexChangeCliController {
 
 /// CLI controller for FlexVariant management commands.
 class FlexVariantCliController {
-  private ManageFlexVariantsUseCase usecase;
+  protected ManageFlexVariantsUseCase usecase;
 
   this(ManageFlexVariantsUseCase usecase) {
     this.usecase = usecase;

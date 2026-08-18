@@ -15,7 +15,7 @@ mixin(ShowModule!());
 /// Full MongoDB CRUD would use MongoClient and vibe.db.mongo with collection
 /// "ui_flexibility.flex_changes" and queries by { tenantId, appId, changeType, layer }.
 class MongoFlexChangeRepository : FlexChangeRepository {
-  private MemoryFlexChangeRepository delegate_;
+  protected MemoryFlexChangeRepository delegate_;
 
   this(string mongoUri) {
     // TODO: initialize MongoClient(mongoUri) and collection handle

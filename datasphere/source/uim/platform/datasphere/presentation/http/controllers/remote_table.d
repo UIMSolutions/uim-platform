@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class RemoteTableController : ManageHttpController {
-  private ManageRemoteTablesUseCase usecase;
+  protected ManageRemoteTablesUseCase usecase;
 
   this(ManageRemoteTablesUseCase usecase) {
     this.usecase = usecase;

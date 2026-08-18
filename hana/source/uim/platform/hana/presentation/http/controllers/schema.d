@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class SchemaController : ManageHttpController {
-  private ManageSchemasUseCase usecase;
+  protected ManageSchemasUseCase usecase;
 
   this(ManageSchemasUseCase usecase) {
     this.usecase = usecase;

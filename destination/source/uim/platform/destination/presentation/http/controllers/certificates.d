@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class CertificateController : ManageHttpController {
-  private ManageCertificatesUseCase usecase;
+  protected ManageCertificatesUseCase usecase;
 
   this(ManageCertificatesUseCase usecase) {
     this.usecase = usecase;

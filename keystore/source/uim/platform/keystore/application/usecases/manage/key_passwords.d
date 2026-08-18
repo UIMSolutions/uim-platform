@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageKeyPasswordsUseCase {
-  private IKeyPasswordRepository repo;
+  protected IKeyPasswordRepository repo;
 
   this(IKeyPasswordRepository repo) {
     this.repo = repo;

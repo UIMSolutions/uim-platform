@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class SiteController : ManageHttpController {
-  private ManageSitesUseCase useCase;
+  protected ManageSitesUseCase useCase;
 
   this(ManageSitesUseCase useCase) {
     this.useCase = useCase;

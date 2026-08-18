@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for API client management.
 class ApiClientController : ManageHttpController {
-  private ManageApiClientsUseCase useCase;
+  protected ManageApiClientsUseCase useCase;
 
   this(ManageApiClientsUseCase useCase) {
     this.useCase = useCase;

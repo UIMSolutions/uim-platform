@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class KeyMappingController : ManageHttpController {
-  private ManageKeyMappingsUseCase usecase;
+  protected ManageKeyMappingsUseCase usecase;
 
   this(ManageKeyMappingsUseCase usecase) {
     this.usecase = usecase;

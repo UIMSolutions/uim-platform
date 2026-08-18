@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 /// Domain service for access control checks.
 class AccessControlService {
-  private IPermissionRepository permissions;
+  protected IPermissionRepository permissions;
 
   this(IPermissionRepository permissions) {
     this.permissions = permissions;

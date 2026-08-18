@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class GroupController : ManageHttpController {
-  private ManageGroupsUseCase useCase;
+  protected ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase) {
     this.useCase = useCase;

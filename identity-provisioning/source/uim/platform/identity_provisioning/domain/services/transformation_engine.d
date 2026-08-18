@@ -16,7 +16,7 @@ mixin(ShowModule!());
 /// Domain service that applies transformation rules to identity
 /// attributes during provisioning.
 class TransformationEngine {
-  private ITransformationRepository repo;
+  protected ITransformationRepository repo;
 
   this(ITransformationRepository repo) {
     this.repo = repo;

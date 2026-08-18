@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class SectionRepository : SectionRepository {
-  private PortalSection[SectionId] store;
+  protected PortalSection[SectionId] store;
 
   bool existsById(SectionId id) {
     return id in store ? true : false;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageScalingPoliciesUseCase {
-  private ScalingPolicyRepository repo;
+  protected ScalingPolicyRepository repo;
 
   this(ScalingPolicyRepository repo) {
     this.repo = repo;

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class TaskController : ManageHttpController {
-  private ManageTasksUseCase usecase;
+  protected ManageTasksUseCase usecase;
 
   this(ManageTasksUseCase usecase) {
     this.usecase = usecase;

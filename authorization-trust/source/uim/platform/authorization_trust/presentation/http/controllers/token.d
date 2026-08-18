@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// OAuth 2.0 token endpoint.
 /// Supports: client_credentials grant type (simplified, no PKCE).
 class TokenController : HttpController {
-  private TokenService tokenService;
+  protected TokenService tokenService;
 
   this(TokenService tokenService) {
     this.tokenService = tokenService;

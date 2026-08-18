@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Handles SAPUI5 flexibility change records (key user adaptations).
 /// Routes: /keyuser/v2/changes
 class FlexChangesController : ManageHttpController {
-  private ManageFlexChangesUseCase usecase;
+  protected ManageFlexChangesUseCase usecase;
 
   this(ManageFlexChangesUseCase usecase) {
     this.usecase = usecase;

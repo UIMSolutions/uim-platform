@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class StoryHandler {
-  private StoryUseCases useCases;
+  protected StoryUseCases useCases;
 
   this(StoryUseCases useCases) {
     this.useCases = useCases;

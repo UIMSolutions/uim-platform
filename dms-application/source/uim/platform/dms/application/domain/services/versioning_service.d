@@ -20,7 +20,7 @@ mixin(ShowModule!());
 @safe:
 /// Domain service for document version management (checkout/checkin model).
 class VersioningService {
-  private IDocumentRepository docs;
+  protected IDocumentRepository docs;
   private IDocumentVersionRepository versions;
 
   this(IDocumentRepository docs, IDocumentVersionRepository versions) {

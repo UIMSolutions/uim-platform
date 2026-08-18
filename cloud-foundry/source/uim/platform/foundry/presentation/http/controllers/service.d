@@ -17,7 +17,7 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceController : ManageHttpController {
-  private ManageServicesUseCase useCase;
+  protected ManageServicesUseCase useCase;
 
   this(ManageServicesUseCase useCase) {
     this.useCase = useCase;

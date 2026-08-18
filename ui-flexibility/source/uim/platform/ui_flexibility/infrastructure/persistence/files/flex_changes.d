@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// File-backed FlexChange repository.
 /// Stores each change as a JSON file: {basePath}/FlexChange_{tenantId}_{id}.json
 class FileFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), IFlexChangeRepository {
-  private string basePath;
+  protected string basePath;
 
   this(string basePath) {
     this.basePath = basePath;

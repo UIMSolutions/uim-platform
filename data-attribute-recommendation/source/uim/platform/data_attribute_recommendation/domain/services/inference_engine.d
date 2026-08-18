@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:/// Domain service that processes inference requests against deployed
 /// models. Validates deployment state and generates simulated predictions.
 class InferenceEngine {
-  private IDeploymentRepository deploymentRepo;
+  protected IDeploymentRepository deploymentRepo;
   private IInferenceRequestRepository requestRepo;
   private IInferenceResultRepository resultRepo;
 

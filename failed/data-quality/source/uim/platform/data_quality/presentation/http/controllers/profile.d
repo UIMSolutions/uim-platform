@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 class ProfileController : HttpController {
-  private ProfileDataUseCase usecase;
+  protected ProfileDataUseCase usecase;
 
   this(ProfileDataUseCase usecase) {
     this.usecase = usecase;

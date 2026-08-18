@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class AuditLogController : SAPController {
-  private ManageAuditLogsUseCase uc;
+  protected ManageAuditLogsUseCase uc;
 
   this(ManageAuditLogsUseCase uc) {
     this.uc = uc;
@@ -19,7 +19,7 @@ class AuditLogController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/market_refinitiv/auditlogs", &handleList);
     router.get("/api/v1/market_refinitiv/auditlogs/*", &handleGet);
   }

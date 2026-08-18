@@ -16,7 +16,7 @@ import uim.platform.mobile;
 @safe:
 
 class UserSessionController : ManageHttpController {
-  private ManageUserSessionsUseCase usecase;
+  protected ManageUserSessionsUseCase usecase;
 
   this(ManageUserSessionsUseCase usecase) {
     this.usecase = usecase;

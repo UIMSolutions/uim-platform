@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class DestinationController : ManageHttpController {
-  private ManageDestinationsUseCase useCase;
+  protected ManageDestinationsUseCase useCase;
 
   this(ManageDestinationsUseCase useCase) {
     this.useCase = useCase;

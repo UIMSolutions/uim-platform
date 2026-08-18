@@ -18,7 +18,7 @@ mixin(ShowModule!());
 
 @safe:
 class BucketController : ManageHttpController {
-  private ManageBucketsUseCase usecase;
+  protected ManageBucketsUseCase usecase;
 
   this(ManageBucketsUseCase usecase) {
     this.usecase = usecase;

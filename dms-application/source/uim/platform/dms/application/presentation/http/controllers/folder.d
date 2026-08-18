@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 
 class FolderController : ManageHttpController {
-  private ManageFoldersUseCase usecase;
+  protected ManageFoldersUseCase usecase;
 
   this(ManageFoldersUseCase usecase) {
     this.usecase = usecase;

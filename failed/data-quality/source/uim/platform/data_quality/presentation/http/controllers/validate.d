@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class ValidateController : HttpController {
-  private ValidateDataUseCase usecase;
+  protected ValidateDataUseCase usecase;
 
   this(ValidateDataUseCase usecase) {
     this.usecase = usecase;

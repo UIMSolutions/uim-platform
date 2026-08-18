@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class LabelController : ManageHttpController {
-  private ManageLabelsUseCase usecase;
+  protected ManageLabelsUseCase usecase;
 
   this(ManageLabelsUseCase usecase) {
     this.usecase = usecase;

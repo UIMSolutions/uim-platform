@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 
 class EnrichmentDataController : ManageHttpController {
-  private ManageEnrichmentDataUseCase usecase;
+  protected ManageEnrichmentDataUseCase usecase;
 
   this(ManageEnrichmentDataUseCase usecase) {
     this.usecase = usecase;

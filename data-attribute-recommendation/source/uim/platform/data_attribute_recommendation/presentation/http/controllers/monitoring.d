@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 
 class MonitoringController : HttpController {
-  private MonitorTrainingUseCase usecase;
+  protected MonitorTrainingUseCase usecase;
 
   this(MonitorTrainingUseCase usecase) {
     this.usecase = usecase;

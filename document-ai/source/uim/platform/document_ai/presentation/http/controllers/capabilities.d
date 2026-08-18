@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 
 class CapabilitiesController : HttpController {
-  private GetCapabilitiesUseCase usecase;
+  protected GetCapabilitiesUseCase usecase;
 
   this(GetCapabilitiesUseCase usecase) {
     this.usecase = usecase;

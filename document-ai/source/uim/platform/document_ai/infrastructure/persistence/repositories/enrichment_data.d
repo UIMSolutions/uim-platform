@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class EnrichmentDataRepository : EnrichmentDataRepository {
-  private EnrichmentData[][string] store;
+  protected EnrichmentData[][string] store;
 
   bool existsById(ClientId clientId, EnrichmentDataId id) {
     return clientId in store ? store[clientId].any!(ed => ed.id == id) : false;

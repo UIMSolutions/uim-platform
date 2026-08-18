@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class FilterRuleController : ManageHttpController {
-  private ManageFilterRulesUseCase usecase;
+  protected ManageFilterRulesUseCase usecase;
 
   this(ManageFilterRulesUseCase usecase) {
     this.usecase = usecase;

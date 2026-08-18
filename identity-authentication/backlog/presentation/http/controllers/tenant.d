@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for tenant management.
 class TenantController : ManageHttpController {
-  private ManageTenantsUseCase useCase;
+  protected ManageTenantsUseCase useCase;
 
   this(ManageTenantsUseCase useCase) {
     this.useCase = useCase;

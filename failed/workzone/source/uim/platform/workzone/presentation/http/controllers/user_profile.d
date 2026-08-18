@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class UserProfileController : ManageHttpController {
-  private ManageUserProfilesUseCase useCase;
+  protected ManageUserProfilesUseCase useCase;
 
   this(ManageUserProfilesUseCase useCase) {
     this.useCase = useCase;

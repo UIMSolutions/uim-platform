@@ -3,7 +3,7 @@ module uim.platform.analytics.infrastructure.persistence.repositories.assets;
 import uim.platform.analytics.domain;
 
 class AssetRepository : AssetRepository {
-  private InsightAsset[][TenantId] byTenant;
+  protected InsightAsset[][TenantId] byTenant;
 
   AssetId save(InsightAsset asset) {
     byTenant[asset.tenantId] ~= asset;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /*
 class UIMTenantRepository {
-  private IUIMTenant[UUID] tenants;
+  protected IUIMTenant[UUID] tenants;
 
   this() {
   // Load tenants from a data source or initialize an empty array

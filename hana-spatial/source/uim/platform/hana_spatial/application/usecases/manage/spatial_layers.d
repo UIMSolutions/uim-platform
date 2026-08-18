@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSpatialLayersUseCase {
-  private ISpatialLayerRepository repo;
+  protected ISpatialLayerRepository repo;
 
   this(ISpatialLayerRepository repo) {
     this.repo = repo;

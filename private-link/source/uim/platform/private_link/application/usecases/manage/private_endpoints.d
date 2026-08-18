@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage private endpoint creation, approval and status transitions.
 class ManagePrivateEndpointsUseCase {
-  private PrivateEndpointRepository endpoints;
+  protected PrivateEndpointRepository endpoints;
   private ServiceInstanceRepository instances;
 
   this(PrivateEndpointRepository endpoints, ServiceInstanceRepository instances) {

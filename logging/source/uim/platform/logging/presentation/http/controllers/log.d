@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class LogController : HttpController {
-  private IngestLogsUseCase usecase;
+  protected IngestLogsUseCase usecase;
 
   this(IngestLogsUseCase usecase) {
     this.usecase = usecase;

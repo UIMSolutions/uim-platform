@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class UnificationRuleController : ManageHttpController {
-  private ManageUnificationRulesUseCase usecase;
+  protected ManageUnificationRulesUseCase usecase;
 
   this(ManageUnificationRulesUseCase usecase) {
     this.usecase = usecase;

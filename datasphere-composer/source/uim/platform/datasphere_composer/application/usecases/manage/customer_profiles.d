@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCustomerProfilesUseCase {
-  private ICustomerProfileRepository repo;
+  protected ICustomerProfileRepository repo;
 
   this(ICustomerProfileRepository repo) { this.repo = repo; }
 

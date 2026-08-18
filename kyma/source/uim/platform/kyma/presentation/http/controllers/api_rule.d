@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 class ApiRuleController : ManageHttpController {
-  private ManageApiRulesUseCase usecase;
+  protected ManageApiRulesUseCase usecase;
 
   this(ManageApiRulesUseCase usecase) {
     this.usecase = usecase;

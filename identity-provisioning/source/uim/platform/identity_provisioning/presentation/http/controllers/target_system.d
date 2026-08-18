@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class TargetSystemController : ManageHttpController {
-  private ManageTargetSystemsUseCase usecase;
+  protected ManageTargetSystemsUseCase usecase;
 
   this(ManageTargetSystemsUseCase usecase) {
     this.usecase = usecase;

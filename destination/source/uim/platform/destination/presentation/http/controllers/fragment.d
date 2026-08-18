@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class FragmentController : ManageHttpController {
-  private ManageFragmentsUseCase usecase;
+  protected ManageFragmentsUseCase usecase;
 
   this(ManageFragmentsUseCase usecase) {
     this.usecase = usecase;

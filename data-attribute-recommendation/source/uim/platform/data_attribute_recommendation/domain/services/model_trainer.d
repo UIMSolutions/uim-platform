@@ -21,7 +21,7 @@ mixin(ShowModule!());
 /// validates dataset readiness, creates training jobs, and
 /// simulates training with quality metrics.
 class ModelTrainer {
-  private IDatasetRepository datasetRepo;
+  protected IDatasetRepository datasetRepo;
   private IModelConfigRepository configRepo;
   private ITrainingJobRepository jobRepo;
   private IDataRecordRepository recordRepo;

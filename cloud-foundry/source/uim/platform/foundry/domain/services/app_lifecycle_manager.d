@@ -22,7 +22,7 @@ mixin(ShowModule!());
 /// Domain service that manages application lifecycle transitions —
 /// staging, starting, stopping, scaling, and quota enforcement.
 class AppLifecycleManager {
-  private IAppRepository apps;
+  protected IAppRepository apps;
   private IOrgRepository orgs;
   private ISpaceRepository spaces;
 

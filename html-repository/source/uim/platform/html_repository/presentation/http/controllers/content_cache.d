@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class ContentCacheController : ManageHttpController {
-  private ManageContentCacheUseCase usecase;
+  protected ManageContentCacheUseCase usecase;
 
   this(ManageContentCacheUseCase usecase) {
     this.usecase = usecase;

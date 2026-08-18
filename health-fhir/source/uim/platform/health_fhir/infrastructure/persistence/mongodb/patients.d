@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 
 class MongoPatientRepository : PatientRepository {
-  private string collectionName = "fhir_patients";
+  protected string collectionName = "fhir_patients";
   private string mongoUri;
 
   this(string mongoUri) {

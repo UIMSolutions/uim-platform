@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class ServiceInstanceRepository : ServiceInstanceRepository {
-  private ServiceInstance[ServiceInstanceId] store;
+  protected ServiceInstance[ServiceInstanceId] store;
 
   bool existsById(ServiceInstanceId id) {
     return (id in store) ? true : false;

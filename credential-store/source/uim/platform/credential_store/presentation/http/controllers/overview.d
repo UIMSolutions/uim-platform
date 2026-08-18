@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class OverviewController : HttpController {
-  private GetOverviewUseCase usecase;
+  protected GetOverviewUseCase usecase;
 
   this(GetOverviewUseCase usecase) {
     this.usecase = usecase;

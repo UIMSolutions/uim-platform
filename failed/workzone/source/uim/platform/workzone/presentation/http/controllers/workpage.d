@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class WorkpageController : ManageHttpController {
-  private ManageWorkpagesUseCase useCase;
+  protected ManageWorkpagesUseCase useCase;
 
   this(ManageWorkpagesUseCase useCase) {
     this.useCase = useCase;

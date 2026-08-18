@@ -16,7 +16,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class SubscriptionController : ManageHttpController {
-  private ManageSubscriptionsUseCase usecase;
+  protected ManageSubscriptionsUseCase usecase;
 
   this(ManageSubscriptionsUseCase usecase) {
     this.usecase = usecase;

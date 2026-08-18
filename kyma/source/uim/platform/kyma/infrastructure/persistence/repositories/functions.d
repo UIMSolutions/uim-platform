@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class FunctionRepository : FunctionRepository {
-  private ServerlessFunction[ServerlessFunctionId] store;
+  protected ServerlessFunction[ServerlessFunctionId] store;
 
   bool existsById(ServerlessFunctionId functionId) {
     return (functionId in store) ? true : false;

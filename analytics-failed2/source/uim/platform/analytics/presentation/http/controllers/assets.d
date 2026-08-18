@@ -14,7 +14,7 @@ import uim.platform.analytics.application.usecases.manage_assets;
 import uim.platform.analytics.presentation.http.json_utils;
 
 class AnalyticsAssetsController : ManageHttpController {
-  private ManageAssetsUseCase useCase;
+  protected ManageAssetsUseCase useCase;
 
   this(ManageAssetsUseCase useCase) {
     this.useCase = useCase;

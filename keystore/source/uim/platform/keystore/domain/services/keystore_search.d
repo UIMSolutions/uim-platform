@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Implements the SAP BTP keystore search-order logic:
 /// subscription level -> application level -> account level.
 class KeystoreSearchService {
-  private IKeystoreRepository repo;
+  protected IKeystoreRepository repo;
 
   this(IKeystoreRepository repo) {
     this.repo = repo;

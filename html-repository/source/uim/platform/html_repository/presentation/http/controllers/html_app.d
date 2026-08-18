@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class HtmlAppController : ManageHttpController {
-  private ManageHtmlAppsUseCase usecase;
+  protected ManageHtmlAppsUseCase usecase;
 
   this(ManageHtmlAppsUseCase usecase) {
     this.usecase = usecase;

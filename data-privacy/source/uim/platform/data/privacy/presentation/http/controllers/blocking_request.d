@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class BlockingController : ManageHttpController {
-  private ManageBlockingRequestsUseCase usecase;
+  protected ManageBlockingRequestsUseCase usecase;
 
   this(ManageBlockingRequestsUseCase usecase) {
     this.usecase = usecase;

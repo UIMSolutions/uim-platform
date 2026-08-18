@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 class ClientLogController : ManageHttpController {
-  private ManageClientLogsUseCase usecase;
+  protected ManageClientLogsUseCase usecase;
 
   this(ManageClientLogsUseCase usecase) {
     this.usecase = usecase;

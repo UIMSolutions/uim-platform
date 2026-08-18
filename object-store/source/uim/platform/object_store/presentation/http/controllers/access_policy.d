@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 class AccessPolicyController : ManageHttpController {
-  private ManageAccessPoliciesUseCase usecase;
+  protected ManageAccessPoliciesUseCase usecase;
 
   this(ManageAccessPoliciesUseCase usecase) {
     this.usecase = usecase;

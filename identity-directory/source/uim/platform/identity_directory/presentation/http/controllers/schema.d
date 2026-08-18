@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for custom schema management.
 class SchemaController : ManageHttpController {
-  private ManageSchemasUseCase useCase;
+  protected ManageSchemasUseCase useCase;
 
   this(ManageSchemasUseCase useCase) {
     this.useCase = useCase;

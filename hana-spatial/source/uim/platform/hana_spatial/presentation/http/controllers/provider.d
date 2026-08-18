@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ProviderController : ManageHttpController {
-  private ManageProvidersUseCase usecase;
+  protected ManageProvidersUseCase usecase;
 
   this(ManageProvidersUseCase usecase) {
     this.usecase = usecase;

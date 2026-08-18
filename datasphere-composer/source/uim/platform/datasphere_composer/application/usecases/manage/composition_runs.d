@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCompositionRunsUseCase {
-  private ICompositionRunRepository repo;
+  protected ICompositionRunRepository repo;
 
   this(ICompositionRunRepository repo) { this.repo = repo; }
 

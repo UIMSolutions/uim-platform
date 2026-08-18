@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class AttributeMappingController : ManageHttpController {
-  private ManageAttributeMappingsUseCase usecase;
+  protected ManageAttributeMappingsUseCase usecase;
 
   this(ManageAttributeMappingsUseCase usecase) { this.usecase = usecase; }
 

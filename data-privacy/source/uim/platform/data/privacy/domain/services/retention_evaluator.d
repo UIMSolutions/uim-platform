@@ -21,7 +21,7 @@ struct RetentionEvaluation {
 }
 /// Domain service — evaluates whether data retention has exceeded its allowed period.
 class RetentionEvaluator {
-  private RetentionRuleRepository ruleRepo;
+  protected RetentionRuleRepository ruleRepo;
 
   this(RetentionRuleRepository ruleRepo) {
     this.ruleRepo = ruleRepo;

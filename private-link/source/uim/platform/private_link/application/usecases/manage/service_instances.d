@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 /// Use case: full lifecycle management of private link service instances.
 class ManageServiceInstancesUseCase {
-  private ServiceInstanceRepository instances;
+  protected ServiceInstanceRepository instances;
   private PrivateEndpointRepository endpoints;
 
   this(ServiceInstanceRepository instances, PrivateEndpointRepository endpoints) {

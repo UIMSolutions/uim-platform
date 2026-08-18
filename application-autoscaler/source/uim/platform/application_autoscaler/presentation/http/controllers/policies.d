@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ScalingPolicyController : ManageHttpController {
-  private ManageScalingPoliciesUseCase usecase;
+  protected ManageScalingPoliciesUseCase usecase;
 
   this(ManageScalingPoliciesUseCase usecase) {
     this.usecase = usecase;

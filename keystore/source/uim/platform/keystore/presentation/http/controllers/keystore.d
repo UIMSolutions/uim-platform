@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class KeystoreController : ManageHttpController {
-  private ManageKeystoresUseCase usecase;
+  protected ManageKeystoresUseCase usecase;
   private KeystoreSearchService searchSvc;
 
   this(ManageKeystoresUseCase usecase, KeystoreSearchService searchSvc) {

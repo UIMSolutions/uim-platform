@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class RuleSetController : ManageHttpController {
-  private ManageRuleSetsUseCase usecase;
+  protected ManageRuleSetsUseCase usecase;
 
   this(ManageRuleSetsUseCase usecase) {
     this.usecase = usecase;

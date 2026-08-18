@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class TrainingJobRepository : TrainingJobRepository {
-  private TrainingJob[][string] store;
+  protected TrainingJob[][string] store;
 
   bool existsById(ClientId clientId, TrainingJobId id) {
     if (clientId !in store)

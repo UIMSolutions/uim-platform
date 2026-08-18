@@ -6,7 +6,7 @@ import vibe.http.router;
 mixin(ShowModule!());
 @safe:
 class SnowflakeTenantUserController : ManageHttpController {
-  private ManageSnowflakeTenantUsersUseCase usecase;
+  protected ManageSnowflakeTenantUsersUseCase usecase;
   this(ManageSnowflakeTenantUsersUseCase usecase) { this.usecase = usecase; }
 
   override void registerRoutes(URLRouter router) {

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class MenuItemRepository : MenuItemRepository {
-  private MenuItem[MenuItemId] store;
+  protected MenuItem[MenuItemId] store;
 
   bool existsById(MenuItemId id) {
     return (id in store) ? true : false;

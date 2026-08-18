@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 class DataAccessController : HttpController {
-  private WriteDataAccessLogUseCase useCase;
+  protected WriteDataAccessLogUseCase useCase;
 
   this(WriteDataAccessLogUseCase useCase) {
     this.useCase = useCase;

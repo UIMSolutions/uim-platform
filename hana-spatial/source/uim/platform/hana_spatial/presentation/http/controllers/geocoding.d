@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class GeocodingController : ManageHttpController {
-  private ManageGeocodingResultsUseCase usecase;
+  protected ManageGeocodingResultsUseCase usecase;
 
   this(ManageGeocodingResultsUseCase usecase) {
     this.usecase = usecase;

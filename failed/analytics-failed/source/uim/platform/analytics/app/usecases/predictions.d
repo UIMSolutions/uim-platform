@@ -15,7 +15,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 class PredictionUseCases {
-  private IPredictionRepository repo;
+  protected IPredictionRepository repo;
 
   this(IPredictionRepository repo) {
     this.repo = repo;

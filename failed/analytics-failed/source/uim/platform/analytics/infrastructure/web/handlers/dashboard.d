@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class DashboardHandler {
-  private DashboardUseCases useCases;
+  protected DashboardUseCases useCases;
 
   this(DashboardUseCases useCases) {
     this.useCases = useCases;

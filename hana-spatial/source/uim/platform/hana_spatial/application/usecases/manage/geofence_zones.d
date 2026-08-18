@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageGeofenceZonesUseCase {
-  private IGeofenceZoneRepository repo;
+  protected IGeofenceZoneRepository repo;
 
   this(IGeofenceZoneRepository repo) {
     this.repo = repo;

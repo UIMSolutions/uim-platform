@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class UserAssignmentController : ManageHttpController {
-  private ManageUserAssignmentsUseCase usecase;
+  protected ManageUserAssignmentsUseCase usecase;
 
   this(ManageUserAssignmentsUseCase usecase) {
     this.usecase = usecase;

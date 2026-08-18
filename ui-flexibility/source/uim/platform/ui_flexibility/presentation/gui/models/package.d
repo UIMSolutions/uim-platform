@@ -12,7 +12,7 @@ import uim.platform.ui_flexibility;
 
 /// Observable GUI model for FlexChange — notifies listeners on change.
 class FlexChangeGuiModel {
-  private FlexChange change_;
+  protected FlexChange change_;
   private void delegate() @safe[] listeners_;
 
   this(FlexChange c) {
@@ -33,7 +33,7 @@ class FlexChangeGuiModel {
 
 /// Observable GUI model for a list of FlexVariants.
 class FlexVariantListGuiModel {
-  private FlexVariant[] variants_;
+  protected FlexVariant[] variants_;
   private void delegate() @safe[] listeners_;
 
   FlexVariant[] values() const { return cast(FlexVariant[]) variants_; }

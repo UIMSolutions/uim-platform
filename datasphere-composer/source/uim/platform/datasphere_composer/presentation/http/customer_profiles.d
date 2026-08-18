@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class CustomerProfileController : ManageHttpController {
-  private ManageCustomerProfilesUseCase usecase;
+  protected ManageCustomerProfilesUseCase usecase;
 
   this(ManageCustomerProfilesUseCase usecase) { this.usecase = usecase; }
 

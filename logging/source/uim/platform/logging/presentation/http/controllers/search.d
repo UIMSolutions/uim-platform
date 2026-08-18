@@ -17,7 +17,7 @@ mixin(ShowModule!());
 @safe:
 
 class SearchController : HttpController {
-  private SearchLogsUseCase usecase;
+  protected SearchLogsUseCase usecase;
 
   this(SearchLogsUseCase usecase) {
     this.usecase = usecase;

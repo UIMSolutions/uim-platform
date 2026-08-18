@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 /// Routes: /keyuser/v2/versions
 class FlexVersionsController : ManageHttpController {
-  private ManageFlexVersionsUseCase usecase;
+  protected ManageFlexVersionsUseCase usecase;
 
   this(ManageFlexVersionsUseCase usecase) {
     this.usecase = usecase;

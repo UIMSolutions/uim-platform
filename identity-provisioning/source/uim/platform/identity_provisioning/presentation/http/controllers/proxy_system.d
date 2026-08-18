@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ProxySystemController : ManageHttpController {
-  private ManageProxySystemsUseCase usecase;
+  protected ManageProxySystemsUseCase usecase;
 
   this(ManageProxySystemsUseCase usecase) {
     this.usecase = usecase;

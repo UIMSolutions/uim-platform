@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ImportController : ManageHttpController {
-  private ImportContentUseCase usecase;
+  protected ImportContentUseCase usecase;
 
   this(ImportContentUseCase usecase) {
     this.usecase = usecase;

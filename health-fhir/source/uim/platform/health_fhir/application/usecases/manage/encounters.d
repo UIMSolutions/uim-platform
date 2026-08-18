@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageEncountersUseCase {
-  private IEncounterRepository repo;
+  protected IEncounterRepository repo;
 
   this(IEncounterRepository repo) {
     this.repo = repo;

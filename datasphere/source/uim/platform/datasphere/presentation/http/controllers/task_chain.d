@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class TaskChainController : ManageHttpController {
-  private ManageTaskChainsUseCase usecase;
+  protected ManageTaskChainsUseCase usecase;
 
   this(ManageTaskChainsUseCase usecase) {
     this.usecase = usecase;

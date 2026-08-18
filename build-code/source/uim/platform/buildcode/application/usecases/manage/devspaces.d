@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDevSpacesUseCase {
-  private DevSpaceRepository  _repo;
+  protected DevSpaceRepository  _repo;
   private QuotaService        _quota;
 
   this(DevSpaceRepository repo) {

@@ -14,7 +14,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 class EventController : ManageHttpController {
-  private QueryEnvironmentEventsUseCase usecase;
+  protected QueryEnvironmentEventsUseCase usecase;
 
   this(QueryEnvironmentEventsUseCase usecase) {
     this.usecase = usecase;

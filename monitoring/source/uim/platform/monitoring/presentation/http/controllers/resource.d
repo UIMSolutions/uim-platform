@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 class ResourceController : ManageHttpController {
-  private ManageMonitoredResourcesUseCase usecase;
+  protected ManageMonitoredResourcesUseCase usecase;
 
   this(ManageMonitoredResourcesUseCase usecase) {
     this.usecase = usecase;

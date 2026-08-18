@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 /// Use case: bind/unbind a private link service instance to an application.
 class ManageServiceBindingsUseCase {
-  private ServiceBindingRepository bindings;
+  protected ServiceBindingRepository bindings;
   private ServiceInstanceRepository instances;
   private PrivateEndpointRepository endpoints;
   private EndpointResolver resolver;

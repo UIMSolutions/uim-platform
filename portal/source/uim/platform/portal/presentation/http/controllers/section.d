@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class SectionController : ManageHttpController {
-  private ManageSectionsUseCase useCase;
+  protected ManageSectionsUseCase useCase;
 
   this(ManageSectionsUseCase useCase) {
     this.useCase = useCase;

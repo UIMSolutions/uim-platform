@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageFlexChangesUseCase {
-  private IFlexChangeRepository repo;
+  protected IFlexChangeRepository repo;
 
   this(IFlexChangeRepository repo) {
     this.repo = repo;

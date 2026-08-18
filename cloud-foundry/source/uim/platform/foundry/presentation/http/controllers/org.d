@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 
 class OrgController : ManageHttpController {
-  private ManageOrgsUseCase useCase;
+  protected ManageOrgsUseCase useCase;
 
   this(ManageOrgsUseCase useCase) {
     this.useCase = useCase;

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class CorrectionRequestController : ManageHttpController {
-  private ManageCorrectionRequestsUseCase usecase;
+  protected ManageCorrectionRequestsUseCase usecase;
 
   this(ManageCorrectionRequestsUseCase usecase) {
     this.usecase = usecase;

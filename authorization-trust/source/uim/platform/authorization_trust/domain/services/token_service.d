@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// Issues opaque bearer tokens representing granted scopes.
 /// In a production deployment this would produce signed RS256 JWT tokens.
 class TokenService {
-  private IOAuthClientRepository clientRepo;
+  protected IOAuthClientRepository clientRepo;
 
   this(IOAuthClientRepository clientRepo) {
     this.clientRepo = clientRepo;

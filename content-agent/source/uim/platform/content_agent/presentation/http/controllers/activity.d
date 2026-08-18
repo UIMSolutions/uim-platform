@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class ActivityController : ManageHttpController {
-  private MonitorActivitiesUseCase usecase;
+  protected MonitorActivitiesUseCase usecase;
 
   this(MonitorActivitiesUseCase usecase) {
     this.usecase = usecase;

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class EventSubscriptionController : ManageHttpController {
-  private ManageEventSubscriptionsUseCase usecase;
+  protected ManageEventSubscriptionsUseCase usecase;
 
   this(ManageEventSubscriptionsUseCase usecase) {
     this.usecase = usecase;

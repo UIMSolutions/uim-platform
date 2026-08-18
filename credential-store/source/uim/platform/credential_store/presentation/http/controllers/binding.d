@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class BindingController : ManageHttpController {
-  private ManageServiceBindingsUseCase bindings;
+  protected ManageServiceBindingsUseCase bindings;
 
   this(ManageServiceBindingsUseCase bindings) {
     this.bindings = bindings;

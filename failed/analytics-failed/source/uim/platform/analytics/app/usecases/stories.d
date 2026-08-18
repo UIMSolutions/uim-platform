@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class StoryUseCases {
-  private IStoryRepository repo;
+  protected IStoryRepository repo;
 
   this(IStoryRepository repo) {
     this.repo = repo;

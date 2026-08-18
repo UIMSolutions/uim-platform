@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 class DashboardController : HttpController {
-  private ComputeDashboardUseCase usecase;
+  protected ComputeDashboardUseCase usecase;
 
   this(ComputeDashboardUseCase usecase) {
     this.usecase = usecase;

@@ -6,7 +6,7 @@ import uim.platform.market_refinitiv;
 @safe:
 
 class MarketRateWebView {
-  private ManageMarketRatesUseCase ratesUC;
+  protected ManageMarketRatesUseCase ratesUC;
   private ManageProvidersUseCase providersUC;
 
   this(ManageMarketRatesUseCase ratesUC, ManageProvidersUseCase providersUC) {

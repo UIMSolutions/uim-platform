@@ -15,7 +15,7 @@ mixin(ShowModule!());
 /// In a real deployment this would be called internally by a metric poller;
 /// here it is also exposed as an HTTP endpoint for testing / manual triggers.
 class ScalingEngineController : HttpController {
-  private ScalingEngineUseCase usecase;
+  protected ScalingEngineUseCase usecase;
 
   this(ScalingEngineUseCase usecase) {
     this.usecase = usecase;

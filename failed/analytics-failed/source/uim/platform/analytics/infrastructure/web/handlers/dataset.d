@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class DatasetHandler {
-  private DatasetUseCases useCases;
+  protected DatasetUseCases useCases;
 
   this(DatasetUseCases useCases) {
     this.useCases = useCases;

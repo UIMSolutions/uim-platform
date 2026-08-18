@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class ContentController : ManageHttpController {
-  private ManageContentUseCase useCase;
+  protected ManageContentUseCase useCase;
 
   this(ManageContentUseCase useCase) {
     this.useCase = useCase;

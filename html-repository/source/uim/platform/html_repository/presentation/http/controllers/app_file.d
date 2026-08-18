@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 class AppFileController : ManageHttpController {
-  private ManageAppFilesUseCase usecase;
+  protected ManageAppFilesUseCase usecase;
 
   this(ManageAppFilesUseCase usecase) {
     this.usecase = usecase;

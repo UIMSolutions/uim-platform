@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class SurveyController : ManageHttpController {
-  private ManageSurveysUseCase useCase;
+  protected ManageSurveysUseCase useCase;
 
   this(ManageSurveysUseCase useCase) {
     this.useCase = useCase;

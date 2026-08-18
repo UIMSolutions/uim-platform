@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class AuditController : HttpController {
-  private GetAuditLogsUseCase auditLogs;
+  protected GetAuditLogsUseCase auditLogs;
 
   this(GetAuditLogsUseCase auditLogs) {
     this.auditLogs = auditLogs;

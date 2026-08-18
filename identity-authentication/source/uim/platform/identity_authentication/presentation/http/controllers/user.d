@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for SCIM-like user management API.
 class UserController : ManageHttpController {
-  private ManageUsersUseCase useCase;
+  protected ManageUsersUseCase useCase;
 
   this(ManageUsersUseCase useCase) {
     this.useCase = useCase;

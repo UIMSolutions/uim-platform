@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class CheckController : ManageHttpController {
-  private ManageHealthChecksUseCase usecase;
+  protected ManageHealthChecksUseCase usecase;
 
   this(ManageHealthChecksUseCase usecase) {
     this.usecase = usecase;

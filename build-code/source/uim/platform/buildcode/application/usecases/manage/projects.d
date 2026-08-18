@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageProjectsUseCase {
-  private IProjectRepository   _repo;
+  protected IProjectRepository   _repo;
   private ProjectValidator    _validator;
   private QuotaService        _quota;
 

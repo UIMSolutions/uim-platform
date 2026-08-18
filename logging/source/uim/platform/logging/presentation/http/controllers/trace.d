@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 
 class TraceController : HttpController {
-  private IngestTracesUseCase usecase;
+  protected IngestTracesUseCase usecase;
 
   this(IngestTracesUseCase usecase) {
     this.usecase = usecase;
