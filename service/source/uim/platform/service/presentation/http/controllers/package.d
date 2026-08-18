@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service.presentation.http.controllers;
 
-public {
-  import uim.platform.service.presentation.http.controllers.health;
+public:
   import uim.platform.service.presentation.http.controllers.controller;
   import uim.platform.service.presentation.http.controllers.manage;
-}
+
