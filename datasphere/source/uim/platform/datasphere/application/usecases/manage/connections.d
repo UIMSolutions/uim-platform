@@ -14,8 +14,8 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageConnectionsUseCase { // TODO: UIMUseCase {
-  private IConnectionRepository repo;
+class ManageConnectionsUseCase {
+  protected IConnectionRepository repo;
 
   this(IConnectionRepository repo) {
     this.repo = repo;

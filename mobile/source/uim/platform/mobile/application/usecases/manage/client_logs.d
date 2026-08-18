@@ -14,7 +14,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManageClientLogsUseCase { // TODO: UIMUseCase {
+class ManageClientLogsUseCase {
     private IClientLogRepository repo;
 
     this(IClientLogRepository repo) {

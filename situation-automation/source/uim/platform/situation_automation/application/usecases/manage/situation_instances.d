@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
+class ManageSituationInstancesUseCase {
     private ISituationInstanceRepository repo;
 
     this(ISituationInstanceRepository repo) {

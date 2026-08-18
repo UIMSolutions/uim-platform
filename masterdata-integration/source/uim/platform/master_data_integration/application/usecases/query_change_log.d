@@ -14,8 +14,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for querying the change log (delta tracking).
-class QueryChangeLogUseCase { // TODO: UIMUseCase {
-  private IChangeLogRepository repo;
+class QueryChangeLogUseCase {
+  protected IChangeLogRepository repo;
 
   this(IChangeLogRepository repo) {
     this.repo = repo;

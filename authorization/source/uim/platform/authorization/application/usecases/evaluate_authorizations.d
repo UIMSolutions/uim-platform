@@ -7,7 +7,7 @@ mixin(ShowModule!());
 @safe:
 
 class EvaluateAuthorizationsUseCase {
-  private IAuthorizationRepository repo;
+  protected IAuthorizationRepository repo;
   private PolicyEvaluator evaluator;
 
   this(IAuthorizationRepository repo, PolicyEvaluator evaluator) {

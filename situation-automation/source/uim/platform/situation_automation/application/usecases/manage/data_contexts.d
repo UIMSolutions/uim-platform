@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageDataContextsUseCase { // TODO: UIMUseCase {
+class ManageDataContextsUseCase {
     private IDataContextRepository repo;
 
     this(IDataContextRepository repo) {

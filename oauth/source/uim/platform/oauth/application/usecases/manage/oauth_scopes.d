@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
+class ManageOAuthScopesUseCase {
     private IOAuthScopeRepository repo;
 
     this(IOAuthScopeRepository repo) {

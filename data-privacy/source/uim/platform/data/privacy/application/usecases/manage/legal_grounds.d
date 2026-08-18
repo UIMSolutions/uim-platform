@@ -14,8 +14,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
-  private LegalGroundRepository legalGrounds;
+class ManageLegalGroundsUseCase {
+  protected LegalGroundRepository legalGrounds;
 
   this(LegalGroundRepository legalGrounds) {
     this.legalGrounds = legalGrounds;

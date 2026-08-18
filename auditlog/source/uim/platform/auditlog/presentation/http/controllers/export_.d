@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ExportController : ManageHttpController {
-  private ManageExportsUseCase useCase;
+  protected ManageExportsUseCase useCase;
 
   this(ManageExportsUseCase useCase) {
     this.useCase = useCase;

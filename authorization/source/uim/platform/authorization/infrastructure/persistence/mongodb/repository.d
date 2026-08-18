@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MongoAuthorizationRepository : MemoryAuthorizationRepository {
-  private MongoCollection collection;
+  protected MongoCollection collection;
   private bool isConnected;
 
   this(string connectionUri, string dbName, string collectionName) @trusted {

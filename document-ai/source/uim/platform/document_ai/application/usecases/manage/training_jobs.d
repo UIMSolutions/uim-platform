@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
-  private TrainingJobRepository jobRepo;
+class ManageTrainingJobsUseCase {
+  protected TrainingJobRepository jobRepo;
   private DocumentRepository docRepo;
 
   this(TrainingJobRepository jobRepo, DocumentRepository docRepo) {

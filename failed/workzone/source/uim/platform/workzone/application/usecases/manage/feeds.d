@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageFeedsUseCase { // TODO: UIMUseCase {
-  private IFeedRepository repo;
+class ManageFeedsUseCase {
+  protected IFeedRepository repo;
 
   this(IFeedRepository repo) {
     this.repo = repo;

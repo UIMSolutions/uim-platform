@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for certificate CRUD operations.
-class ManageCertificatesUseCase { // TODO: UIMUseCase {
-  private ICertificateRepository repo;
+class ManageCertificatesUseCase {
+  protected ICertificateRepository repo;
 
   private string normalizeToken(string value) {
     return value.toLower.replace("-", "").replace("_", "").replace(" ", "");

@@ -15,8 +15,8 @@ import uim.platform.integration_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageSystemsUseCase { // TODO: UIMUseCase {
-  private ISystemRepository repo;
+class ManageSystemsUseCase {
+  protected ISystemRepository repo;
 
   this(ISystemRepository repo) {
     this.repo = repo;

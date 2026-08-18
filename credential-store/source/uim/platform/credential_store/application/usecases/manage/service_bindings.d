@@ -15,8 +15,8 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-  private IServiceBindingRepository bindings;
+class ManageServiceBindingsUseCase {
+  protected IServiceBindingRepository bindings;
 
   this(IServiceBindingRepository bindings) {
     this.bindings = bindings;

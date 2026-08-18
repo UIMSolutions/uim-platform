@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageUserAssignmentsUseCase {
-  private IUserAssignmentRepository repo;
+  protected IUserAssignmentRepository repo;
   private IRoleCollectionRepository roleCollectionRepo;
 
   this(IUserAssignmentRepository repo, IRoleCollectionRepository roleCollectionRepo) {

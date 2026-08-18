@@ -18,8 +18,8 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class ManageServicesUseCase { // TODO: UIMUseCase {
-  private IServiceInstanceRepository instances;
+class ManageServicesUseCase {
+  protected IServiceInstanceRepository instances;
   private IServiceBindingRepository bindings;
 
   this(IServiceInstanceRepository instances, IServiceBindingRepository bindings) {

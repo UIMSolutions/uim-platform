@@ -13,14 +13,14 @@ mixin(ShowModule!());
 /// Orchestrates the autoscaling decision: evaluate policy rules against
 /// the submitted metric and record a scaling history event.
 class ScalingEngineUseCase {
-  private ScalingPolicyRepository  policyRepo;
-  private AppBindingRepository     bindingRepo;
-  private ScalingHistoryRepository historyRepo;
-  private ScalingEvaluatorService  evaluator;
+  protected IScalingPolicyRepository  policyRepo;
+  protected IAppBindingRepository     bindingRepo;
+  protected IScalingHistoryRepository historyRepo;
+  protected ScalingEvaluatorService  evaluator;
 
-  this(ScalingPolicyRepository  policyRepo,
-    AppBindingRepository     bindingRepo,
-    ScalingHistoryRepository historyRepo,
+  this(IScalingPolicyRepository  policyRepo,
+    IAppBindingRepository     bindingRepo,
+    IScalingHistoryRepository historyRepo,
     ScalingEvaluatorService  evaluator
   ) {
     this.policyRepo  = policyRepo;
@@ -30,8 +30,6 @@ class ScalingEngineUseCase {
   }
 
   CommandResult triggerScaling(TriggerScalingRequest r) {
-    
-    
     import std.random : uniform;
 
     // Resolve binding

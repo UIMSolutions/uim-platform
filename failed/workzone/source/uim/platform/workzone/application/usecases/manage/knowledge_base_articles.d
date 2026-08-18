@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
-  private IKnowledgeBaseArticleRepository repo;
+class ManageKnowledgeBaseArticlesUseCase {
+  protected IKnowledgeBaseArticleRepository repo;
 
   this(IKnowledgeBaseArticleRepository repo) {
     this.repo = repo;

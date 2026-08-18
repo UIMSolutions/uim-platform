@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IManageProjectMembersUseCase { // TODO: UIMUseCase {
+interface IManageProjectMembersUseCase {
     
     ProjectMember getProjectMember(TenantId tenantId, ProjectMemberId id);
     ProjectMember[] listProjectMembers(TenantId tenantId);

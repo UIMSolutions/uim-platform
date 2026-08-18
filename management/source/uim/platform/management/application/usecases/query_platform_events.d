@@ -15,8 +15,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: query platform events for audit and monitoring.
-class QueryEnvironmentEventsUseCase { // TODO: UIMUseCase {
-  private IEnvironmentEventRepository repo;
+class QueryEnvironmentEventsUseCase {
+  protected IEnvironmentEventRepository repo;
 
   this(IEnvironmentEventRepository repo) {
     this.repo = repo;

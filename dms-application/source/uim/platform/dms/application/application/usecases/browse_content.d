@@ -30,8 +30,8 @@ struct RepositorySummary {
   RepositoryStatus status;
 }
 /// Use case for browsing content, searching, and managing favorites.
-class BrowseContentUseCase { // TODO: UIMUseCase {
-  private IDocumentRepository docs;
+class BrowseContentUseCase {
+  protected IDocumentRepository docs;
   private IFolderRepository folders;
   private IFavoriteRepository favorites;
   private IRepositoryRepository repositories;

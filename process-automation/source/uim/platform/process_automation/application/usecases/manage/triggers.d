@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageTriggersUseCase { // TODO: UIMUseCase {
+class ManageTriggersUseCase {
     private ITriggerRepository repo;
 
     this(ITriggerRepository repo) {

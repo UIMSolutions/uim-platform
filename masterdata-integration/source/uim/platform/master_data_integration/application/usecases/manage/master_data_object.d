@@ -17,8 +17,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for master data object CRUD and lifecycle.
-class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
-  private IMasterDataObjectRepository repo;
+class ManageMasterDataObjectsUseCase {
+  protected IMasterDataObjectRepository repo;
   private IChangeLogRepository changeLogRepo;
 
   this(IMasterDataObjectRepository repo, IChangeLogRepository changeLogRepo) {

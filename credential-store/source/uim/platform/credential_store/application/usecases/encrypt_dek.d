@@ -16,8 +16,8 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class EncryptDekUseCase { // TODO: UIMUseCase {
-  private ICredentialRepository credRepo;
+class EncryptDekUseCase {
+  protected ICredentialRepository credRepo;
   private IKeyringVersionRepository versionRepo;
 
   this(ICredentialRepository credRepo, IKeyringVersionRepository versionRepo) {

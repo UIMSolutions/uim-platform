@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class PipelineController : SAPController {
-  private ManagePipelinesUseCase _uc;
+  protected ManagePipelinesUseCase _uc;
 
   this(ManagePipelinesUseCase uc) { _uc = uc; }
 
@@ -39,17 +39,17 @@ class PipelineController : SAPController {
 
   private void createPipeline(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto body_    = req.json;
+    auto data    = req.json;
     CreatePipelineRequest dto;
-    dto.projectId      = body_["projectId"].get!string("");
-    dto.name           = body_["name"].get!string("");
-    dto.description    = body_["description"].get!string("");
-    dto.stage          = body_["stage"].get!string("full");
-    dto.repositoryUrl  = body_["repositoryUrl"].get!string("");
-    dto.branch         = body_["branch"].get!string("main");
-    dto.configFilePath = body_["configFilePath"].get!string(".pipeline/config.yml");
-    dto.triggerType    = body_["triggerType"].get!string("manual");
-    dto.schedule       = body_["schedule"].get!string("");
+    dto.projectId      = data.getString("projectId", "");
+    dto.name           = data.getString("name", "");
+    dto.description    = data.getString("description", "");
+    dto.stage          = data.getString("stage", "full");
+    dto.repositoryUrl  = data.getString("repositoryUrl", "");
+    dto.branch         = data.getString("branch", "main");
+    dto.configFilePath = data.getString("configFilePath", ".pipeline/config.yml");
+    dto.triggerType    = data.getString("triggerType", "manual");
+    dto.schedule       = data.getString("schedule", "");
     auto result = _uc.create(tenantId, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
@@ -68,14 +68,14 @@ class PipelineController : SAPController {
   private void updatePipeline(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
     auto id       = precheck.id;
-    auto body_    = req.json;
+    auto data    = req.json;
     UpdatePipelineRequest dto;
-    dto.description    = body_["description"].get!string("");
-    dto.branch         = body_["branch"].get!string("");
-    dto.configFilePath = body_["configFilePath"].get!string("");
-    dto.isActive       = body_["isActive"].get!bool(true);
-    dto.triggerType    = body_["triggerType"].get!string("");
-    dto.schedule       = body_["schedule"].get!string("");
+    dto.description    = data.getString("description", "");
+    dto.branch         = data.getString("branch", "");
+    dto.configFilePath = data.getString("configFilePath", "");
+    dto.isActive       = data.getBool("isActive", true);
+    dto.triggerType    = data.getString("triggerType", "");
+    dto.schedule       = data.getString("schedule", "");
     auto result = _uc.update(tenantId, id, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

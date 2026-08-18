@@ -17,8 +17,8 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageSitesUseCase { // TODO: UIMUseCase {
-  private SiteRepository siteRepo;
+class ManageSitesUseCase {
+  protected SiteRepository siteRepo;
 
   this(SiteRepository siteRepo) {
     this.siteRepo = siteRepo;

@@ -14,8 +14,8 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ManageAlertsUseCase { // TODO: UIMUseCase {
-  private IAlertRepository repo;
+class ManageAlertsUseCase {
+  protected IAlertRepository repo;
 
   this(IAlertRepository repo) {
     this.repo = repo;

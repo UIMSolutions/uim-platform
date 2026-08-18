@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class DevSpaceController : SAPController {
-  private ManageDevSpacesUseCase _uc;
+  protected ManageDevSpacesUseCase _uc;
 
   this(ManageDevSpacesUseCase uc) { _uc = uc; }
 
@@ -39,14 +39,14 @@ class DevSpaceController : SAPController {
 
   private void createDevSpace(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto body_    = req.json;
+    auto data    = req.json;
     CreateDevSpaceRequest dto;
-    dto.projectId    = body_["projectId"].get!string("");
-    dto.name         = body_["name"].get!string("");
-    dto.displayName  = body_["displayName"].get!string(dto.name);
-    dto.technicalUser = body_["technicalUser"].get!string("");
-    dto.storageGiB   = cast(ushort) body_["storageGiB"].get!long(4);
-    dto.ramGiB       = cast(ushort) body_["ramGiB"].get!long(4);
+    dto.projectId    = data.getString("projectId", "");
+    dto.name         = data.getString("name", "");
+    dto.displayName  = data.getString("displayName", dto.name);
+    dto.technicalUser = data.getString("technicalUser", "");
+    dto.storageGiB   = cast(ushort) data.getInt("storageGiB", 4);
+    dto.ramGiB       = cast(ushort) data.getInt("ramGiB", 4);
     auto result = _uc.create(tenantId, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
@@ -65,8 +65,8 @@ class DevSpaceController : SAPController {
   private void updateDevSpaceStatus(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
     auto id       = precheck.id;
-    auto body_    = req.json;
-    auto status_  = body_["status"].get!string("");
+    auto data    = req.json;
+    auto status_  = data.getString("status", "");
     auto result   = _uc.setStatus(tenantId, id, status_);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

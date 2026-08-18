@@ -34,7 +34,7 @@ class RetentionRuleController : ManageHttpController {
         r.tenantId = tenantId;
         r.businessPurposeId = data.getString("businessPurposeId");
         r.legalGroundId = data.getString("legalGroundId");
-        r.duration = jsonInt(data, "duration");
+        r.duration = data.getInteger("duration");
         r.periodUnit = data.getString("periodUnit");
         r.actionOnExpiry = data.getString("actionOnExpiry");
         r.createdBy = UserId(data.getString("createdBy"));
@@ -113,7 +113,7 @@ class RetentionRuleController : ManageHttpController {
         UpdateRetentionRuleRequest r;
         r.ruleId = id;
         r.tenantId = tenantId;
-        r.duration = jsonInt(data, "duration");
+        r.duration = data.getInteger("duration");
         r.periodUnit = data.getString("periodUnit");
         r.actionOnExpiry = data.getString("actionOnExpiry");
         r.isActive = data.getBoolean("isActive", true);

@@ -15,8 +15,8 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class CleanseAddressesUseCase { // TODO: UIMUseCase {
-  private IAddressRepository repo;
+class CleanseAddressesUseCase {
+  protected IAddressRepository repo;
   private AddressCleanser cleanser;
 
   this(IAddressRepository repo, AddressCleanser cleanser) {

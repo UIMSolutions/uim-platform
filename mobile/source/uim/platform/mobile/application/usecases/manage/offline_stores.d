@@ -16,7 +16,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
+class ManageOfflineStoresUseCase {
     private IOfflineStoreRepository repo;
 
     this(IOfflineStoreRepository repo) {

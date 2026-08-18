@@ -34,7 +34,7 @@ class ResidenceRuleController : ManageHttpController {
         r.tenantId = tenantId;
         r.purposeId = BusinessPurposeId(data.getString("businessPurposeId"));
         r.groundId = LegalGroundId(data.getString("legalGroundId"));
-        r.duration = jsonInt(data, "duration");
+        r.duration = data.getInteger("duration");
         r.periodUnit = data.getString("periodUnit");
         r.createdBy = UserId(data.getString("createdBy"));
 
@@ -116,7 +116,7 @@ class ResidenceRuleController : ManageHttpController {
         UpdateResidenceRuleRequest r;
         r.tenantId = tenantId;
         r.ruleId = id;
-        r.duration = jsonInt(data, "duration");
+        r.duration = data.getInteger("duration");
         r.periodUnit = data.getString("periodUnit");
         r.isActive = data.getBoolean("isActive", true);
 

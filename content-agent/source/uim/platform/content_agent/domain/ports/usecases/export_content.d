@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for exporting content packages.
-interface IExportContentUseCase { // TODO: UIMUseCase {
+interface IExportContentUseCase {
 
   CommandResult startExport(StartExportRequest req);
   ExportJob getExportJob(TenantId tenantId, ExportJobId id);

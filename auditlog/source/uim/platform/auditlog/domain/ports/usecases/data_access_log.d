@@ -10,7 +10,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-interface IWriteDataAccessLogUseCase { // TODO: UIMUseCase {
+interface IWriteDataAccessLogUseCase {
   
   CommandResult writeLog(WriteDataAccessLogRequest req);
 

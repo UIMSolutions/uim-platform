@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 @safe:
 
 class ServiceBindingCommand : ManageCommand {
-  private ManageServiceBindingsUseCase usecase;
+  protected ManageServiceBindingsUseCase usecase;
 
   this(ManageServiceBindingsUseCase usecase) {
     this.usecase = usecase;

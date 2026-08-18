@@ -16,7 +16,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
+class ManageFeatureRestrictionsUseCase {
     private IFeatureRestrictionRepository repo;
 
     this(IFeatureRestrictionRepository repo) {

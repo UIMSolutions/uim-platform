@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for Cloud Connector registration and lifecycle.
-class ManageConnectorsUseCase { // TODO: UIMUseCase {
-  private IConnectorRepository repo;
+class ManageConnectorsUseCase {
+  protected IConnectorRepository repo;
   private IConnectivityLogRepository logRepo;
 
   this(IConnectorRepository repo, IConnectivityLogRepository logRepo) {

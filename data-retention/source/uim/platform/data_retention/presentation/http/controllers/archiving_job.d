@@ -113,8 +113,8 @@ class ArchivingJobController : ManageHttpController {
         r.jobId = id;
         r.operationType = data.getString("operationType");
         r.status = data.getString("status");
-        r.recordsProcessed = jsonInt(data, "recordsProcessed");
-        r.recordsFailed = jsonInt(data, "recordsFailed");
+        r.recordsProcessed = data.getInteger("recordsProcessed");
+        r.recordsFailed = data.getInteger("recordsFailed");
         r.errorMessage = data.getString("errorMessage");
 
         auto result = usecase.updateArchivingJob(r);

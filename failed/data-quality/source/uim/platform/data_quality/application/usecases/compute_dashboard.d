@@ -15,8 +15,8 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class ComputeDashboardUseCase { // TODO: UIMUseCase {
-  private ValidationResultRepository resultRepo;
+class ComputeDashboardUseCase {
+  protected ValidationResultRepository resultRepo;
   private DataProfileRepository profileRepo;
   private QualityScorer scorer;
 

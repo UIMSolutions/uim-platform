@@ -56,26 +56,25 @@ class SaasApplicationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto tenantId = precheck.tenantId;
-        auto body_ = req.json;
+        auto data = req.json;
 
         RegisterAppRequest dto;
-        dto.appName = body_["appName"].get!string;
-        dto.displayName = body_["displayName"].get!string;
-        dto.description = body_.getString("description");
-        dto.category = body_.getString("category");
-        dto.plan = safeEnum!AppPlan(body_, "plan", AppPlan.application);
-        dto.providerSubaccountId = body_.getString("providerSubaccountId");
-        dto.globalAccountId = body_.getString("globalAccountId");
-        dto.xsuaaServiceInstanceId = body_.getString("xsuaaServiceInstanceId");
-        dto.autoSubscribeGlobalAccounts = safeBool(body_, "autoSubscribeGlobalAccounts");
-        if ("appUrls" in body_) {
-            auto u = body_["appUrls"];
-            dto.appUrls.onSubscriptionUrl = safeStr(u, "onSubscriptionUrl");
-            dto.appUrls.onUnsubscriptionUrl = safeStr(u, "onUnsubscriptionUrl");
-            dto.appUrls.onUpdateUrl = safeStr(u, "onUpdateUrl");
-            dto.appUrls.getDependenciesUrl = safeStr(u, "getDependenciesUrl");
-            dto.appUrls.appBaseUrl = safeStr(u, "appBaseUrl");
+        dto.appName = data["appName"].get!string;
+        dto.displayName = data["displayName"].get!string;
+        dto.description = data.getString("description");
+        dto.category = data.getString("category");
+        dto.plan = safeEnum!AppPlan(data, "plan", AppPlan.application);
+        dto.providerSubaccountId = data.getString("providerSubaccountId");
+        dto.globalAccountId = data.getString("globalAccountId");
+        dto.xsuaaServiceInstanceId = data.getString("xsuaaServiceInstanceId");
+        dto.autoSubscribeGlobalAccounts = safeBool(data, "autoSubscribeGlobalAccounts");
+        if ("appUrls" in data) {
+            auto u = data["appUrls"];
+            dto.appUrls.onSubscriptionUrl = u.getString("onSubscriptionUrl");
+            dto.appUrls.onUnsubscriptionUrl = u.getString("onUnsubscriptionUrl");
+            dto.appUrls.onUpdateUrl = u.getString("onUpdateUrl");
+            dto.appUrls.getDependenciesUrl = u.getString("getDependenciesUrl");
+            dto.appUrls.appBaseUrl = u.getString("appBaseUrl");
         }
 
         auto result = usecase.registerApplication(tenantId, dto);
@@ -93,6 +92,9 @@ class SaasApplicationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = SaasApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid application ID", "Invalid application ID: " ~ precheck.id.value, 400);
+
         auto app = usecase.getApplication(tenantId, id);
         if (app.isNull)
             return errorResponse("Application not found", "No application found with ID " ~ id, 404);
@@ -108,21 +110,24 @@ class SaasApplicationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = SaasApplicationId(precheck.id);
-        auto body_ = req.json;
+        if (id.isNull)
+            return errorResponse("Invalid application ID", "Invalid application ID: " ~ precheck.id.value, 400);
+
+        auto data = req.json;
 
         UpdateAppRequest dto;
-        dto.displayName = body_.getString("displayName");
-        dto.description = body_.getString("description");
-        dto.category = body_.getString("category");
-        dto.plan = safeEnum!AppPlan(body_, "plan", AppPlan.application);
-        dto.autoSubscribeGlobalAccounts = safeBool(body_, "autoSubscribeGlobalAccounts");
-        if ("appUrls" in body_) {
-            auto u = body_["appUrls"];
-            dto.appUrls.onSubscriptionUrl = safeStr(u, "onSubscriptionUrl");
-            dto.appUrls.onUnsubscriptionUrl = safeStr(u, "onUnsubscriptionUrl");
-            dto.appUrls.onUpdateUrl = safeStr(u, "onUpdateUrl");
-            dto.appUrls.getDependenciesUrl = safeStr(u, "getDependenciesUrl");
-            dto.appUrls.appBaseUrl = safeStr(u, "appBaseUrl");
+        dto.displayName = data.getString("displayName");
+        dto.description = data.getString("description");
+        dto.category = data.getString("category");
+        dto.plan = safeEnum!AppPlan(data, "plan", AppPlan.application);
+        dto.autoSubscribeGlobalAccounts = safeBool(data, "autoSubscribeGlobalAccounts");
+        if ("appUrls" in data) {
+            auto u = data["appUrls"];
+            dto.appUrls.onSubscriptionUrl = u.getString("onSubscriptionUrl");
+            dto.appUrls.onUnsubscriptionUrl = u.getString("onUnsubscriptionUrl");
+            dto.appUrls.onUpdateUrl = u.getString("onUpdateUrl");
+            dto.appUrls.getDependenciesUrl = u.getString("getDependenciesUrl");
+            dto.appUrls.appBaseUrl = u.getString("appBaseUrl");
         }
 
         auto result = usecase.updateApplication(tenantId, id, dto);
@@ -141,6 +146,9 @@ class SaasApplicationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = SaasApplicationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid application ID", "Invalid application ID: " ~ precheck.id.value, 400);
+            
         auto result = usecase.deregisterApplication(tenantId, id);
         if (result.hasError)
             return errorResponse("Application deregistration failed", result.message, 404);
@@ -149,30 +157,4 @@ class SaasApplicationController : ManageHttpController {
                 .emptyObject);
     }
 
-    // -----------------------------------------------------------------------
-    // JSON helpers
-    // -----------------------------------------------------------------------
-
-    private string safeStr(Json obj, string key) {
-        if ((key in obj) !is null && obj[key].isString)
-            return obj[key].get!string;
-        return "";
-    }
-
-    private bool safeBool(Json obj, string key) {
-        if ((key in obj) !is null && obj[key].isBoolean_)
-            return obj[key].get!bool;
-        return false;
-    }
-
-    private E safeEnum(E)(Json obj, string key, E default_) {
-        if ((key in obj) !is null && obj[key].isString) {
-            try {
-                return obj[key].get!string
-                    .to!E;
-            } catch (Exception) {
-            }
-        }
-        return default_;
-    }
 }

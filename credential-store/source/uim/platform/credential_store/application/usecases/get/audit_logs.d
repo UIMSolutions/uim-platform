@@ -10,8 +10,8 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class GetAuditLogsUseCase { // TODO: UIMUseCase {
-  private IAuditLogRepository repo;
+class GetAuditLogsUseCase {
+  protected IAuditLogRepository repo;
 
   this(IAuditLogRepository repo) {
     this.repo = repo;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageExtensionsUseCase { // TODO: UIMUseCase {
+class ManageExtensionsUseCase {
     private IExtensionRepository extensions;
 
     this(IExtensionRepository extensions) {

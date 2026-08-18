@@ -15,8 +15,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
-  private IDeletionRequestRepository repo;
+class ManageDeletionRequestsUseCase {
+  protected IDeletionRequestRepository repo;
   private IDataSubjectRepository subjectRepo;
 
   this(IDeletionRequestRepository repo, IDataSubjectRepository subjectRepo) {

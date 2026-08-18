@@ -18,8 +18,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for transport queue configuration.
-class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
-  private ITransportQueueRepository queueRepo;
+class ManageTransportQueuesUseCase {
+  protected ITransportQueueRepository queueRepo;
   private IContentActivityRepository activityRepo;
 
   this(ITransportQueueRepository queueRepo, IContentActivityRepository activityRepo) {

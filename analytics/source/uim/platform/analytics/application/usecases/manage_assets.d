@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:  
 
 class ManageAssetsUseCase {
-  private IAssetRepository repository;
-  private AnalyticsValidator validator;
+  protected IAssetRepository repository;
+  protected AnalyticsValidator validator;
 
   this(IAssetRepository repository) {
     this.repository = repository;

@@ -19,8 +19,8 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class ManageRoutesUseCase { // TODO: UIMUseCase {
-  private IRouteRepository routes;
+class ManageRoutesUseCase {
+  protected IRouteRepository routes;
   private IDomainRepository domains;
   private RouteResolver resolver;
 

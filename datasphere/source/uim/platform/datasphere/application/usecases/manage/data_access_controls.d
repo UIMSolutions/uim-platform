@@ -14,8 +14,8 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
-  private IDataAccessControlRepository repo;
+class ManageDataAccessControlsUseCase {
+  protected IDataAccessControlRepository repo;
 
   this(IDataAccessControlRepository repo) {
     this.repo = repo;

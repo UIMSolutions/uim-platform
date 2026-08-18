@@ -16,8 +16,8 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageScenariosUseCase { // TODO: UIMUseCase {
-  private IScenarioRepository repo;
+class ManageScenariosUseCase {
+  protected IScenarioRepository repo;
 
   this(IScenarioRepository repo) {
     this.repo = repo;

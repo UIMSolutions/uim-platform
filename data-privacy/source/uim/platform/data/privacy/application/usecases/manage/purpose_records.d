@@ -10,8 +10,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
-  private IPurposeRecordRepository repo;
+class ManagePurposeRecordsUseCase {
+  protected IPurposeRecordRepository repo;
 
   this(IPurposeRecordRepository repo) {
     this.repo = repo;

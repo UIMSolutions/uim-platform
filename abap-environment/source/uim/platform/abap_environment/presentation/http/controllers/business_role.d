@@ -26,7 +26,7 @@ import uim.platform.abap_environment;
   * Each endpoint expects and returns JSON data, and uses standard HTTP status codes to indicate success or failure.
   */
 class BusinessRoleController : ManageHttpController {
-  private ManageBusinessRolesUseCase usecase;
+  protected ManageBusinessRolesUseCase usecase;
 
   this(ManageBusinessRolesUseCase usecase) {
     this.usecase = usecase;

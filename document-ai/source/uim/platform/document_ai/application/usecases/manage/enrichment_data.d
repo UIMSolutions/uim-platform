@@ -15,8 +15,8 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
-  private IEnrichmentDataRepository repo;
+class ManageEnrichmentDataUseCase {
+  protected IEnrichmentDataRepository repo;
 
   this(IEnrichmentDataRepository repo) {
     this.repo = repo;

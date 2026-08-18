@@ -8,8 +8,8 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class RetrieveAuditLogsUseCase { // TODO: UIMUseCase {
-  private IAuditLogRepository repository;
+class RetrieveAuditLogsUseCase {
+  protected IAuditLogRepository repository;
 
   this(IAuditLogRepository repository) {
     this.repository = repository;

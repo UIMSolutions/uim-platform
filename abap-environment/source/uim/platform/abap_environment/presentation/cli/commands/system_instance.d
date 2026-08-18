@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 @safe:
 
 class SystemInstanceCommand : ManageCommand {
-  private ManageSystemInstancesUseCase usecase;
+  protected ManageSystemInstancesUseCase usecase;
 
   this(ManageSystemInstancesUseCase usecase) {
     this.usecase = usecase;

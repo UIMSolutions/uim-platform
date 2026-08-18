@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
     /// Substitution Rule Management 
-class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
+class ManageSubstitutionRulesUseCase {
     private ISubstitutionRuleRepository repo;
 
     this(ISubstitutionRuleRepository repo) {

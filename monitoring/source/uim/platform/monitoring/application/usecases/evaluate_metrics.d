@@ -19,8 +19,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service: evaluates metrics against alert rules and triggers alerts.
-class EvaluateMetricsUseCase { // TODO: UIMUseCase {
-  private IAlertRuleRepository rules;
+class EvaluateMetricsUseCase {
+  protected IAlertRuleRepository rules;
   private IMetricRepository metrics;
   private ManageAlertsUseCase alertsUseCase;
 

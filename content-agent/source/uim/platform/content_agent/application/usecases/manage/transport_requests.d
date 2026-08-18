@@ -22,8 +22,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for transport request lifecycle management.
-class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
-  private ITransportRequestRepository requestRepo;
+class ManageTransportRequestsUseCase {
+  protected ITransportRequestRepository requestRepo;
   private IContentPackageRepository packageRepo;
   private ITransportQueueRepository queueRepo;
   private IContentActivityRepository activityRepo;

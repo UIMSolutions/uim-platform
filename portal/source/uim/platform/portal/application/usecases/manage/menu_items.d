@@ -19,8 +19,8 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageMenuItemsUseCase { // TODO: UIMUseCase {
-  private MenuItemRepository menuRepo;
+class ManageMenuItemsUseCase {
+  protected MenuItemRepository menuRepo;
   private SiteRepository siteRepo;
 
   this(MenuItemRepository menuRepo, SiteRepository siteRepo) {

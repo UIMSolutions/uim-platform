@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageArtifactsUseCase { // TODO: UIMUseCase {
+class ManageArtifactsUseCase {
     private IArtifactRepository repo;
 
     this(IArtifactRepository repo) {

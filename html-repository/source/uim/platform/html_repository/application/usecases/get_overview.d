@@ -18,7 +18,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class GetOverviewUseCase { // TODO: UIMUseCase {
+class GetOverviewUseCase {
     private IHtmlAppRepository appRepo;
     private IAppVersionRepository versionRepo;
     private IAppFileRepository fileRepo;

@@ -15,8 +15,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
-  private IDocumentTypeRepository repo;
+class ManageDocumentTypesUseCase {
+  protected IDocumentTypeRepository repo;
 
   this(IDocumentTypeRepository repo) {
     this.repo = repo;

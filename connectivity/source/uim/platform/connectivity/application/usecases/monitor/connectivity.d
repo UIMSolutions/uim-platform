@@ -22,8 +22,8 @@ struct ConnectivitySummary {
   ulong criticalCount;
 }
 /// Application service for connectivity monitoring and log queries.
-class MonitorConnectivityUseCase { // TODO: UIMUseCase {
-  private IConnectivityLogRepository logRepo;
+class MonitorConnectivityUseCase {
+  protected IConnectivityLogRepository logRepo;
 
   this(IConnectivityLogRepository logRepo) {
     this.logRepo = logRepo;

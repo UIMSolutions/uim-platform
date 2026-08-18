@@ -10,7 +10,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class GetCapabilitiesUseCase { // TODO: UIMUseCase {
+class GetCapabilitiesUseCase {
   CapabilitiesResponse getCapabilities(TenantId tenantId) {
     CapabilitiesResponse r;
     r.extraction = true;

@@ -11,8 +11,8 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Application service for communication arrangement CRUD.
-class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
-  private ICommunicationArrangementRepository repo;
+class ManageCommunicationArrangementsUseCase {
+  protected ICommunicationArrangementRepository repo;
 
   this(ICommunicationArrangementRepository repo) {
     this.repo = repo;

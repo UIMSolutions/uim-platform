@@ -16,8 +16,8 @@ mixin(ShowModule!());
 @safe:
 
 
-class DetectDuplicatesUseCase { // TODO: UIMUseCase {
-  private IMatchGroupRepository repo;
+class DetectDuplicatesUseCase {
+  protected IMatchGroupRepository repo;
   private DuplicateDetector detector;
 
   this(IMatchGroupRepository repo, DuplicateDetector detector) {

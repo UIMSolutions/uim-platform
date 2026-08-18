@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManagePromptsUseCase { // TODO: UIMUseCase {
+class ManagePromptsUseCase {
   protected IPromptRepository repo;
   protected PromptEnricher enricher;
 

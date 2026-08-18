@@ -14,7 +14,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManageDatasetsUseCase { // TODO: UIMUseCase {
+class ManageDatasetsUseCase {
   protected IDatasetRepository repo;
 
   this(IDatasetRepository repo) {

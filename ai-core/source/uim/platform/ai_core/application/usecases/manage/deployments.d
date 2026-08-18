@@ -10,9 +10,9 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageDeploymentsUseCase { // TODO: UIMUseCase {
-  private IDeploymentRepository deployments;
-  private IConfigurationRepository configurations;
+class ManageDeploymentsUseCase {
+  protected IDeploymentRepository deployments;
+  protected IConfigurationRepository configurations;
 
   this(IDeploymentRepository deployments, IConfigurationRepository configurations) {
     this.deployments = deployments;

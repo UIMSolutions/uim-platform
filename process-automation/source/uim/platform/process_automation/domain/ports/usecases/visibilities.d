@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-interface IManageVisibilitiesUseCase { // TODO: UIMUseCase {
+interface IManageVisibilitiesUseCase {
     
     CommandResult createVisibility(CreateVisibilityRequest r);
     Visibility getVisibility(TenantId tenantId, VisibilityId visibilityId);

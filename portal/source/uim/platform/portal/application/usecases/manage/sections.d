@@ -19,8 +19,8 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageSectionsUseCase { // TODO: UIMUseCase {
-  private SectionRepository sectionRepo;
+class ManageSectionsUseCase {
+  protected SectionRepository sectionRepo;
   private PageRepository pageRepo;
 
   this(SectionRepository sectionRepo, PageRepository pageRepo) {

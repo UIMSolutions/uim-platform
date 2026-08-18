@@ -14,7 +14,9 @@ mixin(ShowModule!());
 class AlertEventController : HttpController {
     private ProduceEventsUseCase usecase;
 
-    this(ProduceEventsUseCase usecase) { this.usecase = usecase; }
+    this(ProduceEventsUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -23,32 +25,37 @@ class AlertEventController : HttpController {
 
     private void handlePost(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto body_    = req.json;
+        auto data = req.json;
 
         PostAlertEventRequest dto;
-        dto.eventType = body_["eventType"].to!string;
-        dto.category  = body_["category"].to!string;
-        dto.severity  = body_["severity"].to!string;
-        dto.subject   = body_["subject"].to!string;
-        dto.body      = body_["body"].opt!string("");
-        dto.region    = body_["region"].opt!string("");
+        dto.eventType = data.getString("eventType");
+        dto.category = data.getString("category");
+        dto.severity = data.getString("severity");
+        dto.subject = data.getString("subject");
+        dto.body = data.getString("body", "");
+        dto.region = data.getString("region", "");
 
-        auto tagsNode = body_["tags"];
+        auto tagsNode = data.get("tags", Json.emptyObject);
         if (tagsNode.isObject())
-            foreach (k, v; tagsNode.byKeyValue()) dto.tags[k] = v.to!string;
+            foreach (k, v; tagsNode.byKeyValue())
+                dto.tags[k] = v.to!string;
 
-        auto arNode   = body_["affectedResource"];
+        auto arNode = data.get("affectedResource", Json.emptyObject);
         if (arNode.isObject()) {
-            dto.affectedResource.name      = arNode["name"].opt!string("");
-            dto.affectedResource.type_     = arNode["type"].opt!string("");
-            dto.affectedResource.instance_ = arNode["instance"].opt!string("");
-            auto arTags = arNode["tags"];
+            dto.affectedResource.name = arNode.getString("name", "");
+            dto.affectedResource.type_ = arNode.getString("type", "");
+            dto.affectedResource.instance_ = arNode.getString("instance", "");
+            auto arTags = arNode.get("tags", Json.emptyObject);
             if (arTags.isObject())
-                foreach (k, v; arTags.byKeyValue()) dto.affectedResource.tags[k] = v.to!string;
+                foreach (k, v; arTags.byKeyValue())
+                    dto.affectedResource.tags[k] = v.to!string;
         }
 
         auto result = usecase.postEvent(tenantId, dto);
-        if (!result.success) { writeError(res, cast(int)HTTPStatus.badRequest, result.message); return; }
+        if (!result.success) {
+            writeError(res, cast(int)HTTPStatus.badRequest, result.message);
+            return;
+        }
         res.writeBody(result.message, cast(int)HTTPStatus.accepted, "application/json");
     }
 }

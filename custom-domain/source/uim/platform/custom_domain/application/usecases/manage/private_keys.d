@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
+class ManagePrivateKeysUseCase {
     private IPrivateKeyRepository repo;
 
     this(IPrivateKeyRepository repo) {

@@ -17,8 +17,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for service channel lifecycle.
-class ManageChannelsUseCase { // TODO: UIMUseCase {
-  private IChannelRepository channels;
+class ManageChannelsUseCase {
+  protected IChannelRepository channels;
   private IConnectorRepository connectorRepo;
   private IConnectivityLogRepository logRepo;
 

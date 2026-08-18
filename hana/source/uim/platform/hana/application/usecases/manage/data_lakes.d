@@ -14,8 +14,8 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ManageDataLakesUseCase { // TODO: UIMUseCase {
-  private IDataLakeRepository repo;
+class ManageDataLakesUseCase {
+  protected IDataLakeRepository repo;
 
   this(IDataLakeRepository repo) {
     this.repo = repo;

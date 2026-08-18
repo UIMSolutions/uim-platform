@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
-  private IExternalContentProviderRepository repo;
+class ManageExternalContentProvidersUseCase {
+  protected IExternalContentProviderRepository repo;
 
   this(IExternalContentProviderRepository repo) {
     this.repo = repo;

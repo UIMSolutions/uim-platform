@@ -15,8 +15,8 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class GetOverviewUseCase { // TODO: UIMUseCase {
-  private INamespaceRepository nsRepo;
+class GetOverviewUseCase {
+  protected INamespaceRepository nsRepo;
   private ICredentialRepository credRepo;
   private IServiceBindingRepository bindingRepo;
   private IAuditLogRepository auditRepo;

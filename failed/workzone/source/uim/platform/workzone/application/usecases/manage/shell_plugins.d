@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageShellPluginsUseCase { // TODO: UIMUseCase {
-  private IShellPluginRepository repo;
+class ManageShellPluginsUseCase {
+  protected IShellPluginRepository repo;
 
   this(IShellPluginRepository repo) {
     this.repo = repo;

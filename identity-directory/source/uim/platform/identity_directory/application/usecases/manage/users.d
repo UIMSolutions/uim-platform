@@ -19,8 +19,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application use case: SCIM 2.0 user management (CRUD + search).
-class ManageUsersUseCase { // TODO: UIMUseCase {
-  private IUserRepository userRepo;
+class ManageUsersUseCase {
+  protected IUserRepository userRepo;
   private IPasswordService passwordSvc;
   private IPasswordPolicyRepository policyRepo;
   private IAuditRepository auditRepo;

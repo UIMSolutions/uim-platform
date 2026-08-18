@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageFormsUseCase { // TODO: UIMUseCase {
+class ManageFormsUseCase {
     private IFormRepository repo;
 
     this(IFormRepository repo) {

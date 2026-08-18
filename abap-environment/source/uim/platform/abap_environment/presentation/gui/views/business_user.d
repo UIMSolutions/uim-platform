@@ -20,7 +20,7 @@ import gtk.ToolButton;
 // mixin(ShowModule!());
 
 class BusinessUserWindow : ApplicationWindow {
-  private ManageBusinessUsersUseCase usecase;
+  protected ManageBusinessUsersUseCase usecase;
   private TreeView treeView;
 
   this(Application app, ManageBusinessUsersUseCase usecase) {

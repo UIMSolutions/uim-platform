@@ -19,8 +19,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for exporting content packages.
-class ExportContentUseCase { // TODO: UIMUseCase {
-  private IExportJobRepository exportRepo;
+class ExportContentUseCase {
+  protected IExportJobRepository exportRepo;
   private IContentPackageRepository packageRepo;
   private IContentActivityRepository activityRepo;
 

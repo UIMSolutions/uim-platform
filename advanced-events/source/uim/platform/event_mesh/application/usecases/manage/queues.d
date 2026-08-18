@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageQueuesUseCase { // TODO: UIMUseCase {
+class ManageQueuesUseCase {
     protected IQueueRepository repo;
 
     this(IQueueRepository repo) {

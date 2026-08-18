@@ -17,8 +17,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for content provider registration and management.
-class ManageContentProvidersUseCase { // TODO: UIMUseCase {
-  private IContentProviderRepository providerRepo;
+class ManageContentProvidersUseCase {
+  protected IContentProviderRepository providerRepo;
   private IContentActivityRepository activityRepo;
 
   this(IContentProviderRepository providerRepo, IContentActivityRepository activityRepo) {

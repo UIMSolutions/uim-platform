@@ -15,8 +15,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageRetentionUseCase { // TODO: UIMUseCase {
-  private IRetentionPolicyRepository repo;
+class ManageRetentionUseCase {
+  protected IRetentionPolicyRepository repo;
 
   this(IRetentionPolicyRepository repo) {
     this.repo = repo;

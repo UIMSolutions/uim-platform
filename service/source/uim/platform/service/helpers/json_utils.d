@@ -87,7 +87,7 @@ string[][] jsonMessageArray(Json j, string key) {
 /// Write a JSON error response.
 void writeError(scope HTTPServerResponse res, int status, string message) {
   auto error = Json.emptyObject
-    .set("error",  message)
+    .set("error", message)
     .set("status", status);
   // j["code"] = Json(code);
   res.writeJsonBody(error, status);
@@ -103,7 +103,8 @@ unittest {
   assert(getString(parseJsonString(`{"name": "test"}`), "name") == "test");
   assert(getString(parseJsonString(`{"name": "test"}`), "missing") == "");
 
-  assert(getStrings(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == ["a", "b"
+  assert(getStrings(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == [
+      "a", "b"
     ]);
   // assert(getStrings(parseJsonString(`{}`), "tags").isNull);
 }
@@ -221,7 +222,7 @@ Json toJsonValue(T)(T val) {
           arr ~= Json(s);
         j[name] = arr;
       } else static if (is(FT == enum)) {
-        
+
         j[name] = Json(val.tupleof[i].to!string);
       } else static if (is(FT == string[string])) {
         auto obj = Json.emptyObject;
@@ -248,7 +249,7 @@ T jsonEnum(T)(Json j, string key, T default_ = T.init) {
   auto str = data.getString(key);
   if (str.length == 0)
     return default_;
-  
+
   try
     return str.to!T;
   catch (Exception)
@@ -280,7 +281,7 @@ Json toJsonValue(T)(T val) {
           arr ~= Json(s);
         j[name] = arr;
       } else static if (is(FT == enum)) {
-        
+
         j[name] = Json(val.tupleof[i].to!string);
       } else static if (is(FT == string[string])) {
         auto obj = Json.emptyObject;
@@ -411,7 +412,6 @@ string[][] jsonFieldArray(Json j, string key) {
 }
 
 string[][] jsonRegionArray(Json j, string key) {
-  
 
   if (!j.isObject)
     return null;
@@ -457,7 +457,6 @@ Json toJsonValue(T)(T val) {
           arr ~= Json(s);
         j[name] = arr;
       } else static if (is(FT == enum)) {
-        
 
         j[name] = Json(val.tupleof[i].to!string);
       }
@@ -508,7 +507,7 @@ ushort getUshort(Json j, string key, ushort default_ = 0) {
 }
 
 // Extract the last path segment (used as an ID)
-string extractIdFromPath(HTTPServerRequest req) {  
+string extractIdFromPath(HTTPServerRequest req) {
   return req.requestPath.to!string.extractIdFromPath;
 }
 
@@ -641,4 +640,21 @@ int jsonInt(Json j, string key, int default_ = 0) {
     return default_;
 
   return cast(int)v.get!long;
+}
+
+bool safeBool(Json obj, string key) {
+  if ((key in obj) !is null && obj[key].isBoolean_)
+    return obj[key].get!bool;
+  return false;
+}
+
+E safeEnum(E)(Json obj, string key, E default_) {
+  if ((key in obj) !is null && obj[key].isString) {
+    try {
+      return obj[key].get!string
+        .to!E;
+    } catch (Exception) {
+    }
+  }
+  return default_;
 }

@@ -10,8 +10,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
-  private IBusinessSubprocessRepository repo;
+class ManageBusinessSubprocessesUseCase {
+  protected IBusinessSubprocessRepository repo;
 
   this(IBusinessSubprocessRepository repo) {
     this.repo = repo;

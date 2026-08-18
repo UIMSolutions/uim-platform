@@ -15,8 +15,8 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class ManageBuildpacksUseCase { // TODO: UIMUseCase {
-  private IBuildpackRepository buildpacks;
+class ManageBuildpacksUseCase {
+  protected IBuildpackRepository buildpacks;
 
   this(IBuildpackRepository buildpacks) {
     this.buildpacks = buildpacks;

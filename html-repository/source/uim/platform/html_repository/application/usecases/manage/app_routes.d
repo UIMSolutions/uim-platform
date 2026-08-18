@@ -17,7 +17,7 @@ mixin(ShowModule!());
 @safe:
 
 
-class ManageAppRoutesUseCase { // TODO: UIMUseCase {
+class ManageAppRoutesUseCase {
     private IAppRouteRepository repo;
 
     this(IAppRouteRepository repo) {

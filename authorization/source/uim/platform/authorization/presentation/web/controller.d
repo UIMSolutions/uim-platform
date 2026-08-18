@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class AuthorizationWebController : ManageHttpController {
-  private AuthorizationWebModel model;
+  protected AuthorizationWebModel model;
   private AuthorizationWebView view;
 
   this(AuthorizationWebModel model, AuthorizationWebView view) {

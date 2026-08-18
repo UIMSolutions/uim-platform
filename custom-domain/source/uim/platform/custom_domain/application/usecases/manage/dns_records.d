@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
+class ManageDnsRecordsUseCase {
     private IDnsRecordRepository repo;
 
     this(IDnsRecordRepository repo) {

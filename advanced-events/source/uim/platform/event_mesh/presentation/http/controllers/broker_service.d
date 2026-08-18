@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class BrokerServiceController : ManageHttpController {
-  private ManageBrokerServicesUseCase usecase;
+  protected ManageBrokerServicesUseCase usecase;
 
   this(ManageBrokerServicesUseCase usecase) {
     this.usecase = usecase;

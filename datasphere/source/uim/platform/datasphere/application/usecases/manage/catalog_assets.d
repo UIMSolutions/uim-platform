@@ -14,8 +14,8 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
-  private ICatalogAssetRepository repo;
+class ManageCatalogAssetsUseCase {
+  protected ICatalogAssetRepository repo;
 
   this(ICatalogAssetRepository repo) {
     this.repo = repo;

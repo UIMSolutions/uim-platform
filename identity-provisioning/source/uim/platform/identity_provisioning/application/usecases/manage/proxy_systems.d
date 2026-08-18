@@ -16,8 +16,8 @@ import uim.platform.identity_provisioning;
 mixin(ShowModule!());
 
 @safe:
-class ManageProxySystemsUseCase { // TODO: UIMUseCase {
-  private IProxySystemRepository repo;
+class ManageProxySystemsUseCase {
+  protected IProxySystemRepository repo;
   private ISourceSystemRepository sourceRepo;
   private ITargetSystemRepository targetRepo;
 

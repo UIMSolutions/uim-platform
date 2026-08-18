@@ -11,8 +11,8 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class ManageValidationRulesUseCase { // TODO: UIMUseCase {
-  private IValidationRuleRepository repo;
+class ManageValidationRulesUseCase {
+  protected IValidationRuleRepository repo;
 
   this(IValidationRuleRepository repo) {
     this.repo = repo;

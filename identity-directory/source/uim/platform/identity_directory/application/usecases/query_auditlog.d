@@ -11,8 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application use case: query audit logs.
-class QueryAuditLogUseCase { // TODO: UIMUseCase {
-  private IAuditRepository auditRepo;
+class QueryAuditLogUseCase {
+  protected IAuditRepository auditRepo;
 
   this(IAuditRepository auditRepo) {
     this.auditRepo = auditRepo;

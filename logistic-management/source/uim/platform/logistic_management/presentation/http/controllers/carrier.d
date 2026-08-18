@@ -40,17 +40,17 @@ override protected Json listHandler(HTTPServerRequest req) {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto body_ = req.json;
+    auto data = req.json;
     CreateCarrierRequest dto;
-    dto.name = body_.getString("name");
-    dto.description = body_.getString("description");
-    dto.contactEmail = body_.getString("contactEmail");
-    dto.contactPhone = body_.getString("contactPhone");
-    dto.addressStreet = body_.getString("addressStreet");
-    dto.addressCity = body_.getString("addressCity");
-    dto.addressCountry = body_.getString("addressCountry");
-    dto.taxId = body_.getString("taxId");
-    auto modes = body_["supportedModes"];
+    dto.name = data.getString("name");
+    dto.description = data.getString("description");
+    dto.contactEmail = data.getString("contactEmail");
+    dto.contactPhone = data.getString("contactPhone");
+    dto.addressStreet = data.getString("addressStreet");
+    dto.addressCity = data.getString("addressCity");
+    dto.addressCountry = data.getString("addressCountry");
+    dto.taxId = data.getString("taxId");
+    auto modes = data["supportedModes"];
     if (modes.isArray) {
       foreach (m; modes.byValue) dto.supportedModes ~= m.get!string;
     }
@@ -78,16 +78,16 @@ override protected Json listHandler(HTTPServerRequest req) {
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = CarrierId(extractIdFromPath(req.requestPath.to!string));
-    auto body_ = req.json;
+    auto data = req.json;
     UpdateCarrierRequest dto;
-    dto.description = body_.getString("description");
-    dto.contactEmail = body_.getString("contactEmail");
-    dto.contactPhone = body_.getString("contactPhone");
-    dto.addressStreet = body_.getString("addressStreet");
-    dto.addressCity = body_.getString("addressCity");
-    dto.addressCountry = body_.getString("addressCountry");
-    dto.status = body_.getString("status");
-    auto modes = body_["supportedModes"];
+    dto.description = data.getString("description");
+    dto.contactEmail = data.getString("contactEmail");
+    dto.contactPhone = data.getString("contactPhone");
+    dto.addressStreet = data.getString("addressStreet");
+    dto.addressCity = data.getString("addressCity");
+    dto.addressCountry = data.getString("addressCountry");
+    dto.status = data.getString("status");
+    auto modes = data["supportedModes"];
     if (modes.isArray) {
       foreach (m; modes.byValue) dto.supportedModes ~= m.get!string;
     }

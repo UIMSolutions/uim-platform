@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ProjectController : SAPController {
-  private ManageProjectsUseCase _uc;
+  protected ManageProjectsUseCase _uc;
 
   this(ManageProjectsUseCase uc) { _uc = uc; }
 
@@ -39,17 +39,17 @@ class ProjectController : SAPController {
 
   private void createProject(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto body_    = req.json;
+    auto data    = req.json;
     CreateProjectRequest dto;
-    dto.name          = body_["name"].get!string("");
-    dto.description   = body_["description"].get!string("");
-    dto.type          = body_["type"].get!string("other");
-    dto.techStack     = body_["techStack"].get!string("other");
-    dto.ownerEmail    = body_["ownerEmail"].get!string("");
-    dto.repositoryUrl = body_["repositoryUrl"].get!string("");
-    dto.defaultBranch = body_["defaultBranch"].get!string("main");
-    if (body_["tags"].isArray)
-      foreach (t; body_["tags"]) dto.tags ~= t.get!string("");
+    dto.name          = data.getString("name", "");
+    dto.description   = data.getString("description", "");
+    dto.type          = data.getString("type", "other");
+    dto.techStack     = data.getString("techStack", "other");
+    dto.ownerEmail    = data.getString("ownerEmail", "");
+    dto.repositoryUrl = data.getString("repositoryUrl", "");
+    dto.defaultBranch = data.getString("defaultBranch", "main");
+    if (data["tags"].isArray)
+      foreach (t; data["tags"]) dto.tags ~= t.get!string("");
     auto result = _uc.create(tenantId, dto);
     if (!result.success)
       return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
@@ -69,15 +69,15 @@ class ProjectController : SAPController {
   private void updateProject(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
     auto id       = precheck.id;
-    auto body_    = req.json;
+    auto data    = req.json;
     UpdateProjectRequest dto;
-    dto.description   = body_["description"].get!string("");
-    dto.ownerEmail    = body_["ownerEmail"].get!string("");
-    dto.repositoryUrl = body_["repositoryUrl"].get!string("");
-    dto.defaultBranch = body_["defaultBranch"].get!string("");
-    dto.status        = body_["status"].get!string("");
-    if (body_["tags"].isArray)
-      foreach (t; body_["tags"]) dto.tags ~= t.get!string("");
+    dto.description   = data.getString("description", "");
+    dto.ownerEmail    = data.getString("ownerEmail", "");
+    dto.repositoryUrl = data.getString("repositoryUrl", "");
+    dto.defaultBranch = data.getString("defaultBranch", "");
+    dto.status        = data.getString("status", "");
+    if (data["tags"].isArray)
+      foreach (t; data["tags"]) dto.tags ~= t.get!string("");
     auto result = _uc.update(tenantId, id, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

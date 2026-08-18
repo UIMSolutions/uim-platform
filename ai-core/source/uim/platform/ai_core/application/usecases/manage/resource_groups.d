@@ -13,8 +13,8 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
-  private IResourceGroupRepository repo;
+class ManageResourceGroupsUseCase {
+  protected IResourceGroupRepository repo;
 
   this(IResourceGroupRepository repo) {
     this.repo = repo;

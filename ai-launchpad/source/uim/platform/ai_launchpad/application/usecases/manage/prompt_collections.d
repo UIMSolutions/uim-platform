@@ -15,8 +15,8 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
-  private IPromptCollectionRepository collections;
+class ManagePromptCollectionsUseCase {
+  protected IPromptCollectionRepository collections;
 
   this(IPromptCollectionRepository repo) {
     this.collections = repo;

@@ -22,7 +22,7 @@ import gtk.ToolButton;
 // mixin(ShowModule!());
 
 class ApplicationJobWindow : ApplicationWindow {
-  private ManageApplicationJobsUseCase usecase;
+  protected ManageApplicationJobsUseCase usecase;
   private TreeView treeView;
 
   this(Application app, ManageApplicationJobsUseCase usecase) {

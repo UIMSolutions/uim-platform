@@ -14,8 +14,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
-  private IConsentRecordRepository repo;
+class ManageConsentRecordsUseCase {
+  protected IConsentRecordRepository repo;
   private IDataSubjectRepository subjectRepo;
 
   this(IConsentRecordRepository repo, IDataSubjectRepository subjectRepo) {

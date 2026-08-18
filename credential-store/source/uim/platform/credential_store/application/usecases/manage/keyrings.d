@@ -18,8 +18,8 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class ManageKeyringsUseCase { // TODO: UIMUseCase {
-  private ICredentialRepository credRepo;
+class ManageKeyringsUseCase {
+  protected ICredentialRepository credRepo;
   private IKeyringVersionRepository versionRepo;
 
   this(ICredentialRepository credRepo, IKeyringVersionRepository versionRepo) {

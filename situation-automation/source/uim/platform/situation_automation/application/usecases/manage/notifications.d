@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageNotificationsUseCase { // TODO: UIMUseCase {
+class ManageNotificationsUseCase {
     private INotificationRepository repo;
 
     this(INotificationRepository repo) {

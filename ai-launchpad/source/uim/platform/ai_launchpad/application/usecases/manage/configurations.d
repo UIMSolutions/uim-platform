@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageConfigurationsUseCase { // TODO: UIMUseCase {
+class ManageConfigurationsUseCase {
   protected IConfigurationRepository repo;
 
   this(IConfigurationRepository repo) {

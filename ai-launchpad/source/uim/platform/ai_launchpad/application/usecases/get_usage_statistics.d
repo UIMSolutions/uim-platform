@@ -13,8 +13,8 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class GetUsageStatisticsUseCase { // TODO: UIMUseCase {
-  private IUsageStatisticRepository repo;
+class GetUsageStatisticsUseCase {
+  protected IUsageStatisticRepository repo;
 
   this(IUsageStatisticRepository repo) {
     this.repo = repo;

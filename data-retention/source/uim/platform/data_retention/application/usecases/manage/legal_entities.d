@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
+class ManageLegalEntitiesUseCase {
     private ILegalEntityRepository repo;
 
     this(ILegalEntityRepository repo) {

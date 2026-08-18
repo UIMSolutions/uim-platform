@@ -15,8 +15,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for viewing content operation activities.
-class MonitorActivitiesUseCase { // TODO: UIMUseCase {
-  private IContentActivityRepository activityRepo;
+class MonitorActivitiesUseCase {
+  protected IContentActivityRepository activityRepo;
 
   this(IContentActivityRepository activityRepo) {
     this.activityRepo = activityRepo;

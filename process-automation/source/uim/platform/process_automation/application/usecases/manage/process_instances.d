@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
+class ManageProcessInstancesUseCase {
     private IProcessInstanceRepository repo;
 
     this(IProcessInstanceRepository repo) {

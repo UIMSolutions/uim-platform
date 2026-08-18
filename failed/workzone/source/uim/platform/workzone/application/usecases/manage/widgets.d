@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageWidgetsUseCase { // TODO: UIMUseCase {
-  private IWidgetRepository repo;
+class ManageWidgetsUseCase {
+  protected IWidgetRepository repo;
 
   this(IWidgetRepository repo) {
     this.repo = repo;

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class DeploymentController : ManageHttpController {
-  private ManageDeploymentsUseCase usercase;
+  protected ManageDeploymentsUseCase usercase;
 
   this(ManageDeploymentsUseCase usercase) {
     this.usercase = usercase;

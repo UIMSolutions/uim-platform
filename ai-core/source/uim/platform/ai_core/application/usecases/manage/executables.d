@@ -10,8 +10,8 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageExecutablesUseCase { // TODO: UIMUseCase {
-    private IExecutableRepository repo;
+class ManageExecutablesUseCase {
+    protected IExecutableRepository repo;
 
     this(IExecutableRepository repo) {
         this.repo = repo;

@@ -10,8 +10,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
-  private IPageTemplateRepository repo;
+class ManagePageTemplatesUseCase {
+  protected IPageTemplateRepository repo;
 
   this(IPageTemplateRepository repo) {
     this.repo = repo;

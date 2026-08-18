@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class TemplateController : SAPController {
-  private ManageTemplatesUseCase _uc;
+  protected ManageTemplatesUseCase _uc;
 
   this(ManageTemplatesUseCase uc) { _uc = uc; }
 
@@ -41,19 +41,19 @@ class TemplateController : SAPController {
 
   private void createTemplate(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto body_    = req.json;
+    auto data    = req.json;
     CreateTemplateRequest dto;
-    dto.name        = body_["name"].get!string("");
-    dto.displayName = body_["displayName"].get!string(dto.name);
-    dto.description = body_["description"].get!string("");
-    dto.category    = body_["category"].get!string("");
-    dto.projectType = body_["projectType"].get!string("other");
-    dto.techStack   = body_["techStack"].get!string("other");
-    dto.version_    = body_["version"].get!string("1.0.0");
-    dto.author      = body_["author"].get!string("");
-    dto.isBuiltIn   = body_["isBuiltIn"].get!bool(false);
-    if (body_["parameters"].isArray)
-      foreach (p; body_["parameters"]) dto.parameters ~= p.get!string("");
+    dto.name        = data.getString("name", "");
+    dto.displayName = data.getString("displayName", dto.name);
+    dto.description = data.getString("description", "");
+    dto.category    = data.getString("category", "");
+    dto.projectType = data.getString("projectType", "other");
+    dto.techStack   = data.getString("techStack", "other");
+    dto.version_    = data.getString("version", "1.0.0");
+    dto.author      = data.getString("author", "");
+    dto.isBuiltIn   = data.getBool("isBuiltIn", false);
+    if (data["parameters"].isArray)
+      foreach (p; data["parameters"]) dto.parameters ~= p.get!string("");
     auto result = _uc.create(tenantId, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;

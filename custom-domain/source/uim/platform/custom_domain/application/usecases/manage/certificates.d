@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageCertificatesUseCase { // TODO: UIMUseCase {
+class ManageCertificatesUseCase {
     private ICertificateRepository repo;
 
     this(ICertificateRepository repo) {

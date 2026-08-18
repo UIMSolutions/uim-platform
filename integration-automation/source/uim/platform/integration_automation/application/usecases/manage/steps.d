@@ -16,8 +16,8 @@ import uim.platform.integration_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageStepsUseCase { // TODO: UIMUseCase {
-  private IStepRepository repo;
+class ManageStepsUseCase {
+  protected IStepRepository repo;
   private StepExecutor executor;
   private WorkflowEngine engine;
 

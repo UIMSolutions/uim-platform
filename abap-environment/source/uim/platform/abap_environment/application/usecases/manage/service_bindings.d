@@ -11,8 +11,8 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Application service for service binding CRUD.
-class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-  private IServiceBindingRepository repo;
+class ManageServiceBindingsUseCase {
+  protected IServiceBindingRepository repo;
 
   this(IServiceBindingRepository repo) {
     this.repo = repo;

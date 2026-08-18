@@ -14,7 +14,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
+class ManagePushRegistrationsUseCase {
     private IPushRegistrationRepository repo;
 
     this(IPushRegistrationRepository repo) {

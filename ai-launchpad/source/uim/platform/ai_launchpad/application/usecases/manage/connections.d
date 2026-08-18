@@ -15,7 +15,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManageConnectionsUseCase { // TODO: UIMUseCase {
+class ManageConnectionsUseCase {
   protected IConnectionRepository repo;
   protected ConnectionValidator validator;
 

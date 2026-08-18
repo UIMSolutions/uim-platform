@@ -20,7 +20,7 @@ import gtk.ToolButton;
 // mixin(ShowModule!());
 
 class TransportRequestWindow : ApplicationWindow {
-  private ManageTransportRequestsUseCase usecase;
+  protected ManageTransportRequestsUseCase usecase;
   private TreeView treeView;
 
   this(Application app, ManageTransportRequestsUseCase usecase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
+class ManageCustomDomainsUseCase {
     private ICustomDomainRepository repo;
 
     this(ICustomDomainRepository repo) {

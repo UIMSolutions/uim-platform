@@ -69,15 +69,15 @@ class AppSubscriptionController : ManageHttpController {
     protected void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto body_ = req.json;
+            auto data = req.json;
 
             SubscribeRequest dto;
-            dto.subscriberTenantId = body_.getString("subscriberTenantId");
-            dto.subscriberSubaccountId = body_.getString("subscriberSubaccountId");
-            dto.subscriberGlobalAccountId = body_.getString("subscriberGlobalAccountId");
-            dto.subdomain = body_.getString("subdomain");
-            dto.subscribedBy = body_.getString("subscribedBy");
-            string appName = body_.getString("appName");
+            dto.subscriberTenantId = data.getString("subscriberTenantId");
+            dto.subscriberSubaccountId = data.getString("subscriberSubaccountId");
+            dto.subscriberGlobalAccountId = data.getString("subscriberGlobalAccountId");
+            dto.subdomain = data.getString("subdomain");
+            dto.subscribedBy = data.getString("subscribedBy");
+            string appName = data.getString("appName");
 
             auto result = usecase.subscribeConsumer(tenantId, appName, dto);
             if (!result.success) {
@@ -113,52 +113,54 @@ class AppSubscriptionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = AppSubscriptionId(precheck.id);
         if (id.isNull)
-            return errorResponse("Invalid subscription ID", "Invalid subscription ID: " ~ precheck.id.value, 400);    
+            return errorResponse("Invalid subscription ID", "Invalid subscription ID: " ~ precheck.id.value, 400);
 
-        auto body_ = req.json;
+        auto data = req.json;
         UpdateSubscriptionRequest dto;
-        if ((("state" in body_) !is null) && body_["state"].isString) {
+        if ((("state" in data) !is null) && data["state"].isString) {
             try {
-                dto.state = body_["state"].get!string
+                dto.state = data["state"].get!string
                     .to!SubscriptionState;
             } catch (Exception) {
             }
         }
-        dto.error = body_.getString("error");
+        dto.error = data.getString("error");
         auto result = usecase.updateSubscription(tenantId, id, dto);
         if (result.hasError)
             return errorResponse("Subscription update failed", result.message, 400);
 
         auto responsedata = Json.emptyObject.set("id", result.id);
         return successResponse("Subscription updated", "Subscription updated with ID " ~ result.id.value, 200, responsedata);
-}
-
-protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-        auto tenantId = tenantId;
-        auto id = AppSubscriptionId(precheck.id);
-        
-        UserId requestedBy = "";
-        try {
-            requestedBy = safeStr(req.json, "requestedBy");
-        } catch (Exception) {
-        }
-        auto result = usecase.unsubscribeConsumer(tenantId, id, requestedBy);
-        if (!result.success) {
-            writeError(res, 404, result.message);
-            return;
-        }
-        res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-    } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
     }
-}
 
-// -----------------------------------------------------------------------
+    protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto precheck = super.unsubscribeHandler(req);
+            if (precheck.hasError) {
+                writeError(res, 400, precheck.message);
+                return;
+            }
+            auto tenantId = precheck.tenantId;
+            auto id = AppSubscriptionId(precheck.id);
+            if (id.isNull) {
+                writeError(res, 400, "Invalid subscription ID: " ~ precheck.id.value);
+                return;
+            }
 
-private string safeStr(Json obj, string key) {
-    if ((key in obj) !is null && obj[key].isString)
-        return obj[key].get!string;
-    return "";
-}
+            UserId requestedBy = "";
+            try {
+                requestedBy = req.json.getString("requestedBy");
+            } catch (Exception) {
+            }
+            auto result = usecase.unsubscribeConsumer(tenantId, id, requestedBy);
+            if (!result.success) {
+                writeError(res, 404, result.message);
+                return;
+            }
+            res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
 }

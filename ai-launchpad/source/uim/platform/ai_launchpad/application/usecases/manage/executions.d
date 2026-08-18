@@ -15,8 +15,8 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManageExecutionsUseCase { // TODO: UIMUseCase {
-  private IExecutionRepository executions;
+class ManageExecutionsUseCase {
+  protected IExecutionRepository executions;
 
   this(IExecutionRepository executions) {
     this.executions = executions;

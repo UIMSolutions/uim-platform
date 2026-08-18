@@ -22,8 +22,8 @@ import gtk.ToolButton;
 // mixin(ShowModule!());
 
 class BusinessRoleWindow : ApplicationWindow {
-  private ManageBusinessRolesUseCase usecase;
-  private TreeView treeView;
+  protected ManageBusinessRolesUseCase usecase;
+  protected TreeView treeView;
 
   this(Application app, ManageBusinessRolesUseCase usecase) {
     super(app);

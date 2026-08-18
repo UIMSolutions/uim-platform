@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application use case: password policy management.
-class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
-  private IPasswordPolicyRepository policyRepo;
+class ManagePasswordPoliciesUseCase {
+  protected IPasswordPolicyRepository policyRepo;
   private IAuditRepository auditRepo;
 
   this(IPasswordPolicyRepository policyRepo, IAuditRepository auditRepo) {

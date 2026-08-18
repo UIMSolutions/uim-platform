@@ -18,8 +18,8 @@ import uim.platform.identity_provisioning;
 mixin(ShowModule!());
 
 @safe:
-class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
-  private IProvisioningJobRepository repo;
+class RunProvisioningJobsUseCase {
+  protected IProvisioningJobRepository repo;
   private ISourceSystemRepository sourceRepo;
   private ITargetSystemRepository targetRepo;
   private IProvisioningLogRepository logRepo;

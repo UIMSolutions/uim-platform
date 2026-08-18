@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageForumTopicsUseCase { // TODO: UIMUseCase {
-  private IForumTopicRepository repo;
+class ManageForumTopicsUseCase {
+  protected IForumTopicRepository repo;
 
   this(IForumTopicRepository repo) {
     this.repo = repo;

@@ -14,8 +14,8 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageViewsUseCase { // TODO: UIMUseCase {
-  private IViewRepository repo;
+class ManageViewsUseCase {
+  protected IViewRepository repo;
 
   this(IViewRepository repo) {
     this.repo = repo;

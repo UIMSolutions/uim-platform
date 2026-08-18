@@ -22,13 +22,13 @@ class AgentDeterminationController : ManageHttpController {
     }
 
     void handleDetermine(HTTPServerRequest req, HTTPServerResponse res) {
-        auto body_ = req.json;
+        auto data = req.json;
         DetermineAgentsRequest request;
-        request.tenantId   = TenantIf(body_["tenantId"].get!string);
-        request.contextId  = body_["contextId"].get!string;
-        request.objectType = body_["objectType"].get!string;
-        request.objectId   = body_["objectId"].get!string;
-        request.callerApp  = body_.gString("callerApp");
+        request.tenantId   = TenantId(data["tenantId"].get!string);
+        request.contextId  = data["contextId"].get!string;
+        request.objectType = data["objectType"].get!string;
+        request.objectId   = data["objectId"].get!string;
+        request.callerApp  = data.getString("callerApp");
 
         auto result = _uc.determine(request);
         auto json = Json.emptyObject;

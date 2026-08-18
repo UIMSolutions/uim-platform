@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for service binding management (credentials for programmatic access).
-class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-  private IServiceBindingRepository bindingRepo;
+class ManageServiceBindingsUseCase {
+  protected IServiceBindingRepository bindingRepo;
   private IBucketRepository bucketRepo;
 
   this(IServiceBindingRepository bindingRepo, IBucketRepository bucketRepo) {

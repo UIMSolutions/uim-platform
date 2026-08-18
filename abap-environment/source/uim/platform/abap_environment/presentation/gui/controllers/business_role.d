@@ -12,7 +12,7 @@ import uim.platform.abap_environment.presentation.gui.models.business_role;
 // mixin(ShowModule!());
 
 class BusinessRoleGuiController {
-  private ManageBusinessRolesUseCase usecase;
+  protected ManageBusinessRolesUseCase usecase;
   private BusinessRoleWindow view;
   private BusinessRoleGuiModel model;
 

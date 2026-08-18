@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageEntityTypesUseCase { // TODO: UIMUseCase {
+class ManageEntityTypesUseCase {
     private IEntityTypeRepository repo;
 
     this(IEntityTypeRepository repo) {

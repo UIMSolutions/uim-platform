@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
+class ManageArchivingJobsUseCase {
     private IArchivingJobRepository repo;
 
     this(IArchivingJobRepository repo) {

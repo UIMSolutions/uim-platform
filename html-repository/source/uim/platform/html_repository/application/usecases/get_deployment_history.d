@@ -12,7 +12,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class GetDeploymentHistoryUseCase { // TODO: UIMUseCase {
+class GetDeploymentHistoryUseCase {
     private IDeploymentRecordRepository repo;
 
     this(IDeploymentRecordRepository repo) {

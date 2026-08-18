@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class DeploymentController : SAPController {
-  private ManageDeploymentsUseCase _uc;
+  protected ManageDeploymentsUseCase _uc;
 
   this(ManageDeploymentsUseCase uc) { _uc = uc; }
 
@@ -41,15 +41,15 @@ class DeploymentController : SAPController {
 
   private void createDeployment(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto body_    = req.json;
+    auto data    = req.json;
     CreateDeploymentRequest dto;
-    dto.projectId         = body_["projectId"].get!string("");
-    dto.buildJobId        = body_["buildJobId"].get!string("");
-    dto.artifactVersion   = body_["artifactVersion"].get!string("latest");
-    dto.targetEnvironment = body_["targetEnvironment"].get!string("cloud-foundry");
-    dto.targetOrg         = body_["targetOrg"].get!string("");
-    dto.targetSpace       = body_["targetSpace"].get!string("");
-    dto.deployedBy        = body_["deployedBy"].get!string("api");
+    dto.projectId         = data.getString("projectId", "");
+    dto.buildJobId        = data.getString("buildJobId", "");
+    dto.artifactVersion   = data.getString("artifactVersion", "latest");
+    dto.targetEnvironment = data.getString("targetEnvironment", "cloud-foundry");
+    dto.targetOrg         = data.getString("targetOrg", "");
+    dto.targetSpace       = data.getString("targetSpace", "");
+    dto.deployedBy        = data.getString("deployedBy", "api");
     auto result = _uc.create(tenantId, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
@@ -68,9 +68,9 @@ class DeploymentController : SAPController {
   private void updateDeploymentStatus(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId  = req.headers.get("X-Tenant-Id", "default");
     auto id        = precheck.id;
-    auto body_     = req.json;
-    auto statusStr = body_["status"].get!string("");
-    auto url       = body_["targetUrl"].get!string("");
+    auto data      = req.json;
+    auto statusStr = data.getString("status", "");
+    auto url       = data.getString("targetUrl", "");
     auto result    = _uc.updateStatus(tenantId, id, statusStr, url);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

@@ -14,7 +14,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManageUsageReportsUseCase { // TODO: UIMUseCase {
+class ManageUsageReportsUseCase {
     private IUsageReportRepository repo;
 
     this(IUsageReportRepository repo) {

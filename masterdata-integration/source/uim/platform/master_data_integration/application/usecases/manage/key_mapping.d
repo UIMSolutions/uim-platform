@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for cross-system key mapping management.
-class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
-  private IKeyMappingRepository repo;
+class ManageKeyMappingsUseCase {
+  protected IKeyMappingRepository repo;
   private KeyMappingResolver resolver;
 
   this(IKeyMappingRepository repo, KeyMappingResolver resolver) {

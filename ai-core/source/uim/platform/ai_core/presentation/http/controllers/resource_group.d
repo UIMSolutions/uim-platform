@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class ResourceGroupController : ManageHttpController {
-  private ManageResourceGroupsUseCase groups;
+  protected ManageResourceGroupsUseCase groups;
 
   this(ManageResourceGroupsUseCase groups) {
     this.groups = groups;

@@ -14,8 +14,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for Kubernetes namespace management.
-class ManageNamespacesUseCase { // TODO: UIMUseCase {
-  private NamespaceRepository namespaceRepository;
+class ManageNamespacesUseCase {
+  protected NamespaceRepository namespaceRepository;
 
   this(NamespaceRepository namespaceRepository) {
     this.namespaceRepository = namespaceRepository;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManagePoliciesUseCase {
-  private IAuthorizationRepository repo;
+  protected IAuthorizationRepository repo;
 
   this(IAuthorizationRepository repo) {
     this.repo = repo;

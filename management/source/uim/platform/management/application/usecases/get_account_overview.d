@@ -19,7 +19,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: generate a dashboard overview for a global account.
-class GetAccountOverviewUseCase { // TODO: UIMUseCase {
+class GetAccountOverviewUseCase {
   protected ISubaccountRepository subaccountRepo;
   protected IDirectoryRepository directoryRepo;
   protected IEntitlementRepository entitlementRepo;

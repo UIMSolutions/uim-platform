@@ -56,11 +56,11 @@ protected:
     if (itemsJson.isArray) {
       foreach (ij; itemsJson.byValue) {
         DeliveryItemRequest ir;
-        ir.itemNumber = jsonStr(ij, "itemNumber");
-        ir.productId = jsonStr(ij, "productId");
-        ir.productDescription = jsonStr(ij, "productDescription");
+        ir.itemNumber = ij.getString("itemNumber");
+        ir.productId  = ij.getString("productId");
+        ir.productDescription = ij.getString("productDescription");
         ir.quantity = ij["quantity"].isFloat ? ij["quantity"].get!double : 0.0;
-        ir.unit = jsonStr(ij, "unit");
+        ir.unit = ij.getString("unit");
         ir.weightKg = ij["weightKg"].isFloat ? ij["weightKg"].get!double : 0.0;
         ir.volumeM3 = ij["volumeM3"].isFloat ? ij["volumeM3"].get!double : 0.0;
         dto.items ~= ir;
@@ -89,12 +89,17 @@ protected:
   override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = DeliveryId(extractIdFromPath(req.requestPath.to!string));
-    auto body_ = req.json;
+    if (id.isNull) {
+      res.statusCode = cast(int) HTTPStatus.badRequest;
+      return writeError("Invalid delivery ID");
+    }
+
+    auto data = req.json;
     UpdateDeliveryRequest dto;
-    dto.description = body_.getString("description");
-    dto.status = body_.getString("status");
-    dto.deliveryAddress = body_.getString("deliveryAddress");
-    dto.actualDate = jsonInt(body_, "actualDate");
+    dto.description = data.getString("description");
+    dto.status = data.getString("status");
+    dto.deliveryAddress = data.getString("deliveryAddress");
+    dto.actualDate = jsonInt(data, "actualDate");
     auto result = _useCase.updateDeliveryStatus(tenantId, id, dto);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.badRequest;

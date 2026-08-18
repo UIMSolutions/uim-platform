@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
-  private INavigationItemRepository repo;
+class ManageNavigationItemsUseCase {
+  protected INavigationItemRepository repo;
 
   this(INavigationItemRepository repo) {
     this.repo = repo;

@@ -18,8 +18,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class GetOverviewUseCase { // TODO: UIMUseCase {
-  private ILogEntryRepository logRepo;
+class GetOverviewUseCase {
+  protected ILogEntryRepository logRepo;
   private ISpanRepository spanRepo;
   private ILogStreamRepository streamRepo;
   private IDashboardRepository dashboardRepo;

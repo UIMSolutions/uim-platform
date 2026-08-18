@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 @safe:
 
 class BusinessUserCommand : ManageCommand {
-  private ManageBusinessUsersUseCase usecase;
+  protected ManageBusinessUsersUseCase usecase;
 
   this(ManageBusinessUsersUseCase usecase) {
     this.usecase = usecase;

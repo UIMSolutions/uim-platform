@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 @safe:
 
 class BusinessRoleWebController : ManageHttpController {
-  private ManageBusinessRolesUseCase usecase;
+  protected ManageBusinessRolesUseCase usecase;
 
   this(ManageBusinessRolesUseCase usecase) {
     this.usecase = usecase;

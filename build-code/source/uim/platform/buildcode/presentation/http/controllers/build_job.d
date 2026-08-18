@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class BuildJobController : SAPController {
-  private ManageBuildJobsUseCase _uc;
+  protected ManageBuildJobsUseCase _uc;
 
   this(ManageBuildJobsUseCase uc) { _uc = uc; }
 
@@ -41,12 +41,12 @@ class BuildJobController : SAPController {
 
   private void triggerBuild(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto body_    = req.json;
+    auto data    = req.json;
     TriggerBuildRequest dto;
-    dto.pipelineId  = body_["pipelineId"].get!string("");
-    dto.commitSha   = body_["commitSha"].get!string("");
-    dto.branch      = body_["branch"].get!string("");
-    dto.triggeredBy = body_["triggeredBy"].get!string("api");
+    dto.pipelineId  = data.getString("pipelineId", "");
+    dto.commitSha   = data.getString("commitSha", "");
+    dto.branch      = data.getString("branch", "");
+    dto.triggeredBy = data.getString("triggeredBy", "api");
     auto result = _uc.trigger(tenantId, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
@@ -65,8 +65,8 @@ class BuildJobController : SAPController {
   private void updateStatus(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId  = req.headers.get("X-Tenant-Id", "default");
     auto id        = precheck.id;
-    auto body_     = req.json;
-    auto statusStr = body_["status"].get!string("");
+    auto data      = req.json;
+    auto statusStr = data.getString("status", "");
     auto result    = _uc.updateStatus(tenantId, id, statusStr);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

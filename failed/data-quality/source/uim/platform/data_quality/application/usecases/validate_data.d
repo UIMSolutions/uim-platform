@@ -10,8 +10,8 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class ValidateDataUseCase { // TODO: UIMUseCase {
-  private ValidationRuleRepository ruleRepo;
+class ValidateDataUseCase {
+  protected ValidationRuleRepository ruleRepo;
   private ValidationResultRepository resultRepo;
   private ValidationEngine engine;
 

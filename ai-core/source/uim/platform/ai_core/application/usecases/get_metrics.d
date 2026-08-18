@@ -8,15 +8,13 @@ module uim.platform.ai_core.application.usecases.get_metrics;
 // import uim.platform.ai_core.domain.entities.metric;
 // import uim.platform.ai_core.domain.ports.repositories.metric;
 
-
-
 import uim.platform.ai_core;
 
 mixin(ShowModule!()); 
 
 @safe:
-class GetMetricsUseCase { // TODO: UIMUseCase {
-  private IMetricRepository repo;
+class GetMetricsUseCase { 
+  protected IMetricRepository repo;
 
   this(IMetricRepository repo) {
     this.repo = repo;

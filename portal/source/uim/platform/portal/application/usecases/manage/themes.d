@@ -16,8 +16,8 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ManageThemesUseCase { // TODO: UIMUseCase {
-  private IThemeRepository repo;
+class ManageThemesUseCase {
+  protected IThemeRepository repo;
 
   this(IThemeRepository repo) {
     this.repo = repo;

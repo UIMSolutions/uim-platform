@@ -21,8 +21,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service: aggregates monitoring data for dashboard overview.
-class GetDashboardUseCase { // TODO: UIMUseCase {
-  private IMonitoredResourceRepository resourceRepo;
+class GetDashboardUseCase {
+  protected IMonitoredResourceRepository resourceRepo;
   private IAlertRepository alertRepo;
   private IHealthCheckRepository checkRepo;
   private IHealthCheckResultRepository checkResultRepo;

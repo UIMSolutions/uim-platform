@@ -14,8 +14,8 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class ManageClientsUseCase { // TODO: UIMUseCase {
-  private IClientRepository repo;
+class ManageClientsUseCase {
+  protected IClientRepository repo;
 
   this(IClientRepository repo) {
     this.repo = repo;

@@ -13,8 +13,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
-  private INotificationChannelRepository repo;
+class ManageNotificationChannelsUseCase {
+  protected INotificationChannelRepository repo;
 
   this(INotificationChannelRepository repo) {
     this.repo = repo;

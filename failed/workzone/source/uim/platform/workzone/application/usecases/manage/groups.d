@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageGroupsUseCase { // TODO: UIMUseCase {
-  private IGroupRepository repo;
+class ManageGroupsUseCase {
+  protected IGroupRepository repo;
 
   this(IGroupRepository repo) {
     this.repo = repo;

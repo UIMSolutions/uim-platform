@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
+class ManageLegalGroundsUseCase {
     private ILegalGroundRepository repo;
 
     this(ILegalGroundRepository repo) {

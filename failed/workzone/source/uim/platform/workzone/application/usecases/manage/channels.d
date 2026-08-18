@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageChannelsUseCase { // TODO: UIMUseCase {
-  private IChannelRepository repo;
+class ManageChannelsUseCase {
+  protected IChannelRepository repo;
 
   this(IChannelRepository repo) {
     this.repo = repo;

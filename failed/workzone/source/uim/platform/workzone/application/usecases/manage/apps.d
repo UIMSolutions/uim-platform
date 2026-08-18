@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageAppsUseCase { // TODO: UIMUseCase {
-  private IAppRepository repo;
+class ManageAppsUseCase {
+  protected IAppRepository repo;
 
   this(IAppRepository repo) {
     this.repo = repo;

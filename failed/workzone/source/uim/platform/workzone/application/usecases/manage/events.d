@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageEventsUseCase { // TODO: UIMUseCase {
-  private IEventRepository repo;
+class ManageEventsUseCase {
+  protected IEventRepository repo;
 
   this(IEventRepository repo) {
     this.repo = repo;

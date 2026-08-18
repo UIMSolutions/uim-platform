@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for serverless function lifecycle management.
-class ManageFunctionsUseCase { // TODO: UIMUseCase {
+class ManageFunctionsUseCase {
   protected FunctionRepository functionRepository;
   protected FunctionValidator validator;
 

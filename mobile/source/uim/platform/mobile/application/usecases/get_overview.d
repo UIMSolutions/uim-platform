@@ -17,7 +17,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class GetOverviewUseCase { // TODO: UIMUseCase {
+class GetOverviewUseCase {
     private IMobileAppRepository appRepo;
     private IDeviceRegistrationRepository deviceRepo;
     private IPushNotificationRepository pushNotifRepo;

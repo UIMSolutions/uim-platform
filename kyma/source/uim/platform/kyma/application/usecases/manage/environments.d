@@ -14,8 +14,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for Kyma environment lifecycle management.
-class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
-  private IEnvironmentRepository repo;
+class ManageEnvironmentsUseCase {
+  protected IEnvironmentRepository repo;
 
   this(IEnvironmentRepository repo) {
     this.repo = repo;

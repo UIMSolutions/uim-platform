@@ -20,7 +20,7 @@ import gtk.ToolButton;
 // mixin(ShowModule!());
 
 class CommunicationArrangementWindow : ApplicationWindow {
-  private ManageCommunicationArrangementsUseCase usecase;
+  protected ManageCommunicationArrangementsUseCase usecase;
   private TreeView treeView;
 
   this(Application app, ManageCommunicationArrangementsUseCase usecase) {

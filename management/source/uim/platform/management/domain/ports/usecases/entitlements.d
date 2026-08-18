@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: manage service plan entitlements and quota assignments.
-interface IManageEntitlementsUseCase { // TODO: UIMUseCase {
+interface IManageEntitlementsUseCase {
 
   CommandResult assignEntitlement(AssignEntitlementRequest request);
   CommandResult updateEntitlementQuota(UpdateEntitlementQuotaRequest request);

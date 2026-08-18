@@ -94,13 +94,13 @@ class ActionController : ManageHttpController {
 
 
         auto id = req.requestPath.to!string.split("/")[$ - 1];
-        auto body_ = req.json;
+        auto data = req.json;
         UpdateActionRequest dto;
-        dto.description = body_["description"].opt!string("");
-        dto.state = body_["state"].opt!string("");
-        dto.fallbackAction = body_["fallbackAction"].opt!string("");
-        dto.enableDeliveryStatus = body_["enableDeliveryStatus"].opt!bool(false);
-        auto propsNode = body_["properties"];
+        dto.description = data.getString("description", "");
+        dto.state = data.getString("state", "");
+        dto.fallbackAction = data.getString("fallbackAction", "");
+        dto.enableDeliveryStatus = data.getBool("enableDeliveryStatus", false);
+        auto propsNode = data["properties"];
         if (propsNode.isObject())
             foreach (k, v; propsNode.byKeyValue())
                 dto.properties[k] = v.to!string;

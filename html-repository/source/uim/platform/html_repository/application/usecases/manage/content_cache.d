@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageContentCacheUseCase { // TODO: UIMUseCase {
+class ManageContentCacheUseCase {
     private IContentCacheRepository repo;
 
     this(IContentCacheRepository repo) {

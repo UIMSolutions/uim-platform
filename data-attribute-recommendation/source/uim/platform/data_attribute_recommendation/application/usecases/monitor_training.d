@@ -88,8 +88,8 @@ struct PipelineSummary {
   }
 }
 
-class MonitorTrainingUseCase { // TODO: UIMUseCase {
-  private ITrainingJobRepository jobRepo;
+class MonitorTrainingUseCase {
+  protected ITrainingJobRepository jobRepo;
   private IDeploymentRepository deploymentRepo;
   private IModelConfigRepository configRepo;
   private IInferenceRequestRepository inferenceRepo;

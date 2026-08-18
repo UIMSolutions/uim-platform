@@ -11,8 +11,8 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Application service for business user management.
-class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
-  private IBusinessUserRepository repo;
+class ManageBusinessUsersUseCase {
+  protected IBusinessUserRepository repo;
   private IBusinessRoleRepository roleRepo;
 
   this(IBusinessUserRepository repo, IBusinessRoleRepository roleRepo) {

@@ -26,18 +26,18 @@ class FileSubscriptionRepository : TenantRepository!(), ISubscriptionRepository 
         this.basePath = basePath;
     }
 
-    private string filePath(TenantId tenantId) const {
+    protected string filePath(TenantId tenantId) const {
         return buildPath(basePath, tenantId.value, "subscriptions.json");
     }
 
-    private void ensureLoaded(TenantId tenantId) {
+    protected void ensureLoaded(TenantId tenantId) {
         if (tenantId in loadedTenants)
             return;
         loadedTenants[tenantId] = true;
         loadTenant(tenantId);
     }
 
-    private void loadTenant(TenantId tenantId) @trusted {
+    protected void loadTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         if (!fileExists(fp))
             return;
@@ -69,7 +69,7 @@ class FileSubscriptionRepository : TenantRepository!(), ISubscriptionRepository 
         }
     }
 
-    private void persistTenant(TenantId tenantId) @trusted {
+    protected void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
         Json arr = super.findByTenant(tenantId).map!(item => item.toJson).array.toJson;

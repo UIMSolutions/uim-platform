@@ -10,8 +10,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
-  private IConsentPurposeRepository repo;
+class ManageConsentPurposesUseCase {
+  protected IConsentPurposeRepository repo;
 
   this(IConsentPurposeRepository repo) {
     this.repo = repo;

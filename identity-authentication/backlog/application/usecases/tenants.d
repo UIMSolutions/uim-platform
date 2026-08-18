@@ -16,8 +16,8 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application use case: tenant management.
-class ManageTenantsUseCase { // TODO: UIMUseCase {
-  private TenantRepository tenantRepo;
+class ManageTenantsUseCase {
+  protected TenantRepository tenantRepo;
 
   this(TenantRepository tenantRepo) {
     this.tenantRepo = tenantRepo;

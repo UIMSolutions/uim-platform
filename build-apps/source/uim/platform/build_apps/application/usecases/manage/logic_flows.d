@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
+class ManageLogicFlowsUseCase {
     private ILogicFlowRepository repo;
 
     this(ILogicFlowRepository repo) {

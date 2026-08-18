@@ -11,8 +11,8 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Application service for transport request management (CTS-like).
-class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
-  private ITransportRequestRepository repo;
+class ManageTransportRequestsUseCase {
+  protected ITransportRequestRepository repo;
 
   this(ITransportRequestRepository repo) {
     this.repo = repo;

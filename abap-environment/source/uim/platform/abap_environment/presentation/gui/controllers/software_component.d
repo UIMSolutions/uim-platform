@@ -12,7 +12,7 @@ import uim.platform.abap_environment.presentation.gui.models.software_component;
 // mixin(ShowModule!());
 
 class SoftwareComponentGuiController {
-  private ManageSoftwareComponentsUseCase usecase;
+  protected ManageSoftwareComponentsUseCase usecase;
   private SoftwareComponentWindow view;
   private SoftwareComponentGuiModel model;
 

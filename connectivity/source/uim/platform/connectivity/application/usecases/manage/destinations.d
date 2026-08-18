@@ -18,8 +18,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for destination CRUD and lookup.
-class ManageDestinationsUseCase { // TODO: UIMUseCase {
-  private IDestinationRepository destinations;
+class ManageDestinationsUseCase {
+  protected IDestinationRepository destinations;
   private IConnectivityLogRepository logs;
 
   this(IDestinationRepository destinations, IConnectivityLogRepository logs) {

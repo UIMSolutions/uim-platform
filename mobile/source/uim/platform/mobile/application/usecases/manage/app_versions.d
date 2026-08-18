@@ -15,7 +15,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManageAppVersionsUseCase { // TODO: UIMUseCase {
+class ManageAppVersionsUseCase {
     private IAppVersionRepository repo;
 
     this(IAppVersionRepository repo) {

@@ -15,7 +15,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
+class ManagePushNotificationsUseCase {
     private IPushNotificationRepository repo;
 
     this(IPushNotificationRepository repo) {

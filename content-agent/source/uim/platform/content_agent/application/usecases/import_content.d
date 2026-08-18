@@ -18,8 +18,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for importing content packages.
-class ImportContentUseCase { // TODO: UIMUseCase {
-  private IImportJobRepository importRepo;
+class ImportContentUseCase {
+  protected IImportJobRepository importRepo;
   private IContentPackageRepository packageRepo;
   private IContentActivityRepository activityRepo;
 

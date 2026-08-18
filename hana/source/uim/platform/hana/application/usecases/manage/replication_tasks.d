@@ -14,8 +14,8 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
-  private ReplicationTaskRepository repo;
+class ManageReplicationTasksUseCase {
+  protected ReplicationTaskRepository repo;
 
   this(ReplicationTaskRepository repo) {
     this.repo = repo;

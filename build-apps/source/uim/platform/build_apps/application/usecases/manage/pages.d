@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManagePagesUseCase { // TODO: UIMUseCase {
+class ManagePagesUseCase {
     private IPageRepository repo;
 
     this(IPageRepository repo) {

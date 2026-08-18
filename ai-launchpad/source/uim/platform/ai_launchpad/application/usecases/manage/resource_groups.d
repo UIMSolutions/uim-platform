@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
+class ManageResourceGroupsUseCase {
   protected IResourceGroupRepository repo;
 
   this(IResourceGroupRepository repo) {

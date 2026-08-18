@@ -18,8 +18,8 @@ import uim.platform.integration_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageWorkflowsUseCase { // TODO: UIMUseCase {
-  private IWorkflowRepository workflowRepo;
+class ManageWorkflowsUseCase {
+  protected IWorkflowRepository workflowRepo;
   private IStepRepository stepRepo;
   private IScenarioRepository scenarioRepo;
   private WorkflowEngine engine;

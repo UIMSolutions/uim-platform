@@ -14,8 +14,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManagePipelinesUseCase { // TODO: UIMUseCase {
-  private IPipelineRepository repo;
+class ManagePipelinesUseCase {
+  protected IPipelineRepository repo;
 
   private bool tryParseSourceType(string raw, out PipelineSourceType sourceType) {
     auto normalized = raw.toLower;

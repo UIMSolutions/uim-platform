@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: manage global account lifecycle.
-class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
-  private IGlobalAccountRepository repo;
+class ManageGlobalAccountsUseCase {
+  protected IGlobalAccountRepository repo;
   private IEnvironmentEventRepository eventRepo;
 
   this(IGlobalAccountRepository repo, IEnvironmentEventRepository eventRepo) {

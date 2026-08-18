@@ -10,8 +10,8 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 @safe:
 
-class TransportRequestCommand : ManageCommand {
-  private ManageTransportRequestsUseCase usecase;
+class TransportRequestCommand : ManageCommand {      
+  protected ManageTransportRequestsUseCase usecase;
 
   this(ManageTransportRequestsUseCase usecase) {
     this.usecase = usecase;

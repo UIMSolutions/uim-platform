@@ -15,8 +15,8 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageSpacesUseCase { // TODO: UIMUseCase {
-  private ISpaceRepository repo;
+class ManageSpacesUseCase {
+  protected ISpaceRepository repo;
 
   this(ISpaceRepository repo) {
     this.repo = repo;

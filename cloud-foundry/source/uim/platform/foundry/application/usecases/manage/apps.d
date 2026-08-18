@@ -16,8 +16,8 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class ManageAppsUseCase { // TODO: UIMUseCase {
-  private IAppRepository apps;
+class ManageAppsUseCase {
+  protected IAppRepository apps;
   private AppLifecycleManager lifecycle;
 
   this(IAppRepository apps, AppLifecycleManager lifecycle) {

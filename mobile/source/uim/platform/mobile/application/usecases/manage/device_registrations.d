@@ -14,7 +14,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
+class ManageDeviceRegistrationsUseCase {
     private IDeviceRegistrationRepository repo;
 
     this(IDeviceRegistrationRepository repo) {

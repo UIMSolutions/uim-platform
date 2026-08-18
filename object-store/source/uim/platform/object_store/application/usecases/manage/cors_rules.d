@@ -15,8 +15,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for CORS rule management.
-class ManageCorsRulesUseCase { // TODO: UIMUseCase {
-  private ICorsRuleRepository corsRules;
+class ManageCorsRulesUseCase {
+  protected ICorsRuleRepository corsRules;
   private IBucketRepository bucketRepo;
 
   this(ICorsRuleRepository corsRules, IBucketRepository bucketRepo) {

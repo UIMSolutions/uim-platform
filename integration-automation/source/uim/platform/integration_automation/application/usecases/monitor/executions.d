@@ -16,8 +16,8 @@ import uim.platform.integration_automation;
 mixin(ShowModule!());
 
 @safe:
-class MonitorExecutionsUseCase { // TODO: UIMUseCase {
-  private IExecutionLogRepository logRepo;
+class MonitorExecutionsUseCase {
+  protected IExecutionLogRepository logRepo;
   private IWorkflowRepository workflowRepo;
   private IStepRepository stepRepo;
 

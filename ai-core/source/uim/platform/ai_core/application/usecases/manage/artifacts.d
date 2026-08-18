@@ -10,8 +10,8 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageArtifactsUseCase { // TODO: UIMUseCase {
-  private IArtifactRepository repo;
+class ManageArtifactsUseCase {
+  protected IArtifactRepository repo;
 
   this(IArtifactRepository repo) {
     this.repo = repo;

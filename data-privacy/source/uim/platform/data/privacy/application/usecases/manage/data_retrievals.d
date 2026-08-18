@@ -15,8 +15,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
-  private IDataRetrievalRequestRepository repo;
+class ManageDataRetrievalsUseCase {
+  protected IDataRetrievalRequestRepository repo;
   private IDataSubjectRepository dataSubjects;
   private IPersonalDataModelRepository modelRepo;
 

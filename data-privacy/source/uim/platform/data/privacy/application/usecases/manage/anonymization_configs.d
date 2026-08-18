@@ -10,8 +10,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
-  private IAnonymizationConfigRepository repo;
+class ManageAnonymizationConfigsUseCase {
+  protected IAnonymizationConfigRepository repo;
 
   this(IAnonymizationConfigRepository repo) {
     this.repo = repo;

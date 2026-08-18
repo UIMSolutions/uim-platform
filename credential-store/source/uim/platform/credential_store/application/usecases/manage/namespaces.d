@@ -16,8 +16,8 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class ManageNamespacesUseCase { // TODO: UIMUseCase {
-  private INamespaceRepository namespaces;
+class ManageNamespacesUseCase {
+  protected INamespaceRepository namespaces;
 
   this(INamespaceRepository namespaces) {
     this.namespaces = namespaces;

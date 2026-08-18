@@ -11,8 +11,8 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Application service for application job scheduling and management.
-class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
-  private IApplicationJobRepository jobs;
+class ManageApplicationJobsUseCase {
+  protected IApplicationJobRepository jobs;
 
   this(IApplicationJobRepository jobs) {
     this.jobs = jobs;

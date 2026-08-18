@@ -16,8 +16,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class IngestLogsUseCase { // TODO: UIMUseCase {
-  private ILogEntryRepository logRepo;
+class IngestLogsUseCase {
+  protected ILogEntryRepository logRepo;
   private ILogStreamRepository streamRepo;
 
   this(ILogEntryRepository logRepo, ILogStreamRepository streamRepo) {

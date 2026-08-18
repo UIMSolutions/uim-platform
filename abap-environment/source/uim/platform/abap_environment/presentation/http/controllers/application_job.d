@@ -16,7 +16,7 @@ import uim.platform.abap_environment;
 @safe:
 
 class ApplicationJobController : ManageHttpController {
-  private ManageApplicationJobsUseCase usecase;
+  protected ManageApplicationJobsUseCase usecase;
 
   this(ManageApplicationJobsUseCase usecase) {
     this.usecase = usecase;

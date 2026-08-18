@@ -66,8 +66,8 @@ struct SpaceUsageSummary {
   }
 }
 
-class MonitorAppsUseCase { // TODO: UIMUseCase {
-  private IAppRepository apps;
+class MonitorAppsUseCase {
+  protected IAppRepository apps;
   private IServiceInstanceRepository instances;
   private IRouteRepository routes;
 

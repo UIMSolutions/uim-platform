@@ -14,8 +14,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: manage the service plan catalog.
-class ManageServicePlansUseCase { // TODO: UIMUseCase {
-  private IServicePlanRepository servicePlans;
+class ManageServicePlansUseCase {
+  protected IServicePlanRepository servicePlans;
 
   this(IServicePlanRepository servicePlans) {
     this.servicePlans = servicePlans;

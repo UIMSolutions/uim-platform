@@ -14,8 +14,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for event subscription management.
-class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
-  private EventSubscriptionRepository subscriptionRepository;
+class ManageEventSubscriptionsUseCase {
+  protected EventSubscriptionRepository subscriptionRepository;
 
   this(EventSubscriptionRepository subscriptionRepository) {
     this.subscriptionRepository = subscriptionRepository;

@@ -251,19 +251,19 @@ class MarketRateController : SAPController {
 
   private void handleUpdateProvider(HTTPServerRequest req, HTTPServerResponse res) {
     auto id = precheck.id;
-    auto body_ = req.json;
-    if (body_.type == Json.Type.undefined) {
+    auto data = req.json;
+    if (data.isUndefined) {
       writeError(res, 400, "Request body must be JSON");
       return;
     }
 
     UpdateProviderRequest ucReq;
-    ucReq.tenantId = TenantId(body_.getString("tenantId", "default"));
+    ucReq.tenantId = TenantId(data.getString("tenantId", "default"));
     ucReq.providerId = ProviderId(id);
-    ucReq.name = body_.getString("name");
-    ucReq.description = body_.getString("description");
-    ucReq.contactEmail = body_.getString("contactEmail");
-    ucReq.isActive = jsonBool(body_, "isActive", true);
+    ucReq.name = data.getString("name");
+    ucReq.description = data.getString("description");
+    ucReq.contactEmail = data.getString("contactEmail");
+    ucReq.isActive = jsonBool(data, "isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);
     if (!result.success) {

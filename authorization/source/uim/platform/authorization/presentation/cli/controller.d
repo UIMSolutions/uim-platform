@@ -7,7 +7,7 @@ mixin(ShowModule!());
 @safe:
 
 class AuthorizationCliController {
-  private AuthorizationCliModel model;
+  protected AuthorizationCliModel model;
   private AuthorizationCliView view;
 
   this(AuthorizationCliModel model, AuthorizationCliView view) {

@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageTagsUseCase { // TODO: UIMUseCase {
-  private ITagRepository repo;
+class ManageTagsUseCase {
+  protected ITagRepository repo;
 
   this(ITagRepository repo) {
     this.repo = repo;

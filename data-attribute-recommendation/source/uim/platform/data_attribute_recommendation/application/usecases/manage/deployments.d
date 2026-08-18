@@ -16,8 +16,8 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class ManageDeploymentsUseCase { // TODO: UIMUseCase {
-  private IDeploymentRepository repo;
+class ManageDeploymentsUseCase {
+  protected IDeploymentRepository repo;
   private ITrainingJobRepository jobRepo;
   private IModelConfigRepository configRepo;
 

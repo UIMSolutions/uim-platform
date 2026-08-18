@@ -14,8 +14,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for destination CRUD operations.
-class ManageDestinationsUseCase { // TODO: UIMUseCase {
-  private IDestinationRepository repo;
+class ManageDestinationsUseCase {
+  protected IDestinationRepository repo;
 
   this(IDestinationRepository repo) {
     this.repo = repo;

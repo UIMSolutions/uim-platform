@@ -13,8 +13,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageDashboardsUseCase { // TODO: UIMUseCase {
-  private IDashboardRepository repo;
+class ManageDashboardsUseCase {
+  protected IDashboardRepository repo;
 
   this(IDashboardRepository repo) {
     this.repo = repo;

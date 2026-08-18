@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 class ExecutableController : ManageHttpController {
-  private ManageExecutablesUseCase usecase;
+  protected ManageExecutablesUseCase usecase;
 
   this(ManageExecutablesUseCase usecase) {
     this.usecase = usecase;

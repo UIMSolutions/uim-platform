@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 mixin(ShowModule!());
 
 @safe:
-class ManageDashboardsUseCase { // TODO: UIMUseCase {
+class ManageDashboardsUseCase {
     private IDashboardRepository repo;
 
     this(IDashboardRepository repo) {

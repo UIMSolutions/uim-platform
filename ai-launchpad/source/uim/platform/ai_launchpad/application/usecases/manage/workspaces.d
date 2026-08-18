@@ -14,7 +14,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManageWorkspacesUseCase { // TODO: UIMUseCase {
+class ManageWorkspacesUseCase {
   protected IWorkspaceRepository workspaces;
 
   this(IWorkspaceRepository workspaces) {

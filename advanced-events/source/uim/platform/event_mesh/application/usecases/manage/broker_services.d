@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
+class ManageBrokerServicesUseCase {
     protected IBrokerServiceRepository repo;
 
     this(IBrokerServiceRepository repo) {

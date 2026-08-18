@@ -16,8 +16,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageContentUseCase { // TODO: UIMUseCase {
-  private IContentRepository repo;
+class ManageContentUseCase {
+  protected IContentRepository repo;
 
   this(IContentRepository repo) {
     this.repo = repo;

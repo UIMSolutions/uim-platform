@@ -40,14 +40,14 @@ protected:
 
   override Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto body_ = req.json;
+    auto data = req.json;
     CreateWarehouseOrderRequest dto;
-    dto.orderNumber = body_.getString("orderNumber");
-    dto.description = body_.getString("description");
-    dto.deliveryId = body_.getString("deliveryId");
-    dto.warehouseId = body_.getString("warehouseId");
-    dto.assignedTo = body_.getString("assignedTo");
-    dto.dueAt = jsonInt(body_, "dueAt");
+    dto.orderNumber = data.getString("orderNumber");
+    dto.description = data.getString("description");
+    dto.deliveryId = data.getString("deliveryId");
+    dto.warehouseId = data.getString("warehouseId");
+    dto.assignedTo = data.getString("assignedTo");
+    dto.dueAt = jsonInt(data, "dueAt");
     auto result = _useCase.createWarehouseOrder(tenantId, dto);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
@@ -71,12 +71,12 @@ protected:
   override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = WarehouseOrderId(extractIdFromPath(req.requestPath.to!string));
-    auto body_ = req.json;
+    auto data = req.json;
     UpdateWarehouseOrderRequest dto;
-    dto.description = body_.getString("description");
-    dto.status = body_.getString("status");
-    dto.assignedTo = body_.getString("assignedTo");
-    dto.dueAt = jsonInt(body_, "dueAt");
+    dto.description = data.getString("description");
+    dto.status = data.getString("status");
+    dto.assignedTo = data.getString("assignedTo");
+    dto.dueAt = jsonInt(data, "dueAt");
     auto result = _useCase.updateWarehouseOrder(tenantId, id, dto);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.badRequest;

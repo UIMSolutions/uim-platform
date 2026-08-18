@@ -14,8 +14,8 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class ManageBackupsUseCase { // TODO: UIMUseCase {
-  private IBackupRepository repo;
+class ManageBackupsUseCase {
+  protected IBackupRepository repo;
 
   this(IBackupRepository repo) {
     this.repo = repo;

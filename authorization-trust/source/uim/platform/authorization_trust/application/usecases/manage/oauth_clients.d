@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageOAuthClientsUseCase {
-  private IOAuthClientRepository repo;
+  protected IOAuthClientRepository repo;
 
   this(IOAuthClientRepository repo) {
     this.repo = repo;

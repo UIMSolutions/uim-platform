@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 class FileAuthorizationRepository : MemoryAuthorizationRepository {
-  private string basePath;
+  protected string basePath;
 
   this(string basePath) {
     this.basePath = basePath;

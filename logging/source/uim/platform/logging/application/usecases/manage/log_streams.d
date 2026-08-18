@@ -15,8 +15,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageLogStreamsUseCase { // TODO: UIMUseCase {
-  private ILogStreamRepository repo;
+class ManageLogStreamsUseCase {
+  protected ILogStreamRepository repo;
 
   private bool tryParseSourceType(string raw, out LogSourceType sourceType) {
     auto normalized = raw.toLower;

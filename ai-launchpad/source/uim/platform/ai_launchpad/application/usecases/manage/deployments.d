@@ -14,7 +14,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManageDeploymentsUseCase { // TODO: UIMUseCase {
+class ManageDeploymentsUseCase {
   protected IDeploymentRepository repo;
 
   this(IDeploymentRepository repo) {

@@ -16,8 +16,8 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class ManageModelsUseCase { // TODO: UIMUseCase {
-  private IModelConfigRepository repo;
+class ManageModelsUseCase {
+  protected IModelConfigRepository repo;
   private IDatasetRepository datasetRepo;
   private ModelTrainer trainer;
 

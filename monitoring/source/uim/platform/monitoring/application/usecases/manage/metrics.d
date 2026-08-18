@@ -17,8 +17,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for metric retrieval, push, and custom metric definitions.
-class ManageMetricsUseCase { // TODO: UIMUseCase {
-  private IMetricRepository metricRepo;
+class ManageMetricsUseCase {
+  protected IMetricRepository metricRepo;
   private IMetricDefinitionRepository definitions;
 
   this(IMetricRepository metricRepo, IMetricDefinitionRepository definitions) {

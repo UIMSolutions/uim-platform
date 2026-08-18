@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class GetCapabilitiesUseCase { // TODO: UIMUseCase {
+class GetCapabilitiesUseCase {
   CapabilitiesResponse getCapabilities(TenantId tenantId) {
     CapabilitiesResponse r;
     r.tenantId = tenantId;

@@ -16,8 +16,8 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class ManageDataRecordsUseCase { // TODO: UIMUseCase {
-  private IDataRecordRepository repo;
+class ManageDataRecordsUseCase {
+  protected IDataRecordRepository repo;
   private IDatasetRepository datasetRepo;
 
   this(IDataRecordRepository repo, IDatasetRepository datasetRepo) {

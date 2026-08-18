@@ -16,7 +16,7 @@ import uim.platform.abap_environment;
 
 @safe:
 class TransportRequestController : ManageHttpController {
-  private ManageTransportRequestsUseCase usecase;
+  protected ManageTransportRequestsUseCase usecase;
 
   this(ManageTransportRequestsUseCase usecase) {
     this.usecase = usecase;

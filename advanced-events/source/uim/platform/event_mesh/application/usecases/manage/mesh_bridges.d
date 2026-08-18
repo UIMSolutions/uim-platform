@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
+class ManageMeshBridgesUseCase {
     protected IMeshBridgeRepository repo;
 
     this(IMeshBridgeRepository repo) {

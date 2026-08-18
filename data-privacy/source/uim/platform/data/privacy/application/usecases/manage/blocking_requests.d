@@ -15,8 +15,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
-  private BlockingRequestRepository blockingRequests;
+class ManageBlockingRequestsUseCase {
+  protected BlockingRequestRepository blockingRequests;
   private DataSubjectRepository dataSubjects;
 
   this(BlockingRequestRepository blockingRequests, DataSubjectRepository dataSubjects) {

@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageSurveysUseCase { // TODO: UIMUseCase {
-  private ISurveyRepository repo;
+class ManageSurveysUseCase {
+  protected ISurveyRepository repo;
 
   this(ISurveyRepository repo) {
     this.repo = repo;

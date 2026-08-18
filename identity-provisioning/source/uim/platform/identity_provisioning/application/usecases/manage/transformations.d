@@ -15,8 +15,8 @@ import uim.platform.identity_provisioning;
 mixin(ShowModule!());
 
 @safe:
-class ManageTransformationsUseCase { // TODO: UIMUseCase {
-  private ITransformationRepository repo;
+class ManageTransformationsUseCase {
+  protected ITransformationRepository repo;
   private TransformationEngine engine;
 
   this(ITransformationRepository repo, TransformationEngine engine) {

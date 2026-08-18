@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class RetentionController : ManageHttpController {
-  private ManageRetentionUseCase useCase;
+  protected ManageRetentionUseCase useCase;
 
   this(ManageRetentionUseCase useCase) {
     this.useCase = useCase;

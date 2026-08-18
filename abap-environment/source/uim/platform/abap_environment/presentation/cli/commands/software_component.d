@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 @safe:
 
 class SoftwareComponentCommand : ManageCommand {
-  private ManageSoftwareComponentsUseCase usecase;
+  protected ManageSoftwareComponentsUseCase usecase;
 
   this(ManageSoftwareComponentsUseCase usecase) {
     this.usecase = usecase;

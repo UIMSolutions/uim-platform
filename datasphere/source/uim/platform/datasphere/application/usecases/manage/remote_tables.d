@@ -14,8 +14,8 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
-  private IRemoteTableRepository tables;
+class ManageRemoteTablesUseCase {
+  protected IRemoteTableRepository tables;
 
   this(IRemoteTableRepository tables) {
     this.tables = tables;

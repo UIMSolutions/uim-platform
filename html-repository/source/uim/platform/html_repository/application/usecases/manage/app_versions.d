@@ -15,7 +15,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class ManageAppVersionsUseCase { // TODO: UIMUseCase {
+class ManageAppVersionsUseCase {
     private IAppVersionRepository repo;
 
     this(IAppVersionRepository repo) {

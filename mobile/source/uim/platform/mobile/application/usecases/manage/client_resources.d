@@ -15,7 +15,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-class ManageClientResourcesUseCase { // TODO: UIMUseCase {
+class ManageClientResourcesUseCase {
     private IClientResourceRepository repo;
 
     this(IClientResourceRepository repo) {

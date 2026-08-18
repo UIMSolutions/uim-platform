@@ -18,7 +18,7 @@ import uim.platform.abap_environment;
 @safe:
 
 class CommunicationArrangementController : ManageHttpController {
-  private ManageCommunicationArrangementsUseCase usecase;
+  protected ManageCommunicationArrangementsUseCase usecase;
 
   this(ManageCommunicationArrangementsUseCase usecase) {
     this.usecase = usecase;

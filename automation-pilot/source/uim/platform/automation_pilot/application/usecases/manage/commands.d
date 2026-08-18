@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageCommandsUseCase { // TODO: UIMUseCase {
+class ManageCommandsUseCase {
     private ICommandRepository repo;
 
     this(ICommandRepository repo) {

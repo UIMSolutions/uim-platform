@@ -13,8 +13,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
-  private IRetentionRuleRepository repo;
+class ManageRetentionRulesUseCase {
+  protected IRetentionRuleRepository repo;
 
   this(IRetentionRuleRepository repo) {
     this.repo = repo;

@@ -17,7 +17,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class ManageRunLogsUseCase { // TODO: UIMUseCase {
+class ManageRunLogsUseCase {
     private IRunLogRepository repo;
 
     this(IRunLogRepository repo) {

@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
+class ManageResidenceRulesUseCase {
     private IResidenceRuleRepository repo;
 
     this(IResidenceRuleRepository repo) {

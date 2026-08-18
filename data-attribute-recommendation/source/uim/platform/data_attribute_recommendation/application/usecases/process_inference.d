@@ -16,8 +16,8 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class ProcessInferenceUseCase { // TODO: UIMUseCase {
-  private IInferenceRequestRepository requestRepo;
+class ProcessInferenceUseCase {
+  protected IInferenceRequestRepository requestRepo;
   private IInferenceResultRepository resultRepo;
   private InferenceEngine engine;
 

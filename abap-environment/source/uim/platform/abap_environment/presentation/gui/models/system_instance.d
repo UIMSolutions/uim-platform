@@ -9,7 +9,7 @@ import gtk.ListStore;
 import gobject.c.types : GType;
 
 class SystemInstanceGuiModel {
-  private ListStore store;
+  protected ListStore store;
 
   this() {
     store = new ListStore([GType.STRING, GType.STRING, GType.STRING, GType.STRING]);

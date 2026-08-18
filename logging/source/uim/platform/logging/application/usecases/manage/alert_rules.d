@@ -12,8 +12,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageAlertRulesUseCase { // TODO: UIMUseCase {
-  private IAlertRuleRepository repo;
+class ManageAlertRulesUseCase {
+  protected IAlertRuleRepository repo;
 
   this(IAlertRuleRepository repo) {
     this.repo = repo;

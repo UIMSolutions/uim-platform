@@ -14,8 +14,8 @@ import uim.platform.identity_provisioning;
 mixin(ShowModule!());
 
 @safe:
-class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
-  private ISourceSystemRepository repo;
+class ManageSourceSystemsUseCase {
+  protected ISourceSystemRepository repo;
 
   this(ISourceSystemRepository repo) {
     this.repo = repo;

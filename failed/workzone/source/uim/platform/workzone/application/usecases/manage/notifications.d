@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageNotificationsUseCase { // TODO: UIMUseCase {
-  private INotificationRepository repo;
+class ManageNotificationsUseCase {
+  protected INotificationRepository repo;
 
   this(INotificationRepository repo) {
     this.repo = repo;

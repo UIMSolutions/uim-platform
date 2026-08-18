@@ -7,7 +7,7 @@ mixin(ShowModule!());
 @safe:
 
 class AuthorizationCliModel {
-  private ManageApplicationsUseCase apps;
+  protected ManageApplicationsUseCase apps;
   private ManagePoliciesUseCase policies;
   private ManageAssignmentsUseCase assignments;
 

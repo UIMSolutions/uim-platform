@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 @safe:
 
 class ApplicationJobCommand : ManageCommand {
-  private ManageApplicationJobsUseCase usecase;
+  protected ManageApplicationJobsUseCase usecase;
 
   this(ManageApplicationJobsUseCase usecase) {
     this.usecase = usecase;

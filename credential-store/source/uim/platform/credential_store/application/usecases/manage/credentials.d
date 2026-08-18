@@ -16,8 +16,8 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class ManageCredentialsUseCase { // TODO: UIMUseCase {
-  private ICredentialRepository credentials;
+class ManageCredentialsUseCase {
+  protected ICredentialRepository credentials;
 
   this(ICredentialRepository credentials) {
     this.credentials = credentials;

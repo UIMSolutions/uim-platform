@@ -10,9 +10,9 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageExecutionsUseCase { // TODO: UIMUseCase {
-  private IExecutionRepository execRepo;
-  private IConfigurationRepository confRepo;
+class ManageExecutionsUseCase {
+  protected IExecutionRepository execRepo;
+  protected IConfigurationRepository confRepo;
 
   this(IExecutionRepository execRepo, IConfigurationRepository confRepo) {
     this.execRepo = execRepo;

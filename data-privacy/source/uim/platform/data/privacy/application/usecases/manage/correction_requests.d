@@ -10,8 +10,8 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
-  private CorrectionRequestRepository crRepo;
+class ManageCorrectionRequestsUseCase {
+  protected CorrectionRequestRepository crRepo;
   private DataSubjectRepository dsRepo;
 
   this(CorrectionRequestRepository crRepo, DataSubjectRepository dsRepo) {

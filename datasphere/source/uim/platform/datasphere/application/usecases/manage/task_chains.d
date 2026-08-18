@@ -10,8 +10,8 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageTaskChainsUseCase { // TODO: UIMUseCase {
-  private ITaskChainRepository repo;
+class ManageTaskChainsUseCase {
+  protected ITaskChainRepository repo;
 
   this(ITaskChainRepository repo) {
     this.repo = repo;

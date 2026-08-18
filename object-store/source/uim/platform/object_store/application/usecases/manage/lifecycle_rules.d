@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for lifecycle rule management.
-class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
-  private ILifecycleRuleRepository ruleRepo;
+class ManageLifecycleRulesUseCase {
+  protected ILifecycleRuleRepository ruleRepo;
   private IBucketRepository bucketRepo;
 
   this(ILifecycleRuleRepository ruleRepo, IBucketRepository bucketRepo) {

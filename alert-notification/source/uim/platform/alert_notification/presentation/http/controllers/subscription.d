@@ -44,7 +44,7 @@ class SubscriptionController : ManageHttpController {
         if (conditionsNode.isArray)
             foreach (v; conditionsNode.byValue)
                 dto.conditions ~= v.to!string;
-                
+
         auto actionsNode = data["actions"];
         if (actionsNode.isArray)
             foreach (v; actionsNode.byValue)
@@ -80,15 +80,15 @@ class SubscriptionController : ManageHttpController {
     private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto id = req.requestPath.to!string.split("/")[$ - 1];
-        auto body_ = req.json;
+        auto data = req.json;
         UpdateSubscriptionRequest dto;
-        dto.description = body_["description"].opt!string("");
-        dto.state = body_["state"].opt!string("");
-        auto conditionsNode = body_["conditions"];
+        dto.description = data["description"].opt!string("");
+        dto.state = data["state"].opt!string("");
+        auto conditionsNode = data["conditions"];
         if (conditionsNode.isArray)
             foreach (v; conditionsNode.byValue)
                 dto.conditions ~= v.to!string;
-        auto actionsNode = body_["actions"];
+        auto actionsNode = data["actions"];
         if (actionsNode.isArray)
             foreach (v; actionsNode.byValue)
                 dto.actions ~= v.to!string;

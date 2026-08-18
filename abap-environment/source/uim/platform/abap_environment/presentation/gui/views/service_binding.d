@@ -20,8 +20,8 @@ import gtk.ToolButton;
 // mixin(ShowModule!());
 
 class ServiceBindingWindow : ApplicationWindow {
-  private ManageServiceBindingsUseCase usecase;
-  private TreeView treeView;
+  protected ManageServiceBindingsUseCase usecase;
+  protected TreeView treeView;
 
   this(Application app, ManageServiceBindingsUseCase usecase) {
     super(app);

@@ -19,8 +19,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for content package CRUD and assembly.
-class ManageContentPackagesUseCase { // TODO: UIMUseCase {
-  private IContentPackageRepository packages;
+class ManageContentPackagesUseCase {
+  protected IContentPackageRepository packages;
   private IContentProviderRepository providers;
   private IContentActivityRepository activities;
 

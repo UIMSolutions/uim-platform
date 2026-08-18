@@ -13,8 +13,8 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
-  private ICleansingRuleRepository repo;
+class ManageCleansingRulesUseCase {
+  protected ICleansingRuleRepository repo;
 
   this(ICleansingRuleRepository repo) {
     this.repo = repo;

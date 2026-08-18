@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageRolesUseCase { // TODO: UIMUseCase {
-  private IRoleRepository repo;
+class ManageRolesUseCase {
+  protected IRoleRepository repo;
 
   this(IRoleRepository repo) {
     this.repo = repo;

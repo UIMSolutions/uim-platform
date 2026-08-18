@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageCardsUseCase { // TODO: UIMUseCase {
-  private ICardRepository repo;
+class ManageCardsUseCase {
+  protected ICardRepository repo;
 
   this(ICardRepository repo) {
     this.repo = repo;

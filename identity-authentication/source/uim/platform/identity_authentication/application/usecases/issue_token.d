@@ -23,8 +23,8 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application use case: issue OAuth2/OIDC tokens after successful authentication.
-class IssueTokenUseCase { // TODO: UIMUseCase {
-  private IUserRepository userRepo;
+class IssueTokenUseCase {
+  protected IUserRepository userRepo;
   private IApplicationRepository appRepo;
   private ITokenRepository tokenRepo;
   private ISessionRepository sessionRepo;

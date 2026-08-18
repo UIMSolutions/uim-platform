@@ -17,8 +17,8 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class ManageSpacesUseCase { // TODO: UIMUseCase {
-  private ISpaceRepository repo;
+class ManageSpacesUseCase {
+  protected ISpaceRepository repo;
   private IOrgRepository orgRepo;
 
   this(ISpaceRepository repo, IOrgRepository orgRepo) {

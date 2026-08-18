@@ -16,8 +16,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageTasksUseCase { // TODO: UIMUseCase {
-  private ITaskRepository tasks;
+class ManageTasksUseCase {
+  protected ITaskRepository tasks;
 
   this(ITaskRepository tasks) {
     this.tasks = tasks;

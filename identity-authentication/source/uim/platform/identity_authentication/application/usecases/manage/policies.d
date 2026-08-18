@@ -16,8 +16,8 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application use case: authorization policy management.
-class ManagePoliciesUseCase { // TODO: UIMUseCase {
-  private IPolicyRepository policyRepo;
+class ManagePoliciesUseCase {
+  protected IPolicyRepository policyRepo;
 
   this(IPolicyRepository policyRepo) {
     this.policyRepo = policyRepo;

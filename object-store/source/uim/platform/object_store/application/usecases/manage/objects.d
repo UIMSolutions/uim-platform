@@ -19,8 +19,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for storage object CRUD operations.
-class ManageObjectsUseCase { // TODO: UIMUseCase {
-  private IStorageObjectRepository objectRepo;
+class ManageObjectsUseCase {
+  protected IStorageObjectRepository objectRepo;
   private IBucketRepository bucketRepo;
   private IObjectVersionRepository versionRepo;
 

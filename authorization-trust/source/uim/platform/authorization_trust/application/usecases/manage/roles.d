@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ManageRolesUseCase {
-  private IRoleRepository repo;
+  protected IRoleRepository repo;
 
   this(IRoleRepository repo) {
     this.repo = repo;

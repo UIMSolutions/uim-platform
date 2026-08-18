@@ -7,7 +7,7 @@ mixin(ShowModule!());
 @safe:
 
 class AuthorizationGuiController {
-  private AuthorizationGuiModel model;
+  protected AuthorizationGuiModel model;
   private AuthorizationGuiView view;
 
   this(AuthorizationGuiModel model, AuthorizationGuiView view) {

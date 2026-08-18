@@ -17,7 +17,7 @@ mixin(ShowModule!());
 @safe:
 
 
-class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
+class ManageHtmlAppsUseCase {
     private IHtmlAppRepository repo;
 
     this(IHtmlAppRepository repo) {

@@ -15,8 +15,8 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageDataFlowsUseCase { // TODO: UIMUseCase {
-  private IDataFlowRepository repo;
+class ManageDataFlowsUseCase {
+  protected IDataFlowRepository repo;
 
   this(IDataFlowRepository repo) {
     this.repo = repo;

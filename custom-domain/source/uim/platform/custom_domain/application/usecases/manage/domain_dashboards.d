@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDomainDashboardsUseCase { // TODO: UIMUseCase {
+class ManageDomainDashboardsUseCase {
     private IDomainDashboardRepository dashboardRepo;
     private ICustomDomainRepository domainRepo;
     private ICertificateRepository certRepo;

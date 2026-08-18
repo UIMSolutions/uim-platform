@@ -15,7 +15,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManageModelsUseCase { // TODO: UIMUseCase {
+class ManageModelsUseCase {
   protected IModelRepository models;
 
   this(IModelRepository models) {

@@ -14,8 +14,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for service binding management.
-class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-  private IServiceBindingRepository repo;
+class ManageServiceBindingsUseCase {
+  protected IServiceBindingRepository repo;
 
   this(IServiceBindingRepository repo) {
     this.repo = repo;

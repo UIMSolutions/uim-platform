@@ -37,10 +37,10 @@ public:
     auto slashIdx = idStr.lastIndexOf('/');
     auto id = WarehouseTaskId(idStr[slashIdx + 1 .. $]);
 
-    auto body_ = req.json;
+    auto data = req.json;
     ConfirmWarehouseTaskRequest dto;
-    dto.assignedTo = body_.getString("assignedTo");
-    dto.confirmedAt = jsonInt(body_, "confirmedAt");
+    dto.assignedTo = data.getString("assignedTo");
+    dto.confirmedAt = jsonInt(data, "confirmedAt");
 
     auto result = _useCase.confirmTask(tenantId, id, dto);
     if (!result.success) {
@@ -62,19 +62,19 @@ protected:
 
   override Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto body_ = req.json;
+    auto data = req.json;
     CreateWarehouseTaskRequest dto;
-    dto.taskNumber = body_.getString("taskNumber");
-    dto.taskType = body_.getString("taskType");
-    dto.warehouseOrderId = body_.getString("warehouseOrderId");
-    dto.warehouseId = body_.getString("warehouseId");
-    dto.sourceStorageBin = body_.getString("sourceStorageBin");
-    dto.destinationStorageBin = body_.getString("destinationStorageBin");
-    dto.productId = body_.getString("productId");
-    dto.productDescription = body_.getString("productDescription");
-    dto.quantity = body_["quantity"].isFloat ? body_["quantity"].get!double : 0.0;
-    dto.unit = body_.getString("unit");
-    dto.assignedTo = body_.getString("assignedTo");
+    dto.taskNumber = data.getString("taskNumber");
+    dto.taskType = data.getString("taskType");
+    dto.warehouseOrderId = data.getString("warehouseOrderId");
+    dto.warehouseId = data.getString("warehouseId");
+    dto.sourceStorageBin = data.getString("sourceStorageBin");
+    dto.destinationStorageBin = data.getString("destinationStorageBin");
+    dto.productId = data.getString("productId");
+    dto.productDescription = data.getString("productDescription");
+    dto.quantity = data["quantity"].isFloat ? data["quantity"].get!double : 0.0;
+    dto.unit = data.getString("unit");
+    dto.assignedTo = data.getString("assignedTo");
     auto result = _useCase.createWarehouseTask(tenantId, dto);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
@@ -92,6 +92,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto id = WarehouseTaskId(extractIdFromPath(req.requestPath.to!string));
     if (id.isNull) 
+      return errorResponse("Invalid warehouse task ID", 400);
     
     auto wt = _useCase.getWarehouseTask(tenantId, id);
     if (wt.isNull) 

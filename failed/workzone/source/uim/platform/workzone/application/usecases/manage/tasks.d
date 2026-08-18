@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageTasksUseCase { // TODO: UIMUseCase {
-  private ITaskRepository repo;
+class ManageTasksUseCase {
+  protected ITaskRepository repo;
 
   this(ITaskRepository repo) {
     this.repo = repo;

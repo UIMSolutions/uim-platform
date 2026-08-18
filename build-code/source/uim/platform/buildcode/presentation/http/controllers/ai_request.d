@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class AIRequestController : SAPController {
-  private ManageAIRequestsUseCase _uc;
+  protected ManageAIRequestsUseCase _uc;
 
   this(ManageAIRequestsUseCase uc) { _uc = uc; }
 
@@ -27,13 +27,13 @@ class AIRequestController : SAPController {
 
   private void generate(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
-    auto body_    = req.json;
+    auto data    = req.json;
     AIGenerateRequest dto;
-    dto.projectId      = body_["projectId"].get!string("");
-    dto.requestedBy    = body_["requestedBy"].get!string("api");
-    dto.generationType = body_["generationType"].get!string("code-fragment");
-    dto.prompt         = body_["prompt"].get!string("");
-    dto.targetFilePath = body_["targetFilePath"].get!string("");
+    dto.projectId      = data.getString("projectId", "");
+    dto.requestedBy    = data.getString("requestedBy", "api");
+    dto.generationType = data.getString("generationType", "code-fragment");
+    dto.prompt         = data.getString("prompt", "");
+    dto.targetFilePath = data.getString("targetFilePath", "");
     auto result = _uc.generate(tenantId, dto);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
@@ -68,10 +68,10 @@ class AIRequestController : SAPController {
   private void updateStatus(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId      = req.headers.get("X-Tenant-Id", "default");
     auto id            = precheck.id;
-    auto body_         = req.json;
-    auto statusStr     = body_["status"].get!string("");
-    auto generatedCode = body_["generatedCode"].get!string("");
-    auto errorMsg      = body_["errorMessage"].get!string("");
+    auto data          = req.json;
+    auto statusStr     = data.getString("status", "");
+    auto generatedCode = data.getString("generatedCode", "");
+    auto errorMsg      = data.getString("errorMessage", "");
     auto result        = _uc.updateStatus(tenantId, id, statusStr, generatedCode, errorMsg);
     if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);

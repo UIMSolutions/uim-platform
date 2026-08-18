@@ -21,7 +21,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeployApplicationUseCase { // TODO: UIMUseCase {
+class DeployApplicationUseCase {
     private IDeploymentRecordRepository deploymentRepo;
     private IHtmlAppRepository appRepo;
     private IAppVersionRepository versionRepo;

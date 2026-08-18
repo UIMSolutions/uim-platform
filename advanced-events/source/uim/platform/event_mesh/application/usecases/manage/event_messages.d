@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageEventMessagesUseCase { // TODO: UIMUseCase {
+class ManageEventMessagesUseCase {
     protected IEventMessageRepository repo;
 
     this(IEventMessageRepository repo) {

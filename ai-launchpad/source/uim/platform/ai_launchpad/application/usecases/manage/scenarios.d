@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ManageScenariosUseCase { // TODO: UIMUseCase {
+class ManageScenariosUseCase {
   protected IScenarioRepository scenarios;
 
   this(IScenarioRepository scenarios) {

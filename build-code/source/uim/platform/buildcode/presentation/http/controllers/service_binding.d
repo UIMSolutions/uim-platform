@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class ServiceBindingController : SAPController {
-  private ManageServiceBindingsUseCase _uc;
+  protected ManageServiceBindingsUseCase _uc;
 
   this(ManageServiceBindingsUseCase uc) { _uc = uc; }
 

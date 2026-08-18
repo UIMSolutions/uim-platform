@@ -15,8 +15,8 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ManageUserProfilesUseCase { // TODO: UIMUseCase {
-  private IUserProfileRepository repo;
+class ManageUserProfilesUseCase {
+  protected IUserProfileRepository repo;
 
   this(IAppRepository
   UserProfileRepository repo) {

@@ -15,8 +15,8 @@ mixin(ShowModule!());
 @safe:
 
 /// Application use case: API client / technical user management.
-class ManageApiClientsUseCase { // TODO: UIMUseCase {
-  private IApiClientRepository clientRepo;
+class ManageApiClientsUseCase {
+  protected IApiClientRepository clientRepo;
   private IAuditRepository auditRepo;
 
   this(IApiClientRepository clientRepo, IAuditRepository auditRepo) {

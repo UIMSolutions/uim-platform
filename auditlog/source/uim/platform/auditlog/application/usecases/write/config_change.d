@@ -10,8 +10,8 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class WriteConfigChangeUseCase { // TODO: UIMUseCase {
-  private IAuditLogRepository auditRepo;
+class WriteConfigChangeUseCase {
+  protected IAuditLogRepository auditRepo;
   private IConfigChangeLogRepository cclRepo;
 
   this(IAuditLogRepository auditRepo, IConfigChangeLogRepository cclRepo) {

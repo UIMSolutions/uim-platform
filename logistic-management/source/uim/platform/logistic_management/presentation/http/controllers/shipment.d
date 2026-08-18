@@ -38,17 +38,17 @@ protected:
 
   override Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto body_ = req.json;
+    auto data = req.json;
     CreateShipmentRequest dto;
-    dto.shipmentNumber = body_.getString("shipmentNumber");
-    dto.description = body_.getString("description");
-    dto.direction = body_.getString("direction");
-    dto.freightOrderId = body_.getString("freightOrderId");
-    dto.warehouseId = body_.getString("warehouseId");
-    dto.partnerId = body_.getString("partnerId");
-    dto.partnerName = body_.getString("partnerName");
-    dto.trackingNumber = body_.getString("trackingNumber");
-    dto.plannedDate = jsonInt(body_, "plannedDate");
+    dto.shipmentNumber = data.getString("shipmentNumber");
+    dto.description = data.getString("description");
+    dto.direction = data.getString("direction");
+    dto.freightOrderId = data.getString("freightOrderId");
+    dto.warehouseId = data.getString("warehouseId");
+    dto.partnerId = data.getString("partnerId");
+    dto.partnerName = data.getString("partnerName");
+    dto.trackingNumber = data.getString("trackingNumber");
+    dto.plannedDate = jsonInt(data, "plannedDate");
     auto result = _useCase.createShipment(tenantId, dto);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
@@ -72,12 +72,12 @@ protected:
   override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
-    auto body_ = req.json;
+    auto data = req.json;
     UpdateShipmentRequest dto;
-    dto.description = body_.getString("description");
-    dto.status = body_.getString("status");
-    dto.trackingNumber = body_.getString("trackingNumber");
-    dto.actualDate = jsonInt(body_, "actualDate");
+    dto.description = data.getString("description");
+    dto.status = data.getString("status");
+    dto.trackingNumber = data.getString("trackingNumber");
+    dto.actualDate = jsonInt(data, "actualDate");
     auto result = _useCase.updateShipment(tenantId, id, dto);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
@@ -89,6 +89,11 @@ protected:
   override Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
+    if (id.isNull) {
+      res.statusCode = cast(int) HTTPStatus.badRequest;
+      return writeError("Invalid shipment ID");
+    }
+    
     auto result = _useCase.deleteShipment(tenantId, id);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.notFound;

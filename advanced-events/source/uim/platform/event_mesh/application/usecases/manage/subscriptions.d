@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
+class ManageSubscriptionsUseCase {
     protected ISubscriptionRepository repo;
 
     this(ISubscriptionRepository repo) {

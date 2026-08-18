@@ -18,8 +18,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProcessDocumentsUseCase { // TODO: UIMUseCase {
-  private DocumentRepository docRepo;
+class ProcessDocumentsUseCase {
+  protected DocumentRepository docRepo;
   private ExtractionResultRepository resultRepo;
 
   this(DocumentRepository docRepo, ExtractionResultRepository resultRepo) {

@@ -7,7 +7,7 @@ mixin(ShowModule!());
 @safe:
 
 class AuthorizationWebModel {
-  private ManageApplicationsUseCase apps;
+  protected ManageApplicationsUseCase apps;
   private ManagePoliciesUseCase policies;
   private ManageAssignmentsUseCase assignments;
   private EvaluateAuthorizationsUseCase evaluator;

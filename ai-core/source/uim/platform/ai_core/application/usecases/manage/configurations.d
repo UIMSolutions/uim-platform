@@ -10,8 +10,8 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class ManageConfigurationsUseCase { // TODO: UIMUseCase {
-  private IConfigurationRepository repo;
+class ManageConfigurationsUseCase {
+  protected IConfigurationRepository repo;
 
   this(IConfigurationRepository repo) {
     this.repo = repo;
