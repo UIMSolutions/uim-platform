@@ -18,11 +18,11 @@ import std.conv      : to;
 @safe:
 
 class MongoDeadLetterEntryRepository : DeadLetterEntryRepository {
-    private MongoCollection _collection;
+    protected MongoCollection _collection;
 
     this(MongoCollection collection) { _collection = collection; }
 
-    private DeadLetterEntry fromBson(Bson doc) {
+    protected DeadLetterEntry fromBson(Bson doc) {
         DeadLetterEntry e;
         e.id                = DeadLetterEntryId(doc["id"].get!string);
         e.tenantId          = TenantId(doc["tenantId"].get!string);
@@ -37,7 +37,7 @@ class MongoDeadLetterEntryRepository : DeadLetterEntryRepository {
         return e;
     }
 
-    private Bson toBson(DeadLetterEntry e) {
+    protected Bson toBson(DeadLetterEntry e) {
         return Bson([    "id":                Bson(e.id.value),
             "tenantId":          Bson(e.tenantId.value),
             "originalMessageId": Bson(e.originalMessageId.value),

@@ -16,7 +16,7 @@ import std.datetime.systime : Clock;
 @safe:
 
 class ManageDeadLetterEntriesUseCase {
-    private IDeadLetterEntryRepository repo;
+    protected IDeadLetterEntryRepository repo;
 
     this(IDeadLetterEntryRepository repo) { this.repo = repo; }
 

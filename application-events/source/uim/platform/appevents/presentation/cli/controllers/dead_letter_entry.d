@@ -15,9 +15,9 @@ import uim.platform.appevents.presentation.cli.views.dead_letter_entry;
 @safe:
 
 class CliDeadLetterEntryController {
-    private CliDeadLetterEntryModel _model;
-    private CliDeadLetterEntryView _view;
-    private ManageDeadLetterEntriesUseCase _useCase;
+    protected CliDeadLetterEntryModel _model;
+    protected CliDeadLetterEntryView _view;
+    protected ManageDeadLetterEntriesUseCase _useCase;
 
     this(ManageDeadLetterEntriesUseCase useCase) {
         _useCase = useCase;

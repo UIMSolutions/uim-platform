@@ -28,11 +28,11 @@ class FileEventTopicRepository : MemoryEventTopicRepository, EventTopicRepositor
         _basePath = basePath;
     }
 
-    private string filePath(TenantId tenantId) @safe {
+    protected string filePath(TenantId tenantId) @safe {
         return buildPath(_basePath, tenantId.value, "event_topics.json");
     }
 
-    private void persistTenant(TenantId tenantId) @trusted {
+    protected void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
         auto items = findByTenant(tenantId);
@@ -42,7 +42,7 @@ class FileEventTopicRepository : MemoryEventTopicRepository, EventTopicRepositor
         write(fp, arr.toString());
     }
 
-    private void loadTenant(TenantId tenantId) @trusted {
+    protected void loadTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         if (!exists(fp))
             return;

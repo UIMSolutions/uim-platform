@@ -16,6 +16,8 @@ class WebController {
   }
 
   void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/web", &handleDashboard);
   }
 

@@ -15,9 +15,9 @@ import uim.platform.appevents.presentation.cli.views.system_registration;
 @safe:
 
 class CliSystemRegistrationController {
-    private CliSystemRegistrationModel        _model;
-    private CliSystemRegistrationView         _view;
-    private ManageSystemRegistrationsUseCase  _useCase;
+    protected CliSystemRegistrationModel        _model;
+    protected CliSystemRegistrationView         _view;
+    protected ManageSystemRegistrationsUseCase  _useCase;
 
     this(ManageSystemRegistrationsUseCase useCase) {
         _useCase = useCase;
