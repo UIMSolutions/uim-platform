@@ -108,7 +108,7 @@ class ConsentRecordController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 9]; // remove "/withdraw"
-        auto id = ConsentRecordId(extractIdFromPath(stripped));
+        auto id = ConsentRecordId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid consent record ID", 400);
 

@@ -81,19 +81,19 @@ class WebBrokerServiceView {
 }
 
 class WebQueueView {
-    string renderIndex(Queue[] entities) const {
+    string renderIndex(EventQueue[] entities) const {
         string[] rows;
         rows.reserve(entities.length);
         foreach (e; entities) rows ~= format("%s | %s", e.id.value, e.name);
         return renderListPage("Queues", rows);
     }
 
-    string renderDetails(Queue entity) const {
-        return renderJsonPage("Queue Details", entity.toJson);
+    string renderDetails(EventQueue entity) const {
+        return renderJsonPage("EventQueue Details", entity.toJson);
     }
 
     string renderMutation(UsecaseResult result) const {
-        return renderMutationPage("Queue Command Result", result);
+        return renderMutationPage("EventQueue Command Result", result);
     }
 }
 

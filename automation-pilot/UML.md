@@ -9,7 +9,7 @@ This document is maintained alongside the implementation, deployment manifests, 
 
 ```mermaid
 classDiagram
-    class Command {
+    class PilotCommand {
         +string id
         +string name
         +string catalogId
@@ -67,11 +67,11 @@ classDiagram
         +string status
     }
 
-    Command --> Catalog : belongs to
-    CommandInput --> Command : input for
-    Execution --> Command : executes
-    ScheduledExecution --> Command : schedules
-    Trigger --> Command : triggers
+    PilotCommand --> Catalog : belongs to
+    CommandInput --> PilotCommand : input for
+    Execution --> PilotCommand : executes
+    ScheduledExecution --> PilotCommand : schedules
+    Trigger --> PilotCommand : triggers
     Execution --> ServiceAccount : runs as
 ```
 
@@ -89,7 +89,7 @@ flowchart TB
         TRIGGER_UC["TriggerUseCases"]
     end
     subgraph Domain["Domain Layer"]
-        CMD["Command"]
+        CMD["PilotCommand"]
         INPUT["CommandInput"]
         CATALOG["Catalog"]
         EXEC["Execution"]
@@ -110,7 +110,7 @@ flowchart TB
     Application --> Infrastructure
 ```
 
-## Sequence Diagram — Execute Command
+## Sequence Diagram — Execute PilotCommand
 
 ```mermaid
 sequenceDiagram

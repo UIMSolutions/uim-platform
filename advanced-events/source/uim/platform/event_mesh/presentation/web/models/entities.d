@@ -72,11 +72,11 @@ class WebQueueModel {
         this.usecase = usecase;
     }
 
-    Queue[] list(TenantId tenantId) {
+    EventQueue[] list(TenantId tenantId) {
         return usecase.listQueues(tenantId);
     }
 
-    Queue get(TenantId tenantId, string id) {
+    EventQueue get(TenantId tenantId, string id) {
         return usecase.getQueue(tenantId, QueueId(id));
     }
 

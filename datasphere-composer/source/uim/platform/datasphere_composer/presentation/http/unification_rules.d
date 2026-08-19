@@ -38,7 +38,7 @@ class UnificationRuleController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) {
       writeError(res, 404, "Rule not found");
       return;
@@ -97,7 +97,7 @@ class UnificationRuleController : ManageHttpController {
     auto data = precheck.data;
     UpdateUnificationRuleRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.priority = data.getInteger("priority");
@@ -116,7 +116,7 @@ class UnificationRuleController : ManageHttpController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
       if (result.hasError)
             return errorResponse(result.message, 400);
 

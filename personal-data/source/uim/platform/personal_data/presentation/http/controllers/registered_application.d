@@ -139,7 +139,7 @@ class RegisteredApplicationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 9]; // remove "/activate"
-        auto id = RegisteredApplicationId(extractIdFromPath(stripped));
+        auto id = RegisteredApplicationId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid application ID");
 
@@ -164,7 +164,7 @@ class RegisteredApplicationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 8]; // remove "/suspend"
-        auto id = RegisteredApplicationId(extractIdFromPath(stripped));
+        auto id = RegisteredApplicationId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid application ID");
 

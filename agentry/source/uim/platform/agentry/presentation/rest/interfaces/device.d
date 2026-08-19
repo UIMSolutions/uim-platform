@@ -13,16 +13,16 @@ mixin(ShowModule!());
 
 interface IDeviceApi {
     @headerParam("tenantId", "X-Tenant-Id")
-    Device[] listDevices(string tenantId);
+    MobileDevice[] listDevices(string tenantId);
 
     @headerParam("tenantId", "X-Tenant-Id")
-    Device getDevice(string tenantId, string deviceId);
+    MobileDevice getDevice(string tenantId, string deviceId);
 
     @headerParam("tenantId", "X-Tenant-Id")
-    void createDevice(string tenantId, Device device);
+    void createDevice(string tenantId, MobileDevice device);
 
     @headerParam("tenantId", "X-Tenant-Id")
-    void updateDevice(string tenantId, Device device);
+    void updateDevice(string tenantId, MobileDevice device);
 
     @headerParam("tenantId", "X-Tenant-Id")
     void deleteDevice(string tenantId, string deviceId);

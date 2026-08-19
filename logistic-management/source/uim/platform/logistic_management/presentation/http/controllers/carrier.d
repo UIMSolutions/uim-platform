@@ -66,7 +66,7 @@ override protected Json listHandler(HTTPServerRequest req) {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = CarrierId(extractIdFromPath(req.requestPath.to!string));
+    auto id = CarrierId(extractId(req.requestPath.to!string));
     auto carrier = _useCase.getCarrier(tenantId, id);
     if (carrier.isNull)
       return errorResponse("Carrier not found", cast(int) HTTPStatus.notFound);
@@ -77,7 +77,7 @@ override protected Json listHandler(HTTPServerRequest req) {
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = CarrierId(extractIdFromPath(req.requestPath.to!string));
+    auto id = CarrierId(extractId(req.requestPath.to!string));
     auto data = req.json;
     UpdateCarrierRequest dto;
     dto.description = data.getString("description");
@@ -100,7 +100,7 @@ override protected Json listHandler(HTTPServerRequest req) {
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = CarrierId(extractIdFromPath(req.requestPath.to!string));
+    auto id = CarrierId(extractId(req.requestPath.to!string));
     auto result = _useCase.deleteCarrier(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, cast(int) HTTPStatus.notFound);

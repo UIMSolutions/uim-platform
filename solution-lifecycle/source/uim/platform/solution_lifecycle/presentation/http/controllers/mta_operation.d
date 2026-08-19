@@ -67,7 +67,7 @@ class MtaOperationController : ManageHttpController {
         import std.string : indexOf;
 
         auto bare = path[0 .. path.indexOf("/poll")];
-        auto id = MtaOperationId(extractIdFromPath(bare));
+        auto id = MtaOperationId(extractId(bare));
         auto result = usecase.pollOperation(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
@@ -94,7 +94,7 @@ class MtaOperationController : ManageHttpController {
             import std.string : indexOf;
 
             auto bare = path[0 .. path.indexOf("/abort")];
-            r.operationId = extractIdFromPath(bare);
+            r.operationId = extractId(bare);
             r.abortedBy = data.getString("abortedBy");
 
             auto result = usecase.abortOperation(r);
@@ -113,7 +113,7 @@ protected void handleLogs(scope HTTPServerRequest req, scope HTTPServerResponse 
         import std.string : indexOf;
 
         auto bare = path[0 .. path.indexOf("/logs")];
-        auto id = MtaOperationId(extractIdFromPath(bare));
+        auto id = MtaOperationId(extractId(bare));
         auto lines = usecase.getOperationLogs(tenantId, id);
         auto arr = Json.emptyArray;
         foreach (l; lines)

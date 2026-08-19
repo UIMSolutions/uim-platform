@@ -47,7 +47,7 @@ class FileQueueRepository : MemoryQueueRepository {
             return;
 
         foreach (j; arr.get!(Json[])) {
-            Queue e;
+            EventQueue e;
             e.id = QueueId(jstr(j, "id"));
             e.tenantId = TenantId(jstr(j, "tenantId"));
             e.serviceId = BrokerServiceId(jstr(j, "brokerServiceId"));
@@ -82,23 +82,23 @@ class FileQueueRepository : MemoryQueueRepository {
         write(fp, arr.toString());
     }
 
-    override Queue[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
+    override EventQueue[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
         ensureLoaded(tenantId);
         return super.findByTenant(tenantId, offset, limit);
     }
 
-    override Queue findById(TenantId tenantId, QueueId id) {
+    override EventQueue findById(TenantId tenantId, QueueId id) {
         ensureLoaded(tenantId);
         return super.findById(tenantId, id);
     }
 
-    override void save(Queue item) {
+    override void save(EventQueue item) {
         ensureLoaded(item.tenantId);
         super.save(item);
         persistTenant(item.tenantId);
     }
 
-    override void update(Queue item) {
+    override void update(EventQueue item) {
         ensureLoaded(item.tenantId);
         super.update(item);
         persistTenant(item.tenantId);

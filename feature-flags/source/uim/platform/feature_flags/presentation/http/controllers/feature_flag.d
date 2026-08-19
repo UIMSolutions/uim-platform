@@ -96,7 +96,7 @@ class FeatureFlagController {
     private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = req.query.get("tenantId", "default");
         auto path = req.requestPath.to!string;
-        auto id = FlagId(extractIdFromPath(path));
+        auto id = FlagId(extractId(path));
         if (id.isNull) {
             writeError(res, 400, "Invalid flag ID");
             return;
@@ -115,7 +115,7 @@ class FeatureFlagController {
     private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = req.query.get("tenantId", "default");
         auto path = req.requestPath.to!string;
-        auto id = FlagId(extractIdFromPath(path));
+        auto id = FlagId(extractId(path));
         if (id.isNull) {
             writeError(res, 400, "Invalid flag ID");
             return;
@@ -159,7 +159,7 @@ class FeatureFlagController {
     private void handlePatch(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = req.query.get("tenantId", "default");
         auto path = req.requestPath.to!string;
-        auto id = FlagId(extractIdFromPath(path));
+        auto id = FlagId(extractId(path));
         if (id.isNull) {
             writeError(res, 400, "Invalid flag ID");
             return;
@@ -187,7 +187,7 @@ class FeatureFlagController {
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = req.query.get("tenantId", "default");
         auto path = req.requestPath.to!string;
-        auto id = FlagId(extractIdFromPath(path));
+        auto id = FlagId(extractId(path));
         auto deletedBy = req.query.get("deletedBy", "");
         if (id.isNull) {
             writeError(res, 400, "Invalid flag ID");

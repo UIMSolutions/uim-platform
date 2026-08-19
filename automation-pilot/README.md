@@ -10,8 +10,8 @@ A microservice providing DevOps automation capabilities similar to **SAP Automat
 ## Features
 
 - **Catalog Management** -- Organize commands into logical catalogs with versioning, tagging, and built-in/custom classification for structured command discovery
-- **Command Design** -- Define automation workflows with input/output schemas, multi-step execution logic, timeout policies, retry strategies, and version control
-- **Command Inputs** -- Create reusable key-value input sets for command executions with support for sensitive value masking and cross-command sharing
+- **PilotCommand Design** -- Define automation workflows with input/output schemas, multi-step execution logic, timeout policies, retry strategies, and version control
+- **PilotCommand Inputs** -- Create reusable key-value input sets for command executions with support for sensitive value masking and cross-command sharing
 - **Execution Engine** -- Execute commands on-demand with real-time status tracking, input binding, output capture, error logging, and duration measurement
 - **Scheduled Executions** -- Schedule one-time or recurring command runs using cron expressions with retry configuration, enable/disable toggles, and next-run tracking
 - **Trigger Management** -- Configure event-driven automation triggers with event type/source filtering, filter expressions, and input mapping from event payloads to command inputs

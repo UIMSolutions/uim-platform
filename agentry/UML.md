@@ -35,7 +35,7 @@ classDiagram
         +AppVersionStatus status
         +bool isMandatoryUpdate
     }
-    class Device {
+    class MobileDevice {
         +string id
         +string mobileApplicationId
         +string deviceName
@@ -76,8 +76,8 @@ classDiagram
     AppDefinition --> MobileApplication : defines
     AppVersion --> MobileApplication : version of
     AppVersion --> AppDefinition : built from
-    Device --> MobileApplication : enrolled in
-    SyncSession --> Device : initiated by
+    MobileDevice --> MobileApplication : enrolled in
+    SyncSession --> MobileDevice : initiated by
     SyncSession --> MobileApplication : syncs
     SyncSession --> BackendConnection : connects to
     Deployment --> MobileApplication : deploys
@@ -103,7 +103,7 @@ flowchart TB
     end
 
     subgraph Domain["Domain Layer"]
-        Entities["Entities\nMobileApplication · AppDefinition\nAppVersion · Device\nSyncSession · BackendConnection\nDeployment"]
+        Entities["Entities\nMobileApplication · AppDefinition\nAppVersion · MobileDevice\nSyncSession · BackendConnection\nDeployment"]
         Ports["Repository Interfaces\n(Ports)"]
         Validator["AgentryValidator"]
     end
@@ -123,7 +123,7 @@ flowchart TB
     Container --> Repos
 ```
 
-## Sequence Diagram — Device Enrollment
+## Sequence Diagram — MobileDevice Enrollment
 
 ```mermaid
 sequenceDiagram

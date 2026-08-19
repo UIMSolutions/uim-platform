@@ -172,7 +172,7 @@ class SituationInstanceController : ManageHttpController {
             return errorResponse("Invalid resolve path", 400);
 
         auto sub = path[0 .. resolveIdx];
-        auto id = SituationInstanceId(extractIdFromPath(sub));
+        auto id = SituationInstanceId(extractId(sub));
         // auto id = SituationInstanceId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid situation instance ID", 400);

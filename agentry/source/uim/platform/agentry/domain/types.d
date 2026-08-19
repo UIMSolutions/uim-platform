@@ -26,7 +26,7 @@ struct AppVersionId {
     mixin(IdTemplate);
 }
 
-/// Strongly-typed identifier for a Device.
+/// Strongly-typed identifier for a MobileDevice.
 struct DeviceId {
     mixin(IdTemplate);
 }

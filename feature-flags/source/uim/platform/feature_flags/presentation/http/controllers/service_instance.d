@@ -77,7 +77,7 @@ override protected Json listHandler(HTTPServerRequest req) {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = ServiceInstanceId(extractIdFromPath(path));
+        auto id = ServiceInstanceId(extractId(path));
         if (id.isNull) {
             writeError(res, 400, "Invalid instance ID");
             return;

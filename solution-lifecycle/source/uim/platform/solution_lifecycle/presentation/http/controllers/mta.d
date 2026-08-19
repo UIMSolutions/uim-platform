@@ -89,7 +89,7 @@ class MtaController : ManageHttpController {
         auto data = precheck.data;
         UpdateMtaRequest r;
         r.tenantId = tenantId;
-        r.mtaId = extractIdFromPath(req.requestURI.to!string);
+        r.mtaId = extractId(req.requestURI.to!string);
         r.archiveId = data.getString("archiveId");
         r.extensionDescriptor = data.getString("extensionDescriptor");
         r.updatedBy = data.getString("updatedBy");
@@ -110,7 +110,7 @@ class MtaController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         DeleteMtaRequest r;
         r.tenantId = tenantId;
-        r.mtaId = extractIdFromPath(req.requestURI.to!string);
+        r.mtaId = extractId(req.requestURI.to!string);
         r.deletedBy = req.json.getString("deletedBy");
 
         auto result = usecase.deleteMta(r);

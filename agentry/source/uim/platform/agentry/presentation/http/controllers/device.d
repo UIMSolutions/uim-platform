@@ -40,7 +40,7 @@ class DeviceController : ManageHttpController {
             .set("count", items.length)
             .set("resources", list);
 
-        return successResponse("Device list retrieved successfully", "Retrieved", 200, resp);
+        return successResponse("MobileDevice list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -71,7 +71,7 @@ class DeviceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Device enrolled successfully", "Created", 201, resp);
+        return successResponse("MobileDevice enrolled successfully", "Created", 201, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -87,9 +87,9 @@ class DeviceController : ManageHttpController {
 
         auto e = usecase.getDevice(tenantId, id);
         if (e.isNull)
-            return errorResponse("Device not found", 404);
+            return errorResponse("MobileDevice not found", 404);
 
-        return successResponse("Device retrieved successfully", "Retrieved", 200, e.toJson);
+        return successResponse("MobileDevice retrieved successfully", "Retrieved", 200, e.toJson);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -112,7 +112,7 @@ class DeviceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Device updated successfully", "Updated", 200, resp);
+        return successResponse("MobileDevice updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -133,6 +133,6 @@ class DeviceController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("id", id);
 
-        return successResponse("Device removed successfully", "Deleted", 200, resp);
+        return successResponse("MobileDevice removed successfully", "Deleted", 200, resp);
     }
 }

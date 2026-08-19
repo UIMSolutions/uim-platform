@@ -90,7 +90,7 @@ protected:
       return precheck;
 
     auto tenantId = getTenantId(req);
-    auto id = WarehouseTaskId(extractIdFromPath(req.requestPath.to!string));
+    auto id = WarehouseTaskId(extractId(req.requestPath.to!string));
     if (id.isNull) 
       return errorResponse("Invalid warehouse task ID", 400);
     
@@ -113,7 +113,7 @@ protected:
       return precheck;
       
     auto tenantId = getTenantId(req);
-    auto id = WarehouseTaskId(extractIdFromPath(req.requestPath.to!string));
+    auto id = WarehouseTaskId(extractId(req.requestPath.to!string));
     if (id.isNull) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError("Invalid warehouse task ID");

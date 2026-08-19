@@ -110,7 +110,7 @@ class ObjectController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = BucketId(extractIdFromPath(precheck.path));
+    auto id = BucketId(extractId(precheck.path));
     auto data = precheck.data;
 
     auto r = UpdateObjectMetadataRequest();

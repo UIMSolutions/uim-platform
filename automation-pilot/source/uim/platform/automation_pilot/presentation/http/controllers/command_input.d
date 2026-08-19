@@ -38,7 +38,7 @@ class CommandInputController : ManageHttpController {
 
         auto items = commandInputs.listCommandInputs(tenantId).map!(e => e.toJson()).array.toJson;
 
-        return successResponse("Command inputs retrieved successfully", "Retrieved", 200, Json.emptyObject
+        return successResponse("PilotCommand inputs retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items));
     }
@@ -66,9 +66,9 @@ class CommandInputController : ManageHttpController {
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id)
-            .set("message", "Command Input created");
+            .set("message", "PilotCommand Input created");
 
-        return successResponse("Command Input created successfully", "Created", 201, resp);
+        return successResponse("PilotCommand Input created successfully", "Created", 201, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -81,13 +81,13 @@ class CommandInputController : ManageHttpController {
         auto path = precheck.path;
         auto id = CommandInputId(precheck.id);
         if (id.isNull) 
-            return errorResponse("Invalid Command Input ID", 400);
+            return errorResponse("Invalid PilotCommand Input ID", 400);
 
         auto e = commandInputs.getCommandInput(tenantId, id);
         if (e.isNull) 
-            return errorResponse("Command Input not found", 404);
+            return errorResponse("PilotCommand Input not found", 404);
 
-        return successResponse("Command Input retrieved successfully", "Retrieved", 200, e.toJson());
+        return successResponse("PilotCommand Input retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -100,7 +100,7 @@ class CommandInputController : ManageHttpController {
         auto path = precheck.path;
         auto id = CommandInputId(precheck.id);
         if (id.isNull) 
-            return errorResponse("Invalid Command Input ID", 400);
+            return errorResponse("Invalid PilotCommand Input ID", 400);
         
 
         auto data = precheck.data;
@@ -116,7 +116,7 @@ class CommandInputController : ManageHttpController {
         auto result = commandInputs.updateCommandInput(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        return successResponse("Command Input updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
+        return successResponse("PilotCommand Input updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -128,7 +128,7 @@ class CommandInputController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = CommandInputId(precheck.id);
         if (id.isNull) {
-            return errorResponse("Invalid Command Input ID", 400);
+            return errorResponse("Invalid PilotCommand Input ID", 400);
         }
 
         auto result = commandInputs.deleteCommandInput(tenantId, id);
@@ -136,6 +136,6 @@ class CommandInputController : ManageHttpController {
             return errorResponse(result.message, 404);
         }
 
-        return successResponse("Command Input deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
+        return successResponse("PilotCommand Input deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
     }
 }

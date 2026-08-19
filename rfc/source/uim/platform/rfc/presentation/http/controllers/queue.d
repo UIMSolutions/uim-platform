@@ -32,7 +32,7 @@ class QueueController : ManageHttpController {
     override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId  = tenantId;
-            auto queueName = extractIdFromPath(req.requestURI.to!string);
+            auto queueName = extractId(req.requestURI.to!string);
             auto entries   = _usecase.listQueue(tenantId, queueName);
             auto jarr      = Json.emptyArray;
             foreach (e; entries) jarr ~= e.toJson();
@@ -69,7 +69,7 @@ class QueueController : ManageHttpController {
     override protected void handleDeleteEntry(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto tenantId = precheck.tenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
+            auto id       = extractId(req.requestURI.to!string);
             auto result   = _usecase.deleteQueueEntry(tenantId, id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("message", "Queue entry deleted"), 200);

@@ -84,7 +84,7 @@ override protected Json getHandler(HTTPServerRequest req) {
         return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = extractIdFromPath(req.requestURI.to!string);
+    auto id = extractId(req.requestURI.to!string);
     auto dest = _usecase.getDestination(tenantId, id);
     if (dest.isNull()) {
         return errorResponse("Destination not found", 404);
@@ -101,7 +101,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto data = precheck.data;
     UpdateDestinationRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestURI.to!string);
+    r.id = extractId(req.requestURI.to!string);
     r.description = data.getString("description", "");
     r.host = data.getString("host", "");
     r.port = cast(ushort)j.get("port", Json(0)).to!long;
@@ -123,7 +123,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
         return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = extractIdFromPath(req.requestURI.to!string);
+    auto id = extractId(req.requestURI.to!string);
     auto result = _usecase.deleteDestination(tenantId, id);
     if (result.hasError)
         return errorResponse(result.error, 404);

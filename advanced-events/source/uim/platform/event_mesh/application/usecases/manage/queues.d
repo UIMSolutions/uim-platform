@@ -18,20 +18,20 @@ class ManageQueuesUseCase {
         this.repo = repo;
     }
 
-    Queue getQueue(TenantId tenantId, QueueId id) {
+    EventQueue getQueue(TenantId tenantId, QueueId id) {
         return repo.findById(tenantId, id);
     }
 
-    Queue[] listQueues(TenantId tenantId) {
+    EventQueue[] listQueues(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Queue[] listQueues(TenantId tenantId, BrokerServiceId serviceId) {
+    EventQueue[] listQueues(TenantId tenantId, BrokerServiceId serviceId) {
         return repo.findByBrokerService(tenantId, serviceId);
     }
 
     UsecaseResult createQueue(QueueDTO dto) {
-        Queue queue;
+        EventQueue queue;
 
         queue.id = dto.queueId;
         queue.tenantId = dto.tenantId;
@@ -59,7 +59,7 @@ class ManageQueuesUseCase {
     UsecaseResult updateQueue(QueueDTO dto) {
         auto queue = repo.findById(dto.tenantId, dto.queueId);
         if (queue.isNull)
-            return UsecaseResult(false, "", "Queue not found");
+            return UsecaseResult(false, "", "EventQueue not found");
 
         if (dto.name.length > 0) queue.name = dto.name;
         if (dto.description.length > 0) queue.description = dto.description;
@@ -75,7 +75,7 @@ class ManageQueuesUseCase {
     UsecaseResult deleteQueue(TenantId tenantId, QueueId queueId) {
         auto queue = repo.findById(tenantId, queueId);
         if (queue.isNull)
-            return UsecaseResult(false, "", "Queue not found");
+            return UsecaseResult(false, "", "EventQueue not found");
 
         repo.remove(queue);
         return UsecaseResult(true, queue.id.value, "");
@@ -92,7 +92,7 @@ unittest {
 //    QueueDTO createDto;
 //    createDto.tenantId = tenantId;
 //    createDto.queueId = QueueId("queue-1");
-//    createDto.name = "Test Queue";
+//    createDto.name = "Test EventQueue";
 //    auto createResult = usecase.createQueue(createDto);
 //    assert(createResult.success, createResult.message);
 //
@@ -108,7 +108,7 @@ unittest {
 //    QueueDTO updateDto;
 //    updateDto.tenantId = tenantId;
 //    updateDto.queueId = QueueId("queue-1");
-//    updateDto.name = "Updated Queue";
+//    updateDto.name = "Updated EventQueue";
 //    auto updateResult = usecase.updateQueue(updateDto);
 //    assert(updateResult.success, updateResult.message);
 //

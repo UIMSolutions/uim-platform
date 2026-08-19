@@ -11,15 +11,15 @@ mixin(ShowModule!());
 
 @safe:
 
-class QueueRepository : TenantRepository!(Queue, QueueId), IQueueRepository {
+class QueueRepository : TenantRepository!(EventQueue, QueueId), IQueueRepository {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         return findByBrokerService(tenantId, serviceId).length;
     }
-    Queue[] filterByBrokerService(Queue[] queues, BrokerServiceId serviceId) {
+    EventQueue[] filterByBrokerService(EventQueue[] queues, BrokerServiceId serviceId) {
         return queues.filter!(e => e.serviceId == serviceId).array;
     }
-    Queue[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
+    EventQueue[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         return filterByBrokerService(findByTenant(tenantId), serviceId);
     }
     void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
@@ -29,10 +29,10 @@ class QueueRepository : TenantRepository!(Queue, QueueId), IQueueRepository {
     size_t countByStatus(TenantId tenantId, QueueStatus status) {
         return findByStatus(tenantId, status).length;
     }
-    Queue[] filterByStatus(Queue[] queues, QueueStatus status) {
+    EventQueue[] filterByStatus(EventQueue[] queues, QueueStatus status) {
         return queues.filter!(e => e.status == status).array;
     }
-    Queue[] findByStatus(TenantId tenantId, QueueStatus status) {
+    EventQueue[] findByStatus(TenantId tenantId, QueueStatus status) {
         return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, QueueStatus status) {

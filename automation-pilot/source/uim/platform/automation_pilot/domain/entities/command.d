@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-struct Command {
+struct PilotCommand {
     mixin TenantEntity!CommandId;
 
     CatalogId catalogId;

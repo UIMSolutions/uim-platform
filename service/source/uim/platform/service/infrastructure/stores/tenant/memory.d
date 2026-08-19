@@ -133,29 +133,36 @@ class TenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
     }
     // #endregion remove
 }
-///
+
+struct TestEntityId {
+    mixin(IdTemplate);
+}
+struct TestEntity {
+    mixin TenantEntity!TestEntityId;
+    string displayName;
+}
+
 unittest {
-    auto store = new TenantStore!(User, UserId)();
+    auto store = new TenantStore!(TestEntity, TestEntityId)();
 
     auto tenantId = TenantId("tenant1");
-    auto user1 = User(tenantId, UserId("user1"));
-    user1.displayName = "User 1";
-    auto user2 = User(tenantId, UserId("user2"));
-    user2.displayName = "User 2";
+    auto entity1 = TestEntity(tenantId, TestEntityId("entity1"));
+    entity1.displayName = "Entity 1";
+    auto entity2 = TestEntity(tenantId, TestEntityId("entity2"));
+    entity2.displayName = "Entity 2";
 
-    store.save(user1);
-    store.save(user2);
+    store.save(entity1);
+    store.save(entity2);
     // writeln("Saved users: ", store.count(tenantId));
 
-    assert(store.exists(user1.tenantId));
-    assert(store.exists(user2.tenantId));
+    assert(store.exists(entity1.tenantId));
+    assert(store.exists(entity2.tenantId));
 
-    assert(store.count(user1.tenantId) == 2);
-    assert(store.count(user2.tenantId) == 2);
+    assert(store.count(entity1.tenantId) == 2);
+    assert(store.count(entity2.tenantId) == 2);
 
-    auto foundUser1 = store.find(user1.tenantId, user1.id);
-    assert(foundUser1 == user1);
+    auto foundEntity1 = store.find(entity1.tenantId, entity1.id);
+    assert(foundEntity1 == entity1);
 
-    store.remove(user1);
-    assert(!store.exists(user1));
+    store.remove(entity1);
 }

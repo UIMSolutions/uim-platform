@@ -97,7 +97,7 @@ class TenantUserController : ManageHttpController {
     auto data = precheck.data;
     UpdateTenantUserRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.firstName = data.getString("firstName");
     r.lastName = data.getString("lastName");
     r.role = data.getString("role");

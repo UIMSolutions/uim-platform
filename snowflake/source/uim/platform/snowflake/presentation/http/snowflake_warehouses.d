@@ -29,7 +29,7 @@ class SnowflakeWarehouseController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) {
       writeError(res, 404, "Warehouse not found");
       return;
@@ -64,7 +64,7 @@ class SnowflakeWarehouseController : ManageHttpController {
     auto data = precheck.data;
     UpdateWarehouseRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.size = data.getString("size");
     r.status = data.getString("status");
     r.comment = data.getString("comment");
@@ -81,7 +81,7 @@ class SnowflakeWarehouseController : ManageHttpController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) {
       writeError(res, 404, result.message);
       return;

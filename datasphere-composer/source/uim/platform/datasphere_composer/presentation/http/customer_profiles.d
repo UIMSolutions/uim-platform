@@ -32,7 +32,7 @@ class CustomerProfileController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) { writeError(res, 404, "Profile not found"); return; }
     res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
   }

@@ -44,7 +44,7 @@ class ManageCommandInputsUseCase {
     UsecaseResult updateCommandInput(CommandInputDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.inputId);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Command input not found");
+            return UsecaseResult(false, "", "PilotCommand input not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -59,7 +59,7 @@ class ManageCommandInputsUseCase {
     UsecaseResult deleteCommandInput(TenantId tenantId, CommandInputId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return UsecaseResult(false, "", "Command input not found");
+            return UsecaseResult(false, "", "PilotCommand input not found");
             
         repo.remove(entity);
         return UsecaseResult(true, entity.id.value, "");

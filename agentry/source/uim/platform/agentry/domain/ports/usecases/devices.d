@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 interface IManageDevicesUseCase {
 
-    Device[] listDevices(TenantId tenantId);
-    Device getDevice(TenantId tenantId, DeviceId id);
+    MobileDevice[] listDevices(TenantId tenantId);
+    MobileDevice getDevice(TenantId tenantId, DeviceId id);
     UsecaseResult enrollDevice(DeviceDTO dto);
     UsecaseResult updateDevice(DeviceDTO dto);
     UsecaseResult removeDevice(TenantId tenantId, DeviceId id);
 
-    Device[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId);
-    Device[] listByStatus(TenantId tenantId, DeviceStatus status);
-    Device[] listByGroup(TenantId tenantId, string groupName);
+    MobileDevice[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId);
+    MobileDevice[] listByStatus(TenantId tenantId, DeviceStatus status);
+    MobileDevice[] listByGroup(TenantId tenantId, string groupName);
 
 }

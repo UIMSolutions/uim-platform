@@ -77,7 +77,7 @@ protected:
 
   override Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = DeliveryId(extractIdFromPath(req.requestPath.to!string));
+    auto id = DeliveryId(extractId(req.requestPath.to!string));
     auto d = _useCase.getDelivery(tenantId, id);
     if (d.isNull) {
       res.statusCode = cast(int) HTTPStatus.notFound;
@@ -88,7 +88,7 @@ protected:
 
   override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = DeliveryId(extractIdFromPath(req.requestPath.to!string));
+    auto id = DeliveryId(extractId(req.requestPath.to!string));
     if (id.isNull) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError("Invalid delivery ID");
@@ -110,7 +110,7 @@ protected:
 
   override Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = DeliveryId(extractIdFromPath(req.requestPath.to!string));
+    auto id = DeliveryId(extractId(req.requestPath.to!string));
     auto result = _useCase.deleteDelivery(tenantId, id);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.notFound;

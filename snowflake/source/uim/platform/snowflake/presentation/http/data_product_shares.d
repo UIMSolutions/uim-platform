@@ -27,7 +27,7 @@ class DataProductShareController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) { writeError(res, 404, "Share not found"); return; }
     res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
   }
@@ -53,7 +53,7 @@ class DataProductShareController : ManageHttpController {
     auto data = precheck.data;
     UpdateShareRequest r;
     r.tenantId = tenantId;
-    r.id       = extractIdFromPath(req.requestPath.to!string);
+    r.id       = extractId(req.requestPath.to!string);
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");
     auto result = usecase.update(r);
@@ -65,13 +65,13 @@ class DataProductShareController : ManageHttpController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 
   void handleSync(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.sync_(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.sync_(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }

@@ -26,7 +26,7 @@ class SnowflakeTenantUserController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) { writeError(res, 404, "User not found"); return; }
     res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
   }
@@ -52,7 +52,7 @@ class SnowflakeTenantUserController : ManageHttpController {
     auto data = precheck.data;
     UpdateTenantUserRequest r;
     r.tenantId  = tenantId;
-    r.id        = extractIdFromPath(req.requestPath.to!string);
+    r.id        = extractId(req.requestPath.to!string);
     r.firstName = data.getString("firstName");
     r.lastName  = data.getString("lastName");
     r.role      = data.getString("role");
@@ -66,7 +66,7 @@ class SnowflakeTenantUserController : ManageHttpController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }

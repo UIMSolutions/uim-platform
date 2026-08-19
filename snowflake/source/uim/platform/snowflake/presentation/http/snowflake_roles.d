@@ -29,7 +29,7 @@ class SnowflakeRoleController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) {
       writeError(res, 404, "Role not found");
       return;
@@ -60,7 +60,7 @@ class SnowflakeRoleController : ManageHttpController {
     auto data = precheck.data;
     UpdateRoleRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.description = data.getString("description");
     r.privileges = data.getStrings("privileges");
     if (j["active"].isBoolean_)
@@ -74,7 +74,7 @@ class SnowflakeRoleController : ManageHttpController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) {
       writeError(res, 404, result.message);
       return;

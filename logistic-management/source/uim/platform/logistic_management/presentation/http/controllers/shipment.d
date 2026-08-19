@@ -60,7 +60,7 @@ protected:
 
   override Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
+    auto id = ShipmentId(extractId(req.requestPath.to!string));
     auto s = _useCase.getShipment(tenantId, id);
     if (s.isNull) {
       res.statusCode = cast(int) HTTPStatus.notFound;
@@ -71,7 +71,7 @@ protected:
 
   override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
+    auto id = ShipmentId(extractId(req.requestPath.to!string));
     auto data = req.json;
     UpdateShipmentRequest dto;
     dto.description = data.getString("description");
@@ -88,7 +88,7 @@ protected:
 
   override Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
+    auto id = ShipmentId(extractId(req.requestPath.to!string));
     if (id.isNull) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError("Invalid shipment ID");

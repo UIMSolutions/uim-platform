@@ -159,7 +159,7 @@ class AlertController : ManageHttpController {
       return errorResponse("Invalid path for acknowledge", 400);
 
     auto sub = path[0 .. ackIdx];
-    auto id = AlertId(extractIdFromPath(sub));
+    auto id = AlertId(extractId(sub));
     if (id.isNull)
       return errorResponse("Invalid alert ID", 400);
 

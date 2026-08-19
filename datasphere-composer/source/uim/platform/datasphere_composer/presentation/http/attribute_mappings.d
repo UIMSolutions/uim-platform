@@ -34,7 +34,7 @@ class AttributeMappingController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) { writeError(res, 404, "Mapping not found"); return; }
     res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
   }
@@ -62,7 +62,7 @@ class AttributeMappingController : ManageHttpController {
     auto data = precheck.data;
     UpdateAttributeMappingRequest r;
     r.tenantId            = tenantId;
-    r.id                  = extractIdFromPath(req.requestPath.to!string);
+    r.id                  = extractId(req.requestPath.to!string);
     r.sourceAttributeName = data.getString("sourceAttributeName");
     r.sourceDataType      = data.getString("sourceDataType");
     r.targetAttributeName = data.getString("targetAttributeName");
@@ -76,7 +76,7 @@ class AttributeMappingController : ManageHttpController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }

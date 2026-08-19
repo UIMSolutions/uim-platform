@@ -18,20 +18,20 @@ class ManageCommandsUseCase {
         this.repo = repo;
     }
 
-    Command getCommand(TenantId tenantId, CommandId id) {
+    PilotCommand getCommand(TenantId tenantId, CommandId id) {
         return repo.findById(tenantId, id);
     }
 
-    Command[] listCommands(TenantId tenantId) {
+    PilotCommand[] listCommands(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Command[] listCommands(TenantId tenantId, CatalogId catalogId) {
+    PilotCommand[] listCommands(TenantId tenantId, CatalogId catalogId) {
         return repo.findByCatalog(tenantId, catalogId);
     }
 
     UsecaseResult createCommand(CommandDTO dto) {
-        auto cmd = Command(dto.tenantId, dto.commandId.isNull ? CommandId(createId) : dto.commandId, dto.createdBy);
+        auto cmd = PilotCommand(dto.tenantId, dto.commandId.isNull ? CommandId(createId) : dto.commandId, dto.createdBy);
         cmd.catalogId = dto.catalogId;
         cmd.name = dto.name;
         cmd.description = dto.description;
@@ -52,7 +52,7 @@ class ManageCommandsUseCase {
     UsecaseResult updateCommand(CommandDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.commandId);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Command not found");
+            return UsecaseResult(false, "", "PilotCommand not found");
             
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
@@ -68,7 +68,7 @@ class ManageCommandsUseCase {
     UsecaseResult deleteCommand(TenantId tenantId, CommandId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return UsecaseResult(false, "", "Command not found");
+            return UsecaseResult(false, "", "PilotCommand not found");
             
         repo.remove(entity);
         return UsecaseResult(true, entity.id.value, "");
@@ -85,7 +85,7 @@ unittest {
 //    CommandDTO createDto;
 //    createDto.tenantId = tenantId;
 //    createDto.commandId = CommandId("command-1");
-//    createDto.name = "Test Command";
+//    createDto.name = "Test PilotCommand";
 //    auto createResult = usecase.createCommand(createDto);
 //    assert(createResult.success, createResult.message);
 //
@@ -101,7 +101,7 @@ unittest {
 //    CommandDTO updateDto;
 //    updateDto.tenantId = tenantId;
 //    updateDto.commandId = CommandId("command-1");
-//    updateDto.name = "Updated Command";
+//    updateDto.name = "Updated PilotCommand";
 //    auto updateResult = usecase.updateCommand(updateDto);
 //    assert(updateResult.success, updateResult.message);
 //

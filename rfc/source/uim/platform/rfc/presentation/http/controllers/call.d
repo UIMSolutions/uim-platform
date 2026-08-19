@@ -92,7 +92,7 @@ class CallController : HttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
+            auto id       = extractId(req.requestURI.to!string);
             auto call     = _manageUC.getCall(tenantId, id);
             if (call.isNull()) { writeError(res, 404, "RFC call not found"); return; }
             res.writeJsonBody(call.toJson(), 200);
@@ -105,7 +105,7 @@ class CallController : HttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
+            auto id       = extractId(req.requestURI.to!string);
             auto result   = _manageUC.deleteCall(tenantId, id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("message", "RFC call deleted"), 200);

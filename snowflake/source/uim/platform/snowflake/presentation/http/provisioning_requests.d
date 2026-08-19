@@ -37,7 +37,7 @@ class ProvisioningRequestController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) {
       writeError(res, 404, "Provisioning request not found");
       return;
@@ -78,7 +78,7 @@ class ProvisioningRequestController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = extractIdFromPath(req.requestPath.to!string);
+    auto id = extractId(req.requestPath.to!string);
 
     auto result = usecase.remove(tenantId, id);
     if (result.hasError)
@@ -93,7 +93,7 @@ class ProvisioningRequestController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = extractIdFromPath(req.requestPath.to!string);
+    auto id = extractId(req.requestPath.to!string);
 
     auto result = usecase.process(tenantId, id);
     if (result.hasError)
@@ -103,7 +103,7 @@ class ProvisioningRequestController : ManageHttpController {
   }
   
   void handleProcess(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.process(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.process(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) {
       writeError(res, 404, result.message);
       return;
@@ -115,7 +115,7 @@ class ProvisioningRequestController : ManageHttpController {
     auto data = precheck.data;
     UpdateProvisioningStatusRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.resultAccountId = data.getString("resultAccountId");
     auto result = usecase.complete(r);
     if (!result.success) {
@@ -129,7 +129,7 @@ class ProvisioningRequestController : ManageHttpController {
     auto data = precheck.data;
     UpdateProvisioningStatusRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.errorMessage = data.getString("errorMessage");
     auto result = usecase.fail(r);
     if (!result.success) {

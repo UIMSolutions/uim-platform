@@ -30,7 +30,7 @@ class SnowflakeAccountController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) {
       writeError(res, 404, "Account not found");
       return;
@@ -63,7 +63,7 @@ class SnowflakeAccountController : ManageHttpController {
     auto data = precheck.data;
     UpdateAccountRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.name = data.getString("name");
     r.status = data.getString("status");
     auto result = usecase.update(r);
@@ -75,7 +75,7 @@ class SnowflakeAccountController : ManageHttpController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) {
       writeError(res, 404, result.message);
       return;
@@ -84,7 +84,7 @@ class SnowflakeAccountController : ManageHttpController {
   }
 
   void handleActivate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.activate(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.activate(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) {
       writeError(res, 404, result.message);
       return;

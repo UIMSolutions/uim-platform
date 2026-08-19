@@ -39,7 +39,7 @@ class SnowflakeDatabaseController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull)
             return errorResponse("Scan job not found", 404);
 
@@ -78,7 +78,7 @@ class SnowflakeDatabaseController : ManageHttpController {
     auto data = precheck.data;
     UpdateDatabaseRequest r;
     r.tenantId = tenantId;
-    r.id       = extractIdFromPath(req.requestPath.to!string);
+    r.id       = extractId(req.requestPath.to!string);
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");
     if (j["retentionDays"].isInteger) r.retentionDays = cast(int) j["retentionDays"].get!long;
@@ -96,11 +96,11 @@ class SnowflakeDatabaseController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = extractIdFromPath(req.requestPath.to!string);
+        auto id = extractId(req.requestPath.to!string);
         if (id.isNull)
             return errorResponse("Invalid database ID", 400); 
 
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
     if (result.hasError)
             return errorResponse(result.message, 400);
 

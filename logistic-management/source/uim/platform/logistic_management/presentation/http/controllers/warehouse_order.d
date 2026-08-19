@@ -59,7 +59,7 @@ protected:
 
   override Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = WarehouseOrderId(extractIdFromPath(req.requestPath.to!string));
+    auto id = WarehouseOrderId(extractId(req.requestPath.to!string));
     auto wo = _useCase.getWarehouseOrder(tenantId, id);
     if (wo.isNull) {
       res.statusCode = cast(int) HTTPStatus.notFound;
@@ -70,7 +70,7 @@ protected:
 
   override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = WarehouseOrderId(extractIdFromPath(req.requestPath.to!string));
+    auto id = WarehouseOrderId(extractId(req.requestPath.to!string));
     auto data = req.json;
     UpdateWarehouseOrderRequest dto;
     dto.description = data.getString("description");
@@ -87,7 +87,7 @@ protected:
 
   override Json deleteHandler(HTTPServerRequest req ) {
     auto tenantId = getTenantId(req);
-    auto id = WarehouseOrderId(extractIdFromPath(req.requestPath.to!string));
+    auto id = WarehouseOrderId(extractId(req.requestPath.to!string));
     auto result = _useCase.deleteWarehouseOrder(tenantId, id);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.notFound;

@@ -136,7 +136,7 @@ class SubstitutionRuleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 9]; // remove "/activate"
-        auto id = SubstitutionRuleId(extractIdFromPath(stripped));
+        auto id = SubstitutionRuleId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid substitution rule ID", 400);
 
@@ -157,7 +157,7 @@ class SubstitutionRuleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-        auto id = SubstitutionRuleId(extractIdFromPath(stripped));
+        auto id = SubstitutionRuleId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid substitution rule ID", 400);
 

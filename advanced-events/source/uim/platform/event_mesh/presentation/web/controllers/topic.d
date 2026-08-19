@@ -11,43 +11,43 @@ mixin(ShowModule!());
 
 @safe:
 
-class WebTopicController {
-    private WebTopicModel model;
-    private WebTopicView view;
+// class WebTopicController {
+//     private WebTopicModel model;
+//     private WebTopicView view;
 
-    this(WebTopicModel model, WebTopicView view) {
-        this.model = model;
-        this.view = view;
-    }
+//     this(WebTopicModel model, WebTopicView view) {
+//         this.model = model;
+//         this.view = view;
+//     }
 
-    void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
+//     void registerRoutes(URLRouter router) {
+//         super.registerRoutes(router);
 
-        router.get("/web/event-mesh/topics", &handleIndex);
-        router.get("/web/event-mesh/topics/*", &handleGet);
-        router.post("/web/event-mesh/topics", &handleCreate);
-        router.put("/web/event-mesh/topics/*", &handleUpdate);
-        router.delete_("/web/event-mesh/topics/*", &handleDelete);
-    }
+//         router.get("/web/event-mesh/topics", &handleIndex);
+//         router.get("/web/event-mesh/topics/*", &handleGet);
+//         router.post("/web/event-mesh/topics", &handleCreate);
+//         router.put("/web/event-mesh/topics/*", &handleUpdate);
+//         router.delete_("/web/event-mesh/topics/*", &handleDelete);
+//     }
 
-    void handleIndex(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(res, view.renderIndex(model.list(tenantFromRequest(req))));
-    }
+//     void handleIndex(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+//         writeHtml(res, view.renderIndex(model.list(tenantFromRequest(req))));
+//     }
 
-    void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(res, view.renderDetails(model.get(tenantFromRequest(req), idFromRequest(req))));
-    }
+//     void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+//         writeHtml(res, view.renderDetails(model.get(tenantFromRequest(req), extractId(req))));
+//     }
 
-    void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(res, view.renderMutation(model.create(tenantFromRequest(req), bodyFromRequest(req))));
-    }
+//     void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+//         writeHtml(res, view.renderMutation(model.create(tenantFromRequest(req), bodyFromRequest(req))));
+//     }
 
-    void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(        res,
-            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
-    }
+//     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+//         writeHtml(        res,
+//             view.renderMutation(            model.update(tenantFromRequest(req), extractId(req), bodyFromRequest(req))));
+//     }
 
-    void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(res, view.renderMutation(model.remove(tenantFromRequest(req), idFromRequest(req))));
-    }
-}
+//     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+//         writeHtml(res, view.renderMutation(model.remove(tenantFromRequest(req), extractId(req))));
+//     }
+// }

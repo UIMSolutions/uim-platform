@@ -153,7 +153,7 @@ class ProcessController : ManageHttpController {
             return errorResponse("Invalid deploy path", 400);
         }
         auto sub = path[0 .. deployIdx];
-        auto id = extractIdFromPath(sub);
+        auto id = extractId(sub);
 
         auto data = precheck.data;
         DeployProcessRequest r;

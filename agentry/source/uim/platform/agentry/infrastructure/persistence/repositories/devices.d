@@ -11,18 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository {
-    mixin TenantRepositoryTemplate!(DeviceRepository, Device, DeviceId);
+class DeviceRepository : TenantRepository!(MobileDevice, DeviceId), IDeviceRepository {
+    mixin TenantRepositoryTemplate!(DeviceRepository, MobileDevice, DeviceId);
 
     size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         return findByMobileApplication(tenantId, appId).length;
     }
 
-    Device[] filterByMobileApplication(Device[] devices, MobileApplicationId appId) {
+    MobileDevice[] filterByMobileApplication(MobileDevice[] devices, MobileApplicationId appId) {
         return devices.filter!(d => d.mobileApplicationId == appId).array;
     }
 
-    Device[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+    MobileDevice[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         return filterByMobileApplication(findByTenant(tenantId), appId);
     }
 
@@ -34,11 +34,11 @@ class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository 
         return findByStatus(tenantId, status).length;
     }
 
-    Device[] filterByStatus(Device[] devices, DeviceStatus status) {
+    MobileDevice[] filterByStatus(MobileDevice[] devices, DeviceStatus status) {
         return devices.filter!(d => d.status == status).array;
     }
 
-    Device[] findByStatus(TenantId tenantId, DeviceStatus status) {
+    MobileDevice[] findByStatus(TenantId tenantId, DeviceStatus status) {
         return filterByStatus(findByTenant(tenantId), status);
     }
 
@@ -50,11 +50,11 @@ class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository 
         return findByPlatform(tenantId, platform).length;
     }
 
-    Device[] filterByPlatform(Device[] devices, AppPlatform platform) {
+    MobileDevice[] filterByPlatform(MobileDevice[] devices, AppPlatform platform) {
         return devices.filter!(d => d.platform == platform).array;
     }
 
-    Device[] findByPlatform(TenantId tenantId, AppPlatform platform) {
+    MobileDevice[] findByPlatform(TenantId tenantId, AppPlatform platform) {
         return filterByPlatform(findByTenant(tenantId), platform);
     }
 
@@ -66,11 +66,11 @@ class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository 
         return findByGroup(tenantId, groupName).length;
     }
 
-    Device[] filterByGroup(Device[] devices, string groupName) {
+    MobileDevice[] filterByGroup(MobileDevice[] devices, string groupName) {
         return devices.filter!(d => d.groupName == groupName).array;
     }
 
-    Device[] findByGroup(TenantId tenantId, string groupName) {
+    MobileDevice[] findByGroup(TenantId tenantId, string groupName) {
         return filterByGroup(findByTenant(tenantId), groupName);
     }
 
@@ -87,7 +87,7 @@ unittest {
     // auto tenantId = TenantId("tenant1");
     // auto deviceId = DeviceId("device1");
     // auto userId = UserId("user1");
-    // auto device = Device(tenantId, deviceId, userId);
+    // auto device = MobileDevice(tenantId, deviceId, userId);
     // device.mobileApplicationId = MobileApplicationId("app1");
     // device.platform = AppPlatform.android;
     // device.groupName = "group1";

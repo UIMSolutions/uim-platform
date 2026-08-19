@@ -36,10 +36,10 @@ Advanced Event Mesh
 │   ├── C1.1.2  Multi-cloud deployment
 │   └── C1.1.3  Broker lifecycle and monitoring
 │
-├── C1.2  Queue Management
+├── C1.2  EventQueue Management
 │   ├── C1.2.1  Create / delete queues
 │   ├── C1.2.2  TTL and capacity policies
-│   └── C1.2.3  Queue monitoring
+│   └── C1.2.3  EventQueue monitoring
 │
 ├── C1.3  Topic Management
 │   ├── C1.3.1  Topic hierarchy definition
@@ -85,7 +85,7 @@ Advanced Event Mesh
 | Service ID | Name | Path Prefix | Methods |
 |---|---|---|---|
 | SVC-BROKER-CRUD | Broker Service | `/api/v1/broker-services` | GET, POST, DELETE |
-| SVC-QUEUE-CRUD | Queue | `/api/v1/queues` | GET, POST, DELETE |
+| SVC-QUEUE-CRUD | EventQueue | `/api/v1/queues` | GET, POST, DELETE |
 | SVC-TOPIC-CRUD | Topic | `/api/v1/topics` | GET, POST, DELETE |
 | SVC-SUB-CRUD | Subscription | `/api/v1/subscriptions` | GET, POST, DELETE |
 | SVC-MSG-PUB | Event Message | `/api/v1/messages` | GET, POST |
@@ -112,10 +112,10 @@ Advanced Event Mesh
 | Entity | Key Relationships |
 |---|---|
 | `BrokerService` | Root; hosts Queues and Topics |
-| `Queue` | Durable message store; associated with BrokerService |
+| `EventQueue` | Durable message store; associated with BrokerService |
 | `Topic` | Pub/sub channel; associated with BrokerService |
-| `Subscription` | Consumer binding to Queue or Topic |
-| `EventMessage` | Single event payload; routed via Topic or Queue |
+| `Subscription` | Consumer binding to EventQueue or Topic |
+| `EventMessage` | Single event payload; routed via Topic or EventQueue |
 | `EventSchema` | JSON/Avro schema registered for Topics |
 | `EventApplication` | Publisher or consumer identity |
 | `MeshBridge` | Cross-broker event forwarding |

@@ -30,7 +30,7 @@ This document is maintained alongside the implementation, deployment manifests, 
 
 ```
 Automation Pilot
-├── C1.1  Command Management
+├── C1.1  PilotCommand Management
 │   ├── C1.1.1  Build and version automation commands
 │   └── C1.1.2  Input parameter schema
 │
@@ -70,7 +70,7 @@ Automation Pilot
 
 | Service ID | Name | Path Prefix | Methods |
 |---|---|---|---|
-| SVC-CMD-CRUD | Command | `/api/v1/commands` | GET, POST, PUT, DELETE |
+| SVC-CMD-CRUD | PilotCommand | `/api/v1/commands` | GET, POST, PUT, DELETE |
 | SVC-CAT-CRUD | Catalog | `/api/v1/catalogs` | GET, POST, DELETE |
 | SVC-EXEC-CRUD | Execution | `/api/v1/executions` | GET, POST |
 | SVC-SCHED-CRUD | Scheduled Execution | `/api/v1/scheduled-executions` | GET, POST, DELETE |
@@ -96,10 +96,10 @@ Automation Pilot
 
 | Entity | Key Relationships |
 |---|---|
-| `Command` | Automation step with input parameters |
-| `CommandInput` | Named input parameter of a Command |
+| `PilotCommand` | Automation step with input parameters |
+| `CommandInput` | Named input parameter of a PilotCommand |
 | `Catalog` | Logical grouping of Commands |
-| `Execution` | Runtime instance of a Command |
+| `Execution` | Runtime instance of a PilotCommand |
 | `ScheduledExecution` | Cron-triggered Execution |
 | `Trigger` | Event-based initiator |
 | `ServiceAccount` | Execution identity |
@@ -124,7 +124,7 @@ Kubernetes Cluster — Namespace: uim-platform
 
 | ID | Decision | Rationale |
 |---|---|---|
-| AD-1 | Command-centric model | Mirrors SAP Automation Pilot command concept |
+| AD-1 | PilotCommand-centric model | Mirrors SAP Automation Pilot command concept |
 | AD-2 | Catalog grouping | Enables library-style reuse |
 | AD-3 | Content connectors | Pre-built SAP integration |
 | AD-4 | In-memory repositories | Fast testing |

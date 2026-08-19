@@ -39,7 +39,7 @@ struct Container {
     ODataMeshBridgeController odataMeshBridgeController;
     WebBrokerServiceController webBrokerServiceController;
     WebQueueController webQueueController;
-    WebTopicController webTopicController;
+    // WebTopicController webTopicController;
     WebSubscriptionController webSubscriptionController;
     WebEventMessageController webEventMessageController;
     WebEventSchemaController webEventSchemaController;
@@ -114,8 +114,8 @@ Container buildContainer(SrvConfig config) {
         new WebBrokerServiceView());
     c.webQueueController = new WebQueueController(new WebQueueModel(c.manageQueuesUseCase),
         new WebQueueView());
-    c.webTopicController = new WebTopicController(new WebTopicModel(c.manageTopicsUseCase),
-        new WebTopicView());
+    // c.webTopicController = new WebTopicController(new WebTopicModel(c.manageTopicsUseCase),
+    //     new WebTopicView());
     c.webSubscriptionController = new WebSubscriptionController(
         new WebSubscriptionModel(c.manageSubscriptionsUseCase),
         new WebSubscriptionView());

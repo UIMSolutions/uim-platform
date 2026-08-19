@@ -172,7 +172,7 @@ class CustomDomainController : ManageHttpController {
         // Extract ID: strip "/activate" suffix, then extract last segment
         enum ACTIVATE_SUFFIX_LEN = "/activate".length;
         auto stripped = path[0 .. $ - ACTIVATE_SUFFIX_LEN]; // remove "/activate"
-        auto id = CustomDomainId(extractIdFromPath(stripped));
+        auto id = CustomDomainId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);
 
@@ -197,7 +197,7 @@ class CustomDomainController : ManageHttpController {
         auto path = precheck.path;
         enum DEACTIVATE_SUFFIX_LEN = "/deactivate".length;
         auto stripped = path[0 .. $ - DEACTIVATE_SUFFIX_LEN]; // remove "/deactivate"
-        auto id = CustomDomainId(extractIdFromPath(stripped));
+        auto id = CustomDomainId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid Custom Domain ID", 400);
 

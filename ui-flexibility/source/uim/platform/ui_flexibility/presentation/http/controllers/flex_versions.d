@@ -68,7 +68,7 @@ class FlexVersionsController : ManageHttpController {
       auto activateIdx = fullPath.lastIndexOf("/activate");
       if (activateIdx < 0) { writeError(res, 400, "Invalid activate path"); return; }
       auto basePath2 = fullPath[0 .. activateIdx];
-      auto id = FlexVersionId(extractIdFromPath(basePath2));
+      auto id = FlexVersionId(extractId(basePath2));
       auto data = precheck.data;
       ActivateVersionRequest r;
       r.tenantId    = tenantId;

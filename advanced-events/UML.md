@@ -59,7 +59,7 @@ classDiagram
         +string bridgeType
         +string status
     }
-    class Queue {
+    class EventQueue {
         +string id
         +string name
         +string brokerId
@@ -72,7 +72,7 @@ classDiagram
     Subscription --> Topic : subscribes to
     Subscription --> EventApplication : owned by
     EventMessage --> Topic : published to
-    Queue --> BrokerService : hosted on
+    EventQueue --> BrokerService : hosted on
     MeshBridge --> BrokerService : source
     MeshBridge --> BrokerService : target
 ```
@@ -98,7 +98,7 @@ flowchart TB
         MSG_DOM["EventMessage"]
         APP_DOM["EventApplication"]
         BRIDGE_DOM["MeshBridge"]
-        QUEUE_DOM["Queue"]
+        QUEUE_DOM["EventQueue"]
     end
     subgraph Infrastructure["Infrastructure Layer"]
         SUB_REPO["InMemorySubscriptionRepository"]

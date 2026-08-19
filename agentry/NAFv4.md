@@ -42,7 +42,7 @@ Agentry
 │   ├── C1.3.1  Build and publish versioned app packages
 │   └── C1.3.2  Mandatory update enforcement and artifact distribution
 │
-├── C1.4  Device Management
+├── C1.4  MobileDevice Management
 │   ├── C1.4.1  Mobile device enrollment and group assignment
 │   ├── C1.4.2  MDM integration and push notification tokens
 │   └── C1.4.3  OS version and installed app version tracking
@@ -82,7 +82,7 @@ Agentry
 | SVC-APP-CRUD | Mobile Application | `/api/v1/agentry/mobile-applications` | GET, POST, PUT, DELETE |
 | SVC-DEF-CRUD | App Definition | `/api/v1/agentry/app-definitions` | GET, POST, PUT, DELETE |
 | SVC-VER-CRUD | App Version | `/api/v1/agentry/app-versions` | GET, POST, PUT, DELETE |
-| SVC-DEV-CRUD | Device | `/api/v1/agentry/devices` | GET, POST, PUT, DELETE |
+| SVC-DEV-CRUD | MobileDevice | `/api/v1/agentry/devices` | GET, POST, PUT, DELETE |
 | SVC-SYNC-CRUD | Sync Session | `/api/v1/agentry/sync-sessions` | GET, POST, PUT, DELETE |
 | SVC-CONN-CRUD | Backend Connection | `/api/v1/agentry/backend-connections` | GET, POST, PUT, DELETE |
 | SVC-DEPLOY-CRUD | Deployment | `/api/v1/agentry/deployments` | GET, POST, PUT, DELETE |
@@ -136,7 +136,7 @@ AppVersion
       versionNumber, releaseNotes, status, artifactUrl,
       checksum, minOsVersion, isMandatoryUpdate, changeLog
 
-Device
+MobileDevice
   └── id, tenantId, mobileApplicationId, deviceName,
       deviceModel, manufacturer, platform, osVersion,
       appVersionInstalled, status, userId, userEmail,
@@ -170,8 +170,8 @@ Deployment
 | AppDefinition | `mobileApplicationId →` | MobileApplication |
 | AppVersion | `mobileApplicationId →` | MobileApplication |
 | AppVersion | `definitionId →` | AppDefinition |
-| Device | `mobileApplicationId →` | MobileApplication |
-| SyncSession | `deviceId →` | Device |
+| MobileDevice | `mobileApplicationId →` | MobileApplication |
+| SyncSession | `deviceId →` | MobileDevice |
 | SyncSession | `mobileApplicationId →` | MobileApplication |
 | SyncSession | `backendConnectionId →` | BackendConnection |
 | Deployment | `mobileApplicationId →` | MobileApplication |
@@ -255,7 +255,7 @@ Container Runtime Compatibility:
 }
 ```
 
-**Device Enrollment (POST body)**
+**MobileDevice Enrollment (POST body)**
 ```json
 {
   "id": "dev-001",

@@ -34,7 +34,7 @@ class CompositionRunController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) { writeError(res, 404, "Composition run not found"); return; }
     res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
   }
@@ -58,7 +58,7 @@ class CompositionRunController : ManageHttpController {
     auto data = precheck.data;
     CompositionRunActionRequest r;
     r.tenantId = tenantId;
-    r.id       = extractIdFromPath(req.requestPath.to!string);
+    r.id       = extractId(req.requestPath.to!string);
     r.action   = data.getString("action");
     auto result = usecase.performAction(r);
     if (!result.success) { writeError(res, 400, result.message); return; }
@@ -71,7 +71,7 @@ class CompositionRunController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-    auto result = usecase.remove(tenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(tenantId, extractId(req.requestPath.to!string));
     if (result.hasError)
             return errorResponse(result.message, 400);
 

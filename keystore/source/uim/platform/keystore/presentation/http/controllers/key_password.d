@@ -38,7 +38,7 @@ class KeyPasswordController : ManageHttpController {
     r.tenantId = tenantId;
     r.accountId = data.getString("accountId");
     r.applicationId = data.getString("applicationId");
-    r.alias_ = extractIdFromPath(req.requestURI.to!string);
+    r.alias_ = extractId(req.requestURI.to!string);
     r.passwordValue = data.getString("passwordValue");
 
     auto result = usecase.setPassword(r);
@@ -57,7 +57,7 @@ class KeyPasswordController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto alias_ = extractIdFromPath(req.requestURI.to!string);
+    auto alias_ = extractId(req.requestURI.to!string);
     auto accountId = req.params.get("accountId", "");
     auto applicationId = req.params.get("applicationId", "");
 
@@ -83,7 +83,7 @@ class KeyPasswordController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto alias_ = extractIdFromPath(req.requestURI.to!string);
+    auto alias_ = extractId(req.requestURI.to!string);
     auto accountId = req.params.get("accountId", "");
     auto applicationId = req.params.get("applicationId", "");
 

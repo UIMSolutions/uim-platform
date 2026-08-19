@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 interface ManageCommandsUseCase { 
     
-    Command getCommand(TenantId tenantId, CommandId id);
-    Command[] listCommands(TenantId tenantId);
-    Command[] listCommands(TenantId tenantId, CatalogId catalogId);
+    PilotCommand getCommand(TenantId tenantId, CommandId id);
+    PilotCommand[] listCommands(TenantId tenantId);
+    PilotCommand[] listCommands(TenantId tenantId, CatalogId catalogId);
     UsecaseResult createCommand(CommandDTO dto);
     UsecaseResult updateCommand(CommandDTO dto);
     UsecaseResult deleteCommand(TenantId tenantId, CommandId id);

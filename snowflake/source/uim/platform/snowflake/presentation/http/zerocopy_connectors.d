@@ -30,7 +30,7 @@ class ZerocopyConnectorController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (item.isNull) {
       writeError(res, 404, "Connector not found");
       return;
@@ -62,7 +62,7 @@ class ZerocopyConnectorController : ManageHttpController {
     auto data = precheck.data;
     UpdateConnectorRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.name = data.getString("name");
     r.status = data.getString("status");
     r.description = data.getString("description");
@@ -75,7 +75,7 @@ class ZerocopyConnectorController : ManageHttpController {
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
     if (!result.success) {
       writeError(res, 404, result.message);
       return;
@@ -87,7 +87,7 @@ class ZerocopyConnectorController : ManageHttpController {
     auto data = precheck.data;
     EnrollConnectorRequest r;
     r.tenantId = tenantId;
-    r.connectorId = extractIdFromPath(req.requestPath.to!string);
+    r.connectorId = extractId(req.requestPath.to!string);
     r.bdcTenantId = data.getString("bdcTenantId");
     auto result = usecase.enroll(r);
     if (!result.success) {

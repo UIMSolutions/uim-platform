@@ -144,7 +144,7 @@ class CertificateController : ManageHttpController {
         const path = req.requestURI.to!string;
         enum UPLOAD_CHAIN_SUFFIX_LEN = "/upload-chain".length;
         auto stripped = path[0 .. $ - 13]; // remove "/upload-chain"
-        auto id = CertificateId(extractIdFromPath(stripped));
+        auto id = CertificateId(extractId(stripped));
         if (id.isNull) 
             return errorResponse("Invalid Certificate ID", 400);
         
@@ -177,7 +177,7 @@ class CertificateController : ManageHttpController {
         const path = req.requestURI.to!string;
         enum ACTIVATE_SUFFIX_LEN = "/activate".length;
         auto stripped = path[0 .. $ - 9]; // remove "/activate"
-        auto id = CertificateId(extractIdFromPath(stripped));
+        auto id = CertificateId(extractId(stripped));
         if (id.isNull) {
             return errorResponse("Invalid Certificate ID", 400);
         }
@@ -208,7 +208,7 @@ class CertificateController : ManageHttpController {
         const path = req.requestURI.to!string;
         enum DEACTIVATE_SUFFIX_LEN = "/deactivate".length;
         auto stripped = path[0 .. $ - DEACTIVATE_SUFFIX_LEN]; // remove "/deactivate"
-        auto id = CertificateId(extractIdFromPath(stripped));
+        auto id = CertificateId(extractId(stripped));
         if (id.isNull) return errorResponse("Invalid Certificate ID", 400);
 
         auto result = certificates.deactivateCertificate(tenantId, id);

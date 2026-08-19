@@ -88,7 +88,7 @@ class DataProviderController : ManageHttpController {
     auto data = precheck.data;
     UpdateDataProviderRequest r;
     r.tenantId = tenantId;
-    r.providerId = DataProviderId(extractIdFromPath(req.requestPath.to!string));
+    r.providerId = DataProviderId(extractId(req.requestPath.to!string));
     r.systemType = data.getString("systemType");
     r.name = data.getString("name");
     r.description = data.getString("description");

@@ -35,7 +35,7 @@ else {
     container.odataMeshBridgeController.registerRoutes(router);
     container.webBrokerServiceController.registerRoutes(router);
     container.webQueueController.registerRoutes(router);
-    container.webTopicController.registerRoutes(router);
+    // container.webTopicController.registerRoutes(router);
     container.webSubscriptionController.registerRoutes(router);
     container.webEventMessageController.registerRoutes(router);
     container.webEventSchemaController.registerRoutes(router);

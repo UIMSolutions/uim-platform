@@ -84,22 +84,8 @@ string[][] jsonMessageArray(Json j, string key) {
   }
   return result[];
 }
-/// Write a JSON error response.
-void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto error = Json.emptyObject
-    .set("error", message)
-    .set("status", status);
-  // j["code"] = Json(code);
-  res.writeJsonBody(error, status);
-}
-
 ///
 unittest {
-  assert(extractIdFromPath("/v1/tenants/abc123") == "abc123");
-  assert(extractIdFromPath("/v1/tenants/abc123/") == "abc123");
-  assert(extractIdFromPath("/v1/tenants/abc123?foo=bar") == "abc123");
-  assert(extractIdFromPath("single") == "single");
-
   assert(getString(parseJsonString(`{"name": "test"}`), "name") == "test");
   assert(getString(parseJsonString(`{"name": "test"}`), "missing") == "");
 
@@ -140,14 +126,6 @@ string[string] jsonStrMap(Json j, string key) {
       result[k] = val.get!string;
   }
   return result;
-}
-
-string extractId(string uri) {
-  // import std.string : lastIndexOf;
-  auto idx = uri.lastIndexOf('/');
-  if (idx >= 0 && idx + 1 < uri.length)
-    return uri[idx + 1 .. $];
-  return "";
 }
 
 /*
@@ -615,8 +593,9 @@ int jsonInt(Json j, string key, int default_ = 0) {
 }
 
 bool safeBool(Json obj, string key) {
-  if ((key in obj) !is null && obj[key].isBoolean_)
+  if ((key in obj) !is null && obj.isBoolean(key))
     return obj[key].get!bool;
+
   return false;
 }
 

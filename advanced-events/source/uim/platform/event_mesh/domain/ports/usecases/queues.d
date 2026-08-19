@@ -13,11 +13,11 @@ mixin(ShowModule!());
 
 interface IManageQueuesUseCase {
 
-    Queue getQueue(TenantId tenantId, QueueId id);
+    EventQueue getQueue(TenantId tenantId, QueueId id);
 
-    Queue[] listQueues(TenantId tenantId);
+    EventQueue[] listQueues(TenantId tenantId);
     
-    Queue[] listQueues(TenantId tenantId, BrokerServiceId serviceId);
+    EventQueue[] listQueues(TenantId tenantId, BrokerServiceId serviceId);
     
     UsecaseResult createQueue(QueueDTO dto);
     

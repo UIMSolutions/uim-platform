@@ -125,7 +125,7 @@ class UserTaskFilterController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 8]; // remove "/default"
-        auto id = UserTaskFilterId(extractIdFromPath(stripped));
+        auto id = UserTaskFilterId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid filter ID", 400);
 

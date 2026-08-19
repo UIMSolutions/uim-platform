@@ -16,7 +16,7 @@ struct EventMeshValidator {
         return bs.name.length > 0 && !bs.tenantId.isEmpty;
     }
 
-    static bool isValidQueue(Queue q) {
+    static bool isValidQueue(EventQueue q) {
         return q.name.length > 0 && !q.tenantId.isEmpty && !q.serviceId.isEmpty;
     }
 

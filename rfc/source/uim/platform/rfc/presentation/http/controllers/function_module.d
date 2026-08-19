@@ -87,7 +87,7 @@ class FunctionModuleController : HttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
+            auto id       = extractId(req.requestURI.to!string);
             auto fm       = _usecase.getFunctionModule(tenantId, id);
             if (fm.isNull()) { writeError(res, 404, "Function module not found"); return; }
             res.writeJsonBody(fm.toJson(), 200);
@@ -103,7 +103,7 @@ class FunctionModuleController : HttpController {
             auto data = precheck.data;
             UpdateFunctionModuleRequest r;
             r.tenantId      = tenantId;
-            r.id            = extractIdFromPath(req.requestURI.to!string);
+            r.id            = extractId(req.requestURI.to!string);
             r.shortText     = data.getString("shortText", "");
             r.remoteEnabled = data.getString("remoteEnabled", "ENABLED");
             r.active        = j.get("active", Json(true)).get!bool;
@@ -135,7 +135,7 @@ class FunctionModuleController : HttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id       = extractIdFromPath(req.requestURI.to!string);
+            auto id       = extractId(req.requestURI.to!string);
             auto result   = _usecase.deleteFunctionModule(tenantId, id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject.set("message", "Function module deleted"), 200);

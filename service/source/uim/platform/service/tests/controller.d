@@ -19,13 +19,13 @@ abstract class ControllerTestBase {
      *   tenantId = The tenant identifier for context.
      *   data = The JSON payload for mutations.
      */
-    protected HTTPServerRequest createMockRequest(    string method = "GET", 
+    protected HTTPServerRequest createMockRequest(string method = "GET", 
         string url = "/api/v1/application-vulnerability/test", 
         TenantId tenantId = "test-tenant", 
         Json data = Json.undefined
     ) {
         // Using vibe.d's testing utility to create a request without a server.
-        auto req = createTestHTTPServerRequest(URL(url));
+        auto req = createTestHTTPServerRequest(vibe.inet.url.URL(url));
         req.method = httpMethodFromString(method);
         req.headers["X-Tenant-Id"] = tenantId.value;
         

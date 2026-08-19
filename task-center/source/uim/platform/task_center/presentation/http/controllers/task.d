@@ -155,7 +155,7 @@ class TaskController : ManageHttpController {
 
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 6]; // remove "/claim"
-        auto id = TaskId(extractIdFromPath(stripped));
+        auto id = TaskId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid task ID", 400);
 
@@ -189,7 +189,7 @@ class TaskController : ManageHttpController {
 
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 8]; // remove "/release"
-        auto id = TaskId(extractIdFromPath(stripped));
+        auto id = TaskId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid task ID", 400);
 
@@ -213,7 +213,7 @@ class TaskController : ManageHttpController {
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 8]; // remove "/forward"
         auto tenantId = precheck.tenantId;
-        auto id = TaskId(extractIdFromPath(stripped));
+        auto id = TaskId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid task ID", 400);
 
@@ -238,7 +238,7 @@ class TaskController : ManageHttpController {
 
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 9]; // remove "/complete"
-        auto id = TaskId(extractIdFromPath(stripped));
+        auto id = TaskId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid task ID", 400);
 
@@ -265,7 +265,7 @@ class TaskController : ManageHttpController {
         auto stripped = path[0 .. $ - 7]; // remove "/cancel"
 
         auto tenantId = precheck.tenantId;
-        auto id = TaskId(extractIdFromPath(stripped));
+        auto id = TaskId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid task ID", 400);
 

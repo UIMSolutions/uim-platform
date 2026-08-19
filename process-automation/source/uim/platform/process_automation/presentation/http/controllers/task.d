@@ -165,7 +165,7 @@ class TaskController : ManageHttpController {
       return errorResponse("Invalid claim path", 400);
 
     auto sub = path[0 .. claimIdx];
-    auto id = TaskId(extractIdFromPath(sub));
+    auto id = TaskId(extractId(sub));
     if (id.isNull)
       return errorResponse("Task ID is required", 400);
 
@@ -201,7 +201,7 @@ class TaskController : ManageHttpController {
         return errorResponse("Invalid complete path", 400);
       
       auto sub = path[0 .. completeIdx];
-      auto id = TaskId(extractIdFromPath(sub));
+      auto id = TaskId(extractId(sub));
 
       auto data = precheck.data;
       CompleteTaskRequest r;

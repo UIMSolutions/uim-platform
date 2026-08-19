@@ -137,7 +137,7 @@ class TaskProviderController : ManageHttpController {
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 9]; // remove "/activate"
 
-        auto id = TaskProviderId(extractIdFromPath(stripped));
+        auto id = TaskProviderId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid provider ID", 400);
 
@@ -160,7 +160,7 @@ class TaskProviderController : ManageHttpController {
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
 
-        auto id = TaskProviderId(extractIdFromPath(stripped));
+        auto id = TaskProviderId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid provider ID", 400);
 
@@ -183,7 +183,7 @@ class TaskProviderController : ManageHttpController {
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 5]; // remove "/sync"
 
-        auto id = TaskProviderId(extractIdFromPath(stripped));
+        auto id = TaskProviderId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid provider ID", 400);
 

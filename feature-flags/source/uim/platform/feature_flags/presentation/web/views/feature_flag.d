@@ -52,7 +52,7 @@ class FeatureFlagWebView {
     private void renderDetail(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto tenantId = req.query.get("tenantId", "default");
         auto path     = req.requestPath.to!string;
-        auto id       = FlagId(extractIdFromPath(path));
+        auto id       = FlagId(extractId(path));
         if (id.isNull) { writeError(res, 400, "Invalid flag ID"); return; }
 
         auto flag_ = useCase.getFlag(tenantId, id);

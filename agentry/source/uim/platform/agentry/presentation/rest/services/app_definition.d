@@ -29,7 +29,7 @@ struct AppDefinitionResponse {
     string tenantId;
     string id;
     string message;
-    int code;
+    ulong code;
     // string description;
 }
 

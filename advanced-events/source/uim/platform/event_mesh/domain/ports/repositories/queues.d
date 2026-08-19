@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IQueueRepository : ITenantRepository!(Queue, QueueId) {
+interface IQueueRepository : ITenantRepository!(EventQueue, QueueId) {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
-    Queue[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
+    EventQueue[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
     void removeByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
 
     size_t countByStatus(TenantId tenantId, QueueStatus status);
-    Queue[] findByStatus(TenantId tenantId, QueueStatus status);
+    EventQueue[] findByStatus(TenantId tenantId, QueueStatus status);
     void removeByStatus(TenantId tenantId, QueueStatus status);
 
 }

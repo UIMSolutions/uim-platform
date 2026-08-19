@@ -127,7 +127,7 @@ class ProcessInstanceController : ManageHttpController {
             return errorResponse("Invalid action path", 400);
         }
         auto sub = path[0 .. actionIdx];
-        auto id = extractIdFromPath(sub);
+        auto id = extractId(sub);
 
         auto data = precheck.data;
         ProcessInstanceActionRequest r;

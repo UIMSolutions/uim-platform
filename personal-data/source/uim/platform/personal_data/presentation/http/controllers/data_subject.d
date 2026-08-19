@@ -166,7 +166,7 @@ class DataSubjectController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 6]; // remove "/block"
-        auto id = DataSubjectId(extractIdFromPath(stripped));
+        auto id = DataSubjectId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid data subject ID", 400);
 
@@ -190,7 +190,7 @@ class DataSubjectController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 6]; // remove "/erase"
-        auto id = DataSubjectId(extractIdFromPath(stripped));
+        auto id = DataSubjectId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid data subject ID", 400);
 

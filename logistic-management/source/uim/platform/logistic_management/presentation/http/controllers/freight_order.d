@@ -89,7 +89,7 @@ protected:
 
   override Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = FreightOrderId(extractIdFromPath(req.requestPath.to!string));
+    auto id = FreightOrderId(extractId(req.requestPath.to!string));
     auto fo = _useCase.getFreightOrder(tenantId, id);
     if (fo.isNull)
       return errorResponse("Freight order not found", 404);
@@ -99,7 +99,7 @@ protected:
 
   override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = FreightOrderId(extractIdFromPath(req.requestPath.to!string));
+    auto id = FreightOrderId(extractId(req.requestPath.to!string));
     auto data = req.json;
     UpdateFreightOrderRequest dto;
     dto.description = data.getString("description");
@@ -122,7 +122,7 @@ protected:
 
   override Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
-    auto id = FreightOrderId(extractIdFromPath(req.requestPath.to!string));
+    auto id = FreightOrderId(extractId(req.requestPath.to!string));
     if (id.isNull)
       return errorResponse("Invalid freight order ID", 400);
       

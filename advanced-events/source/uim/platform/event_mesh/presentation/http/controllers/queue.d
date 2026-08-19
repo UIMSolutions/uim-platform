@@ -44,7 +44,7 @@ class QueueController : ManageHttpController {
             .set("count", items.length)
             .set("resources", list);
 
-        return successResponse("Queue list retrieved successfully", "Retrieved", 200, resp);
+        return successResponse("EventQueue list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -60,10 +60,10 @@ class QueueController : ManageHttpController {
         auto queue = usecase.getQueue(tenantId, id);
 
         if (queue.isNull)
-            return errorResponse("Queue not found", 404);
+            return errorResponse("EventQueue not found", 404);
 
         auto responseData = queue.toJson();
-        return successResponse("Queue retrieved successfully", "Retrieved", 200, responseData);
+        return successResponse("EventQueue retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -107,7 +107,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Queue created successfully", "Created", 201, resp);
+        return successResponse("EventQueue created successfully", "Created", 201, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -133,7 +133,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Queue updated successfully", "Updated", 200, resp);
+        return successResponse("EventQueue updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -152,9 +152,9 @@ class QueueController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("message", "Queue deleted");
+            .set("message", "EventQueue deleted");
 
-        return successResponse("Queue deleted successfully", "Deleted", 200, resp);
+        return successResponse("EventQueue deleted successfully", "Deleted", 200, resp);
     }
 }
 
@@ -178,7 +178,7 @@ unittest {
       // 3. Test Create Handler
       Json createData = Json.emptyObject
         .set("brokerServiceId", "broker-1")
-        .set("name", "Test Queue")
+        .set("name", "Test EventQueue")
         .set("description", "A test queue")
         .set("createdBy", "user-1");
 
@@ -193,11 +193,11 @@ unittest {
       reqGet.params["id"] = "queue-1";
       auto resGet = controller.getHandler(reqGet);
       assert(resGet.getString("status") != "error");
-      assert(resGet["data"]["name"].get!string == "Test Queue");
+      assert(resGet["data"]["name"].get!string == "Test EventQueue");
 
       // 5. Test Update Handler
       Json updateData = Json.emptyObject
-        .set("name", "Updated Queue")
+        .set("name", "Updated EventQueue")
         .set("updatedBy", "user-2");
       auto reqUpdate = createMockRequest("PUT", "/api/v1/event-mesh/queues/queue-1", tenantId, updateData);
       reqUpdate.params["id"] = "queue-1";
@@ -206,7 +206,7 @@ unittest {
 
       // Verify update
       auto resGet2 = controller.getHandler(reqGet);
-      assert(resGet2["data"]["name"].get!string == "Updated Queue");
+      assert(resGet2["data"]["name"].get!string == "Updated EventQueue");
 
       // 6. Test Delete Handler
       auto reqDelete = createMockRequest("DELETE", "/api/v1/event-mesh/queues/queue-1", tenantId);

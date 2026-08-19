@@ -43,7 +43,7 @@ class DataSourceConfigController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
+    auto item = usecase.getById(req.getTenantId, extractId(req.requestPath.to!string));
     if (itemisNull)
       return errorResponse("Scan job not found", 404);
 
@@ -87,7 +87,7 @@ class DataSourceConfigController : ManageHttpController {
     auto data = precheck.data;
     UpdateDataSourceConfigRequest r;
     r.tenantId = tenantId;
-    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.id = extractId(req.requestPath.to!string);
     r.qualityRank = data.getString("qualityRank");
     r.timestampFormat = data.getString("timestampFormat");
     r.timestampField = data.getString("timestampField");
@@ -106,7 +106,7 @@ class DataSourceConfigController : ManageHttpController {
     auto data = precheck.data;
     AddIdentifierMappingRequest r;
     r.tenantId = tenantId;
-    r.configId = extractIdFromPath(req.requestPath.to!string);
+    r.configId = extractId(req.requestPath.to!string);
     r.ruleId = data.getString("ruleId");
     r.ruleAttributeName = data.getString("ruleAttributeName");
     r.sourceAttributeName = data.getString("sourceAttributeName");

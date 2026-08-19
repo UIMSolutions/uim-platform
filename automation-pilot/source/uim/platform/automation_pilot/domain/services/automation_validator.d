@@ -16,7 +16,7 @@ struct AutomationValidator {
         return c.name.length > 0 && c.tenantId.value.length > 0;
     }
 
-    static bool isValidCommand(Command cmd) {
+    static bool isValidCommand(PilotCommand cmd) {
         return cmd.tenantId.value.length > 0 && cmd.catalogId.value.length > 0 && cmd.name.length > 0;
     }
 

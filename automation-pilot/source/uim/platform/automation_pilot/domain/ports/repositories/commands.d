@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ICommandRepository : ITenantRepository!(Command, CommandId) {
+interface ICommandRepository : ITenantRepository!(PilotCommand, CommandId) {
 
     size_t countByCatalog(TenantId tenantId, CatalogId catalogId);
-    Command[] findByCatalog(TenantId tenantId, CatalogId catalogId);
+    PilotCommand[] findByCatalog(TenantId tenantId, CatalogId catalogId);
     void removeByCatalog(TenantId tenantId, CatalogId catalogId);
 
     size_t countByStatus(TenantId tenantId, CommandStatus status);
-    Command[] findByStatus(TenantId tenantId, CommandStatus status);
+    PilotCommand[] findByStatus(TenantId tenantId, CommandStatus status);
     void removeByStatus(TenantId tenantId, CommandStatus status);
 
 }

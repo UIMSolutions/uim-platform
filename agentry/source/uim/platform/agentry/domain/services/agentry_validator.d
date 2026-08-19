@@ -27,7 +27,7 @@ class AgentryValidator {
             && !ver.definitionId.isNull;
     }
 
-    static bool isValidDevice(const Device device) {
+    static bool isValidDevice(const MobileDevice device) {
         return device.deviceName.length > 0
             && device.osVersion.length > 0
             && !device.mobileApplicationId.isNull;

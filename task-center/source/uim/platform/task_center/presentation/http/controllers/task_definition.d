@@ -140,7 +140,7 @@ class TaskDefinitionController : ManageHttpController {
 
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 9]; // remove "/activate"
-        auto id = TaskDefinitionId(extractIdFromPath(stripped));
+        auto id = TaskDefinitionId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid task definition ID", 400);
 
@@ -165,7 +165,7 @@ class TaskDefinitionController : ManageHttpController {
 
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-        auto id = TaskDefinitionId(extractIdFromPath(stripped));
+        auto id = TaskDefinitionId(extractId(stripped));
         if (id.isNull)
             return errorResponse("Invalid task definition ID", 400);
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-struct Device {
+struct MobileDevice {
     mixin TenantEntity!(DeviceId);
 
     MobileApplicationId mobileApplicationId;

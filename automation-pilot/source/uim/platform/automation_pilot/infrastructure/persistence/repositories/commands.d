@@ -11,18 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
-class CommandRepository : TenantRepository!(Command, CommandId), ICommandRepository {
+class CommandRepository : TenantRepository!(PilotCommand, CommandId), ICommandRepository {
 
     // #region ByCatalog
     size_t countByCatalog(TenantId tenantId, CatalogId catalogId) {
         return findByCatalog(tenantId, catalogId).length;
     }
 
-    Command[] findByCatalog(TenantId tenantId, CatalogId catalogId) {
+    PilotCommand[] findByCatalog(TenantId tenantId, CatalogId catalogId) {
         return filterByCatalog(findByTenant(tenantId), catalogId);
     }
 
-    Command[] filterByCatalog(Command[] commands, CatalogId catalogId) {
+    PilotCommand[] filterByCatalog(PilotCommand[] commands, CatalogId catalogId) {
         return commands.filter!(e => e.catalogId == catalogId).array;
     }
 
@@ -36,11 +36,11 @@ class CommandRepository : TenantRepository!(Command, CommandId), ICommandReposit
         return findByStatus(tenantId, status).length;
     }
 
-    Command[] findByStatus(TenantId tenantId, CommandStatus status) {
+    PilotCommand[] findByStatus(TenantId tenantId, CommandStatus status) {
         return filterByStatus(findByTenant(tenantId), status);
     }
 
-    Command[] filterByStatus(Command[] commands, CommandStatus status) {
+    PilotCommand[] filterByStatus(PilotCommand[] commands, CommandStatus status) {
         return commands.filter!(e => e.status == status).array;
     }
 

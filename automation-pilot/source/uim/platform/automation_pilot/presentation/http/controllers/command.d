@@ -42,7 +42,7 @@ class CommandController : ManageHttpController {
             .set("count", items.length)
             .set("resources", list);
 
-        return successResponse("Command list retrieved successfully", "Retrieved", 200, resp);
+        return successResponse("PilotCommand list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -72,7 +72,7 @@ class CommandController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Command created successfully", "Created", 201, responseData);
+        return successResponse("PilotCommand created successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -89,10 +89,10 @@ class CommandController : ManageHttpController {
 
         auto e = commands.getCommand(tenantId, id);
         if (e.isNull)
-            return errorResponse("Command not found", 404);
+            return errorResponse("PilotCommand not found", 404);
 
         auto responseData = e.toJson();
-        return successResponse("Command retrieved successfully", "Retrieved", 200, responseData);
+        return successResponse("PilotCommand retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -121,7 +121,7 @@ class CommandController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Command updated successfully", "Updated", 200, responseData);
+        return successResponse("PilotCommand updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -141,6 +141,6 @@ class CommandController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Command deleted successfully", "Deleted", 200, responseData);
+        return successResponse("PilotCommand deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -18,28 +18,28 @@ class ManageDevicesUseCase {
         this.repo = repo;
     }
 
-    Device getDevice(TenantId tenantId, DeviceId id) {
+    MobileDevice getDevice(TenantId tenantId, DeviceId id) {
         return repo.findById(tenantId, id);
     }
 
-    Device[] listDevices(TenantId tenantId) {
+    MobileDevice[] listDevices(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Device[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+    MobileDevice[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         return repo.findByMobileApplication(tenantId, appId);
     }
 
-    Device[] listByStatus(TenantId tenantId, DeviceStatus status) {
+    MobileDevice[] listByStatus(TenantId tenantId, DeviceStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    Device[] listByGroup(TenantId tenantId, string groupName) {
+    MobileDevice[] listByGroup(TenantId tenantId, string groupName) {
         return repo.findByGroup(tenantId, groupName);
     }
 
     UsecaseResult enrollDevice(DeviceDTO dto) {
-        auto device = Device(dto.tenantId, dto.deviceId, dto.createdBy);
+        auto device = MobileDevice(dto.tenantId, dto.deviceId, dto.createdBy);
         device.mobileApplicationId = dto.applicationId;
         device.deviceName = dto.deviceName;
         device.deviceModel = dto.deviceModel;
@@ -63,7 +63,7 @@ class ManageDevicesUseCase {
     UsecaseResult updateDevice(DeviceDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.deviceId);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Device not found");
+            return UsecaseResult(false, "", "MobileDevice not found");
 
         if (dto.appVersionInstalled.length > 0) existing.appVersionInstalled = dto.appVersionInstalled;
         if (dto.osVersion.length > 0) existing.osVersion = dto.osVersion;
@@ -78,7 +78,7 @@ class ManageDevicesUseCase {
     UsecaseResult removeDevice(TenantId tenantId, DeviceId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
-            return UsecaseResult(false, "", "Device not found");
+            return UsecaseResult(false, "", "MobileDevice not found");
 
         repo.remove(entity);
         return UsecaseResult(true, entity.id.value, "");

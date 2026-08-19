@@ -32,7 +32,7 @@ class WebSubscriptionController {
     }
 
     void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(res, view.renderDetails(model.get(tenantFromRequest(req), idFromRequest(req))));
+        writeHtml(res, view.renderDetails(model.get(tenantFromRequest(req), extractId(req))));
     }
 
     void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -41,10 +41,10 @@ class WebSubscriptionController {
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         writeHtml(        res,
-            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+            view.renderMutation(            model.update(tenantFromRequest(req), extractId(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(res, view.renderMutation(model.remove(tenantFromRequest(req), idFromRequest(req))));
+        writeHtml(res, view.renderMutation(model.remove(tenantFromRequest(req), extractId(req))));
     }
 }

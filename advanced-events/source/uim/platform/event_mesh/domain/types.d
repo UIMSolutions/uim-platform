@@ -11,7 +11,7 @@ struct BrokerServiceId {
     mixin(IdTemplate());
 }
 
-/// Strongly-typed identifier for a Queue aggregate root.
+/// Strongly-typed identifier for a EventQueue aggregate root.
 struct QueueId {
     mixin(IdTemplate);
 }

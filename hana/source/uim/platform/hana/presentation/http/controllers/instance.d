@@ -179,7 +179,7 @@ class InstanceController : ManageHttpController {
       return;
     }
     auto sub = path[0 .. actionIdx];
-    auto id = extractIdFromPath(sub);
+    auto id = extractId(sub);
 
     auto data = precheck.data;
     InstanceActionRequest r;

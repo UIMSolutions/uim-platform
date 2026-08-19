@@ -51,7 +51,7 @@ class DataProductController : ManageHttpController {
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id = extractIdFromPath(req.requestPath.to!string);
+    auto id = extractId(req.requestPath.to!string);
     auto item = usecase.getById(tenantId, id);
     if (item.isNull) {
       writeError(res, 404, "Data product not found");
