@@ -10,13 +10,90 @@ import uim.platform.data_privacy;
 mixin(ShowModule!());
 
 @safe:
-interface IManageInformationReportsUseCase { 
+class ManageInformationReportsUseCase {
+  private IInformationReportRepository repo;
+  private IDataSubjectRepository subjectRepo;
 
-  UsecaseResult createReport(CreateInformationReportRequest req);
-  InformationReport getReport(TenantId tenantId, InformationReportId reportId );
-  InformationReport[] listReports(TenantId tenantId);
-  InformationReport[] listReports(TenantId tenantId, DataSubjectId subjectId);
-  UsecaseResult updateReportStatus(UpdateInformationReportStatusRequest req);
-  UsecaseResult deleteReport(TenantId tenantId, InformationReportId reportId);
+  this(IInformationReportRepository repo, IDataSubjectRepository subjectRepo) {
+    this.repo = repo;
+    this.subjectRepo = subjectRepo;
+  }
 
+  UsecaseResult createReport(CreateInformationReportRequest req) {
+    if (req.tenantId.isNull)
+      return UsecaseResult(false, "", "Tenant ID is required");
+    if (req.dataSubjectId.isNull)
+      return UsecaseResult(false, "", "Data subject ID is required");
+
+    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    if (subject.isNull)
+      return UsecaseResult(false, "", "Data subject not found");
+
+    auto r = InformationReport(req.tenantId);
+    r.dataSubjectId = req.dataSubjectId;
+    r.subjectRole = subject.subjectType;
+    r.requestedBy = req.requestedBy;
+    r.status = InformationReportStatus.requested;
+    r.format = parseExportFormat(req.format);
+    r.targetSystems = req.targetSystems;
+    r.categories = req.categories;
+    r.reason = req.reason;
+    r.requestedAt = now;
+
+    repo.save(r);
+    return UsecaseResult(true, r.id, "");
+  }
+
+  InformationReport getReport(InformationReportId id, TenantId tenantId) {
+    return repo.findById(id, tenantId);
+  }
+
+  InformationReport[] listReports(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
+  InformationReport[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    return repo.findByDataSubject(tenantId, subjectId);
+  }
+
+  UsecaseResult updateStatus(UpdateInformationReportStatusRequest req) {
+    auto r = repo.findById(req.id, req.tenantId);
+    if (r.isNull)
+      return UsecaseResult(false, "", "Information report not found");
+
+    r.status = req.status;
+    if (req.downloadUrl.length > 0)
+      r.downloadUrl = req.downloadUrl;
+    if (req.totalRecords > 0)
+      r.totalRecords = req.totalRecords;
+    if (req.status == InformationReportStatus.completed) {
+      r.generatedAt = Clock.currStdTime();
+      r.expiresAt = r.generatedAt + 7 * 24 * 60 * 60 * 10_000_000L; // 7 days
+    }
+
+    repo.update(r);
+    return UsecaseResult(true, r.id, "");
+  }
+
+  UsecaseResult deleteReport(TenantId tenantId, InformationReportId id) {
+    auto entity = repo.findById(tenantId, id);
+    if (entity.isNull)
+      return UsecaseResult(false, "", "Information report not found");
+
+    repo.remove(entity);
+    return UsecaseResult(true, entity.id.value, "");
+  }
+
+  private ExportFormat parseExportFormat(string s) {
+    switch (s) {
+    case "json":
+      return ExportFormat.json;
+    case "xml":
+      return ExportFormat.xml;
+    case "csv":
+      return ExportFormat.csv;
+    default:
+      return ExportFormat.pdf;
+    }
+  }
 }

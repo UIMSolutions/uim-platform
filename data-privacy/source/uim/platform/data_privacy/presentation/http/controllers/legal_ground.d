@@ -107,10 +107,13 @@ class LegalGroundController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto data = precheck.data;
-    
+    auto id = LegalGroundId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Legal ground ID is required", 400);
+      
+    auto data = precheck.data;    
     UpdateLegalGroundRequest r;
-    r.id = LegalGroundId(precheck.id);
+    r.groundId = id;
     r.tenantId = tenantId;
     r.description = data.getString("description");
     r.legalReference = data.getString("legalReference");

@@ -12,7 +12,7 @@ import uim.platform.data_privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
+class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), IDataSubjectRepository {
 
   bool existsByExternalId(TenantId tenantId, string externalId) {
     return findByTenant(tenantId).any!(s => s.externalId == externalId);

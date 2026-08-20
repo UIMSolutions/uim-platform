@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying information reports.
-interface InformationReportRepository : ITenantRepository!(InformationReport, InformationReportId) {
+interface IInformationReportRepository : ITenantRepository!(InformationReport, InformationReportId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

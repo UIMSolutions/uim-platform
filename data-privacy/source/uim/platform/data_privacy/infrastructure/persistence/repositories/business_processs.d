@@ -12,7 +12,7 @@ import uim.platform.data_privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessProcessRepository : TenantRepository!(BusinessProcess, BusinessProcessId), BusinessProcessRepository {
+class BusinessProcessRepository : TenantRepository!(BusinessProcess, BusinessProcessId), IBusinessProcessRepository {
 
   size_t countByController(TenantId tenantId, DataControllerId controllerId) {
     return findByController(tenantId, controllerId).length;

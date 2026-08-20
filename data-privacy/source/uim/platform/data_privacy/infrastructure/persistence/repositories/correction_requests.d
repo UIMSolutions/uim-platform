@@ -12,7 +12,7 @@ import uim.platform.data_privacy;
 mixin(ShowModule!());
 
 @safe:
-class CorrectionRequestRepository : TenantRepository!(CorrectionRequest, CorrectionRequestId), CorrectionRequestRepository {
+class CorrectionRequestRepository : TenantRepository!(CorrectionRequest, CorrectionRequestId), ICorrectionRequestRepository {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     return findByDataSubject(tenantId, subjectId).length;

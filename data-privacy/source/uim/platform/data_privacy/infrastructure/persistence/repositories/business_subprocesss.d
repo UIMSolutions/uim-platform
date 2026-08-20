@@ -13,7 +13,7 @@ import uim.platform.data_privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessSubprocessRepository : TenantRepository!(BusinessSubprocess, BusinessSubprocessId), BusinessSubprocessRepository {
+class BusinessSubprocessRepository : TenantRepository!(BusinessSubprocess, BusinessSubprocessId), IBusinessSubprocessRepository {
 
   // size_t countByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
   //   return findByParentProcess(tenantId, parentId).length;
