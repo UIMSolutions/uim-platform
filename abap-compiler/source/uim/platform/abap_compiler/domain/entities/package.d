@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_compiler.domain.entities;
 
-public {
+public:
     import uim.platform.abap_compiler.domain.entities.abap_program;
     import uim.platform.abap_compiler.domain.entities.token;
     import uim.platform.abap_compiler.domain.entities.diagnostic;
     import uim.platform.abap_compiler.domain.entities.compilation_job;
-}

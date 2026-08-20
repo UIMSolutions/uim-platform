@@ -24,6 +24,7 @@ class JobController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/abap/jobs", &handleList);
         router.get("/api/v1/abap/jobs/*", &handleGet);
         router.delete_("/api/v1/abap/jobs/*", &handleDelete);

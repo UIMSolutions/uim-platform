@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.abap_compiler.domain.ports.repositories;
 
-public {
+public:
     import uim.platform.abap_compiler.domain.ports.repositories.programs;
     import uim.platform.abap_compiler.domain.ports.repositories.jobs;
-}
+
