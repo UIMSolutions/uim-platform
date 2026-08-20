@@ -51,7 +51,7 @@ class DocumentVersionController : ManageHttpController {
             .set("count", items.length)
             .set("resources", list);
 
-        return successResponse("Document version list retrieved successfully", "Retrieved", 200, responseData);
+        return successResponse("DmsDocument version list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -82,7 +82,7 @@ class DocumentVersionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Document version created successfully", "Created", 201, responseData);
+        return successResponse("DmsDocument version created successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -99,10 +99,10 @@ class DocumentVersionController : ManageHttpController {
 
         auto item = usecase.getDocumentVersion(tenantId, id);
         if (item.isNull)
-            return errorResponse("Document version not found", 404);
+            return errorResponse("DmsDocument version not found", 404);
 
         auto responseData = item.toJson();
-        return successResponse("Document version retrieved successfully", "Retrieved", 200, responseData);
+        return successResponse("DmsDocument version retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -120,6 +120,6 @@ class DocumentVersionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Document version deleted successfully", "Deleted", 200, responseData);
+        return successResponse("DmsDocument version deleted successfully", "Deleted", 200, responseData);
     }
 }

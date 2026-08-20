@@ -28,7 +28,7 @@ classDiagram
         +string path
         +Json toJson()
     }
-    class Document {
+    class DmsDocument {
         +DocumentId id
         +TenantId tenantId
         +RepositoryId repositoryId
@@ -81,13 +81,13 @@ classDiagram
     }
 
     DmsRepository "1" --> "0..*" DmsFolder : contains
-    DmsRepository "1" --> "0..*" Document : stores
+    DmsRepository "1" --> "0..*" DmsDocument : stores
     DmsFolder "1" --> "0..*" DmsFolder : nests
-    DmsFolder "1" --> "0..*" Document : organises
-    Document "1" --> "0..*" DocumentVersion : versions
+    DmsFolder "1" --> "0..*" DmsDocument : organises
+    DmsDocument "1" --> "0..*" DocumentVersion : versions
     Permission --> DmsRepository : on
     Permission --> DmsFolder : on
-    Permission --> Document : on
+    Permission --> DmsDocument : on
 ```
 
 ---
@@ -127,7 +127,7 @@ flowchart TB
 
 ---
 
-## Sequence Diagram — Upload Document and Share
+## Sequence Diagram — Upload DmsDocument and Share
 
 ```mermaid
 sequenceDiagram

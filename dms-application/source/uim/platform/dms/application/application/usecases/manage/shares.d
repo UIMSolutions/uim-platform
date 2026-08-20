@@ -28,11 +28,11 @@ class ManageSharesUseCase {
 
   UsecaseResult createShare(CreateShareRequest r) {
     if (r.documentId.isEmpty)
-      return UsecaseResult(false, "", "Document ID is required");
+      return UsecaseResult(false, "", "DmsDocument ID is required");
 
     auto doc = docs.findById(r.tenantId, r.documentId);
     if (doc.isNull)
-      return UsecaseResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "DmsDocument not found");
 
     auto entity = Share(r.tenantId); //, r.createdBy);
     entity.documentId = r.documentId;

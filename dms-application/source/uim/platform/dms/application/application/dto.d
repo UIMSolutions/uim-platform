@@ -55,7 +55,7 @@ struct MoveFolderRequest {
   TenantId tenantId;
   FolderId newParentFolderId;
 }
-// --- Document DTOs ---
+// --- DmsDocument DTOs ---
 
 struct CreateDocumentRequest {
   TenantId tenantId;

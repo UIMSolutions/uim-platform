@@ -107,7 +107,7 @@ unittest {
     assert(DocumentStatus.archived.toString == "archived"); 
 }
 
-/// Document lifecycle state.
+/// DmsDocument lifecycle state.
 enum LifecycleStatus : string{
     draft = "draft",
     published = "published",

@@ -21,7 +21,7 @@ struct EventsValidator {
         return c.name.length > 0 && !c.serviceId.isNull;
     }
 
-    static bool isValidQueue(const Queue q) {
+    static bool isValidQueue(const EventQueue q) {
         return q.name.length > 0 && !q.serviceId.isNull;
     }
 

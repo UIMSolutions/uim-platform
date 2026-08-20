@@ -38,9 +38,9 @@ Events
 │   ├── C1.2.1  Topic-based event channel management
 │   └── C1.2.2  Channel access control
 │
-├── C1.3  Queue Management
+├── C1.3  EventQueue Management
 │   ├── C1.3.1  Durable queue creation
-│   └── C1.3.2  Queue subscription bindings
+│   └── C1.3.2  EventQueue subscription bindings
 │
 ├── C1.4  Webhook Management
 │   └── C1.4.1  HTTP push webhook registration
@@ -49,7 +49,7 @@ Events
 │   └── C1.5.1  Client credentials and bindings
 │
 ├── C1.6  Message Bindings
-│   └── C1.6.1  Queue-to-channel binding rules
+│   └── C1.6.1  EventQueue-to-channel binding rules
 │
 └── C1.7  Cross-Cutting
     ├── C1.7.1  Tenant isolation
@@ -73,8 +73,8 @@ Events
 |---|---|---|---|
 | SVC-MS-CRUD | Messaging Service | `/api/v1/messaging-services` | GET, POST, DELETE |
 | SVC-CH-CRUD | Event Channel | `/api/v1/event-channels` | GET, POST, DELETE |
-| SVC-QUE-CRUD | Queue | `/api/v1/queues` | GET, POST, DELETE |
-| SVC-QS-CRUD | Queue Subscription | `/api/v1/queue-subscriptions` | GET, POST, DELETE |
+| SVC-QUE-CRUD | EventQueue | `/api/v1/queues` | GET, POST, DELETE |
+| SVC-QS-CRUD | EventQueue Subscription | `/api/v1/queue-subscriptions` | GET, POST, DELETE |
 | SVC-WH-CRUD | Webhook | `/api/v1/webhooks` | GET, POST, DELETE |
 | SVC-MB-CRUD | Message Binding | `/api/v1/message-bindings` | GET, POST, DELETE |
 | SVC-MC-CRUD | Message Client | `/api/v1/message-clients` | GET, POST, DELETE |
@@ -99,8 +99,8 @@ Events
 |---|---|
 | `MessagingService` | Root; parent of EventChannels |
 | `EventChannel` | Topic-based pub/sub channel |
-| `Queue` | Durable message store |
-| `QueueSubscription` | Binds Queue to EventChannel |
+| `EventQueue` | Durable message store |
+| `QueueSubscription` | Binds EventQueue to EventChannel |
 | `Webhook` | HTTP push delivery target |
 | `MessageBinding` | Routing rule binding |
 | `MessageClient` | Consumer/producer credential |

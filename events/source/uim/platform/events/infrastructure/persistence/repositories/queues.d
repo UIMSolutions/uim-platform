@@ -11,17 +11,17 @@ mixin(ShowModule!());
 
 @safe:
 
-class QueueRepository : TenantRepository!(Queue, QueueId), IQueueRepository {
+class QueueRepository : TenantRepository!(EventQueue, QueueId), IQueueRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {
         return findByService(tenantId, serviceId).length;
     }
 
-    Queue[] findByService(TenantId tenantId, MessagingServiceId serviceId) {
+    EventQueue[] findByService(TenantId tenantId, MessagingServiceId serviceId) {
         return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
     }
 
-    Queue[] findByStatus(TenantId tenantId, QueueStatus status) {
+    EventQueue[] findByStatus(TenantId tenantId, QueueStatus status) {
         return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 

@@ -6,7 +6,6 @@
 module uim.platform.identity_directory.presentation.http.controllers.user;
 
 // import uim.platform.identity_directory.application.usecases.manage.users;
-
 // import uim.platform.identity_directory.domain.entities.user;
 import uim.platform.identity_directory;
 
@@ -165,7 +164,6 @@ class UserController : ManageHttpController {
     auto result = useCase.changePassword(tenantId, id,
       data.getString("currentPassword"), data.getString("newPassword"));
     if (result.hasError)
-    
       return errorResponse(result.message, result.code);
       // return scimErrorResponse(result.message, result.code);
 
@@ -199,34 +197,13 @@ class UserController : ManageHttpController {
 }
 
 private Email[] parseEmails(Json j) {
-  Email[] result;
-  if (!j.isObject)
-    return null;
-
-  if ("emails" !in j)
-    return null;
-
-  auto value = j["emails"];
-  if (!value.isArray)
-    return result;
-
-  return value.toArray.map!(item => Email(item.getString("value"), item.getString(  "type"), getBoolean(item, "primary"))).array;
+  return j.getArray("emails").map!(item => Email(item.getString("value"), item.getString("type"), getBoolean(item, "primary"))).array;
 }
 
 private PhoneNumber[] parsePhoneNumbers(Json j) {
-  PhoneNumber[] result;
-  if (!j.isObject)
-    return null;
-
-  if ("phoneNumbers" !in j)
-    return null;
-
-  auto value = j["phoneNumbers"];
-  if (!value.isArray)
-    return result;
-
-  return value.toArray.map!(item => PhoneNumber(item.getString("value"), item.getString(  "type"),
-      item.getBoolean("primary"))).array;
+  return j.getArray("phoneNumbers")
+    .map!(item => PhoneNumber(item.getString("value"), item.getString("type"),
+    item.getBoolean("primary"))).array;
 }
 
 protected Json scimErrorResponse(string detail, int status) {

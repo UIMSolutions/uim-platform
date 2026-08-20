@@ -5,6 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.dms_integration.domain.services;
 
-public {
+public:
     import uim.platform.dms_integration.domain.services.dms_validator;
-}
+

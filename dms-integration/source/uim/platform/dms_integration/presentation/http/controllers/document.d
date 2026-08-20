@@ -34,7 +34,7 @@ class DocumentController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        Document[] items;
+        DmsDocument[] items;
         auto search = req.query.get("search", "");
         auto folderId = req.query.get("folderId", "");
         auto status = req.query.get("status", "");
@@ -53,7 +53,7 @@ class DocumentController : ManageHttpController {
             .set("count", items.length)
             .set("resources", list);
 
-        return successResponse("Document list retrieved successfully", "Retrieved", 200, resp);
+        return successResponse("DmsDocument list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -93,7 +93,7 @@ class DocumentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Document created successfully", "Created", 201, responseData);
+        return successResponse("DmsDocument created successfully", "Created", 201, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -108,10 +108,10 @@ class DocumentController : ManageHttpController {
 
         auto item = usecase.getDocument(tenantId, id);
         if (item.isNull)
-            return errorResponse("Document not found", 404);
+            return errorResponse("DmsDocument not found", 404);
 
         auto responseData = item.toJson();
-        return successResponse("Document retrieved successfully", "Retrieved", 200, responseData);
+        return successResponse("DmsDocument retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -133,7 +133,7 @@ class DocumentController : ManageHttpController {
                 return errorResponse(result.message, 400);
 
             auto responseData = Json.emptyObject.set("id", result.id);
-            return successResponse("Document checked out successfully", "CheckedOut", 200, responseData);
+            return successResponse("DmsDocument checked out successfully", "CheckedOut", 200, responseData);
             // TODO: Revisit force checkout action - may not be needed if we have proper checkout cancellation and admin override mechanisms in place   
             // case "forceCheckout":
             //     auto result = usecase.forceCheckoutDocument(tenantId, id, userId);
@@ -141,7 +141,7 @@ class DocumentController : ManageHttpController {
             //         return errorResponse(result.message, 400);
 
             //     auto responseData = Json.emptyObject.set("id", result.id);
-            //     return successResponse("Document force checked out successfully", "ForceCheckedOut", 200, responseData);
+            //     return successResponse("DmsDocument force checked out successfully", "ForceCheckedOut", 200, responseData);
         case "checkin":
             auto isMajor = data.getBoolean("isMajorVersion");
             auto comment = data.getString("comment");
@@ -150,14 +150,14 @@ class DocumentController : ManageHttpController {
                 return errorResponse(result.message, 400);
 
             auto responseData = Json.emptyObject.set("id", result.id);
-            return successResponse("Document checked in successfully", "CheckedIn", 200, responseData);
+            return successResponse("DmsDocument checked in successfully", "CheckedIn", 200, responseData);
         case "cancelCheckout":
             auto result = usecase.cancelCheckout(tenantId, id, userId);
             if (result.hasError)
                 return errorResponse(result.message, 400);
 
             auto responseData = Json.emptyObject.set("id", result.id);
-            return successResponse("Document checkout cancelled successfully", "CheckoutCancelled", 200, responseData);
+            return successResponse("DmsDocument checkout cancelled successfully", "CheckoutCancelled", 200, responseData);
         case "move":
             auto targetFolderId = FolderId(data.getString("targetFolderId"));
             auto result = usecase.moveDocument(tenantId, id, targetFolderId, userId);
@@ -165,21 +165,21 @@ class DocumentController : ManageHttpController {
                 return errorResponse(result.message, 400);
 
             auto responseData = Json.emptyObject.set("id", result.id);
-            return successResponse("Document moved successfully", "Moved", 200, responseData);
+            return successResponse("DmsDocument moved successfully", "Moved", 200, responseData);
         case "publish":
             auto result = usecase.publishDocument(tenantId, id);
             if (result.hasError)
                 return errorResponse(result.message, 400);
 
             auto responseData = Json.emptyObject.set("id", result.id);
-            return successResponse("Document published successfully", "Published", 200, responseData);
+            return successResponse("DmsDocument published successfully", "Published", 200, responseData);
         case "archive":
             auto result = usecase.archiveDocument(tenantId, id);
             if (result.hasError)
                 return errorResponse(result.message, 400);
 
             auto responseData = Json.emptyObject.set("id", result.id);
-            return successResponse("Document archived successfully", "Archived", 200, responseData);
+            return successResponse("DmsDocument archived successfully", "Archived", 200, responseData);
         case "updateMetadata":
             break; // TODO: Implement update metadata action    
         case "updateContent":
@@ -205,7 +205,7 @@ class DocumentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Document updated successfully", "Updated", 200, responseData);
+        return successResponse("DmsDocument updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -223,6 +223,6 @@ class DocumentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Document deleted successfully", "Deleted", 200, responseData);
+        return successResponse("DmsDocument deleted successfully", "Deleted", 200, responseData);
     }
 }

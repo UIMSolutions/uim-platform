@@ -62,7 +62,7 @@ class DocumentController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Document created successfully", 201, responseData);
+    return successResponse("DmsDocument created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -122,9 +122,9 @@ class DocumentController : ManageHttpController {
 
     auto doc = usecase.getDocument(tenantId, id);
     if (doc.isNull)
-      return errorResponse("Document not found", 404);
+      return errorResponse("DmsDocument not found", 404);
 
-    return successResponse("Document retrieved successfully", 200, doc.toJson);
+    return successResponse("DmsDocument retrieved successfully", 200, doc.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -151,7 +151,7 @@ class DocumentController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Document updated successfully", 200, responseData);
+    return successResponse("DmsDocument updated successfully", 200, responseData);
   }
 
   protected Json moveHandler(HTTPServerRequest req) {
@@ -173,7 +173,7 @@ class DocumentController : ManageHttpController {
         return errorResponse(result.message, 400);
 
       auto responseData = Json.emptyObject.set("id", result.id);
-      return successResponse("Document moved successfully", 200, responseData);
+      return successResponse("DmsDocument moved successfully", 200, responseData);
     }
 
     mixin(HandleTemplate!("handleMove", "moveHandler"));
@@ -194,7 +194,7 @@ class DocumentController : ManageHttpController {
 
       auto responseData = Json.emptyObject
         .set("id", result.id);
-      return successResponse("Document archived successfully", "Archived", 200, responseData);
+      return successResponse("DmsDocument archived successfully", "Archived", 200, responseData);
     }
 
     mixin(HandleTemplate!("handleArchive", "archiveHandler"));
@@ -212,6 +212,6 @@ class DocumentController : ManageHttpController {
         return errorResponse(result.message, 400);
 
       auto responseData = Json.emptyObject.set("id", result.id);
-      return successResponse("Document deleted successfully", 200, responseData);
+      return successResponse("DmsDocument deleted successfully", 200, responseData);
     }
   }

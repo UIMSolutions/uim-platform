@@ -154,10 +154,10 @@ class ManageCertificatesUseCase {
     return repo.findExpiring(tenantId, beforeTimestamp);
   }
 
-  ValidationResult validateCertificate(TenantId tenantId, CertificateId id) {
+  CertificateValidationResult validateCertificate(TenantId tenantId, CertificateId id) {
     auto certificate = repo.findById(tenantId, id);
     if (certificate.isNull)
-      return ValidationResult(false, CertificateStatus.invalid_, "Certificate not found", 0);
+      return CertificateValidationResult(false, CertificateStatus.invalid_, "Certificate not found", 0);
 
     return CertificateValidator.validate(certificate);
   }

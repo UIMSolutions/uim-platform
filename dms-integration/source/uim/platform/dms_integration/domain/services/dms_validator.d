@@ -17,7 +17,7 @@ struct DmsValidator {
         return repo.name.length > 0;
     }
 
-    static bool isValidDocument(const ref Document doc) {
+    static bool isValidDocument(const ref DmsDocument doc) {
         return doc.name.length > 0 && !doc.repositoryId.isEmpty;
     }
 

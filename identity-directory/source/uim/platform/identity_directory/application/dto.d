@@ -7,7 +7,7 @@ module uim.platform.identity_directory.application.dto;
 
 // import uim.platform.identity_directory.domain.types;
 // import uim.platform.identity_directory.domain.entities.user : UserName, Email,
-//   PhoneNumber, Address, ExtendedAttribute;
+//   PhoneNumber, IdmAddress, ExtendedAttribute;
 // import uim.platform.identity_directory.domain.entities.group : GroupMember;
 // import uim.platform.identity_directory.domain.entities.schema : SchemaAttribute;
 import uim.platform.identity_directory;
@@ -32,7 +32,7 @@ struct CreateUserRequest {
   string password;
   Email[] emails;
   PhoneNumber[] phoneNumbers;
-  Address[] addresses;
+  IdmAddress[] addresses;
   ExtendedAttribute[] extendedAttributes;
   string[] schemas;
 }
@@ -50,7 +50,7 @@ struct UpdateUserRequest {
   bool active;
   Email[] emails;
   PhoneNumber[] phoneNumbers;
-  Address[] addresses;
+  IdmAddress[] addresses;
   ExtendedAttribute[] extendedAttributes;
 }
 

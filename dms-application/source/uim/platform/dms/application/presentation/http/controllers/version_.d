@@ -51,7 +51,7 @@ class VersionController : ManageHttpController {
       .set("documentId", docId.value)
       .set("status", Json("locked"));
 
-    return successResponse("Document checked out successfully", "CheckedOut", 200, resp);
+    return successResponse("DmsDocument checked out successfully", "CheckedOut", 200, resp);
   }
 
   mixin(HandleTemplate!("handleCheckOut", "checkOutHandler"));
@@ -83,7 +83,7 @@ class VersionController : ManageHttpController {
       .set("documentId", r.documentId.value)
       .set("status", Json("active"));
 
-    return successResponse("Document checked in successfully", "CheckedIn", 201, resp);
+    return successResponse("DmsDocument checked in successfully", "CheckedIn", 201, resp);
   }
 
   mixin(HandleTemplate!("handleCheckIn", "checkInHandler"));
@@ -104,7 +104,7 @@ class VersionController : ManageHttpController {
       .set("documentId", docId.value)
       .set("status", Json("active"));
 
-    return successResponse("Document checkout cancelled successfully", "Cancelled", 200, resp);
+    return successResponse("DmsDocument checkout cancelled successfully", "Cancelled", 200, resp);
   }
 
   mixin(HandleTemplate!("handleCancelCheckOut", "cancelCheckOutHandler"));
@@ -125,7 +125,7 @@ class VersionController : ManageHttpController {
       .set("items", versions)
       .set("totalCount", versions.length);
 
-    return successResponse("Document versions retrieved successfully", "Retrieved", 200, resp);
+    return successResponse("DmsDocument versions retrieved successfully", "Retrieved", 200, resp);
   }
 
   mixin(HandleTemplate!("handleAllVersions", "allVersionsHandler"));
@@ -140,7 +140,7 @@ class VersionController : ManageHttpController {
 
     auto ver = usecase.getCurrentVersion(tenantId, id);
     if (ver.isNull)
-      return errorResponse("Document not found", 404);
+      return errorResponse("DmsDocument not found", 404);
 
     return successResponse("Current document version retrieved successfully", "Retrieved", 200, ver
         .toJson);

@@ -13,13 +13,13 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRepository {
+class DocumentRepository : TenantRepository!(DmsDocument, DocumentId), IDocumentRepository {
 
   size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
     return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).count;
   }
 
-  Document[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
+  DmsDocument[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
     return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
   }
 
@@ -31,7 +31,7 @@ class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRep
     return findByFolder(tenantId, folderId).count;
   }
 
-  Document[] findByFolder(TenantId tenantId, FolderId folderId) {
+  DmsDocument[] findByFolder(TenantId tenantId, FolderId folderId) {
     return findByFolder(tenantId, folderId).array;
   }
 
@@ -43,7 +43,7 @@ class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRep
     return findByStatus(tenantId, status).count;
   }
 
-  Document[] findByStatus(TenantId tenantId, DocumentStatus status) {
+  DmsDocument[] findByStatus(TenantId tenantId, DocumentStatus status) {
     return findByStatus(tenantId, status).array;
   }
 
@@ -55,7 +55,7 @@ class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRep
     return findByName(tenantId, name).count;
   }
 
-  Document[] findByName(TenantId tenantId, string name) {
+  DmsDocument[] findByName(TenantId tenantId, string name) {
     auto lowerName = name.toLower();
     return findByTenant(tenantId).filter!(e => e.name.toLower().canFind(lowerName)).array;
   }

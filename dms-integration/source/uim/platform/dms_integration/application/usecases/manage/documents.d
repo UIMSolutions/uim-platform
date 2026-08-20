@@ -18,36 +18,36 @@ class ManageDocumentsUseCase {
         this.repo = repo;
     }
 
-    Document getDocument(TenantId tenantId, DocumentId id) {
+    DmsDocument getDocument(TenantId tenantId, DocumentId id) {
         return repo.findById(tenantId, id);
     }
 
-    Document[] listDocuments(TenantId tenantId) {
+    DmsDocument[] listDocuments(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Document[] listDocumentsByRepository(TenantId tenantId, RepositoryId repositoryId) {
+    DmsDocument[] listDocumentsByRepository(TenantId tenantId, RepositoryId repositoryId) {
         return repo.findByRepository(tenantId, repositoryId);
     }
 
-    Document[] listDocumentsByFolder(TenantId tenantId, FolderId folderId) {
+    DmsDocument[] listDocumentsByFolder(TenantId tenantId, FolderId folderId) {
         return repo.findByFolder(tenantId, folderId);
     }
 
-    Document[] listDocumentsByStatus(TenantId tenantId, DocumentStatus status) {
+    DmsDocument[] listDocumentsByStatus(TenantId tenantId, DocumentStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    Document[] listCheckedOutDocuments(TenantId tenantId) {
+    DmsDocument[] listCheckedOutDocuments(TenantId tenantId) {
         return repo.findCheckedOut(tenantId);
     }
 
-    Document[] searchDocumentsByName(TenantId tenantId, string searchTerm) {
+    DmsDocument[] searchDocumentsByName(TenantId tenantId, string searchTerm) {
         return repo.searchByName(tenantId, searchTerm);
     }
 
     UsecaseResult createDocument(DocumentDTO dto) {
-        Document doc;
+        DmsDocument doc;
         doc.id = dto.documentId;
         doc.tenantId = dto.tenantId;
         doc.repositoryId = dto.repositoryId;
@@ -83,10 +83,10 @@ class ManageDocumentsUseCase {
     UsecaseResult updateDocument(DocumentDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.documentId);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "DmsDocument not found");
         if (existing.checkoutStatus == CheckoutStatus.checkedOut &&
             existing.checkedOutBy != dto.updatedBy)
-            return UsecaseResult(false, "", "Document is checked out by another user");
+            return UsecaseResult(false, "", "DmsDocument is checked out by another user");
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.tags.length > 0) existing.tags = dto.tags;
@@ -102,9 +102,9 @@ class ManageDocumentsUseCase {
     UsecaseResult checkoutDocument(TenantId tenantId, DocumentId id, UserId userId) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "DmsDocument not found");
         if (existing.checkoutStatus == CheckoutStatus.checkedOut)
-            return UsecaseResult(false, "", "Document is already checked out");
+            return UsecaseResult(false, "", "DmsDocument is already checked out");
         existing.checkoutStatus = CheckoutStatus.checkedOut;
         existing.checkedOutBy = userId;
         
@@ -118,11 +118,11 @@ class ManageDocumentsUseCase {
     UsecaseResult checkinDocument(TenantId tenantId, DocumentId id, UserId userId, bool isMajor, string comment) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "DmsDocument not found");
         if (existing.checkoutStatus != CheckoutStatus.checkedOut)
-            return UsecaseResult(false, "", "Document is not checked out");
+            return UsecaseResult(false, "", "DmsDocument is not checked out");
         if (existing.checkedOutBy != userId)
-            return UsecaseResult(false, "", "Document is checked out by another user");
+            return UsecaseResult(false, "", "DmsDocument is checked out by another user");
         existing.checkoutStatus = CheckoutStatus.available;
         existing.versioningState = isMajor ? VersioningState.major : VersioningState.minor;
         existing.checkedOutBy = UserId("");
@@ -135,9 +135,9 @@ class ManageDocumentsUseCase {
     UsecaseResult cancelCheckout(TenantId tenantId, DocumentId id, UserId userId) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "DmsDocument not found");
         if (existing.checkoutStatus != CheckoutStatus.checkedOut)
-            return UsecaseResult(false, "", "Document is not checked out");
+            return UsecaseResult(false, "", "DmsDocument is not checked out");
         existing.checkoutStatus = CheckoutStatus.available;
         existing.versioningState = VersioningState.none;
         existing.checkedOutBy = UserId("");
@@ -149,7 +149,7 @@ class ManageDocumentsUseCase {
     UsecaseResult moveDocument(TenantId tenantId, DocumentId id, FolderId targetFolderId, UserId userId) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "DmsDocument not found");
         existing.folderId = targetFolderId;
         if (!userId.isEmpty) existing.updatedBy = userId;
         repo.update(existing);
@@ -159,7 +159,7 @@ class ManageDocumentsUseCase {
     UsecaseResult publishDocument(TenantId tenantId, DocumentId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "DmsDocument not found");
         existing.documentStatus = DocumentStatus.active;
         existing.lifecycleStatus = LifecycleStatus.published;
         repo.update(existing);
@@ -169,7 +169,7 @@ class ManageDocumentsUseCase {
     UsecaseResult archiveDocument(TenantId tenantId, DocumentId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "DmsDocument not found");
         existing.documentStatus = DocumentStatus.archived;
         existing.lifecycleStatus = LifecycleStatus.archived_;
         repo.update(existing);
@@ -179,7 +179,7 @@ class ManageDocumentsUseCase {
     UsecaseResult deleteDocument(TenantId tenantId, DocumentId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document not found");
+            return UsecaseResult(false, "", "DmsDocument not found");
         if (existing.checkoutStatus == CheckoutStatus.checkedOut)
             return UsecaseResult(false, "", "Cannot delete a checked out document");
         repo.remove(existing);
@@ -197,7 +197,7 @@ unittest {
 //     DocumentDTO createDto;
 //     createDto.tenantId = tenantId;
 //     createDto.documentId = DocumentId("document-1");
-//     createDto.name = "Test Document";
+//     createDto.name = "Test DmsDocument";
 //     auto createResult = usecase.createDocument(createDto);
 //     assert(createResult.success, createResult.message);
 // 
@@ -213,7 +213,7 @@ unittest {
 //     DocumentDTO updateDto;
 //     updateDto.tenantId = tenantId;
 //     updateDto.documentId = DocumentId("document-1");
-//     updateDto.name = "Updated Document";
+//     updateDto.name = "Updated DmsDocument";
 //     auto updateResult = usecase.updateDocument(updateDto);
 //     assert(updateResult.success, updateResult.message);
 // 

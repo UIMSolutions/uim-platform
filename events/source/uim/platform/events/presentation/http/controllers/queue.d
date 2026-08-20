@@ -38,8 +38,8 @@ class QueueController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson).array.toJson)
-            .set("message", "Queue list retrieved successfully");
-        return successResponse("Queue list retrieved successfully", "Retrieved", 200, responseData);
+            .set("message", "EventQueue list retrieved successfully");
+        return successResponse("EventQueue list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -51,12 +51,12 @@ class QueueController : ManageHttpController {
         auto id = precheck.id;
         auto e = usecase.getQueue(tenantId, QueueId(id));
         if (e.isNull) {
-            return errorResponse("Queue not found", 404);
+            return errorResponse("EventQueue not found", 404);
         }
         auto responseData = Json.emptyObject
-            .set("message", "Queue retrieved successfully")
+            .set("message", "EventQueue retrieved successfully")
             .set("resource", e.toJson);
-        return successResponse("Queue retrieved successfully", "Retrieved", 200, responseData);
+        return successResponse("EventQueue retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -90,7 +90,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Queue created successfully", 201, responseData);
+        return successResponse("EventQueue created successfully", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -116,7 +116,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Queue updated successfully", 200, responseData);
+        return successResponse("EventQueue updated successfully", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -134,6 +134,6 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Queue deleted successfully", 200, responseData);
+        return successResponse("EventQueue deleted successfully", 200, responseData);
     }
 }

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-struct Queue {
+struct EventQueue {
     mixin TenantEntity!QueueId;
 
     MessagingServiceId serviceId;

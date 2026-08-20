@@ -16,12 +16,12 @@ class ManageQueuesUseCase {
 
     this(IQueueRepository repo) { this.repo = repo; }
 
-    Queue getQueue(TenantId tenantId, QueueId id) { return repo.findById(tenantId, id); }
-    Queue[] listQueues(TenantId tenantId) { return repo.findByTenant(tenantId); }
-    Queue[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
+    EventQueue getQueue(TenantId tenantId, QueueId id) { return repo.findById(tenantId, id); }
+    EventQueue[] listQueues(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    EventQueue[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 
     UsecaseResult createQueue(QueueDTO dto) {
-        Queue q;
+        EventQueue q;
         q.id = dto.queueId;
         q.tenantId = dto.tenantId;
         q.serviceId = dto.serviceId;
@@ -47,7 +47,7 @@ class ManageQueuesUseCase {
 
     UsecaseResult updateQueue(QueueDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.queueId);
-        if (existing.isNull) return UsecaseResult(false, "", "Queue not found");
+        if (existing.isNull) return UsecaseResult(false, "", "EventQueue not found");
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.maxMessageSizeBytes.length > 0) existing.maxMessageSizeBytes = dto.maxMessageSizeBytes;
         if (dto.maxQueueSizeBytes.length > 0) existing.maxQueueSizeBytes = dto.maxQueueSizeBytes;
@@ -61,7 +61,7 @@ class ManageQueuesUseCase {
 
     UsecaseResult deleteQueue(TenantId tenantId, QueueId id) {
         auto q = repo.findById(tenantId, id);
-        if (q.isNull) return UsecaseResult(false, "", "Queue not found");
+        if (q.isNull) return UsecaseResult(false, "", "EventQueue not found");
         repo.remove(q);
         return UsecaseResult(true, q.id.value, "");
     }
@@ -77,7 +77,7 @@ unittest {
     QueueDTO createDto;
     createDto.tenantId = tenantId;
     createDto.queueId = QueueId("queue-1");
-    createDto.name = "Test Queue";
+    createDto.name = "Test EventQueue";
     auto createResult = usecase.createQueue(createDto);
     assert(createResult.success, createResult.message);
 
@@ -93,7 +93,7 @@ unittest {
     QueueDTO updateDto;
     updateDto.tenantId = tenantId;
     updateDto.queueId = QueueId("queue-1");
-    updateDto.name = "Updated Queue";
+    updateDto.name = "Updated EventQueue";
     auto updateResult = usecase.updateQueue(updateDto);
     assert(updateResult.success, updateResult.message);
 

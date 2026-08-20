@@ -10,20 +10,20 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-interface IDocumentRepository : ITenantRepository!(Document, DocumentId) {
+interface IDocumentRepository : ITenantRepository!(DmsDocument, DocumentId) {
   size_t countByRepository(TenantId tenantId, RepositoryId repositoryId);
-  Document[] findByRepository(TenantId tenantId, RepositoryId repositoryId);
+  DmsDocument[] findByRepository(TenantId tenantId, RepositoryId repositoryId);
   void removeByRepository(TenantId tenantId, RepositoryId repositoryId);
   
   size_t countByFolder(TenantId tenantId, FolderId folderId);
-  Document[] findByFolder(TenantId tenantId, FolderId folderId);
+  DmsDocument[] findByFolder(TenantId tenantId, FolderId folderId);
   void removeByFolder(TenantId tenantId, FolderId folderId);
 
   size_t countByStatus(TenantId tenantId, DocumentStatus status);
-  Document[] findByStatus(TenantId tenantId, DocumentStatus status);
+  DmsDocument[] findByStatus(TenantId tenantId, DocumentStatus status);
   void removeByStatus(TenantId tenantId, DocumentStatus status);
 
   size_t countByName(TenantId tenantId, string name);
-  Document[] findByName(TenantId tenantId, string name);
+  DmsDocument[] findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 }

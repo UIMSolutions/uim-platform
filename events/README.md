@@ -16,7 +16,7 @@ A microservice modelling the **SAP Event Mesh** (formerly SAP Enterprise Messagi
 | **Messaging Services** | Service instances with dedicated namespaces for event routing |
 | **Message Clients** | OAuth2-based client applications with protocol bindings (AMQP, MQTT, REST) |
 | **Queues** | Durable message queues with configurable size, TTL, and dead-letter routing |
-| **Queue Subscriptions** | Topic-pattern-based subscriptions that route events into queues |
+| **EventQueue Subscriptions** | Topic-pattern-based subscriptions that route events into queues |
 | **Webhooks** | HTTP push delivery endpoints with OAuth2 / Basic / API-key auth |
 | **Event Channels** | Named publish-subscribe channels with AsyncAPI definition support |
 | **Message Bindings** | Bindings between message clients and queues/channels with permission scopes |

@@ -215,7 +215,7 @@ IDS_HOST=127.0.0.1 IDS_PORT=9090 ./build/uim-identity-directory-platform-service
 | **UserName** | formatted, familyName, givenName, middleName, honorificPrefix, honorificSuffix |
 | **Email** | value, type (work/home/other), primary |
 | **PhoneNumber** | value, type (work/mobile/fax/other), primary |
-| **Address** | formatted, streetAddress, locality, region, postalCode, country, type, primary |
+| **IdmAddress** | formatted, streetAddress, locality, region, postalCode, country, type, primary |
 | **ExtendedAttribute** | schemaId, attributeName, value |
 | **GroupMember** | value (user/group ID), type ("User"/"Group"), display |
 | **SchemaAttribute** | id, name, description, type, multiValued, required, mutability, returned, uniqueness, canonicalValues, referenceTypes |

@@ -5,10 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.dms_integration;
 
-public {
+public:
     import uim.platform.service;
+    
     import uim.platform.dms_integration.domain;
     import uim.platform.dms_integration.application;
     import uim.platform.dms_integration.infrastructure;
     import uim.platform.dms_integration.presentation;
-}
+

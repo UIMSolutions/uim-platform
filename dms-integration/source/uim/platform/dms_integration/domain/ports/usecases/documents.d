@@ -13,19 +13,19 @@ mixin(ShowModule!());
 
 interface IManageDocumentsUseCase {
 
-    Document getDocument(TenantId tenantId, DocumentId id);
+    DmsDocument getDocument(TenantId tenantId, DocumentId id);
 
-    Document[] listDocuments(TenantId tenantId);
+    DmsDocument[] listDocuments(TenantId tenantId);
 
-    Document[] listDocumentsByRepository(TenantId tenantId, RepositoryId repositoryId);
+    DmsDocument[] listDocumentsByRepository(TenantId tenantId, RepositoryId repositoryId);
 
-    Document[] listDocumentsByFolder(TenantId tenantId, FolderId folderId);
+    DmsDocument[] listDocumentsByFolder(TenantId tenantId, FolderId folderId);
 
-    Document[] listDocumentsByStatus(TenantId tenantId, DocumentStatus status);
+    DmsDocument[] listDocumentsByStatus(TenantId tenantId, DocumentStatus status);
 
-    Document[] listCheckedOutDocuments(TenantId tenantId);
+    DmsDocument[] listCheckedOutDocuments(TenantId tenantId);
 
-    Document[] searchDocumentsByName(TenantId tenantId, string searchTerm);
+    DmsDocument[] searchDocumentsByName(TenantId tenantId, string searchTerm);
 
     UsecaseResult createDocument(DocumentDTO dto);
 

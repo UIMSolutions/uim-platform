@@ -11,21 +11,21 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IDocumentRepository : ITenantRepository!(Document, DocumentId) {
+interface IDocumentRepository : ITenantRepository!(DmsDocument, DocumentId) {
 
     size_t countByRepository(TenantId tenantId, RepositoryId repositoryId);
-    Document[] findByRepository(TenantId tenantId, RepositoryId repositoryId);
+    DmsDocument[] findByRepository(TenantId tenantId, RepositoryId repositoryId);
     void removeByRepository(TenantId tenantId, RepositoryId repositoryId);
 
     size_t countByFolder(TenantId tenantId, FolderId folderId);
-    Document[] findByFolder(TenantId tenantId, FolderId folderId);
+    DmsDocument[] findByFolder(TenantId tenantId, FolderId folderId);
     void removeByFolder(TenantId tenantId, FolderId folderId);
 
     size_t countByStatus(TenantId tenantId, DocumentStatus status);
-    Document[] findByStatus(TenantId tenantId, DocumentStatus status);
+    DmsDocument[] findByStatus(TenantId tenantId, DocumentStatus status);
 
-    Document[] findCheckedOut(TenantId tenantId);
-    Document[] findCheckedOutBy(TenantId tenantId, UserId userId);
+    DmsDocument[] findCheckedOut(TenantId tenantId);
+    DmsDocument[] findCheckedOutBy(TenantId tenantId, UserId userId);
 
-    Document[] searchByName(TenantId tenantId, string searchTerm);
+    DmsDocument[] searchByName(TenantId tenantId, string searchTerm);
 }

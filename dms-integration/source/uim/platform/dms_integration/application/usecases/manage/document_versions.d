@@ -61,7 +61,7 @@ class ManageDocumentVersionsUseCase {
     UsecaseResult deleteDocumentVersion(TenantId tenantId, DocumentVersionId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
-            return UsecaseResult(false, "", "Document version not found");
+            return UsecaseResult(false, "", "DmsDocument version not found");
         if (existing.isLatestVersion)
             return UsecaseResult(false, "", "Cannot delete the latest version");
         repo.remove(existing);

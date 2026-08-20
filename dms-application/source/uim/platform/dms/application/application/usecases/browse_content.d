@@ -45,7 +45,7 @@ class BrowseContentUseCase {
   }
 
   /// Search documents by name.
-  Document[] searchDocuments(TenantId tenantId, string query) {
+  DmsDocument[] searchDocuments(TenantId tenantId, string query) {
     return docs.findByName(tenantId, query);
   }
 
@@ -94,7 +94,7 @@ class BrowseContentUseCase {
   }
 struct FolderContents {
   DmsFolder[] subfolders;
-  Document[] documents;
+  DmsDocument[] documents;
 }
   /// Remove a favorite.
   UsecaseResult deleteFavorite(TenantId tenantId, FavoriteId favoriteId) {

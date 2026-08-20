@@ -56,7 +56,7 @@ struct PhoneNumber {
   }
 }
 /// SCIM 2.0 address entry.
-struct Address {
+struct IdmAddress {
   string formatted;
   string streetAddress;
   string locality;
@@ -111,7 +111,7 @@ struct IDUser {
   string passwordHash;
   Email[] emails;
   PhoneNumber[] phoneNumbers;
-  Address[] addresses;
+  IdmAddress[] addresses;
   GroupId[] groupIds;
   ExtendedAttribute[] extendedAttributes;
   string[] schemas; // SCIM schema URNs

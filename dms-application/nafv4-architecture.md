@@ -38,7 +38,7 @@ DMS Application
 │   ├── C1.2.1  Create / rename / delete folders
 │   └── C1.2.2  Nested folder paths
 │
-├── C1.3  Document Lifecycle
+├── C1.3  DmsDocument Lifecycle
 │   ├── C1.3.1  Upload and update documents
 │   ├── C1.3.2  Version management
 │   └── C1.3.3  Content checksum integrity
@@ -51,7 +51,7 @@ DMS Application
 │   └── C1.5.1  User favourites management
 │
 ├── C1.6  Collaboration
-│   └── C1.6.1  Document and folder sharing with expiry
+│   └── C1.6.1  DmsDocument and folder sharing with expiry
 │
 └── C1.7  Cross-Cutting
     ├── C1.7.1  Tenant isolation
@@ -62,7 +62,7 @@ DMS Application
 
 | Aspect | Description |
 |---|---|
-| **Mission** | Provide enterprise document management modelled on SAP Document Management Service (DMS). |
+| **Mission** | Provide enterprise document management modelled on SAP DmsDocument Management Service (DMS). |
 | **Vision** | Enable teams to store, version, and collaborate on documents within governed repository hierarchies. |
 | **Scope** | DmsRepository and folder CRUD, document upload and versioning, permissions, favourites, and sharing. |
 | **Stakeholders** | Business Users, Content Managers, Application Developers. |
@@ -77,8 +77,8 @@ DMS Application
 |---|---|---|---|
 | SVC-REPO-CRUD | DmsRepository | `/api/v1/repositories` | GET, POST, PUT, DELETE |
 | SVC-FLD-CRUD | DmsFolder | `/api/v1/folders` | GET, POST, PUT, DELETE |
-| SVC-DOC-CRUD | Document | `/api/v1/documents` | GET, POST, PUT, DELETE |
-| SVC-DVER-CRUD | Document Version | `/api/v1/document-versions` | GET, POST |
+| SVC-DOC-CRUD | DmsDocument | `/api/v1/documents` | GET, POST, PUT, DELETE |
+| SVC-DVER-CRUD | DmsDocument Version | `/api/v1/document-versions` | GET, POST |
 | SVC-PERM-CRUD | Permission | `/api/v1/permissions` | GET, POST, DELETE |
 | SVC-FAV-CRUD | Favorite | `/api/v1/favorites` | GET, POST, DELETE |
 | SVC-SHR-CRUD | Share | `/api/v1/shares` | GET, POST, DELETE |
@@ -103,9 +103,9 @@ DMS Application
 |---|---|
 | `DmsRepository` | Root aggregate; contains Folders and Documents |
 | `DmsFolder` | Belongs to DmsRepository; self-referential parent/child nesting |
-| `Document` | Belongs to DmsRepository and DmsFolder; parent of DocumentVersions |
-| `DocumentVersion` | Belongs to Document; sequential version numbers |
-| `Permission` | Polymorphic ACL entry for DmsRepository, DmsFolder, or Document |
+| `DmsDocument` | Belongs to DmsRepository and DmsFolder; parent of DocumentVersions |
+| `DocumentVersion` | Belongs to DmsDocument; sequential version numbers |
+| `Permission` | Polymorphic ACL entry for DmsRepository, DmsFolder, or DmsDocument |
 | `Favorite` | User bookmark to any resource |
 | `Share` | Owner-to-recipient grant with optional expiry |
 
@@ -128,7 +128,7 @@ Kubernetes Cluster — Namespace: uim-platform
 
 | ID | Decision | Rationale |
 |---|---|---|
-| AD-1 | Document versioning | Mirrors SAP DMS versioned content objects |
+| AD-1 | DmsDocument versioning | Mirrors SAP DMS versioned content objects |
 | AD-2 | Polymorphic permissions | Single ACL model for repos, folders, and documents |
 | AD-3 | Share expiry | Time-bounded sharing for compliance |
 | AD-4 | In-memory repositories | Fast testing; swap for object store in production |

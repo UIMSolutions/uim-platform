@@ -5,18 +5,18 @@
 
 This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
 
-SAP Document Management Service — Integration Option implementation using D/vibe.d with clean hexagonal architecture.
+SAP DmsDocument Management Service — Integration Option implementation using D/vibe.d with clean hexagonal architecture.
 
 ## Overview
 
-The **DMS Integration Platform Service** (`uim-dms-integration-platform-service`) implements the capabilities of the **SAP Document Management Service, integration option** on SAP BTP. It provides a CMIS-compliant document management backbone that supports multiple repository types (managed, external, Google Workspace, OpenText, SharePoint, S/4HANA DMS), full document lifecycle management, folder hierarchies, document versioning, and fine-grained permission control.
+The **DMS Integration Platform Service** (`uim-dms-integration-platform-service`) implements the capabilities of the **SAP DmsDocument Management Service, integration option** on SAP BTP. It provides a CMIS-compliant document management backbone that supports multiple repository types (managed, external, Google Workspace, OpenText, SharePoint, S/4HANA DMS), full document lifecycle management, folder hierarchies, document versioning, and fine-grained permission control.
 
 ## Features
 
 - **Repository Management** — Create and manage document repositories; supports managed and external repository types; activation/deactivation lifecycle; default repository selection
-- **Document Management** — Full CRUD with checkout/checkin/cancelCheckout lifecycle; document publish and archive workflows; move between folders; full-text search by name
+- **DmsDocument Management** — Full CRUD with checkout/checkin/cancelCheckout lifecycle; document publish and archive workflows; move between folders; full-text search by name
 - **Folder Hierarchy** — Nested folder trees with root/standard/system/virtual/archive types; move folders; depth and path tracking
-- **Document Versioning** — Automatic major/minor version creation on checkin; version label tracking; protect latest versions from deletion
+- **DmsDocument Versioning** — Automatic major/minor version creation on checkin; version label tracking; protect latest versions from deletion
 - **Permission Management** — Grant/revoke permissions per document or folder; principal types: user, group, everyone; permission types: read, write, delete, readWrite, full; inherited vs direct permissions
 
 ## Architecture
@@ -68,7 +68,7 @@ infrastructure/     In-memory repository implementations, DI container, config
 
 **PUT actions**: `move`
 
-### Document Versions
+### DmsDocument Versions
 
 | Method | Path | Description |
 |--------|------|-------------|

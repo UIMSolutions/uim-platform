@@ -23,7 +23,7 @@ classDiagram
         +string name
         +string path
     }
-    class Document {
+    class DmsDocument {
         +string id
         +string folderId
         +string repositoryId
@@ -47,8 +47,8 @@ classDiagram
 
     Folder --> Repository_ : belongs to
     Folder --> Folder : nested in
-    Document --> Folder : stored in
-    DocumentVersion --> Document : version of
+    DmsDocument --> Folder : stored in
+    DocumentVersion --> DmsDocument : version of
     Permission --> Repository_ : governs
 ```
 
@@ -68,7 +68,7 @@ flowchart TB
     subgraph Domain["Domain Layer"]
         REPO["Repository_"]
         FOLDER["Folder"]
-        DOC["Document"]
+        DOC["DmsDocument"]
         VER["DocumentVersion"]
         PERM["Permission"]
     end
@@ -83,7 +83,7 @@ flowchart TB
     Application --> Infrastructure
 ```
 
-## Sequence Diagram — Upload Document
+## Sequence Diagram — Upload DmsDocument
 
 ```mermaid
 sequenceDiagram

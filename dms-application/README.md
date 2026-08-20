@@ -1,11 +1,11 @@
-# Document Management Service
+# DmsDocument Management Service
 
 
 ## Documentation update
 
 This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
 
-A D/vibe.d microservice implementing SAP Document Management Service (DMS)-like functionality for the UIM Platform. Provides repository management, folder hierarchies, document storage with versioning, sharing, permissions, and content browsing.
+A D/vibe.d microservice implementing SAP DmsDocument Management Service (DMS)-like functionality for the UIM Platform. Provides repository management, folder hierarchies, document storage with versioning, sharing, permissions, and content browsing.
 
 ## Architecture
 
@@ -33,7 +33,7 @@ Clean/Hexagonal architecture with four layers:
 - **Repositories** — Manage document repositories with configurable storage backends
 - **Folders** — Hierarchical folder structures within repositories
 - **Documents** — Upload, download, and manage documents with metadata
-- **Versioning** — Document version history and version lifecycle management
+- **Versioning** — DmsDocument version history and version lifecycle management
 - **Sharing** — Share documents and folders with internal and external users
 - **Permissions** — Fine-grained access control for repositories, folders, and documents
 - **Browse** — Navigate repository content with folder-level listing
@@ -88,8 +88,8 @@ See the repository root [LICENSE](../LICENSE) file.
 |--------|-------------|
 | `DmsRepository` | Top-level document storage container |
 | `DmsFolder` | Hierarchical folder within a DmsRepository |
-| `Document` | File stored within a DmsFolder |
-| `DocumentVersion` | Immutable version snapshot of a Document |
-| `Share` | Shared access link for a Document or DmsFolder |
-| `Permission` | Access control entry for a DmsRepository, DmsFolder, or Document |
-| `Favorite` | Bookmarked Document or DmsFolder for quick access |
+| `DmsDocument` | File stored within a DmsFolder |
+| `DocumentVersion` | Immutable version snapshot of a DmsDocument |
+| `Share` | Shared access link for a DmsDocument or DmsFolder |
+| `Permission` | Access control entry for a DmsRepository, DmsFolder, or DmsDocument |
+| `Favorite` | Bookmarked DmsDocument or DmsFolder for quick access |

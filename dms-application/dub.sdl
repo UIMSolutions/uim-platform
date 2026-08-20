@@ -1,5 +1,5 @@
 name "dms-application"
-description "SAP Document Management Service application option style service using D, uim-framework and vibe.d"
+description "SAP DmsDocument Management Service application option style service using D, uim-framework and vibe.d"
 homepage "https://github.com/UIMSolutions/uim/platform/dms-application"
 authors "Ozan Nurettin Suel" "UI Manufaktur (R.I.P)"
 copyright "Copyright 2018-2026, Ozan Nurettin Suel"

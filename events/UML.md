@@ -38,7 +38,7 @@ classDiagram
         +Json toJson()
     }
 
-    class Queue {
+    class EventQueue {
         +QueueId id
         +TenantId tenantId
         +MessagingServiceId serviceId
@@ -106,12 +106,12 @@ classDiagram
     }
 
     MessagingService "1" --> "0..*" MessageClient : hosts
-    MessagingService "1" --> "0..*" Queue : owns
+    MessagingService "1" --> "0..*" EventQueue : owns
     MessagingService "1" --> "0..*" EventChannel : defines
-    Queue "1" --> "0..*" QueueSubscription : has
+    EventQueue "1" --> "0..*" QueueSubscription : has
     QueueSubscription "1" --> "0..*" Webhook : triggers
     MessageClient "1" --> "0..*" MessageBinding : bound via
-    Queue "1" --> "0..*" MessageBinding : bound in
+    EventQueue "1" --> "0..*" MessageBinding : bound in
     EventChannel "1" --> "0..*" MessageBinding : bound in
 ```
 
@@ -134,9 +134,9 @@ classDiagram
 
     class QueueRepository {
         <<interface>>
-        +findByTenant(TenantId) Queue[]
-        +findByService(TenantId, MessagingServiceId) Queue[]
-        +findByStatus(TenantId, QueueStatus) Queue[]
+        +findByTenant(TenantId) EventQueue[]
+        +findByService(TenantId, MessagingServiceId) EventQueue[]
+        +findByStatus(TenantId, QueueStatus) EventQueue[]
         +removeByService(TenantId, MessagingServiceId)
     }
 
@@ -169,7 +169,7 @@ flowchart LR
         UC1[Manage Messaging Services]
         UC2[Manage Message Clients]
         UC3[Manage Queues]
-        UC4[Manage Queue Subscriptions]
+        UC4[Manage EventQueue Subscriptions]
         UC5[Manage Webhooks]
         UC6[Manage Event Channels]
         UC7[Manage Message Bindings]
@@ -213,7 +213,7 @@ flowchart TB
     subgraph Domain["Domain Layer"]
         E1[MessagingService]
         E2[MessageClient]
-        E3[Queue]
+        E3[EventQueue]
         E4[QueueSubscription]
         E5[Webhook]
         E6[EventChannel]
@@ -264,7 +264,7 @@ flowchart TB
 
 ---
 
-## Sequence Diagram — Create Queue with Subscription and Webhook
+## Sequence Diagram — Create EventQueue with Subscription and Webhook
 
 ```mermaid
 sequenceDiagram

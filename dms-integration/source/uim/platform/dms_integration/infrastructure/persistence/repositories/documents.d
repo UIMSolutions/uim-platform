@@ -11,12 +11,12 @@ mixin(ShowModule!());
 
 @safe:
 
-class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRepository {
+class DocumentRepository : TenantRepository!(DmsDocument, DocumentId), IDocumentRepository {
 
     size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
         return findByRepository(tenantId, repositoryId).length;
     }
-    Document[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
+    DmsDocument[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
         return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
     }
     void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -26,7 +26,7 @@ class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRep
     size_t countByFolder(TenantId tenantId, FolderId folderId) {
         return findByFolder(tenantId, folderId).length;
     }
-    Document[] findByFolder(TenantId tenantId, FolderId folderId) {
+    DmsDocument[] findByFolder(TenantId tenantId, FolderId folderId) {
         return findByTenant(tenantId).filter!(e => e.folderId == folderId).array;
     }
     void removeByFolder(TenantId tenantId, FolderId folderId) {
@@ -36,18 +36,18 @@ class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRep
     size_t countByStatus(TenantId tenantId, DocumentStatus status) {
         return findByStatus(tenantId, status).length;
     }
-    Document[] findByStatus(TenantId tenantId, DocumentStatus status) {
+    DmsDocument[] findByStatus(TenantId tenantId, DocumentStatus status) {
         return findByTenant(tenantId).filter!(e => e.documentStatus == status).array;
     }
 
-    Document[] findCheckedOut(TenantId tenantId) {
+    DmsDocument[] findCheckedOut(TenantId tenantId) {
         return findByTenant(tenantId).filter!(e => e.checkoutStatus == CheckoutStatus.checkedOut).array;
     }
-    Document[] findCheckedOutBy(TenantId tenantId, UserId userId) {
+    DmsDocument[] findCheckedOutBy(TenantId tenantId, UserId userId) {
         return findByTenant(tenantId).filter!(e => e.checkoutStatus == CheckoutStatus.checkedOut && e.checkedOutBy == userId).array;
     }
 
-    Document[] searchByName(TenantId tenantId, string searchTerm) {
+    DmsDocument[] searchByName(TenantId tenantId, string searchTerm) {
         import std.string : toLower, indexOf;
         auto term = searchTerm.toLower;
         return findByTenant(tenantId).filter!(e => e.name.toLower.indexOf(term) >= 0).array;

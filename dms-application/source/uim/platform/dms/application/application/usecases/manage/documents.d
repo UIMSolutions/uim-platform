@@ -33,7 +33,7 @@ class ManageDocumentsUseCase {
 
   UsecaseResult createDocument(CreateDocumentRequest r) {
     if (r.name.isEmpty)
-      return UsecaseResult(false, "", "Document name is required");
+      return UsecaseResult(false, "", "DmsDocument name is required");
     if (r.repositoryId.isEmpty)
       return UsecaseResult(false, "", "DmsRepository ID is required");
 
@@ -43,7 +43,7 @@ class ManageDocumentsUseCase {
         return UsecaseResult(false, "", "DmsFolder not found");
     }
 
-    auto doc = Document(r.tenantId);
+    auto doc = DmsDocument(r.tenantId);
     doc.repositoryId = r.repositoryId;
     doc.folderId = r.folderId;
     doc.name = r.name;
@@ -75,30 +75,30 @@ class ManageDocumentsUseCase {
     return UsecaseResult(true, doc.id.value, "");
   }
 
-  Document[] listDocuments(TenantId tenantId) {
+  DmsDocument[] listDocuments(TenantId tenantId) {
     return docs.findByTenant(tenantId);
   }
 
-  Document[] listByFolder(TenantId tenantId, FolderId folderId) {
+  DmsDocument[] listByFolder(TenantId tenantId, FolderId folderId) {
     return docs.findByFolder(tenantId, folderId);
   }
 
-  Document[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
+  DmsDocument[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
     return docs.findByRepository(tenantId, repositoryId);
   }
 
-  Document getDocument(TenantId tenantId, DocumentId id) {
+  DmsDocument getDocument(TenantId tenantId, DocumentId id) {
     return docs.findById(tenantId, id);
   }
 
-  Document[] searchByName(TenantId tenantId, string name) {
+  DmsDocument[] searchByName(TenantId tenantId, string name) {
     return docs.findByName(tenantId, name);
   }
 
   UsecaseResult updateDocument(UpdateDocumentRequest request) {
     auto doc = docs.findById(request.tenantId, request.documentId);
     if (doc.isNull)
-      return UsecaseResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "DmsDocument not found");
 
     if (request.name.length > 0)
       doc.name = request.name;
@@ -122,7 +122,7 @@ class ManageDocumentsUseCase {
   UsecaseResult moveDocument(MoveDocumentRequest request) {
     auto doc = docs.findById(request.tenantId, request.documentId);
     if (doc.isNull)
-      return UsecaseResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "DmsDocument not found");
 
     if (!request.newFolderId.isEmpty) {
       auto folder = folders.findById(request.tenantId, request.newFolderId);
@@ -139,7 +139,7 @@ class ManageDocumentsUseCase {
   UsecaseResult archiveDocument(TenantId tenantId, DocumentId documentId) {
     auto doc = docs.findById(tenantId, documentId);
     if (doc.isNull)
-      return UsecaseResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "DmsDocument not found");
 
     doc.status = DocumentStatus.archived;
     doc.updatedAt = currentTimestamp();
@@ -150,7 +150,7 @@ class ManageDocumentsUseCase {
   UsecaseResult deleteDocument(TenantId tenantId, DocumentId documentId) {
     auto doc = docs.findById(tenantId, documentId);
     if (doc.isNull)
-      return UsecaseResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "DmsDocument not found");
 
     // Cascade delete versions
     versions.removeByDocument(tenantId, documentId);

@@ -35,7 +35,7 @@ class QueueSubscriptionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto items = usecase.listSubscriptions(tenantId);
-        return successResponse("Queue subscription list retrieved successfully", 200, Json.emptyObject
+        return successResponse("EventQueue subscription list retrieved successfully", 200, Json.emptyObject
                 .set("count", items.length)
                 .set("resources", items.map!(e => e.toJson).array.toJson));
 
@@ -50,9 +50,9 @@ override protected Json getHandler(HTTPServerRequest req) {
     auto id = precheck.id;
     auto e = usecase.getSubscription(tenantId, QueueSubscriptionId(id));
     if (e.isNull)
-        return errorResponse("Queue subscription not found", 404);
+        return errorResponse("EventQueue subscription not found", 404);
 
-    return successResponse("Queue subscription retrieved successfully", 200, e.toJson);
+    return successResponse("EventQueue subscription retrieved successfully", 200, e.toJson);
 }
 
 override protected Json createHandler(HTTPServerRequest req) {
@@ -77,7 +77,7 @@ override protected Json createHandler(HTTPServerRequest req) {
     if (result.hasError)
         return errorResponse(result.message, 400);
     
-    return successResponse("Queue subscription created successfully", 201, Json.emptyObject.set("id", result.id));
+    return successResponse("EventQueue subscription created successfully", 201, Json.emptyObject.set("id", result.id));
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {
@@ -99,7 +99,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     if (result.hasError)
         return errorResponse(result.message, 400);
     
-    return successResponse("Queue subscription updated successfully", 200, Json.emptyObject.set("id", result.id));
+    return successResponse("EventQueue subscription updated successfully", 200, Json.emptyObject.set("id", result.id));
 }
 
 override protected Json deleteHandler(HTTPServerRequest req) {
@@ -113,7 +113,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     if (result.hasError)
         return errorResponse(result.message, 400);
 
-    return successResponse("Queue subscription deleted successfully", 200, Json.emptyObject.set("id", result
+    return successResponse("EventQueue subscription deleted successfully", 200, Json.emptyObject.set("id", result
             .id));
 }
 }

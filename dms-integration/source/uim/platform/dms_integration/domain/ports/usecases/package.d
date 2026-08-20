@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.dms_integration.domain.ports.usecases;
 
-public {
+public:
     import uim.platform.dms_integration.domain.ports.usecases.repositories;
     import uim.platform.dms_integration.domain.ports.usecases.documents;
     import uim.platform.dms_integration.domain.ports.usecases.folders;
     import uim.platform.dms_integration.domain.ports.usecases.document_versions;
     import uim.platform.dms_integration.domain.ports.usecases.permissions;
-}
+

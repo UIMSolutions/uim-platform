@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Result of certificate validation.
-struct ValidationResult {
+struct CertificateValidationResult {
   bool isValid;
   CertificateStatus status;
   string message;
@@ -27,8 +27,8 @@ struct CertificateValidator {
   enum EXPIRY_WARNING_DAYS = 30;
 
   /// Validate a certificate's current status.
-  static ValidationResult validate(const ref Certificate cert) {
-    ValidationResult result;
+  static CertificateValidationResult validate(const ref Certificate cert) {
+    CertificateValidationResult result;
     auto now = clockSeconds();
 
     if (cert.content.length == 0) {

@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-Address[] toAddresses(Json json) {
-  Address[] result;
+IdmAddress[] toAddresses(Json json) {
+  IdmAddress[] result;
 
   foreach (item; json.getArray("addresses")) {
     if (!item.isObject)
       continue;
 
-    auto address = Address();
+    auto address = IdmAddress();
     address.formatted = item.getString("formatted");
     address.streetAddress = item.getString("streetAddress");
     address.locality = item.getString("locality");

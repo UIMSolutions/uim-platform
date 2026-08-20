@@ -8,7 +8,7 @@ This document is maintained alongside the implementation, deployment manifests, 
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > DMS Integration Service — document management integration with repository
 > federation, folder management, and permission control modelled on
-> SAP Document Management Service, Integration Option.
+> SAP DmsDocument Management Service, Integration Option.
 
 ---
 
@@ -38,9 +38,9 @@ DMS Integration
 │   ├── C1.2.1  Create folder hierarchies
 │   └── C1.2.2  Folder navigation
 │
-├── C1.3  Document Management
+├── C1.3  DmsDocument Management
 │   ├── C1.3.1  Store and retrieve documents
-│   └── C1.3.2  Document versioning
+│   └── C1.3.2  DmsDocument versioning
 │
 ├── C1.4  Permission Management
 │   └── C1.4.1  Role-based access to repositories and folders
@@ -67,8 +67,8 @@ DMS Integration
 |---|---|---|---|
 | SVC-REPO-CRUD | Repository | `/api/v1/repositories` | GET, POST, DELETE |
 | SVC-FOLD-CRUD | Folder | `/api/v1/folders` | GET, POST, DELETE |
-| SVC-DOC-CRUD | Document | `/api/v1/documents` | GET, POST, DELETE |
-| SVC-VER-LIST | Document Version | `/api/v1/document-versions` | GET |
+| SVC-DOC-CRUD | DmsDocument | `/api/v1/documents` | GET, POST, DELETE |
+| SVC-VER-LIST | DmsDocument Version | `/api/v1/document-versions` | GET |
 | SVC-PERM-CRUD | Permission | `/api/v1/permissions` | GET, POST, DELETE |
 | SVC-HLTH | Health Check | `/api/v1/health` | GET |
 
@@ -91,7 +91,7 @@ DMS Integration
 |---|---|
 | `Repository` | Root content store; parent of Folders |
 | `Folder` | Hierarchical container; parent of Documents |
-| `Document` | File with metadata; parent of DocumentVersions |
+| `DmsDocument` | File with metadata; parent of DocumentVersions |
 | `DocumentVersion` | Point-in-time document snapshot |
 | `Permission` | ACL entry for Repository or Folder |
 
@@ -116,6 +116,6 @@ Kubernetes Cluster — Namespace: uim-platform
 |---|---|---|
 | AD-1 | CMIS-aligned model | Mirrors SAP DMS CMIS interface |
 | AD-2 | Repository federation | Supports multiple backend content stores |
-| AD-3 | Document versioning | Enables audit trail |
+| AD-3 | DmsDocument versioning | Enables audit trail |
 | AD-4 | In-memory repositories | Fast testing |
 | AD-5 | Port 8109 | Consistent UIM platform port allocation |

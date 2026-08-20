@@ -40,7 +40,7 @@ class ManageQueueSubscriptionsUseCase {
 
     UsecaseResult updateSubscription(QueueSubscriptionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.subscriptionId);
-        if (existing.isNull) return UsecaseResult(false, "", "Queue subscription not found");
+        if (existing.isNull) return UsecaseResult(false, "", "EventQueue subscription not found");
         if (dto.description.length > 0) existing.description = dto.description;
         if (dto.topicPattern.length > 0) existing.topicPattern = dto.topicPattern;
         if (dto.namespace.length > 0) existing.namespace = dto.namespace;
@@ -51,7 +51,7 @@ class ManageQueueSubscriptionsUseCase {
 
     UsecaseResult deleteSubscription(TenantId tenantId, QueueSubscriptionId id) {
         auto qs = repo.findById(tenantId, id);
-        if (qs.isNull) return UsecaseResult(false, "", "Queue subscription not found");
+        if (qs.isNull) return UsecaseResult(false, "", "EventQueue subscription not found");
         repo.remove(qs);
         return UsecaseResult(true, qs.id.value, "");
     }
