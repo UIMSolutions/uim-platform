@@ -144,7 +144,7 @@ class UserController : ManageHttpController {
 
     auto result = useCase.deleteUser(tenantId, id);
     if (result.hasError)
-      return errorResponse(result.message, result.code);
+      return errorResponse(result.message, cast(int) result.code);
       // writeScimError(res, 404, result.message);
 
     return successResponse("User deleted successfully", "", 200, Json.emptyObject);
@@ -164,7 +164,7 @@ class UserController : ManageHttpController {
     auto result = useCase.changePassword(tenantId, id,
       data.getString("currentPassword"), data.getString("newPassword"));
     if (result.hasError)
-      return errorResponse(result.message, result.code);
+      return errorResponse(result.message, cast(int) result.code);
       // return scimErrorResponse(result.message, result.code);
 
     auto response = Json.emptyObject
