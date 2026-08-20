@@ -32,7 +32,7 @@ This document is maintained alongside the implementation, deployment manifests, 
 Account Management
 ├── C1.1  Account Hierarchy
 │   ├── C1.1.1  Global account lifecycle
-│   ├── C1.1.2  Directory creation and nesting
+│   ├── C1.1.2  AccountDirectory creation and nesting
 │   └── C1.1.3  Subaccount provisioning
 │
 ├── C1.2  Subscriptions
@@ -78,7 +78,7 @@ Account Management
 | Service ID | Name | Path Prefix | Methods |
 |---|---|---|---|
 | SVC-GA-CRUD | Global Account | `/api/v1/global-accounts` | GET, POST, PUT, DELETE |
-| SVC-DIR-CRUD | Directory | `/api/v1/directories` | GET, POST, PUT, DELETE |
+| SVC-DIR-CRUD | AccountDirectory | `/api/v1/directories` | GET, POST, PUT, DELETE |
 | SVC-SA-CRUD | Subaccount | `/api/v1/subaccounts` | GET, POST, PUT, DELETE |
 | SVC-SUB-CRUD | Subscription | `/api/v1/subscriptions` | GET, POST, DELETE |
 | SVC-SP-LIST | Service Plan | `/api/v1/service-plans` | GET |
@@ -106,7 +106,7 @@ Account Management
 | Entity | Key Relationships |
 |---|---|
 | `GlobalAccount` | Root; parent of Directories and Subaccounts |
-| `Directory` | Organisational unit; self-referential nesting |
+| `AccountDirectory` | Organisational unit; self-referential nesting |
 | `Subaccount` | Deployment unit; owns Subscriptions, Entitlements, Environments |
 | `Subscription` | Application subscription in a Subaccount |
 | `ServicePlan` | Catalogue entry; referenced by Entitlements |

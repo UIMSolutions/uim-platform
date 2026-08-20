@@ -27,7 +27,7 @@ class ManageDataModelsUseCase {
     if (req.namespace.length == 0)
       return UsecaseResult(false, "", "Namespace is required");
 
-    auto model = DataModel(req.tenantId); //, UserId("test-user"));
+    auto model = MasterDataModel(req.tenantId); //, UserId("test-user"));
     model.name = req.name;
     model.namespace = req.namespace;
     model.version_ = req.version_.length > 0 ? req.version_ : "1.0.0";
@@ -63,19 +63,19 @@ class ManageDataModelsUseCase {
     return UsecaseResult(true, model.id.value, "");
   }
 
-  DataModel getModel(TenantId tenantId, DataModelId id) {
+  MasterDataModel getModel(TenantId tenantId, DataModelId id) {
     return repo.findById(tenantId, id);
   }
 
-  DataModel[] listModelsByTenant(TenantId tenantId) {
+  MasterDataModel[] listModelsByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DataModel[] listModelsByCategory(TenantId tenantId, string category) {
+  MasterDataModel[] listModelsByCategory(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, toMasterDataCategory(category));
   }
 
-  DataModel findModelByName(TenantId tenantId, string name) {
+  MasterDataModel findModelByName(TenantId tenantId, string name) {
     return repo.findByName(tenantId, name);
   }
 

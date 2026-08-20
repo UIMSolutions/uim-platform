@@ -9,7 +9,7 @@ This document is maintained alongside the implementation, deployment manifests, 
 
 ```mermaid
 classDiagram
-    class DataModel {
+    class MasterDataModel {
         +DataModelId id
         +TenantId tenantId
         +string name
@@ -85,8 +85,8 @@ classDiagram
         +Json toJson()
     }
 
-    DataModel "1" --> "0..*" MasterDataObject : structures
-    DataModel "1" --> "0..*" DistributionModel : distributes
+    MasterDataModel "1" --> "0..*" MasterDataObject : structures
+    MasterDataModel "1" --> "0..*" DistributionModel : distributes
     DistributionModel "1" --> "0..*" ReplicationJob : triggers
     DistributionModel "1" --> "0..*" FilterRule : filters
     MasterDataObject "1" --> "0..*" KeyMapping : maps

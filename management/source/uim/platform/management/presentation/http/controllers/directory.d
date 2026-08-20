@@ -42,7 +42,7 @@ class DirectoryController : ManageHttpController {
     auto gaId = GlobalAccountId(req.params.get("globalAccountId"));
     auto parentId = DirectoryId(req.params.get("parentDirectoryId"));
 
-    Directory[] items;
+    AccountDirectory[] items;
     if (!parentId.isEmpty)
       items = usecase.listDirectories(tenantId, parentId);
     else if (!gaId.isEmpty)
@@ -54,7 +54,7 @@ class DirectoryController : ManageHttpController {
       .set("items", arr)
       .set("totalCount", items.length);
 
-    return successResponse("Directory list retrieved successfully", "Retrieved", 200, resp);
+    return successResponse("AccountDirectory list retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -83,7 +83,7 @@ class DirectoryController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Directory created successfully", "Created", 201, responseData);
+    return successResponse("AccountDirectory created successfully", "Created", 201, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -100,10 +100,10 @@ class DirectoryController : ManageHttpController {
 
     auto d = usecase.getDirectory(tenantId, id);
     if (d.isNull)
-      return errorResponse("Directory not found", 404);
+      return errorResponse("AccountDirectory not found", 404);
 
     auto responseData = d.toJson();
-    return successResponse("Directory retrieved successfully", "Retrieved", 200, responseData);
+    return successResponse("AccountDirectory retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -132,7 +132,7 @@ class DirectoryController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Directory updated successfully", "Updated", 200, responseData);
+    return successResponse("AccountDirectory updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -150,7 +150,7 @@ class DirectoryController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Directory deleted successfully", "Deleted", 200, responseData);
+    return successResponse("AccountDirectory deleted successfully", "Deleted", 200, responseData);
   }
 }
 ///
@@ -176,7 +176,7 @@ unittest {
       // 3. Test Create Handler
       Json createData = Json.emptyObject
         .set("globalAccountId", "test-account")
-        .set("displayName", "Test Directory")
+        .set("displayName", "Test AccountDirectory")
         .set("description", "A test directory")
         .set("features", ["ENTITLEMENTS", "AUTHORIZATIONS"].toJson)
         .set("manageEntitlements", true)
@@ -195,7 +195,7 @@ unittest {
     //   auto resGet = controller.getHandler(reqGet);
     //   writeln("Get Response: ", resGet);
     //   // assertSuccess(resGet, 200);
-    //   // assert(resGet["data"]["displayName"].get!string == "Test Directory");
+    //   // assert(resGet["data"]["displayName"].get!string == "Test AccountDirectory");
 
     //   // 5. Test Update Handler
     //   Json updateData = Json.emptyObject

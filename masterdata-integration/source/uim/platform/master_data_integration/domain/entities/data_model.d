@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Defines the schema/structure of a master data entity type.
-struct DataModel {
+struct MasterDataModel {
   mixin TenantEntity!(DataModelId);
 
   string name; // e.g. "BusinessPartner", "CostCenter"

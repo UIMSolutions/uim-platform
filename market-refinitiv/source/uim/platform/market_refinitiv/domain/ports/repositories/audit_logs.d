@@ -9,6 +9,8 @@ import uim.platform.market_refinitiv;
 mixin(ShowModule!());
 
 @safe:
+
+/// Port: outgoing — audit log repository.
 interface IAuditLogRepository : ITenantRepository!(AuditLog, AuditLogId) {
 
   AuditLog[] findByOperation(TenantId tenantId, AuditOperation op);

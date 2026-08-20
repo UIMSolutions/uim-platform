@@ -35,6 +35,8 @@ interface IManageProgramsUseCase {
     /// @param programId The ID of the ABAP program to delete.
     UsecaseResult deleteProgram(TenantId tenantId, AbapProgramId programId);
 
+    /// Counts the number of ABAP programs for a given tenant.
+    /// @param tenantId The tenant ID.
     size_t countPrograms(TenantId tenantId);
 
 }

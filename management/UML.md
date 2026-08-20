@@ -19,7 +19,7 @@ classDiagram
         +string geoAccess
         +Json toJson()
     }
-    class Directory {
+    class AccountDirectory {
         +DirectoryId id
         +TenantId tenantId
         +GlobalAccountId globalAccountId
@@ -97,10 +97,10 @@ classDiagram
         +Json toJson()
     }
 
-    GlobalAccount "1" --> "0..*" Directory : groups
+    GlobalAccount "1" --> "0..*" AccountDirectory : groups
     GlobalAccount "1" --> "0..*" Subaccount : owns
-    Directory "1" --> "0..*" Directory : nests
-    Directory "1" --> "0..*" Subaccount : contains
+    AccountDirectory "1" --> "0..*" AccountDirectory : nests
+    AccountDirectory "1" --> "0..*" Subaccount : contains
     Subaccount "1" --> "0..*" Subscription : subscribes
     Subaccount "1" --> "0..*" Entitlement : entitled
     Subaccount "1" --> "0..*" Environment : runs

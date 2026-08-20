@@ -30,9 +30,9 @@ class ManageDirectoriesUseCase {
       return UsecaseResult(false, "", "Display name is required");
 
     if (directories.existsById(request.tenantId, request.directoryId))
-      return UsecaseResult(false, "", "Directory with the same ID already exists");
+      return UsecaseResult(false, "", "AccountDirectory with the same ID already exists");
 
-    auto directory = Directory(request.tenantId);
+    auto directory = AccountDirectory(request.tenantId);
     directory.id = request.directoryId.isNull ? DirectoryId(generateId()) : request.directoryId;
     directory.globalAccountId = request.accountId;
     directory.displayName = request.displayName;
@@ -52,7 +52,7 @@ class ManageDirectoriesUseCase {
   UsecaseResult updateDirectory(UpdateDirectoryRequest request) {
     auto directory = directories.findById(request.tenantId, request.directoryId);
     if (directory.isNull)
-      return UsecaseResult(false, "", "Directory not found");
+      return UsecaseResult(false, "", "AccountDirectory not found");
 
     if (request.displayName.length > 0)
       directory.displayName = request.displayName;
@@ -72,22 +72,22 @@ class ManageDirectoriesUseCase {
     return UsecaseResult(true, directory.id.value, "");
   }
 
-  Directory getDirectory(TenantId tenantId, DirectoryId id) {
+  AccountDirectory getDirectory(TenantId tenantId, DirectoryId id) {
     return directories.findById(tenantId, id);
   }
 
-  Directory[] listDirectories(TenantId tenantId, GlobalAccountId gaId) {
+  AccountDirectory[] listDirectories(TenantId tenantId, GlobalAccountId gaId) {
     return directories.findByGlobalAccount(tenantId, gaId);
   }
 
-  Directory[] listDirectories(TenantId tenantId, DirectoryId parentId) {
+  AccountDirectory[] listDirectories(TenantId tenantId, DirectoryId parentId) {
     return directories.findByParent(tenantId, parentId);
   }
 
   UsecaseResult deleteDirectory(TenantId tenantId, DirectoryId id) {
     auto directory = directories.findById(tenantId, id);
     if (directory.isNull)
-      return UsecaseResult(false, "", "Directory not found");
+      return UsecaseResult(false, "", "AccountDirectory not found");
 
     if (directory.subaccounts.length > 0 || directory.subdirectories.length > 0)
       return UsecaseResult(false, "", "Cannot delete directory with children");

@@ -14,14 +14,14 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class DirectoryRepository : TenantRepository!(Directory, DirectoryId), IDirectoryRepository {
+class DirectoryRepository : TenantRepository!(AccountDirectory, DirectoryId), IDirectoryRepository {
 
   // #region ByGlobalAccount
   size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return findByGlobalAccount(tenantId, globalAccountId).length;
   }
 
-  Directory[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
+  AccountDirectory[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
     return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
@@ -35,11 +35,11 @@ class DirectoryRepository : TenantRepository!(Directory, DirectoryId), IDirector
     return findByParent(tenantId, parentDirectoryId).length;
   }
 
-  Directory[] filterByParent(Directory[] dirs, DirectoryId parentDirectoryId) {
+  AccountDirectory[] filterByParent(AccountDirectory[] dirs, DirectoryId parentDirectoryId) {
     return dirs.filter!(d => d.parentDirectoryId == parentDirectoryId).array;
   }
 
-  Directory[] findByParent(TenantId tenantId, DirectoryId parentDirectoryId) {
+  AccountDirectory[] findByParent(TenantId tenantId, DirectoryId parentDirectoryId) {
     return filterByParent(findByTenant(tenantId), parentDirectoryId);
   }
 
@@ -54,11 +54,11 @@ class DirectoryRepository : TenantRepository!(Directory, DirectoryId), IDirector
     return findByStatus(tenantId, globalAccountId, status).length;
   }
 
-  Directory[] filterByStatus(Directory[] dirs, DirectoryStatus status) {
+  AccountDirectory[] filterByStatus(AccountDirectory[] dirs, DirectoryStatus status) {
     return dirs.filter!(d => d.status == status).array;
   }
 
-  Directory[] findByStatus(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryStatus status) {
+  AccountDirectory[] findByStatus(TenantId tenantId, GlobalAccountId globalAccountId, DirectoryStatus status) {
     return filterByStatus(findByGlobalAccount(tenantId, globalAccountId), status);
   }
 
@@ -77,19 +77,19 @@ unittest {
   auto parentDirId = DirectoryId("parent1");
 
   // Create directories
-  auto dir1 = Directory(tenantId);
+  auto dir1 = AccountDirectory(tenantId);
   dir1.id = DirectoryId("dir1");
   dir1.globalAccountId = gaId;
   dir1.parentDirectoryId = parentDirId;
-  dir1.displayName = "Directory 1";
+  dir1.displayName = "AccountDirectory 1";
   dir1.description = "Description 1";
   dir1.status = DirectoryStatus.active;
 
-  auto dir2 = Directory(tenantId);
+  auto dir2 = AccountDirectory(tenantId);
   dir2.id = DirectoryId("dir2");
   dir2.globalAccountId = gaId;
   dir2.parentDirectoryId = parentDirId;
-  dir2.displayName = "Directory 2";
+  dir2.displayName = "AccountDirectory 2";
   dir2.description = "Description 2";
   dir2.status = DirectoryStatus.inactive;
 

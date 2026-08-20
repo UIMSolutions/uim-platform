@@ -106,7 +106,7 @@ Master Data Integration
 
 | Entity | Key Relationships |
 |---|---|
-| `DataModel` | Schema definition; parent of MasterDataObjects and DistributionModels |
+| `MasterDataModel` | Schema definition; parent of MasterDataObjects and DistributionModels |
 | `Client` | Source or target system; referenced by DistributionModels and KeyMappings |
 | `MasterDataObject` | Individual master data record; audited by ChangeLogEntries |
 | `DistributionModel` | Replication target set; parent of ReplicationJobs and FilterRules |

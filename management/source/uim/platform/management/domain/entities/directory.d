@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A directory is a grouping entity within a global account for
 /// organizing subaccounts and managing entitlements/authorizations.
-struct Directory {
+struct AccountDirectory {
   mixin TenantEntity!DirectoryId;
 
   GlobalAccountId globalAccountId;
@@ -28,8 +28,8 @@ struct Directory {
   string[string] labels;
   string[string] customProperties;
 
-  static Directory createFromRequest(CreateDirectoryRequest req) {
-    auto directory = Directory();
+  static AccountDirectory createFromRequest(CreateDirectoryRequest req) {
+    auto directory = AccountDirectory();
     directory.globalAccountId = req.accountId;
     directory.parentDirectoryId = req.parentDirectoryId;
     directory.displayName = req.displayName;

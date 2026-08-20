@@ -7,7 +7,7 @@ mixin(ShowModule!());
 unittest {
     // import vibe.core.core : yield, runTask;
 
-    // logInfo("--- Starting Service-Unittest for Directory ---");
+    // logInfo("--- Starting Service-Unittest for AccountDirectory ---");
 
     // // 1. Loading Configuration and Building Container
     // auto config = loadConfig();
@@ -46,7 +46,7 @@ unittest {
     //         // Client connects to the dynamic port
     //         auto client = new RestInterfaceClient!IDirectoryApi(basisUrl);
 
-    //         writeln("Testing Directory API at: ", basisUrl);
+    //         writeln("Testing AccountDirectory API at: ", basisUrl);
     //         writeln("Client Settings: ", clientSettings);
     //         writeln("Client Instance: ", client);
             
@@ -54,14 +54,14 @@ unittest {
     //         request.directoryId = DirectoryId("test-directory");
     //         request.tenantId = TenantId("test-tenant");
     //         request.accountId = "test-account"; 
-    //         request.displayName = "Test Directory";
+    //         request.displayName = "Test AccountDirectory";
 
     //         // Test action: Call the service over HTTP
     //         auto result = client.createDirectory("test-tenant", request);
-    //         writeln("Create Directory Response: ", result.toJson);
+    //         writeln("Create AccountDirectory Response: ", result.toJson);
 
     //         writeln("Directories: ", client.getDirectories("test-tenant"));
-    //         writeln("Directory: ", client.getDirectory("test-tenant", result.id));
+    //         writeln("AccountDirectory: ", client.getDirectory("test-tenant", result.id));
     //         // writeln("Directory2: ", client.getDirectories("test-tenant", "result.id"));
             
     //         testSuccessful = true;

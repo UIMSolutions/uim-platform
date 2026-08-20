@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataModelRepository : TenantRepository!(DataModel, DataModelId), IDataModelRepository {
+class DataModelRepository : TenantRepository!(MasterDataModel, DataModelId), IDataModelRepository {
 
   // #region ByName
   /**
@@ -32,12 +32,12 @@ class DataModelRepository : TenantRepository!(DataModel, DataModelId), IDataMode
     * @param name The name of the data model to find.
     * @return The data model with the specified name, or an initialized data model if not found.
     */
-  DataModel findByName(TenantId tenantId, string name) {
+  MasterDataModel findByName(TenantId tenantId, string name) {
     foreach (m; findByTenant(tenantId)) {
       if (m.name == name)
         return m;
     }
-    return DataModel.init;
+    return MasterDataModel.init;
   }
 
   /**
@@ -70,7 +70,7 @@ class DataModelRepository : TenantRepository!(DataModel, DataModelId), IDataMode
     * @param category The category to filter data models by.
     * @return A filtered array of data models that belong to the specified category.
     */
-  DataModel[] filterByCategory(DataModel[] models, MasterDataCategory category) {
+  MasterDataModel[] filterByCategory(MasterDataModel[] models, MasterDataCategory category) {
     return models.filter!(e => e.category == category).array;
   }
 
@@ -81,7 +81,7 @@ class DataModelRepository : TenantRepository!(DataModel, DataModelId), IDataMode
     * @param category The category to filter data models by.
     * @return An array of data models that belong to the specified category.
     */
-  DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category) {
+  MasterDataModel[] findByCategory(TenantId tenantId, MasterDataCategory category) {
     return filterByCategory(findByTenant(tenantId), category);
   }
 

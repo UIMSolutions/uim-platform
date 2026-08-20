@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — data model/schema persistence.
-interface IDataModelRepository : ITenantRepository!(DataModel, DataModelId) {
+interface IDataModelRepository : ITenantRepository!(MasterDataModel, DataModelId) {
 
   bool existsByName(TenantId tenantId, string name);
-  DataModel findByName(TenantId tenantId, string name);
+  MasterDataModel findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
 
   size_t countByCategory(TenantId tenantId, MasterDataCategory category);
-  DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category);
+  MasterDataModel[] findByCategory(TenantId tenantId, MasterDataCategory category);
   void removeByCategory(TenantId tenantId, MasterDataCategory category);
 
 }

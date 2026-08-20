@@ -12,7 +12,7 @@ class DirectoryApi : IDirectoryApi {
         this.usecase = usecase;
     }
 
-    override Directory[] getDirectories(string tenantId) {
+    override AccountDirectory[] getDirectories(string tenantId) {
         // Hier hast du Zugriff auf die tenantId
         logInfo("Anfrage für Tenant-ID: %s", tenantId);
 
@@ -23,7 +23,7 @@ class DirectoryApi : IDirectoryApi {
         auto gaId = GlobalAccountId(`req.params.get("globalAccountId")`);
         auto parentId = DirectoryId(`req.params.get("parentDirectoryId")`);
 
-        Directory[] items;
+        AccountDirectory[] items;
         if (!parentId.isEmpty)
             items = usecase.listDirectories(TenantId(tenantId), parentId);
         else if (!gaId.isEmpty)
@@ -33,9 +33,9 @@ class DirectoryApi : IDirectoryApi {
         return items;
     }
 
-    override Directory getDirectory(string tenantId, string _id) {
+    override AccountDirectory getDirectory(string tenantId, string _id) {
         // Hier hast du Zugriff auf die tenantId
-        logInfo("Anfrage für Tenant-ID: %s, Directory-ID: %s", tenantId, _id);
+        logInfo("Anfrage für Tenant-ID: %s, AccountDirectory-ID: %s", tenantId, _id);
 
         if (tenantId.length == 0) {
             throw new HTTPStatusException(HTTPStatus.badRequest, "Missing X-Tenant-ID header");
@@ -44,7 +44,7 @@ class DirectoryApi : IDirectoryApi {
         // Deine Logik gefiltert nach Tenant und ID...
         auto result = usecase.getDirectory(TenantId(tenantId), DirectoryId(_id));
         if (result.isNull) {
-            throw new HTTPStatusException(HTTPStatus.notFound, "Directory not found");
+            throw new HTTPStatusException(HTTPStatus.notFound, "AccountDirectory not found");
         }
         return result;
     }

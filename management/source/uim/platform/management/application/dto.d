@@ -40,7 +40,7 @@ struct UpdateGlobalAccountRequest {
   string contactEmail;
   string[string] customProperties;
 }
-/// --- Directory DTOs ---
+/// --- AccountDirectory DTOs ---
 struct CreateDirectoryRequest {
   TenantId tenantId;
   DirectoryId directoryId; // optional, for subdirectories

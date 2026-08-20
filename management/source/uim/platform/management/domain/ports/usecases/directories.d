@@ -15,9 +15,9 @@ interface IManageDirectoriesUseCase {
 
   UsecaseResult createDirectory(CreateDirectoryRequest request);
   UsecaseResult updateDirectory(UpdateDirectoryRequest request);
-  Directory getDirectory(TenantId tenantId, DirectoryId id);
-  Directory[] listDirectories(TenantId tenantId, GlobalAccountId gaId);
-  Directory[] listDirectories(TenantId tenantId, DirectoryId parentId);
+  AccountDirectory getDirectory(TenantId tenantId, DirectoryId id);
+  AccountDirectory[] listDirectories(TenantId tenantId, GlobalAccountId gaId);
+  AccountDirectory[] listDirectories(TenantId tenantId, DirectoryId parentId);
   UsecaseResult deleteDirectory(TenantId tenantId, DirectoryId id);
 
 }

@@ -82,7 +82,7 @@ class DataModelController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto category = req.params.get("category", "");
 
-    DataModel[] models = category.length > 0
+    MasterDataModel[] models = category.length > 0
       ? usecase.listModelsByCategory(tenantId, category) : usecase.listModelsByTenant(tenantId);
 
     auto arr = models.map!(m => m.toJson).array.toJson;
