@@ -44,7 +44,7 @@ class DataAccessControlController : ManageHttpController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.criteriaType = data.getString("criteriaType");
-    r.targetViewIds = data.getArray("targetViewIds").map!(v => ViewId(v.toString)).array;
+    r.targetViewIds = data.getArray("targetViewIds").map!(v => DataViewId(v.toString)).array;
     r.assignedUserIds = data.getArray("assignedUserIds").map!(v => UserId(v.to!string)).array;
 
     auto result = usecase.createDataAccessControl(r);

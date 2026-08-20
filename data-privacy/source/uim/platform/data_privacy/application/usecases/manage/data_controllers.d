@@ -1,0 +1,88 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data_privacy.application.usecases.manage.data_controllers;
+
+import uim.platform.data_privacy;
+
+mixin(ShowModule!());
+
+@safe:
+class ManageDataControllersUseCase {
+  protected IDataControllerRepository repo;
+
+  this(IDataControllerRepository repo) {
+    this.repo = repo;
+  }
+
+  UsecaseResult createController(CreateDataControllerRequest req) {
+    if (req.tenantId.isEmpty)
+      return UsecaseResult(false, "", "Tenant ID is required");
+      
+    if (req.name.isEmpty)
+      return UsecaseResult(false, "", "Name is required");
+
+    auto c = DataController(req.tenantId);
+    c.name = req.name;
+    c.description = req.description;
+    c.legalEntityName = req.legalEntityName;
+    c.contactEmail = req.contactEmail;
+    c.contactPhone = req.contactPhone;
+    c.address = req.address;
+    c.country = req.country;
+    c.dpoName = req.dpoName;
+    c.dpoEmail = req.dpoEmail;
+    c.isActive = true;
+
+    repo.save(c);
+    return UsecaseResult(true, c.id.value, "");
+  }
+
+  DataController getController(TenantId tenantId, DataControllerId id) {
+    return repo.findById(tenantId, id);
+  }
+
+  DataController[] listControllers(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
+  UsecaseResult updateController(UpdateDataControllerRequest req) {
+    auto c = repo.findById(req.tenantId, req.controllerId);
+    if (c.isNull)
+      return UsecaseResult(false, "", "Data controller not found");
+
+    if (req.name.length > 0)
+      c.name = req.name;
+    if (req.description.length > 0)
+      c.description = req.description;
+    if (req.legalEntityName.length > 0)
+      c.legalEntityName = req.legalEntityName;
+    if (req.contactEmail.length > 0)
+      c.contactEmail = req.contactEmail;
+    if (req.contactPhone.length > 0)
+      c.contactPhone = req.contactPhone;
+    if (req.address.length > 0)
+      c.address = req.address;
+    if (req.country.length > 0)
+      c.country = req.country;
+    if (req.dpoName.length > 0)
+      c.dpoName = req.dpoName;
+    if (req.dpoEmail.length > 0)
+      c.dpoEmail = req.dpoEmail;
+    c.updatedAt = currentTimestamp();
+
+    repo.update(c);
+    return UsecaseResult(true, c.id.value, "");
+  }
+
+  UsecaseResult deleteController(TenantId tenantId, DataControllerId id) {
+    auto existing = repo.findById(tenantId, id);
+    if (existing.isNull)
+      return UsecaseResult(false, "", "Data controller not found");
+
+    repo.remove(existing);
+    return UsecaseResult(true, existing.id.value, "");
+  }
+}

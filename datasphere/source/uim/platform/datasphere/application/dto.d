@@ -96,12 +96,12 @@ struct PatchDataFlowRequest {
   DataFlowId dataFlowId;
   string targetStatus;
 }
-// --- View ---
+// --- DataView ---
 
 struct CreateViewRequest {
   TenantId tenantId;
   SpaceId spaceId;
-  ViewId viewId;
+  DataViewId viewId;
 
   string name;
   string description;
@@ -114,7 +114,7 @@ struct CreateViewRequest {
 struct UpdateViewRequest {
   TenantId tenantId;
   SpaceId spaceId;
-  ViewId viewId;
+  DataViewId viewId;
   string name;
   string description;
   string businessName;
@@ -170,7 +170,7 @@ struct CreateDataAccessControlRequest {
   string name;
   string description;
   string criteriaType;
-  ViewId[] targetViewIds;
+  DataViewId[] targetViewIds;
   UserId[] assignedUserIds;
 }
 
@@ -180,7 +180,7 @@ struct UpdateDataAccessControlRequest {
   DataAccessControlId controlId;
   string name;
   string description;
-  ViewId[] targetViewIds;
+  DataViewId[] targetViewIds;
   UserId[] assignedUserIds;
   bool isEnabled;
 }

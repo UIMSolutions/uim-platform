@@ -11,22 +11,22 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface IViewRepository : ITenantRepository!(View, ViewId) {
+interface IViewRepository : ITenantRepository!(DataView, DataViewId) {
 
-  bool existsById(TenantId tenantId, SpaceId spaceId, ViewId id);
-  View findById(TenantId tenantId, SpaceId spaceId, ViewId id);
-  void removeById(TenantId tenantId, SpaceId spaceId, ViewId id);
+  bool existsById(TenantId tenantId, SpaceId spaceId, DataViewId id);
+  DataView findById(TenantId tenantId, SpaceId spaceId, DataViewId id);
+  void removeById(TenantId tenantId, SpaceId spaceId, DataViewId id);
 
   size_t countBySpace(TenantId tenantId, SpaceId spaceId);
-  View[] findBySpace(TenantId tenantId, SpaceId spaceId);
+  DataView[] findBySpace(TenantId tenantId, SpaceId spaceId);
   void removeBySpace(TenantId tenantId, SpaceId spaceId);
 
   size_t countBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic);
-  View[] findBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic);
+  DataView[] findBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic);
   void removeBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic);
 
   size_t countExposed(TenantId tenantId, SpaceId spaceId);
-  View[] findExposed(TenantId tenantId, SpaceId spaceId);
+  DataView[] findExposed(TenantId tenantId, SpaceId spaceId);
   void removeExposed(TenantId tenantId, SpaceId spaceId);
 
 }

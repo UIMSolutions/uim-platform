@@ -1,0 +1,35 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data_privacy.domain.entities.business_process;
+
+import uim.platform.data_privacy;
+
+mixin(ShowModule!());
+
+@safe:
+/// A business process — a set of activities performed to achieve a business goal.
+struct BusinessProcess {
+  mixin TenantEntity!(BusinessProcessId);
+
+  string name;
+  string description;
+  DataControllerId controllerId;
+  ProcessingPurpose[] purposes;
+  LegalBasis[] legalBases;
+  string owner; // responsible person
+  bool isActive = true;
+  
+  Json toJson() const {
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("controllerId", controllerId)
+      .set("purposes", purposes.map!(p => p.to!string).array.toJson())
+      .set("legalBases", legalBases.map!(l => l.to!string).array.toJson())
+      .set("owner", owner)
+      .set("isActive", isActive);
+  }
+}

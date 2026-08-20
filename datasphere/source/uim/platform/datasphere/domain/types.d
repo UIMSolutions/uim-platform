@@ -19,7 +19,7 @@ struct DataFlowId {
   mixin(IdTemplate);
 }
 
-struct ViewId {
+struct DataViewId {
   mixin(IdTemplate);
 }
 

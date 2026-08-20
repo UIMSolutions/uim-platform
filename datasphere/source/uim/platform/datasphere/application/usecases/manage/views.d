@@ -23,11 +23,11 @@ class ManageViewsUseCase {
 
   UsecaseResult createView(CreateViewRequest r) {
     if (r.name.isEmpty)
-      return UsecaseResult(false, "", "View name is required");
+      return UsecaseResult(false, "", "DataView name is required");
     if (r.spaceId.isEmpty)
       return UsecaseResult(false, "", "Space ID is required");
 
-    auto v = View(r.tenantId, r.viewId);
+    auto v = DataView(r.tenantId, r.viewId);
     v.spaceId = r.spaceId;
     v.name = r.name;
     v.description = r.description;
@@ -39,22 +39,22 @@ class ManageViewsUseCase {
     return UsecaseResult(true, v.id.value, "");
   }
 
-  View getView(TenantId tenantId, SpaceId spaceId, ViewId id) {
+  DataView getView(TenantId tenantId, SpaceId spaceId, DataViewId id) {
     return repo.findById(tenantId, spaceId, id);
   }
 
-  View[] listViews(TenantId tenantId, SpaceId spaceId) {
+  DataView[] listViews(TenantId tenantId, SpaceId spaceId) {
     return repo.findBySpace(tenantId, spaceId);
   }
 
-  View[] listExposedViews(TenantId tenantId, SpaceId spaceId) {
+  DataView[] listExposedViews(TenantId tenantId, SpaceId spaceId) {
     return repo.findExposed(tenantId, spaceId);
   }
 
   UsecaseResult updateView(UpdateViewRequest r) {
     auto view = repo.findById(r.tenantId, r.spaceId, r.viewId);
     if (view.isNull)
-      return UsecaseResult(false, "", "View not found");
+      return UsecaseResult(false, "", "DataView not found");
 
     view.name = r.name;
     view.description = r.description;
@@ -70,10 +70,10 @@ class ManageViewsUseCase {
     return UsecaseResult(true, view.id.value, "");
   }
 
-  UsecaseResult deleteView(TenantId tenantId, SpaceId spaceId, ViewId id) {
+  UsecaseResult deleteView(TenantId tenantId, SpaceId spaceId, DataViewId id) {
     auto view = repo.findById(tenantId, spaceId, id);
     if (view.isNull)
-      return UsecaseResult(false, "", "View not found");
+      return UsecaseResult(false, "", "DataView not found");
 
     repo.remove(view);
     return UsecaseResult(true, view.id.value, "");

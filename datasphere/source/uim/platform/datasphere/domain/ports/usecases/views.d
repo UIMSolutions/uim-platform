@@ -17,10 +17,10 @@ mixin(ShowModule!());
 interface IManageViewsUseCase { 
   
   UsecaseResult createView(CreateViewRequest r);
-  View getById(TenantId tenantId, SpaceId spaceId, ViewId id);
-  View[] list(TenantId tenantId, SpaceId spaceId);
-  View[] listExposed(TenantId tenantId, SpaceId spaceId);
+  DataView getById(TenantId tenantId, SpaceId spaceId, DataViewId id);
+  DataView[] list(TenantId tenantId, SpaceId spaceId);
+  DataView[] listExposed(TenantId tenantId, SpaceId spaceId);
   UsecaseResult updateView(UpdateViewRequest r);
-  UsecaseResult deleteView(TenantId tenantId, SpaceId spaceId, ViewId id);
+  UsecaseResult deleteView(TenantId tenantId, SpaceId spaceId, DataViewId id);
 
 }

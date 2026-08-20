@@ -1,0 +1,94 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data_privacy.application.usecases.manage.deletion_requests;
+
+// import uim.platform.data_privacy.domain.entities.deletion_request;
+// import uim.platform.data_privacy.domain.ports.repositories.deletion_requests;
+// import uim.platform.data_privacy.domain.ports.repositories.data_subjects;
+// import uim.platform.data_privacy.application.dto;
+
+import uim.platform.data_privacy;
+
+mixin(ShowModule!());
+
+@safe:
+class ManageDeletionRequestsUseCase {
+  protected IDeletionRequestRepository repo;
+  private IDataSubjectRepository subjectRepo;
+
+  this(IDeletionRequestRepository repo, IDataSubjectRepository subjectRepo) {
+    this.repo = repo;
+    this.subjectRepo = subjectRepo;
+  }
+
+  UsecaseResult createRequest(CreateDeletionRequest req) {
+    if (req.tenantId.isEmpty)
+      return UsecaseResult(false, "", "Tenant ID is required");
+    if (req.dataSubjectId.isEmpty)
+      return UsecaseResult(false, "", "Data subject ID is required");
+
+    // Verify data subject exists
+    auto subject = subjectRepo.findById(req.tenantId, req.dataSubjectId);
+    if (subject.isNull)
+      return UsecaseResult(false, "", "Data subject not found");
+
+    auto now = currentTimestamp();
+    // Deadline: 30 days from now (GDPR Art. 12(3))
+    long deadline = now + (30L * 24 * 60 * 60 * 10_000_000L);
+
+    auto request = DeletionRequest(req.tenantId);  
+    request.requestType = RequestType.deletion;
+    request.status = DeletionStatus.requested;
+    request.targetSystems = req.targetSystems;
+    request.categories = req.categories.map!(c => c.to!PersonalDataCategory).array;
+    request.reason = req.reason;
+    request.requestedAt = now;
+    request.deadline = deadline;
+
+    repo.save(request);
+    return UsecaseResult(true, request.id.value, "");
+  }
+
+  DeletionRequest getRequest(TenantId tenantId, DeletionRequestId id) {
+    return repo.findById(tenantId, id);
+  }
+
+  DeletionRequest[] listRequests(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
+  DeletionRequest[] listByStatus(TenantId tenantId, DeletionStatus status) {
+    return repo.findByStatus(tenantId, status);
+  }
+
+  DeletionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+    return repo.findByDataSubject(tenantId, subjectId);
+  }
+
+  UsecaseResult updateStatus(UpdateDeletionStatusRequest req) {
+    auto request = repo.findById(req.tenantId, req.requestId);
+    if (request.isNull)
+      return UsecaseResult(false, "", "Deletion request not found");
+
+    request.status = req.status.to!DeletionStatus;
+    if (req.blockerReason.length > 0)
+      request.blockerReason = req.blockerReason;
+    if (request.status == DeletionStatus.completed)
+      request.completedAt = currentTimestamp();
+
+    repo.update(request);
+    return UsecaseResult(true, request.id.value, "");
+  }
+
+  UsecaseResult deleteRequest(TenantId tenantId, DeletionRequestId id) {
+    auto request = repo.findById(tenantId, id);
+    if (request.isNull)
+      return UsecaseResult(false, "", "Deletion request not found");
+
+    repo.remove(request);
+    return UsecaseResult(true, request.id.value, "");
+  }
+}

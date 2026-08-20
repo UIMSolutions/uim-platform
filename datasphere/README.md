@@ -28,7 +28,7 @@ datasphere/
     uim/platform/datasphere/
       domain/                      # Core business logic (no dependencies)
         types.d                    # Type aliases and enums
-        entities/                  # Domain entities (Space, Connection, View, etc.)
+        entities/                  # Domain entities (Space, Connection, DataView, etc.)
         ports/repositories/        # Repository interfaces (driven ports)
         services/                  # Domain services (validators, schedulers)
       application/                 # Use cases (application services)

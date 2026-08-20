@@ -42,8 +42,8 @@ struct ViewAssociation {
   }
 }
 
-struct View {
-  mixin TenantEntity!ViewId;
+struct DataView {
+  mixin TenantEntity!DataViewId;
 
   SpaceId spaceId;
   string name;

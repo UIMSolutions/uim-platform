@@ -58,7 +58,7 @@ class ViewController : ManageHttpController {
       return errorResponse(result.message, 400);
       
     auto resp = Json.emptyObject.set("id", result.id);
-    return successResponse("View created successfully", "Created", 201, resp);
+    return successResponse("DataView created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -95,14 +95,14 @@ class ViewController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = ViewId(precheck.id);
+    auto id = DataViewId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid view ID", 400);
 
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
     auto v = usecase.getView(tenantId, spaceId, id);
     if (v.isNull)
-      return errorResponse("View not found", 404);
+      return errorResponse("DataView not found", 404);
 
     auto resp = Json.emptyObject
       .set("id", v.id)
@@ -116,7 +116,7 @@ class ViewController : ManageHttpController {
       .set("createdAt", v.createdAt)
       .set("updatedAt", v.updatedAt);
 
-    return successResponse("View retrieved successfully", "Retrieved", 200, resp);
+    return successResponse("DataView retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -130,7 +130,7 @@ class ViewController : ManageHttpController {
     UpdateViewRequest r;
     r.tenantId = tenantId;
     r.spaceId = SpaceId(  req.headers.get("X-Space-Id", ""));
-    r.viewId = ViewId(precheck.id);
+    r.viewId = DataViewId(precheck.id);
     r.name = data.getString(  "name");
     r.description = data.getString("description");
     r.businessName = data.getString(  "businessName");
@@ -143,7 +143,7 @@ class ViewController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject.set("id", result.id);
-    return successResponse("View updated successfully", 200, resp);
+    return successResponse("DataView updated successfully", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -153,7 +153,7 @@ class ViewController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-    auto id = ViewId(precheck.id);
+    auto id = DataViewId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid view ID", 400);
 
@@ -162,6 +162,6 @@ class ViewController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("View deleted successfully", 204, responseData);
+    return successResponse("DataView deleted successfully", 204, responseData);
   }
 }

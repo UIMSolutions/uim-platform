@@ -1,0 +1,97 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data_privacy.infrastructure.persistence.repositories.consent_records;
+
+// import uim.platform.data_privacy.domain.entities.consent_record;
+// import uim.platform.data_privacy.domain.ports.repositories.consent_records;
+import uim.platform.data_privacy;
+
+mixin(ShowModule!());
+
+@safe:
+class ConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
+
+  size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return findByDataSubject(tenantId, dataSubjectId).length;
+  }
+
+  ConsentRecord[] filterByDataSubject(ConsentRecord[] records, DataSubjectId dataSubjectId) {
+    return records.filter!(r => r.dataSubjectId == dataSubjectId).array;
+  }
+
+  ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
+  }
+
+  void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    findByDataSubject(tenantId, dataSubjectId).each!(entity => remove(entity));
+  }
+
+  size_t countByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    return findByPurpose(tenantId, purpose).length;
+  }
+
+  ConsentRecord[] filterByPurpose(ConsentRecord[] records, ProcessingPurpose purpose) {
+    return records.filter!(r => r.purpose == purpose).array;
+  }
+
+  ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    return filterByPurpose(findByTenant(tenantId), purpose);
+  }
+
+  void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    findByPurpose(tenantId, purpose).each!(entity => remove(entity));
+  }
+
+  size_t countByStatus(TenantId tenantId, ConsentStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  ConsentRecord[] filterByStatus(ConsentRecord[] records, ConsentStatus status) {
+    return records.filter!(r => r.status == status).array;
+  }
+
+  ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status) {
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, ConsentStatus status) {
+    findByStatus(tenantId, status).each!(entity => remove(entity));
+  }
+
+size_t countActiveConsents(TenantId tenantId) {
+    return findActiveConsents(tenantId).length;
+  }
+
+  ConsentRecord[] filterActiveConsents(ConsentRecord[] records) {
+    return records.filter!(r => r.status == ConsentStatus.granted).array;
+  }
+
+  ConsentRecord[] findActiveConsents(TenantId tenantId  ) {
+    return filterActiveConsents(findByTenant(tenantId));
+  }
+
+  void removeActiveConsents(TenantId tenantId) {
+    findActiveConsents(tenantId).each!(entity => remove(entity));
+  }
+
+  size_t countActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return findActiveConsents(tenantId, dataSubjectId).length;
+  }
+
+  ConsentRecord[] filterActiveConsents(ConsentRecord[] records, DataSubjectId dataSubjectId) {
+    return records.filter!(r => r.dataSubjectId == dataSubjectId && r.status == ConsentStatus.granted).array;
+  }
+
+  ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
+    return filterActiveConsents(findByTenant(tenantId), dataSubjectId);
+  }
+
+  void removeActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
+    findActiveConsents(tenantId, dataSubjectId).each!(entity => remove(entity));
+  }
+
+}

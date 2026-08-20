@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module app;
 
-// import uim.platform.data.privacy.infrastructure.config;
-// import uim.platform.data.privacy.infrastructure.container;
+// import uim.platform.data_privacy.infrastructure.config;
+// import uim.platform.data_privacy.infrastructure.container;
 
-import uim.platform.data.privacy;
+import uim.platform.data_privacy;
 
 mixin(ShowModule!());
 

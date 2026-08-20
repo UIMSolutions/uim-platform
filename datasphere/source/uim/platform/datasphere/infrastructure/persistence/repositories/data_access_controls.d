@@ -51,19 +51,19 @@ class DataAccessControlRepository : TenantRepository!(DataAccessControl, DataAcc
   }
   // #endregion BySpace
 
-  size_t countByView(TenantId tenantId, SpaceId spaceId, ViewId viewId) {
+  size_t countByView(TenantId tenantId, SpaceId spaceId, DataViewId viewId) {
     return findByView(tenantId, spaceId, viewId).length;
   }
 
-  DataAccessControl[] filterByView(DataAccessControl[] dacs, ViewId viewId) {
+  DataAccessControl[] filterByView(DataAccessControl[] dacs, DataViewId viewId) {
     return dacs.filter!(dac => dac.targetViewIds.any!(id => id == viewId)).array;
   }
 
-  DataAccessControl[] findByView(TenantId tenantId, SpaceId spaceId, ViewId viewId) {
+  DataAccessControl[] findByView(TenantId tenantId, SpaceId spaceId, DataViewId viewId) {
     return filterByView(findBySpace(tenantId, spaceId), viewId);
   }
 
-  void removeByView(TenantId tenantId, SpaceId spaceId, ViewId viewId) {
+  void removeByView(TenantId tenantId, SpaceId spaceId, DataViewId viewId) {
     findByView(tenantId, spaceId, viewId).each!(dac => remove(dac));
   }
 

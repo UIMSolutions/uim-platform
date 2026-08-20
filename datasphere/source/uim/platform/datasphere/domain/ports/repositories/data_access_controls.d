@@ -21,8 +21,8 @@ interface IDataAccessControlRepository : ITenantRepository!(DataAccessControl, D
   DataAccessControl[] findBySpace(TenantId tenantId, SpaceId spaceId);
   void removeBySpace(TenantId tenantId, SpaceId spaceId);
 
-  size_t countByView(TenantId tenantId, SpaceId spaceId, ViewId viewId);
-  DataAccessControl[] findByView(TenantId tenantId, SpaceId spaceId, ViewId viewId);
-  void removeByView(TenantId tenantId, SpaceId spaceId, ViewId viewId);
+  size_t countByView(TenantId tenantId, SpaceId spaceId, DataViewId viewId);
+  DataAccessControl[] findByView(TenantId tenantId, SpaceId spaceId, DataViewId viewId);
+  void removeByView(TenantId tenantId, SpaceId spaceId, DataViewId viewId);
 
 }

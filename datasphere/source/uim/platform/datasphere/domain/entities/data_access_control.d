@@ -31,7 +31,7 @@ struct DataAccessControl {
   string description;
   CriteriaType criteriaType;
   CriteriaCondition[] conditions;
-  ViewId[] targetViewIds;
+  DataViewId[] targetViewIds;
   UserId[] assignedUserIds;
   bool isEnabled;
 

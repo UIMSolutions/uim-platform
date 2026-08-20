@@ -13,18 +13,18 @@ This document is maintained alongside the implementation, deployment manifests, 
 
 ## 1. NAF v4 Grid Mapping
 
-| NAF View | Viewpoint | Covered Below |
+| NAF DataView | Viewpoint | Covered Below |
 |---|---|---|
-| **NCV** – NATO Capability View | C1 Capability Taxonomy, C2 Enterprise Vision | §2 |
-| **NSV** – NATO Service View | NSOV-1 Service Taxonomy, NSOV-2 Service Definitions | §3 |
-| **NOV** – NATO Operational View | NOV-2 Operational Node Connectivity | §4 |
-| **NLV** – NATO Logical View | NLV-1 Logical Data Model | §5 |
-| **NPV** – NATO Physical View | NPV-1 Physical Deployment | §6 |
-| **NIV** – NATO Information View | NIV-1 Information Structure | §7 |
+| **NCV** – NATO Capability DataView | C1 Capability Taxonomy, C2 Enterprise Vision | §2 |
+| **NSV** – NATO Service DataView | NSOV-1 Service Taxonomy, NSOV-2 Service Definitions | §3 |
+| **NOV** – NATO Operational DataView | NOV-2 Operational Node Connectivity | §4 |
+| **NLV** – NATO Logical DataView | NLV-1 Logical Data Model | §5 |
+| **NPV** – NATO Physical DataView | NPV-1 Physical Deployment | §6 |
+| **NIV** – NATO Information DataView | NIV-1 Information Structure | §7 |
 
 ---
 
-## 2. Capability View (NCV)
+## 2. Capability DataView (NCV)
 
 ### C1 – Capability Taxonomy
 
@@ -40,7 +40,7 @@ Datasphere
 │
 ├── C1.3  Data Virtualisation
 │   ├── C1.3.1  Remote table replication
-│   └── C1.3.2  View definition and SQL management
+│   └── C1.3.2  DataView definition and SQL management
 │
 ├── C1.4  Data Integration
 │   ├── C1.4.1  Data flow design and execution
@@ -69,7 +69,7 @@ Datasphere
 
 ---
 
-## 3. Service View (NSV)
+## 3. Service DataView (NSV)
 
 ### NSOV-2 – Service Definitions
 
@@ -78,7 +78,7 @@ Datasphere
 | SVC-SP-CRUD | Space | `/api/v1/spaces` | GET, POST, PUT, DELETE |
 | SVC-CN-CRUD | Connection | `/api/v1/connections` | GET, POST, DELETE |
 | SVC-RT-CRUD | Remote Table | `/api/v1/remote-tables` | GET, POST, DELETE |
-| SVC-VW-CRUD | View | `/api/v1/views` | GET, POST, DELETE |
+| SVC-VW-CRUD | DataView | `/api/v1/views` | GET, POST, DELETE |
 | SVC-DF-CRUD | Data Flow | `/api/v1/data-flows` | GET, POST, DELETE |
 | SVC-TK-CRUD | Task | `/api/v1/tasks` | GET, POST, DELETE |
 | SVC-TC-CRUD | Task Chain | `/api/v1/task-chains` | GET, POST, DELETE |
@@ -88,7 +88,7 @@ Datasphere
 
 ---
 
-## 4. Operational View (NOV)
+## 4. Operational DataView (NOV)
 
 ```
 ┌────────────────────┐   REST/HTTP/JSON   ┌──────────────────────────────┐
@@ -99,7 +99,7 @@ Datasphere
 
 ---
 
-## 5. Logical View (NLV)
+## 5. Logical DataView (NLV)
 
 | Entity | Key Relationships |
 |---|---|
@@ -115,7 +115,7 @@ Datasphere
 
 ---
 
-## 6. Physical View (NPV)
+## 6. Physical DataView (NPV)
 
 ```
 Kubernetes Cluster — Namespace: uim-platform

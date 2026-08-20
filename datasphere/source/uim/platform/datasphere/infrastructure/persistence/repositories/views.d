@@ -10,22 +10,22 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-class ViewRepository : TenantRepository!(View, ViewId), IViewRepository {
+class ViewRepository : TenantRepository!(DataView, DataViewId), IViewRepository {
 
- // #region ById
-  bool existsById(TenantId tenantId, SpaceId spaceId, ViewId id) {
+  // #region ById
+  bool existsById(TenantId tenantId, SpaceId spaceId, DataViewId id) {
     return findBySpace(tenantId, spaceId).any!(v => v.id == id);
   }
 
-  View findById(TenantId tenantId, SpaceId spaceId, ViewId id) {
+  DataView findById(TenantId tenantId, SpaceId spaceId, DataViewId id) {
     foreach (v; findBySpace(tenantId, spaceId)) {
       if (v.id == id)
         return v;
     }
-    return View.init;
+    return DataView.init;
   }
 
-  void removeById(TenantId tenantId, SpaceId spaceId, ViewId id) {
+  void removeById(TenantId tenantId, SpaceId spaceId, DataViewId id) {
     remove(findById(tenantId, spaceId, id));
   }
   // #endregion ById
@@ -34,9 +34,11 @@ class ViewRepository : TenantRepository!(View, ViewId), IViewRepository {
   size_t countBySpace(TenantId tenantId, SpaceId spaceId) {
     return findBySpace(tenantId, spaceId).length;
   }
-  View[] findBySpace(TenantId tenantId, SpaceId spaceId) {
+
+  DataView[] findBySpace(TenantId tenantId, SpaceId spaceId) {
     return filterBySpace(findByTenant(tenantId), spaceId);
   }
+  
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(v => remove(v));
   }
@@ -46,11 +48,11 @@ class ViewRepository : TenantRepository!(View, ViewId), IViewRepository {
     return findBySemantic(tenantId, spaceId, semantic).length;
   }
 
-  View[] filterBySemantic(View[] views, ViewSemantic semantic) {
+  DataView[] filterBySemantic(DataView[] views, ViewSemantic semantic) {
     return views.filter!(v => v.semantic == semantic).array;
   }
 
-  View[] findBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic) {
+  DataView[] findBySemantic(TenantId tenantId, SpaceId spaceId, ViewSemantic semantic) {
     return filterBySemantic(findBySpace(tenantId, spaceId), semantic);
   }
 
@@ -62,11 +64,11 @@ class ViewRepository : TenantRepository!(View, ViewId), IViewRepository {
     return findExposed(tenantId, spaceId).length;
   }
 
-  View[] filterExposed(View[] views) {
+  DataView[] filterExposed(DataView[] views) {
     return views.filter!(v => v.isExposed).array;
   }
 
-  View[] findExposed(TenantId tenantId, SpaceId spaceId) {
+  DataView[] findExposed(TenantId tenantId, SpaceId spaceId) {
     return filterExposed(findBySpace(tenantId, spaceId));
   }
 

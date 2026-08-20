@@ -1,0 +1,44 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data_privacy.infrastructure.persistence.repositories.business_subprocesses;
+  
+
+// import uim.platform.data_privacy.domain.entities.business_subprocess;
+// import uim.platform.data_privacy.domain.ports.business_subprocess_repository;
+import uim.platform.data_privacy;
+
+mixin(ShowModule!());
+
+@safe:
+class BusinessSubprocessRepository : TenantRepository!(BusinessSubprocess, BusinessSubprocessId), BusinessSubprocessRepository {
+
+  // size_t countByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+  //   return findByParentProcess(tenantId, parentId).length;
+  // }
+
+  // BusinessSubprocess[] filterByParentProcess(BusinessSubprocess[] subprocesses, BusinessProcessId parentId) {
+  //   return subprocesses.filter!(s => s.parentProcessId == parentId).array;
+  // }
+
+  // BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+  //   return filterByParentProcess(findByTenant(tenantId), parentId);
+  // }
+
+  // void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+  //   findByParentProcess(tenantId, parentId).each!(entity => remove(entity));
+  // }
+
+  bool existsByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+    return findByTenant(tenantId).any!(s => s.parentProcessId == parentId);
+  }
+  BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+    return findByTenant(tenantId).filter!(s => s.parentProcessId == parentId).array;
+  }
+  void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
+    findByParentProcess(tenantId, parentId).each!(entity => remove(entity));
+  }
+
+}

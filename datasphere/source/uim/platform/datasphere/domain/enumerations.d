@@ -272,7 +272,7 @@ unittest {
          ["none", "realtime", "scheduled", "snapshot"]);
 }
 
-// View semantic type
+// DataView semantic type
 enum ViewSemantic {
   fact,
   dimension,
