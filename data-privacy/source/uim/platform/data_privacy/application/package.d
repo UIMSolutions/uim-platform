@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_privacy.application;
 
-public {
+public:
     import uim.platform.data_privacy.application.usecases;
     import uim.platform.data_privacy.application.dto;
-}
