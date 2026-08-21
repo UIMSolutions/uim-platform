@@ -13,72 +13,81 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class TemplateRepository : TemplateRepository {
-  protected Template[][string] store;
+class TemplateRepository : TenantRepository!(AiTemplate, TemplateId), ITemplateRepository {
 
-  bool existsById(ClientId clientId, TemplateId id) {
-    return clientId in store ? store[clientId].any!(t => t.id == id) : false;
+  bool existsById(TenantId tenantId, ClientId clientId, TemplateId id) {
+    return findByClient(tenantId, clientId).any!(t => t.id == id);
   }
 
-  Template findById(ClientId clientId, TemplateId id) {
-    if (clientId !in store)
-      return Template.init;
-
-    foreach (t; store[clientId]) {
+  AiTemplate findById(TenantId tenantId, ClientId clientId, TemplateId id) {
+    foreach (t; findByClient(tenantId, clientId)) {
       if (t.id == id)
         return t;
     }
-    return Template.init;
+    return AiTemplate.init;
   }
 
-  Template[] findByClient(ClientId clientId) {
-    if (clientId in store)
-      return store[clientId];
-    return null;
+  size_t countByClient(TenantId tenantId, ClientId clientId) {
+    return findByClient(tenantId, clientId).length;
   }
 
-  Template[] findBySchema(ClientId clientId, SchemaId schemaId) {
-    if (clientId in store)
-      return store[clientId].filter!(t => t.schemaId == schemaId).array;
-    return null;
+  AiTemplate[] filterByClient(AiTemplate[] templates, ClientId clientId) {
+    return templates.filter!(t => t.clientId == clientId).array;
   }
 
-  Template[] findByDocumentType(ClientId clientId, DocumentTypeId typeId) {
-    if (clientId in store)
-      return store[clientId].filter!(t => t.documentTypeId == typeId).array;
-    return null;
+  AiTemplate[] findByClient(TenantId tenantId, ClientId clientId) {
+    return filterByClient(findByTenant(tenantId), clientId);
   }
 
-  Template[] findByStatus(ClientId clientId, TemplateStatus status) {
-    if (clientId in store)
-      return store[clientId].filter!(t => t.status == status).array;
-    return null;
+  void removeByClient(TenantId tenantId, ClientId clientId) {
+    findByClient(tenantId, clientId).each!(t => remove(t));
   }
 
-  void save(Template t) {
-    store[t.clientId] ~= t;
+  size_t countBySchema(TenantId tenantId, ClientId clientId, SchemaId schemaId) {
+    return findBySchema(tenantId, clientId, schemaId).length;
   }
 
-  void update(Template t) {
-    if (t.clientId in store) {
-      foreach (existing; store[t.clientId]) {
-        if (existing.id == t.id) {
-          existing = t;
-          return;
-        }
-      }
-    }
+  AiTemplate[] filterBySchema(AiTemplate[] templates, SchemaId schemaId) {
+    return templates.filter!(t => t.schemaId == schemaId).array;
   }
 
-  void remove(ClientId clientId, TemplateId id) {
-    if (clientId in store) {
-      store[clientId] = store[clientId].filter!(t => t.id != id).array;
-    }
+  AiTemplate[] findBySchema(TenantId tenantId, ClientId clientId, SchemaId schemaId) {
+    return filterBySchema(findByClient(tenantId, clientId), schemaId);
   }
 
-  size_t countByClient(ClientId clientId) {
-    if (clientId in store)
-      return store[clientId].length;
-    return 0;
+  void removeBySchema(TenantId tenantId, ClientId clientId, SchemaId schemaId) {
+    findBySchema(tenantId, clientId, schemaId).each!(t => remove(t));
+  }
+
+  size_t countByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return findByDocumentType(tenantId, clientId, typeId).length;
+  }
+
+  AiTemplate[] filterByDocumentType(AiTemplate[] templates, DocumentTypeId typeId) {
+    return templates.filter!(t => t.documentTypeId == typeId).array;
+  }
+
+  AiTemplate[] findByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return filterByDocumentType(findByClient(tenantId, clientId), typeId);
+  }
+
+  void removeByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    findByDocumentType(tenantId, clientId, typeId).each!(t => remove(t));
+  }
+
+  size_t countByStatus(TenantId tenantId, ClientId clientId, TemplateStatus status) {
+    return findByStatus(tenantId, clientId, status).length;
+  }
+
+  AiTemplate[] filterByStatus(AiTemplate[] templates, TemplateStatus status) {
+    return templates.filter!(t => t.status == status).array;
+  }
+
+  AiTemplate[] findByStatus(TenantId tenantId, ClientId clientId, TemplateStatus status) {
+    return filterByStatus(findByClient(tenantId, clientId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, ClientId clientId, TemplateStatus status) {
+    findByStatus(tenantId, clientId, status).each!(t => remove(t));
   }
 }

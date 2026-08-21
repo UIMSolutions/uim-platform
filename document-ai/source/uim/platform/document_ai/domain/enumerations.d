@@ -22,11 +22,33 @@ enum DocumentStatus {
 DocumentStatus toDocumentStatus(string value) {
     mixin(EnumSwitch("DocumentStatus", "DocumentStatus.pending"));
 }
-DocumentStatus[] toDocumentStatuses(string[] values) {
-    return values.map!(v => toDocumentStatus(v)).array;
-}
-string toString(DocumentStatus status) {
-    mixin(toEnumToStringSwitch("DocumentStatus"));
+DocumentStatus[] toDocumentStatuses(string[] values)
+    => values.map!toDocumentStatus.array;
+
+string toString(DocumentStatus status)
+    => status.to!string;
+
+string[] toString(DocumentStatus[] statuses)
+    => statuses.map!toString.array;
+
+unittest {
+    mixin(ShowTest!("DocumentStatus"));
+
+    assert("pending".toDocumentStatus == DocumentStatus.pending);
+    assert("processing".toDocumentStatus == DocumentStatus.processing);
+    assert("completed".toDocumentStatus == DocumentStatus.completed);
+    assert("failed".toDocumentStatus == DocumentStatus.failed);
+    assert("confirmed".toDocumentStatus == DocumentStatus.confirmed);
+    assert("unknown".toDocumentStatus == DocumentStatus.pending); // default case
+
+    assert(DocumentStatus.pending.toString == "pending");
+    assert(DocumentStatus.processing.toString == "processing");
+    assert(DocumentStatus.completed.toString == "completed");
+    assert(DocumentStatus.failed.toString == "failed");
+    assert(DocumentStatus.confirmed.toString == "confirmed");
+
+    assert(["pending", "completed"].toDocumentStatus == [DocumentStatus.pending, DocumentStatus.completed]);
+    assert([DocumentStatus.pending, DocumentStatus.completed].toString == ["pending", "completed"]);
 }
 
 // Training job lifecycle
@@ -51,23 +73,24 @@ string[] toString(TrainingJobStatus[] statuses) {
 }
 ///
 unittest {
-    mixin(ShowTest!("DocumentStatus"));
+    mixin(ShowTest!("TrainingJobStatus"));
 
-    assert("pending".toDocumentStatus == DocumentStatus.pending);
-    assert("processing".toDocumentStatus == DocumentStatus.processing);
-    assert("completed".toDocumentStatus == DocumentStatus.completed);
-    assert("failed".toDocumentStatus == DocumentStatus.failed);
-    assert("confirmed".toDocumentStatus == DocumentStatus.confirmed);
-    assert("unknown".toDocumentStatus == DocumentStatus.pending); // default case
+    assert("pending".toTrainingJobStatus == TrainingJobStatus.pending);
+    assert("running".toTrainingJobStatus == TrainingJobStatus.running);
+    assert("completed".toTrainingJobStatus == TrainingJobStatus.completed);
+    assert("failed".toTrainingJobStatus == TrainingJobStatus.failed);
+    assert("cancelled".toTrainingJobStatus == TrainingJobStatus.cancelled);
+    assert("unknown".toTrainingJobStatus == TrainingJobStatus.pending); // default case
 
-    assert(DocumentStatus.pending.toString == "pending");
-    assert(DocumentStatus.processing.toString == "processing");
-    assert(DocumentStatus.completed.toString == "completed");
-    assert(DocumentStatus.failed.toString == "failed");
-    assert(DocumentStatus.confirmed.toString == "confirmed");
+    assert(TrainingJobStatus.pending.toString == "pending");
+    assert(TrainingJobStatus.running.toString == "running");
+    assert(TrainingJobStatus.completed.toString == "completed");
+    assert(TrainingJobStatus.failed.toString == "failed");
+    assert(TrainingJobStatus.cancelled.toString == "cancelled");
 
-    assert(["pending", "completed"].toDocumentStatus == [DocumentStatus.pending, DocumentStatus.completed]);
-    assert([DocumentStatus.pending, DocumentStatus.completed].toString == ["pending", "completed"]);
+    assert(["pending", "completed"].toTrainingJobStatuses == [TrainingJobStatus.pending, TrainingJobStatus.completed]);
+    assert([TrainingJobStatus.pending, TrainingJobStatus.completed].toString == ["pending", "completed"]);
+
 }
 
 // Extraction method used
@@ -392,7 +415,7 @@ unittest {
     assert([SchemaStatus.active, SchemaStatus.draft].toString == ["active", "draft"]);
 }
 
-// Template status
+// AiTemplate status
 enum TemplateStatus {
   active,
   inactive,

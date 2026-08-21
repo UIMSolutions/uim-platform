@@ -28,7 +28,7 @@ class ProcessDocumentsUseCase {
   }
 
   UsecaseResult upload(UploadDocumentRequest r) {
-    if (r.filename.isEmpty)
+    if (r.fileName.isEmpty)
       return UsecaseResult(false, "", "File name is required");
     if (r.clientId.isEmpty)
       return UsecaseResult(false, "", "Client ID is required");
@@ -37,9 +37,7 @@ class ProcessDocumentsUseCase {
     if (!validation.valid)
       return UsecaseResult(false, "", validation.error);
 
-    AiDocument doc;
-    doc.initEnty(r.tenantId) ;
-
+    auto doc = AiDocument(r.tenantId);
     doc.clientId = r.clientId;
     doc.fileName = r.fileName;
     doc.fileType = detectFileType(r.fileName);
@@ -77,7 +75,7 @@ class ProcessDocumentsUseCase {
     if (r.documentId.isEmpty)
       return UsecaseResult(false, "", "AiDocument ID is required");
 
-    auto doc = docRepo.findById(r.documentId, r.clientId);
+    auto doc = docRepo.findById(r.tenantId, r.clientId, r.documentId);
     if (doc.isNull)
       return UsecaseResult(false, "", "AiDocument not found");
     if (doc.status != DocumentStatus.completed)
@@ -92,24 +90,24 @@ class ProcessDocumentsUseCase {
     return UsecaseResult(true, doc.id.value, "");
   }
 
-  AiDocument getById(DocumentId id, ClientId clientId) {
-    return docRepo.findById(id, clientId);
+  AiDocument getById(TenantId tenantId, DocumentId id, ClientId clientId) {
+    return docRepo.findById(tenantId, clientId, id);
   }
 
-  AiDocument[] list(ClientId clientId) {
-    return docRepo.findByClient(clientId);
+  AiDocument[] list(TenantId tenantId, ClientId clientId) {
+    return docRepo.findByClient(tenantId, clientId);
   }
 
-  AiDocument[] listByStatus(DocumentStatus status, ClientId clientId) {
-    return docRepo.findByStatus(status, clientId);
+  AiDocument[] listByStatus(TenantId tenantId, ClientId clientId, DocumentStatus status) {
+    return docRepo.findByStatus(tenantId, clientId, status);
   }
 
-  AiDocument[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
-    return docRepo.findByDocumentType(typeId, clientId);
+  AiDocument[] listByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return docRepo.findByDocumentType(tenantId, clientId, typeId);
   }
 
-  UsecaseResult deleteDocument(ClientId clientId, DocumentId id) {
-    auto entity = docRepo.findById(id, clientId);
+  UsecaseResult deleteDocument(TenantId tenantId, ClientId clientId, DocumentId id) {
+    auto entity = docRepo.findById(tenantId, clientId, id);
     if (entity.isNull)
       return UsecaseResult(false, "", "AiDocument not found");
 
@@ -117,12 +115,12 @@ class ProcessDocumentsUseCase {
     return UsecaseResult(true, entity.id.value, "");
   }
 
-  ExtractionResult getExtractionResult(DocumentId docId, ClientId clientId) {
-    return resultRepo.findByDocument(docId, clientId);
+  ExtractionResult getExtractionResult(TenantId tenantId, DocumentId docId, ClientId clientId) {
+    return resultRepo.findByDocument(tenantId, clientId, docId);
   }
 
-  size_t count(ClientId clientId) {
-    return docRepo.countByClient(clientId);
+  size_t count(TenantId tenantId, ClientId clientId) {
+    return docRepo.countByClient(tenantId, clientId);
   }
 
   private void processExtraction(AiDocument doc) {
@@ -139,8 +137,8 @@ class ProcessDocumentsUseCase {
 
     // Update AiDocument status
     doc.status = DocumentStatus.completed;
-    doc.processedAt = now;
-    doc.updatedAt = now;
+    doc.processedAt = currentTimestamp;
+    doc.updatedAt = currentTimestamp;
     docRepo.update(doc);
   }
 }

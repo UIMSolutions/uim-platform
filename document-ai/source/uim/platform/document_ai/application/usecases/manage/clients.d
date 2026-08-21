@@ -26,7 +26,7 @@ class ManageClientsUseCase {
       return UsecaseResult(false, "", "Tenant ID is required");
 
     auto c = Client(r.tenantId);
-    c.id = r.clientId.isNull ? createId() : r.clientId;
+    c.id = r.clientId.isNull ? ClientId(createId()) : r.clientId;
     c.name = r.name;
     c.description = r.description;
     c.documentQuota = r.documentQuota > 0 ? r.documentQuota : 1000;
@@ -52,7 +52,7 @@ class ManageClientsUseCase {
     if (r.clientId.isEmpty)
       return UsecaseResult(false, "", "Client ID is required");
 
-    auto existing = repo.findById(r.clientId);
+    auto existing = repo.findById(r.tenantId, r.clientId);
     if (existing.isNull)
       return UsecaseResult(false, "", "Client not found");
 

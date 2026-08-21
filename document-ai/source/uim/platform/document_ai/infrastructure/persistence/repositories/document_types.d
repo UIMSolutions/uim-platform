@@ -15,6 +15,14 @@ mixin(ShowModule!());
 @safe:
 class DocumentTypeRepository : TenantRepository!(DocumentType, DocumentTypeId), IDocumentTypeRepository {
 
+  DocumentType findById(TenantId tenantId, ClientId clientId, DocumentTypeId id) {
+    foreach(c; filterByClient(findByTenant(tenantId), clientId)) {
+      if (c.id == id)
+        return c;
+    }
+    return null;
+  }
+
   size_t countByClient(TenantId tenantId, ClientId clientId) {
     return findByClient(tenantId, clientId).length;
   }
@@ -46,4 +54,5 @@ class DocumentTypeRepository : TenantRepository!(DocumentType, DocumentTypeId), 
   void removeByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category) {
     findByCategory(tenantId, clientId, category).each!(e => remove(e));
   }
+
 }

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 struct UploadDocumentRequest {
   TenantId tenantId;
-  string clientId;
+  ClientId clientId;
   string fileName;
   string mimeType;
   long fileSize;
@@ -27,15 +27,15 @@ struct UploadDocumentRequest {
 
 struct ConfirmDocumentRequest {
   TenantId tenantId;
-  string clientId;
-  string documentId;
+  ClientId clientId;
+  DocumentId documentId;
   string[][] correctedFields;
 }
 // --- Schema ---
 
 struct CreateSchemaRequest {
   TenantId tenantId;
-  string clientId;
+  ClientId clientId;
   string documentTypeId;
   string name;
   string description;
@@ -46,20 +46,20 @@ struct CreateSchemaRequest {
 
 struct UpdateSchemaRequest {
   TenantId tenantId;
-  string clientId;
-  string schemaId;
+  ClientId clientId;
+  SchemaId schemaId;
   string name;
   string description;
   string status;
   string[][] headerFields;
   string[][] lineItemFields;
 }
-// --- Template ---
+// --- AiTemplate ---
 
 struct CreateTemplateRequest {
   TenantId tenantId;
-  string clientId;
-  string schemaId;
+  ClientId clientId;
+  SchemaId schemaId;
   string documentTypeId;
   string name;
   string description;
@@ -68,8 +68,8 @@ struct CreateTemplateRequest {
 
 struct UpdateTemplateRequest {
   TenantId tenantId;
-  string clientId;
-  string templateId;
+  ClientId clientId;
+  TemplateId templateId;
   string name;
   string description;
   string status;
@@ -79,29 +79,29 @@ struct UpdateTemplateRequest {
 
 struct CreateDocumentTypeRequest {
   TenantId tenantId;
-  string clientId;
+  ClientId clientId;
   string name;
   string description;
   string category;
-  string defaultSchemaId;
+  SchemaId defaultSchemaId;
   string[] supportedFileTypes;
 }
 
 struct UpdateDocumentTypeRequest {
   TenantId tenantId;
-  string clientId;
-  string documentTypeId;
+  ClientId clientId;
+  DocumentTypeId documentTypeId;
   string name;
   string description;
   string category;
-  string defaultSchemaId;
+  SchemaId defaultSchemaId;
 }
 // --- Enrichment Data ---
 
 struct CreateEnrichmentDataRequest {
   TenantId tenantId;
-  string clientId;
-  string documentTypeId;
+  ClientId clientId;
+  DocumentTypeId documentTypeId;
   string name;
   string description;
   string subtype;
@@ -110,8 +110,8 @@ struct CreateEnrichmentDataRequest {
 
 struct UpdateEnrichmentDataRequest {
   TenantId tenantId;
-  string clientId;
-  string enrichmentDataId;
+  ClientId clientId;
+  EnrichmentDataId enrichmentDataId;
   string name;
   string description;
   string[][] fields;
@@ -120,24 +120,24 @@ struct UpdateEnrichmentDataRequest {
 
 struct CreateTrainingJobRequest {
   TenantId tenantId;
-  string clientId;
-  string documentTypeId;
-  string schemaId;
+  ClientId clientId;
+  DocumentTypeId documentTypeId;
+  SchemaId schemaId;
   string name;
   string description;
 }
 
 struct PatchTrainingJobRequest {
   TenantId tenantId;
-  string clientId;
-  string trainingJobId;
+  ClientId clientId;
+  TrainingJobId trainingJobId;
   string targetStatus;
 }
 // --- Client ---
 
 struct CreateClientRequest {
   TenantId tenantId;
-  string clientId;
+  ClientId clientId;
   string name;
   string description;
   int documentQuota;
@@ -146,7 +146,7 @@ struct CreateClientRequest {
 
 struct PatchClientRequest {
   TenantId tenantId;
-  string clientId;
+  ClientId clientId;
   string name;
   string description;
   int documentQuota;

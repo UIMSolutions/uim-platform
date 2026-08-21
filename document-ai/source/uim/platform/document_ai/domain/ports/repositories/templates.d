@@ -11,10 +11,10 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface ITemplateRepository : ITenantRepository!(Template, TemplateId) {
+interface ITemplateRepository : ITenantRepository!(AiTemplate, TemplateId) {
 
   size_t countByClient(TenantId tenantId, ClientId clientId);
-  Template[] findByClient(TenantId tenantId, ClientId clientId);
-  Template[] findBySchema(TenantId tenantId, SchemaId schemaId, ClientId clientId);
+  AiTemplate[] findByClient(TenantId tenantId, ClientId clientId);
+  AiTemplate[] findBySchema(TenantId tenantId, ClientId clientId, SchemaId schemaId);
   
 }

@@ -17,12 +17,12 @@ interface ITrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId
   TrainingJob[] findByClient(TenantId tenantId, ClientId clientId);
   void removeByClient(TenantId tenantId, ClientId clientId);
 
-  size_t countByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
-  TrainingJob[] findByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
-  void removeByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
+  size_t countByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId);
+  TrainingJob[] findByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId);
+  void removeByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId);
 
-  size_t countByStatus(TenantId tenantId, TrainingJobStatus status, ClientId clientId);
-  TrainingJob[] findByStatus(TenantId tenantId, TrainingJobStatus status, ClientId clientId);
-  void removeByStatus(TenantId tenantId, TrainingJobStatus status, ClientId clientId);
+  size_t countByStatus(TenantId tenantId, ClientId clientId, TrainingJobStatus status);
+  TrainingJob[] findByStatus(TenantId tenantId, ClientId clientId, TrainingJobStatus status);
+  void removeByStatus(TenantId tenantId, ClientId clientId, TrainingJobStatus status);
 
 }

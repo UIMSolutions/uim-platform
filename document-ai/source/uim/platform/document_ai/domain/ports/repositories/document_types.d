@@ -16,8 +16,10 @@ interface IDocumentTypeRepository : ITenantRepository!(DocumentType, DocumentTyp
   DocumentType[] findByClient(TenantId tenantId, ClientId clientId);
   void removeByClient(TenantId tenantId, ClientId clientId);
 
-  size_t countByCategory(TenantId tenantId, DocumentCategory category, ClientId clientId);
-  DocumentType[] findByCategory(TenantId tenantId, DocumentCategory category, ClientId clientId);
-  void removeByCategory(TenantId tenantId, DocumentCategory category, ClientId clientId);
+  DocumentType findById(TenantId tenantId, ClientId clientId, DocumentTypeId id);
+
+  size_t countByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category);
+  DocumentType[] findByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category);
+  void removeByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category);
 
 }

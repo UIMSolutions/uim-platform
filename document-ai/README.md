@@ -50,7 +50,7 @@ Built with **D (dlang)** and **vibe.d**, following **Clean/Hexagonal Architectur
 | PUT | `/api/v1/schemas/{id}` | Update a schema |
 | DELETE | `/api/v1/schemas/{id}` | Delete a schema |
 
-### Template Management
+### AiTemplate Management
 | Method | Path | Description |
 |--------|------|-------------|
 | POST | `/api/v1/templates` | Create a template |
@@ -145,7 +145,7 @@ kubectl apply -f k8s/service.yaml
 
 - **AiDocument Upload & Extraction** — Upload PDF, PNG, JPEG, TIFF documents for automated field extraction
 - **Schema Management** — Define extraction schemas with typed fields and validation rules
-- **Template Management** — Create templates linking schemas to AiDocument types with field mappings
+- **AiTemplate Management** — Create templates linking schemas to AiDocument types with field mappings
 - **AiDocument Type Classification** — Categorize documents (invoices, purchase orders, receipts, etc.)
 - **Enrichment Data Matching** — Match extracted data against master data with configurable scoring
 - **Training Jobs** — Train custom extraction models on your AiDocument types

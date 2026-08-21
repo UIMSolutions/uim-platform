@@ -7,7 +7,7 @@ module uim.platform.document_ai.presentation.http.controllers.template_;
 // import uim.platform.document_ai.application.usecases.manage.templates;
 // import uim.platform.document_ai.application.dto;
 
-// import uim.platform.document_ai.domain.entities.template_ : Template;
+// import uim.platform.document_ai.domain.entities.template_ : AiTemplate;
 
 import uim.platform.document_ai;
 
@@ -54,7 +54,7 @@ class TemplateController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject.set("id", result.id);
-    return successResponse("Template created", 0, resp);
+    return successResponse("AiTemplate created", 0, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -87,10 +87,10 @@ class TemplateController : ManageHttpController {
       
     auto t = usecase.getById(id, clientId);
     if (t.isNull)
-      return errorResponse("Template not found", 404);
+      return errorResponse("AiTemplate not found", 404);
 
     auto resp = t.toJson;
-    return successResponse("Template retrieved successfully", 200, resp);
+    return successResponse("AiTemplate retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -118,7 +118,7 @@ class TemplateController : ManageHttpController {
 
     auto resp = Json.emptyObject.set("id", result.id);
 
-    return successResponse("Template updated", 0, resp);
+    return successResponse("AiTemplate updated", 0, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -139,6 +139,6 @@ class TemplateController : ManageHttpController {
     auto resp = Json.emptyObject
       .set("id", result.id);
 
-    return successResponse("Template deleted successfully", 200, resp);
+    return successResponse("AiTemplate deleted successfully", 200, resp);
   }
 }

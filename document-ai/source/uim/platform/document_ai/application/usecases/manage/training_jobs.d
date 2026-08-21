@@ -57,7 +57,7 @@ class ManageTrainingJobsUseCase {
     if (r.trainingJobId.isEmpty)
       return UsecaseResult(false, "", "Training job ID is required");
 
-    auto existing = jobRepo.findById(r.clientId, r.trainingJobId);
+    auto existing = jobRepo.findById(r.tenantId, r.clientId, r.trainingJobId);
     if (existing.isNull)
       return UsecaseResult(false, "", "Training job not found");
 
@@ -87,24 +87,24 @@ class ManageTrainingJobsUseCase {
     return UsecaseResult(true, existing.id.value, "");
   }
 
-  TrainingJob getTrainingJob(ClientId clientId, TrainingJobId id) {
-    return jobRepo.findById(clientId, id);
+  TrainingJob getTrainingJob(TenantId tenantId, ClientId clientId, TrainingJobId id) {
+    return jobRepo.findById(tenantId, clientId, id);
   }
 
-  TrainingJob[] listTrainingJobs(ClientId clientId) {
-    return jobRepo.findByClient(clientId);
+  TrainingJob[] listTrainingJobs(TenantId tenantId, ClientId clientId) {
+    return jobRepo.findByClient(tenantId, clientId);
   }
 
-  TrainingJob[] listTrainingJobs(ClientId clientId, TrainingJobStatus status) {
-    return jobRepo.findByStatus(clientId, status);
+  TrainingJob[] listTrainingJobs(TenantId tenantId, ClientId clientId, TrainingJobStatus status) {
+    return jobRepo.findByStatus(tenantId, clientId, status);
   }
 
-  TrainingJob[] listTrainingJobs(ClientId clientId, DocumentTypeId typeId) {
-    return jobRepo.findByDocumentType(clientId, typeId);
+  TrainingJob[] listTrainingJobs(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return jobRepo.findByDocumentType(tenantId, clientId, typeId);
   }
 
-  UsecaseResult deleteTrainingJob(ClientId clientId, TrainingJobId id) {
-    auto job = jobRepo.findById(clientId, id);
+  UsecaseResult deleteTrainingJob(TenantId tenantId, ClientId clientId, TrainingJobId id) {
+    auto job = jobRepo.findById(tenantId, clientId, id);
     if (job.isNull)
       return UsecaseResult(false, "", "Training job not found");
 
@@ -115,7 +115,7 @@ class ManageTrainingJobsUseCase {
     return UsecaseResult(true, job.id.value, "");
   }
 
-  size_t countTrainingJobs(ClientId clientId) {
-    return jobRepo.countByClient(clientId);
+  size_t countTrainingJobs(TenantId tenantId, ClientId clientId) {
+    return jobRepo.countByClient(tenantId, clientId);
   }
 }

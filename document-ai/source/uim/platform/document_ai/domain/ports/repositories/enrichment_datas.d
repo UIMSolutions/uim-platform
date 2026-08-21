@@ -12,6 +12,8 @@ mixin(ShowModule!());
 @safe:
 interface IEnrichmentDataRepository : ITenantRepository!(EnrichmentData, EnrichmentDataId) {
 
+  EnrichmentData findById(TenantId tenantId, ClientId clientId, EnrichmentDataId id);
+  
   size_t countByClient(TenantId tenantId, ClientId clientId);
   EnrichmentData[] findByClient(TenantId tenantId, ClientId clientId);
   EnrichmentData[] findByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId);

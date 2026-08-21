@@ -87,7 +87,7 @@ class ClientController : ManageHttpController {
     return successResponse("Client retrieved successfully", 0, responseData);
   }
 
-  protected Json handlePatch(HTTPServerRequest req) {
+  override protected Json patchHandler(HTTPServerRequest req) {
     auto precheck = super.patchHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -113,7 +113,5 @@ class ClientController : ManageHttpController {
 
     return successResponse("Client updated successfully", "Updated", 200, resp);
   }
-
-  mixin(HandleTemplate!("handlePatch", "patchHandler"));
 
 }

@@ -45,7 +45,7 @@ The AiDocument AI Service provides intelligent AiDocument processing, data extra
 C-ROOT: Intelligent AiDocument Processing
 ├── C-DA-01: AiDocument Processing
 │   ├── C-DA-01.1: AiDocument Upload (PDF, PNG, JPEG, TIFF, XLSX, DOCX)
-│   ├── C-DA-01.2: Automated Field Extraction (ML, Generative AI, Template, Hybrid)
+│   ├── C-DA-01.2: Automated Field Extraction (ML, Generative AI, AiTemplate, Hybrid)
 │   ├── C-DA-01.3: Extraction Result Retrieval
 │   ├── C-DA-01.4: Result Confirmation (Data Feedback Loop)
 │   └── C-DA-01.5: AiDocument Job Lifecycle Management
@@ -54,9 +54,9 @@ C-ROOT: Intelligent AiDocument Processing
 │   ├── C-DA-02.2: Line Item Field Definition
 │   ├── C-DA-02.3: Multi-Language Support
 │   └── C-DA-02.4: Schema Lifecycle (draft → active → inactive)
-├── C-DA-03: Template Management
+├── C-DA-03: AiTemplate Management
 │   ├── C-DA-03.1: Region-Based Field Mapping (page, coordinates)
-│   ├── C-DA-03.2: Template-Schema Binding
+│   ├── C-DA-03.2: AiTemplate-Schema Binding
 │   └── C-DA-03.3: Sample AiDocument Association
 ├── C-DA-04: AiDocument Type Classification
 │   ├── C-DA-04.1: Standard Categories (invoice, PO, receipt, contract, etc.)
@@ -137,12 +137,12 @@ SVC-ROOT: AiDocument AI Platform Service
 │   ├── Get Schema
 │   ├── Update Schema
 │   └── Delete Schema
-├── SVC-DA-03: Template Management Service
-│   ├── Create Template (regions with coordinates)
+├── SVC-DA-03: AiTemplate Management Service
+│   ├── Create AiTemplate (regions with coordinates)
 │   ├── List Templates
-│   ├── Get Template
-│   ├── Update Template
-│   └── Delete Template
+│   ├── Get AiTemplate
+│   ├── Update AiTemplate
+│   └── Delete AiTemplate
 ├── SVC-DA-04: AiDocument Type Service
 │   ├── Create AiDocument Type
 │   ├── List AiDocument Types
@@ -205,7 +205,7 @@ SVC-ROOT: AiDocument AI Platform Service
 | Update | PUT | `/schemas/{id}` | Update schema |
 | Delete | DELETE | `/schemas/{id}` | Delete schema |
 
-#### 5.1.3 Template Endpoints
+#### 5.1.3 AiTemplate Endpoints
 
 | Operation | Method | URI | Description |
 |-----------|--------|-----|-------------|
@@ -314,7 +314,7 @@ F-DA-02: Schema Management
   F-DA-02.3: Manage schema lifecycle (draft → active → inactive)
   F-DA-02.4: Support multiple languages per schema
 
-F-DA-03: Template Management
+F-DA-03: AiTemplate Management
   F-DA-03.1: Define extraction regions (fieldName, page, x, y, width, height)
   F-DA-03.2: Bind templates to schemas and AiDocument types
   F-DA-03.3: Associate sample documents for validation
@@ -425,7 +425,7 @@ F-DA-07: Client Administration
   → Set uploadedAt = currentTimestamp()
   → Persist AiDocument
   → Set status = processing
-  → Run Extraction (ML / AI / Template / Hybrid)
+  → Run Extraction (ML / AI / AiTemplate / Hybrid)
   → Build ExtractionResult entity
   → Compute overallConfidence
   → Persist ExtractionResult
@@ -529,7 +529,7 @@ inactive → active (schema reactivated)
                              └───────────────────┘
 
 ┌───────────────────┐    ┌───────────────────┐    ┌───────────────────┐
-│   DocumentType    │    │      Schema       │    │     Template      │
+│   DocumentType    │    │      Schema       │    │     AiTemplate      │
 ├───────────────────┤    ├───────────────────┤    ├───────────────────┤
 │ id                │    │ id                │    │ id                │
 │ name              │    │ documentTypeId    │    │ schemaId          │
@@ -570,7 +570,7 @@ inactive → active (schema reactivated)
 | Schema | headerFields | SchemaField[] | Name, label, type, required, description, default, format |
 | Schema | lineItemFields | LineItemField[] | Name, label, type, required, description |
 | Schema | status | SchemaStatus enum | active, inactive, draft |
-| Template | regions | TemplateRegion[] | fieldName, page, x, y, width, height |
+| AiTemplate | regions | TemplateRegion[] | fieldName, page, x, y, width, height |
 | EnrichmentData | fields | EnrichmentField[] | Key-value pairs for matching |
 | TrainingJob | status | TrainingJobStatus enum | pending, running, completed, failed, cancelled |
 | TrainingJob | accuracy | double | 0.0–1.0, model accuracy after training |
@@ -627,7 +627,7 @@ AiDocument-ai/
         │   ├── entities/                    # 8 entities with sub-structs
         │   │   ├── AiDocument.d               # AiDocument + DocumentLabel
         │   │   ├── schema.d                 # Schema + SchemaField + LineItemField
-        │   │   ├── template_.d              # Template + TemplateRegion
+        │   │   ├── template_.d              # AiTemplate + TemplateRegion
         │   │   ├── document_type.d          # DocumentType
         │   │   ├── extraction_result.d      # ExtractionResult + ExtractedField + LineItem
         │   │   ├── enrichment_data.d        # EnrichmentData + EnrichmentField

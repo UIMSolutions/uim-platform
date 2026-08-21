@@ -54,7 +54,7 @@ class ManageEnrichmentDataUseCase {
     if (r.enrichmentDataId.isEmpty)
       return UsecaseResult(false, "", "Enrichment data ID is required");
 
-    auto existing = repo.findById(r.clientId, r.enrichmentDataId);
+    auto existing = repo.findById(r.tenantId, r.clientId, r.enrichmentDataId);
     if (existing.isNull)
       return UsecaseResult(false, "", "Enrichment data not found");
 
@@ -81,26 +81,26 @@ class ManageEnrichmentDataUseCase {
     return UsecaseResult(true, existing.id.value, "");
   }
 
-  EnrichmentData getEnrichmentData(ClientId clientId, EnrichmentDataId id) {
-    return repo.findById(clientId, id);
+  EnrichmentData getEnrichmentData(TenantId tenantId, ClientId clientId, EnrichmentDataId id) {
+    return repo.findById(tenantId, clientId, id);
   }
 
-  EnrichmentData[] listEnrichmentData(ClientId clientId) {
-    return repo.findByClient(clientId);
+  EnrichmentData[] listEnrichmentData(TenantId tenantId, ClientId clientId) {
+    return repo.findByClient(tenantId, clientId);
   }
 
-  EnrichmentData[] listEnrichmentData(ClientId clientId, DocumentTypeId typeId) {
-    return repo.findByDocumentType(clientId, typeId);
+  EnrichmentData[] listEnrichmentData(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return repo.findByDocumentType(tenantId, clientId, typeId);
   }
 
-  EnrichmentData[] listEnrichmentData(ClientId clientId, string subtype) {
-    return repo.findBySubtype(clientId, subtype);
+  EnrichmentData[] listEnrichmentData(TenantId tenantId, ClientId clientId, string subtype) {
+    return repo.findBySubtype(tenantId, clientId, subtype);
   }
-  size_t countEnrichmentData(ClientId clientId) {
-    return repo.countByClient(clientId);
+  size_t countEnrichmentData(TenantId tenantId, ClientId clientId) {
+    return repo.countByClient(tenantId, clientId);
   }
-  UsecaseResult deleteEnrichmentData(ClientId clientId, EnrichmentDataId id) {
-    auto entity = repo.findById(clientId, id);
+  UsecaseResult deleteEnrichmentData(TenantId tenantId, ClientId clientId, EnrichmentDataId id) {
+    auto entity = repo.findById(tenantId, clientId, id);
     if (entity.isNull)
       return UsecaseResult(false, "", "Enrichment data not found");
 

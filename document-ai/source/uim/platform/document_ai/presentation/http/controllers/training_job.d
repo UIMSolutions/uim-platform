@@ -91,13 +91,16 @@ class TrainingJobController : ManageHttpController {
     return successResponse("Training job retrieved successfully", 200, jobToJson(tj));
   }
 
-  protected Json handlePatch(HTTPServerRequest req) {
+  override protected Json patchHandler(HTTPServerRequest req) {
     auto precheck = super.patchHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
     auto id = TrainingJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Training job ID is required", 400);
+
     auto data = precheck.data;
     PatchTrainingJobRequest r;
     r.tenantId = tenantId;
@@ -113,8 +116,6 @@ class TrainingJobController : ManageHttpController {
 
     return successResponse("Training job updated successfully", 200, resp);
   }
-
-  mixin(HandleTemplate!("handlePatch", "patchHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

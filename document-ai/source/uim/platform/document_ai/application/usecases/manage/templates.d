@@ -24,13 +24,13 @@ class ManageTemplatesUseCase {
 
   UsecaseResult createTemplate(CreateTemplateRequest r) {
     if (r.name.isEmpty)
-      return UsecaseResult(false, "", "Template name is required");
+      return UsecaseResult(false, "", "AiTemplate name is required");
     if (r.clientId.isEmpty)
       return UsecaseResult(false, "", "Client ID is required");
     if (r.schemaId.isEmpty)
       return UsecaseResult(false, "", "Schema ID is required");
 
-    auto t = Template(r.tenantId);
+    auto t = AiTemplate(r.tenantId);
     t.clientId = r.clientId;
     t.schemaId = r.schemaId;
     t.documentTypeId = r.documentTypeId;
@@ -64,11 +64,11 @@ class ManageTemplatesUseCase {
 
   UsecaseResult updateTemplate(UpdateTemplateRequest r) {
     if (r.templateId.isEmpty)
-      return UsecaseResult(false, "", "Template ID is required");
+      return UsecaseResult(false, "", "AiTemplate ID is required");
 
-    auto existing = repo.findById(r.clientId, r.templateId);
+    auto existing = repo.findById(r.tenantId, r.clientId, r.templateId);
     if (existing.isNull)
-      return UsecaseResult(false, "", "Template not found");
+      return UsecaseResult(false, "", "AiTemplate not found");
 
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
@@ -89,28 +89,28 @@ class ManageTemplatesUseCase {
     return UsecaseResult(true, existing.id.value, "");
   }
 
-  Template getTemplate(ClientId clientId, TemplateId id) {
-    return repo.findById(clientId, id);
+  AiTemplate getTemplate(TenantId tenantId, ClientId clientId, TemplateId id) {
+    return repo.findById(tenantId, clientId, id);
   }
 
-  Template[] listTemplates(ClientId clientId) {
-    return repo.findByClient(clientId);
+  AiTemplate[] listTemplates(TenantId tenantId, ClientId clientId) {
+    return repo.findByClient(tenantId, clientId);
   }
 
-  Template[] listTemplates(ClientId clientId, SchemaId schemaId) {
-    return repo.findBySchema(clientId, schemaId);
+  AiTemplate[] listTemplates(TenantId tenantId, ClientId clientId, SchemaId schemaId) {
+    return repo.findBySchema(tenantId, clientId, schemaId);
   }
 
-  Template[] listTemplates(ClientId clientId, DocumentTypeId typeId) {
-    return repo.findByDocumentType(clientId, typeId);
+  AiTemplate[] listTemplates(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return repo.findByDocumentType(tenantId, clientId, typeId);
   }
-  size_t countTemplates(ClientId clientId) {
-    return repo.countByClient(clientId);
+  size_t countTemplates(TenantId tenantId, ClientId clientId) {
+    return repo.countByClient(tenantId, clientId);
   }
-  UsecaseResult deleteTemplate(ClientId clientId, TemplateId id) {
-    auto entity = repo.findById(clientId, id);
+  UsecaseResult deleteTemplate(TenantId tenantId, ClientId clientId, TemplateId id) {
+    auto entity = repo.findById(tenantId, clientId, id);
     if (entity.isNull)
-      return UsecaseResult(false, "", "Template not found");
+      return UsecaseResult(false, "", "AiTemplate not found");
 
     repo.remove(entity);
     return UsecaseResult(true, entity.id.value, "");

@@ -44,7 +44,7 @@ class ManageSchemasUseCase {
         SchemaField f;
         f.name = pair[0];
         f.label = pair[1];
-        f.type = toFieldType(pair[2]);
+        f.type = toFieldValueType(pair[2]);
         f.required = pair.length >= 4 && pair[3] == "true";
         hFields ~= f;
       }
@@ -58,7 +58,7 @@ class ManageSchemasUseCase {
         LineItemField f;
         f.name = pair[0];
         f.label = pair[1];
-        f.type = parseFieldType(pair[2]);
+        f.type = toFieldValueType(pair[2]);
         f.required = pair.length >= 4 && pair[3] == "true";
         lFields ~= f;
       }
@@ -73,7 +73,7 @@ class ManageSchemasUseCase {
     if (r.schemaId.isEmpty)
       return UsecaseResult(false, "", "Schema ID is required");
 
-    auto existing = repo.findById(r.schemaId, r.clientId);
+    auto existing = repo.findById(r.tenantId, r.clientId, r.schemaId);
     if (existing.isNull)
       return UsecaseResult(false, "", "Schema not found");
 
@@ -96,20 +96,20 @@ class ManageSchemasUseCase {
     return UsecaseResult(true, existing.id.value, "");
   }
 
-  Schema getSchema(SchemaId id, ClientId clientId) {
-    return repo.findById(id, clientId);
+  Schema getSchema(TenantId tenantId, ClientId clientId, SchemaId id) {
+    return repo.findById(tenantId, clientId, id);
   }
 
-  Schema[] listSchemas(ClientId clientId) {
-    return repo.findByClient(clientId);
+  Schema[] listSchemas(TenantId tenantId, ClientId clientId) {
+    return repo.findByClient(tenantId, clientId);
   }
 
-  Schema[] listSchemas(DocumentTypeId typeId, ClientId clientId) {
-    return repo.findByDocumentType(typeId, clientId);
+  Schema[] listSchemas(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return repo.findByDocumentType(tenantId, clientId, typeId);
   }
 
-  UsecaseResult deleteSchema(SchemaId id, ClientId clientId) {
-    auto schema = repo.findById(id, clientId);
+  UsecaseResult deleteSchema(TenantId tenantId, ClientId clientId, SchemaId id) {
+    auto schema = repo.findById(tenantId, clientId, id);
     if (schema.isNull)
       return UsecaseResult(false, "", "Schema not found");
 
@@ -117,20 +117,19 @@ class ManageSchemasUseCase {
     return UsecaseResult(true, schema.id.value, "");
   }
 
-  size_t countSchemas(ClientId clientId) {
-    return repo.countByClient(clientId);
+  size_t countSchemas(TenantId tenantId, ClientId clientId) {
+    return repo.countByClient(tenantId, clientId);
   }
 }
 
-private FieldValueType parseFieldType(string t) {
-  switch (t) {
-    case "string": return FieldValueType.string_;
-    case "number": return FieldValueType.number_;
-    case "date": return FieldValueType.date_;
-    case "boolean": return FieldValueType.boolean_;
-    case "currency": return FieldValueType.currency;
-    case "address": return FieldValueType.address;
-    case "line_items": return FieldValueType.line_items;
-    default: return FieldValueType.string_;
-  }
-}
+// private FieldValueType toFieldType(string t) {
+//   switch (t) {
+//     case "string": return FieldValueType.string_;
+//     case "number": return FieldValueType.number_;
+//     case "date": return FieldValueType.date_;
+//     case "boolean": return FieldValueType.boolean_;
+//     case "currency": return FieldValueType.currency;
+//     case "address": return FieldValueType.address;
+//     case "line_items": return FieldValueType.line_items;
+//     default: return FieldValueType.string_;
+//   }}

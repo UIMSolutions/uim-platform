@@ -29,7 +29,7 @@ struct TemplateRegion {
   }
 }
 
-struct Template {
+struct AiTemplate {
  mixin TenantEntity!(TemplateId);
 
   ClientId clientId;

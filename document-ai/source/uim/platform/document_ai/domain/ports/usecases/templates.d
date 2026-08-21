@@ -15,10 +15,10 @@ interface IManageTemplatesUseCase {
   
   UsecaseResult createTemplate(CreateTemplateRequest r);
   UsecaseResult updateTemplate(UpdateTemplateRequest r);
-  Template getTemplate(ClientId clientId, TemplateId id);
-  Template[] listTemplates(ClientId clientId);
-  Template[] listTemplates(ClientId clientId, SchemaId schemaId);
-  Template[] listTemplates(ClientId clientId, DocumentTypeId typeId);
+  AiTemplate getTemplate(ClientId clientId, TemplateId id);
+  AiTemplate[] listTemplates(ClientId clientId);
+  AiTemplate[] listTemplates(ClientId clientId, SchemaId schemaId);
+  AiTemplate[] listTemplates(ClientId clientId, DocumentTypeId typeId);
   size_t countTemplates(ClientId clientId);
   UsecaseResult deleteTemplate(ClientId clientId, TemplateId id);
 

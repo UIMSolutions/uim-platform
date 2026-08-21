@@ -13,32 +13,50 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class SchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
+class SchemaRepository : TenantRepository!(Schema, SchemaId), ISchemaRepository {
   
-  
-  Schema[] findByClient(ClientId clientId) {
-    foreach (s; findByTenant(tenantId))
-      if (s.clientId == clientId)   
-      return cl;
-    return null;
+  size_t countByClient(TenantId tenantId, ClientId clientId) {
+    return findByClient(tenantId, clientId).length;
   }
 
-  Schema[] findByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (cl).filter!(s => s.documentTypeId == typeId).array;
-    return null;
+  Schema[] filterByClient(Schema[] schemas, ClientId clientId) {
+    return schemas.filter!(s => s.clientId == clientId).array;
   }
 
-  Schema[] findByStatus(SchemaStatus status, ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (cl).filter!(s => s.status == status).array;
-    return null;
+  Schema[] findByClient(TenantId tenantId, ClientId clientId) {
+    return filterByClient(findByTenant(tenantId), clientId);
   }
 
- 
-  size_t countByClient(ClientId clientId) {
-    if (auto cl = clientId in store)
-      return (cl).length;
-    return 0;
+  size_t countByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId) {
+    return findByDocumentType(tenantId, typeId, clientId).length;
   }
+
+  Schema[] filterByDocumentType(Schema[] schemas, DocumentTypeId typeId) {
+    return schemas.filter!(s => s.documentTypeId == typeId).array;
+  }
+
+  Schema[] findByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId) {
+    return filterByDocumentType(findByClient(tenantId, clientId), typeId);
+  }
+
+  void removeByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId) {
+    findByDocumentType(tenantId, typeId, clientId).each!(s => remove(s));
+  }
+
+  size_t countByStatus(TenantId tenantId, SchemaStatus status, ClientId clientId) {
+    return findByStatus(tenantId, status, clientId).length;
+  }
+
+  Schema[] filterByStatus(Schema[] schemas, SchemaStatus status) {
+    return schemas.filter!(s => s.status == status).array;
+  }
+
+  Schema[] findByStatus(TenantId tenantId, SchemaStatus status, ClientId clientId) {
+    return filterByStatus(findByClient(tenantId, clientId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, SchemaStatus status, ClientId clientId) {
+    findByStatus(tenantId, status, clientId).each!(s => remove(s));
+  }
+
 }

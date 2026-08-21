@@ -34,7 +34,7 @@ class ManageDocumentTypesUseCase {
     dt.description = r.description;
     dt.defaultSchemaId = r.defaultSchemaId;
     dt.supportedFileTypes = r.supportedFileTypes;
-    dt.category = parseCategory(r.category);
+    dt.category = r.category.toDocumentCategory;
 
     repo.save(dt);
     return UsecaseResult(true, dt.id.value, "");
@@ -44,7 +44,7 @@ class ManageDocumentTypesUseCase {
     if (r.documentTypeId.isEmpty)
       return UsecaseResult(false, "", "AiDocument type ID is required");
 
-    auto existing = repo.findById(r.documentTypeId, r.clientId);
+    auto existing = repo.findById(r.tenantId, r.clientId, r.documentTypeId);
     if (existing.isNull)
       return UsecaseResult(false, "", "AiDocument type not found");
 
@@ -60,20 +60,20 @@ class ManageDocumentTypesUseCase {
     return UsecaseResult(true, existing.id.value, "");
   }
 
-  DocumentType getDocumentType(DocumentTypeId id, ClientId clientId) {
-    return repo.findById(id, clientId);
+  DocumentType getDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId id) {
+    return repo.findById(tenantId, clientId, id);
   }
 
-  DocumentType[] listDocumentTypes(ClientId clientId) {
-    return repo.findByClient(clientId);
+  DocumentType[] listDocumentTypes(TenantId tenantId, ClientId clientId) {
+    return repo.findByClient(tenantId, clientId);
   }
 
-  DocumentType[] listDocumentTypes(DocumentCategory category, ClientId clientId) {
-    return repo.findByCategory(category, clientId);
+  DocumentType[] listDocumentTypes(TenantId tenantId, ClientId clientId, DocumentCategory category) {
+    return repo.findByCategory(tenantId, clientId, category);
   }
 
-  UsecaseResult deleteDocumentType(ClientId clientId, DocumentTypeId id) {
-    auto entity = repo.findById(clientId, id);
+  UsecaseResult deleteDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId id) {
+    auto entity = repo.findById(tenantId, clientId, id);
     if (entity.isNull)
       return UsecaseResult(false, "", "AiDocument type not found");
 
@@ -81,25 +81,25 @@ class ManageDocumentTypesUseCase {
     return UsecaseResult(true, entity.id.value, "");
   }
 
-  size_t count(ClientId clientId) {
-    return repo.countByClient(clientId);
+  size_t count(TenantId tenantId, ClientId clientId) {
+    return repo.countByClient(tenantId, clientId);
   }
 }
 
-private DocumentCategory toCategory(string c) {
-  switch (c) {
-    case "invoice": return DocumentCategory.invoice;
-    case "purchase_order": return DocumentCategory.purchase_order;
-    case "payment_advice": return DocumentCategory.payment_advice;
-    case "delivery_note": return DocumentCategory.delivery_note;
-    case "credit_memo": return DocumentCategory.credit_memo;
-    case "bank_statement": return DocumentCategory.bank_statement;
-    case "receipt": return DocumentCategory.receipt;
-    case "contract": return DocumentCategory.contract;
-    case "customs_declaration": return DocumentCategory.customs_declaration;
-    case "bill_of_lading": return DocumentCategory.bill_of_lading;
-    case "letter_of_credit": return DocumentCategory.letter_of_credit;
-    case "custom": return DocumentCategory.custom;
-    default: return DocumentCategory.general;
-  }
-}
+// private DocumentCategory toCategory(string c) {
+//   switch (c) {
+//     case "invoice": return DocumentCategory.invoice;
+//     case "purchase_order": return DocumentCategory.purchase_order;
+//     case "payment_advice": return DocumentCategory.payment_advice;
+//     case "delivery_note": return DocumentCategory.delivery_note;
+//     case "credit_memo": return DocumentCategory.credit_memo;
+//     case "bank_statement": return DocumentCategory.bank_statement;
+//     case "receipt": return DocumentCategory.receipt;
+//     case "contract": return DocumentCategory.contract;
+//     case "customs_declaration": return DocumentCategory.customs_declaration;
+//     case "bill_of_lading": return DocumentCategory.bill_of_lading;
+//     case "letter_of_credit": return DocumentCategory.letter_of_credit;
+//     case "custom": return DocumentCategory.custom;
+//     default: return DocumentCategory.general;
+//   }
+// }

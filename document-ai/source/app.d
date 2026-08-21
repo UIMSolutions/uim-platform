@@ -50,7 +50,7 @@ version (unittest) {
         writefln("  Schema Management:                                      ");
         writefln("    CRUD      /api/v1/schemas                             ");
         writefln("                                                          ");
-        writefln("  Template Management:                                    ");
+        writefln("  AiTemplate Management:                                    ");
         writefln("    CRUD      /api/v1/templates                           ");
         writefln("                                                          ");
         writefln("  AiDocument Types:                                         ");

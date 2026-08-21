@@ -13,65 +13,66 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class TrainingJobRepository : TrainingJobRepository {
-  protected TrainingJob[][string] store;
+class TrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId), ITrainingJobRepository {
 
-  bool existsById(ClientId clientId, TrainingJobId id) {
-    if (clientId !in store)
-      return false;
-
-    return store[clientId].any!(tj => tj.id == id);
+  bool existsById(TenantId tenantId, ClientId clientId, TrainingJobId id) {
+    return findByClient(tenantId, clientId).any!(tj => tj.id == id);
   }
 
-  TrainingJob findById(ClientId clientId, TrainingJobId id) {
-    if (clientId !in store)
-      return TrainingJob.init;
-
-    foreach (tj; store[clientId]) {
+  TrainingJob findById(TenantId tenantId, ClientId clientId, TrainingJobId id) {
+    foreach (tj; findByClient(tenantId, clientId)) {
       if (tj.id == id)
         return tj;
     }
     return TrainingJob.init;
   }
 
-  TrainingJob[] findByClient(ClientId clientId) {
-    return clientId in store ? store[clientId] : null;
+  size_t countByClient(TenantId tenantId, ClientId clientId) {
+    return findByClient(tenantId, clientId).length;
   }
 
-  TrainingJob[] findByDocumentType(ClientId clientId, DocumentTypeId typeId) {
-    return findByClient(clientId)
-      .filter!(tj => tj.documentTypeId == typeId).array;
+  TrainingJob[] filterByClient(TrainingJob[] trainingJobs, ClientId clientId) {
+    return trainingJobs.filter!(tj => tj.clientId == clientId).array;
   }
 
-  TrainingJob[] findByStatus(ClientId clientId, TrainingJobStatus status) {
-    return findByClient(clientId)
-      .filter!(tj => tj.status == status).array;
+  TrainingJob[] findByClient(TenantId tenantId, ClientId clientId) {
+    return filterByClient(findByTenant(tenantId), clientId);
   }
 
-  void save(TrainingJob tj) {
-    store[tj.clientId] ~= tj;
+  void removeByClient(TenantId tenantId, ClientId clientId) {
+    findByClient(tenantId, clientId).each!(tj => remove(tj));
   }
 
-  void update(TrainingJob tj) {
-    if (tj.clientId !in store)
-      return;
-
-    store[tj.clientId] = findByClient(tj.clientId).map!(j => j.id == tj.id ? tj : j).array;
+  size_t countByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return findByDocumentType(tenantId, clientId, typeId).length;
   }
 
-  void remove(TrainingJobId id, ClientId clientId) {
-    if (clientId !in store)
-      return;
-
-    store[clientId] = store[clientId].filter!(tj => tj.id != id).array;
+  TrainingJob[] filterByDocumentType(TrainingJob[] trainingJobs, DocumentTypeId typeId) {
+    return trainingJobs.filter!(tj => tj.documentTypeId == typeId).array;
   }
 
-  size_t countByClient(ClientId clientId) {
-    return findByClient(clientId).length;
+  TrainingJob[] findByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return filterByDocumentType(filterByClient(findByTenant(tenantId), clientId), typeId);
   }
 
-  size_t countByStatus(ClientId clientId, TrainingJobStatus status) {
-    return findByClient(clientId)
-      .filter!(tj => tj.status == status).array.length;
+  void removeByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    findByDocumentType(tenantId, clientId, typeId).each!(tj => remove(tj));
   }
+
+  size_t countByStatus(TenantId tenantId, ClientId clientId, TrainingJobStatus status) {
+    return findByStatus(tenantId, clientId, status).length;
+  }
+
+  TrainingJob[] filterByStatus(TrainingJob[] trainingJobs, TrainingJobStatus status) {
+    return trainingJobs.filter!(tj => tj.status == status).array;
+  }
+
+  TrainingJob[] findByStatus(TenantId tenantId, ClientId clientId, TrainingJobStatus status) {
+    return filterByStatus(findByClient(tenantId, clientId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, ClientId clientId, TrainingJobStatus status) {
+    findByStatus(tenantId, clientId, status).each!(tj => remove(tj));
+  }
+
 }
