@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.application.usecases.process_documents;
 
-// import uim.platform.document_ai.domain.entities.document;
+// import uim.platform.document_ai.domain.entities.AiDocument;
 // import uim.platform.document_ai.domain.entities.extraction_result;
 // import uim.platform.document_ai.domain.ports.repositories.documents;
 // import uim.platform.document_ai.domain.ports.repositories.extraction_results;
@@ -37,7 +37,7 @@ class ProcessDocumentsUseCase {
     if (!validation.valid)
       return UsecaseResult(false, "", validation.error);
 
-    Document doc;
+    AiDocument doc;
     doc.initEnty(r.tenantId) ;
 
     doc.clientId = r.clientId;
@@ -75,13 +75,13 @@ class ProcessDocumentsUseCase {
 
   UsecaseResult confirm(ConfirmDocumentRequest r) {
     if (r.documentId.isEmpty)
-      return UsecaseResult(false, "", "Document ID is required");
+      return UsecaseResult(false, "", "AiDocument ID is required");
 
     auto doc = docRepo.findById(r.documentId, r.clientId);
     if (doc.isNull)
-      return UsecaseResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "AiDocument not found");
     if (doc.status != DocumentStatus.completed)
-      return UsecaseResult(false, "", "Document must be in completed status to confirm");
+      return UsecaseResult(false, "", "AiDocument must be in completed status to confirm");
 
     doc.status = DocumentStatus.confirmed;
 
@@ -92,26 +92,26 @@ class ProcessDocumentsUseCase {
     return UsecaseResult(true, doc.id.value, "");
   }
 
-  Document getById(DocumentId id, ClientId clientId) {
+  AiDocument getById(DocumentId id, ClientId clientId) {
     return docRepo.findById(id, clientId);
   }
 
-  Document[] list(ClientId clientId) {
+  AiDocument[] list(ClientId clientId) {
     return docRepo.findByClient(clientId);
   }
 
-  Document[] listByStatus(DocumentStatus status, ClientId clientId) {
+  AiDocument[] listByStatus(DocumentStatus status, ClientId clientId) {
     return docRepo.findByStatus(status, clientId);
   }
 
-  Document[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
+  AiDocument[] listByDocumentType(ClientId clientId, DocumentTypeId typeId) {
     return docRepo.findByDocumentType(typeId, clientId);
   }
 
   UsecaseResult deleteDocument(ClientId clientId, DocumentId id) {
     auto entity = docRepo.findById(id, clientId);
     if (entity.isNull)
-      return UsecaseResult(false, "", "Document not found");
+      return UsecaseResult(false, "", "AiDocument not found");
 
     docRepo.remove(entity);
     return UsecaseResult(true, entity.id.value, "");
@@ -125,7 +125,7 @@ class ProcessDocumentsUseCase {
     return docRepo.countByClient(clientId);
   }
 
-  private void processExtraction(Document doc) {
+  private void processExtraction(AiDocument doc) {
     auto result = ExtractionResult(doc.tenantId);
     result.clientId = doc.clientId;
     result.documentId = doc.id;
@@ -137,7 +137,7 @@ class ProcessDocumentsUseCase {
 
     resultRepo.save(result);
 
-    // Update document status
+    // Update AiDocument status
     doc.status = DocumentStatus.completed;
     doc.processedAt = now;
     doc.updatedAt = now;

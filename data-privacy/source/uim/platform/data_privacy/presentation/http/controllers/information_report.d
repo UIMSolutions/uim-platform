@@ -78,6 +78,8 @@ class InformationReportController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = InformationReportId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid information report ID", 400);
 
     auto entry = usecase.getReport(tenantId, id);
     if (entry.isNull)

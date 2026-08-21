@@ -18,7 +18,7 @@ class ArchitectureBlockUi5Controller {
     }
 
     void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
+        // super.registerRoutes(router);
         
         router.get("/ui5/architecture/architecture2", &handleArchitectureList);
         router.get("/ui5/architecture/architecture2/:id", &handleArchitectureDetail);

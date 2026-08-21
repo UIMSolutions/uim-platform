@@ -3,11 +3,11 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.document_ai.presentation.http.controllers.document;
+module uim.platform.document_ai.presentation.http.controllers.AiDocument;
 // import uim.platform.document_ai.application.usecases.process_documents;
 // import uim.platform.document_ai.application.dto;
 
-// import uim.platform.document_ai.domain.entities.document : Document;
+// import uim.platform.document_ai.domain.entities.AiDocument : AiDocument;
 
 import uim.platform.document_ai;
 
@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DocumentController : HttpController {
+class DocumentController : ManageHttpController {
   protected ProcessDocumentsUseCase usecase;
 
   this(ProcessDocumentsUseCase usecase) {
@@ -25,12 +25,12 @@ class DocumentController : HttpController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
-    router.post("/api/v1/document/jobs", &handleUpload);
-    router.get("/api/v1/document/jobs", &handleList);
-    router.get("/api/v1/document/jobs/*", &handleGet);
-    router.delete_("/api/v1/document/jobs/*", &handleDelete);
-    router.post("/api/v1/document/jobs/confirm/*", &handleConfirm);
-    router.get("/api/v1/document/jobs/results/*", &handleResult);
+    router.post("/api/v1/AiDocument/jobs", &handleUpload);
+    router.get("/api/v1/AiDocument/jobs", &handleList);
+    router.get("/api/v1/AiDocument/jobs/*", &handleGet);
+    router.delete_("/api/v1/AiDocument/jobs/*", &handleDelete);
+    router.post("/api/v1/AiDocument/jobs/confirm/*", &handleConfirm);
+    router.get("/api/v1/AiDocument/jobs/results/*", &handleResult);
   }
 
   protected Json uploadHandler(HTTPServerRequest req) {
@@ -59,7 +59,7 @@ class DocumentController : HttpController {
       .set("id", result.id)
       .set("status", Json("pending"));
 
-    return successResponse("Document uploaded successfully", "Uploaded", 201, resp);
+    return successResponse("AiDocument uploaded successfully", "Uploaded", 201, resp);
   }
 
   mixin(HandleTemplate!("handleUpload", "uploadHandler"));
@@ -89,15 +89,15 @@ class DocumentController : HttpController {
     auto tenantId = precheck.tenantId;
     auto id = DocumentId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid document ID", 400);
+      return errorResponse("Invalid AiDocument ID", 400);
 
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
     auto d = usecase.getById(tenantId, id, clientId);
     if (d.isNull)
-      return errorResponse("Document not found", 404);
+      return errorResponse("AiDocument not found", 404);
 
-    return successResponse("Document retrieved successfully", 200, toJson(d));
+    return successResponse("AiDocument retrieved successfully", 200, toJson(d));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -108,7 +108,7 @@ class DocumentController : HttpController {
     auto tenantId = precheck.tenantId;
     auto id = DocumentId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid document ID", 400);
+      return errorResponse("Invalid AiDocument ID", 400);
 
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
@@ -117,7 +117,7 @@ class DocumentController : HttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Document deleted successfully", 200, responseData);
+    return successResponse("AiDocument deleted successfully", 200, responseData);
   }
 
   protected Json confirmHandler(HTTPServerRequest req) {
@@ -128,7 +128,7 @@ class DocumentController : HttpController {
     auto tenantId = precheck.tenantId;
     auto id = DocumentId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid document ID", 400);
+      return errorResponse("Invalid AiDocument ID", 400);
 
     auto data = precheck.data;
     ConfirmDocumentRequest r;
@@ -142,7 +142,7 @@ class DocumentController : HttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Document confirmed successfully", 200, responseData);
+    return successResponse("AiDocument confirmed successfully", 200, responseData);
   }
 
   mixin(HandleTemplate!("handleConfirm", "confirmHandler"));
@@ -155,7 +155,7 @@ class DocumentController : HttpController {
     auto tenantId = precheck.tenantId;
     auto id = DocumentId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid document ID", 400);
+      return errorResponse("Invalid AiDocument ID", 400);
 
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 

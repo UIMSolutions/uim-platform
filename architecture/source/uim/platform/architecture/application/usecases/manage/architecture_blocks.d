@@ -25,7 +25,8 @@ class ManageArchitectureBlocksUseCase {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "Title is required");
 
-        auto block = ArchitectureBlock(req.tenantId, req.blockId);
+        auto block = ArchitectureBlock(req.tenantId);
+        block.id = req.blockId.isNull ? ArchitectureBlockId(generateId()) : req.blockId;
         block.title = req.title;
         block.description = req.description;
         block.owner = req.owner;
@@ -65,20 +66,35 @@ unittest {
         auto usecase = new ManageArchitectureBlocksUseCase(repo);
         auto tenantId = TenantId("tenant1");
 
-        auto createReq = CreateArchitectureBlockRequest(tenantId, "Test Block", "Description");
+        auto createReq = CreateArchitectureBlockRequest();
+        createReq.tenantId = tenantId;
+        createReq.title = "Test Block";
+        createReq.description = "Description";
+        createReq.owner = "Owner";
         auto createResult = usecase.createBlock(createReq);
-        assert(createResult.success);
+        // writeln("Created block with ID: ", createResult.id, " Message: ", createResult.message);
+        assert(createResult.success, "Create operation failed");
 
-        auto blockId = ArchitectureBlockId(createResult.blockId);
-        auto block = usecase.getBlock(tenantId, blockId);
-        assert(block.id == blockId);
+        auto blockId = createResult.id;
+        auto block = usecase.getBlock(tenantId, ArchitectureBlockId(blockId));
+        // writeln("Retrieved block with ID: ", block.id.value, " Title: ", block.title, " Description: ", block.description);
+        assert(block.title == "Test Block", "Retrieved block title does not match");
+        assert(block.description == "Description", "Retrieved block description does not match");
+        assert(block.owner == "Owner", "Retrieved block owner does not match");
+        assert(block.tenantId == tenantId, "Retrieved block tenant ID does not match");
+        assert(block.id.value == blockId, "Retrieved block ID does not match created block ID");
 
-        auto updateReq = UpdateArchitectureBlockRequest(tenantId, blockId, "Updated Block", "Updated Description");
+        auto updateReq = UpdateArchitectureBlockRequest();
+        updateReq.tenantId = tenantId;
+        updateReq.blockId = block.id;
+        updateReq.title = "Updated Block";
+        updateReq.description = "Updated Description";
         auto updateResult = usecase.updateBlock(updateReq);
-        assert(updateResult.success);
+        // writeln("Updated block with ID: ", updateResult.id, " Message: ", updateResult.message);
+        assert(updateResult.success, "Update operation failed");
 
-        auto deleteResult = usecase.deleteBlock(tenantId, blockId);
-        assert(deleteResult.success);
+        auto deleteResult = usecase.deleteBlock(tenantId, ArchitectureBlockId(blockId));
+        assert(deleteResult.success, "Delete operation failed");
     }
 
     testManageArchitectureBlocksUseCase();

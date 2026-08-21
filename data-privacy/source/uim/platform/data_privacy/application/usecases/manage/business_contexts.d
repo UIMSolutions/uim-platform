@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageBusinessContextsUseCase {
-  protected BusinessContextRepository businessContexts;
+  protected IBusinessContextRepository businessContexts;
 
   this(BusinessContextRepository businessContexts) {
     this.businessContexts = businessContexts;

@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: document-ai
+  name: AiDocument-ai
   labels:
-    app: document-ai
+    app: AiDocument-ai
     part-of: uim-platform
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: document-ai
+      app: AiDocument-ai
   template:
     metadata:
       labels:
-        app: document-ai
+        app: AiDocument-ai
     spec:
       containers:
-      - name: document-ai
-        image: uim-platform/document-ai:latest
+      - name: AiDocument-ai
+        image: uim-platform/AiDocument-ai:latest
         ports:
         - containerPort: 8096
           protocol: TCP
         envFrom:
         - configMapRef:
-            name: document-ai-config
+            name: AiDocument-ai-config
         livenessProbe:
           httpGet:
             path: /api/v1/health

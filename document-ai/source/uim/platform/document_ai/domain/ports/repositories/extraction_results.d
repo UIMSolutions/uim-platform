@@ -12,12 +12,12 @@ mixin(ShowModule!());
 @safe:
 interface IExtractionResultRepository : ITenantRepository!(ExtractionResult, ExtractionResultId) {
 
-  bool existsByDocument(TenantId tenantId, DocumentId docId, ClientId clientId);
-  ExtractionResult findByDocument(TenantId tenantId, DocumentId docId, ClientId clientId);
-
   size_t countByClient(TenantId tenantId, ClientId clientId);  
   ExtractionResult[] findByClient(TenantId tenantId, ClientId clientId);
+
+  bool existsByDocument(TenantId tenantId, ClientId clientId, DocumentId docId);
+  ExtractionResult findByDocument(TenantId tenantId, ClientId clientId, DocumentId docId);
   
-  ExtractionResult[] findBySchema(TenantId tenantId, SchemaId schemaId, ClientId clientId);
+  ExtractionResult[] findBySchema(TenantId tenantId, ClientId clientId, SchemaId schemaId);
 
 }

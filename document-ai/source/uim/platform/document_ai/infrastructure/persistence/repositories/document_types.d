@@ -15,40 +15,35 @@ mixin(ShowModule!());
 @safe:
 class DocumentTypeRepository : TenantRepository!(DocumentType, DocumentTypeId), IDocumentTypeRepository {
 
-  size_t countByClient(TenantId tenentId, ClientId clientId) {
-    return findByClient()
-
-  DocumentType[] findByClient(TenantId tenentId, ClientId clientId) {
-    return clientId in store ? store[clientId] : null;
+  size_t countByClient(TenantId tenantId, ClientId clientId) {
+    return findByClient(tenantId, clientId).length;
   }
 
-  DocumentType[] findByCategory(TenantId tenentId, DocumentCategory category, ClientId clientId) {
-    return clientId in store ? store[clientId].filter!(dt => dt.category == category).array : null;
+  DocumentType[] filterByClient(DocumentType[] types, ClientId clientId) {
+    return types.filter!(dt => dt.clientId == clientId).array;
+  }
+  
+  DocumentType[] findByClient(TenantId tenantId, ClientId clientId) {
+    return filterByClient(findByTenant(tenantId), clientId).array;
   }
 
-  void save(DocumentType dt) {
-    if (dt.clientId !in store) {
-      DocumentType[] types;
-      store[dt.clientId] = types;
-    }
-    store[dt.clientId] ~= dt;
+  void removeByClient(TenantId tenantId, ClientId clientId) {
+    findByClient(tenantId, clientId).each!(e => remove(e));
   }
 
-  void update(DocumentType newType) {
-    if (newType.clientId !in store)
-      return;
-
-    store[newType.clientId] = store[newType.clientId].map!(type => type.id == newType.id ? newType : type).array;
+  size_t countByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category) {
+    return findByCategory(tenantId, clientId, category).length;
   }
 
-  void remove(DocumentTypeId id, ClientId clientId) {
-    if (clientId !in store)
-      return;
-
-    store[clientId] = store[clientId].filter!(type => type.id != id).array;
+  DocumentType[] filterByCategory(DocumentType[] types, DocumentCategory category) {
+    return types.filter!(dt => dt.category == category).array;
+  }
+  
+  DocumentType[] findByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category) {
+    return filterByCategory(findByClient(tenantId, clientId), category).array;
   }
 
-  size_t countByClient(ClientId clientId) {
-    return clientId in store ? store[clientId].length : 0;
+  void removeByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category) {
+    findByCategory(tenantId, clientId, category).each!(e => remove(e));
   }
 }

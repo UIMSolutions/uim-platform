@@ -14,7 +14,7 @@ interface IEnrichmentDataRepository : ITenantRepository!(EnrichmentData, Enrichm
 
   size_t countByClient(TenantId tenantId, ClientId clientId);
   EnrichmentData[] findByClient(TenantId tenantId, ClientId clientId);
-  EnrichmentData[] findByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
-  EnrichmentData[] findBySubtype(TenantId tenantId, string subtype, ClientId clientId);
+  EnrichmentData[] findByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId);
+  EnrichmentData[] findBySubtype(TenantId tenantId, ClientId clientId, string subtype);
   
 }

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-// Document processing status
+// AiDocument processing status
 enum DocumentStatus {
   pending,
   processing,
@@ -108,7 +108,7 @@ unittest {
     assert([ExtractionMethod.ml_model, ExtractionMethod.hybrid].toString == ["ml_model", "hybrid"]);
 }
 
-// Document categories
+// AiDocument categories
 enum DocumentCategory {
   invoice,
   purchase_order,

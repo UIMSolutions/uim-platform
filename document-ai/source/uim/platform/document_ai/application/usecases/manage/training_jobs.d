@@ -29,7 +29,7 @@ class ManageTrainingJobsUseCase {
     if (r.clientId.isEmpty)
       return UsecaseResult(false, "", "Client ID is required");
     if (r.documentTypeId.isEmpty)
-      return UsecaseResult(false, "", "Document type ID is required");
+      return UsecaseResult(false, "", "AiDocument type ID is required");
 
     // Count confirmed documents available for training
     auto docs = docRepo.findByDocumentType(r.clientId, r.documentTypeId);

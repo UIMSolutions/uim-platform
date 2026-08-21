@@ -1,11 +1,11 @@
-# NAF v4 Architecture Document
+# NAF v4 Architecture AiDocument
 
 
 ## Documentation update
 
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+This AiDocument is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
 
-## Document AI Service — UIM Platform
+## AiDocument AI Service — UIM Platform
 
 **Version:** 1.0
 **Date:** 2026-04-05
@@ -37,18 +37,18 @@ This document is maintained alongside the implementation, deployment manifests, 
 
 ### 2.1 Capability Overview
 
-The Document AI Service provides intelligent document processing, data extraction, enrichment matching, and model training capabilities for the UIM Cloud Platform — analogous to the SAP Document Information Extraction Service on SAP BTP.
+The AiDocument AI Service provides intelligent AiDocument processing, data extraction, enrichment matching, and model training capabilities for the UIM Cloud Platform — analogous to the SAP AiDocument Information Extraction Service on SAP BTP.
 
 ### 2.2 Capability Hierarchy
 
 ```
-C-ROOT: Intelligent Document Processing
-├── C-DA-01: Document Processing
-│   ├── C-DA-01.1: Document Upload (PDF, PNG, JPEG, TIFF, XLSX, DOCX)
+C-ROOT: Intelligent AiDocument Processing
+├── C-DA-01: AiDocument Processing
+│   ├── C-DA-01.1: AiDocument Upload (PDF, PNG, JPEG, TIFF, XLSX, DOCX)
 │   ├── C-DA-01.2: Automated Field Extraction (ML, Generative AI, Template, Hybrid)
 │   ├── C-DA-01.3: Extraction Result Retrieval
 │   ├── C-DA-01.4: Result Confirmation (Data Feedback Loop)
-│   └── C-DA-01.5: Document Job Lifecycle Management
+│   └── C-DA-01.5: AiDocument Job Lifecycle Management
 ├── C-DA-02: Schema Management
 │   ├── C-DA-02.1: Header Field Definition (typed, required, format)
 │   ├── C-DA-02.2: Line Item Field Definition
@@ -57,12 +57,12 @@ C-ROOT: Intelligent Document Processing
 ├── C-DA-03: Template Management
 │   ├── C-DA-03.1: Region-Based Field Mapping (page, coordinates)
 │   ├── C-DA-03.2: Template-Schema Binding
-│   └── C-DA-03.3: Sample Document Association
-├── C-DA-04: Document Type Classification
+│   └── C-DA-03.3: Sample AiDocument Association
+├── C-DA-04: AiDocument Type Classification
 │   ├── C-DA-04.1: Standard Categories (invoice, PO, receipt, contract, etc.)
-│   ├── C-DA-04.2: Custom Document Types
+│   ├── C-DA-04.2: Custom AiDocument Types
 │   ├── C-DA-04.3: Default Schema Assignment
-│   └── C-DA-04.4: File Type Restriction per Document Type
+│   └── C-DA-04.4: File Type Restriction per AiDocument Type
 ├── C-DA-05: Enrichment Data
 │   ├── C-DA-05.1: Master Data Upload
 │   ├── C-DA-05.2: Enrichment Matching (scored, threshold-based)
@@ -74,7 +74,7 @@ C-ROOT: Intelligent Document Processing
 │   └── C-DA-06.4: Model Versioning
 ├── C-DA-07: Client Administration
 │   ├── C-DA-07.1: Client Provisioning
-│   ├── C-DA-07.2: Document Quota Management
+│   ├── C-DA-07.2: AiDocument Quota Management
 │   ├── C-DA-07.3: Data Feedback Configuration
 │   └── C-DA-07.4: Usage Tracking (documentsProcessed)
 ├── C-DA-08: Capabilities Discovery
@@ -89,7 +89,7 @@ C-ROOT: Intelligent Document Processing
 
 ### 3.1 Purpose Statement
 
-Provide an intelligent document processing service that automates the extraction of structured data from unstructured business documents, supports multiple extraction methods (ML, generative AI, template-based, hybrid), and enables continuous model improvement through data feedback and training — all accessible via a uniform REST API within the UIM Cloud Platform.
+Provide an intelligent AiDocument processing service that automates the extraction of structured data from unstructured business documents, supports multiple extraction methods (ML, generative AI, template-based, hybrid), and enables continuous model improvement through data feedback and training — all accessible via a uniform REST API within the UIM Cloud Platform.
 
 ### 3.2 Strategic Goals
 
@@ -99,8 +99,8 @@ Provide an intelligent document processing service that automates the extraction
 | SG-02 | Support multiple extraction methods (ML, generative AI, template, hybrid) | High |
 | SG-03 | Enable data feedback loop for continuous extraction improvement | High |
 | SG-04 | Provide enrichment matching against master data | Medium |
-| SG-05 | Support custom model training per document type | Medium |
-| SG-06 | Cover 13+ standard business document categories | Medium |
+| SG-05 | Support custom model training per AiDocument type | Medium |
+| SG-06 | Cover 13+ standard business AiDocument categories | Medium |
 | SG-07 | Multi-tenant, multi-client data isolation | High |
 | SG-08 | Cloud-native deployment (Docker, Podman, Kubernetes) | High |
 
@@ -123,12 +123,12 @@ Provide an intelligent document processing service that automates the extraction
 ### 4.1 Service Inventory
 
 ```
-SVC-ROOT: Document AI Platform Service
-├── SVC-DA-01: Document Processing Service
-│   ├── Upload Document (with schema/template/docType binding)
-│   ├── List Document Jobs
-│   ├── Get Document Job
-│   ├── Delete Document Job
+SVC-ROOT: AiDocument AI Platform Service
+├── SVC-DA-01: AiDocument Processing Service
+│   ├── Upload AiDocument (with schema/template/docType binding)
+│   ├── List AiDocument Jobs
+│   ├── Get AiDocument Job
+│   ├── Delete AiDocument Job
 │   ├── Confirm Extraction Results (data feedback)
 │   └── Get Extraction Results
 ├── SVC-DA-02: Schema Management Service
@@ -143,12 +143,12 @@ SVC-ROOT: Document AI Platform Service
 │   ├── Get Template
 │   ├── Update Template
 │   └── Delete Template
-├── SVC-DA-04: Document Type Service
-│   ├── Create Document Type
-│   ├── List Document Types
-│   ├── Get Document Type
-│   ├── Update Document Type
-│   └── Delete Document Type
+├── SVC-DA-04: AiDocument Type Service
+│   ├── Create AiDocument Type
+│   ├── List AiDocument Types
+│   ├── Get AiDocument Type
+│   ├── Update AiDocument Type
+│   └── Delete AiDocument Type
 ├── SVC-DA-05: Enrichment Data Service
 │   ├── Create Enrichment Data
 │   ├── List Enrichment Data
@@ -184,16 +184,16 @@ SVC-ROOT: Document AI Platform Service
 **Content-Type:** application/json
 **Authentication:** X-Tenant-Id header (tenant identification)
 
-#### 5.1.1 Document Processing Endpoints
+#### 5.1.1 AiDocument Processing Endpoints
 
 | Operation | Method | URI | Description |
 |-----------|--------|-----|-------------|
-| Upload Document | POST | `/document/jobs` | Upload document for extraction |
-| List Jobs | GET | `/document/jobs` | List document processing jobs |
-| Get Job | GET | `/document/jobs/{id}` | Get document job detail |
-| Delete Job | DELETE | `/document/jobs/{id}` | Delete a document job |
-| Confirm Results | POST | `/document/jobs/{id}/confirm` | Confirm with corrections |
-| Get Results | GET | `/document/jobs/{id}/results` | Get extraction results |
+| Upload AiDocument | POST | `/AiDocument/jobs` | Upload AiDocument for extraction |
+| List Jobs | GET | `/AiDocument/jobs` | List AiDocument processing jobs |
+| Get Job | GET | `/AiDocument/jobs/{id}` | Get AiDocument job detail |
+| Delete Job | DELETE | `/AiDocument/jobs/{id}` | Delete a AiDocument job |
+| Confirm Results | POST | `/AiDocument/jobs/{id}/confirm` | Confirm with corrections |
+| Get Results | GET | `/AiDocument/jobs/{id}/results` | Get extraction results |
 
 #### 5.1.2 Schema Endpoints
 
@@ -215,15 +215,15 @@ SVC-ROOT: Document AI Platform Service
 | Update | PUT | `/templates/{id}` | Update template |
 | Delete | DELETE | `/templates/{id}` | Delete template |
 
-#### 5.1.4 Document Type Endpoints
+#### 5.1.4 AiDocument Type Endpoints
 
 | Operation | Method | URI | Description |
 |-----------|--------|-----|-------------|
-| Create | POST | `/document-types` | Create document type |
-| List | GET | `/document-types` | List document types |
-| Get | GET | `/document-types/{id}` | Get document type |
-| Update | PUT | `/document-types/{id}` | Update document type |
-| Delete | DELETE | `/document-types/{id}` | Delete document type |
+| Create | POST | `/AiDocument-types` | Create AiDocument type |
+| List | GET | `/AiDocument-types` | List AiDocument types |
+| Get | GET | `/AiDocument-types/{id}` | Get AiDocument type |
+| Update | PUT | `/AiDocument-types/{id}` | Update AiDocument type |
+| Delete | DELETE | `/AiDocument-types/{id}` | Delete AiDocument type |
 
 #### 5.1.5 Enrichment Data Endpoints
 
@@ -298,14 +298,14 @@ SVC-ROOT: Document AI Platform Service
 ### 6.1 Functional Decomposition
 
 ```
-F-DA-01: Document Processing
+F-DA-01: AiDocument Processing
   F-DA-01.1: Validate file type (DocumentValidator.validateFileType)
   F-DA-01.2: Detect file type from extension (DocumentValidator.detectFileType)
-  F-DA-01.3: Generate unique document ID (UUID v4)
-  F-DA-01.4: Create Document entity with status = pending
+  F-DA-01.3: Generate unique AiDocument ID (UUID v4)
+  F-DA-01.4: Create AiDocument entity with status = pending
   F-DA-01.5: Execute extraction (status → processing → completed)
   F-DA-01.6: Build ExtractionResult (headerFields, lineItems, confidence scores)
-  F-DA-01.7: Persist Document and ExtractionResult
+  F-DA-01.7: Persist AiDocument and ExtractionResult
   F-DA-01.8: Confirm results with corrected fields (data feedback)
 
 F-DA-02: Schema Management
@@ -316,10 +316,10 @@ F-DA-02: Schema Management
 
 F-DA-03: Template Management
   F-DA-03.1: Define extraction regions (fieldName, page, x, y, width, height)
-  F-DA-03.2: Bind templates to schemas and document types
+  F-DA-03.2: Bind templates to schemas and AiDocument types
   F-DA-03.3: Associate sample documents for validation
 
-F-DA-04: Document Type Management
+F-DA-04: AiDocument Type Management
   F-DA-04.1: Map to standard categories (13 built-in + custom)
   F-DA-04.2: Assign default schema
   F-DA-04.3: Configure supported file types per doc type
@@ -331,13 +331,13 @@ F-DA-05: Enrichment Data Management
   F-DA-05.4: Return match result with score and matched field names
 
 F-DA-06: Training Job Management
-  F-DA-06.1: Create job linked to document type and schema
+  F-DA-06.1: Create job linked to AiDocument type and schema
   F-DA-06.2: Count available training documents by type
   F-DA-06.3: Track accuracy and training metrics over time
   F-DA-06.4: Manage status transitions (pending → running → completed/failed/cancelled)
 
 F-DA-07: Client Administration
-  F-DA-07.1: Provision clients with document quota
+  F-DA-07.1: Provision clients with AiDocument quota
   F-DA-07.2: Track documents processed against quota
   F-DA-07.3: Enable/disable data feedback per client
   F-DA-07.4: Label-based client organization
@@ -347,28 +347,28 @@ F-DA-07: Client Administration
 
 ## 7. L2 — Logical Scenario
 
-### 7.1 Scenario 1: Document Upload and Extraction
+### 7.1 Scenario 1: AiDocument Upload and Extraction
 
 ```
-1. Client sends POST /api/v1/document/jobs with upload metadata
+1. Client sends POST /api/v1/AiDocument/jobs with upload metadata
 2. DocumentController parses JSON, extracts tenant/client IDs
 3. ProcessDocumentsUseCase validates file type via DocumentValidator
-4. Document entity created with status = pending
-5. Document persisted via DocumentRepository
+4. AiDocument entity created with status = pending
+5. AiDocument persisted via DocumentRepository
 6. Extraction pipeline invoked (status → processing)
 7. ExtractionResult built with headerFields, lineItems, confidence scores
 8. ExtractionResult persisted via ExtractionResultRepository
-9. Document status → completed, processedAt set
-10. 201 Created returned with document ID
+9. AiDocument status → completed, processedAt set
+10. 201 Created returned with AiDocument ID
 ```
 
 ### 7.2 Scenario 2: Result Confirmation (Data Feedback)
 
 ```
-1. Client sends POST /api/v1/document/jobs/{id}/confirm with corrections
-2. Document retrieved, status verified = completed
+1. Client sends POST /api/v1/AiDocument/jobs/{id}/confirm with corrections
+2. AiDocument retrieved, status verified = completed
 3. Corrected fields applied to extraction result
-4. Document status → confirmed
+4. AiDocument status → confirmed
 5. Feedback data available for future model training
 6. 200 OK returned
 ```
@@ -376,7 +376,7 @@ F-DA-07: Client Administration
 ### 7.3 Scenario 3: Enrichment Matching
 
 ```
-1. After extraction, system retrieves EnrichmentData candidates for the document type
+1. After extraction, system retrieves EnrichmentData candidates for the AiDocument type
 2. EnrichmentMatcher compares each candidate's fields against extracted header fields
 3. Match score calculated: matchedFields / totalFields per candidate
 4. Highest-scoring candidate selected
@@ -401,7 +401,7 @@ F-DA-07: Client Administration
 ```
 1. Client sends GET /api/v1/capabilities
 2. GetCapabilitiesUseCase returns CapabilitiesResponse
-3. Response includes supported features, file types, languages, document types
+3. Response includes supported features, file types, languages, AiDocument types
 4. Client configures its behavior based on available capabilities
 ```
 
@@ -409,11 +409,11 @@ F-DA-07: Client Administration
 
 ## 8. L4 — Logical Activities
 
-### 8.1 Document Upload Activity Flow
+### 8.1 AiDocument Upload Activity Flow
 
 ```
 [Start]
-  → Receive HTTP POST /document/jobs
+  → Receive HTTP POST /AiDocument/jobs
   → Parse JSON Body
   → Extract X-Tenant-Id, X-Client-Id
   → Validate File Type (DocumentValidator)
@@ -421,21 +421,21 @@ F-DA-07: Client Administration
     ── valid →
   → Detect FileType enum from extension
   → Generate UUID
-  → Build Document entity (status = pending)
+  → Build AiDocument entity (status = pending)
   → Set uploadedAt = currentTimestamp()
-  → Persist Document
+  → Persist AiDocument
   → Set status = processing
   → Run Extraction (ML / AI / Template / Hybrid)
   → Build ExtractionResult entity
   → Compute overallConfidence
   → Persist ExtractionResult
-  → Set Document status = completed, processedAt = currentTimestamp()
-  → Update Document
+  → Set AiDocument status = completed, processedAt = currentTimestamp()
+  → Update AiDocument
   → Return 201 Created
   → [End]
 ```
 
-### 8.2 Document Processing State Machine
+### 8.2 AiDocument Processing State Machine
 
 ```
 [*] → pending (upload received)
@@ -474,8 +474,8 @@ inactive → active (schema reactivated)
 
 ```
 [Start]
-  → Retrieve ExtractionResult for document
-  → Retrieve EnrichmentData candidates for document type
+  → Retrieve ExtractionResult for AiDocument
+  → Retrieve EnrichmentData candidates for AiDocument type
   → For each candidate:
       → Compare fields by key (case-insensitive value match)
       → Count matched fields
@@ -497,7 +497,7 @@ inactive → active (schema reactivated)
 
 ```
 ┌───────────────────┐        ┌───────────────────┐
-│      Client       │1    *  │     Document      │
+│      Client       │1    *  │     AiDocument      │
 ├───────────────────┤────────├───────────────────┤
 │ id: ClientId      │        │ id: DocumentId    │
 │ tenantId          │        │ tenantId          │
@@ -560,10 +560,10 @@ inactive → active (schema reactivated)
 
 | Entity | Attribute | Type | Description |
 |--------|-----------|------|-------------|
-| Document | fileType | FileType enum | pdf, png, jpeg, tiff, xlsx, docx |
-| Document | status | DocumentStatus enum | pending, processing, completed, failed, confirmed |
-| Document | extractionMethod | ExtractionMethod enum | ml_model, generative_ai, template_based, hybrid |
-| Document | category | DocumentCategory enum | 13 standard categories + custom |
+| AiDocument | fileType | FileType enum | pdf, png, jpeg, tiff, xlsx, docx |
+| AiDocument | status | DocumentStatus enum | pending, processing, completed, failed, confirmed |
+| AiDocument | extractionMethod | ExtractionMethod enum | ml_model, generative_ai, template_based, hybrid |
+| AiDocument | category | DocumentCategory enum | 13 standard categories + custom |
 | ExtractionResult | overallConfidence | double | 0.0–1.0, aggregate extraction confidence |
 | ExtractionResult | headerFields | ExtractedField[] | Name, value, type, confidence, page, coordinates |
 | ExtractionResult | lineItems | LineItem[] | Row-indexed arrays of extracted fields |
@@ -606,7 +606,7 @@ inactive → active (schema reactivated)
 ### 11.1 Source Code Structure
 
 ```
-document-ai/
+AiDocument-ai/
 ├── dub.sdl                                  # Build configuration
 ├── Dockerfile                               # Docker multi-stage build
 ├── Containerfile                            # Podman multi-stage build
@@ -617,7 +617,7 @@ document-ai/
 │   └── configmap.yaml
 ├── docs/                                    # Architecture documentation
 │   ├── uml.md                               # UML diagrams (Mermaid)
-│   └── nafv4.md                             # This document
+│   └── nafv4.md                             # This AiDocument
 └── source/
     ├── app.d                                # Entry point
     └── uim/platform/document_ai/
@@ -625,7 +625,7 @@ document-ai/
         ├── domain/                          # CORE (no external deps)
         │   ├── types.d                      # 9 ID aliases, 10 enums
         │   ├── entities/                    # 8 entities with sub-structs
-        │   │   ├── document.d               # Document + DocumentLabel
+        │   │   ├── AiDocument.d               # AiDocument + DocumentLabel
         │   │   ├── schema.d                 # Schema + SchemaField + LineItemField
         │   │   ├── template_.d              # Template + TemplateRegion
         │   │   ├── document_type.d          # DocumentType
@@ -652,7 +652,7 @@ document-ai/
         │   └── http/
         │       ├── json_utils.d             # JSON extraction helpers
         │       └── controllers/             # 9 controllers
-        │           ├── document.d
+        │           ├── AiDocument.d
         │           ├── schema.d
         │           ├── template_.d
         │           ├── document_type.d
@@ -710,7 +710,7 @@ Stage 1: Builder (dlang2/ldc-ubuntu:1.40.1)
   1. Copy dub.sdl, dub.selections.json
   2. Copy source/
   3. dub build --build=release --config=defaultRun
-  Output: build/uim-document-ai-platform-service
+  Output: build/uim-AiDocument-ai-platform-service
 
 Stage 2: Runtime (ubuntu:24.04)
   1. Install ca-certificates, curl
@@ -746,7 +746,7 @@ Stage 2: Runtime (ubuntu:24.04)
 | Liveness Probe | GET /api/v1/health (initialDelay 5s, period 30s) |
 | Readiness Probe | GET /api/v1/health (initialDelay 3s, period 10s) |
 | Security | runAsNonRoot, readOnlyRootFilesystem, no privilege escalation |
-| Config Source | ConfigMap: cloud-document-ai-config |
+| Config Source | ConfigMap: cloud-AiDocument-ai-config |
 
 ---
 
@@ -754,7 +754,7 @@ Stage 2: Runtime (ubuntu:24.04)
 
 | Field | Value |
 |-------|-------|
-| Architecture Name | Document AI Service |
+| Architecture Name | AiDocument AI Service |
 | Version | 1.0 |
 | Framework | NAF v4 |
 | Status | Baseline |
@@ -763,7 +763,7 @@ Stage 2: Runtime (ubuntu:24.04)
 | Classification | UNCLASSIFIED |
 | Platform | UIM Cloud Platform |
 | Repository | UIMSolutions/uim-platform |
-| Subpackage | document-ai |
+| Subpackage | AiDocument-ai |
 | Language | D (dlang) |
 | HTTP Framework | vibe-d 0.10.x |
 | Base Framework | uim-framework 26.5.1 |

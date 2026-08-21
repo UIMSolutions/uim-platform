@@ -24,7 +24,7 @@ class ManageDocumentTypesUseCase {
 
   UsecaseResult createDocumentType(CreateDocumentTypeRequest r) {
     if (r.name.isEmpty)
-      return UsecaseResult(false, "", "Document type name is required");
+      return UsecaseResult(false, "", "AiDocument type name is required");
     if (r.clientId.isEmpty)
       return UsecaseResult(false, "", "Client ID is required");
 
@@ -42,11 +42,11 @@ class ManageDocumentTypesUseCase {
 
   UsecaseResult updateDocumentType(UpdateDocumentTypeRequest r) {
     if (r.documentTypeId.isEmpty)
-      return UsecaseResult(false, "", "Document type ID is required");
+      return UsecaseResult(false, "", "AiDocument type ID is required");
 
     auto existing = repo.findById(r.documentTypeId, r.clientId);
     if (existing.isNull)
-      return UsecaseResult(false, "", "Document type not found");
+      return UsecaseResult(false, "", "AiDocument type not found");
 
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
@@ -75,7 +75,7 @@ class ManageDocumentTypesUseCase {
   UsecaseResult deleteDocumentType(ClientId clientId, DocumentTypeId id) {
     auto entity = repo.findById(clientId, id);
     if (entity.isNull)
-      return UsecaseResult(false, "", "Document type not found");
+      return UsecaseResult(false, "", "AiDocument type not found");
 
     repo.remove(entity);
     return UsecaseResult(true, entity.id.value, "");

@@ -1,4 +1,4 @@
-# Multi-stage build for Document AI Service
+# Multi-stage build for AiDocument AI Service
 # Works with both Docker and Podman
 
 # Stage 1: Build
@@ -24,7 +24,7 @@ RUN useradd --system --no-create-home appuser
 
 WORKDIR /app
 
-COPY --from=builder /app/build/uim-document-ai-platform-service .
+COPY --from=builder /app/build/uim-AiDocument-ai-platform-service .
 
 USER appuser
 
@@ -36,4 +36,4 @@ ENV DOCAI_PORT=8096
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:8096/api/v1/health || exit 1
 
-ENTRYPOINT ["./uim-document-ai-platform-service"]
+ENTRYPOINT ["./uim-AiDocument-ai-platform-service"]

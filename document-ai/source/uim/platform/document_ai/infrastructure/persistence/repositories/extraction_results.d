@@ -15,14 +15,11 @@ mixin(ShowModule!());
 @safe:
 class ExtractionResultRepository : TenantRepository!(ExtractionResult, ExtractionResultId), IExtractionResultRepository {
   bool existsById(TenantId tenantId, ClientId clientId, ExtractionResultId id) {
-    return clientId in store ? store[clientId].any!(r => r.id == id) : false;
+    return findByClient(tenantId, clientId).any!(r => r.id == id);
   }
 
   ExtractionResult findById(TenantId tenantId, ClientId clientId, ExtractionResultId id) {
-    if (clientId !in findByTenant(tenantId))
-      return ExtractionResult.init;
-  
-    foreach (r; findByTenant(tenantId)[clientId]) {
+    foreach (r; findByClient(tenantId, clientId)) {
       if (r.id == id)
         return r;
     }
@@ -31,7 +28,7 @@ class ExtractionResultRepository : TenantRepository!(ExtractionResult, Extractio
 
   // #
   size_t countByClient(TenantId tenantId, ClientId clientId) {
-    return clientId in findByTenant(tenantId) ? findByTenant(tenantId)[clientId].length : 0;
+    return findByClient(tenantId, clientId).length;
   }
 
   ExtractionResult[] filterByClient(ExtractionResult[] results, ClientId clientId) {
@@ -39,51 +36,42 @@ class ExtractionResultRepository : TenantRepository!(ExtractionResult, Extractio
   }
 
   ExtractionResult[] findByClient(TenantId tenantId, ClientId clientId) {
-    return filterByClient(findByTenant(tenantId), clientId);
+    return filterByClient(findByClient(tenantId, clientId), clientId);
   }
 
   void removeByClient(TenantId tenantId, ClientId clientId) {
     findByClient(tenantId, clientId).each!(r => remove(r));
   }
 
+  bool existsByDocument(TenantId tenantId, ClientId clientId, DocumentId docId) {
+    return findByClient(tenantId, clientId).any!(r => r.documentId == docId);
+  }
+
   ExtractionResult findByDocument(TenantId tenantId, ClientId clientId, DocumentId docId) {
-    if (clientId !in findByTenant(tenantId))
+    if (countByClient(tenantId, clientId) == 0)
       return ExtractionResult.init;
 
-    foreach (r; findByTenant(tenantId)[clientId]) {
+    foreach (r; findByClient(tenantId, clientId)) {
       if (r.documentId == docId)
         return r;
     }
     return ExtractionResult.init;
   }
 
-  ExtractionResult[] findBySchema(TenantId tenantId, SchemaId schemaId, ClientId clientId) {
-    return clientId in findByTenant(tenantId) ? findByTenant(tenantId)[clientId].filter!(r => r.schemaId == schemaId).array : null;
+  size_t countBySchema(TenantId tenantId, ClientId clientId, SchemaId schemaId) {
+    return findBySchema(tenantId, clientId, schemaId).length;
   }
 
-  void save(TenantId tenantId, ExtractionResult r) {
-    findByTenant(tenantId)[r.clientId] ~= r;
+  ExtractionResult[] filterBySchema(ExtractionResult[] results, SchemaId schemaId) {
+    return results.filter!(r => r.schemaId == schemaId).array;
   }
 
-  void update(TenantId tenantId, ExtractionResult r) {
-    if (r.clientId !in findByTenant(tenantId)) {
-      return;
-    }
-    foreach (existing; findByTenant(tenantId)[r.clientId]) {
-      if (existing.id == r.id) {
-        existing = r;
-        return;
-      }
-    }
+  ExtractionResult[] findBySchema(TenantId tenantId, ClientId clientId, SchemaId schemaId) {
+    return filterBySchema(findByClient(tenantId, clientId), schemaId);
   }
 
-  void remove(ExtractionResultId id, ClientId clientId) {
-    if (clientId in store) {
-      store[clientId] = store[clientId].filter!(r => r.id != id).array;
-    }
+  void removeBySchema(TenantId tenantId, ClientId clientId, SchemaId schemaId) {
+    findBySchema(tenantId, clientId, schemaId).each!(r => remove(r));
   }
 
-  size_t countByClient(ClientId clientId) {
-    return clientId in store ? store[clientId].length : 0;
-  }
 }

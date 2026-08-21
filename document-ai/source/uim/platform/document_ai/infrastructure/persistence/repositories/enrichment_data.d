@@ -13,54 +13,66 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class EnrichmentDataRepository : EnrichmentDataRepository {
-  protected EnrichmentData[][string] store;
+class EnrichmentDataRepository : TenantRepository!(EnrichmentData, EnrichmentDataId), IEnrichmentDataRepository {
 
-  bool existsById(ClientId clientId, EnrichmentDataId id) {
-    return clientId in store ? store[clientId].any!(ed => ed.id == id) : false;
+  bool existsById(TenantId tenantId, ClientId clientId, EnrichmentDataId id) {
+    return findByClient(tenantId, clientId) ? store[clientId].any!(ed => ed.id == id) : false;
   }
 
-  EnrichmentData findById(ClientId clientId, EnrichmentDataId id) {
-    foreach (enrichmentData; findByClient(clientId)) {
+  EnrichmentData findById(TenantId tenantId, ClientId clientId, EnrichmentDataId id) {
+    foreach (enrichmentData; findByClient(tenantId, clientId)) {
       if (enrichmentData.id == id)
         return enrichmentData;
     }
     return EnrichmentData.init;
   }
 
-  EnrichmentData[] findByClient(ClientId clientId) {
-    return clientId in store ? store[clientId] : null;
+  size_t countByClient(TenantId tenantId, ClientId clientId) {
+    return findByClient(tenantId, clientId).length;
   }
 
-  EnrichmentData[] findByDocumentType(ClientId clientId, DocumentTypeId typeId) {
-    return findByClient(clientId).filter!(ed => ed.documentTypeId == typeId).array;
+  EnrichmentData[] filterByClient(EnrichmentData[] enrichmentDatas, ClientId clientId) {
+    return enrichmentDatas.filter!(ed => ed.clientId == clientId).array;
   }
 
-  EnrichmentData[] findBySubtype(ClientId clientId, string subtype) {
-    return findByClient(clientId).filter!(ed => ed.subtype == subtype).array;
+  EnrichmentData[] findByClient(TenantId tenantId, ClientId clientId) {
+    return filterByClient(findByTenant(tenantId), clientId);
   }
 
-  void save(EnrichmentData ed) {
-    store[ed.clientId] ~= ed;
+  void removeByClient(TenantId tenantId, ClientId clientId) {
+    findByClient(tenantId, clientId).each!(ed => remove(ed));
   }
 
-  void update(EnrichmentData ed) {
-    foreach (existing; findByClient(clientId)) {
-      if (existing.id == ed.id) {
-        existing = ed;
-        return;
-      }
-    }
+  size_t countByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return findByDocumentType(tenantId, clientId, typeId).length;
   }
 
-  void remove(EnrichmentDataId id, ClientId clientId) {
-    if (clientId !in store)
-      return;
-
-    store[clientId] = [clientId].filter!(ed => ed.id != id).array;
+  EnrichmentData[] filterByDocumentType(EnrichmentData[] enrichmentDatas, DocumentTypeId typeId) {
+    return enrichmentDatas.filter!(ed => ed.documentTypeId == typeId).array;
   }
 
-  size_t countByClient(ClientId clientId) {
-    return findByClient(clientId).length;
+  EnrichmentData[] findByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return filterByDocumentType(findByClient(tenantId, clientId), typeId);
   }
+
+  void removeByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    findByDocumentType(tenantId, clientId, typeId).each!(ed => remove(ed));
+  }
+
+  size_t countBySubtype(TenantId tenantId, ClientId clientId, string subtype) {
+    return findBySubtype(tenantId, clientId, subtype).length;
+  }
+
+  EnrichmentData[] filterBySubtype(EnrichmentData[] enrichmentDatas, string subtype) {
+    return enrichmentDatas.filter!(ed => ed.subtype == subtype).array;
+  }
+
+  EnrichmentData[] findBySubtype(TenantId tenantId, ClientId clientId, string subtype) {
+    return filterBySubtype(findByClient(tenantId, clientId), subtype);
+  }
+
+  void removeBySubtype(TenantId tenantId, ClientId clientId, string subtype) {
+    findBySubtype(tenantId, clientId, subtype).each!(ed => remove(ed));
+  }
+
 }

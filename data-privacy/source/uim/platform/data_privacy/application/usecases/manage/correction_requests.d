@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageCorrectionRequestsUseCase {
-  protected CorrectionRequestRepository crRepo;
-  private DataSubjectRepository dsRepo;
+  protected ICorrectionRequestRepository crRepo;
+  private IDataSubjectRepository dsRepo;
 
-  this(CorrectionRequestRepository crRepo, DataSubjectRepository dsRepo) {
+  this(ICorrectionRequestRepository crRepo, IDataSubjectRepository dsRepo) {
     this.crRepo = crRepo;
     this.dsRepo = dsRepo;
   }

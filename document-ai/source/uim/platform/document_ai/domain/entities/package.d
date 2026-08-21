@@ -6,7 +6,7 @@
 module uim.platform.document_ai.domain.entities;
 
 public {
-  import uim.platform.document_ai.domain.entities.document;
+  import uim.platform.document_ai.domain.entities.AiDocument;
   import uim.platform.document_ai.domain.entities.extraction_result;
   import uim.platform.document_ai.domain.entities.schema;
   import uim.platform.document_ai.domain.entities.template_;

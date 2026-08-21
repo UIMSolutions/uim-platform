@@ -16,7 +16,7 @@ mixin(ShowModule!());
 struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 8096;
-  string serviceName = "Document AI Service";
+  string serviceName = "AiDocument AI Service";
 }
 
 SrvConfig loadConfig() {

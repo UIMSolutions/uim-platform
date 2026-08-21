@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.persistence.repositories.documents;
 
-// import uim.platform.document_ai.domain.entities.document;
+// import uim.platform.document_ai.domain.entities.AiDocument;
 // import uim.platform.document_ai.domain.ports.repositories.documents;
 
 import uim.platform.document_ai;
@@ -13,72 +13,82 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class DocumentRepository : DocumentRepository {
-  protected Document[][string] store;
+class DocumentRepository : TenantRepository!(AiDocument, DocumentId), IDocumentRepository {
 
-  bool existsById(DocumentId id, ClientId clientId) {
-    return clientId in store ? store[clientId].any!(d => d.id == id) : false;
+  bool existsById(TenantId tenantId, ClientId clientId, DocumentId id) {
+    return findByClient(tenantId, clientId).any!(d => d.id == id);
   }
 
-  Document findById(DocumentId id, ClientId clientId) {
-    if (clientId !in store)
-      return Document.init;
-
-    foreach (d; store[clientId]) {
+  AiDocument findById(TenantId tenantId, ClientId clientId, DocumentId id) {
+    foreach (d; findByClient(tenantId, clientId)) {
       if (d.id == id)
         return d;
     }
-    return Document.init;
+    return AiDocument.init;
   }
 
-  Document[] findByClient(ClientId clientId) {
-    return clientId in store ? store[clientId] : [];
+  size_t countByClient(TenantId tenantId, ClientId clientId) {
+    return findByClient(tenantId, clientId).length;
   }
 
-  Document[] findByStatus(DocumentStatus status, ClientId clientId) {
-    return clientId in store ? store[clientId].filter!(d => d.status == status).array : null;
+  AiDocument[] filterByClient(AiDocument[] documents, ClientId clientId) {
+    return documents.filter!(d => d.clientId == clientId).array;
   }
 
-  Document[] findByDocumentType(DocumentTypeId typeId, ClientId clientId) {
-    return clientId in store ? store[clientId].filter!(d => d.documentTypeId == typeId).array : [];
+  AiDocument[] findByClient(TenantId tenantId, ClientId clientId) {
+    return filterByClient(findByClient(tenantId, clientId), clientId);
   }
 
-  Document[] findByCategory(DocumentCategory category, ClientId clientId) {
-    return clientId in store ? store[clientId].filter!(d => d.category == category).array : [];
+  void removeByClient(TenantId tenantId, ClientId clientId) {
+    findByClient(tenantId, clientId).each!(e => remove(e));
   }
 
-  void save(Document d) {
-    if (d.clientId !in store) {
-      Document[] docs;
-      store[d.clientId] = docs;
-    }
-    store[d.clientId] ~= d;
+  size_t countByStatus(TenantId tenantId, ClientId clientId, DocumentStatus status) {
+    return findByStatus(tenantId, clientId, status).length;
   }
 
-  void update(Document d) {
-    if (d.clientId !in store)
-      return;
-
-    foreach (existing; store[d.clientId]) {
-      if (existing.id == d.id) {
-        existing = d;
-        return;
-      }
-    }
+  AiDocument[] filterByStatus(AiDocument[] documents, ClientId clientId, DocumentStatus status) {
+    return documents.filter!(d => d.clientId == clientId && d.status == status).array;
   }
 
-  void remove(DocumentId id, ClientId clientId) {
-    if (clientId !in store)
-      return;
-
-    store[clientId] = store[clientId].filter!(d => d.id != id).array;
+  AiDocument[] findByStatus(TenantId tenantId, ClientId clientId, DocumentStatus status) {
+    return filterByStatus(findByClient(tenantId, clientId), clientId, status);
   }
 
-  size_t countByClient(ClientId clientId) {
-    return clientId in store ? store[clientId].length : 0;
+  void removeByStatus(TenantId tenantId, ClientId clientId, DocumentStatus status) {
+    findByStatus(tenantId, clientId, status).each!(e => remove(e));
   }
 
-  size_t countByStatus(DocumentStatus status, ClientId clientId) {
-    return clientId in store ? store[clientId].filter!(d => d.status == status).array.length : 0;
+  size_t countByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return findByDocumentType(tenantId, clientId, typeId).length;
   }
+
+  AiDocument[] filterByDocumentType(AiDocument[] documents, ClientId clientId, DocumentTypeId typeId) {
+    return documents.filter!(d => d.clientId == clientId && d.documentTypeId == typeId).array;
+  }
+
+  AiDocument[] findByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    return filterByDocumentType(findByClient(tenantId, clientId), clientId, typeId);
+  }
+
+  void removeByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId) {
+    findByDocumentType(tenantId, clientId, typeId).each!(e => remove(e));
+  }
+
+  size_t countByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category) {
+    return findByCategory(tenantId, clientId, category).length;
+  }
+
+  AiDocument[] filterByCategory(AiDocument[] documents, ClientId clientId, DocumentCategory category) {
+    return documents.filter!(d => d.clientId == clientId && d.category == category).array;
+  }
+
+  AiDocument[] findByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category) {
+    return filterByCategory(findByClient(tenantId, clientId), clientId, category);
+  }
+
+  void removeByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category) {
+    findByCategory(tenantId, clientId, category).each!(e => remove(e));
+  }
+
 }

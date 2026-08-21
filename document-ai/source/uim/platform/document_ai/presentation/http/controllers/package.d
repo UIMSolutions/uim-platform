@@ -6,7 +6,7 @@
 module uim.platform.document_ai.presentation.http.controllers;
 
 public {
-  import uim.platform.document_ai.presentation.http.controllers.document;
+  import uim.platform.document_ai.presentation.http.controllers.AiDocument;
   import uim.platform.document_ai.presentation.http.controllers.schema;
   import uim.platform.document_ai.presentation.http.controllers.template_;
   import uim.platform.document_ai.presentation.http.controllers.document_type;

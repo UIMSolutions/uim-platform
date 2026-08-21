@@ -37,17 +37,17 @@ unittest {
         auto repo = new BusinessBlockRepository();
         auto tenantId = TenantId("tenant1");
         auto block1 = BusinessBlock(tenantId, BusinessBlockId("block1"));
-        block1.name = "Block 1";
+        block1.title = "Block 1";
         block1.description = "Description 1";
         block1.status = LifecycleStatus.active;
 
         auto block2 = BusinessBlock(tenantId, BusinessBlockId("block2"));
-        block2.name = "Block 2";
+        block2.title = "Block 2";
         block2.description = "Description 2";
         block2.status = LifecycleStatus.deprecated_;
 
         auto block3 = BusinessBlock(tenantId, BusinessBlockId("block3"));
-        block3.name = "Block 3";
+        block3.title = "Block 3";
         block3.description = "Description 3";
         block3.status = LifecycleStatus.active;
 

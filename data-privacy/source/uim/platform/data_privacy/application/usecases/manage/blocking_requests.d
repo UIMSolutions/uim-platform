@@ -16,10 +16,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageBlockingRequestsUseCase {
-  protected BlockingRequestRepository blockingRequests;
-  private DataSubjectRepository dataSubjects;
+  protected IBlockingRequestRepository blockingRequests;
+  protected IDataSubjectRepository dataSubjects;
 
-  this(BlockingRequestRepository blockingRequests, DataSubjectRepository dataSubjects) {
+  this(IBlockingRequestRepository blockingRequests, IDataSubjectRepository dataSubjects) {
     this.blockingRequests = blockingRequests;
     this.dataSubjects = dataSubjects;
   }

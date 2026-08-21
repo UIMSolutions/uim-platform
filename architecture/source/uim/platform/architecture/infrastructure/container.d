@@ -78,7 +78,7 @@ Container buildContainer(SrvConfig config) {
     container.architectureBlocksUi5Controller = new ArchitectureBlockUi5Controller(architectureUi5Model, architectureUi5View);
 
     // container.buildingBlockController = new BuildingBlockController(container.manageBlocksUseCase);
-    container.healthController = new HealthController("architecture", "1.0.0", "TOGAF Building Blocks Service");
+    container.healthController = new HealthController("architecture", "1.0.0"); // , "TOGAF Building Blocks Service");
 
     return container;
 }

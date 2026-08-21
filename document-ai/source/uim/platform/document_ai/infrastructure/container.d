@@ -6,7 +6,7 @@
 module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.infrastructure.config;
 // Repositories
-// import uim.platform.document_ai.infrastructure.persistence.repositories.document;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.AiDocument;
 // import uim.platform.document_ai.infrastructure.persistence.repositories.extraction_result;
 // import uim.platform.document_ai.infrastructure.persistence.repositories.schema;
 // import uim.platform.document_ai.infrastructure.persistence.repositories.template;
@@ -24,7 +24,7 @@ module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.application.usecases.manage.clients;
 // import uim.platform.document_ai.application.usecases.get_capabilities;
 // Controllers
-// import uim.platform.document_ai.presentation.http.controllers.document;
+// import uim.platform.document_ai.presentation.http.controllers.AiDocument;
 // import uim.platform.document_ai.presentation.http.controllers.schema;
 // import uim.platform.document_ai.presentation.http.controllers.template_;
 // import uim.platform.document_ai.presentation.http.controllers.document_type;
@@ -103,7 +103,7 @@ Container buildContainer(SrvConfig config) {
   c.trainingJobController = new TrainingJobController(c.manageTrainingJobs);
   c.clientController = new ClientController(c.manageClients);
   c.capabilitiesController = new CapabilitiesController(c.getCapabilities);
-  c.healthController = new HealthController("document-ai");
+  c.healthController = new HealthController("AiDocument-ai");
 
   return c;
 }

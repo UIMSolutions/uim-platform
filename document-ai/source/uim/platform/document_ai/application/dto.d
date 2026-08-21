@@ -10,7 +10,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-// --- Document ---
+// --- AiDocument ---
 
 struct UploadDocumentRequest {
   TenantId tenantId;
@@ -75,7 +75,7 @@ struct UpdateTemplateRequest {
   string status;
   string[][] regions;
 }
-// --- Document Type ---
+// --- AiDocument Type ---
 
 struct CreateDocumentTypeRequest {
   TenantId tenantId;

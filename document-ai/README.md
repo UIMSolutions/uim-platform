@@ -1,11 +1,11 @@
-# Document AI Service
+# AiDocument AI Service
 
 
 ## Documentation update
 
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+This AiDocument is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
 
-A Document AI microservice for the UIM Platform that provides intelligent document processing, extraction, and management capabilities — similar to the SAP Document AI Service for SAP BTP.
+A AiDocument AI microservice for the UIM Platform that provides intelligent AiDocument processing, extraction, and management capabilities — similar to the SAP AiDocument AI Service for SAP BTP.
 
 Built with **D (dlang)** and **vibe.d**, following **Clean/Hexagonal Architecture** principles.
 
@@ -31,15 +31,15 @@ Built with **D (dlang)** and **vibe.d**, following **Clean/Hexagonal Architectur
 
 ## API Endpoints
 
-### Document Processing
+### AiDocument Processing
 | Method | Path | Description |
 |--------|------|-------------|
-| POST | `/api/v1/document/jobs` | Upload a document for processing |
-| GET | `/api/v1/document/jobs` | List document jobs |
-| GET | `/api/v1/document/jobs/{id}` | Get a specific document job |
-| DELETE | `/api/v1/document/jobs/{id}` | Delete a document job |
-| POST | `/api/v1/document/jobs/{id}/confirm` | Confirm extraction results |
-| GET | `/api/v1/document/jobs/{id}/results` | Get extraction results |
+| POST | `/api/v1/AiDocument/jobs` | Upload a AiDocument for processing |
+| GET | `/api/v1/AiDocument/jobs` | List AiDocument jobs |
+| GET | `/api/v1/AiDocument/jobs/{id}` | Get a specific AiDocument job |
+| DELETE | `/api/v1/AiDocument/jobs/{id}` | Delete a AiDocument job |
+| POST | `/api/v1/AiDocument/jobs/{id}/confirm` | Confirm extraction results |
+| GET | `/api/v1/AiDocument/jobs/{id}/results` | Get extraction results |
 
 ### Schema Management
 | Method | Path | Description |
@@ -59,14 +59,14 @@ Built with **D (dlang)** and **vibe.d**, following **Clean/Hexagonal Architectur
 | PUT | `/api/v1/templates/{id}` | Update a template |
 | DELETE | `/api/v1/templates/{id}` | Delete a template |
 
-### Document Types
+### AiDocument Types
 | Method | Path | Description |
 |--------|------|-------------|
-| POST | `/api/v1/document-types` | Create a document type |
-| GET | `/api/v1/document-types` | List document types |
-| GET | `/api/v1/document-types/{id}` | Get a document type |
-| PUT | `/api/v1/document-types/{id}` | Update a document type |
-| DELETE | `/api/v1/document-types/{id}` | Delete a document type |
+| POST | `/api/v1/AiDocument-types` | Create a AiDocument type |
+| GET | `/api/v1/AiDocument-types` | List AiDocument types |
+| GET | `/api/v1/AiDocument-types/{id}` | Get a AiDocument type |
+| PUT | `/api/v1/AiDocument-types/{id}` | Update a AiDocument type |
+| DELETE | `/api/v1/AiDocument-types/{id}` | Delete a AiDocument type |
 
 ### Enrichment Data
 | Method | Path | Description |
@@ -105,7 +105,7 @@ Built with **D (dlang)** and **vibe.d**, following **Clean/Hexagonal Architectur
 
 ```bash
 # Build the service
-cd document-ai
+cd AiDocument-ai
 dub build
 
 # Run tests
@@ -115,15 +115,15 @@ dub test
 ## Docker
 
 ```bash
-docker build -t uim-document-ai -f Dockerfile .
-docker run -p 8096:8096 uim-document-ai
+docker build -t uim-AiDocument-ai -f Dockerfile .
+docker run -p 8096:8096 uim-AiDocument-ai
 ```
 
 ## Podman
 
 ```bash
-podman build -t uim-document-ai -f Containerfile .
-podman run -p 8096:8096 uim-document-ai
+podman build -t uim-AiDocument-ai -f Containerfile .
+podman run -p 8096:8096 uim-AiDocument-ai
 ```
 
 ## Kubernetes
@@ -143,12 +143,12 @@ kubectl apply -f k8s/service.yaml
 
 ## Features
 
-- **Document Upload & Extraction** — Upload PDF, PNG, JPEG, TIFF documents for automated field extraction
+- **AiDocument Upload & Extraction** — Upload PDF, PNG, JPEG, TIFF documents for automated field extraction
 - **Schema Management** — Define extraction schemas with typed fields and validation rules
-- **Template Management** — Create templates linking schemas to document types with field mappings
-- **Document Type Classification** — Categorize documents (invoices, purchase orders, receipts, etc.)
+- **Template Management** — Create templates linking schemas to AiDocument types with field mappings
+- **AiDocument Type Classification** — Categorize documents (invoices, purchase orders, receipts, etc.)
 - **Enrichment Data Matching** — Match extracted data against master data with configurable scoring
-- **Training Jobs** — Train custom extraction models on your document types
+- **Training Jobs** — Train custom extraction models on your AiDocument types
 - **Multi-tenant Client Management** — Isolate data per tenant/client
 - **Capabilities Discovery** — Query supported extraction methods, file types, and features
 

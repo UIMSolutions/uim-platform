@@ -13,8 +13,38 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class ClientRepository : TenantRepository!(Client, ClientId), ClientRepository {
+class ClientRepository : TenantRepository!(Client, ClientId), IClientRepository {
 
-  // TODO
+  size_t countByName(TenantId tenantId, string name) {
+    return findByName(tenantId, name).length;
+  }
+
+  Client[] filterByName(Client[] clients, string name) {
+    return clients.filter!(c => c.name == name).array;
+  }
+
+  Client[] findByName(TenantId tenantId, string name) {
+    return filterByName(findByTenant(tenantId), name);
+  }
+
+  void removeByName(TenantId tenantId, string name) {
+    findByName(tenantId, name).each!(e => remove(e));
+  }
+  
+  size_t countByQuota(TenantId tenantId, int quota) {
+    return findByQuota(tenantId, quota).length;
+  }
+
+  Client[] filterByQuota(Client[] clients, int quota) {
+    return clients.filter!(c => c.quota == quota).array;
+  }
+
+  Client[] findByQuota(TenantId tenantId, int quota) {
+    return filterByQuota(findByTenant(tenantId), quota);
+  }
+
+  void removeByQuota(TenantId tenantId, int quota) {
+    findByQuota(tenantId, quota).each!(e => remove(e));
+  }
 
 }

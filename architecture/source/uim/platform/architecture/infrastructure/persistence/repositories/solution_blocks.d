@@ -37,22 +37,21 @@ unittest {
         auto repo = new SolutionBlockRepository();
         auto tenantId = TenantId("tenant1");
         auto block1 = SolutionBlock(tenantId, SolutionBlockId("block1"));
-        block1.name = "Block 1";
+        block1.title = "Block 1";
         block1.description = "Description 1";
         block1.status = LifecycleStatus.active;
+        repo.save(block1);
 
         auto block2 = SolutionBlock(tenantId, SolutionBlockId("block2"));
-        block2.name = "Block 2";
+        block2.title = "Block 2";
         block2.description = "Description 2";
         block2.status = LifecycleStatus.deprecated_;
+        repo.save(block2);
 
         auto block3 = SolutionBlock(tenantId, SolutionBlockId("block3"));
-        block3.name = "Block 3";
+        block3.title = "Block 3";
         block3.description = "Description 3";
         block3.status = LifecycleStatus.active;
-
-        repo.save(block1);
-        repo.save(block2);
         repo.save(block3);
 
         assert(repo.countByTenant(tenantId) == 3);

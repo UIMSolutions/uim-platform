@@ -25,11 +25,11 @@ class DocumentTypeController : ManageHttpController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
-    router.post("/api/v1/document-types", &handleCreate);
-    router.get("/api/v1/document-types", &handleList);
-    router.get("/api/v1/document-types/*", &handleGet);
-    router.put("/api/v1/document-types/*", &handleUpdate);
-    router.delete_("/api/v1/document-types/*", &handleDelete);
+    router.post("/api/v1/AiDocument-types", &handleCreate);
+    router.get("/api/v1/AiDocument-types", &handleList);
+    router.get("/api/v1/AiDocument-types/*", &handleGet);
+    router.put("/api/v1/AiDocument-types/*", &handleUpdate);
+    router.delete_("/api/v1/AiDocument-types/*", &handleDelete);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -56,7 +56,7 @@ class DocumentTypeController : ManageHttpController {
     auto resp = Json.emptyObject
       .set("id", result.id);
 
-    return successResponse("Document type created successfully", 201, resp);
+    return successResponse("AiDocument type created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -73,7 +73,7 @@ class DocumentTypeController : ManageHttpController {
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
-    return successResponse("Document types retrieved successfully", 0, responseData);
+    return successResponse("AiDocument types retrieved successfully", 0, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -84,13 +84,13 @@ class DocumentTypeController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto id = DocumentTypeId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid document type ID", 400);
+      return errorResponse("Invalid AiDocument type ID", 400);
 
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
     auto dt = usecase.getDocumentType(tenantId, id, clientId);
     if (dt.isNull)
-      return errorResponse("Document type not found", 404);
+      return errorResponse("AiDocument type not found", 404);
 
     auto responseData = Json.emptyObject
       .set("id", dt.id)
@@ -102,7 +102,7 @@ class DocumentTypeController : ManageHttpController {
       .set("createdAt", dt.createdAt)
       .set("updatedAt", dt.updatedAt);
 
-    return successResponse("Document type retrieved successfully", 0, responseData);
+    return successResponse("AiDocument type retrieved successfully", 0, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -113,7 +113,7 @@ class DocumentTypeController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto id = DocumentTypeId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid document type ID", 400);
+      return errorResponse("Invalid AiDocument type ID", 400);
 
     auto data = precheck.data;
     UpdateDocumentTypeRequest r;
@@ -130,7 +130,7 @@ class DocumentTypeController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Document type updated successfully", 200, responseData);
+    return successResponse("AiDocument type updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -141,7 +141,7 @@ class DocumentTypeController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto id = DocumentTypeId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid document type ID", 400);
+      return errorResponse("Invalid AiDocument type ID", 400);
 
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
@@ -149,6 +149,6 @@ class DocumentTypeController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Document type deleted successfully", 204, Json.emptyObject);
+    return successResponse("AiDocument type deleted successfully", 204, Json.emptyObject);
   }
 }

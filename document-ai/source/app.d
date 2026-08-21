@@ -36,16 +36,16 @@ version (unittest) {
         auto listener = listenHTTP(settings, router);
 
         writefln("==========================================================");
-        writefln("  Document AI Service");
+        writefln("  AiDocument AI Service");
         writefln("  Listening on %s:%d", config.host, config.port);
         writefln("                                                          ");
-        writefln("  Document Processing Endpoints:                          ");
-        writefln("    POST      /api/v1/document/jobs         (Upload)      ");
-        writefln("    GET       /api/v1/document/jobs         (List)        ");
-        writefln("    GET       /api/v1/document/jobs/*        (Get)        ");
-        writefln("    DELETE    /api/v1/document/jobs/*        (Delete)     ");
-        writefln("    POST      /api/v1/document/jobs/*/confirm             ");
-        writefln("    GET       /api/v1/document/jobs/*/results             ");
+        writefln("  AiDocument Processing Endpoints:                          ");
+        writefln("    POST      /api/v1/AiDocument/jobs         (Upload)      ");
+        writefln("    GET       /api/v1/AiDocument/jobs         (List)        ");
+        writefln("    GET       /api/v1/AiDocument/jobs/*        (Get)        ");
+        writefln("    DELETE    /api/v1/AiDocument/jobs/*        (Delete)     ");
+        writefln("    POST      /api/v1/AiDocument/jobs/*/confirm             ");
+        writefln("    GET       /api/v1/AiDocument/jobs/*/results             ");
         writefln("                                                          ");
         writefln("  Schema Management:                                      ");
         writefln("    CRUD      /api/v1/schemas                             ");
@@ -53,8 +53,8 @@ version (unittest) {
         writefln("  Template Management:                                    ");
         writefln("    CRUD      /api/v1/templates                           ");
         writefln("                                                          ");
-        writefln("  Document Types:                                         ");
-        writefln("    CRUD      /api/v1/document-types                      ");
+        writefln("  AiDocument Types:                                         ");
+        writefln("    CRUD      /api/v1/AiDocument-types                      ");
         writefln("                                                          ");
         writefln("  Enrichment Data:                                        ");
         writefln("    CRUD      /api/v1/enrichment-data                     ");

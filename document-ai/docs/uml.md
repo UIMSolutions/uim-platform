@@ -1,9 +1,9 @@
-# UML Diagrams — Document AI Service
+# UML Diagrams — AiDocument AI Service
 
 
 ## Documentation update
 
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+This AiDocument is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
 
 ## Class Diagram
 
@@ -37,7 +37,7 @@ classDiagram
         +string name
         +string sampleFile
     }
-    class Document {
+    class AiDocument {
         +string id
         +string clientId
         +string documentTypeId
@@ -68,10 +68,10 @@ classDiagram
     DocumentType --> Client : owned by
     Schema --> DocumentType : defines
     Template_ --> DocumentType : samples
-    Document --> DocumentType : classified as
-    ExtractionResult --> Document : extracts from
+    AiDocument --> DocumentType : classified as
+    ExtractionResult --> AiDocument : extracts from
     TrainingJob --> DocumentType : trains
-    EnrichmentData --> Document : enriches
+    EnrichmentData --> AiDocument : enriches
 ```
 
 ## Component Diagram
@@ -92,7 +92,7 @@ flowchart TB
         DOCTYPE["DocumentType"]
         SCHEMA["Schema"]
         TMPL["Template_"]
-        DOC["Document"]
+        DOC["AiDocument"]
         RESULT["ExtractionResult"]
         JOB["TrainingJob"]
         ENRICH["EnrichmentData"]
@@ -109,7 +109,7 @@ flowchart TB
     Application --> Infrastructure
 ```
 
-## Sequence Diagram — Extract Document Fields
+## Sequence Diagram — Extract AiDocument Fields
 
 ```mermaid
 sequenceDiagram
@@ -122,7 +122,7 @@ sequenceDiagram
     C->>R: POST /api/v1/documents/{id}/extract
     R->>UC: extractDocument(documentId)
     UC->>DR: getById(documentId)
-    DR-->>UC: document
+    DR-->>UC: AiDocument
     UC->>RR: save(extractionResult)
     RR-->>UC: saved
     UC-->>R: extractionResult

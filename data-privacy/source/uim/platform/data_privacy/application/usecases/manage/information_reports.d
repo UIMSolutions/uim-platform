@@ -44,8 +44,8 @@ class ManageInformationReportsUseCase {
     return UsecaseResult(true, r.id, "");
   }
 
-  InformationReport getReport(InformationReportId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  InformationReport getReport(TenantId tenantId, InformationReportId id) {
+    return repo.findById(tenantId, id);
   }
 
   InformationReport[] listReports(TenantId tenantId) {
@@ -57,7 +57,7 @@ class ManageInformationReportsUseCase {
   }
 
   UsecaseResult updateStatus(UpdateInformationReportStatusRequest req) {
-    auto r = repo.findById(req.id, req.tenantId);
+    auto r = repo.findById(req.tenantId, req.id);
     if (r.isNull)
       return UsecaseResult(false, "", "Information report not found");
 

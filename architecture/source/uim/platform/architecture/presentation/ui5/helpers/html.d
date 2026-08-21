@@ -6,10 +6,6 @@ mixin(ShowModule!());
 
 @safe:
 
-void writeHtml(scope HTTPServerResponse res, string html) {
-    res.writeBody(html, cast(int)HTTPStatus.ok, "text/html; charset=utf-8");
-}
-
 void writeJson(scope HTTPServerResponse res, int status, UsecaseResult result) {
     auto payload = Json.emptyObject;
     payload["success"] = Json(result.success);
@@ -43,15 +39,6 @@ string navItem(string title, string href) {
 string field(string label, string propertyName) {
     return "new sap.m.Label({text:'" ~ escapeJs(
         label) ~ "'}),new sap.m.Text({text:'{" ~ escapeJs(propertyName) ~ "}'})";
-}
-
-string escapeHtml(string value) {
-    return value
-        .replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-        .replace("\"", "&quot;")
-        .replace("'", "&#39;");
 }
 
 string escapeJs(string value) {

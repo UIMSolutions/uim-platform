@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageLegalGroundsUseCase {
-  protected LegalGroundRepository legalGrounds;
+  protected ILegalGroundRepository legalGrounds;
 
-  this(LegalGroundRepository legalGrounds) {
+  this(ILegalGroundRepository legalGrounds) {
     this.legalGrounds = legalGrounds;
   }
 

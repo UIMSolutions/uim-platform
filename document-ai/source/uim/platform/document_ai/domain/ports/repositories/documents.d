@@ -10,14 +10,16 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface IDocumentRepository {
+interface IDocumentRepository : ITenantRepository!(AiDocument, DocumentId) {
 
   size_t countByClient(TenantId tenantId, ClientId clientId);
-  size_t countByStatus(TenantId tenantId, DocumentStatus status, TenantId tenantId, ClientId clientId);
+  AiDocument[] findByClient(TenantId tenantId, ClientId clientId);
 
-  Document[TenantId tenantId, ] findByClient(TenantId tenantId, ClientId clientId);
-  Document[TenantId tenantId, ] findByStatus(TenantId tenantId, DocumentStatus status, ClientId clientId)TenantId tenantId, ;
-  Document[] findByDocumentType(TenantId tenantId, DocumentTypeId typeId, ClientId clientId);
-  Document[] findByCategory(TenantId tenantId, DocumentCategory category, ClientId clientId);
+  size_t countByStatus(TenantId tenantId, ClientId clientId, DocumentStatus status);
+  AiDocument[] findByStatus(TenantId tenantId, ClientId clientId, DocumentStatus status);
+
+  AiDocument[] findByDocumentType(TenantId tenantId, ClientId clientId, DocumentTypeId typeId);
+
+  AiDocument[] findByCategory(TenantId tenantId, ClientId clientId, DocumentCategory category);
   
 }

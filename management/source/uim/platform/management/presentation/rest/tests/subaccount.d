@@ -41,7 +41,7 @@ scope (exit) {
     auto clientTask = runTask({
         try {
             auto clientSettings = new RestInterfaceSettings;
-            clientSettings.baseURL = URL(basisUrl);
+            clientSettings.baseURL = vibe.inet.url.URL(basisUrl);
 
             // Client connects to the dynamic port
             auto client = new RestInterfaceClient!ISubaccountApi(basisUrl);
