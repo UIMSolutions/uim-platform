@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for event subscription management.
 class ManageEventSubscriptionsUseCase {
-  protected EventSubscriptionRepository subscriptionRepository;
+  protected IEventSubscriptionRepository subscriptionRepository;
 
-  this(EventSubscriptionRepository subscriptionRepository) {
+  this(IEventSubscriptionRepository subscriptionRepository) {
     this.subscriptionRepository = subscriptionRepository;
   }
 

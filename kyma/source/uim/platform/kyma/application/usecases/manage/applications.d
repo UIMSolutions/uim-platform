@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for external application connectivity.
 class ManageApplicationsUseCase {
-  protected ApplicationRepository appRepository;
+  protected IApplicationRepository appRepository;
 
-  this(ApplicationRepository appRepository) {
+  this(IApplicationRepository appRepository) {
     this.appRepository = appRepository;
   }
 

@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for serverless function lifecycle management.
 class ManageFunctionsUseCase {
-  protected FunctionRepository functionRepository;
+  protected IFunctionRepository functionRepository;
   protected FunctionValidator validator;
 
-  this(FunctionRepository functionRepository, FunctionValidator validator) {
+  this(IFunctionRepository functionRepository, FunctionValidator validator) {
     this.functionRepository = functionRepository;
     this.validator = validator;
   }

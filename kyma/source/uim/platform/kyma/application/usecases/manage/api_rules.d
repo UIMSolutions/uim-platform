@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for API rule management.
 class ManageApiRulesUseCase {
-  protected ApiRuleRepository ruleRepository;
+  protected IApiRuleRepository ruleRepository;
 
-  this(ApiRuleRepository ruleRepository) {
+  this(IApiRuleRepository ruleRepository) {
     this.ruleRepository = ruleRepository;
   }
 

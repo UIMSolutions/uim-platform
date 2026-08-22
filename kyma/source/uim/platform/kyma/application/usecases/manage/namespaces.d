@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for Kubernetes namespace management.
 class ManageNamespacesUseCase {
-  protected NamespaceRepository namespaceRepository;
+  protected INamespaceRepository namespaceRepository;
 
-  this(NamespaceRepository namespaceRepository) {
+  this(INamespaceRepository namespaceRepository) {
     this.namespaceRepository = namespaceRepository;
   }
 

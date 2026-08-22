@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for Kyma module management.
 class ManageModulesUseCase {
-  protected ModuleRepository moduleRepository;
+  protected IModuleRepository moduleRepository;
   private ModuleDependencyResolver depResolver;
 
-  this(ModuleRepository moduleRepository, ModuleDependencyResolver depResolver) {
+  this(IModuleRepository moduleRepository, ModuleDependencyResolver depResolver) {
     this.moduleRepository = moduleRepository;
     this.depResolver = depResolver;
   }
