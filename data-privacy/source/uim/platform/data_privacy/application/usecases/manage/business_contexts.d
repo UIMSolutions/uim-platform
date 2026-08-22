@@ -13,7 +13,7 @@ mixin(ShowModule!());
 class ManageBusinessContextsUseCase {
   protected IBusinessContextRepository businessContexts;
 
-  this(BusinessContextRepository businessContexts) {
+  this(IBusinessContextRepository businessContexts) {
     this.businessContexts = businessContexts;
   }
 

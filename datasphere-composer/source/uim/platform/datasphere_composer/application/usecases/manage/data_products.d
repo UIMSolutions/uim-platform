@@ -13,12 +13,14 @@ mixin(ShowModule!());
 class ManageDataProductsUseCase {
   protected IDataProductRepository repo;
 
-  this(IDataProductRepository repo) { this.repo = repo; }
+  this(IDataProductRepository repo) {
+    this.repo = repo;
+  }
 
   UsecaseResult create(CreateDataProductRequest r) {
     DataProduct p;
     p.id = DataProductId(r.id.length > 0 ? r.id.value : generateId);
-    p.tenantId = TenantId(r.tenantId);
+    p.tenantId = r.tenantId;
     p.providerId = DataProviderId(r.providerId);
     p.name = r.name;
     p.description = r.description;
@@ -33,38 +35,46 @@ class ManageDataProductsUseCase {
     return UsecaseResult(true, p.id.value, null);
   }
 
-  DataProduct[] list(TenantId tenantId) {
+  DataProduct[] listProducts(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 
-  DataProduct[] listByProvider(TenantId tenantId, string providerId) {
+  DataProduct[] listProducts(TenantId tenantId, string providerId) {
     return repo.findByProvider(TenantId(tenantId), DataProviderId(providerId));
   }
 
-  DataProduct getById(TenantId tenantId, string id) {
-    return repo.findById(TenantId(tenantId), DataProductId(id));
+  DataProduct getProduct(TenantId tenantId, DataProductId id) {
+    return repo.findById(TenantId(tenantId), id);
   }
 
   UsecaseResult update(UpdateDataProductRequest r) {
-    auto p = repo.findById(TenantId(r.tenantId), DataProductId(r.id));
-    if (p.isNull) return UsecaseResult(false, r.id, "Data product not found");
+    auto p = repo.findById(R.tenantId, r.productId);
+    if (p.isNull)
+      return UsecaseResult(false, r.id, "Data product not found");
 
-    if (r.name.length > 0)        p.name = r.name;
-    if (r.description.length > 0) p.description = r.description;
+    if (r.name.length > 0)
+      p.name = r.name;
+    if (r.description.length > 0)
+      p.description = r.description;
     p.enabled = r.enabled;
     if (r.status.length > 0) {
-      
-      try { p.status = r.status.to!DataProductStatus; } catch (Exception) {}
+
+      try {
+        p.status = r.status.to!DataProductStatus;
+      } catch (Exception) {
+      }
     }
 
     repo.update(p);
     return UsecaseResult(true, p.id.value, null);
   }
 
-  UsecaseResult remove(TenantId tenantId, string id) {
-    auto p = repo.findById(TenantId(tenantId), DataProductId(id));
-    if (p.isNull) return UsecaseResult(false, id, "Data product not found");
-    repo.remove(TenantId(tenantId), DataProductId(id));
+  UsecaseResult remove(TenantId tenantId, DataProductId id) {
+    auto p = repo.findById(TenantId(tenantId), id);
+    if (p.isNull)
+      return UsecaseResult(false, id, "Data product not found");
+      
+    repo.remove(p);
     return UsecaseResult(true, id, null);
   }
 }

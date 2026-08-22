@@ -20,7 +20,7 @@ class InformationReportRepository : TenantRepository!(InformationReport, Informa
   }
 
   InformationReport[] filterByDataSubject(InformationReport[] records, DataSubjectId subjectId) {
-    return records.filter!(s => s.dataSubjectId == subjectId).array;
+    return records.filter!(s => s.subjectId == subjectId).array;
   }
 
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {

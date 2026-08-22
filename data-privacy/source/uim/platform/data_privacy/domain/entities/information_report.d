@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 /// An information report — generated report about a data subject's personal data.
 struct InformationReport {
-  mixin TenantEntity!(InformationReportId);
+  mixin TenantEntity!InformationReportId;
 
-  DataSubjectId dataSubjectId;
+  DataSubjectId subjectId;
   DataSubjectType subjectRole;
   UserId requestedBy;
   InformationReportStatus status = InformationReportStatus.requested;
@@ -30,7 +30,7 @@ struct InformationReport {
 
   Json toJson() const {
     return entityToJson
-      .set("dataSubjectId", dataSubjectId)
+      .set("dataSubjectId", subjectId)
       .set("subjectRole", subjectRole.to!string)
       .set("requestedBy", requestedBy)
       .set("status", status.to!string)

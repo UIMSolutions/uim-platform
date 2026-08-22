@@ -6,7 +6,8 @@
 module uim.platform.html_repository.domain.services.content_delivery_service;
 // import uim.platform.html_repository.domain.types;
 
-// import std.digest.md : md5Of, toHexString;
+import std.digest : toHexString;
+import std.digest.md : md5Of;
 import uim.platform.html_repository;
 
 mixin(ShowModule!());
@@ -15,8 +16,7 @@ mixin(ShowModule!());
 struct ContentDeliveryService {
   // Generate ETag from content data
   static string generateEtag(string data) {
-    auto hash = md5Of(data);
-    return hash.toHexString.to!string;
+    return toHexString(md5Of(data)).idup;
   }
 
   // Check if cached content is still valid

@@ -30,7 +30,7 @@ class ManageAppVersionsUseCase {
         ver.appId = r.appId;
         ver.versionCode = r.versionCode;
         ver.description = r.description;
-        ver.status = VersionStatus.draft;
+        ver.status = VersionStatus.active;
         ver.totalSizeBytes = 0;
 
         repo.save(ver);
@@ -51,12 +51,12 @@ class ManageAppVersionsUseCase {
         return UsecaseResult(true, ver.id.value, "");
     }
 
-    AppVersion getAppVersionById(TenantId tenantId, AppVersionId id) {
+    AppVersion getAppVersion(TenantId tenantId, AppVersionId id) {
         return repo.findById(tenantId, id);
     }
 
     AppVersion getLatestAppVersion(TenantId tenantId, HtmlAppId appId) {
-        return repo.findLatestByApp(tenantId, appId);
+        return repo.findLatest(tenantId, appId);
     }
 
     AppVersion[] listAppVersions(TenantId tenantId, HtmlAppId appId) {

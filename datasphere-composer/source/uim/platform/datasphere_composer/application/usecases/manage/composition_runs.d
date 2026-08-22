@@ -47,6 +47,7 @@ class ManageCompositionRunsUseCase {
     return repo.findById(tenantId, id);
   }
 
+  /// Performs an action on a composition run, such as "cancel". Returns a UsecaseResult indicating success or failure.
   UsecaseResult performAction(CompositionRunActionRequest r) {
     auto run = repo.findById(r.tenantId, r.runId);
     if (run.isNull)
@@ -55,7 +56,7 @@ class ManageCompositionRunsUseCase {
     if (r.action == "cancel") {
       if (run.status != CompositionRunStatus.running &&
         run.status != CompositionRunStatus.pending)
-        return UsecaseResult(false, r.runId, "Only running or pending runs can be cancelled");
+        return UsecaseResult(false, run.id.value, "Only running or pending runs can be cancelled");
       
       run.status = CompositionRunStatus.cancelled;
       repo.update(run);
@@ -65,12 +66,13 @@ class ManageCompositionRunsUseCase {
     return UsecaseResult(false, r.runId, "Unknown action: " ~ r.action);
   }
 
+  /// Deletes a composition run by its ID. Returns a UsecaseResult indicating success or failure.
   UsecaseResult deleteRun(TenantId tenantId, CompositionRunId id) {
     auto run = repo.findById(tenantId, id);
     if (run.isNull)
       return UsecaseResult(false, id.value, "Composition run not found");
 
     repo.remove(run);
-    return UsecaseResult(true, run.id.value, null);
+    return UsecaseResult(true, run.id.value, "Composition run deleted successfully");
   }
 }

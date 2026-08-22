@@ -38,18 +38,18 @@ class AppFileController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     UploadAppFileRequest r;
     r.tenantId = tenantId;
-    r.versionId = data.getString("versionId");
+    r.appId = HtmlAppId(data.getString("appId"));
+    r.versionId = AppVersionId(data.getString("versionId"));
     r.filePath = data.getString("filePath");
     r.contentType = data.getString("contentType");
-    r.data = data.getString("data");
+    r.content = data.getString("content");
     r.encoding = data.getString("encoding");
+    // TODO: r.sizeBytes = data.getInteger("sizeBytes", cast(long) r.content.length);
     r.createdBy = UserId(data.getString("createdBy"));
 
-    auto result = usecase.uploadAppFile(r);
+    auto result = usecase.uploadFile(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -66,8 +66,10 @@ class AppFileController : ManageHttpController {
     auto versionId = getString(req.json, "versionId");
     if (versionId.isEmpty)
       versionId = req.headers.get("X-Version-Id", "");
+    if (versionId.isEmpty)
+      return errorResponse("versionId is required", 400);
 
-    auto items = usecase.listAppFiles(tenantId, versionId);
+    auto items = usecase.listFiles(tenantId, AppVersionId(versionId));
     auto arr = Json.emptyArray;
     foreach (e; items) {
       auto obj = Json.emptyObject
@@ -80,11 +82,9 @@ class AppFileController : ManageHttpController {
       arr ~= obj;
     }
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
-
     auto responseData = Json.emptyObject
-      .set("count", list.length)
-      .set("resources", list);
+      .set("count", arr.length)
+      .set("resources", arr);
     return successResponse("", 0, responseData);
   }
 
@@ -95,11 +95,10 @@ class AppFileController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = AppFileId(precheck.id);
-    auto tenantId = precheck.tenantId;
-    if (isNull)
+    if (id.isNull)
       return errorResponse("File not found", 404);
 
-    auto entry = usecase.getAppFile(tenantId, id);
+    auto entry = usecase.getFile(tenantId, id);
     if (entry.isNull)
       return errorResponse("File not found", 404);
 
@@ -110,7 +109,7 @@ class AppFileController : ManageHttpController {
       .set("contentType", entry.contentType)
       .set("category", entry.category)
       .set("sizeBytes", entry.sizeBytes)
-      .set("data", entry.data)
+      .set("content", entry.content)
       .set("encoding", entry.encoding)
       .set("createdBy", entry.createdBy)
       .set("createdAt", entry.createdAt)
@@ -128,15 +127,18 @@ class AppFileController : ManageHttpController {
     auto id = AppFileId(precheck.id);
     if (id.isNull)
       return errorResponse("File not found", 404);
+    auto data = precheck.data;
 
     UpdateAppFileRequest r;
     r.tenantId = tenantId;
     r.fileId = id;
+    r.versionId = AppVersionId(data.getString("versionId", ""));
     r.contentType = data.getString("contentType");
-    r.data = data.getString("data");
+    r.content = data.getString("content");
     r.encoding = data.getString("encoding");
+    // TODO: r.sizeBytes = data.getInteger("sizeBytes", cast(long) r.content.length);
 
-    auto result = usecase.updateAppFile(r);
+    auto result = usecase.updateFile(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -156,7 +158,7 @@ class AppFileController : ManageHttpController {
     if (id.isNull)
       return errorResponse("File not found", 404);
 
-    auto result = usecase.deleteAppFile(tenantId, id);
+    auto result = usecase.deleteFile(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

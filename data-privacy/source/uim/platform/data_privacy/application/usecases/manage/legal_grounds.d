@@ -65,7 +65,7 @@ class ManageLegalGroundsUseCase {
   }
 
   UsecaseResult updateGround(UpdateLegalGroundRequest req) {
-    auto ground = legalGrounds.findById(req.tenantId, req.id);
+    auto ground = legalGrounds.findById(req.tenantId, req.groundId);
     if (ground.isNull)
       return UsecaseResult(false, "", "Legal ground not found");
 

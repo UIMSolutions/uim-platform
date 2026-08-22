@@ -13,7 +13,9 @@ mixin(ShowModule!());
 class ManageAttributeMappingsUseCase {
   protected IAttributeMappingRepository repo;
 
-  this(IAttributeMappingRepository repo) { this.repo = repo; }
+  this(IAttributeMappingRepository repo) {
+    this.repo = repo;
+  }
 
   UsecaseResult create(CreateAttributeMappingRequest r) {
     auto m = AttributeMapping(r.tenantId);
@@ -29,43 +31,53 @@ class ManageAttributeMappingsUseCase {
     // initEntity(m);
 
     auto err = ComposerValidator.validateAttributeMapping(m);
-    if (err !is null) return UsecaseResult(false, m.id.value, err);
+    if (err !is null)
+      return UsecaseResult(false, m.id.value, err);
 
     repo.save(m);
     return UsecaseResult(true, m.id.value, null);
   }
 
-  AttributeMapping[] list(TenantId tenantId) {
-    return repo.findByTenant(TenantId(tenantId));
+  AttributeMapping[] listMappings(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
   }
 
-  AttributeMapping[] listByConfig(TenantId tenantId, string configId) {
-    return repo.findByConfig(TenantId(tenantId), DataSourceConfigId(configId));
+  AttributeMapping[] listMappings(TenantId tenantId, DataSourceConfigId configId) {
+    return repo.findByConfig(tenantId, configId);
   }
 
-  AttributeMapping getById(TenantId tenantId, AttributeMappingId id) {
-    return repo.findById(TenantId(tenantId), AttributeMappingId(id));
+  AttributeMapping getMapping(TenantId tenantId, AttributeMappingId id) {
+    return repo.findById(tenantId, id);
   }
 
-  UsecaseResult update(UpdateAttributeMappingRequest r) {
-    auto m = repo.findById(TenantId(r.tenantId), AttributeMappingId(r.id));
-    if (m.isNull) return UsecaseResult(false, r.id, "Mapping not found");
+  UsecaseResult updateMapping(UpdateAttributeMappingRequest r) {
+    auto m = repo.findById(r.tenantId, r.mappingId);
+    if (m.isNull)
+      return UsecaseResult(false, r.mappingId, "Mapping not found");
 
-    if (r.sourceAttributeName.length > 0) m.sourceAttributeName = r.sourceAttributeName;
-    if (r.sourceDataType.length > 0)      m.sourceDataType = r.sourceDataType;
-    if (r.targetAttributeName.length > 0) m.targetAttributeName = r.targetAttributeName;
-    if (r.targetDataType.length > 0)      m.targetDataType = r.targetDataType;
-    if (r.delimiter.length > 0)           m.delimiter = r.delimiter;
-    if (r.sortOrder >= 0)                  m.sortOrder = r.sortOrder;
+    if (r.sourceAttributeName.length > 0)
+      m.sourceAttributeName = r.sourceAttributeName;
+    if (r.sourceDataType.length > 0)
+      m.sourceDataType = r.sourceDataType;
+    if (r.targetAttributeName.length > 0)
+      m.targetAttributeName = r.targetAttributeName;
+    if (r.targetDataType.length > 0)
+      m.targetDataType = r.targetDataType;
+    if (r.delimiter.length > 0)
+      m.delimiter = r.delimiter;
+    if (r.sortOrder >= 0)
+      m.sortOrder = r.sortOrder;
     m.active = r.active;
 
     repo.update(m);
     return UsecaseResult(true, m.id.value, null);
   }
 
-  UsecaseResult remove(TenantId tenantId, AttributeMappingId id) {
-    auto m = repo.findById(tenantId, (id));
-    if (m.isNull) return UsecaseResult(false, id, "Mapping not found");
+  UsecaseResult deleteMapping(TenantId tenantId, AttributeMappingId id) {
+    auto m = repo.findById(tenantId, id);
+    if (m.isNull)
+      return UsecaseResult(false, id, "Mapping not found");
+      
     repo.remove(m);
     return UsecaseResult(true, m.id.value, null);
   }

@@ -39,15 +39,13 @@ class AppRouteController : ManageHttpController {
 
     auto data = precheck.data;
     CreateAppRouteRequest request;
-    with (request) {
-      tenantId = tenantId;
-      appId = data.getString("appId");
-      pathPrefix = data.getString("pathPrefix");
-      targetPath = data.getString("targetPath");
-      authRequired = data.getBoolean("authRequired");
-      cacheEnabled = data.getBoolean("cacheEnabled");
-      createdBy = UserId(data.getString("createdBy"));
-    }
+    request.tenantId = tenantId;
+    request.routeId = AppRouteId(data.getString("routeId", ""));
+    request.appId = HtmlAppId(data.getString("appId"));
+    request.pathPrefix = data.getString("pathPrefix");
+    request.targetUrl = data.getString("targetUrl");
+    request.description = data.getString("description");
+    request.createdBy = UserId(data.getString("createdBy"));
 
     auto result = usecase.createAppRoute(request);
     if (result.hasError)
@@ -68,10 +66,10 @@ class AppRouteController : ManageHttpController {
     auto arr = Json.emptyArray;
     foreach (e; items) {
       arr ~= Json.emptyObject
-        .set("id", Json(e.id))
-        .set("appId", Json(e.appId))
-        .set("pathPrefix", Json(e.pathPrefix))
-        .set("status", Json(e.status));
+        .set("id", e.id.value)
+        .set("appId", e.appId.value)
+        .set("pathPrefix", e.pathPrefix)
+        .set("status", e.status);
     }
 
     auto resp = Json.emptyObject
@@ -88,7 +86,7 @@ class AppRouteController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = precheck.id;
+    auto id = AppRouteId(precheck.id);
     if (id.isNull)
       return errorResponse("Route not found", 404);
 
@@ -119,16 +117,18 @@ class AppRouteController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    auto id = precheck.id;
+    auto id = AppRouteId(precheck.id);
     if (id.isNull)
       return errorResponse("Route not found", 404);
 
     UpdateAppRouteRequest r;
-    r.id = id;
+    r.routeId = id;
     r.tenantId = tenantId;
+    r.appId = HtmlAppId(data.getString("appId", ""));
+    r.pathPrefix = data.getString("pathPrefix");
     r.description = data.getString("description");
     r.targetUrl = data.getString("targetUrl");
-    r.updatedBy = UserId(data.getString("updatedBy"));
+    r.status = data.getString("status");
 
     auto result = usecase.updateAppRoute(r);
     if (result.hasError)
@@ -144,7 +144,7 @@ class AppRouteController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = AppRouteId(precheck.id);
     if (id.isNull)
       return errorResponse("Route not found", 404);
 

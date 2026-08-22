@@ -18,7 +18,7 @@ class ManageUnificationRulesUseCase {
   UsecaseResult create(CreateUnificationRuleRequest r) {
     UnificationRule rule;
     rule.id = UnificationRuleId(r.id.length > 0 ? r.id : currentTimestamp());
-    rule.tenantId = TenantId(r.tenantId);
+    rule.tenantId = R.tenantId;
     rule.name = r.name;
     rule.description = r.description;
     rule.priority = r.priority;
@@ -46,7 +46,7 @@ class ManageUnificationRulesUseCase {
   }
 
   UsecaseResult update(UpdateUnificationRuleRequest r) {
-    auto rule = repo.findById(TenantId(r.tenantId), UnificationRuleId(r.id));
+    auto rule = repo.findById(R.tenantId, UnificationRuleId(r.id));
     if (rule.isNull) return UsecaseResult(false, r.id, "Rule not found");
 
     if (r.name.length > 0)        rule.name = r.name;

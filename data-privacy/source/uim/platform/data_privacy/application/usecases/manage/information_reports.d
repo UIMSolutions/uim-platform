@@ -22,26 +22,26 @@ class ManageInformationReportsUseCase {
   UsecaseResult createReport(CreateInformationReportRequest req) {
     if (req.tenantId.isNull)
       return UsecaseResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectId.isNull)
+    if (req.subjectId.isNull)
       return UsecaseResult(false, "", "Data subject ID is required");
 
-    auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
+    auto subject = subjectRepo.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
       return UsecaseResult(false, "", "Data subject not found");
 
     auto r = InformationReport(req.tenantId);
-    r.dataSubjectId = req.dataSubjectId;
+    r.subjectId = req.subjectId;
     r.subjectRole = subject.subjectType;
     r.requestedBy = req.requestedBy;
     r.status = InformationReportStatus.requested;
     r.format = parseExportFormat(req.format);
     r.targetSystems = req.targetSystems;
-    r.categories = req.categories;
+    r.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
     r.reason = req.reason;
-    r.requestedAt = now;
+    r.requestedAt = currentTimestamp;
 
     repo.save(r);
-    return UsecaseResult(true, r.id, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
   InformationReport getReport(TenantId tenantId, InformationReportId id) {
@@ -52,27 +52,27 @@ class ManageInformationReportsUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  InformationReport[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
+  InformationReport[] listReports(TenantId tenantId, DataSubjectId subjectId) {
     return repo.findByDataSubject(tenantId, subjectId);
   }
 
   UsecaseResult updateStatus(UpdateInformationReportStatusRequest req) {
-    auto r = repo.findById(req.tenantId, req.id);
+    auto r = repo.findById(req.tenantId, req.reportId);
     if (r.isNull)
       return UsecaseResult(false, "", "Information report not found");
 
-    r.status = req.status;
+    r.status = req.status.toInformationReportStatus;
     if (req.downloadUrl.length > 0)
       r.downloadUrl = req.downloadUrl;
     if (req.totalRecords > 0)
       r.totalRecords = req.totalRecords;
-    if (req.status == InformationReportStatus.completed) {
+    if (req.status.toInformationReportStatus == InformationReportStatus.completed) {
       r.generatedAt = Clock.currStdTime();
       r.expiresAt = r.generatedAt + 7 * 24 * 60 * 60 * 10_000_000L; // 7 days
     }
 
     repo.update(r);
-    return UsecaseResult(true, r.id, "");
+    return UsecaseResult(true, r.id.value, "");
   }
 
   UsecaseResult deleteReport(TenantId tenantId, InformationReportId id) {

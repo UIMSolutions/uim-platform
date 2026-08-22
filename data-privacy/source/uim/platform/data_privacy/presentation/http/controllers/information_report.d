@@ -107,7 +107,7 @@ class InformationReportController : ManageHttpController {
     r.downloadUrl = data.getString("downloadUrl");
     r.totalRecords = data.getLong("totalRecords");
 
-    auto result = usecase.updateReportStatus(r);
+    auto result = usecase.updateStatus(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

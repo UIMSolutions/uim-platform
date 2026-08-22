@@ -13,7 +13,9 @@ mixin(ShowModule!());
 class ManageCustomerProfilesUseCase {
   protected ICustomerProfileRepository repo;
 
-  this(ICustomerProfileRepository repo) { this.repo = repo; }
+  this(ICustomerProfileRepository repo) {
+    this.repo = repo;
+  }
 
   CustomerProfile[] list(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
@@ -39,13 +41,15 @@ class ManageCustomerProfilesUseCase {
     } else {
       repo.update(profile);
     }
-    return UsecaseResult(true, profile.id.value, null);
+    return UsecaseResult(true, profile.id.value, "Customer profile upserted successfully");
   }
 
   UsecaseResult remove(TenantId tenantId, string id) {
     auto p = repo.findById(TenantId(tenantId), CustomerProfileId(id));
-    if (p.isNull) return UsecaseResult(false, id, "Profile not found");
-    repo.remove(TenantId(tenantId), CustomerProfileId(id));
-    return UsecaseResult(true, id, null);
+    if (p.isNull)
+      return UsecaseResult(false, id, "Profile not found");
+
+    repo.remove(p);
+    return UsecaseResult(true, id, "Customer profile removed successfully");
   }
 }

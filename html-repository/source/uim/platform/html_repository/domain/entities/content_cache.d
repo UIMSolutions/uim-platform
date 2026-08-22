@@ -13,7 +13,7 @@ mixin(ShowModule!());
 struct ContentCache {
   mixin TenantEntity!ContentCacheId;
 
-  AppFileId appFileId;
+  AppFileId fileId;
   string filePath;
   string contentType;
   string content;              // cached base64-encoded content
@@ -28,7 +28,7 @@ struct ContentCache {
 
   Json toJson() const {
     return entityToJson
-      .set("appFileId", appFileId)
+      .set("fileId", fileId)
       .set("filePath", filePath)
       .set("contentType", contentType)
       .set("content", content)

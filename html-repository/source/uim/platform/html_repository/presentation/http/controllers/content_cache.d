@@ -38,19 +38,20 @@ class ContentCacheController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    CreateContentCacheRequest r;
+    CacheContentRequest r;
     r.tenantId = tenantId;
-    r.fileId = data.getString("fileId");
+    r.fileId = AppFileId(data.getString("fileId"));
     r.filePath = data.getString("filePath");
     r.contentType = data.getString("contentType");
-    r.data = data.getString("data");
-    r.etag = data.getString("etag");
+    r.content = data.getString("content");
+    // TODO: r.etag = data.getString("etag");
     r.ttlSeconds = data.getLong("ttlSeconds");
 
-    auto result = usecase.create(r);
+    auto result = usecase.cacheContent(r);
     if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject.set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Cache entry created successfully", "Created", 201, resp);
   }
 
@@ -60,7 +61,7 @@ class ContentCacheController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto items = usecase.listByTenant(tenantId);
+    auto items = usecase.listContent(tenantId);
 
     auto arr = Json.emptyArray;
     foreach (e; items) {
@@ -84,12 +85,11 @@ class ContentCacheController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = ContentCacheId(precheck.id);
     if (id.isNull)
       return errorResponse("Cache entry not found", 404);
 
-    auto entry = usecase.getById(tenantId, id);
+    auto entry = usecase.getContent(tenantId, id);
     if (entry.isNull)
       return errorResponse("Cache entry not found", 404);
 
@@ -97,8 +97,7 @@ class ContentCacheController : ManageHttpController {
       .set("id", entry.id)
       .set("fileId", entry.fileId)
       .set("filePath", entry.filePath)
-      .set("contentType", entry.contentType)
-      .set("data", entry.data)
+      .set("contentType", entry.contentType) // TODO: .set("data", entry.data)
       .set("etag", entry.etag)
       .set("ttlSeconds", entry.ttlSeconds)
       .set("status", entry.status)
@@ -115,24 +114,25 @@ class ContentCacheController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = ContentCacheId(precheck.id);
     if (id.isNull)
       return errorResponse("Cache entry not found", 404);
 
-    auto result = usecase.invalidate(tenantId, id);
+    auto result = usecase.invalidateContent(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
+    return successResponse("Cache entry invalidated successfully", "Invalidated", 200, Json.emptyObject);
   }
 
-  protected Json purgehandler(HTTPServerRequest req) {
-    auto precheck = super.purgehandler(req);
+  protected Json purgeHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto result = usecase.purgeExpired(tenantId);
-    if (result.hasError())
+    auto result = usecase.purgeExpiredContent(tenantId);
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
@@ -141,6 +141,6 @@ class ContentCacheController : ManageHttpController {
     return successResponse("Expired cache entries purged successfully", "Purged", 200, resp);
   }
 
-  mixin(HandleTemplate!("handlePurge", "purgehandler"));
+  mixin(HandleTemplate!("handlePurge", "purgeHandler"));
 
 }

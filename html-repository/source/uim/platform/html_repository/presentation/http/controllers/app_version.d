@@ -40,7 +40,7 @@ class AppVersionController : ManageHttpController {
     auto data = precheck.data;
     CreateAppVersionRequest r;
     r.tenantId = tenantId;
-    r.appId = AppVersionId(data.getString("appId"));
+    r.appId = HtmlAppId(data.getString("appId"));
     r.versionCode = data.getString("versionCode");
     r.description = data.getString("description");
     r.createdBy = UserId(data.getString("createdBy"));
@@ -63,7 +63,7 @@ class AppVersionController : ManageHttpController {
     auto appId = getString(req.json, "appId");
     if (appId.isEmpty)
       appId = req.headers.get("X-App-Id", "");
-    auto items = usecase.listByApp(appId);
+    auto items = usecase.listByApp(HtmlAppId(appId));
 
     auto arr = Json.emptyArray;
     foreach (e; items) {
@@ -93,7 +93,7 @@ class AppVersionController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Version not found", 404);
 
-    auto entry = usecase.getById(tenantId, id);
+    auto entry = usecase.getVersion(tenantId, id);
     if (entry.isNull)
       return errorResponse("Version not found", 404);
 
@@ -123,6 +123,8 @@ class AppVersionController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateAppVersionRequest r;
+    r.tenantId = tenantId;
+    r.versionId = id;
     r.description = data.getString("description");
     r.status = data.getString("status");
 
@@ -146,11 +148,7 @@ class AppVersionController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Version not found", 404);
 
-    auto tenantId = precheck.tenantId;
-    if (id.isNull)
-      return errorResponse("Version not found", 404);
-
-    auto result = usecase.deleteAppVersion(tenantId, AppVersionId(id));
+    auto result = usecase.deleteAppVersion(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

@@ -55,12 +55,13 @@ class ManageAppRoutesUseCase {
 
         if (request.pathPrefix.length > 0)
             route.pathPrefix = request.pathPrefix;
-        // if (request.targetPath.length > 0)
-        //     route.targetPath = request.targetPath;
-        // route.authRequired = request.authRequired;
-        // route.cacheEnabled = request.cacheEnabled;
+        if (request.targetUrl.length > 0)
+            route.targetUrl = request.targetUrl;
+        if (request.description.length > 0)
+            route.description = request.description;
+        if (request.status.length > 0)
+            route.status = request.status.toRouteStatus;
         route.updatedAt = currentTimestamp();
-        route.updatedBy = request.updatedBy;
 
         repo.update(route);
         return UsecaseResult(true, route.id.value, "");

@@ -27,7 +27,7 @@ class ManageServiceInstancesUseCase {
         inst.name = r.name;
         inst.plan = parsePlan(r.plan);
         inst.sizeQuotaMb = r.sizeQuotaMb > 0 ? r.sizeQuotaMb : 100;
-        inst.sizeUsedMb = 0;
+        inst.usedSizeBytes = 0;
         inst.status = InstanceStatus.active;
 
         repo.save(inst);

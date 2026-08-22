@@ -48,7 +48,7 @@ class ContentCacheRepository : TenantRepository!(ContentCache, ContentCacheId), 
     return caches.filter!(c => c.expiresAt < currentTime).array;
   }
   ContentCache[] findExpired(TenantId tenantId, long currentTime) {
-    return filterByExpiration(findByTenant(tenantId), currentTime);
+    return filterExpired(findByTenant(tenantId), currentTime);
   }
   void removeExpired(TenantId tenantId, long currentTime) {
     findExpired(tenantId, currentTime).each!(c => remove(c));

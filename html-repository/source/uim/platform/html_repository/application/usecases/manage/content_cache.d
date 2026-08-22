@@ -26,17 +26,16 @@ class ManageContentCacheUseCase {
 
     UsecaseResult cacheContent(CacheContentRequest r) {
         auto entry = ContentCache(r.tenantId);
-        entry.appId = r.appId;
         entry.fileId = r.fileId;
         entry.filePath = r.filePath;
         entry.contentType = r.contentType;
-        entry.sizeBytes = r.sizeBytes;
+        entry.sizeBytes = cast(long) r.content.length;
         entry.etag = ContentDeliveryService.generateEtag(r.content);
         entry.content = r.content;
         entry.ttlSeconds = r.ttlSeconds;
         entry.cachedAt = currentTimestamp();
         entry.expiresAt = entry.cachedAt + r.ttlSeconds * 10_000_000L;
-        entry.status = CacheStatus.active;
+        entry.status = CacheStatus.valid;
 
         repo.save(entry);
         return UsecaseResult(true, entry.id.value, "");
@@ -46,20 +45,26 @@ class ManageContentCacheUseCase {
         return repo.findById(tenantId, id);
     }
 
-    ContentCache getByFile(TenantId tenantId, AppFileId fileId) {
-        return repo.findByFile(tenantId, fileId);
+    ContentCache getContent(TenantId tenantId, AppFileId fileId) {
+        foreach (entry; repo.findByTenant(tenantId)) {
+            if (entry.fileId == fileId)
+                return entry;
+        }
+        return ContentCache.init;
     }
 
-    void invalidate(TenantId tenantId, ContentCacheId id) {
+    UsecaseResult invalidateContent(TenantId tenantId, ContentCacheId id) {
         auto entry = repo.findById(tenantId, id);
         if (!entry.isNull) {
             entry.status = CacheStatus.invalid;
             repo.update(entry);
         }
+        return UsecaseResult(true, entry.id.value, "Content invalidated");
     }
 
-    void purgeExpiredContent() {
-        repo.purgeExpired(currentTimestamp());
+    UsecaseResult purgeExpiredContent(TenantId tenantId) {
+        repo.removeExpired(tenantId, currentTimestamp());
+        return UsecaseResult(true, "", "Expired content purged");
     }
 
     ContentCache[] listContent(TenantId tenantId) {

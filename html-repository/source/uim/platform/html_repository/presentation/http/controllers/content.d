@@ -16,12 +16,12 @@ mixin(ShowModule!());
 
 @safe:
 class ContentController : ManageHttpController {
-  protected ManageAppFilesUseCase fileUc;
-  private ManageContentCacheUseCase cacheUc;
+  protected ManageAppFilesUseCase fileUsecase;
+  private ManageContentCacheUseCase cacheUsecase;
 
-  this(ManageAppFilesUseCase fileUc, ManageContentCacheUseCase cacheUc) {
-    this.fileUc = fileUc;
-    this.cacheUc = cacheUc;
+  this(ManageAppFilesUseCase fileUsecase, ManageContentCacheUseCase cacheUsecase) {
+    this.fileUsecase = fileUsecase;
+    this.cacheUsecase = cacheUsecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -40,7 +40,7 @@ class ContentController : ManageHttpController {
       if (id.isNull)
         return errorResponse("File ID is required", 400);
 
-      auto entry = fileUc.getAppFile(tenantId, id);
+      auto entry = fileUsecase.getFile(tenantId, id);
       if (entry.isNull) 
       return errorResponse("Content not found", 404);
       
@@ -49,8 +49,8 @@ class ContentController : ManageHttpController {
 
       auto response = Json.emptyObject
         .set("id", entry.id)
-        .set("contentType", entry.contentType)
-        .set("data", entry.data);
+        .set("contentType", entry.contentType);
+        // .set("data", entry.data);
 
         return successResponse("Content retrieved successfully", 200, response);
   }

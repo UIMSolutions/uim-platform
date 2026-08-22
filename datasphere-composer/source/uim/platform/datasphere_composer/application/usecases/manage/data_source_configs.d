@@ -13,7 +13,9 @@ mixin(ShowModule!());
 class ManageDataSourceConfigsUseCase {
   protected IDataSourceConfigRepository repo;
 
-  this(IDataSourceConfigRepository repo) { this.repo = repo; }
+  this(IDataSourceConfigRepository repo) {
+    this.repo = repo;
+  }
 
   UsecaseResult create(CreateDataSourceConfigRequest r) {
     auto cfg = DataSourceConfig.init(r.tenantId);
@@ -21,37 +23,41 @@ class ManageDataSourceConfigsUseCase {
     cfg.dataProductId = DataProductId(r.dataProductId);
     cfg.providerId = DataProviderId(r.providerId);
     cfg.qualityRank = r.qualityRank.length > 0
-      ? cast(DataQualityRank) r.qualityRank
-      : DataQualityRank.medium;
-    cfg.timestampConfig = TimestampConfig(r.timestampFormat, r.timestampField, r.timestampCustomPattern);
+      ? cast(DataQualityRank)r.qualityRank : DataQualityRank.medium;
+    cfg.timestampConfig = TimestampConfig(r.timestampFormat, r.timestampField, r
+        .timestampCustomPattern);
     cfg.enabled = r.enabled;
     cfg.disabledRuleIds = r.disabledRuleIds;
 
     auto err = ComposerValidator.validateDataSourceConfig(cfg);
-    if (err !is null) return UsecaseResult(false, cfg.id.value, err);
+    if (err !is null)
+      return UsecaseResult(false, cfg.id.value, err);
 
     repo.save(cfg);
     return UsecaseResult(true, cfg.id.value, null);
   }
 
-  DataSourceConfig[] list(TenantId tenantId) {
+  DataSourceConfig[] listConfigs(TenantId tenantId) {
     return repo.findByTenant(TenantId(tenantId));
   }
 
-  DataSourceConfig[] listByProduct(TenantId tenantId, string productId) {
+  DataSourceConfig[] listConfigs(TenantId tenantId, string productId) {
     return repo.findByProduct(TenantId(tenantId), DataProductId(productId));
   }
 
-  DataSourceConfig getById(TenantId tenantId, string id) {
+  DataSourceConfig getConfig(TenantId tenantId, string id) {
     return repo.findById(TenantId(tenantId), DataSourceConfigId(id));
   }
 
   UsecaseResult update(UpdateDataSourceConfigRequest r) {
-    auto cfg = repo.findById(TenantId(r.tenantId), DataSourceConfigId(r.id));
-    if (cfg.isNull) return UsecaseResult(false, r.id, "Config not found");
+    auto cfg = repo.findById(R.tenantId, DataSourceConfigId(r.id));
+    if (cfg.isNull)
+      return UsecaseResult(false, r.id, "Config not found");
 
-    if (r.qualityRank.length > 0) cfg.qualityRank = cast(DataQualityRank) r.qualityRank;
-    cfg.timestampConfig = TimestampConfig(r.timestampFormat, r.timestampField, r.timestampCustomPattern);
+    if (r.qualityRank.length > 0)
+      cfg.qualityRank = cast(DataQualityRank)r.qualityRank;
+    cfg.timestampConfig = TimestampConfig(r.timestampFormat, r.timestampField, r
+        .timestampCustomPattern);
     cfg.enabled = r.enabled;
     cfg.disabledRuleIds = r.disabledRuleIds;
 
@@ -60,8 +66,9 @@ class ManageDataSourceConfigsUseCase {
   }
 
   UsecaseResult addIdentifierMapping(AddIdentifierMappingRequest r) {
-    auto cfg = repo.findById(TenantId(r.tenantId), DataSourceConfigId(r.configId));
-    if (cfg.isNull) return UsecaseResult(false, r.configId, "Config not found");
+    auto cfg = repo.findById(R.tenantId, DataSourceConfigId(r.configId));
+    if (cfg.isNull)
+      return UsecaseResult(false, r.configId, "Config not found");
 
     IdentifierMapping m;
     m.ruleId = r.ruleId;
@@ -79,8 +86,9 @@ class ManageDataSourceConfigsUseCase {
 
   UsecaseResult remove(TenantId tenantId, string id) {
     auto cfg = repo.findById(TenantId(tenantId), DataSourceConfigId(id));
-    if (cfg.isNull) return UsecaseResult(false, id, "Config not found");
-    repo.remove(TenantId(tenantId), DataSourceConfigId(id));
+    if (cfg.isNull)
+      return UsecaseResult(false, id, "Config not found");
+    repo.remove(cfg);
     return UsecaseResult(true, id, null);
   }
 }

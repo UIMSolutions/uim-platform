@@ -18,16 +18,15 @@ class ManageAppFilesUseCase {
         this.repo = repo;
     }
 
-    UsecaseResult upload(UploadAppFileRequest r) {
+    UsecaseResult uploadFile(UploadAppFileRequest r) {
         if (!DeploymentValidator.validateFilePath(r.filePath))
             return UsecaseResult(false, "", "Invalid file path");
 
         auto file = AppFile(r.tenantId);
-        file.appId = r.appId;
         file.versionId = r.versionId;
         file.filePath = r.filePath;
-        // file.fileName = r.fileName;
         file.contentType = r.contentType;
+        file.encoding = r.encoding;
         file.sizeBytes = r.sizeBytes;
         file.etag = ContentDeliveryService.generateEtag(r.content);
         file.category = categorizeFile(r.filePath);
@@ -37,7 +36,7 @@ class ManageAppFilesUseCase {
         return UsecaseResult(true, file.id.value, "");
     }
 
-    UsecaseResult update(UpdateAppFileRequest r) {
+    UsecaseResult updateFile(UpdateAppFileRequest r) {
         auto file = repo.findById(r.tenantId, r.fileId);
         if (file.isNull)
             return UsecaseResult(false, "", "File not found");
@@ -49,8 +48,9 @@ class ManageAppFilesUseCase {
         }
         if (r.contentType.length > 0)
             file.contentType = r.contentType;
+        if (r.encoding.length > 0)
+            file.encoding = r.encoding;
         file.updatedAt = currentTimestamp();
-        file.updatedBy = r.updatedBy;
 
         repo.update(file);
         return UsecaseResult(true, file.id.value, "");
@@ -64,7 +64,7 @@ class ManageAppFilesUseCase {
         return repo.findByPath(tenantId, versionId, filePath);
     }
 
-    AppFile[] listByVersion(TenantId tenantId, AppVersionId versionId) {
+    AppFile[] listFiles(TenantId tenantId, AppVersionId versionId) {
         return repo.findByVersion(tenantId, versionId);
     }
 
@@ -94,7 +94,10 @@ class ManageAppFilesUseCase {
             return FileCategory.javascript;
         if (filePath.endsWith(".css"))
             return FileCategory.css;
-        if (filePath.endsWith(".png") || filePath.endsWith(".jpg") || filePath.endsWith(".gif") || filePath.endsWith(            ".svg"))
+        if (filePath.endsWith(".png") ||
+            filePath.endsWith(".jpg") ||
+            filePath.endsWith(".gif") ||
+            filePath.endsWith(".svg"))
             return FileCategory.image;
         if (filePath.endsWith(".json"))
             return FileCategory.json;

@@ -18,7 +18,7 @@ class ManageTenantUsersUseCase {
   UsecaseResult create(CreateTenantUserRequest r) {
     TenantUser u;
     u.id = TenantUserId(r.id.length > 0 ? r.id : currentTimestamp());
-    u.tenantId = TenantId(r.tenantId);
+    u.tenantId = R.tenantId;
     u.email = r.email;
     u.firstName = r.firstName;
     u.lastName = r.lastName;
@@ -43,7 +43,7 @@ class ManageTenantUsersUseCase {
   }
 
   UsecaseResult update(UpdateTenantUserRequest r) {
-    auto u = repo.findById(TenantId(r.tenantId), TenantUserId(r.id));
+    auto u = repo.findById(R.tenantId, TenantUserId(r.id));
     if (u.isNull) return UsecaseResult(false, r.id, "User not found");
 
     if (r.firstName.length > 0) u.firstName = r.firstName;

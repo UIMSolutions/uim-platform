@@ -33,6 +33,6 @@ struct VisibilityService {
 
   // Check if an app can be accessed at runtime
   static bool canServe(HtmlApp app) {
-    return app.status == AppStatus.active && app.activeVersionId.length > 0;
+    return app.status == AppStatus.active && app.activeVersionId.value.length > 0;
   }
 }
