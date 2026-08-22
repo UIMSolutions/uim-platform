@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 interface IHtmlAppRepository : ITenantRepository!(HtmlApp, HtmlAppId) {
 
-  size_t countByName(TenantId tenantId, string name);
-  HtmlApp[] findByName(TenantId tenantId, string name);
+  bool existsByName(TenantId tenantId, string name);
+  HtmlApp findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);
   
   size_t countByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);

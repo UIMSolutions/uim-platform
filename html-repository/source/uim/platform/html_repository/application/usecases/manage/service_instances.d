@@ -22,7 +22,7 @@ class ManageServiceInstancesUseCase {
         if (!DeploymentValidator.validateInstanceName(r.name))
             return UsecaseResult(false, "", "Invalid service instance name");
 
-        auto inst = ServiceInstance(r.tenantId, r.createdBy);
+        auto inst = ServiceInstance(r.tenantId); // , r.createdBy);
         inst.spaceId = r.spaceId;
         inst.name = r.name;
         inst.plan = parsePlan(r.plan);
@@ -34,8 +34,8 @@ class ManageServiceInstancesUseCase {
         return UsecaseResult(true, inst.id.value, "");
     }
 
-    UsecaseResult updateServiceInstance(TenantId tenantId, ServiceInstanceId id, UpdateServiceInstanceRequest r) {
-        auto inst = repo.findById(tenantId, id);
+    UsecaseResult updateServiceInstance(UpdateServiceInstanceRequest r) {
+        auto inst = repo.findById(r.tenantId, r.instanceId);
         if (inst.isNull)
             return UsecaseResult(false, "", "Service instance not found");
 
@@ -43,7 +43,7 @@ class ManageServiceInstancesUseCase {
         if (r.plan.length > 0) inst.plan = parsePlan(r.plan);
         if (r.sizeQuotaMb > 0) inst.sizeQuotaMb = r.sizeQuotaMb;
         inst.updatedAt = currentTimestamp();
-        inst.updatedBy = r.updatedBy;
+        // inst.updatedBy = r.updatedBy;
 
         repo.update(inst);
         return UsecaseResult(true, inst.id.value, "");

@@ -13,7 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCacheId), IContentCacheRepository {
+class ContentCacheRepository : TenantRepository!(ContentCache, ContentCacheId), IContentCacheRepository {
 
   bool existsByFile(TenantId tenantId, AppFileId fileId) {
     foreach (e; findByTenant(tenantId)) {

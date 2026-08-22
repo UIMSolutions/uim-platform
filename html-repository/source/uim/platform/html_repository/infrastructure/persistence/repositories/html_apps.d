@@ -12,20 +12,21 @@ mixin(ShowModule!());
 @safe:
 class HtmlAppRepository : TenantRepository!(HtmlApp, HtmlAppId), IHtmlAppRepository {
 
-  size_t countByName(TenantId tenantId, string name) {
-    return findByName(tenantId, name);
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(a => a.name == name);
   }
 
-  HtmlApp[] filterByName(HtmlApp[] apps, string name) {
-    return apps.filter!(a => a.name == name).array;
-  }
-
-  HtmlApp[] findByName(TenantId tenantId, string name) {
-    return filterByName(findByTenant(tenantId), name);
+  HtmlApp findByName(TenantId tenantId, string name) {
+    foreach(app; findByTenant(tenantId)) {
+      if (app.name == name) {
+        return app;
+      }
+    }
+    return HtmlApp.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).each!(e => remove(e));
+    remove(findByName(tenantId, name));
   }
 
   size_t countBySpace(TenantId tenantId, SpaceId spaceId) {

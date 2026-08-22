@@ -20,7 +20,7 @@ struct HtmlApp {
   string description;
   AppVisibility visibility;
   AppStatus status;
-  string activeVersionId;  // currently active version
+  AppVersionId activeVersionId;  // currently active version
   long totalSizeBytes;     // total storage used
   
   Json toJson() const {

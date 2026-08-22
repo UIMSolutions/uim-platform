@@ -13,7 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), IAppVersionRepository {
+class AppVersionRepository : TenantRepository!(AppVersion, AppVersionId), IAppVersionRepository {
 
   AppVersion findLatest(TenantId tenantId, HtmlAppId appId) {
     AppVersion latest = AppVersion.init;

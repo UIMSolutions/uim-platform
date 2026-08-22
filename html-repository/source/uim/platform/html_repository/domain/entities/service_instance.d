@@ -27,7 +27,7 @@ struct ServiceInstance {
       .set("spaceId", spaceId.value)
       .set("name", name)
       .set("description", description)
-      .set("plan", plan.toString())
+      .set("plan", plan.to!string())
       .set("status", status.toString())
       .set("sizeQuotaMb", sizeQuotaMb)
       .set("usedSizeBytes", usedSizeBytes)

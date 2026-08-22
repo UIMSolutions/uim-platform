@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 struct CreateDataProviderRequest {
   TenantId tenantId;
-  string id;
+  DataProviderId id;
   string name;
   string description;
   string systemType;
@@ -26,7 +26,7 @@ struct CreateDataProviderRequest {
 
 struct UpdateDataProviderRequest {
   TenantId tenantId;
-  string id;
+  DataProviderId id;
   string name;
   string description;
   string status;
@@ -38,8 +38,8 @@ struct UpdateDataProviderRequest {
 
 struct CreateDataProductRequest {
   TenantId tenantId;
-  string id;
-  string providerId;
+  DataProductId productId;
+  DataProviderId providerId;
   string name;
   string description;
   string schemaVersion;
@@ -50,7 +50,7 @@ struct CreateDataProductRequest {
 
 struct UpdateDataProductRequest {
   TenantId tenantId;
-  string id;
+  DataProductId productId;
   string name;
   string description;
   string status;
@@ -60,8 +60,8 @@ struct UpdateDataProductRequest {
 // ---- UnificationRule DTOs ----
 
 struct CreateUnificationRuleRequest {
-  string   tenantId;
-  string   id;
+  TenantId tenantId;
+  UnificationRuleId ruleId;
   string   name;
   string   description;
   int      priority;
@@ -73,8 +73,8 @@ struct CreateUnificationRuleRequest {
 }
 
 struct UpdateUnificationRuleRequest {
-  string   tenantId;
-  string   id;
+  TenantId tenantId;
+  UnificationRuleId ruleId;
   string   name;
   string   description;
   int      priority;
@@ -87,17 +87,17 @@ struct UpdateUnificationRuleRequest {
 }
 
 struct ReorderRulesRequest {
-  string   tenantId;
-  string[] orderedRuleIds;
+  TenantId tenantId;
+  UnificationRuleId[] orderedRuleIds;
 }
 
 // ---- DataSourceConfig DTOs ----
 
 struct CreateDataSourceConfigRequest {
   TenantId tenantId;
-  string id;
-  string dataProductId;
-  string providerId;
+  DataSourceConfigId configId;
+  DataProductId dataProductId;
+  DataProviderId providerId;
   string qualityRank;
   string timestampFormat;
   string timestampField;
@@ -108,7 +108,7 @@ struct CreateDataSourceConfigRequest {
 
 struct UpdateDataSourceConfigRequest {
   TenantId tenantId;
-  string id;
+  DataSourceConfigId configId;
   string qualityRank;
   string timestampFormat;
   string timestampField;
@@ -119,7 +119,7 @@ struct UpdateDataSourceConfigRequest {
 
 struct AddIdentifierMappingRequest {
   TenantId tenantId;
-  string configId;
+  DataSourceConfigId configId;
   string ruleId;
   string ruleAttributeName;
   string sourceAttributeName;
@@ -129,9 +129,9 @@ struct AddIdentifierMappingRequest {
 // ---- AttributeMapping DTOs ----
 
 struct CreateAttributeMappingRequest {
-  string   tenantId;
-  string   id;
-  string   configId;
+  TenantId tenantId;
+  AttributeMappingId mappingId;
+  DataSourceConfigId configId;
   string   sourceAttributeName;
   string   sourceDataType;
   string   targetAttributeName;
@@ -141,8 +141,8 @@ struct CreateAttributeMappingRequest {
 }
 
 struct UpdateAttributeMappingRequest {
-  string   tenantId;
-  string   id;
+  TenantId tenantId;
+  AttributeMappingId mappingId;
   string   sourceAttributeName;
   string   sourceDataType;
   string   targetAttributeName;
@@ -164,8 +164,8 @@ struct SearchCustomerProfileRequest {
 // ---- CompositionRun DTOs ----
 
 struct StartCompositionRunRequest {
-  string   tenantId;
-  string   id;
+  TenantId tenantId;
+  CompositionRunId runId;
   string   name;
   string[] dataProductIds;
   string   triggeredBy;
@@ -173,7 +173,7 @@ struct StartCompositionRunRequest {
 
 struct CompositionRunActionRequest {
   TenantId tenantId;
-  string id;
+  CompositionRunId runId;
   string action;  /// "cancel"
 }
 
@@ -181,7 +181,7 @@ struct CompositionRunActionRequest {
 
 struct CreateTenantUserRequest {
   TenantId tenantId;
-  string id;
+  TenantUserId userId;
   string email;
   string firstName;
   string lastName;
@@ -191,7 +191,7 @@ struct CreateTenantUserRequest {
 
 struct UpdateTenantUserRequest {
   TenantId tenantId;
-  string id;
+  TenantUserId userId;
   string firstName;
   string lastName;
   string role;

@@ -28,8 +28,7 @@ class ManageHtmlAppsUseCase {
         if (!DeploymentValidator.validateAppName(r.name))
             return UsecaseResult(false, "", "Invalid application name");
 
-        auto existing = repo.findByName(r.tenantId, r.name);
-        if (!existing.isNull)
+        if (repo.existsByName(r.tenantId, r.name))
             return UsecaseResult(false, "", "Application with this name already exists");
 
         auto app = HtmlApp(r.tenantId);
@@ -47,7 +46,7 @@ class ManageHtmlAppsUseCase {
     }
 
     UsecaseResult updateHtmlApp(UpdateHtmlAppRequest r) {
-        auto app = repo.findById(r.tenantId, r.id);
+        auto app = repo.findById(r.tenantId, r.appId);
         if (app.isNull)
             return UsecaseResult(false, "", "App not found");
 

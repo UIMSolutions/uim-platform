@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.datasphere_composer.domain.ports.repositories;
 
-public {
+public:
   import uim.platform.datasphere_composer.domain.ports.repositories.data_providers;
   import uim.platform.datasphere_composer.domain.ports.repositories.data_products;
   import uim.platform.datasphere_composer.domain.ports.repositories.unification_rules;
@@ -14,4 +14,4 @@ public {
   import uim.platform.datasphere_composer.domain.ports.repositories.customer_profiles;
   import uim.platform.datasphere_composer.domain.ports.repositories.composition_runs;
   import uim.platform.datasphere_composer.domain.ports.repositories.tenant_users;
-}
+

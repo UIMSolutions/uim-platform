@@ -15,6 +15,7 @@ mixin(ShowModule!());
 enum AppVisibility : string {
   private_ = "private", // accessible only within same space
   public_ = "public", // shared across spaces
+  restricted = "restricted", // restricted access
 }
 
 AppVisibility toAppVisibility(string value) {
@@ -23,31 +24,32 @@ AppVisibility toAppVisibility(string value) {
     return AppVisibility.private_;
   case "public":
     return AppVisibility.public_;
+  case "restricted":
+    return AppVisibility.restricted; // treat "restricted" as "private"
   default:
     return AppVisibility.private_; // Default value for unknown strings is "private"
   }
 }
 
-AppVisibility[] toAppVisibilities(string[] values) {
-  return values.map!(toAppVisibility).array;
-}
+AppVisibility[] toAppVisibilities(string[] values) 
+  => values.map!(toAppVisibility).array;
 
-string toString(AppVisibility value) {
-  return cast(string)value;
-}
+string toString(AppVisibility value) 
+  => cast(string)value;
 
-string[] toString(AppVisibility[] values) {
-  return values.map!toString.array;
-}
+string[] toString(AppVisibility[] values)
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("AppVisibility"));
 
   assert(toAppVisibility("private") == AppVisibility.private_);
   assert(toAppVisibility("public") == AppVisibility.public_);
+  assert(toAppVisibility("restricted") == AppVisibility.restricted);
 
   assert(toAppVisibility("") == AppVisibility.private_);
   assert(toAppVisibility("unknown") == AppVisibility.private_);
+  assert(toAppVisibility("restricted") == AppVisibility.restricted);
 
   assert(toString(AppVisibility.private_) == "private");
   assert(toString(AppVisibility.public_) == "public");
@@ -76,6 +78,18 @@ AppStatus toAppStatus(string value) {
   default:
     return AppStatus.active; // Default value for unknown strings is "active"
   }
+}
+
+AppStatus[] toAppStatuses(string[] values) {
+  return values.map!(toAppStatus).array;
+}
+
+string toString(AppStatus value) {
+  return cast(string)value;
+}
+
+string[] toString(AppStatus[] values) {
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -254,17 +268,15 @@ ServicePlan toServicePlan(string value) {
   }
 }
 
-ServicePlan[] toServicePlans(string[] values) {
-  return values.map!(toServicePlan).array;
-}
+ServicePlan[] toServicePlans(string[] values)
+  => values.map!(toServicePlan).array;
 
-string toString(ServicePlan value) {
-  return cast(string)value;
-}
+string toString(ServicePlan value)
+  => cast(string)value;
 
-string[] toString(ServicePlan[] values) {
-  return values.map!toString.array;
-}
+string[] toString(ServicePlan[] values)
+  => values.map!toString.array;
+
 ///
 unittest {
   mixin(ShowTest!("ServicePlan"));
@@ -339,6 +351,7 @@ unittest {
 // Cache status
 enum CacheStatus {
   valid,
+  invalid, // ?
   stale,
   expired,
 }

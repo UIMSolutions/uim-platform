@@ -12,7 +12,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class AppFileMemoryRepository : TenantRepository!(AppFile, AppFileId), IAppFileRepository {
+class AppFileRepository : TenantRepository!(AppFile, AppFileId), IAppFileRepository {
 
   bool existsByPath(TenantId tenantId, AppVersionId versionId, string filePath) {
     return findByTenant(tenantId).any!(e => e.versionId == versionId && e.filePath == filePath);

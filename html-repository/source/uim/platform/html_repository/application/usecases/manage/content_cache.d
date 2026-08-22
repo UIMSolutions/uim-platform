@@ -53,13 +53,13 @@ class ManageContentCacheUseCase {
     void invalidate(TenantId tenantId, ContentCacheId id) {
         auto entry = repo.findById(tenantId, id);
         if (!entry.isNull) {
-            entry.status = CacheStatus.invalidated;
+            entry.status = CacheStatus.invalid;
             repo.update(entry);
         }
     }
 
     void purgeExpiredContent() {
-        repo.purgeExpired(Clock.currStdTime()());
+        repo.purgeExpired(currentTimestamp());
     }
 
     ContentCache[] listContent(TenantId tenantId) {

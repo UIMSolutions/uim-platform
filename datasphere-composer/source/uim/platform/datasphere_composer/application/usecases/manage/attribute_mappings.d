@@ -16,9 +16,8 @@ class ManageAttributeMappingsUseCase {
   this(IAttributeMappingRepository repo) { this.repo = repo; }
 
   UsecaseResult create(CreateAttributeMappingRequest r) {
-    AttributeMapping m;
-    m.id = AttributeMappingId(r.id.length > 0 ? r.id : currentTimestamp());
-    m.tenantId = TenantId(r.tenantId);
+    auto m = AttributeMapping(r.tenantId);
+    m.id = r.mappingId.isNull ? AttributeMappingId(createId) : r.mappingId;
     m.configId = DataSourceConfigId(r.configId);
     m.sourceAttributeName = r.sourceAttributeName;
     m.sourceDataType = r.sourceDataType;
@@ -27,7 +26,7 @@ class ManageAttributeMappingsUseCase {
     m.delimiter = r.delimiter;
     m.sortOrder = r.sortOrder;
     m.active = true;
-    initEntity(m);
+    // initEntity(m);
 
     auto err = ComposerValidator.validateAttributeMapping(m);
     if (err !is null) return UsecaseResult(false, m.id.value, err);
@@ -44,7 +43,7 @@ class ManageAttributeMappingsUseCase {
     return repo.findByConfig(TenantId(tenantId), DataSourceConfigId(configId));
   }
 
-  AttributeMapping getById(TenantId tenantId, string id) {
+  AttributeMapping getById(TenantId tenantId, AttributeMappingId id) {
     return repo.findById(TenantId(tenantId), AttributeMappingId(id));
   }
 
@@ -64,10 +63,10 @@ class ManageAttributeMappingsUseCase {
     return UsecaseResult(true, m.id.value, null);
   }
 
-  UsecaseResult remove(TenantId tenantId, string id) {
-    auto m = repo.findById(TenantId(tenantId), AttributeMappingId(id));
+  UsecaseResult remove(TenantId tenantId, AttributeMappingId id) {
+    auto m = repo.findById(tenantId, (id));
     if (m.isNull) return UsecaseResult(false, id, "Mapping not found");
-    repo.remove(TenantId(tenantId), AttributeMappingId(id));
-    return UsecaseResult(true, id, null);
+    repo.remove(m);
+    return UsecaseResult(true, m.id.value, null);
   }
 }
