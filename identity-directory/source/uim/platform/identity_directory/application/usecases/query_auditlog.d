@@ -11,21 +11,47 @@ mixin(ShowModule!());
 
 @safe:
 /// Application use case: query audit logs.
-interface IQueryAuditLogUseCase {
+class QueryAuditLogUseCase {
+  protected IAuditRepository auditRepo;
+
+  this(IAuditRepository auditRepo) {
+    this.auditRepo = auditRepo;
+  }
 
   /// List audit events by tenant.
-  AuditEvent[] listEvents(TenantId tenantId);
+  AuditEvent[] listEvents(TenantId tenantId) { // }, size_t offset = 0, size_t limit = 100) {
+    return auditRepo.findByTenant(tenantId); // , offset, limit);
+  }
   
   /// Find events by actor.
-  AuditEvent[] findByActor(TenantId tenantId, string actorId);
+  AuditEvent[] findByActor(TenantId tenantId, string actorId) { // }, size_t offset = 0, size_t limit = 100) {
+    return auditRepo.findByActor(tenantId, actorId); // , offset, limit);
+  }
 
   /// Find events by target resource.
-  AuditEvent[] findByTarget(TenantId tenantId, string targetId);
+  AuditEvent[] findByTarget(TenantId tenantId, string targetId) { // }, size_t offset = 0, size_t limit = 100) {
+    return auditRepo.findByTarget(tenantId, targetId); // , offset, limit);
+  }
 
   /// Find events by type.
-  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType);
+  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType) { // size_t offset = 0, size_t limit = 100) {
+    return auditRepo.findByType(tenantId, eventType); // , offset, limit);
+  }
 
   /// Find events within a time range.
-  AuditEvent[] findByTimeRange(TenantId tenantId, long from, long to);
+  AuditEvent[] findByTimeRange(TenantId tenantId, long from, long to) { // }, size_t offset = 0, size_t limit = 100) {
+    return auditRepo.findByTimeRange(tenantId, from, to); // , offset, limit);
+  }
+}
+
+///
+unittest {
+//     auto auditRepository = new AuditRepository();
+//     auto usecase = new QueryAuditLogUseCase(auditRepository);
+//     auto tenantId = TenantId("test-tenant");
+// 
+//     // Test list
+//     auto items = usecase.listEvents(tenantId);
+//     assert(items !is null);
 
 }

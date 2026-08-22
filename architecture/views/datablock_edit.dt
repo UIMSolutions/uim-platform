@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  nav(aria-label="breadcrumb")
+    ul
+      li
+        a(href="/web") Home
+      li
+        a(href="/web/datablock") Datablock
+      li Edit
+
+  h1 Daten Bausteine
+
+  form(action="/web/datablock/update", method="post")
+
+    div.grid
+      div(role="group")
+        button(type="button", onclick="window.location.href='/web/datablock/create'") Create
+        button(type="button", onclick="window.location.href='/web/datablock/duplicate/" ~ block.id.value ~ "'") Duplicate
+        button.outline(type="button", disabled) Edit
+        button(type="button", onclick="window.location.href='/web/datablock/delete/" ~ block.id.value ~ "'") Delete
+
+      div(role="group")
+        button(type="button", onclick="window.location.href='/web/datablock/view/" ~ block.id.value ~ "'") Cancel
+        button(type="submit") Save
+
+    fieldset
+      div.field
+        label(for="id")=translations["id"]
+        input(type="text", id="id", name="id", value=block.id.value)
+
+      div.field
+        label(for="title")=translations["title"]
+        input(type="text", id="title", name="title", value=block.title)
+
+      div.field
+        label(for="description")=translations["description"]
+        textarea(id="description", name="description", value=block.description)

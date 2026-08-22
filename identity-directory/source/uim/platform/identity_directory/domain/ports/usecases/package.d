@@ -11,3 +11,4 @@ public:
   import uim.platform.identity_directory.domain.ports.usecases.schemas;
   import uim.platform.identity_directory.domain.ports.usecases.password_policies;
   import uim.platform.identity_directory.domain.ports.usecases.api_clients;
+  import uim.platform.identity_directory.domain.ports.usecases.query_auditlog;

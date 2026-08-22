@@ -15,16 +15,16 @@ mixin(ShowModule!());
 @safe:
 
 final class IdentityDirectoryGuiController {
-    private ManageApiClientsUseCase apiClients;
-    private QueryAuditLogUseCase auditLog;
-    private ManageUsersUseCase users;
-    private ManageGroupsUseCase groups;
-    private ManageSchemasUseCase schemas;
-    private ManagePasswordPoliciesUseCase passwordPolicies;
+    private IManageApiClientsUseCase apiClients;
+    private IQueryAuditLogUseCase auditLog;
+    private IManageUsersUseCase users;
+    private IManageGroupsUseCase groups;
+    private IManageSchemasUseCase schemas;
+    private IManagePasswordPoliciesUseCase passwordPolicies;
 
-    this(ManageApiClientsUseCase apiClients, QueryAuditLogUseCase auditLog,
-        ManageUsersUseCase users, ManageGroupsUseCase groups,
-        ManageSchemasUseCase schemas, ManagePasswordPoliciesUseCase passwordPolicies) {
+    this(IManageApiClientsUseCase apiClients, IQueryAuditLogUseCase auditLog,
+        IManageUsersUseCase users, IManageGroupsUseCase groups,
+        IManageSchemasUseCase schemas, IManagePasswordPoliciesUseCase passwordPolicies) {
         this.apiClients = apiClients;
         this.auditLog = auditLog;
         this.users = users;

@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  nav(aria-label="breadcrumb")
+    ul
+      li
+        a(href="/web") Home
+      li Datablock
+
+  h1 Daten Bausteine
+  div.grid
+    div(role="group")
+      button(type="button", onclick="window.location.href='/web/datablock/create'") Create
+      button.outline(type="button", disabled) Duplicate
+      button.outline(type="button", disabled) Edit
+      button.outline(type="button", disabled) Delete
+
+    div(role="group")
+      button.outline(type="button", disabled) Cancel
+      button.outline(type="button", disabled) Save
+
+  div(class="overflow-auto")
+    table(class="striped")
+      thead
+        tr
+          th(scope="col") Name
+          th(scope="col") Version
+          th(scope="col") Title
+          th(scope="col") Responsible
+
+      tbody
+        - foreach (block; blocks)
+          tr
+            td
+              a(href="/web/datablock/view/" ~ block.id.value)=block.id
+            td= block.versionLabel
+            td= block.title
+            td= block.owner

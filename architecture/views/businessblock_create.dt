@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  nav(aria-label="breadcrumb")
+    ul
+      li
+        a(href="/web") Home
+      li
+        a(href="/web/businessblock") Businessblock
+      li Create
+
+  h1 Business Bausteine
+
+  form(action="/web/businessblock/create", method="post")
+
+    div.grid
+      div(role="group")
+        button.outline(type="button", disabled) Create
+        button.outline(type="button", disabled) Duplicate
+        button.outline(type="button", disabled) Edit
+        button.outline(type="button", disabled) Delete
+
+      div(role="group")
+        button(type="button", onclick="window.location.href='/web/businessblock'") Cancel
+        button(type="submit") Save
+
+    fieldset
+      div.field
+        label(for="id")=translations["id"]
+        input(type="text", id="id", name="id", value=block.id.value)
+
+      div.field
+        label(for="title")=translations["title"]
+        input(type="text", id="title", name="title", value=block.title)
+
+      div.field
+        label(for="description")=translations["description"]
+        textarea(id="description", name="description", value=block.description)

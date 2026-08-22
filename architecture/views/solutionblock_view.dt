@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  nav(aria-label="breadcrumb")
+    ul
+      li
+        a(href="/web") Home
+      li
+        a(href="/web/solutionblock") Solutionblock
+      li View
+
+  h1 Loesungs Bausteine
+
+  form(action="", method="")
+
+    div.grid
+      div(role="group")
+        button(type="button", onclick="window.location.href='/web/solutionblock/create'") Create
+        button(type="button", onclick="window.location.href='/web/solutionblock/duplicate/" ~ block.id.value ~ "'") Duplicate
+        button(type="button", onclick="window.location.href='/web/solutionblock/edit/" ~ block.id.value ~ "'") Edit
+        button(type="button", onclick="window.location.href='/web/solutionblock/delete/" ~ block.id.value ~ "'") Delete
+
+      div(role="group")
+        button.outline(type="button", disabled) Cancel
+        button.outline(type="button", disabled) Save
+
+    fieldset
+      div.field
+        label(for="id")=translations["id"]
+        input(type="text", id="id", name="id", aria-label="Read-only input", readonly, value=block.id.value)
+
+      div.field
+        label(for="title")=translations["title"]
+        input(type="text", id="title", name="title", aria-label="Read-only input", readonly, value=block.title)
+
+      div.field
+        label(for="description")=translations["description"]
+        textarea(id="description", name="description", aria-label="Read-only input", readonly)=block.description

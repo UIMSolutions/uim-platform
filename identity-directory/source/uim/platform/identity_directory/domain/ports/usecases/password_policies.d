@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application use case: password policy management.
-interface ManagePasswordPoliciesUseCase {
+interface IManagePasswordPoliciesUseCase {
 
   /// Create a new password policy.
   UsecaseResult createPolicy(CreatePasswordPolicyRequest req);
