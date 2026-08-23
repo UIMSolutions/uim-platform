@@ -39,6 +39,10 @@ class ManageBusinessBlocksUseCase {
         return repository.findByDomain(tenantId, domain);
     }
 
+    BusinessBlock[] listBlocks(TenantId tenantId, ArchiMateAspect aspect) {
+        return repository.findByAspect(tenantId, aspect);
+    }
+
     UsecaseResult createBlock(CreateBusinessBlockRequest req) {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "Title is required");

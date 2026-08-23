@@ -14,5 +14,8 @@ interface IDataBlockRepository : ITenantRepository!(DataBlock, DataBlockId) {
     size_t countByDomain(TenantId tenantId, ArchiMateDomain domain);
     DataBlock[] findByDomain(TenantId tenantId, ArchiMateDomain domain);
     void removeByDomain(TenantId tenantId, ArchiMateDomain domain);
+    size_t countByAspect(TenantId tenantId, ArchiMateAspect aspect);
+    DataBlock[] findByAspect(TenantId tenantId, ArchiMateAspect aspect);
+    void removeByAspect(TenantId tenantId, ArchiMateAspect aspect);
     
 }

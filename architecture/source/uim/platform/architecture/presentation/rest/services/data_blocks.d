@@ -22,6 +22,10 @@ class DataBlocksService : IDataBlocksApi {
         return usecase.listBlocks(TenantId(tenantId), toArchiMateDomain(domain));
     }
 
+    override DataBlock[] listDataBlocksByAspect(string tenantId, string aspect) {
+        return usecase.listBlocks(TenantId(tenantId), toArchiMateAspect(aspect));
+    }
+
     override DataBlock getDataBlock(string tenantId, string id) {
         return usecase.getBlock(TenantId(tenantId), DataBlockId(id));
     }

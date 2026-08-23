@@ -39,6 +39,10 @@ class ManageDataBlocksUseCase {
         return repository.findByDomain(tenantId, domain);
     }
 
+    DataBlock[] listBlocks(TenantId tenantId, ArchiMateAspect aspect) {
+        return repository.findByAspect(tenantId, aspect);
+    }
+
     UsecaseResult createBlock(CreateDataBlockRequest req) {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "Title is required");

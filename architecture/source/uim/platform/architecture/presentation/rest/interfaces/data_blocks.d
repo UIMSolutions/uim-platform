@@ -16,6 +16,10 @@ interface IDataBlocksApi {
     DataBlock[] listDataBlocksByDomain(string tenantId, string domain);
 
     @headerParam("tenantId", "X-Tenant-ID")
+    @path("/aspect/:aspect") @method(HTTPMethod.GET)
+    DataBlock[] listDataBlocksByAspect(string tenantId, string aspect);
+
+    @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.GET)
     DataBlock getDataBlock(string tenantId, string _id);
 

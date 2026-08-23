@@ -14,5 +14,8 @@ interface IBusinessBlockRepository : ITenantRepository!(BusinessBlock, BusinessB
     size_t countByDomain(TenantId tenantId, ArchiMateDomain domain);
     BusinessBlock[] findByDomain(TenantId tenantId, ArchiMateDomain domain);
     void removeByDomain(TenantId tenantId, ArchiMateDomain domain);
+    size_t countByAspect(TenantId tenantId, ArchiMateAspect aspect);
+    BusinessBlock[] findByAspect(TenantId tenantId, ArchiMateAspect aspect);
+    void removeByAspect(TenantId tenantId, ArchiMateAspect aspect);
     
 }

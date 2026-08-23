@@ -37,12 +37,28 @@ class DataBlockRepository : TenantRepository!(DataBlock, DataBlockId), IDataBloc
         return filterByDomain(findByTenant(tenantId), domain);
     }
 
+    size_t countByAspect(TenantId tenantId, ArchiMateAspect aspect) {
+        return findByAspect(tenantId, aspect).length;
+    }
+
+    DataBlock[] filterByAspect(DataBlock[] blocks, ArchiMateAspect aspect) {
+        return blocks.filter!(block => block.archimateAspect == aspect).array;
+    }
+
+    DataBlock[] findByAspect(TenantId tenantId, ArchiMateAspect aspect) {
+        return filterByAspect(findByTenant(tenantId), aspect);
+    }
+
     void removeByStatus(TenantId tenantId, LifecycleStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
     }
 
     void removeByDomain(TenantId tenantId, ArchiMateDomain domain) {
         findByDomain(tenantId, domain).each!(e => remove(e));
+    }
+
+    void removeByAspect(TenantId tenantId, ArchiMateAspect aspect) {
+        findByAspect(tenantId, aspect).each!(e => remove(e));
     }
 
 }
@@ -57,6 +73,7 @@ unittest {
         block1.description = "Description 1";
         block1.status = LifecycleStatus.active;
         block1.archimateDomain = ArchiMateDomain.application;
+        block1.archimateAspect = ArchiMateAspect.passiveStructure;
         repo.save(block1);
 
         auto block2 = DataBlock(tenantId, DataBlockId("block2"));
@@ -64,6 +81,7 @@ unittest {
         block2.description = "Description 2";
         block2.status = LifecycleStatus.deprecated_;
         block2.archimateDomain = ArchiMateDomain.technology;
+        block2.archimateAspect = ArchiMateAspect.activeStructure;
         repo.save(block2);
 
         auto block3 = DataBlock(tenantId, DataBlockId("block3"));
@@ -71,6 +89,7 @@ unittest {
         block3.description = "Description 3";
         block3.status = LifecycleStatus.active;
         block3.archimateDomain = ArchiMateDomain.application;
+        block3.archimateAspect = ArchiMateAspect.passiveStructure;
         repo.save(block3);
 
         assert(repo.countByTenant(tenantId) == 3);
@@ -78,6 +97,8 @@ unittest {
         assert(repo.countByStatus(tenantId, LifecycleStatus.deprecated_) == 1);
         assert(repo.countByDomain(tenantId, ArchiMateDomain.application) == 2);
         assert(repo.countByDomain(tenantId, ArchiMateDomain.technology) == 1);
+        assert(repo.countByAspect(tenantId, ArchiMateAspect.passiveStructure) == 2);
+        assert(repo.countByAspect(tenantId, ArchiMateAspect.activeStructure) == 1);
 
         auto activeBlocks = repo.findByStatus(tenantId, LifecycleStatus.active);
         assert(activeBlocks.length == 2);

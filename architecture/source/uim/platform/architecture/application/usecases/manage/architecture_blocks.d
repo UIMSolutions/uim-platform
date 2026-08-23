@@ -25,6 +25,10 @@ class ManageArchitectureBlocksUseCase {
         return repository.findByDomain(tenantId, domain);
     }
 
+    ArchitectureBlock[] listBlocks(TenantId tenantId, ArchiMateAspect aspect) {
+        return repository.findByAspect(tenantId, aspect);
+    }
+
     private ArchiMateRelationship[] mapRelationships(ArchiMateRelationshipRequest[] relationshipRequests) {
         ArchiMateRelationship[] relationships;
 

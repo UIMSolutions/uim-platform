@@ -22,6 +22,10 @@ class SolutionBlocksService : ISolutionBlocksApi {
         return usecase.listBlocks(TenantId(tenantId), toArchiMateDomain(domain));
     }
 
+    override SolutionBlock[] listSolutionBlocksByAspect(string tenantId, string aspect) {
+        return usecase.listBlocks(TenantId(tenantId), toArchiMateAspect(aspect));
+    }
+
     override SolutionBlock getSolutionBlock(string tenantId, string id) {
         return usecase.getBlock(TenantId(tenantId), SolutionBlockId(id));
     }

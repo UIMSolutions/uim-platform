@@ -39,6 +39,10 @@ class ManageTechnologyBlocksUseCase {
         return repository.findByDomain(tenantId, domain);
     }
 
+    TechnologyBlock[] listBlocks(TenantId tenantId, ArchiMateAspect aspect) {
+        return repository.findByAspect(tenantId, aspect);
+    }
+
     UsecaseResult createBlock(CreateTechnologyBlockRequest req) {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "title is required");

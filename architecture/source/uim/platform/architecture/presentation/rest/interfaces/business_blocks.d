@@ -16,6 +16,10 @@ interface IBusinessBlocksApi {
     BusinessBlock[] listBusinessBlocksByDomain(string tenantId, string domain);
 
     @headerParam("tenantId", "X-Tenant-ID")
+    @path("/aspect/:aspect") @method(HTTPMethod.GET)
+    BusinessBlock[] listBusinessBlocksByAspect(string tenantId, string aspect);
+
+    @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.GET)
     BusinessBlock getBusinessBlock(string tenantId, string _id);
 
