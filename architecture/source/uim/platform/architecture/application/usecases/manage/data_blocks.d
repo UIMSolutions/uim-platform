@@ -1,5 +1,6 @@
 module uim.platform.architecture.application.usecases.manage.data_blocks;
 
+import std.conv : to;
 import uim.platform.architecture;
 
 mixin(ShowModule!());
@@ -8,6 +9,15 @@ mixin(ShowModule!());
 
 class ManageDataBlocksUseCase {
     private IDataBlockRepository repository;
+
+    private bool hasTitle(DataBlock[] blocks, string title) {
+        foreach (block; blocks) {
+            if (block.title == title) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private ArchiMateRelationship[] mapRelationships(ArchiMateRelationshipRequest[] relationshipRequests) {
         ArchiMateRelationship[] relationships;
@@ -43,6 +53,43 @@ class ManageDataBlocksUseCase {
         return repository.findByAspect(tenantId, aspect);
     }
 
+    DataBlock[] listBlocksByLeanIXObjectType(TenantId tenantId, LeanIXDataObjectType objectType) {
+        return repository.findByLeanIXObjectType(tenantId, objectType);
+    }
+
+    UsecaseResult createLeanIXDefaultDataObjects(TenantId tenantId) {
+        auto existingBlocks = repository.findByTenant(tenantId);
+        size_t created = 0;
+
+        foreach (objectType; defaultLeanIXDataObjectTypes()) {
+            auto title = "LeanIX " ~ objectType.toString;
+            if (hasTitle(existingBlocks, title)) {
+                continue;
+            }
+
+            auto block = DataBlock(tenantId, DataBlockId(generateId()));
+            block.title = title;
+            block.description = "Seeded SAP LeanIX data object of type " ~ objectType.toString;
+            block.owner = "leanix-sync";
+            block.status = LifecycleStatus.active;
+            block.versionLabel = "1.0.0";
+            block.tags = ["sap", "leanix", "seeded"];
+            block.dataOwner = "enterprise-architecture";
+            block.dataClassification = "Internal";
+            block.leanixObjectType = objectType;
+            block.leanixFactSheetId = "";
+            block.sourceSystem = "SAP LeanIX";
+            block.archimateDomain = ArchiMateDomain.application;
+            block.archimateAspect = ArchiMateAspect.passiveStructure;
+            block.viewpoint = "informationStructure";
+            repository.save(block);
+            existingBlocks ~= block;
+            created++;
+        }
+
+        return UsecaseResult(true, created.to!string, "LeanIX default data objects created: " ~ created.to!string);
+    }
+
     UsecaseResult createBlock(CreateDataBlockRequest req) {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "Title is required");
@@ -57,6 +104,11 @@ class ManageDataBlocksUseCase {
         block.tags = req.tags;
         block.dataOwner = req.dataOwner;
         block.dataClassification = req.dataClassification;
+        block.leanixObjectType = req.leanixObjectType.isEmpty
+            ? LeanIXDataObjectType.dataObject
+            : toLeanIXDataObjectType(req.leanixObjectType);
+        block.leanixFactSheetId = req.leanixFactSheetId;
+        block.sourceSystem = req.sourceSystem;
         block.archimateDomain = req.archimateDomain.isEmpty
             ? ArchiMateDomain.application
             : toArchiMateDomain(req.archimateDomain);
@@ -87,6 +139,11 @@ class ManageDataBlocksUseCase {
         block.tags = req.tags;
         block.dataOwner = req.dataOwner;
         block.dataClassification = req.dataClassification;
+        block.leanixObjectType = req.leanixObjectType.isEmpty
+            ? LeanIXDataObjectType.dataObject
+            : toLeanIXDataObjectType(req.leanixObjectType);
+        block.leanixFactSheetId = req.leanixFactSheetId;
+        block.sourceSystem = req.sourceSystem;
         block.archimateDomain = req.archimateDomain.isEmpty
             ? ArchiMateDomain.application
             : toArchiMateDomain(req.archimateDomain);

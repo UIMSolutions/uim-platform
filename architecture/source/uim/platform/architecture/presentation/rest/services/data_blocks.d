@@ -26,6 +26,14 @@ class DataBlocksService : IDataBlocksApi {
         return usecase.listBlocks(TenantId(tenantId), toArchiMateAspect(aspect));
     }
 
+    override DataBlock[] listDataBlocksByLeanIXObjectType(string tenantId, string objectType) {
+        return usecase.listBlocksByLeanIXObjectType(TenantId(tenantId), toLeanIXDataObjectType(objectType));
+    }
+
+    override UsecaseResult createLeanIXDefaultDataObjects(string tenantId) {
+        return usecase.createLeanIXDefaultDataObjects(TenantId(tenantId));
+    }
+
     override DataBlock getDataBlock(string tenantId, string id) {
         return usecase.getBlock(TenantId(tenantId), DataBlockId(id));
     }

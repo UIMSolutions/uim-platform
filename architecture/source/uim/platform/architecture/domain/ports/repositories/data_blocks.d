@@ -17,5 +17,8 @@ interface IDataBlockRepository : ITenantRepository!(DataBlock, DataBlockId) {
     size_t countByAspect(TenantId tenantId, ArchiMateAspect aspect);
     DataBlock[] findByAspect(TenantId tenantId, ArchiMateAspect aspect);
     void removeByAspect(TenantId tenantId, ArchiMateAspect aspect);
+    size_t countByLeanIXObjectType(TenantId tenantId, LeanIXDataObjectType objectType);
+    DataBlock[] findByLeanIXObjectType(TenantId tenantId, LeanIXDataObjectType objectType);
+    void removeByLeanIXObjectType(TenantId tenantId, LeanIXDataObjectType objectType);
     
 }

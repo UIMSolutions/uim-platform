@@ -18,6 +18,10 @@ struct SolutionBlock {
     string mappedAbbId; // Referenz auf das abgedeckte ABB
     string vendorOrComponent; // z.B. "PostgreSQL 15" oder "Internal Auth Microservice"
     string deploymentEndpoint;
+    LeanIXSolutionObjectType leanixObjectType;
+    string leanixFactSheetId;
+    string providerApplicationId;
+    string consumerApplicationId;
     ArchiMateDomain archimateDomain;
     ArchiMateAspect archimateAspect;
     string viewpoint;
@@ -34,6 +38,10 @@ struct SolutionBlock {
             .set("mappedAbbId", mappedAbbId)
             .set("vendorOrComponent", vendorOrComponent)
             .set("deploymentEndpoint", deploymentEndpoint)
+            .set("leanixObjectType", leanixObjectType.toString)
+            .set("leanixFactSheetId", leanixFactSheetId)
+            .set("providerApplicationId", providerApplicationId)
+            .set("consumerApplicationId", consumerApplicationId)
             .set("archimateDomain", archimateDomain.toString)
             .set("archimateAspect", archimateAspect.toString)
             .set("viewpoint", viewpoint)

@@ -18,6 +18,9 @@ struct DataBlock {
     string[] tags;
     string dataOwner;
     string dataClassification; // z.B. "Confidential", "Public"
+    LeanIXDataObjectType leanixObjectType;
+    string leanixFactSheetId;
+    string sourceSystem;
     ArchiMateDomain archimateDomain;
     ArchiMateAspect archimateAspect;
     string viewpoint;
@@ -34,6 +37,9 @@ struct DataBlock {
             .set("tags", tagsJson)
             .set("dataOwner", dataOwner)
             .set("dataClassification", dataClassification)
+            .set("leanixObjectType", leanixObjectType.toString)
+            .set("leanixFactSheetId", leanixFactSheetId)
+            .set("sourceSystem", sourceSystem)
             .set("archimateDomain", archimateDomain.toString)
             .set("archimateAspect", archimateAspect.toString)
             .set("viewpoint", viewpoint)

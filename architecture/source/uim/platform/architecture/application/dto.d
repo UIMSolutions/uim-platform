@@ -104,6 +104,9 @@ struct CreateDataBlockRequest {
     string[] tags;
     string dataOwner;
     string dataClassification;
+    string leanixObjectType;
+    string leanixFactSheetId;
+    string sourceSystem;
     string archimateDomain;
     string archimateAspect;
     string viewpoint;
@@ -123,6 +126,9 @@ struct UpdateDataBlockRequest {
     string[] tags;
     string dataOwner;
     string dataClassification;
+    string leanixObjectType;
+    string leanixFactSheetId;
+    string sourceSystem;
     string archimateDomain;
     string archimateAspect;
     string viewpoint;
@@ -143,6 +149,10 @@ struct CreateSolutionBlockRequest {
     string mappedAbbId;
     string vendorOrComponent;
     string deploymentEndpoint;
+    string leanixObjectType;
+    string leanixFactSheetId;
+    string providerApplicationId;
+    string consumerApplicationId;
     string archimateDomain;
     string archimateAspect;
     string viewpoint;
@@ -163,6 +173,10 @@ struct UpdateSolutionBlockRequest {
     string mappedAbbId;
     string vendorOrComponent;
     string deploymentEndpoint;
+    string leanixObjectType;
+    string leanixFactSheetId;
+    string providerApplicationId;
+    string consumerApplicationId;
     string archimateDomain;
     string archimateAspect;
     string viewpoint;

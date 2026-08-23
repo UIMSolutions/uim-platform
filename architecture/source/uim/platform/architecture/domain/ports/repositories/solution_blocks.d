@@ -17,5 +17,8 @@ interface ISolutionBlockRepository : ITenantRepository!(SolutionBlock, SolutionB
     size_t countByAspect(TenantId tenantId, ArchiMateAspect aspect);
     SolutionBlock[] findByAspect(TenantId tenantId, ArchiMateAspect aspect);
     void removeByAspect(TenantId tenantId, ArchiMateAspect aspect);
+    size_t countByLeanIXObjectType(TenantId tenantId, LeanIXSolutionObjectType objectType);
+    SolutionBlock[] findByLeanIXObjectType(TenantId tenantId, LeanIXSolutionObjectType objectType);
+    void removeByLeanIXObjectType(TenantId tenantId, LeanIXSolutionObjectType objectType);
     
 }

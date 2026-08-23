@@ -20,6 +20,14 @@ interface ISolutionBlocksApi {
     SolutionBlock[] listSolutionBlocksByAspect(string tenantId, string aspect);
 
     @headerParam("tenantId", "X-Tenant-ID")
+    @path("/leanix/object-type/:objectType") @method(HTTPMethod.GET)
+    SolutionBlock[] listSolutionBlocksByLeanIXObjectType(string tenantId, string objectType);
+
+    @headerParam("tenantId", "X-Tenant-ID")
+    @path("/leanix/defaults") @method(HTTPMethod.POST)
+    UsecaseResult createLeanIXDefaultSolutionObjects(string tenantId);
+
+    @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.GET)
     SolutionBlock getSolutionBlock(string tenantId, string _id);
 

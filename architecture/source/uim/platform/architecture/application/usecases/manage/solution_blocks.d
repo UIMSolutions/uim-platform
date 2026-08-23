@@ -1,5 +1,6 @@
 module uim.platform.architecture.application.usecases.manage.solution_blocks;
 
+import std.conv : to;
 import uim.platform.architecture;
 
 mixin(ShowModule!());
@@ -8,6 +9,15 @@ mixin(ShowModule!());
 
 class ManageSolutionBlocksUseCase {
     private ISolutionBlockRepository repository;
+
+    private bool hasTitle(SolutionBlock[] blocks, string title) {
+        foreach (block; blocks) {
+            if (block.title == title) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private ArchiMateRelationship[] mapRelationships(ArchiMateRelationshipRequest[] relationshipRequests) {
         ArchiMateRelationship[] relationships;
@@ -43,6 +53,45 @@ class ManageSolutionBlocksUseCase {
         return repository.findByAspect(tenantId, aspect);
     }
 
+    SolutionBlock[] listBlocksByLeanIXObjectType(TenantId tenantId, LeanIXSolutionObjectType objectType) {
+        return repository.findByLeanIXObjectType(tenantId, objectType);
+    }
+
+    UsecaseResult createLeanIXDefaultSolutionObjects(TenantId tenantId) {
+        auto existingBlocks = repository.findByTenant(tenantId);
+        size_t created = 0;
+
+        foreach (objectType; defaultLeanIXSolutionObjectTypes()) {
+            auto title = "LeanIX Solution " ~ objectType.toString;
+            if (hasTitle(existingBlocks, title)) {
+                continue;
+            }
+
+            auto block = SolutionBlock(tenantId, SolutionBlockId(generateId()));
+            block.title = title;
+            block.description = "Seeded SAP LeanIX solution object of type " ~ objectType.toString;
+            block.owner = "leanix-sync";
+            block.status = LifecycleStatus.active;
+            block.versionLabel = "1.0.0";
+            block.tags = ["sap", "leanix", "solution", "seeded"];
+            block.mappedAbbId = "";
+            block.vendorOrComponent = "";
+            block.deploymentEndpoint = "";
+            block.leanixObjectType = objectType;
+            block.leanixFactSheetId = "";
+            block.providerApplicationId = "";
+            block.consumerApplicationId = "";
+            block.archimateDomain = ArchiMateDomain.application;
+            block.archimateAspect = ArchiMateAspect.activeStructure;
+            block.viewpoint = "applicationStructure";
+            repository.save(block);
+            existingBlocks ~= block;
+            created++;
+        }
+
+        return UsecaseResult(true, created.to!string, "LeanIX default solution objects created: " ~ created.to!string);
+    }
+
     UsecaseResult createBlock(CreateSolutionBlockRequest req) {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "Title is required");
@@ -58,6 +107,12 @@ class ManageSolutionBlocksUseCase {
         block.mappedAbbId = req.mappedAbbId;
         block.vendorOrComponent = req.vendorOrComponent;
         block.deploymentEndpoint = req.deploymentEndpoint;
+        block.leanixObjectType = req.leanixObjectType.isEmpty
+            ? LeanIXSolutionObjectType.application
+            : toLeanIXSolutionObjectType(req.leanixObjectType);
+        block.leanixFactSheetId = req.leanixFactSheetId;
+        block.providerApplicationId = req.providerApplicationId;
+        block.consumerApplicationId = req.consumerApplicationId;
         block.archimateDomain = req.archimateDomain.isEmpty
             ? ArchiMateDomain.application
             : toArchiMateDomain(req.archimateDomain);
@@ -89,6 +144,12 @@ class ManageSolutionBlocksUseCase {
         block.mappedAbbId = req.mappedAbbId;
         block.vendorOrComponent = req.vendorOrComponent;
         block.deploymentEndpoint = req.deploymentEndpoint;
+        block.leanixObjectType = req.leanixObjectType.isEmpty
+            ? LeanIXSolutionObjectType.application
+            : toLeanIXSolutionObjectType(req.leanixObjectType);
+        block.leanixFactSheetId = req.leanixFactSheetId;
+        block.providerApplicationId = req.providerApplicationId;
+        block.consumerApplicationId = req.consumerApplicationId;
         block.archimateDomain = req.archimateDomain.isEmpty
             ? ArchiMateDomain.application
             : toArchiMateDomain(req.archimateDomain);

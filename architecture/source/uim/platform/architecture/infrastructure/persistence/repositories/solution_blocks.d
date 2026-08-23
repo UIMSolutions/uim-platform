@@ -49,6 +49,18 @@ class SolutionBlockRepository : TenantRepository!(SolutionBlock, SolutionBlockId
         return filterByAspect(findByTenant(tenantId), aspect);
     }
 
+    size_t countByLeanIXObjectType(TenantId tenantId, LeanIXSolutionObjectType objectType) {
+        return findByLeanIXObjectType(tenantId, objectType).length;
+    }
+
+    SolutionBlock[] filterByLeanIXObjectType(SolutionBlock[] blocks, LeanIXSolutionObjectType objectType) {
+        return blocks.filter!(block => block.leanixObjectType == objectType).array;
+    }
+
+    SolutionBlock[] findByLeanIXObjectType(TenantId tenantId, LeanIXSolutionObjectType objectType) {
+        return filterByLeanIXObjectType(findByTenant(tenantId), objectType);
+    }
+
     void removeByStatus(TenantId tenantId, LifecycleStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
     }
@@ -59,6 +71,10 @@ class SolutionBlockRepository : TenantRepository!(SolutionBlock, SolutionBlockId
 
     void removeByAspect(TenantId tenantId, ArchiMateAspect aspect) {
         findByAspect(tenantId, aspect).each!(e => remove(e));
+    }
+
+    void removeByLeanIXObjectType(TenantId tenantId, LeanIXSolutionObjectType objectType) {
+        findByLeanIXObjectType(tenantId, objectType).each!(e => remove(e));
     }
     
 }
@@ -74,6 +90,7 @@ unittest {
         block1.status = LifecycleStatus.active;
         block1.archimateDomain = ArchiMateDomain.application;
         block1.archimateAspect = ArchiMateAspect.activeStructure;
+        block1.leanixObjectType = LeanIXSolutionObjectType.application;
         repo.save(block1);
 
         auto block2 = SolutionBlock(tenantId, SolutionBlockId("block2"));
@@ -82,6 +99,7 @@ unittest {
         block2.status = LifecycleStatus.deprecated_;
         block2.archimateDomain = ArchiMateDomain.technology;
         block2.archimateAspect = ArchiMateAspect.behavior;
+        block2.leanixObjectType = LeanIXSolutionObjectType.interface_;
         repo.save(block2);
 
         auto block3 = SolutionBlock(tenantId, SolutionBlockId("block3"));
@@ -90,6 +108,7 @@ unittest {
         block3.status = LifecycleStatus.active;
         block3.archimateDomain = ArchiMateDomain.application;
         block3.archimateAspect = ArchiMateAspect.activeStructure;
+        block3.leanixObjectType = LeanIXSolutionObjectType.application;
         repo.save(block3);
 
         assert(repo.countByTenant(tenantId) == 3);
@@ -99,6 +118,8 @@ unittest {
         assert(repo.countByDomain(tenantId, ArchiMateDomain.technology) == 1);
         assert(repo.countByAspect(tenantId, ArchiMateAspect.activeStructure) == 2);
         assert(repo.countByAspect(tenantId, ArchiMateAspect.behavior) == 1);
+        assert(repo.countByLeanIXObjectType(tenantId, LeanIXSolutionObjectType.application) == 2);
+        assert(repo.countByLeanIXObjectType(tenantId, LeanIXSolutionObjectType.interface_) == 1);
 
         auto activeBlocks = repo.findByStatus(tenantId, LifecycleStatus.active);
         assert(activeBlocks.length == 2);

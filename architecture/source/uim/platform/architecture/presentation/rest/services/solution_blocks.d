@@ -26,6 +26,14 @@ class SolutionBlocksService : ISolutionBlocksApi {
         return usecase.listBlocks(TenantId(tenantId), toArchiMateAspect(aspect));
     }
 
+    override SolutionBlock[] listSolutionBlocksByLeanIXObjectType(string tenantId, string objectType) {
+        return usecase.listBlocksByLeanIXObjectType(TenantId(tenantId), toLeanIXSolutionObjectType(objectType));
+    }
+
+    override UsecaseResult createLeanIXDefaultSolutionObjects(string tenantId) {
+        return usecase.createLeanIXDefaultSolutionObjects(TenantId(tenantId));
+    }
+
     override SolutionBlock getSolutionBlock(string tenantId, string id) {
         return usecase.getBlock(TenantId(tenantId), SolutionBlockId(id));
     }

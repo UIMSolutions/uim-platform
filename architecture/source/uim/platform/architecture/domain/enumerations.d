@@ -49,6 +49,30 @@ enum ArchiMateRelationshipType {
     specialization
 }
 
+/// LeanIXDataObjectType models common SAP LeanIX data object fact sheet types.
+enum LeanIXDataObjectType {
+    dataObject,
+    businessObject,
+    masterData,
+    referenceData,
+    transactionalData,
+    interfaceContract,
+    apiPayload,
+    eventSchema,
+    canonicalDataModel
+}
+
+/// LeanIXSolutionObjectType models common SAP LeanIX solution/application landscape types.
+enum LeanIXSolutionObjectType {
+    application,
+    itComponent,
+    interface_,
+    provider,
+    consumer,
+    platformService,
+    businessCapabilityRealization
+}
+
 /// LifecycleStatus represents the lifecycle status of a building block.
 enum LifecycleStatus {
     proposed,
@@ -175,6 +199,88 @@ string toString(ArchiMateRelationshipType relationshipType) {
     }
 }
 
+LeanIXDataObjectType toLeanIXDataObjectType(string objectType) {
+    switch (objectType) {
+        case "dataObject": return LeanIXDataObjectType.dataObject;
+        case "businessObject": return LeanIXDataObjectType.businessObject;
+        case "masterData": return LeanIXDataObjectType.masterData;
+        case "referenceData": return LeanIXDataObjectType.referenceData;
+        case "transactionalData": return LeanIXDataObjectType.transactionalData;
+        case "interfaceContract": return LeanIXDataObjectType.interfaceContract;
+        case "apiPayload": return LeanIXDataObjectType.apiPayload;
+        case "eventSchema": return LeanIXDataObjectType.eventSchema;
+        case "canonicalDataModel": return LeanIXDataObjectType.canonicalDataModel;
+        default: return LeanIXDataObjectType.dataObject;
+    }
+}
+
+string toString(LeanIXDataObjectType objectType) {
+    final switch (objectType) {
+        case LeanIXDataObjectType.dataObject: return "dataObject";
+        case LeanIXDataObjectType.businessObject: return "businessObject";
+        case LeanIXDataObjectType.masterData: return "masterData";
+        case LeanIXDataObjectType.referenceData: return "referenceData";
+        case LeanIXDataObjectType.transactionalData: return "transactionalData";
+        case LeanIXDataObjectType.interfaceContract: return "interfaceContract";
+        case LeanIXDataObjectType.apiPayload: return "apiPayload";
+        case LeanIXDataObjectType.eventSchema: return "eventSchema";
+        case LeanIXDataObjectType.canonicalDataModel: return "canonicalDataModel";
+    }
+}
+
+LeanIXDataObjectType[] defaultLeanIXDataObjectTypes() {
+    return [
+        LeanIXDataObjectType.dataObject,
+        LeanIXDataObjectType.businessObject,
+        LeanIXDataObjectType.masterData,
+        LeanIXDataObjectType.referenceData,
+        LeanIXDataObjectType.transactionalData,
+        LeanIXDataObjectType.interfaceContract,
+        LeanIXDataObjectType.apiPayload,
+        LeanIXDataObjectType.eventSchema,
+        LeanIXDataObjectType.canonicalDataModel
+    ];
+}
+
+LeanIXSolutionObjectType toLeanIXSolutionObjectType(string objectType) {
+    switch (objectType) {
+        case "application": return LeanIXSolutionObjectType.application;
+        case "itComponent": return LeanIXSolutionObjectType.itComponent;
+        case "interface": return LeanIXSolutionObjectType.interface_;
+        case "provider": return LeanIXSolutionObjectType.provider;
+        case "consumer": return LeanIXSolutionObjectType.consumer;
+        case "platformService": return LeanIXSolutionObjectType.platformService;
+        case "businessCapabilityRealization":
+            return LeanIXSolutionObjectType.businessCapabilityRealization;
+        default: return LeanIXSolutionObjectType.application;
+    }
+}
+
+string toString(LeanIXSolutionObjectType objectType) {
+    final switch (objectType) {
+        case LeanIXSolutionObjectType.application: return "application";
+        case LeanIXSolutionObjectType.itComponent: return "itComponent";
+        case LeanIXSolutionObjectType.interface_: return "interface";
+        case LeanIXSolutionObjectType.provider: return "provider";
+        case LeanIXSolutionObjectType.consumer: return "consumer";
+        case LeanIXSolutionObjectType.platformService: return "platformService";
+        case LeanIXSolutionObjectType.businessCapabilityRealization:
+            return "businessCapabilityRealization";
+    }
+}
+
+LeanIXSolutionObjectType[] defaultLeanIXSolutionObjectTypes() {
+    return [
+        LeanIXSolutionObjectType.application,
+        LeanIXSolutionObjectType.itComponent,
+        LeanIXSolutionObjectType.interface_,
+        LeanIXSolutionObjectType.provider,
+        LeanIXSolutionObjectType.consumer,
+        LeanIXSolutionObjectType.platformService,
+        LeanIXSolutionObjectType.businessCapabilityRealization
+    ];
+}
+
 ///
 unittest {
     assert(toString(LifecycleStatus.proposed) == "proposed");
@@ -200,4 +306,14 @@ unittest {
     assert(toArchiMateRelationshipType("flow") == ArchiMateRelationshipType.flow);
     assert(toArchiMateRelationshipType("unknown") == ArchiMateRelationshipType.association);
     assert(toString(ArchiMateRelationshipType.realization) == "realization");
+
+    assert(toLeanIXDataObjectType("masterData") == LeanIXDataObjectType.masterData);
+    assert(toLeanIXDataObjectType("unknown") == LeanIXDataObjectType.dataObject);
+    assert(toString(LeanIXDataObjectType.apiPayload) == "apiPayload");
+    assert(defaultLeanIXDataObjectTypes().length == 9);
+
+    assert(toLeanIXSolutionObjectType("itComponent") == LeanIXSolutionObjectType.itComponent);
+    assert(toLeanIXSolutionObjectType("interface") == LeanIXSolutionObjectType.interface_);
+    assert(toString(LeanIXSolutionObjectType.platformService) == "platformService");
+    assert(defaultLeanIXSolutionObjectTypes().length == 7);
 }
