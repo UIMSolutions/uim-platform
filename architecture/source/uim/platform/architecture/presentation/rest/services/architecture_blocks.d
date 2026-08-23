@@ -18,6 +18,10 @@ class ArchitectureBlocksService : IArchitectureBlocksApi {
         return usecase.listBlocks(TenantId(tenantId));
     }
 
+    override ArchitectureBlock[] listArchitectureBlocksByDomain(string tenantId, string domain) {
+        return usecase.listBlocks(TenantId(tenantId), toArchiMateDomain(domain));
+    }
+
     override ArchitectureBlock getArchitectureBlock(string tenantId, string id) {
         return usecase.getBlock(TenantId(tenantId), ArchitectureBlockId(id));
     }

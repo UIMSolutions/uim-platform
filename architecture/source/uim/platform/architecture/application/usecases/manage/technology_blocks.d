@@ -9,6 +9,20 @@ mixin(ShowModule!());
 class ManageTechnologyBlocksUseCase {
     private ITechnologyBlockRepository repository;
 
+    private ArchiMateRelationship[] mapRelationships(ArchiMateRelationshipRequest[] relationshipRequests) {
+        ArchiMateRelationship[] relationships;
+
+        foreach (request; relationshipRequests) {
+            ArchiMateRelationship relationship;
+            relationship.relationshipType = toArchiMateRelationshipType(request.relationshipType);
+            relationship.targetBlockId = request.targetBlockId;
+            relationship.description = request.description;
+            relationships ~= relationship;
+        }
+
+        return relationships;
+    }
+
     this(ITechnologyBlockRepository repository) {
         this.repository = repository;
     }
@@ -21,11 +35,30 @@ class ManageTechnologyBlocksUseCase {
         return repository.findByStatus(tenantId, status);
     }
 
+    TechnologyBlock[] listBlocks(TenantId tenantId, ArchiMateDomain domain) {
+        return repository.findByDomain(tenantId, domain);
+    }
+
     UsecaseResult createBlock(CreateTechnologyBlockRequest req) {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "title is required");
 
-        auto block = TechnologyBlock(req.tenantId, TechnologyBlockId(generateId()));
+        auto block = TechnologyBlock(req.tenantId);
+        block.id = req.blockId.isNull ? TechnologyBlockId(generateId()) : req.blockId;
+        block.title = req.title;
+        block.description = req.description;
+        block.owner = req.owner;
+        block.status = req.status.isEmpty ? LifecycleStatus.proposed : toLifecycleStatus(req.status);
+        block.versionLabel = req.versionLabel;
+        block.tags = req.tags;
+        block.archimateDomain = req.archimateDomain.isEmpty
+            ? ArchiMateDomain.technology
+            : toArchiMateDomain(req.archimateDomain);
+        block.archimateAspect = req.archimateAspect.isEmpty
+            ? ArchiMateAspect.activeStructure
+            : toArchiMateAspect(req.archimateAspect);
+        block.viewpoint = req.viewpoint;
+        block.relationships = mapRelationships(req.relationships);
 
         repository.save(block);
         return UsecaseResult(true, block.id.value, "Technology block created");
@@ -40,6 +73,20 @@ class ManageTechnologyBlocksUseCase {
         if (block.id.value.length == 0)
             return UsecaseResult(false, "", "Technology block not found");
 
+        block.title = req.title;
+        block.description = req.description;
+        block.owner = req.owner;
+        block.status = req.status.isEmpty ? LifecycleStatus.proposed : toLifecycleStatus(req.status);
+        block.versionLabel = req.versionLabel;
+        block.tags = req.tags;
+        block.archimateDomain = req.archimateDomain.isEmpty
+            ? ArchiMateDomain.technology
+            : toArchiMateDomain(req.archimateDomain);
+        block.archimateAspect = req.archimateAspect.isEmpty
+            ? ArchiMateAspect.activeStructure
+            : toArchiMateAspect(req.archimateAspect);
+        block.viewpoint = req.viewpoint;
+        block.relationships = mapRelationships(req.relationships);
         block.updatedAt = currentTimestamp();
 
         repository.update(block);

@@ -12,6 +12,10 @@ interface IArchitectureBlocksApi {
     ArchitectureBlock[] listArchitectureBlocks(string tenantId);
 
     @headerParam("tenantId", "X-Tenant-ID")
+    @path("/domain/:domain") @method(HTTPMethod.GET)
+    ArchitectureBlock[] listArchitectureBlocksByDomain(string tenantId, string domain);
+
+    @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.GET)
     ArchitectureBlock getArchitectureBlock(string tenantId, string _id);
 

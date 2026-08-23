@@ -6,6 +6,19 @@ mixin(ShowModule!());
 
 @safe:
 
+struct ArchiMateRelationship {
+    ArchiMateRelationshipType relationshipType;
+    string targetBlockId;
+    string description;
+
+    Json toJson() const {
+        return Json.emptyObject
+            .set("relationshipType", relationshipType.toString)
+            .set("targetBlockId", targetBlockId)
+            .set("description", description);
+    }
+}
+
 struct ArchitectureBlock {
     mixin TenantEntity!(ArchitectureBlockId);
 
@@ -19,7 +32,10 @@ struct ArchitectureBlock {
     string[] tags;
     string capabilityProvided;
     string[] requiredInterfaces;
-    // DataArchitectureBlock[] associatedDataBlocks;
+    ArchiMateDomain archimateDomain;
+    ArchiMateAspect archimateAspect;
+    string viewpoint;
+    ArchiMateRelationship[] relationships;
     LifecycleStatus status;
 
     Json toJson() const {
@@ -34,8 +50,11 @@ struct ArchitectureBlock {
             .set("tags", tagsJson)
             .set("capabilityProvided", capabilityProvided)
             .set("requiredInterfaces", requiredInterfaces.toJson)
+            .set("archimateDomain", archimateDomain.toString)
+            .set("archimateAspect", archimateAspect.toString)
+            .set("viewpoint", viewpoint)
+            .set("relationships", relationships.toJson)
             .set("lastVersion", lastVersion)
             .set("validDate", validDate);
-            //.set("associatedDataBlocks", associatedDataBlocks.toJson);
     }
 }

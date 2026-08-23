@@ -18,6 +18,10 @@ class TechnologyBlocksService : ITechnologyBlocksApi {
         return usecase.listBlocks(TenantId(tenantId));
     }
 
+    override TechnologyBlock[] listTechnologyBlocksByDomain(string tenantId, string domain) {
+        return usecase.listBlocks(TenantId(tenantId), toArchiMateDomain(domain));
+    }
+
     override TechnologyBlock getTechnologyBlock(string tenantId, string id) {
         return usecase.getBlock(TenantId(tenantId), TechnologyBlockId(id));
     }

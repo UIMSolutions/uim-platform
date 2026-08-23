@@ -9,6 +9,20 @@ mixin(ShowModule!());
 class ManageBusinessBlocksUseCase {
     private IBusinessBlockRepository repository;
 
+    private ArchiMateRelationship[] mapRelationships(ArchiMateRelationshipRequest[] relationshipRequests) {
+        ArchiMateRelationship[] relationships;
+
+        foreach (request; relationshipRequests) {
+            ArchiMateRelationship relationship;
+            relationship.relationshipType = toArchiMateRelationshipType(request.relationshipType);
+            relationship.targetBlockId = request.targetBlockId;
+            relationship.description = request.description;
+            relationships ~= relationship;
+        }
+
+        return relationships;
+    }
+
     this(IBusinessBlockRepository repository) {
         this.repository = repository;
     }
@@ -21,11 +35,31 @@ class ManageBusinessBlocksUseCase {
         return repository.findByStatus(tenantId, status);
     }
 
+    BusinessBlock[] listBlocks(TenantId tenantId, ArchiMateDomain domain) {
+        return repository.findByDomain(tenantId, domain);
+    }
+
     UsecaseResult createBlock(CreateBusinessBlockRequest req) {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "Title is required");
 
-        auto block = BusinessBlock(req.tenantId, BusinessBlockId(generateId()));
+        auto block = BusinessBlock(req.tenantId);
+        block.id = req.blockId.isNull ? BusinessBlockId(generateId()) : req.blockId;
+        block.title = req.title;
+        block.description = req.description;
+        block.owner = req.owner;
+        block.lifecycleState = req.lifecycleState;
+        block.status = req.status.isEmpty ? LifecycleStatus.proposed : toLifecycleStatus(req.status);
+        block.versionLabel = req.versionLabel;
+        block.tags = req.tags;
+        block.archimateDomain = req.archimateDomain.isEmpty
+            ? ArchiMateDomain.business
+            : toArchiMateDomain(req.archimateDomain);
+        block.archimateAspect = req.archimateAspect.isEmpty
+            ? ArchiMateAspect.behavior
+            : toArchiMateAspect(req.archimateAspect);
+        block.viewpoint = req.viewpoint;
+        block.relationships = mapRelationships(req.relationships);
 
         repository.save(block);
         return UsecaseResult(true, block.id.value, "Business block created");
@@ -40,6 +74,21 @@ class ManageBusinessBlocksUseCase {
         if (block.id.value.length == 0)
             return UsecaseResult(false, "", "Business block not found");
 
+        block.title = req.title;
+        block.description = req.description;
+        block.owner = req.owner;
+        block.lifecycleState = req.lifecycleState;
+        block.status = req.status.isEmpty ? LifecycleStatus.proposed : toLifecycleStatus(req.status);
+        block.versionLabel = req.versionLabel;
+        block.tags = req.tags;
+        block.archimateDomain = req.archimateDomain.isEmpty
+            ? ArchiMateDomain.business
+            : toArchiMateDomain(req.archimateDomain);
+        block.archimateAspect = req.archimateAspect.isEmpty
+            ? ArchiMateAspect.behavior
+            : toArchiMateAspect(req.archimateAspect);
+        block.viewpoint = req.viewpoint;
+        block.relationships = mapRelationships(req.relationships);
         block.updatedAt = currentTimestamp();
 
         repository.update(block);

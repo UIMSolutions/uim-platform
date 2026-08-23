@@ -25,8 +25,24 @@ class BusinessBlockRepository : TenantRepository!(BusinessBlock, BusinessBlockId
         return filterByStatus(findByTenant(tenantId), status);
     }
 
+    size_t countByDomain(TenantId tenantId, ArchiMateDomain domain) {
+        return findByDomain(tenantId, domain).length;
+    }
+
+    BusinessBlock[] filterByDomain(BusinessBlock[] blocks, ArchiMateDomain domain) {
+        return blocks.filter!(block => block.archimateDomain == domain).array;
+    }
+
+    BusinessBlock[] findByDomain(TenantId tenantId, ArchiMateDomain domain) {
+        return filterByDomain(findByTenant(tenantId), domain);
+    }
+
     void removeByStatus(TenantId tenantId, LifecycleStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
+    }
+
+    void removeByDomain(TenantId tenantId, ArchiMateDomain domain) {
+        findByDomain(tenantId, domain).each!(e => remove(e));
     }
     
 }
@@ -40,16 +56,19 @@ unittest {
         block1.title = "Block 1";
         block1.description = "Description 1";
         block1.status = LifecycleStatus.active;
+        block1.archimateDomain = ArchiMateDomain.business;
 
         auto block2 = BusinessBlock(tenantId, BusinessBlockId("block2"));
         block2.title = "Block 2";
         block2.description = "Description 2";
         block2.status = LifecycleStatus.deprecated_;
+        block2.archimateDomain = ArchiMateDomain.application;
 
         auto block3 = BusinessBlock(tenantId, BusinessBlockId("block3"));
         block3.title = "Block 3";
         block3.description = "Description 3";
         block3.status = LifecycleStatus.active;
+        block3.archimateDomain = ArchiMateDomain.business;
 
         repo.save(block1);
         repo.save(block2);
@@ -58,6 +77,8 @@ unittest {
         assert(repo.countByTenant(tenantId) == 3);
         assert(repo.countByStatus(tenantId, LifecycleStatus.active) == 2);
         assert(repo.countByStatus(tenantId, LifecycleStatus.deprecated_) == 1);
+        assert(repo.countByDomain(tenantId, ArchiMateDomain.business) == 2);
+        assert(repo.countByDomain(tenantId, ArchiMateDomain.application) == 1);
 
         auto activeBlocks = repo.findByStatus(tenantId, LifecycleStatus.active);
         assert(activeBlocks.length == 2);

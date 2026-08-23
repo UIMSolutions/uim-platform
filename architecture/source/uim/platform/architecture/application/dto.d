@@ -6,6 +6,12 @@ mixin(ShowModule!());
 
 @safe:
 
+struct ArchiMateRelationshipRequest {
+    string relationshipType;
+    string targetBlockId;
+    string description;
+}
+
 struct CreateArchitectureBlockRequest {
     TenantId tenantId;
     ArchitectureBlockId blockId;
@@ -17,6 +23,14 @@ struct CreateArchitectureBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string capabilityProvided;
+    string[] requiredInterfaces;
+    bool lastVersion;
+    long validDate;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct UpdateArchitectureBlockRequest {
@@ -33,6 +47,14 @@ struct UpdateArchitectureBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string capabilityProvided;
+    string[] requiredInterfaces;
+    bool lastVersion;
+    long validDate;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct CreateBusinessBlockRequest {
@@ -46,6 +68,10 @@ struct CreateBusinessBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct UpdateBusinessBlockRequest {
@@ -59,6 +85,10 @@ struct UpdateBusinessBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct CreateDataBlockRequest {
@@ -72,6 +102,12 @@ struct CreateDataBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string dataOwner;
+    string dataClassification;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct UpdateDataBlockRequest {
@@ -85,6 +121,12 @@ struct UpdateDataBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string dataOwner;
+    string dataClassification;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct CreateSolutionBlockRequest {
@@ -98,6 +140,13 @@ struct CreateSolutionBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string mappedAbbId;
+    string vendorOrComponent;
+    string deploymentEndpoint;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct UpdateSolutionBlockRequest {
@@ -111,6 +160,13 @@ struct UpdateSolutionBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string mappedAbbId;
+    string vendorOrComponent;
+    string deploymentEndpoint;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct CreateTechnologyBlockRequest {
@@ -124,6 +180,10 @@ struct CreateTechnologyBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }
 
 struct UpdateTechnologyBlockRequest {
@@ -137,4 +197,8 @@ struct UpdateTechnologyBlockRequest {
     string status;
     string versionLabel;
     string[] tags;
+    string archimateDomain;
+    string archimateAspect;
+    string viewpoint;
+    ArchiMateRelationshipRequest[] relationships;
 }

@@ -18,6 +18,10 @@ struct DataBlock {
     string[] tags;
     string dataOwner;
     string dataClassification; // z.B. "Confidential", "Public"
+    ArchiMateDomain archimateDomain;
+    ArchiMateAspect archimateAspect;
+    string viewpoint;
+    ArchiMateRelationship[] relationships;
 
     Json toJson() const {
         auto tagsJson = tags.toJson;
@@ -29,6 +33,10 @@ struct DataBlock {
             .set("versionLabel", versionLabel)
             .set("tags", tagsJson)
             .set("dataOwner", dataOwner)
-            .set("dataClassification", dataClassification);
+            .set("dataClassification", dataClassification)
+            .set("archimateDomain", archimateDomain.toString)
+            .set("archimateAspect", archimateAspect.toString)
+            .set("viewpoint", viewpoint)
+            .set("relationships", relationships.toJson);
     }
 }

@@ -18,6 +18,10 @@ class BusinessBlocksService : IBusinessBlocksApi {
         return usecase.listBlocks(TenantId(tenantId));
     }
 
+    override BusinessBlock[] listBusinessBlocksByDomain(string tenantId, string domain) {
+        return usecase.listBlocks(TenantId(tenantId), toArchiMateDomain(domain));
+    }
+
     override BusinessBlock getBusinessBlock(string tenantId, string id) {
         return usecase.getBlock(TenantId(tenantId), BusinessBlockId(id));
     }

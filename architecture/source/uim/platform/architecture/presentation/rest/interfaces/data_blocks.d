@@ -12,6 +12,10 @@ interface IDataBlocksApi {
     DataBlock[] listDataBlocks(string tenantId);
 
     @headerParam("tenantId", "X-Tenant-ID")
+    @path("/domain/:domain") @method(HTTPMethod.GET)
+    DataBlock[] listDataBlocksByDomain(string tenantId, string domain);
+
+    @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.GET)
     DataBlock getDataBlock(string tenantId, string _id);
 

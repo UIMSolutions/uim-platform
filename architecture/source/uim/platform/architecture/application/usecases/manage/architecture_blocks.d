@@ -21,6 +21,24 @@ class ManageArchitectureBlocksUseCase {
         return repository.findByStatus(tenantId, status);
     }
 
+    ArchitectureBlock[] listBlocks(TenantId tenantId, ArchiMateDomain domain) {
+        return repository.findByDomain(tenantId, domain);
+    }
+
+    private ArchiMateRelationship[] mapRelationships(ArchiMateRelationshipRequest[] relationshipRequests) {
+        ArchiMateRelationship[] relationships;
+
+        foreach (request; relationshipRequests) {
+            ArchiMateRelationship relationship;
+            relationship.relationshipType = toArchiMateRelationshipType(request.relationshipType);
+            relationship.targetBlockId = request.targetBlockId;
+            relationship.description = request.description;
+            relationships ~= relationship;
+        }
+
+        return relationships;
+    }
+
     UsecaseResult createBlock(CreateArchitectureBlockRequest req) {
         if (req.title.isEmpty)
             return UsecaseResult(false, "", "Title is required");
@@ -30,6 +48,22 @@ class ManageArchitectureBlocksUseCase {
         block.title = req.title;
         block.description = req.description;
         block.owner = req.owner;
+        block.lifecycleState = req.lifecycleState;
+        block.status = req.status.isEmpty ? LifecycleStatus.proposed : toLifecycleStatus(req.status);
+        block.versionLabel = req.versionLabel;
+        block.tags = req.tags;
+        block.capabilityProvided = req.capabilityProvided;
+        block.requiredInterfaces = req.requiredInterfaces;
+        block.lastVersion = req.lastVersion;
+        block.validDate = req.validDate;
+        block.archimateDomain = req.archimateDomain.isEmpty
+            ? ArchiMateDomain.application
+            : toArchiMateDomain(req.archimateDomain);
+        block.archimateAspect = req.archimateAspect.isEmpty
+            ? ArchiMateAspect.behavior
+            : toArchiMateAspect(req.archimateAspect);
+        block.viewpoint = req.viewpoint;
+        block.relationships = mapRelationships(req.relationships);
 
         repository.save(block);
         return UsecaseResult(true, block.id.value, "Architecture block created");
@@ -44,6 +78,25 @@ class ManageArchitectureBlocksUseCase {
         if (block.id.value.length == 0)
             return UsecaseResult(false, "", "Architecture block not found");
 
+        block.title = req.title;
+        block.description = req.description;
+        block.owner = req.owner;
+        block.lifecycleState = req.lifecycleState;
+        block.status = req.status.isEmpty ? LifecycleStatus.proposed : toLifecycleStatus(req.status);
+        block.versionLabel = req.versionLabel;
+        block.tags = req.tags;
+        block.capabilityProvided = req.capabilityProvided;
+        block.requiredInterfaces = req.requiredInterfaces;
+        block.lastVersion = req.lastVersion;
+        block.validDate = req.validDate;
+        block.archimateDomain = req.archimateDomain.isEmpty
+            ? ArchiMateDomain.application
+            : toArchiMateDomain(req.archimateDomain);
+        block.archimateAspect = req.archimateAspect.isEmpty
+            ? ArchiMateAspect.behavior
+            : toArchiMateAspect(req.archimateAspect);
+        block.viewpoint = req.viewpoint;
+        block.relationships = mapRelationships(req.relationships);
         block.updatedAt = currentTimestamp();
 
         repository.update(block);

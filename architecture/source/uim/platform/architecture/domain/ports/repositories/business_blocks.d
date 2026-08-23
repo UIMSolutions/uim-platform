@@ -11,5 +11,8 @@ interface IBusinessBlockRepository : ITenantRepository!(BusinessBlock, BusinessB
     size_t countByStatus(TenantId tenantId, LifecycleStatus status); 
     BusinessBlock[] findByStatus(TenantId tenantId, LifecycleStatus status);
     void removeByStatus(TenantId tenantId, LifecycleStatus status);
+    size_t countByDomain(TenantId tenantId, ArchiMateDomain domain);
+    BusinessBlock[] findByDomain(TenantId tenantId, ArchiMateDomain domain);
+    void removeByDomain(TenantId tenantId, ArchiMateDomain domain);
     
 }

@@ -11,5 +11,8 @@ interface IDataBlockRepository : ITenantRepository!(DataBlock, DataBlockId) {
     size_t countByStatus(TenantId tenantId, LifecycleStatus status); 
     DataBlock[] findByStatus(TenantId tenantId, LifecycleStatus status);
     void removeByStatus(TenantId tenantId, LifecycleStatus status);
+    size_t countByDomain(TenantId tenantId, ArchiMateDomain domain);
+    DataBlock[] findByDomain(TenantId tenantId, ArchiMateDomain domain);
+    void removeByDomain(TenantId tenantId, ArchiMateDomain domain);
     
 }

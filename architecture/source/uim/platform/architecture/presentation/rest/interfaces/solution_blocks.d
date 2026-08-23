@@ -12,6 +12,10 @@ interface ISolutionBlocksApi {
     SolutionBlock[] listSolutionBlocks(string tenantId);
 
     @headerParam("tenantId", "X-Tenant-ID")
+    @path("/domain/:domain") @method(HTTPMethod.GET)
+    SolutionBlock[] listSolutionBlocksByDomain(string tenantId, string domain);
+
+    @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.GET)
     SolutionBlock getSolutionBlock(string tenantId, string _id);
 

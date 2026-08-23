@@ -18,6 +18,10 @@ struct SolutionBlock {
     string mappedAbbId; // Referenz auf das abgedeckte ABB
     string vendorOrComponent; // z.B. "PostgreSQL 15" oder "Internal Auth Microservice"
     string deploymentEndpoint;
+    ArchiMateDomain archimateDomain;
+    ArchiMateAspect archimateAspect;
+    string viewpoint;
+    ArchiMateRelationship[] relationships;
 
     Json toJson() const {
         return entityToJson
@@ -29,6 +33,10 @@ struct SolutionBlock {
             .set("tags", tags.toJson)
             .set("mappedAbbId", mappedAbbId)
             .set("vendorOrComponent", vendorOrComponent)
-            .set("deploymentEndpoint", deploymentEndpoint);
+            .set("deploymentEndpoint", deploymentEndpoint)
+            .set("archimateDomain", archimateDomain.toString)
+            .set("archimateAspect", archimateAspect.toString)
+            .set("viewpoint", viewpoint)
+            .set("relationships", relationships.toJson);
     }
 }

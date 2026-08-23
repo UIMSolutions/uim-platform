@@ -16,6 +16,10 @@ struct TechnologyBlock {
     LifecycleStatus status;
     string versionLabel;
     string[] tags;
+    ArchiMateDomain archimateDomain;
+    ArchiMateAspect archimateAspect;
+    string viewpoint;
+    ArchiMateRelationship[] relationships;
     long createdAt;
     long updatedAt;
 
@@ -28,6 +32,10 @@ struct TechnologyBlock {
             .set("status", status.toString)
             .set("versionLabel", versionLabel)
             .set("tags", tagsJson)
+            .set("archimateDomain", archimateDomain.toString)
+            .set("archimateAspect", archimateAspect.toString)
+            .set("viewpoint", viewpoint)
+            .set("relationships", relationships.toJson)
             .set("createdAt", createdAt)
             .set("updatedAt", updatedAt);
     }

@@ -12,6 +12,10 @@ interface ITechnologyBlocksApi {
     TechnologyBlock[] listTechnologyBlocks(string tenantId);
 
     @headerParam("tenantId", "X-Tenant-ID")
+    @path("/domain/:domain") @method(HTTPMethod.GET)
+    TechnologyBlock[] listTechnologyBlocksByDomain(string tenantId, string domain);
+
+    @headerParam("tenantId", "X-Tenant-ID")
     @path("/:id") @method(HTTPMethod.GET)
     TechnologyBlock getTechnologyBlock(string tenantId, string _id);
 
