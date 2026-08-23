@@ -67,7 +67,7 @@ protected:
       }
     }
     auto result = _useCase.createDelivery(tenantId, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError(result.message);
     }
@@ -101,7 +101,7 @@ protected:
     dto.deliveryAddress = data.getString("deliveryAddress");
     dto.actualDate = jsonInt(data, "actualDate");
     auto result = _useCase.updateDeliveryStatus(tenantId, id, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError(result.message);
     }
@@ -112,7 +112,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto id = DeliveryId(extractId(req.requestPath.to!string));
     auto result = _useCase.deleteDelivery(tenantId, id);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.notFound;
       return writeError(result.message);
     }

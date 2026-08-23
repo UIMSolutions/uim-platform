@@ -42,7 +42,7 @@ class SnowflakeTenantUserController : ManageHttpController {
     r.role           = data.getString("role");
     r.externalUserId = data.getString("externalUserId");
     auto result = usecase.create(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
+    if (result.hasError) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
     resp["id"] = Json(result.id);
     res.writeJsonBody(resp, cast(int) HTTPStatus.created);
@@ -67,7 +67,7 @@ class SnowflakeTenantUserController : ManageHttpController {
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
-    if (!result.success) { writeError(res, 404, result.message); return; }
+    if (result.hasError) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 }

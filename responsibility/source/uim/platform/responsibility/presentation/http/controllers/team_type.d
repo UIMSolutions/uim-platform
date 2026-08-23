@@ -61,7 +61,7 @@ class TeamTypeController : ManageHttpController {
         dto.code        = data.getString("code", "");
         dto.categoryId  = data.getString("categoryId", "");
         auto result = _uc.createType(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
@@ -79,7 +79,7 @@ class TeamTypeController : ManageHttpController {
         dto.code        = data.getString("code", "");
         dto.categoryId  = data.getString("categoryId", "");
         auto result = _uc.updateType(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
@@ -90,7 +90,7 @@ class TeamTypeController : ManageHttpController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = TeamTypeId(precheck.id);
         auto result = _uc.deleteType(tenantId, id);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }

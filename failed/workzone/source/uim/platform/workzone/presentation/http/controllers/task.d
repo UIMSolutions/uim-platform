@@ -42,7 +42,7 @@ class TaskController : ManageHttpController {
     r.dueDate = data.getLong("dueDate", 0);
 
     auto result = useCase.createTask(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Task created successfully", "Created", 201,
@@ -105,7 +105,7 @@ class TaskController : ManageHttpController {
     r.dueDate = precheck.data.getLong("dueDate", 0);
 
     auto result = useCase.updateTask(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Task updated successfully", "Updated", 200,
@@ -118,7 +118,7 @@ class TaskController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteTask(precheck.tenantId, TaskId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Task deleted successfully", "Deleted", 200, Json.emptyObject);

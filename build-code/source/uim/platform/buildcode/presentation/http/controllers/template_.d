@@ -55,7 +55,7 @@ class TemplateController : SAPController {
     if (data["parameters"].isArray)
       foreach (p; data["parameters"]) dto.parameters ~= p.get!string("");
     auto result = _uc.create(tenantId, dto);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
     j["id"] = Json(result.id);
     res.writeJsonBody(j, cast(int) HTTPStatus.created);
@@ -73,7 +73,7 @@ class TemplateController : SAPController {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
     auto id       = precheck.id;
     auto result   = _uc.remove(tenantId, id);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.noContent);
   }
 }

@@ -47,7 +47,7 @@ class SnowflakeRoleController : ManageHttpController {
     r.description = data.getString("description");
     r.privileges = data.getStrings("privileges");
     auto result = usecase.create(r);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 400, result.message);
       return;
     }
@@ -75,7 +75,7 @@ class SnowflakeRoleController : ManageHttpController {
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 404, result.message);
       return;
     }

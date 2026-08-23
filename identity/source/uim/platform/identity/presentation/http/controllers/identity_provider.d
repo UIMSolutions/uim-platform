@@ -78,7 +78,7 @@ class IdentityProviderController : ManageHttpController {
         dto.isDefault = data.getBoolean("isDefault");
 
         auto result = usecase.createIdentityProvider(dto);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.message, 400);
         return successResponse("Identity provider created successfully", "Created", 201, Json.emptyObject.set("id", result
                 .id));
@@ -103,7 +103,7 @@ class IdentityProviderController : ManageHttpController {
         dto.isDefault = data.getBoolean("isDefault");
 
         auto result = usecase.updateIdentityProvider(dto);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.message, 404);
         return successResponse("Identity provider updated successfully", "Updated", 200, Json.emptyObject.set("id", result
                 .id));
@@ -117,7 +117,7 @@ class IdentityProviderController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = IdentityProviderId(precheck.id);
         auto result = usecase.deleteIdentityProvider(tenantId, id);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.message, 404);
         return successResponse("Identity provider deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
                 .id));

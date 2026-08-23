@@ -47,7 +47,7 @@ class AuthController : HttpController {
     authReq.userAgent = req.headers.get("User-Agent", "");
 
     auto result = authUseCase.execute(authReq);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto response = Json.emptyObject

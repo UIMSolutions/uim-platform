@@ -51,7 +51,7 @@ class SnowflakeWarehouseController : ManageHttpController {
     if (j["autoResume"].isBoolean_)
       r.autoResume = j["autoResume"].get!bool;
     auto result = usecase.create(r);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 400, result.message);
       return;
     }
@@ -82,7 +82,7 @@ class SnowflakeWarehouseController : ManageHttpController {
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 404, result.message);
       return;
     }

@@ -69,7 +69,7 @@ class ResponsibilityRuleController : ManageHttpController {
         dto.teamId      = data.getString("teamId", "");
 
         auto result = _uc.createRule(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
@@ -90,7 +90,7 @@ class ResponsibilityRuleController : ManageHttpController {
         dto.teamId      = data.getString("teamId", "");
 
         auto result = _uc.updateRule(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
@@ -102,7 +102,7 @@ class ResponsibilityRuleController : ManageHttpController {
         auto id = ResponsibilityRuleId(precheck.id);
 
         auto result = _uc.deleteRule(tenantId, id);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }

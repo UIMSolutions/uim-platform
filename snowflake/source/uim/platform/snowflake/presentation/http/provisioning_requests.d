@@ -104,7 +104,7 @@ class ProvisioningRequestController : ManageHttpController {
   
   void handleProcess(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.process(req.getTenantId, extractId(req.requestPath.to!string));
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 404, result.message);
       return;
     }
@@ -118,7 +118,7 @@ class ProvisioningRequestController : ManageHttpController {
     r.id = extractId(req.requestPath.to!string);
     r.resultAccountId = data.getString("resultAccountId");
     auto result = usecase.complete(r);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 404, result.message);
       return;
     }
@@ -132,7 +132,7 @@ class ProvisioningRequestController : ManageHttpController {
     r.id = extractId(req.requestPath.to!string);
     r.errorMessage = data.getString("errorMessage");
     auto result = usecase.fail(r);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 404, result.message);
       return;
     }

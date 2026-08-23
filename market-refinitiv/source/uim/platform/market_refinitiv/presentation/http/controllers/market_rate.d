@@ -186,7 +186,7 @@ class MarketRateController : SAPController {
 
     auto result = ratesUC.deleteRate(ucReq);
 
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 422, result.message);
       return;
     }
@@ -226,7 +226,7 @@ class MarketRateController : SAPController {
     ucReq.contactEmail = body_.getString("contactEmail");
 
     auto result = providersUC.createProvider(ucReq);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 422, result.message);
       return;
     }
@@ -266,7 +266,7 @@ class MarketRateController : SAPController {
     ucReq.isActive = jsonBool(data, "isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 422, result.message);
       return;
     }
@@ -278,7 +278,7 @@ class MarketRateController : SAPController {
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
 
     auto result = providersUC.deleteProvider(tenantId, ProviderId(id));
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 404, result.message);
       return;
     }

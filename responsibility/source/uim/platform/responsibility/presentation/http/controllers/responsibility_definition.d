@@ -66,7 +66,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         dto.validFrom    = data.getString("validFrom", "");
         dto.validTo      = data.getString("validTo", "");
         auto result = _uc.createDefinition(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
@@ -85,7 +85,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         dto.validFrom    = data.getString("validFrom", "");
         dto.validTo      = data.getString("validTo", "");
         auto result = _uc.updateDefinition(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
@@ -96,7 +96,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = ResponsibilityDefinitionId(precheck.id);
         auto result = _uc.deleteDefinition(tenantId, id);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }

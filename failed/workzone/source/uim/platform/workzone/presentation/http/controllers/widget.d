@@ -38,7 +38,7 @@ class WidgetController : ManageHttpController {
     r.sortOrder = cast(int) data.getLong("sortOrder", 0);
 
     auto result = useCase.createWidget(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Widget created successfully", "Created", 201,
@@ -93,7 +93,7 @@ class WidgetController : ManageHttpController {
     r.visible = precheck.data.getLong("visible", 1) != 0;
 
     auto result = useCase.updateWidget(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Widget updated successfully", "Updated", 200,
@@ -106,7 +106,7 @@ class WidgetController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteWidget(precheck.tenantId, WidgetId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Widget deleted successfully", "Deleted", 200, Json.emptyObject);

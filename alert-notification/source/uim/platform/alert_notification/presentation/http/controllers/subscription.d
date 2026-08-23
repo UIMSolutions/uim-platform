@@ -51,7 +51,7 @@ class SubscriptionController : ManageHttpController {
                 dto.actions ~= v.to!string;
 
         auto result = usecase.createSubscription(tenantId, dto);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -70,7 +70,7 @@ class SubscriptionController : ManageHttpController {
         auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto id = req.requestPath.to!string.split("/")[$ - 1];
         auto result = usecase.getSubscription(tenantId, id);
-        if (!result.success) {
+        if (result.hasError) {
             writeError(res, cast(int)HTTPStatus.notFound, result.message);
             return;
         }
@@ -93,7 +93,7 @@ class SubscriptionController : ManageHttpController {
             foreach (v; actionsNode.byValue)
                 dto.actions ~= v.to!string;
         auto result = usecase.updateSubscription(tenantId, id, dto);
-        if (!result.success) {
+        if (result.hasError) {
             writeError(res, cast(int)HTTPStatus.notFound, result.message);
             return;
         }
@@ -104,7 +104,7 @@ class SubscriptionController : ManageHttpController {
         auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto id = req.requestPath.to!string.split("/")[$ - 1];
         auto result = usecase.deleteSubscription(tenantId, id);
-        if (!result.success) {
+        if (result.hasError) {
             writeError(res, cast(int)HTTPStatus.notFound, result.message);
             return;
         }

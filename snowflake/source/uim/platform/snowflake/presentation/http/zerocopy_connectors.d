@@ -49,7 +49,7 @@ class ZerocopyConnectorController : ManageHttpController {
     r.bdcTenantId = data.getString("bdcTenantId");
     r.description = data.getString("description");
     auto result = usecase.create(r);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 400, result.message);
       return;
     }
@@ -76,7 +76,7 @@ class ZerocopyConnectorController : ManageHttpController {
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 404, result.message);
       return;
     }
@@ -90,7 +90,7 @@ class ZerocopyConnectorController : ManageHttpController {
     r.connectorId = extractId(req.requestPath.to!string);
     r.bdcTenantId = data.getString("bdcTenantId");
     auto result = usecase.enroll(r);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 404, result.message);
       return;
     }

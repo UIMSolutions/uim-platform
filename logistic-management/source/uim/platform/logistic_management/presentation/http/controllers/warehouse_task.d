@@ -43,7 +43,7 @@ public:
     dto.confirmedAt = jsonInt(data, "confirmedAt");
 
     auto result = _useCase.confirmTask(tenantId, id, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.writeBody(`{"error":"` ~ result.message ~ `","statusCode":400}`,
           cast(int) HTTPStatus.badRequest, "application/json");
       return;
@@ -76,7 +76,7 @@ protected:
     dto.unit = data.getString("unit");
     dto.assignedTo = data.getString("assignedTo");
     auto result = _useCase.createWarehouseTask(tenantId, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError(result.message);
     }
@@ -119,7 +119,7 @@ protected:
       return writeError("Invalid warehouse task ID");
     }
     auto result = _useCase.deleteWarehouseTask(tenantId, id);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.notFound;
       return writeError(result.message);
     }

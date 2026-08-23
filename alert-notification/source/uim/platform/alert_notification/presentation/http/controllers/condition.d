@@ -65,7 +65,7 @@ class ConditionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = req.requestPath.to!string.split("/")[$ - 1];
         auto result = usecase.getCondition(tenantId, id);
-        if (!result.success) {
+        if (result.hasError) {
             writeError(res, cast(int)HTTPStatus.notFound, result.message);
             return;
         }
@@ -88,7 +88,7 @@ class ConditionController : ManageHttpController {
         dto.propertyValue = data.getString("propertyValue");
         dto.mandatory = data.getBool("mandatory", false);
         auto result = usecase.updateCondition(tenantId, id, dto);
-        if (!result.success) {
+        if (result.hasError) {
             writeError(res, cast(int)HTTPStatus.notFound, result.message);
             return;
         }

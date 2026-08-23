@@ -52,7 +52,7 @@ class AttributeMappingController : ManageHttpController {
     r.delimiter           = data.getString("delimiter");
     r.sortOrder           = data.getInteger("sortOrder");
     auto result = usecase.create(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
+    if (result.hasError) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
     resp["id"] = Json(result.id);
     res.writeJsonBody(resp, cast(int) HTTPStatus.created);
@@ -71,13 +71,13 @@ class AttributeMappingController : ManageHttpController {
     r.sortOrder           = data.getInteger("sortOrder");
     r.active              = data.getBoolean("active");
     auto result = usecase.update(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
+    if (result.hasError) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
-    if (!result.success) { writeError(res, 404, result.message); return; }
+    if (result.hasError) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 }

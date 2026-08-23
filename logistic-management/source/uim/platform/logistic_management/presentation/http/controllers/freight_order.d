@@ -47,7 +47,7 @@ public:
     dto.actualArrivalAt = jsonInt(data, "actualArrivalAt");
 
     auto result = _useCase.transitionFreightOrder(tenantId, id, dto);
-    if (!result.success) {
+    if (result.hasError) {
       return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     }
     res.writeJsonBody(Json(["id": Json(result.id), "statusCode": Json(200)]));
@@ -79,7 +79,7 @@ protected:
     dto.plannedDepartureAt = jsonInt(data, "plannedDepartureAt");
     dto.plannedArrivalAt = jsonInt(data, "plannedArrivalAt");
     auto result = _useCase.createFreightOrder(tenantId, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError(result.message);
     }

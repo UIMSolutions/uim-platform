@@ -102,7 +102,7 @@ class WorkspaceListView : Box {
             immutable name = nameEntry.getText();
             if (name.length > 0) {
                 auto result = _model.createWorkspace(name, "", "", WorkspaceType.team);
-                if (!result.success)
+                if (result.hasError)
                     showError(dlg, result.message);
             }
         }

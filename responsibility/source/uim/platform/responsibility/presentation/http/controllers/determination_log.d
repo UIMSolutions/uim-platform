@@ -64,7 +64,7 @@ class DeterminationLogController : ManageHttpController {
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto result = super.deleteHandler(req);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.error, result.statusCode);
 
         auto tenantId = TenantId(result.gString("tenantId"));

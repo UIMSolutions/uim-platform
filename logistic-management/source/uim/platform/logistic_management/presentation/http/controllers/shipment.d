@@ -50,7 +50,7 @@ protected:
     dto.trackingNumber = data.getString("trackingNumber");
     dto.plannedDate = jsonInt(data, "plannedDate");
     auto result = _useCase.createShipment(tenantId, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError(result.message);
     }
@@ -79,7 +79,7 @@ protected:
     dto.trackingNumber = data.getString("trackingNumber");
     dto.actualDate = jsonInt(data, "actualDate");
     auto result = _useCase.updateShipment(tenantId, id, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError(result.message);
     }
@@ -95,7 +95,7 @@ protected:
     }
     
     auto result = _useCase.deleteShipment(tenantId, id);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.notFound;
       return writeError(result.message);
     }

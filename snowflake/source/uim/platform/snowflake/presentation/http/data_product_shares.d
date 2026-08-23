@@ -43,7 +43,7 @@ class DataProductShareController : ManageHttpController {
     r.shareName     = data.getString("shareName");
     r.comment       = data.getString("comment");
     auto result = usecase.create(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
+    if (result.hasError) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
     resp["id"] = Json(result.id);
     res.writeJsonBody(resp, cast(int) HTTPStatus.created);
@@ -66,13 +66,13 @@ class DataProductShareController : ManageHttpController {
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.remove(req.getTenantId, extractId(req.requestPath.to!string));
-    if (!result.success) { writeError(res, 404, result.message); return; }
+    if (result.hasError) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 
   void handleSync(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.sync_(req.getTenantId, extractId(req.requestPath.to!string));
-    if (!result.success) { writeError(res, 404, result.message); return; }
+    if (result.hasError) { writeError(res, 404, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 }

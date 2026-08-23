@@ -40,7 +40,7 @@ class UndeliveredEventController : HttpController {
     auto tenantId = precheck.tenantId;
     auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.getUndeliveredEvent(tenantId, id);
-        if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
+        if (result.hasError) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 }

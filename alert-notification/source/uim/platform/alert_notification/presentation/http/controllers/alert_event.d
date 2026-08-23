@@ -52,7 +52,7 @@ class AlertEventController : HttpController {
         }
 
         auto result = usecase.postEvent(tenantId, dto);
-        if (!result.success) {
+        if (result.hasError) {
             writeError(res, cast(int)HTTPStatus.badRequest, result.message);
             return;
         }

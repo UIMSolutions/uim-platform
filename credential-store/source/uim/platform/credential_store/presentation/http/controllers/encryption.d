@@ -72,7 +72,7 @@ class EncryptionController : HttpController {
     r.dek = data.getString("dek");
 
     const result = usecase.encrypt(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse("Failed to encrypt DEK", 400);
 
     auto resp = Json.emptyObject
@@ -101,7 +101,7 @@ class EncryptionController : HttpController {
     r.keyringVersion = data.getLong("keyringVersion");
 
     const result = usecase.decrypt(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse("Failed to decrypt DEK", 400);
 
     auto resp = Json.emptyObject

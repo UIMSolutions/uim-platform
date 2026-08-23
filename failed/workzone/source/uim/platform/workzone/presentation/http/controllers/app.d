@@ -36,7 +36,7 @@ class AppController : ManageHttpController {
     r.version_ = data.getString("version");
 
     auto result = useCase.createApp(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("App created successfully", "Created", 201,

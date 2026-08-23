@@ -32,7 +32,7 @@ class MatchedEventController : HttpController {
         auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
         auto id       = req.requestPath.to!string.split("/")[$-1];
         auto result   = usecase.getMatchedEvent(tenantId, id);
-        if (!result.success) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
+        if (result.hasError) { writeError(res, cast(int)HTTPStatus.notFound, result.message); return; }
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 }

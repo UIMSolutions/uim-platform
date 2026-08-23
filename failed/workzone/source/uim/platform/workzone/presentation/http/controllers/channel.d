@@ -34,7 +34,7 @@ class ChannelController : ManageHttpController {
     r.channelType = toChannelType(data.getString("channelType", "custom"));
 
     auto result = useCase.createChannel(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Channel created successfully", "Created", 201,
@@ -85,7 +85,7 @@ class ChannelController : ManageHttpController {
     r.active = precheck.data.getLong("active", 1) != 0;
 
     auto result = useCase.updateChannel(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Channel updated successfully", "Updated", 200,
@@ -98,7 +98,7 @@ class ChannelController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteChannel(precheck.tenantId, ChannelId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Channel deleted successfully", "Deleted", 200, Json.emptyObject);

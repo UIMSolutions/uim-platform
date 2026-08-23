@@ -79,7 +79,7 @@ class PrintDocumentController : ManageHttpController {
         dto.expiresAt = j.getInt("expiresAt");
 
         auto result = usecase.createPrintDocument(dto);
-        if (!result.success) {
+        if (result.hasError) {
             writeError(res, 400, result.message);
             return;
         }

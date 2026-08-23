@@ -60,7 +60,7 @@ class UnificationRuleController : ManageHttpController {
     r.preventMerge = data.getBoolean("preventMerge");
     r.identifierAttributes = data.getStrings("identifierAttributes");
     auto result = usecase.create(r);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 400, result.message);
       return;
     }

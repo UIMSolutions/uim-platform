@@ -51,7 +51,7 @@ class PipelineController : SAPController {
     dto.triggerType    = data.getString("triggerType", "manual");
     dto.schedule       = data.getString("schedule", "");
     auto result = _uc.create(tenantId, dto);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
     j["id"] = Json(result.id);
     res.writeJsonBody(j, cast(int) HTTPStatus.created);
@@ -77,7 +77,7 @@ class PipelineController : SAPController {
     dto.triggerType    = data.getString("triggerType", "");
     dto.schedule       = data.getString("schedule", "");
     auto result = _uc.update(tenantId, id, dto);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 
@@ -85,7 +85,7 @@ class PipelineController : SAPController {
     auto tenantId = req.headers.get("X-Tenant-Id", "default");
     auto id       = precheck.id;
     auto result   = _uc.remove(tenantId, id);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.notFound, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.noContent);
   }
 }

@@ -51,7 +51,7 @@ class DeploymentController : SAPController {
     dto.targetSpace       = data.getString("targetSpace", "");
     dto.deployedBy        = data.getString("deployedBy", "api");
     auto result = _uc.create(tenantId, dto);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
     j["id"] = Json(result.id);
     res.writeJsonBody(j, cast(int) HTTPStatus.created);
@@ -72,7 +72,7 @@ class DeploymentController : SAPController {
     auto statusStr = data.getString("status", "");
     auto url       = data.getString("targetUrl", "");
     auto result    = _uc.updateStatus(tenantId, id, statusStr, url);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 }

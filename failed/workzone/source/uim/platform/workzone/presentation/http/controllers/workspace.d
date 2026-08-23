@@ -37,7 +37,7 @@ class WorkspaceController : ManageHttpController {
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = useCase.createWorkspace(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Workspace created successfully", "Created", 201,
@@ -86,7 +86,7 @@ class WorkspaceController : ManageHttpController {
     r.imageUrl = precheck.data.getString("imageUrl");
 
     auto result = useCase.updateWorkspace(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Workspace updated successfully", "Updated", 200,
@@ -99,7 +99,7 @@ class WorkspaceController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteWorkspace(precheck.tenantId, WorkspaceId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Workspace deleted successfully", "Deleted", 200, Json.emptyObject);

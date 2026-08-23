@@ -79,7 +79,7 @@ class PrintClientController : ManageHttpController {
             dto.osVersion = data.getString("osVersion");
 
             auto result = usecase.registerPrintClient(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
+            if (result.hasError) { writeError(res, 400, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id);
@@ -103,7 +103,7 @@ class PrintClientController : ManageHttpController {
             dto.ipAddress = data.getString("ipAddress");
 
             auto result = usecase.updatePrintClient(dto);
-            if (!result.success) { writeError(res, 404, result.message); return; }
+            if (result.hasError) { writeError(res, 404, result.message); return; }
 
             auto resp = Json.emptyObject
                 .set("id", result.id);

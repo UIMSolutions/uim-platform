@@ -219,7 +219,7 @@ class MarketRateController : ManageHttpController {
 
     auto result = ratesUC.deleteRate(ucReq);
 
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 422);
 
     auto j = Json.emptyObject.set("deleted", true);
@@ -268,7 +268,7 @@ class MarketRateController : ManageHttpController {
     ucReq.contactEmail = data.getString("contactEmail");
 
     auto result = providersUC.createProvider(ucReq);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 422);
 
     auto j = Json.emptyObject.set("id", result.id).set("created", true);
@@ -312,7 +312,7 @@ class MarketRateController : ManageHttpController {
     ucReq.isActive = jsonBool(data, "isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 422);
 
     auto j = Json.emptyObject.set("updated", true);
@@ -330,7 +330,7 @@ class MarketRateController : ManageHttpController {
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
 
     auto result = providersUC.deleteProvider(tenantId, ProviderId(id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     auto j = Json.emptyObject.set("deleted", true);

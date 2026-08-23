@@ -49,7 +49,7 @@ protected:
     dto.assignedTo = data.getString("assignedTo");
     dto.dueAt = jsonInt(data, "dueAt");
     auto result = _useCase.createWarehouseOrder(tenantId, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError(result.message);
     }
@@ -78,7 +78,7 @@ protected:
     dto.assignedTo = data.getString("assignedTo");
     dto.dueAt = jsonInt(data, "dueAt");
     auto result = _useCase.updateWarehouseOrder(tenantId, id, dto);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
       return writeError(result.message);
     }
@@ -89,7 +89,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto id = WarehouseOrderId(extractId(req.requestPath.to!string));
     auto result = _useCase.deleteWarehouseOrder(tenantId, id);
-    if (!result.success) {
+    if (result.hasError) {
       res.statusCode = cast(int) HTTPStatus.notFound;
       return writeError(result.message);
     }

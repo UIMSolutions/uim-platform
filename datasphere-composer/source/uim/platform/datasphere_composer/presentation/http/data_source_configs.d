@@ -112,7 +112,7 @@ class DataSourceConfigController : ManageHttpController {
     r.sourceAttributeName = data.getString("sourceAttributeName");
     r.transformationType = data.getString("transformationType");
     auto result = usecase.addIdentifierMapping(r);
-    if (!result.success) {
+    if (result.hasError) {
       writeError(res, 400, result.message);
       return;
     }

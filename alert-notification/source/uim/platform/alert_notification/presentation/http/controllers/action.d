@@ -48,7 +48,7 @@ class ActionController : ManageHttpController {
                 dto.properties[k] = v.to!string;
 
         auto result = usecase.createAction(tenantId, dto);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -62,7 +62,7 @@ class ActionController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto result = usecase.listActions(tenantId);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         return successResponse("Actions retrieved successfully", "Retrieved", 200, result.data);
@@ -79,7 +79,7 @@ class ActionController : ManageHttpController {
             return errorResponse("Invalid action ID", 400);
 
         auto result = usecase.getAction(tenantId, id);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.message, 404);
 
         return successResponse("Action retrieved successfully", "Retrieved", 200, result.data);
@@ -123,7 +123,7 @@ class ActionController : ManageHttpController {
             return errorResponse("Invalid action ID", 400);
 
         auto result = usecase.deleteAction(tenantId, id);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.message, 404);
 
         return successResponse("Action deleted successfully", "Deleted", 204, Json.emptyObject);

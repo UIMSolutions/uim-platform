@@ -137,7 +137,7 @@ class LifecycleRuleController : ManageHttpController {
       return errorResponse("Invalid lifecycle rule ID");
 
     auto result = usecase.deleteRule(tenantId, id);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message);
 
     return successResponse("Lifecycle rule deleted successfully", 200, Json.emptyObject.set("id", id));

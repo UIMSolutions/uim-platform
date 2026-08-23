@@ -39,7 +39,7 @@ class NotificationController : ManageHttpController {
     r.expiresAt = data.getLong("expiresAt", 0);
 
     auto result = useCase.createNotification(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Notification created successfully", "Created", 201,

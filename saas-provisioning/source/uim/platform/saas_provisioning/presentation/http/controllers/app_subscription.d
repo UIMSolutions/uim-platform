@@ -80,7 +80,7 @@ class AppSubscriptionController : ManageHttpController {
             string appName = data.getString("appName");
 
             auto result = usecase.subscribeConsumer(tenantId, appName, dto);
-            if (!result.success) {
+            if (result.hasError) {
                 writeError(res, 400, result.message);
                 return;
             }
@@ -153,7 +153,7 @@ class AppSubscriptionController : ManageHttpController {
             } catch (Exception) {
             }
             auto result = usecase.unsubscribeConsumer(tenantId, id, requestedBy);
-            if (!result.success) {
+            if (result.hasError) {
                 writeError(res, 404, result.message);
                 return;
             }

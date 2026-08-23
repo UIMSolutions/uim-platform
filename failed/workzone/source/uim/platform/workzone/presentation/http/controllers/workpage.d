@@ -35,7 +35,7 @@ class WorkpageController : ManageHttpController {
     r.isDefault = data.getLong("isDefault", 0) != 0;
 
     auto result = useCase.createWorkpage(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Workpage created successfully", "Created", 201,
@@ -88,7 +88,7 @@ class WorkpageController : ManageHttpController {
     r.visible = precheck.data.getLong("visible", 1) != 0;
 
     auto result = useCase.updateWorkpage(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Workpage updated successfully", "Updated", 200,
@@ -101,7 +101,7 @@ class WorkpageController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteWorkpage(precheck.tenantId, WorkpageId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Workpage deleted successfully", "Deleted", 200, Json.emptyObject);

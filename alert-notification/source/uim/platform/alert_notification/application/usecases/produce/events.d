@@ -85,7 +85,7 @@ class ProduceEventsUseCase {
                     me.storedAt = event.timestamp;
                     me.retentionPeriod = 604_800;
                     matchedEvents.save(me);
-                } else if (!result.success) {
+                } else if (result.hasError) {
                     auto ue = new UndeliveredEvent(tenantId);
                     ue.eventId = event.id.toString();
                     ue.eventType = event.eventType;

@@ -71,7 +71,7 @@ class AnalyticsAssetsController : ManageHttpController {
     dto.measures = readStringArray(data, "measures");
 
     auto result = (() @trusted => useCase.createAsset(dto))();
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
@@ -119,7 +119,7 @@ class AnalyticsAssetsController : ManageHttpController {
     dto.measures = readStringArray(data, "measures");
 
     auto result = (() @trusted => useCase.updateAsset(dto))();
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
@@ -137,7 +137,7 @@ class AnalyticsAssetsController : ManageHttpController {
       return errorResponse("Invalid asset ID", 400);
 
     auto result = (() @trusted => useCase.deleteAsset(tenantId, id))();
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
@@ -160,7 +160,7 @@ class AnalyticsAssetsController : ManageHttpController {
 
     auto result = (() @trusted => useCase.publishAsset(tenantId, id))();
 
-    if (!result.success) {
+    if (result.hasError) {
       res.writeJsonBody(errorResponse(result.message, 400), 400);
       return;
     }

@@ -62,7 +62,7 @@ class ResponsibilityContextController : ManageHttpController {
         dto.namespace_  = data.getString("namespace", "");
         dto.status      = data.getString("status", "active");
         auto result = _uc.createContext(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
@@ -79,7 +79,7 @@ class ResponsibilityContextController : ManageHttpController {
         dto.description = data.getString("description", "");
         dto.status      = data.getString("status", "active");
         auto result = _uc.updateContext(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
@@ -90,7 +90,7 @@ class ResponsibilityContextController : ManageHttpController {
         auto tenantId = TenantId(pre.gString("tenantId"));
         auto id = ResponsibilityContextId(precheck.id);
         auto result = _uc.deleteContext(tenantId, id);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }

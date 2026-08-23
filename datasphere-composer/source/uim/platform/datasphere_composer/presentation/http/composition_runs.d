@@ -48,7 +48,7 @@ class CompositionRunController : ManageHttpController {
     r.triggeredBy   = data.getString("triggeredBy");
     r.dataProductIds = data.getStrings("dataProductIds");
     auto result = usecase.start(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
+    if (result.hasError) { writeError(res, 400, result.message); return; }
     auto resp = Json.emptyObject;
     resp["id"] = Json(result.id);
     res.writeJsonBody(resp, cast(int) HTTPStatus.created);
@@ -61,7 +61,7 @@ class CompositionRunController : ManageHttpController {
     r.id       = extractId(req.requestPath.to!string);
     r.action   = data.getString("action");
     auto result = usecase.performAction(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
+    if (result.hasError) { writeError(res, 400, result.message); return; }
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 

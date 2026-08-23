@@ -48,7 +48,7 @@ class BuildJobController : SAPController {
     dto.branch      = data.getString("branch", "");
     dto.triggeredBy = data.getString("triggeredBy", "api");
     auto result = _uc.trigger(tenantId, dto);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     auto j = Json.emptyObject;
     j["id"] = Json(result.id);
     res.writeJsonBody(j, cast(int) HTTPStatus.created);
@@ -68,7 +68,7 @@ class BuildJobController : SAPController {
     auto data      = req.json;
     auto statusStr = data.getString("status", "");
     auto result    = _uc.updateStatus(tenantId, id, statusStr);
-    if (!result.success) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
+    if (result.hasError) return writeError(res, cast(int) HTTPStatus.badRequest, result.message);
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 }

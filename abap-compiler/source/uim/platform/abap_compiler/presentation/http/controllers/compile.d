@@ -39,7 +39,7 @@ class CompileController : HttpController {
         r.sourceCode = data.getString("sourceCode");
 
         auto result = usecase.compile(r);
-        if (!result.success)
+        if (result.hasError)
             return errorResponse(result.error, 400);
 
         auto responseData = result.toJson();

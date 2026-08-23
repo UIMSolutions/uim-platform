@@ -27,9 +27,11 @@ class MemberFunctionController : ManageHttpController {
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto pre = super.listHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError) 
+            return precheck;
+
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto items = _uc.listFunctions(tenantId);
         auto responseData = Json.emptyObject
             .set("count",     items.length)
@@ -40,13 +42,17 @@ class MemberFunctionController : ManageHttpController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto pre = super.getHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
-        auto id = MemberFunctionId(pre.id);
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto id = MemberFunctionId(precheck.gString("id"));
+        if (id.isNull)
+            return Json.emptyObject.set("error", "Invalid function ID").set("statusCode", 400);
+
         auto e = _uc.getFunction(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Function not found").set("statusCode", 404);
+            return errorResponse("Member function not found", 404);
 
         auto responseData = Json.emptyObject
             .set("status", "success").set("statusCode", 200)
@@ -55,10 +61,11 @@ class MemberFunctionController : ManageHttpController {
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
-        auto pre = super.createHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
-        auto data = pre["data"];
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto data = precheck["data"];
         import std.uuid : randomUUID;
         MemberFunctionDTO dto;
         dto.functionId  = MemberFunctionId(data.getString("functionId", generateId));
@@ -68,7 +75,7 @@ class MemberFunctionController : ManageHttpController {
         dto.code        = data.getString("code", "");
         dto.status      = data.getString("status", "active");
         auto result = _uc.createFunction(dto);
-        if (!result.success)
+        if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
         auto responseData = Json.emptyObject
@@ -78,31 +85,38 @@ class MemberFunctionController : ManageHttpController {
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
-        auto pre = super.updateHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
-        auto data = pre["data"];
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError) 
+            return precheck;
+
+        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto data = precheck["data"];
         MemberFunctionDTO dto;
-        dto.functionId  = MemberFunctionId(pre.id);
+        dto.functionId  = MemberFunctionId(precheck.gString("id"));
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");
         dto.code        = data.getString("code", "");
         dto.status      = data.getString("status", "active");
         auto result = _uc.updateFunction(dto);
-        if (!result.success)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        return successResponse("Member function updated successfully", 200, Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
-        auto pre = super.deleteHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = TenantId(precheck.gString("tenantId"));
         auto id = MemberFunctionId(precheck.id);
+        if (id.isNull)
+            return Json.emptyObject.set("error", "Invalid function ID").set("statusCode", 400);
+
         auto result = _uc.deleteFunction(tenantId, id);
-        if (!result.success)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
+        if (result.hasError)
+            return errorResponse(result.message, 404);#
+        return successResponse("Member function deleted successfully", 200, Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200));
     }
 }

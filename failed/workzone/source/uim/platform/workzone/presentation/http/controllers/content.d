@@ -38,7 +38,7 @@ class ContentController : ManageHttpController {
     r.language = data.getString("language", "en");
 
     auto result = useCase.createContent(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Content created successfully", "Created", 201,
@@ -91,7 +91,7 @@ class ContentController : ManageHttpController {
     r.pinned = precheck.data.getLong("pinned", 0) != 0;
 
     auto result = useCase.updateContent(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Content updated successfully", "Updated", 200,
@@ -104,7 +104,7 @@ class ContentController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteContent(precheck.tenantId, ContentId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Content deleted successfully", "Deleted", 200, Json.emptyObject);

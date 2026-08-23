@@ -37,7 +37,7 @@ class FeedController : ManageHttpController {
     r.message = data.getString("message");
 
     auto result = useCase.createFeedEntry(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Feed entry created successfully", "Created", 201,
@@ -86,7 +86,7 @@ class FeedController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteFeedEntry(precheck.tenantId, FeedEntryId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Feed entry deleted successfully", "Deleted", 200, Json.emptyObject);
