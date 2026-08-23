@@ -45,7 +45,7 @@ class ServiceInstanceController : ManageHttpController {
     r.plan = data.getString("plan");
     r.createdBy = UserId(data.getString("createdBy"));
 
-    auto result = usecase.create(r);
+    auto result = usecase.createInstance(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -60,7 +60,7 @@ class ServiceInstanceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto items = usecase.listByTenant(tenantId);
+    auto items = usecase.listInstances(tenantId);
 
     auto arr = Json.emptyArray;
     foreach (e; items) {
@@ -85,12 +85,11 @@ class ServiceInstanceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = ServiceInstanceId(precheck.id);
     if (id.isNull)
       return errorResponse("Service instance not found", 404);
 
-    auto entry = usecase.getById(tenantId, id);
+    auto entry = usecase.getInstance(tenantId, id);
     if (entry.isNull)
       return errorResponse("Service instance not found", 404);
 
@@ -116,23 +115,23 @@ class ServiceInstanceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto data = precheck.data;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = ServiceInstanceId(precheck.id);
     if (id.isNull)
       return errorResponse("Service instance not found", 404);
 
+    auto data = precheck.data;
     UpdateServiceInstanceRequest r;
-    r.id = id;
+    r.instanceId = id;
     r.tenantId = tenantId;
     r.description = data.getString("description");
-    r.updatedBy = UserId(data.getString("updatedBy"));
+    // r.updatedBy = UserId(data.getString("updatedBy"));
 
-    auto result = usecase.update(r);
+    auto result = usecase.updateInstance(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Service instance updated successfully", "Updated", 200, result);
+    auto responseData = Json.emptyObject.set("id", id);
+    return successResponse("Service instance updated successfully", "Updated", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -145,14 +144,11 @@ class ServiceInstanceController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Service instance not found", 404);
 
-    auto tenantId = precheck.tenantId;
-    if (id.isNull)
-      return errorResponse("Service instance not found", 404);
-
-    auto result = usecase.deleteServiceInstance(tenantId, id);
+    auto result = usecase.deleteInstance(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Service instance deleted successfully", "Deleted", 200, Json.emptyObject.set("id", id));
+    auto responseData = Json.emptyObject.set("id", id);
+    return successResponse("Service instance deleted successfully", "Deleted", 200, responseData);
   }
 }

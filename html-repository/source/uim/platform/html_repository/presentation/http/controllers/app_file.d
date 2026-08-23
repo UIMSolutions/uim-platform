@@ -76,7 +76,7 @@ class AppFileController : ManageHttpController {
         .set("id", e.id)
         .set("filePath", e.filePath)
         .set("contentType", e.contentType)
-        .set("category", e.category)
+        .set("category", e.category.toString())
         .set("sizeBytes", e.sizeBytes);
 
       arr ~= obj;
@@ -107,7 +107,7 @@ class AppFileController : ManageHttpController {
       .set("versionId", entry.versionId)
       .set("filePath", entry.filePath)
       .set("contentType", entry.contentType)
-      .set("category", entry.category)
+      .set("category", entry.category.toString())
       .set("sizeBytes", entry.sizeBytes)
       .set("content", entry.content)
       .set("encoding", entry.encoding)

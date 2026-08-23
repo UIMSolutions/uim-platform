@@ -3,9 +3,15 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.html_repository.domain.ports;
+module uim.platform.html_repository.domain.ports.usecases.get_overview;
 
-public:
-  import uim.platform.html_repository.domain.ports.repositories;
-  import uim.platform.html_repository.domain.ports.usecases;
+import uim.platform.html_repository;
 
+mixin(ShowModule!());
+
+@safe:
+interface IGetOverviewUseCase {
+    
+    OverviewSummary getSummary(TenantId tenantId);
+    
+}

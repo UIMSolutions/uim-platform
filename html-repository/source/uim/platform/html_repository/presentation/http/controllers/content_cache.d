@@ -69,7 +69,7 @@ class ContentCacheController : ManageHttpController {
         .set("id", e.id)
         .set("fileId", e.fileId)
         .set("filePath", e.filePath)
-        .set("status", e.status)
+        .set("status", e.status.toString())
         .set("hitCount", e.hitCount);
     }
 
@@ -100,7 +100,7 @@ class ContentCacheController : ManageHttpController {
       .set("contentType", entry.contentType) // TODO: .set("data", entry.data)
       .set("etag", entry.etag)
       .set("ttlSeconds", entry.ttlSeconds)
-      .set("status", entry.status)
+      .set("status", entry.status.toString())
       .set("hitCount", entry.hitCount)
       .set("createdAt", entry.createdAt)
       .set("expiresAt", entry.expiresAt);

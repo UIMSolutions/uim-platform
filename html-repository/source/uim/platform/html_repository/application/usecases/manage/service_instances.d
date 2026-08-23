@@ -18,7 +18,7 @@ class ManageServiceInstancesUseCase {
         this.repo = repo;
     }
 
-    UsecaseResult createServiceInstance(CreateServiceInstanceRequest r) {
+    UsecaseResult createInstance(CreateServiceInstanceRequest r) {
         if (!DeploymentValidator.validateInstanceName(r.name))
             return UsecaseResult(false, "", "Invalid service instance name");
 
@@ -34,7 +34,7 @@ class ManageServiceInstancesUseCase {
         return UsecaseResult(true, inst.id.value, "");
     }
 
-    UsecaseResult updateServiceInstance(UpdateServiceInstanceRequest r) {
+    UsecaseResult updateInstance(UpdateServiceInstanceRequest r) {
         auto inst = repo.findById(r.tenantId, r.instanceId);
         if (inst.isNull)
             return UsecaseResult(false, "", "Service instance not found");
@@ -49,15 +49,15 @@ class ManageServiceInstancesUseCase {
         return UsecaseResult(true, inst.id.value, "");
     }
 
-    ServiceInstance getServiceInstance(TenantId tenantId, ServiceInstanceId id) {
+    ServiceInstance getInstance(TenantId tenantId, ServiceInstanceId id) {
         return repo.findById(tenantId, id);
     }
 
-    ServiceInstance[] listServiceInstances(TenantId tenantId) {
+    ServiceInstance[] listInstances(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    UsecaseResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
+    UsecaseResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
         auto inst = repo.findById(tenantId, id);
         if (inst.isNull)
             return UsecaseResult(false, "", "Service instance not found");
@@ -66,7 +66,7 @@ class ManageServiceInstancesUseCase {
         return UsecaseResult(true, inst.id.value, "");
     }
 
-    size_t countServiceInstances(TenantId tenantId) {
+    size_t countInstances(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 

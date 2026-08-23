@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 struct ServiceInstance {
-  mixin TenantEntity!(ServiceInstanceId);
+  mixin TenantEntity!ServiceInstanceId;
 
   SpaceId spaceId;
   string name;

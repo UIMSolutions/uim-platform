@@ -6,7 +6,7 @@
 module uim.platform.html_repository.domain.entities;
 
 public {
-  import uim.platform.html_repository.domain.entities.html_app;
+  import uim.platform.html_repository.domain.entities.app;
   import uim.platform.html_repository.domain.entities.app_version;
   import uim.platform.html_repository.domain.entities.app_file;
   import uim.platform.html_repository.domain.entities.service_instance;

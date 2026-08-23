@@ -111,6 +111,10 @@ struct CreateAppVersionRequest {
 }
 
 struct UpdateAppVersionRequest {
+  TenantId tenantId;
+  HtmlAppId appId;
+  AppVersionId versionId;
+
   string status;
   string description;
 

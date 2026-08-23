@@ -69,7 +69,7 @@ class AppRouteController : ManageHttpController {
         .set("id", e.id.value)
         .set("appId", e.appId.value)
         .set("pathPrefix", e.pathPrefix)
-        .set("status", e.status);
+        .set("status", e.status.toString());
     }
 
     auto resp = Json.emptyObject
@@ -100,7 +100,7 @@ class AppRouteController : ManageHttpController {
       .set("pathPrefix", entry.pathPrefix)
       .set("targetUrl", entry.targetUrl)
       .set("description", entry.description)
-      .set("status", entry.status)
+      .set("status", entry.status.toString())
       .set("createdBy", entry.createdBy)
       .set("createdAt", entry.createdAt)
       .set("updatedBy", entry.updatedBy)

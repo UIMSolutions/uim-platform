@@ -16,11 +16,11 @@ mixin(ShowModule!());
 @safe:
 class DeploymentController : ManageHttpController {
   protected DeployApplicationUseCase deployApp;
-  private GetDeploymentHistoryUseCase getHistory;
+  private GetDeploymentHistoryUseCase history;
 
-  this(DeployApplicationUseCase deployApp, GetDeploymentHistoryUseCase getHistory) {
+  this(DeployApplicationUseCase deployApp, GetDeploymentHistoryUseCase history) {
     this.deployApp = deployApp;
-    this.getHistory = getHistory;
+    this.history = history;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,22 +39,19 @@ class DeploymentController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
-    DeployApplicationRequest r;
+    CreateDeploymentRequest r;
     r.tenantId = tenantId;
-    r.appId = data.getString("appId");
-    r.versionId = data.getString("versionId");
-    r.serviceInstanceId = data.getString("serviceInstanceId");
+    r.appId = HtmlAppId(data.getString("appId"));
+    r.versionId = AppVersionId(data.getString("versionId"));
+    r.instanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
     r.operation = data.getString("operation");
-    r.deployedBy = data.getString("deployedBy");
+    r.deployedBy = UserId(data.getString("deployedBy"));
 
     auto result = deployApp.deploy(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto response = Json.emptyObject.set("id", result.id);
-
     return successResponse("Deployment created successfully", 201, response);
   }
 
@@ -64,7 +61,7 @@ class DeploymentController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto items = getHistory.getByTenant(tenantId);
+    auto items = history.listRecords(tenantId);
 
     auto arr = Json.emptyArray;
     foreach (e; items) {
@@ -72,11 +69,11 @@ class DeploymentController : ManageHttpController {
         .set("id", e.id)
         .set("appId", e.appId)
         .set("versionId", e.versionId)
-        .set("operation", e.operation)
-        .set("status", e.status);
+        .set("operation", e.operation.toString())
+        .set("status", e.status.toString());
     }
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = items.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
@@ -90,12 +87,11 @@ class DeploymentController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = DeploymentRecordId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid deployment ID", 400);
 
-    auto entry = getHistory.getById(tenantId, id);
+    auto entry = history.getRecord(tenantId, id);
     if (entry.isNull)
       return errorResponse("Deployment not found", 404);
 
@@ -104,10 +100,10 @@ class DeploymentController : ManageHttpController {
       .set("appId", entry.appId)
       .set("versionId", entry.versionId)
       .set("serviceInstanceId", entry.serviceInstanceId)
-      .set("operation", entry.operation)
-      .set("status", entry.status)
+      .set("operation", entry.operation.toString())
+      .set("status", entry.status.toString())
       .set("deployedBy", entry.deployedBy)
-      .set("deployedAt", entry.deployedAt)
+      // .set("deployedAt", entry.deployedAt)
       .set("completedAt", entry.completedAt)
       .set("errorMessage", entry.errorMessage);
 

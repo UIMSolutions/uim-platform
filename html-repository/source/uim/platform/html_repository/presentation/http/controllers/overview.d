@@ -26,7 +26,7 @@ class OverviewController : HttpController {
     router.get("/api/v1/overview", &handleOverview);
   }
 
-  protected Json getOverviewHandler(HTTPServerRequest req) {
+  protected Json overviewHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -39,16 +39,16 @@ class OverviewController : HttpController {
       .set("totalApps", summary.totalApps)
       .set("totalVersions", summary.totalVersions)
       .set("totalFiles", summary.totalFiles)
-      .set("totalInstances", summary.totalInstances)
+      // .set("totalInstances", summary.totalInstances)
       .set("totalDeployments", summary.totalDeployments)
       .set("totalRoutes", summary.totalRoutes)
-      .set("totalCacheEntries", summary.totalCacheEntries)
-      .set("cacheHitRate", summary.cacheHitRate)
-      .set("totalStorageBytes", summary.totalStorageBytes);
+      .set("totalCacheEntries", summary.totalCacheEntries);
+      // .set("cacheHitRate", summary.cacheHitRate)
+      // .set("totalStorageBytes", summary.totalStorageBytes);
 
     return successResponse("Overview retrieved successfully", 200, response);
   }
   
-  mixin(HandleTemplate!("handleGetOverview", "getOverviewHandler"));
+  mixin(HandleTemplate!("handleOverview", "overviewHandler"));
 
 }

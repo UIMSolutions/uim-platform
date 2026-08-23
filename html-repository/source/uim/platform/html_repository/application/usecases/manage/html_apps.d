@@ -24,7 +24,7 @@ class ManageHtmlAppsUseCase {
         this.repo = repo;
     }
 
-    UsecaseResult createHtmlApp(CreateHtmlAppRequest r) {
+    UsecaseResult createApp(CreateHtmlAppRequest r) {
         if (!DeploymentValidator.validateAppName(r.name))
             return UsecaseResult(false, "", "Invalid application name");
 
@@ -45,7 +45,7 @@ class ManageHtmlAppsUseCase {
         return UsecaseResult(true, app.id.value, "");
     }
 
-    UsecaseResult updateHtmlApp(UpdateHtmlAppRequest r) {
+    UsecaseResult updateApp(UpdateHtmlAppRequest r) {
         auto app = repo.findById(r.tenantId, r.appId);
         if (app.isNull)
             return UsecaseResult(false, "", "App not found");
@@ -59,19 +59,19 @@ class ManageHtmlAppsUseCase {
         return UsecaseResult(true, app.id.value, "");
     }
 
-    HtmlApp getHtmlAppById(TenantId tenantId, HtmlAppId id) {
+    HtmlApp getApp(TenantId tenantId, HtmlAppId id) {
         return repo.findById(tenantId, id);
     }
 
-    HtmlApp[] listHtmlAppsByTenant(TenantId tenantId) {
+    HtmlApp[] listApps(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    HtmlApp[] listPublicHtmlApps(TenantId tenantId) {
+    HtmlApp[] listPublicApps(TenantId tenantId) {
         return repo.findPublic(tenantId);
     }
 
-    UsecaseResult deleteHtmlApp(TenantId tenantId, HtmlAppId id) {
+    UsecaseResult deleteApp(TenantId tenantId, HtmlAppId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return UsecaseResult(false, "", "App not found");
@@ -80,7 +80,7 @@ class ManageHtmlAppsUseCase {
         return UsecaseResult(true, id.value, "");
     }
 
-    size_t countHtmlAppsByTenant(TenantId tenantId) {
+    size_t countApps(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 

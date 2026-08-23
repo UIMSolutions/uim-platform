@@ -45,7 +45,7 @@ class AppVersionController : ManageHttpController {
     r.description = data.getString("description");
     r.createdBy = UserId(data.getString("createdBy"));
 
-    auto result = usecase.createAppVersion(r);
+    auto result = usecase.createVersion(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -63,23 +63,23 @@ class AppVersionController : ManageHttpController {
     auto appId = getString(req.json, "appId");
     if (appId.isEmpty)
       appId = req.headers.get("X-App-Id", "");
-    auto items = usecase.listByApp(HtmlAppId(appId));
+    auto items = usecase.listVersions(tenantId, HtmlAppId(appId));
 
     auto arr = Json.emptyArray;
     foreach (e; items) {
       arr ~= Json.emptyObject
-        .set("id", Json(e.id))
-        .set("appId", Json(e.appId))
-        .set("versionCode", Json(e.versionCode))
-        .set("status", Json(e.status))
-        .set("fileCount", Json(e.fileCount));
+        .set("id", e.id.value)
+        .set("appId", e.appId.value)
+        .set("versionCode", e.versionCode)
+        .set("status", e.status.toString)
+        .set("fileCount", e.fileCount);
     }
 
     auto resp = Json.emptyObject
       .set("items", arr)
       .set("totalCount", items.length);
 
-    return successResponse("Versions retrieved successfully", 200, resp);
+    return successResponse("Versions retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -88,8 +88,7 @@ class AppVersionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = AppVersionId(precheck.id);
     if (id.isNull)
       return errorResponse("Version not found", 404);
 
@@ -102,13 +101,13 @@ class AppVersionController : ManageHttpController {
       .set("appId", entry.appId)
       .set("versionCode", entry.versionCode)
       .set("description", entry.description)
-      .set("status", entry.status)
-      .set("fileCount", entry.fileCount)
+      .set("status", entry.status.toString)
+      // .set("fileCount", entry.fileCount)
       .set("createdBy", entry.createdBy)
       .set("createdAt", entry.createdAt)
       .set("updatedAt", entry.updatedAt);
 
-    return successResponse("Version retrieved successfully", 200, obj);
+    return successResponse("Version retrieved successfully", "Retrieved", 200, obj);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -128,7 +127,7 @@ class AppVersionController : ManageHttpController {
     r.description = data.getString("description");
     r.status = data.getString("status");
 
-    auto result = usecase.update(r);
+    auto result = usecase.updateVersion(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -148,7 +147,7 @@ class AppVersionController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Version not found", 404);
 
-    auto result = usecase.deleteAppVersion(tenantId, id);
+    auto result = usecase.deleteVersion(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

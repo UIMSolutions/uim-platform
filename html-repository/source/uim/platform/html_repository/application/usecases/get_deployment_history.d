@@ -19,19 +19,20 @@ class GetDeploymentHistoryUseCase {
         this.repo = repo;
     }
 
-    DeploymentRecord[] getByApp(TenantId tenantId, HtmlAppId appId) {
+    DeploymentRecord getRecord(TenantId tenantId, DeploymentRecordId id) {
+        return repo.findById(tenantId, id);
+    }
+
+    DeploymentRecord[] listRecords(TenantId tenantId, HtmlAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 
-    DeploymentRecord[] getByVersion(TenantId tenantId, AppVersionId versionId) {
+    DeploymentRecord[] listRecords(TenantId tenantId, AppVersionId versionId) {
         return repo.findByVersion(tenantId, versionId);
     }
 
-    DeploymentRecord[] getByTenant(TenantId tenantId) {
+    DeploymentRecord[] listRecords(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    DeploymentRecord getById(TenantId tenantId, DeploymentRecordId id) {
-        return repo.findById(tenantId, id);
-    }
 }

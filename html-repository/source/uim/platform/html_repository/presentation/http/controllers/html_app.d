@@ -48,7 +48,7 @@ class HtmlAppController : ManageHttpController {
     r.visibility = data.getString("visibility");
     r.createdBy = UserId(data.getString("createdBy"));
 
-    auto result = usecase.create(r);
+    auto result = usecase.createApp(r);
     if (result.hasError())
       return errorResponse(result.message, 400);
 
@@ -62,7 +62,7 @@ class HtmlAppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto items = usecase.listByTenant(tenantId);
+    auto items = usecase.listApps(tenantId);
 
     auto arr = Json.emptyArray;
     foreach (e; items) {
@@ -74,10 +74,7 @@ class HtmlAppController : ManageHttpController {
         .set("status", e.status);
     }
 
-    auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", items.length);
-
+    auto resp = Json.emptyObject.set("items", arr).set("totalCount", items.length);
     return successResponse("Apps retrieved successfully", "OK", 200, resp);
   }
 
@@ -87,12 +84,11 @@ class HtmlAppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = HtmlAppId(precheck.id);
     if (id.isNull)
       return errorResponse("App not found", 404);
 
-    auto entry = usecase.getById(tenantId, id);
+    auto entry = usecase.getApp(tenantId, id);
     if (entry.isNull)
       return errorResponse("App not found", 404);
 
@@ -119,26 +115,23 @@ class HtmlAppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto data = precheck.data;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = HtmlAppId(precheck.id);
     if (id.isNull)
       return errorResponse("App not found", 404);
 
+    auto data = precheck.data;
     UpdateHtmlAppRequest r;
-    r.id = id;
+    r.appId = id;
     r.tenantId = tenantId;
     r.description = data.getString("description");
     r.visibility = data.getString("visibility");
     r.updatedBy = UserId(data.getString("updatedBy"));
 
-    auto result = usecase.update(r);
+    auto result = usecase.updateApp(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", id);
-
+    auto resp = Json.emptyObject.set("id", id);
     return successResponse("App updated successfully", "Updated", 200, resp);
   }
 
@@ -148,18 +141,15 @@ class HtmlAppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = HtmlAppId(precheck.id);
     if (id.isNull)
       return errorResponse("App not found", 404);
 
-    auto result = usecase.deleteHtmlApp(tenantId, HtmlAppId(id));
+    auto result = usecase.deleteApp(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", id);
-
+    auto resp = Json.emptyObject.set("id", id);
     return successResponse("App deleted successfully", "Deleted", 200, resp);
   }
 }

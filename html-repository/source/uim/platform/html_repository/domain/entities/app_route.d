@@ -25,6 +25,6 @@ struct AppRoute {
       .set("pathPrefix", pathPrefix)
       .set("targetUrl", targetUrl)
       .set("description", description)
-      .set("status", status.to!string);
+      .set("status", status.toString);
   }
 }

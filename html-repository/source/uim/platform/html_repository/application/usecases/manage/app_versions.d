@@ -22,7 +22,7 @@ class ManageAppVersionsUseCase {
         this.repo = repo;
     }
 
-    UsecaseResult createAppVersion(CreateAppVersionRequest r) {
+    UsecaseResult createVersion(CreateAppVersionRequest r) {
         if (!DeploymentValidator.validateVersionCode(r.versionCode))
             return UsecaseResult(false, "", "Invalid version code");
 
@@ -37,8 +37,8 @@ class ManageAppVersionsUseCase {
         return UsecaseResult(true, ver.id.value, "");
     }
 
-    UsecaseResult updateAppVersion(TenantId tenantId, AppVersionId id, UpdateAppVersionRequest r) {
-        auto ver = repo.findById(tenantId, id);
+    UsecaseResult updateVersion(UpdateAppVersionRequest r) {
+        auto ver = repo.findById(r.tenantId, r.versionId);
         if (ver.isNull)
             return UsecaseResult(false, "", "Version not found");
 
@@ -51,19 +51,19 @@ class ManageAppVersionsUseCase {
         return UsecaseResult(true, ver.id.value, "");
     }
 
-    AppVersion getAppVersion(TenantId tenantId, AppVersionId id) {
+    AppVersion getVersion(TenantId tenantId, AppVersionId id) {
         return repo.findById(tenantId, id);
     }
 
-    AppVersion getLatestAppVersion(TenantId tenantId, HtmlAppId appId) {
+    AppVersion getLatestVersion(TenantId tenantId, HtmlAppId appId) {
         return repo.findLatest(tenantId, appId);
     }
 
-    AppVersion[] listAppVersions(TenantId tenantId, HtmlAppId appId) {
+    AppVersion[] listVersions(TenantId tenantId, HtmlAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 
-    UsecaseResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
+    UsecaseResult deleteVersion(TenantId tenantId, AppVersionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return UsecaseResult(false, "", "Version not found");
@@ -72,7 +72,7 @@ class ManageAppVersionsUseCase {
         return UsecaseResult(true, entity.id.value, "");
     }
 
-    size_t countByApp(TenantId tenantId, HtmlAppId appId) {
+    size_t countVersions(TenantId tenantId, HtmlAppId appId) {
         return repo.countByApp(tenantId, appId);
     }
 
