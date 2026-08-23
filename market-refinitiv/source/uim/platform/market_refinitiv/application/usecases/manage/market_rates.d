@@ -27,8 +27,8 @@ class ManageMarketRatesUseCase {
     // Quota: batch size
     auto quotaErr = QuotaService.checkBatchSize(req.records.length);
     if (quotaErr.length > 0) {
-      logAudit(req.tenantId, req.requestedBy, AuditOperation.upload, "",
-               MarketDataCategory.exchangeRates, OperationStatus.failed, quotaErr, 0, "", "");
+      // logAudit(req.tenantId, req.requestedBy, AuditOperation.upload, "",
+      //          MarketDataCategory.exchangeRates, OperationStatus.failed, quotaErr, 0, "", "");
       return UploadRatesResponse(OperationStatus.failed, 0, cast(int) req.records.length, [quotaErr]);
     }
 
@@ -82,13 +82,13 @@ class ManageMarketRatesUseCase {
       ? OperationStatus.success
       : (accepted.length > 0 ? OperationStatus.warning : OperationStatus.failed);
 
-    logAudit(req.tenantId, req.requestedBy, AuditOperation.upload,
-             req.records.length > 0 ? req.records[0].providerCode : "",
-             req.records.length > 0
-               ? cast(MarketDataCategory)(req.records[0].category)
-               : MarketDataCategory.exchangeRates,
-             status, errors.length > 0 ? errors[0] : "OK",
-             cast(int) accepted.length, "", "");
+    // logAudit(req.tenantId, req.requestedBy, AuditOperation.upload,
+    //          req.records.length > 0 ? req.records[0].providerCode : "",
+    //          req.records.length > 0
+    //            ? cast(MarketDataCategory)(req.records[0].category)
+    //            : MarketDataCategory.exchangeRates,
+    //          status, errors.length > 0 ? errors[0] : "OK",
+    //          cast(int) accepted.length, "", "");
 
     return UploadRatesResponse(status,
       cast(int) accepted.length,
@@ -122,13 +122,13 @@ class ManageMarketRatesUseCase {
       result ~= rates;
     }
 
-    logAudit(req.tenantId, req.requestedBy, AuditOperation.download,
-             req.providerCode,
-             req.instruments.length > 0
-               ? cast(MarketDataCategory)(req.instruments[0].category)
-               : MarketDataCategory.exchangeRates,
-             OperationStatus.success, "OK",
-             cast(int) result.length, req.fromDate, req.toDate);
+    // logAudit(req.tenantId, req.requestedBy, AuditOperation.download,
+    //          req.providerCode,
+    //          req.instruments.length > 0
+    //            ? cast(MarketDataCategory)(req.instruments[0].category)
+    //            : MarketDataCategory.exchangeRates,
+    //          OperationStatus.success, "OK",
+    //          cast(int) result.length, req.fromDate, req.toDate);
 
     return DownloadRatesResponse(OperationStatus.success, result, cast(int) result.length);
   }
@@ -163,9 +163,9 @@ class ManageMarketRatesUseCase {
       return UsecaseResult(false, "", "Either providerCode or date range is required for deletion");
     }
 
-    logAudit(req.tenantId, req.requestedBy, AuditOperation.delete_,
-             req.providerCode, MarketDataCategory.exchangeRates,
-             OperationStatus.success, "Deleted", 0, req.fromDate, req.toDate);
+    // logAudit(req.tenantId, req.requestedBy, AuditOperation.delete_,
+    //          req.providerCode, MarketDataCategory.exchangeRates,
+    //          OperationStatus.success, "Deleted", 0, req.fromDate, req.toDate);
 
     return UsecaseResult(true, "", "");
   }
@@ -179,7 +179,7 @@ class ManageMarketRatesUseCase {
 
     auto entry = AuditLog(tenantId); //, UserId("test-user"));
     entry.operation   = op;
-    entry.requestedBy = requestedBy;
+    entry.requestedBy = requestedBy.value;
     entry.providerCode = providerCode;
     entry.category    = category;
     entry.status      = status;

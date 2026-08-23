@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AuditLogController : SAPController {
+class AuditLogController : ManageHttpController {
   protected ManageAuditLogsUseCase uc;
 
   this(ManageAuditLogsUseCase uc) {

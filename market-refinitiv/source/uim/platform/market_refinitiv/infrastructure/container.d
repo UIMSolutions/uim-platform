@@ -37,16 +37,16 @@ Container buildContainer(AppConfig cfg) {
 
   // 1. Repositories
   switch (cfg.storageBackend) {
-    case "FILE":
-      c.rateRepo     = new FileMarketRateRepository(cfg.fileStoragePath);
-      c.providerRepo = new FileProviderRepository(cfg.fileStoragePath);
-      c.auditRepo    = new FileAuditLogRepository(cfg.fileStoragePath);
-      break;
-    case "MONGODB":
-      c.rateRepo     = new MongoDbMarketRateRepository(cfg.mongoUri, cfg.mongoDb);
-      c.providerRepo = new MongoDbProviderRepository(cfg.mongoUri, cfg.mongoDb);
-      c.auditRepo    = new MongoDbAuditLogRepository(cfg.mongoUri, cfg.mongoDb);
-      break;
+    // case "FILE":
+    //   c.rateRepo     = new FileMarketRateRepository(cfg.fileStoragePath);
+    //   c.providerRepo = new FileProviderRepository(cfg.fileStoragePath);
+    //   c.auditRepo    = new FileAuditLogRepository(cfg.fileStoragePath);
+    //   break;
+    // case "MONGODB":
+//       c.rateRepo     = new MongoDbMarketRateRepository(cfg.mongoUri, cfg.mongoDb);
+      // c.providerRepo = new MongoDbProviderRepository(cfg.mongoUri, cfg.mongoDb);
+      // c.auditRepo    = new MongoDbAuditLogRepository(cfg.mongoUri, cfg.mongoDb);
+      // break;
     case "MEMORY":
       c.rateRepo     = new MarketRateRepository();
       c.providerRepo = new ProviderRepository();

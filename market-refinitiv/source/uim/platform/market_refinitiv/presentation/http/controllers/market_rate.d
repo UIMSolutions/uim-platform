@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 // Handles upload, download, query and delete of market rates,
 // and provider CRUD – the primary HTTP driving adapter.
-class MarketRateController : SAPController {
+class MarketRateController : ManageHttpController {
   protected ManageMarketRatesUseCase ratesUC;
   protected ManageProvidersUseCase providersUC;
 

@@ -6,7 +6,7 @@
 module uim.platform.market_refinitiv.infrastructure.persistence.repositories.audit_logs;
 import uim.platform.market_refinitiv;
 import std.algorithm : filter;
-import std.array     : array;
+import std.array : array;
 
 mixin(ShowModule!());
 
@@ -23,35 +23,44 @@ class AuditLogRepository : TenantRepository!(AuditLog, AuditLogId), IAuditLogRep
   }
 
   AuditLog[] findByOperation(TenantId tenantId, AuditOperation op) {
-    return filterfindByTenant(tenantId).filter!(l => l.operation == op).array;
+    return filterByOperation(findByTenant(tenantId), op);
   }
 
   size_t countByProvider(TenantId tenantId, string code) {
     return findByTenant(tenantId).filter!(l => l.providerCode == code).length;
   }
 
-  AuditLog[] findByProvider(TenantId tenantId, string code) {
-    return findByTenant(tenantId).filter!(l => l.providerCode == code).array;
+AuditLog[] filterByProvider(AuditLog[] logs, string code) {
+    return logs.filter!(l => l.providerCode == code).array;
   }
   
+  AuditLog[] findByProvider(TenantId tenantId, string code) {
+    return filterByProvider(findByTenant(tenantId), code);
+  }
+
   size_t countByStatus(TenantId tenantId, OperationStatus s) {
     return findByTenant(tenantId).filter!(l => l.status == s).length;
   }
 
-  AuditLog[] findByStatus(TenantId tenantId, OperationStatus s) {
-    return findByTenant(tenantId).filter!(l => l.status == s).array;
+  AuditLog[] filterByStatus(AuditLog[] logs, OperationStatus s) {
+    return logs.filter!(l => l.status == s).array;
   }
-  
+
+  AuditLog[] findByStatus(TenantId tenantId, OperationStatus s) {
+    return filterByStatus(findByTenant(tenantId), s);
+  }
+
   size_t countByDateRange(TenantId tenantId, string from_, string to_) {
     return findByTenant(tenantId).filter!(l =>
-      l.fromDate >= from_ &&
-      (to_.length == 0 || l.toDate <= to_)
-    ).length;
+        l.fromDate >= from_ &&
+        (to_.length == 0 || l.toDate <= to_)
+    ).array.length;
   }
 
   AuditLog[] findByDateRange(TenantId tenantId, string from_, string to_) {
     return findByTenant(tenantId).filter!(l =>
-      l.fromDate >= from_ &&
-      (to_.length == 0 || l.toDate <= to_)
+        l.fromDate >= from_ &&
+        (to_.length == 0 || l.toDate <= to_)
     ).array;
+  }
 }

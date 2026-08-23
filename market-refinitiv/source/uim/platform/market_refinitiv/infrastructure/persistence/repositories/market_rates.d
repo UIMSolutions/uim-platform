@@ -95,4 +95,9 @@ class MarketRateRepository : TenantRepository!(MarketRate, MarketRateId), IMarke
         store.remove(key);
   }
 
+  void saveAll(MarketRate[] rates) {
+    foreach (r; rates)
+      save(r);
+  }
+
 }

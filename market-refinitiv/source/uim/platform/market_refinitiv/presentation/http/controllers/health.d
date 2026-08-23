@@ -10,16 +10,16 @@ mixin(ShowModule!());
 
 @safe:
 
-class HealthController : SAPController {
+// class HealthController : SAPController {
 
-  override void registerRoutes(URLRouter router) {
-    router.get("/api/v1/health", &handleHealth);
-  }
+//   override void registerRoutes(URLRouter router) {
+//     router.get("/api/v1/health", &handleHealth);
+//   }
 
-  private void handleHealth(HTTPServerRequest req, HTTPServerResponse res) {
-    auto j = Json.emptyObject;
-    j["status"]  = Json("UP");
-    j["service"] = Json("Market Rates Management - Refinitiv Data Option");
-    res.writeJsonBody(j, 200);
-  }
-}
+//   private void handleHealth(HTTPServerRequest req, HTTPServerResponse res) {
+//     auto j = Json.emptyObject;
+//     j["status"]  = Json("UP");
+//     j["service"] = Json("Market Rates Management - Refinitiv Data Option");
+//     res.writeJsonBody(j, 200);
+//   }
+// }
