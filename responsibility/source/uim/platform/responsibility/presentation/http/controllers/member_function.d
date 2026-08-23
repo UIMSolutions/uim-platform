@@ -31,7 +31,7 @@ class MemberFunctionController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.tenantId);
         auto items = _uc.listFunctions(tenantId);
         auto responseData = Json.emptyObject
             .set("count",     items.length)
@@ -45,8 +45,8 @@ class MemberFunctionController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(precheck.gString("tenantId"));
-        auto id = MemberFunctionId(precheck.gString("id"));
+        auto tenantId = TenantId(precheck.tenantId);
+        auto id = MemberFunctionId(precheck.id);
         if (id.isNull)
             return Json.emptyObject.set("error", "Invalid function ID").set("statusCode", 400);
 
@@ -64,7 +64,8 @@ class MemberFunctionController : ManageHttpController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+
+        auto tenantId = TenantId(precheck.tenantId);
         auto data = precheck["data"];
         import std.uuid : randomUUID;
         MemberFunctionDTO dto;
@@ -76,8 +77,7 @@ class MemberFunctionController : ManageHttpController {
         dto.status      = data.getString("status", "active");
         auto result = _uc.createFunction(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
-
+            return errorResponse(result.message, 400);
         auto responseData = Json.emptyObject
             .set("status", "success").set("statusCode", 201)
             .set("id", result.id);
@@ -89,10 +89,10 @@ class MemberFunctionController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
 
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.tenantId);
         auto data = precheck["data"];
         MemberFunctionDTO dto;
-        dto.functionId  = MemberFunctionId(precheck.gString("id"));
+        dto.functionId  = MemberFunctionId(precheck.id);
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");
@@ -109,14 +109,15 @@ class MemberFunctionController : ManageHttpController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(precheck.gString("tenantId"));
+        auto tenantId = TenantId(precheck.tenantId);
         auto id = MemberFunctionId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid function ID").set("statusCode", 400);
+            return errorResponse("Invalid function ID", 400);
 
         auto result = _uc.deleteFunction(tenantId, id);
         if (result.hasError)
-            return errorResponse(result.message, 404);#
+            return errorResponse(result.message, 404);
+
         return successResponse("Member function deleted successfully", 200, Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200));
     }
 }

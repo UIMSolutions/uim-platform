@@ -67,7 +67,7 @@ class DeterminationLogController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.error, result.statusCode);
 
-        auto tenantId = TenantId(result.gString("tenantId"));
+        auto tenantId = TenantId(result.getString("tenantId"));
         auto id = DeterminationLogId(result.id);
         if (id.isNull)
             return errorResponse("Invalid log id", 400);

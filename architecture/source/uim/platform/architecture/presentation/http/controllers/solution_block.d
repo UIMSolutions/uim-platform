@@ -27,7 +27,7 @@ mixin(ShowModule!());
 //     }
 
 //     override protected Json listHandler(HTTPServerRequest req) {
-//         auto pre = super.listHandler(req);
+//         auto precheck = super.listHandler(req);
 //         if (pre.hasError)
 //             return pre;
 
@@ -40,7 +40,7 @@ mixin(ShowModule!());
 //     }
 
 //     private void handleListByType(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-//         auto pre = super.getHandler(req);
+//         auto precheck = super.getHandler
 //         if (pre.hasError) {
 //             res.writeJsonBody(pre, pre.code);
 //             return;
@@ -64,7 +64,7 @@ mixin(ShowModule!());
 //     }
 
 //     override protected Json getHandler(HTTPServerRequest req) {
-//         auto pre = super.getHandler(req);
+//         auto precheck = super.getHandler
 //         if (pre.hasError)
 //             return pre;
 

@@ -26,9 +26,10 @@ class ResponsibilityRuleController : ManageHttpController {
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto pre = super.listHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = TenantId(pre.getString("tenantId"));
         auto items = _uc.listRules(tenantId);
         return Json.emptyObject
             .set("count",     items.length)
@@ -38,9 +39,10 @@ class ResponsibilityRuleController : ManageHttpController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto pre = super.getHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        auto precheck = super.getHandler
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = TenantId(pre.getString("tenantId"));
         auto id = ResponsibilityRuleId(precheck.id);
         auto e = _uc.getRule(tenantId, id);
         if (e.isNull)
@@ -50,8 +52,9 @@ class ResponsibilityRuleController : ManageHttpController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto pre = super.createHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = TenantId(pre.getString("tenantId"));
         auto data     = pre["data"];
 
         import std.uuid : randomUUID;
@@ -76,8 +79,9 @@ class ResponsibilityRuleController : ManageHttpController {
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto pre = super.updateHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = TenantId(pre.getString("tenantId"));
         auto data     = pre["data"];
         auto id = ResponsibilityRuleId(precheck.id);
 
@@ -97,8 +101,9 @@ class ResponsibilityRuleController : ManageHttpController {
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto pre = super.deleteHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = TenantId(pre.getString("tenantId"));
         auto id = ResponsibilityRuleId(precheck.id);
 
         auto result = _uc.deleteRule(tenantId, id);

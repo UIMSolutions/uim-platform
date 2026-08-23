@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class TeamMemberController : ManageHttpController {
-    private ManageTeamMembersUseCase _uc;
+    private ManageTeamMembersUseCase usecase;
 
-    this(ManageTeamMembersUseCase uc) { _uc = uc; }
+    this(ManageTeamMembersUseCase uc) { usecase = uc; }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -26,10 +26,11 @@ class TeamMemberController : ManageHttpController {
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
-        auto pre = super.listHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
-        auto items = _uc.listMembers(tenantId);
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = precheck.tenantId;
+        auto items = usecase.listMembers(tenantId);
         return Json.emptyObject
             .set("count",     items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson)
@@ -37,11 +38,12 @@ class TeamMemberController : ManageHttpController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto pre = super.getHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = precheck.tenantId;
         auto id = TeamMemberId(precheck.id);
-        auto e = _uc.getMember(tenantId, id);
+        auto e = usecase.getMember(tenantId, id);
         if (e.isNull)
             return Json.emptyObject.set("error", "Member not found").set("statusCode", 404);
         return e.toJson().set("status", "success").set("statusCode", 200);
@@ -49,9 +51,10 @@ class TeamMemberController : ManageHttpController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto pre = super.createHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
-        auto data = pre["data"];
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
         import std.uuid : randomUUID;
         TeamMemberDTO dto;
         dto.memberId     = TeamMemberId(data.getString("memberId", generateId));
@@ -64,7 +67,7 @@ class TeamMemberController : ManageHttpController {
         dto.role         = data.getString("role", "responsible");
         dto.validFrom    = data.getString("validFrom", "");
         dto.validTo      = data.getString("validTo", "");
-        auto result = _uc.addMember(dto);
+        auto result = usecase.addMember(dto);
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
@@ -72,16 +75,17 @@ class TeamMemberController : ManageHttpController {
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto pre = super.updateHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
-        auto data = pre["data"];
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
         TeamMemberDTO dto;
         dto.memberId    = TeamMemberId(precheck.id);
         dto.tenantId    = tenantId;
         dto.role        = data.getString("role", "responsible");
         dto.validFrom   = data.getString("validFrom", "");
         dto.validTo     = data.getString("validTo", "");
-        auto result = _uc.updateMember(dto);
+        auto result = usecase.updateMember(dto);
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
@@ -89,10 +93,11 @@ class TeamMemberController : ManageHttpController {
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto pre = super.deleteHandler(req);
-        if (!pre.success) return Json.emptyObject.set("error", pre.error);
-        auto tenantId = TenantId(pre.gString("tenantId"));
+        if (precheck.hasError) 
+            return precheck;
+        auto tenantId = precheck.tenantId;
         auto id = TeamMemberId(precheck.id);
-        auto result = _uc.removeMember(tenantId, id);
+        auto result = usecase.removeMember(tenantId, id);
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 404);
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);

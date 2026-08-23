@@ -65,11 +65,11 @@ class TechnologyBlockController : ManageHttpController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto pre = super.getHandler(req);
-        if (pre.hasError)
-            return pre;
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-        auto block = usecase.getBlock(pre.tenantId, TechnologyBlockId(pre.id));
+        auto block = usecase.getBlock(precheck.tenantId, TechnologyBlockId(precheck .id));
         if (block.id.value.length == 0)
             return errorResponse("Technology block not found", 404);
 
@@ -102,16 +102,16 @@ class TechnologyBlockController : ManageHttpController {
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
-        auto pre = super.updateHandler(req);
-        if (pre.hasError)
-            return pre;
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-        auto tenantId = pre.tenantId;
-        auto id = TechnologyBlockId(pre.id);
+        auto tenantId = precheck.tenantId;
+        auto id = TechnologyBlockId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid block ID", 400);
         
-        auto data = pre.data;
+        auto data = precheck.data;
         auto request = UpdateTechnologyBlockRequest();
         request.tenantId = tenantId;
         request.blockId = id;
