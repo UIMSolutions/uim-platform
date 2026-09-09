@@ -6,7 +6,7 @@ copyright "Copyright © 2018 - 2026, ONS"
 license "Apache-2.0"
 dependency "gtk-d" version="~>3.11.0"
 
-dependency "uim-framework" version="~>26.8.3"
+dependency "uim-framework" version="~>26.9.2"
 
 targetType "library"
 targetName "uim-platform-service"
