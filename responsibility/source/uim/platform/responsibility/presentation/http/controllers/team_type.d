@@ -29,6 +29,7 @@ class TeamTypeController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(pre.getString("tenantId"));
         auto items = _uc.listTypes(tenantId);
         return Json.emptyObject
@@ -41,6 +42,7 @@ class TeamTypeController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(pre.getString("tenantId"));
         auto id = TeamTypeId(precheck.id);
         auto e = _uc.getType(tenantId, id);
@@ -53,6 +55,7 @@ class TeamTypeController : ManageHttpController {
         auto pre = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(pre.getString("tenantId"));
         auto data = pre["data"];
         import std.uuid : randomUUID;
@@ -73,6 +76,7 @@ class TeamTypeController : ManageHttpController {
         auto pre = super.updateHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(pre.getString("tenantId"));
         auto data = pre["data"];
         TeamTypeDTO dto;
@@ -92,6 +96,7 @@ class TeamTypeController : ManageHttpController {
         auto pre = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(pre.getString("tenantId"));
         auto id = TeamTypeId(precheck.id);
         auto result = _uc.deleteType(tenantId, id);

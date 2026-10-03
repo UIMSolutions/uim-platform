@@ -31,6 +31,7 @@ class ConfigurationController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = configurations.listConfigurations(tenantId);
         return successResponse("Configurations retrieved successfully", 200, Json.emptyObject
@@ -42,6 +43,7 @@ class ConfigurationController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = ConfigurationId(precheck.id);
         if (id.isNull)
@@ -56,6 +58,7 @@ class ConfigurationController : ManageHttpController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ConfigurationDTO dto;
@@ -82,6 +85,7 @@ class ConfigurationController : ManageHttpController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ConfigurationDTO dto;
@@ -103,6 +107,7 @@ class ConfigurationController : ManageHttpController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = ConfigurationId(precheck.id);
         if (id.isNull)

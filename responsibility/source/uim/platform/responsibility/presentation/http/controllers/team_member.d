@@ -29,6 +29,7 @@ class TeamMemberController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = usecase.listMembers(tenantId);
         return Json.emptyObject
@@ -41,6 +42,7 @@ class TeamMemberController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = TeamMemberId(precheck.id);
         auto e = usecase.getMember(tenantId, id);
@@ -53,6 +55,7 @@ class TeamMemberController : ManageHttpController {
         auto pre = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         import std.uuid : randomUUID;
@@ -77,6 +80,7 @@ class TeamMemberController : ManageHttpController {
         auto pre = super.updateHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         TeamMemberDTO dto;
@@ -95,6 +99,7 @@ class TeamMemberController : ManageHttpController {
         auto pre = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = TeamMemberId(precheck.id);
         auto result = usecase.removeMember(tenantId, id);

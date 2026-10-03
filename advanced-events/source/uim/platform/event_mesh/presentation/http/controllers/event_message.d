@@ -137,6 +137,7 @@ class EventMessageController : ManageHttpController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 

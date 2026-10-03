@@ -45,6 +45,7 @@ class MemberFunctionController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(precheck.tenantId);
         auto id = MemberFunctionId(precheck.id);
         if (id.isNull)
@@ -109,6 +110,7 @@ class MemberFunctionController : ManageHttpController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(precheck.tenantId);
         auto id = MemberFunctionId(precheck.id);
         if (id.isNull)

@@ -31,6 +31,7 @@ class ServiceBindingController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = bindings.listServiceBindings(tenantId);
         return successResponse("Service bindings retrieved successfully", 200, Json.emptyObject
@@ -42,6 +43,7 @@ class ServiceBindingController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);
         if (id.isNull)
@@ -56,6 +58,7 @@ class ServiceBindingController : ManageHttpController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ServiceBindingDTO dto;
@@ -76,6 +79,7 @@ class ServiceBindingController : ManageHttpController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);
         auto result = bindings.deleteServiceBinding(tenantId, id);

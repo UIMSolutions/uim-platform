@@ -31,6 +31,7 @@ class BackupPolicyController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = backupPolicies.listBackupPolicies(tenantId);
         return Json.emptyObject
@@ -44,6 +45,7 @@ class BackupPolicyController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = BackupPolicyId(precheck.id);
         if (id.isNull)
@@ -58,6 +60,7 @@ class BackupPolicyController : ManageHttpController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         BackupPolicyDTO dto;
@@ -79,6 +82,7 @@ class BackupPolicyController : ManageHttpController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         BackupPolicyDTO dto;

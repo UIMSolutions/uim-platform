@@ -29,7 +29,8 @@ class TeamController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(pre.getString("tenantId"));
+            
+        auto tenantId = TenantId(precheck.getString("tenantId"));
         auto items = _uc.listTeams(tenantId);
         return Json.emptyObject
             .set("count",     items.length)
@@ -38,10 +39,11 @@ class TeamController : ManageHttpController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler
+        auto precheck = super.getHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(pre.getString("tenantId"));
+            
+        auto tenantId =  TenantId(precheck.getString("tenantId"));
         auto id = TeamId(precheck.id);
         auto e = _uc.getTeam(tenantId, id);
         if (e.isNull)
@@ -50,11 +52,12 @@ class TeamController : ManageHttpController {
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
-        auto pre = super.createHandler(req);
+        auto precheck = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(pre.getString("tenantId"));
-        auto data = pre["data"];
+            
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto data = precheck["data"];
         import std.uuid : randomUUID;
         TeamDTO dto;
         dto.teamId      = TeamId(data.getString("teamId", generateId));
@@ -72,11 +75,12 @@ class TeamController : ManageHttpController {
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
-        auto pre = super.updateHandler(req);
+        auto precheck = super.updateHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(pre.getString("tenantId"));
-        auto data = pre["data"];
+            
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto data = precheck["data"];
         TeamDTO dto;
         dto.teamId      = TeamId(precheck.id);
         dto.tenantId    = tenantId;
@@ -90,10 +94,11 @@ class TeamController : ManageHttpController {
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
-        auto pre = super.deleteHandler(req);
+        auto precheck = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(pre.getString("tenantId"));
+            
+        auto tenantId = TenantId(precheck.getString("tenantId"));
         auto id = TeamId(precheck.id);
         auto result = _uc.deleteTeam(tenantId, id);
         if (result.hasError)

@@ -27,6 +27,7 @@ class DatabaseExtensionController : ManageHttpController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = extensions.listDatabaseExtensions(tenantId);
         return Json.emptyObject
@@ -39,6 +40,7 @@ class DatabaseExtensionController : ManageHttpController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = DatabaseExtensionId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
@@ -50,6 +52,7 @@ class DatabaseExtensionController : ManageHttpController {
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         DatabaseExtensionDTO dto;
@@ -68,6 +71,7 @@ class DatabaseExtensionController : ManageHttpController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = DatabaseExtensionId(precheck.id);
         auto result = extensions.deleteDatabaseExtension(tenantId, id);

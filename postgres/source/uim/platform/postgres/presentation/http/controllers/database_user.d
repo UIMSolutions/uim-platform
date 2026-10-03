@@ -28,6 +28,7 @@ class DatabaseUserController : ManageHttpController {
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = users.listDatabaseUsers(tenantId);
         return Json.emptyObject
@@ -40,6 +41,7 @@ class DatabaseUserController : ManageHttpController {
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = DatabaseUserId(precheck.id);
         if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
@@ -51,6 +53,7 @@ class DatabaseUserController : ManageHttpController {
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         DatabaseUserDTO dto;
@@ -68,6 +71,7 @@ class DatabaseUserController : ManageHttpController {
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         DatabaseUserDTO dto;
@@ -83,6 +87,7 @@ class DatabaseUserController : ManageHttpController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = DatabaseUserId(precheck.id);
         auto result = users.deleteDatabaseUser(tenantId, id);

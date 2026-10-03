@@ -37,6 +37,7 @@ class FormationController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = _useCase.listFormations(tenantId);
         return successResponse("Formations retrieved successfully", "Retrieved", 200, Json.emptyObject
@@ -48,6 +49,7 @@ class FormationController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = FormationId(precheck.id);
         if (id.isNull)
@@ -84,6 +86,7 @@ class FormationController : ManageHttpController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         FormationDTO dto;

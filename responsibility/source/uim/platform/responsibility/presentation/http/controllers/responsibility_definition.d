@@ -29,6 +29,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = _uc.listDefinitions(tenantId);
         return Json.emptyObject
@@ -41,6 +42,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = ResponsibilityDefinitionId(precheck.id);
         auto e = _uc.getDefinition(tenantId, id);
@@ -53,6 +55,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto pre = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         import std.uuid : randomUUID;
@@ -78,6 +81,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto pre = super.updateHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(pre.getString("tenantId"));
         auto data = pre["data"];
         ResponsibilityDefinitionDTO dto;
@@ -98,6 +102,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto pre = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(pre.getString("tenantId"));
         auto id = ResponsibilityDefinitionId(precheck.id);
         auto result = _uc.deleteDefinition(tenantId, id);

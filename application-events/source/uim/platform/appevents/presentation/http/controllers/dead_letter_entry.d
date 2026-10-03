@@ -53,6 +53,7 @@ class DeadLetterEntryController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
 
         auto id = DeadLetterEntryId(precheck.id);
@@ -102,6 +103,7 @@ class DeadLetterEntryController : ManageHttpController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = DeadLetterEntryId(precheck.id);
         auto result = _useCase.deleteDeadLetterEntry(tenantId, id);

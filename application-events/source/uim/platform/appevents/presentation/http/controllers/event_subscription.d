@@ -36,6 +36,7 @@ class EventSubscriptionController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = _useCase.listEventSubscriptions(tenantId);
         return Json.emptyObject
@@ -49,6 +50,7 @@ class EventSubscriptionController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = EventSubscriptionId(precheck.id);
         if (id.isNull)
@@ -63,6 +65,7 @@ class EventSubscriptionController : ManageHttpController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         EventSubscriptionDTO dto;
@@ -88,6 +91,7 @@ class EventSubscriptionController : ManageHttpController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         EventSubscriptionDTO dto;
@@ -113,6 +117,7 @@ class EventSubscriptionController : ManageHttpController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = EventSubscriptionId(precheck.id);
         auto result = _useCase.deleteEventSubscription(tenantId, id);

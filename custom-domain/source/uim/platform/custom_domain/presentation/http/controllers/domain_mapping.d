@@ -126,6 +126,7 @@ class DomainMappingController : ManageHttpController {
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req); // Assuming ManageController.deleteHandler for pre-checks
         if (precheck.hasError) return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = DomainMappingId(precheck.id);
         auto result = usecase.deleteDomainMapping(tenantId, id);

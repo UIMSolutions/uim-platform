@@ -30,7 +30,8 @@ class ResponsibilityContextController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(pre.getString("tenantId"));
+            
+        auto tenantId = TenantId(precheck.getString("tenantId"));
         auto items = usecase.listContexts(tenantId);
         return Json.emptyObject
             .set("count",     items.length)
@@ -42,16 +43,17 @@ class ResponsibilityContextController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError) 
             return precheck;
+            
         auto tenantId = TenantId(precheck.getString("tenantId"));
         auto id = ResponsibilityContextId(precheck.id);
         if (id.isNull)
-            return error("Invalid context ID", 400);
+            return errorResponse("Invalid context ID", 400);
 
         auto e = usecase.getContext(tenantId, id);
         if (e.isNull)
-            return error("Context not found", 404); 
+            return errorResponse("Context not found", 404); 
 
-        return e.toJson().set("status", "success").set("statusCode", 200);
+        return successResponse("Context retrieved successfully", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -63,7 +65,7 @@ class ResponsibilityContextController : ManageHttpController {
         auto data = precheck["data"];
         import std.uuid : randomUUID;
         ResponsibilityContextDTO dto;
-        dto.contextId   = ResponsibilityContextId(data.getString("contextId", generateId));
+        dto.contextId   = ResponsibilityContextId(data.getString("contextId", randomUUID().toString));
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");
@@ -72,17 +74,18 @@ class ResponsibilityContextController : ManageHttpController {
         dto.status      = data.getString("status", "active");
         auto result = usecase.createContext(dto);
         if (result.hasError)
-            return error(result.message, 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
+        return successResponse("Context created successfully", 201, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
-        auto pre = super.updateHandler(req);
+        auto precheck = super.updateHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(pre.getString("tenantId"));
-        auto data = pre["data"];
+            
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto data = precheck["data"];
         ResponsibilityContextDTO dto;
         dto.contextId   = ResponsibilityContextId(precheck.id);
         dto.tenantId    = tenantId;
@@ -91,19 +94,22 @@ class ResponsibilityContextController : ManageHttpController {
         dto.status      = data.getString("status", "active");
         auto result = usecase.updateContext(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
+            return errorResponse(result.message, 404);
+
+        return successResponse("Context updated successfully", 200, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
-        auto pre = super.deleteHandler(req);
+        auto precheck = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
-        auto tenantId = TenantId(pre.getString("tenantId"));
+            
+        auto tenantId = TenantId(precheck.getString("tenantId"));
         auto id = ResponsibilityContextId(precheck.id);
         auto result = usecase.deleteContext(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
+            return errorResponse(result.message, 404);
+
+        return successResponse("Context deleted successfully", 200, Json.emptyObject.set("id", result.id));
     }
 }

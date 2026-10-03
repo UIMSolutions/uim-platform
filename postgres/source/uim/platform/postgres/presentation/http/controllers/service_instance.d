@@ -31,6 +31,7 @@ class ServiceInstanceController : ManageHttpController {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto items = instances.listServiceInstances(tenantId);
         return Json.emptyObject
@@ -44,6 +45,7 @@ class ServiceInstanceController : ManageHttpController {
         auto precheck = super.getHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = ServiceInstanceId(precheck.id);
         if (id.isNull)
@@ -59,6 +61,7 @@ class ServiceInstanceController : ManageHttpController {
         auto precheck = super.createHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ServiceInstanceDTO dto;
@@ -83,6 +86,7 @@ class ServiceInstanceController : ManageHttpController {
         auto precheck = super.updateHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ServiceInstanceDTO dto;
@@ -103,6 +107,7 @@ class ServiceInstanceController : ManageHttpController {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
             return precheck;
+            
         auto tenantId = precheck.tenantId;
         auto id = ServiceInstanceId(precheck.id);
         if (id.isNull)
