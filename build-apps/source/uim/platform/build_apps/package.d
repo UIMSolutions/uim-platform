@@ -7,8 +7,9 @@ module uim.platform.build_apps;
 
 public {
     import uim.platform.service;
-    import uim.platform.build_apps.domain;
     import uim.platform.build_apps.application;
+    import uim.platform.build_apps.domain;
+    import uim.platform.build_apps.interfaces;
     import uim.platform.build_apps.infrastructure;
     import uim.platform.build_apps.presentation;
 }

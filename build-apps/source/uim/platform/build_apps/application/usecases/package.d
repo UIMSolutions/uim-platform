@@ -5,6 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.build_apps.application.usecases;
 
-public {
+public:
     import uim.platform.build_apps.application.usecases.manage;
-}
+
