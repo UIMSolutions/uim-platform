@@ -7,9 +7,6 @@ mixin(ShowModule!());
 @safe:
 
 mixin template IdEntity(TId) {
-    this(UUID id) {
-        this.id = id;
-    }
 
     TId id; // unique identifier for the entity
     UserId createdBy; // user who created the entity

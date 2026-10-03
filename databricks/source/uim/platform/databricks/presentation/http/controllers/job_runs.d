@@ -55,16 +55,17 @@ public:
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto result = _usecase.list(req.getTenantId);
+    auto tenantId = precheck.tenantId;
+    auto result = _usecase.list(req.getTenantId);
 
-        auto responseData = Json.emptyObject.set("count", result.data.length).set("resources", serializeToJson(result.data));
-            
-        return successResponse("Job runs retrieved successfully", "Retrieved", 200, responseData);
+    auto responseData = Json.emptyObject.set("count", result.data.length)
+      .set("resources", serializeToJson(result.data));
+
+    return successResponse("Job runs retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -76,56 +77,57 @@ public:
 
     auto id = req.requestPath.to!string.split("/")[$ - 1];
     auto result = _usecase.get(tenantId, id);
-      if (result.isNull)
-            return errorResponse("Job run not found", 404);
+    if (result.isNull)
+      return errorResponse("Job run not found", 404);
 
-        auto responseData = result.toJson();
-            
-        return successResponse("Job run retrieved successfully", "Retrieved", 200, responseData);
-}
+    auto responseData = result.toJson();
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-
-  auto data = precheck.data;
-  UpdateJobRunRequest r;
-  r.tenantId = tenantId;
-  r.id = req.requestPath.to!string.split("/")[$ - 1];
-  r.stateMessage = data.getString("stateMessage");
-  r.resultState = data.getString("resultState");
-  auto stateStr = data.getString("state");
-  if (stateStr.length > 0) {
-    import std.conv : ConvException;
-
-    try {
-      r.state = stateStr.to!RunState;
-    } catch (ConvException) {
-    }
+    return successResponse("Job run retrieved successfully", "Retrieved", 200, responseData);
   }
-  auto result = _usecase.update(r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
 
-  auto responseData = Json.emptyObject.set("id", result.id);
-  return successResponse("Job run updated successfully", 200, responseData);
-}
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto tenantId = precheck.tenantId;
 
-  auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    UpdateJobRunRequest r;
+    r.tenantId = tenantId;
+    r.id = req.requestPath.to!string.split("/")[$ - 1];
+    r.stateMessage = data.getString("stateMessage");
+    r.resultState = data.getString("resultState");
+    auto stateStr = data.getString("state");
+    if (stateStr.length > 0) {
+      import std.conv : ConvException;
 
-  auto id = req.requestPath.to!string.split("/")[$ - 1];
-  auto result = _usecase.remove(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+      try {
+        r.state = stateStr.to!RunState;
+      } catch (ConvException) {
+      }
+    }
+    auto result = _usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto responseData = Json.emptyObject.set("id", result.id);
-  return successResponse("Job run deleted successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Job run updated successfully", 200, responseData);
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = req.requestPath.to!string.split("/")[$ - 1];
+    auto result = _usecase.remove(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Job run deleted successfully", 200, responseData);
+  }
 }

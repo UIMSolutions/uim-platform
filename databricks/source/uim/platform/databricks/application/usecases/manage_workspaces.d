@@ -12,10 +12,10 @@ mixin(ShowModule!());
 
 class ManageWorkspacesUseCase {
 private:
-  WorkspaceRepository _repo;
+  IWorkspaceRepository _repo;
 
 public:
-  this(WorkspaceRepository repo) { _repo = repo; }
+  this(IWorkspaceRepository repo) { _repo = repo; }
 
   UseCaseResult!Workspace create(CreateWorkspaceRequest r) {
     auto w = Workspace();
@@ -46,7 +46,7 @@ public:
   }
 
   UseCaseResult!Workspace update(UpdateWorkspaceRequest r) {
-    auto w = _repo.find(r.tenantId, r.id);
+    auto w = _repo.findById(r.tenantId, r.id);
     if (w.isNull)
       return UseCaseResult!Workspace(false, "Workspace not found", Workspace.init);
     if (r.name.length   > 0) w.name        = r.name;

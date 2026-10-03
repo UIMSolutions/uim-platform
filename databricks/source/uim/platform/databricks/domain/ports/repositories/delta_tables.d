@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IDeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId) {
+interface IDeltaTableRepository : ITenantRepository!(DeltaTable, DeltaTableId) {
   DeltaTable[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   DeltaTable[] findByCatalog(TenantId tenantId, string catalogName);
   DeltaTable[] findBySchema(TenantId tenantId, string catalogName, string schemaName);

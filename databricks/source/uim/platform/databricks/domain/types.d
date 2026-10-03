@@ -5,13 +5,33 @@ mixin(ShowModule!());
 
 @safe:
 
-alias WorkspaceId    = string;
-alias ClusterId      = string;
-alias NotebookId     = string;
-alias JobId          = string;
-alias JobRunId       = string;
-alias DeltaTableId   = string;
-alias DataProductId  = string;
-alias MlExperimentId = string;
-alias MlModelId      = string;
-alias SqlWarehouseId = string;
+struct WorkspaceId {
+    mixin(IdTemplate);
+}
+struct ClusterId {
+    mixin(IdTemplate);
+}
+struct NotebookId {
+    mixin(IdTemplate);
+}
+struct JobId {
+    mixin(IdTemplate);
+}
+struct JobRunId {
+    mixin(IdTemplate);
+}
+struct DeltaTableId {
+    mixin(IdTemplate);
+}
+struct DataProductId {
+    mixin(IdTemplate);
+}
+struct MlExperimentId {
+    mixin(IdTemplate);
+}
+struct MlModelId {
+    mixin(IdTemplate);
+}
+struct SqlWarehouseId {
+    mixin(IdTemplate);
+}

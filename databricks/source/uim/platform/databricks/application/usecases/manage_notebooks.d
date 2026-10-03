@@ -15,7 +15,7 @@ private:
   INotebookRepository _repo;
 
 public:
-  this(NotebookRepository repo) { _repo = repo; }
+  this(INotebookRepository repo) { _repo = repo; }
 
   UseCaseResult!Notebook create(CreateNotebookRequest r) {
     auto n = Notebook();
@@ -48,7 +48,7 @@ public:
   }
 
   UseCaseResult!Notebook update(UpdateNotebookRequest r) {
-    auto n = _repo.find(r.tenantId, r.id);
+    auto n = _repo.findById(r.tenantId, r.id);
     if (n.isNull)
       return UseCaseResult!Notebook(false, "Notebook not found", Notebook.init);
     if (r.name.length    > 0) n.name    = r.name;

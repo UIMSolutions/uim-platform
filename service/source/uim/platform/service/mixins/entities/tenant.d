@@ -40,7 +40,7 @@ mixin template TenantEntity(TId) {
 
   // Helper method to check if the entity is new (i.e. has no ID assigned yet)
   bool isNull() const {
-    return id.isNull;
+    return id.value.length == 0;
   }
 
   // void initEntity() {

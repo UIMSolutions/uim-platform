@@ -50,7 +50,7 @@ public:
   }
 
   UseCaseResult!DataProduct update(UpdateDataProductRequest r) {
-    auto dp = _repo.find(r.tenantId, r.id);
+    auto dp = _repo.findById(r.tenantId, r.id);
     if (dp.isNull)
       return UseCaseResult!DataProduct(false, "Data product not found", DataProduct.init);
     if (r.description.length   > 0) dp.description   = r.description;

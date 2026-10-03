@@ -47,7 +47,7 @@ public:
   }
 
   UseCaseResult!MlExperiment update(UpdateMlExperimentRequest r) {
-    auto e = _repo.find(r.tenantId, r.id);
+    auto e = _repo.findById(r.tenantId, r.id);
     if (e.isNull)
       return UseCaseResult!MlExperiment(false, "ML experiment not found", MlExperiment.init);
     if (r.name.length > 0) e.name = r.name;

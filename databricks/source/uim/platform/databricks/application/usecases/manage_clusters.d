@@ -7,10 +7,10 @@ mixin(ShowModule!());
 
 class ManageClustersUseCase {
 private:
-  ClusterRepository _repo;
+  IClusterRepository _repo;
 
 public:
-  this(ClusterRepository repo) { _repo = repo; }
+  this(IClusterRepository repo) { _repo = repo; }
 
   UseCaseResult!Cluster create(CreateClusterRequest r) {
     auto c = Cluster();
@@ -48,7 +48,7 @@ public:
   }
 
   UseCaseResult!Cluster update(UpdateClusterRequest r) {
-    auto c = _repo.find(r.tenantId, r.id);
+    auto c = _repo.findById(r.tenantId, r.id);
     if (c.isNull)
       return UseCaseResult!Cluster(false, "Cluster not found", Cluster.init);
     if (r.name.length > 0)   c.name       = r.name;

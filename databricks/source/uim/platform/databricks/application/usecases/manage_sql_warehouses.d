@@ -12,10 +12,10 @@ mixin(ShowModule!());
 
 class ManageSqlWarehousesUseCase {
 private:
-  SqlWarehouseRepository _repo;
+  ISqlWarehouseRepository _repo;
 
 public:
-  this(SqlWarehouseRepository repo) { _repo = repo; }
+  this(ISqlWarehouseRepository repo) { _repo = repo; }
 
   UseCaseResult!SqlWarehouse create(CreateSqlWarehouseRequest r) {
     auto w = SqlWarehouse();
@@ -49,7 +49,7 @@ public:
   }
 
   UseCaseResult!SqlWarehouse update(UpdateSqlWarehouseRequest r) {
-    auto w = _repo.find(r.tenantId, r.id);
+    auto w = _repo.findById(r.tenantId, r.id);
     if (w.isNull)
       return UseCaseResult!SqlWarehouse(false, "SQL warehouse not found", SqlWarehouse.init);
     if (r.name.length > 0) w.name    = r.name;

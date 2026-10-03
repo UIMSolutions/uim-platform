@@ -12,10 +12,10 @@ mixin(ShowModule!());
 
 class ManageJobRunsUseCase {
 private:
-  JobRunRepository _repo;
+  IJobRunRepository _repo;
 
 public:
-  this(JobRunRepository repo) { _repo = repo; }
+  this(IJobRunRepository repo) { _repo = repo; }
 
   UseCaseResult!JobRun create(CreateJobRunRequest r) {
     auto run = JobRun();
@@ -45,7 +45,7 @@ public:
   }
 
   UseCaseResult!JobRun update(UpdateJobRunRequest r) {
-    auto run = _repo.find(r.tenantId, r.id);
+    auto run = _repo.findById(r.tenantId, r.id);
     if (run.isNull)
       return UseCaseResult!JobRun(false, "Job run not found", JobRun.init);
     run.state        = r.state;

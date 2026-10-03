@@ -12,10 +12,10 @@ mixin(ShowModule!());
 
 class ManageMlModelsUseCase {
 private:
-  MlModelRepository _repo;
+  IMlModelRepository _repo;
 
 public:
-  this(MlModelRepository repo) { _repo = repo; }
+  this(IMlModelRepository repo) { _repo = repo; }
 
   UseCaseResult!MlModel create(CreateMlModelRequest r) {
     auto m = MlModel();
@@ -48,7 +48,7 @@ public:
   }
 
   UseCaseResult!MlModel update(UpdateMlModelRequest r) {
-    auto m = _repo.find(r.tenantId, r.id);
+    auto m = _repo.findById(r.tenantId, r.id);
     if (m.isNull)
       return UseCaseResult!MlModel(false, "ML model not found", MlModel.init);
     if (r.description.length > 0) m.description = r.description;

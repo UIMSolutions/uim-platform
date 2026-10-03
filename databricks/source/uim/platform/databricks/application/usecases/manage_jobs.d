@@ -12,10 +12,10 @@ mixin(ShowModule!());
 
 class ManageJobsUseCase {
 private:
-  JobRepository _repo;
+  IJobRepository _repo;
 
 public:
-  this(JobRepository repo) { _repo = repo; }
+  this(IJobRepository repo) { _repo = repo; }
 
   UseCaseResult!Job create(CreateJobRequest r) {
     auto j = Job();
@@ -51,7 +51,7 @@ public:
   }
 
   UseCaseResult!Job update(UpdateJobRequest r) {
-    auto j = _repo.find(r.tenantId, r.id);
+    auto j = _repo.findById(r.tenantId, r.id);
     if (j.isNull)
       return UseCaseResult!Job(false, "Job not found", Job.init);
     if (r.name.length         > 0) j.name         = r.name;

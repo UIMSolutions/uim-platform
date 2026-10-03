@@ -54,89 +54,91 @@ public:
 
     auto tenantId = precheck.tenantId;
     auto result = _usecase.list(tenantId);
-    
-    return successResponse("ML models retrieved successfully", 200, result.map!(m => Json.emptyObject
-      .set("id", m.id)
-      .set("workspaceId", m.workspaceId)
-      .set("name", m.name)
-      .set("description", m.description)
-      .set("ownerId", m.ownerId)
-      .set("source", m.source)
-      .set("tags", m.tags)
-      .set("latestStage", m.latestStage.to!string)
-      .set("createdAt", m.createdAt)
-      .set("updatedAt", m.updatedAt)));
-}
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-
-  auto id = req.requestPath.to!string.split("/")[$ - 1];
-  auto result = _usecase.get(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 404);
-
-  auto responseData = Json.emptyObject
-    .set("id", result.data.id)
-    .set("workspaceId", result.data.workspaceId)
-    .set("name", result.data.name)
-    .set("description", result.data.description)
-    .set("ownerId", result.data.ownerId)
-    .set("source", result.data.source)
-    .set("tags", result.data.tags)
-    .set("latestStage", result.data.latestStage.to!string)
-    .set("createdAt", result.data.createdAt)
-    .set("updatedAt", result.data.updatedAt);
-
-  return successResponse("ML model retrieved successfully", 200, responseData);
-}
-
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-
-  auto data = precheck.data;
-  UpdateMlModelRequest r;
-  r.tenantId = tenantId;
-  r.id = req.requestPath.to!string.split("/")[$ - 1];
-  r.description = data.getString("description");
-  r.tags = data.getString("tags");
-  auto stageStr = data.getString("latestStage");
-  if (stageStr.length > 0) {
-    import std.conv : ConvException;
-
-    try {
-      r.latestStage = stageStr.to!ModelStage;
-    } catch (ConvException) {
-    }
+    return successResponse("ML models retrieved successfully", 200, result.map!(
+        m => Json.emptyObject
+        .set("id", m.id)
+        .set("workspaceId", m.workspaceId)
+        .set("name", m.name)
+        .set("description", m.description)
+        .set("ownerId", m.ownerId)
+        .set("source", m.source)
+        .set("tags", m.tags)
+        .set("latestStage", m.latestStage.to!string)
+        .set("createdAt", m.createdAt)
+        .set("updatedAt", m.updatedAt)));
   }
-  auto result = _usecase.update(r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
 
-  auto responseData = Json.emptyObject.set("id", result.id);
-  return successResponse("ML model updated successfully", 200, responseData);
-}
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto tenantId = precheck.tenantId;
 
-  auto tenantId = precheck.tenantId;
+    auto id = req.requestPath.to!string.split("/")[$ - 1];
+    auto result = _usecase.get(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
 
-  auto id = req.requestPath.to!string.split("/")[$ - 1];
-  auto result = _usecase.remove(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto responseData = Json.emptyObject
+      .set("id", result.data.id)
+      .set("workspaceId", result.data.workspaceId)
+      .set("name", result.data.name)
+      .set("description", result.data.description)
+      .set("ownerId", result.data.ownerId)
+      .set("source", result.data.source)
+      .set("tags", result.data.tags)
+      .set("latestStage", result.data.latestStage.to!string)
+      .set("createdAt", result.data.createdAt)
+      .set("updatedAt", result.data.updatedAt);
 
-  auto responseData = Json.emptyObject.set("id", result.id);
-  return successResponse("ML model deleted successfully", 200, responseData);
+    return successResponse("ML model retrieved successfully", 200, responseData);
+  }
+
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    UpdateMlModelRequest r;
+    r.tenantId = tenantId;
+    r.id = req.requestPath.to!string.split("/")[$ - 1];
+    r.description = data.getString("description");
+    r.tags = data.getString("tags");
+    auto stageStr = data.getString("latestStage");
+    if (stageStr.length > 0) {
+      import std.conv : ConvException;
+
+      try {
+        r.latestStage = stageStr.to!ModelStage;
+      } catch (ConvException) {
+      }
+    }
+    auto result = _usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("ML model updated successfully", 200, responseData);
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = req.requestPath.to!string.split("/")[$ - 1];
+    auto result = _usecase.remove(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("ML model deleted successfully", 200, responseData);
+  }
 }

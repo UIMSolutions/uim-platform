@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IClusterRepository : TenantRepository!(Cluster, ClusterId) {
+interface IClusterRepository : ITenantRepository!(Cluster, ClusterId) {
   Cluster[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Cluster[] findByState(TenantId tenantId, ClusterState state);
   Cluster[] findByType(TenantId tenantId, ClusterType clusterType);

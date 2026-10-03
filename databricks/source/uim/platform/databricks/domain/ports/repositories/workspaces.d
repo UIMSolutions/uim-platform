@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId) {
+interface IWorkspaceRepository : ITenantRepository!(Workspace, WorkspaceId) {
   Workspace[] findByStatus(TenantId tenantId, WorkspaceStatus status);
   Workspace[] findByRegion(TenantId tenantId, string region);
   Workspace[] findByTier(TenantId tenantId, WorkspaceTier tier);

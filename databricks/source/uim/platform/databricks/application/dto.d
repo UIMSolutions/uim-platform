@@ -165,6 +165,7 @@ struct CreateDataProductRequest {
 struct UpdateDataProductRequest {
   TenantId      tenantId;
   DataProductId id;
+  string        name;
   string        description;
   string        version_;
   ShareMode     shareMode;

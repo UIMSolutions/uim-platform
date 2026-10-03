@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IDataProductRepository : TenantRepository!(DataProduct, DataProductId) {
+interface IDataProductRepository : ITenantRepository!(DataProduct, DataProductId) {
   DataProduct[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   DataProduct[] findByStatus(TenantId tenantId, DataProductStatus status);
   DataProduct[] findByProvider(TenantId tenantId, string provider);
