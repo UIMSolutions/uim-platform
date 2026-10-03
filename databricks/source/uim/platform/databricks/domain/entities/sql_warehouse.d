@@ -19,7 +19,25 @@ struct SqlWarehouse {
   bool          enablePhoton;        // Photon vectorised execution engine
   bool          enableServerlessCompute;
   string        creatorId;
-  long          createdAt;           // Unix epoch ms
   string        jdbcUrl;
   string        odbcParams;
+
+    Json toJson() const { 
+        auto j = entityToJson()
+        .set("workspaceId", workspaceId)
+        .set("name", name)
+        .set("warehouseType", warehouseType)
+        .set("size", size)
+        .set("state", state)
+        .set("numClusters", numClusters)
+        .set("autoStopMinutes", autoStopMinutes)
+        .set("enablePhoton", enablePhoton)
+        .set("enableServerlessCompute", enableServerlessCompute)
+        .set("creatorId", creatorId)
+        .set("jdbcUrl", jdbcUrl)
+        .set("odbcParams", odbcParams);
+
+    return j;
+  }
+
 }

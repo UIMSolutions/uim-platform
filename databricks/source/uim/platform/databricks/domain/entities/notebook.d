@@ -17,6 +17,18 @@ struct Notebook {
   string           content;         // Base64-encoded or plain source
   string           format;          // SOURCE, HTML, JUPYTER, DBC
   string           ownerId;
-  long             createdAt;
-  long             modifiedAt;
+
+    Json toJson() const { 
+        auto j = entityToJson()
+        .set("workspaceId", workspaceId)
+        .set("path", path)
+        .set("name", name)
+        .set("language", language)
+        .set("status", status)
+        .set("content", content)
+        .set("format", format)
+        .set("ownerId", ownerId);
+
+    return j;
+  }
 }

@@ -1,5 +1,6 @@
 module uim.platform.databricks.presentation.http.controllers.data_products;
 import uim.platform.databricks;
+import std.conv : to, ConvException;
 
 mixin(ShowModule!());
 
@@ -8,6 +9,10 @@ mixin(ShowModule!());
 class DataProductController : ManageHttpController {
 private:
   ManageDataProductsUseCase _usecase;
+
+  static DataProductId requestId(HTTPServerRequest req) {
+    return DataProductId(req.requestPath.to!string.split("/")[$ - 1]);
+  }
 
 public:
   this(ManageDataProductsUseCase usecase) {
@@ -32,7 +37,7 @@ public:
     auto data = precheck.data;
     CreateDataProductRequest r;
     r.tenantId = tenantId;
-    r.id = DataProductId(precheck.id); // allow client to specify ID or generate new one if not provided
+    r.id = precheck.id;
     r.workspaceId = data.getString("workspaceId");
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -44,13 +49,17 @@ public:
     r.tags = data.getString("tags");
     auto modeStr = data.getString("shareMode");
     if (modeStr.length > 0) {
-      r.shareMode = modeStr.toShareMode;
+      try {
+        r.shareMode = modeStr.to!ShareMode;
+      } catch (ConvException) {
+        return errorResponse("Invalid shareMode: " ~ modeStr, 400);
+      }
     }
     auto result = _usecase.create(r);
-    if (result.hasError)
+    if (!result.success)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.data.id);
     return successResponse("Data product created successfully", 201, responseData);
   }
 
@@ -61,10 +70,12 @@ public:
 
     auto tenantId = precheck.tenantId;
     auto result = _usecase.list(tenantId);
+    if (!result.success)
+      return errorResponse(result.message, 400);
 
-    auto list = result.map!(item => item.toJson()).array.toJson;
+    auto list = serializeToJson(result.data);
     auto responseData = Json.emptyObject
-      .set("count", result.length)
+      .set("count", result.data.length)
       .set("resources", list);
     return successResponse("Data product list retrieved successfully", 200, responseData);
   }
@@ -76,12 +87,12 @@ public:
 
     auto tenantId = precheck.tenantId;
 
-    auto id = DataProductId(req.requestPath.to!string.split("/")[$ - 1]);
+    auto id = requestId(req);
     auto result = _usecase.get(tenantId, id);
-    if (result.isNull)
-      return errorResponse("Data product not found", 404);
+    if (!result.success)
+      return errorResponse(result.message, 404);
 
-    auto responseData = result.toJson();
+    auto responseData = result.data.toJson();
     return successResponse("Data product retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -95,7 +106,7 @@ public:
     auto data = precheck.data;
     UpdateDataProductRequest r;
     r.tenantId = tenantId;
-    r.id = DataProductId(req.requestPath.to!string.split("/")[$ - 1]);
+    r.id = requestId(req);
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.version_ = data.getString("version");
@@ -104,18 +115,17 @@ public:
     r.tags = data.getString("tags");
     auto modeStr = data.getString("shareMode");
     if (modeStr.length > 0) {
-      import std.conv : ConvException;
-
       try {
         r.shareMode = modeStr.to!ShareMode;
       } catch (ConvException) {
+        return errorResponse("Invalid shareMode: " ~ modeStr, 400);
       }
     }
     auto result = _usecase.update(r);
-    if (result.hasError)
+    if (!result.success)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.data.id);
     return successResponse("Data product updated successfully", "Updated", 200, responseData);
   }
 
@@ -126,12 +136,12 @@ public:
 
     auto tenantId = precheck.tenantId;
 
-    auto id = req.requestPath.to!string.split("/")[$ - 1];
+    auto id = requestId(req);
     auto result = _usecase.remove(tenantId, id);
-    if (result.hasError)
+    if (!result.success)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", id);
     return successResponse("Data product deleted successfully", 200, responseData);
   }
 }

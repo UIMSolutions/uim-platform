@@ -21,4 +21,23 @@ struct JobRun {
   string      stateMessage;
   string      resultState;   // SUCCESS, FAILED, TIMEDOUT, CANCELLED
   int         runPageUrl;    // relative page URL index
+
+    Json toJson() const { 
+        auto j = entityToJson()
+        .set("jobId", jobId)
+        .set("workspaceId", workspaceId)
+        .set("state", state)
+        .set("triggerType", triggerType)
+        .set("runType", runType)
+        .set("taskKey", taskKey)
+        .set("clusterId", clusterId)
+        .set("startTime", startTime)
+        .set("endTime", endTime)
+        .set("stateMessage", stateMessage)
+        .set("resultState", resultState)
+        .set("runPageUrl", runPageUrl);
+
+    return j;
+  }
+
 }

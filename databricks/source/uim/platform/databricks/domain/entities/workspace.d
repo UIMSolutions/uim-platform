@@ -17,5 +17,18 @@ struct Workspace {
   string          cloudProvider;   // aws, azure, gcp
   string          storageRoot;
   string          credentialId;
-  long            createdAt;       // Unix epoch ms
+
+    Json toJson() const { 
+        auto j = entityToJson()
+        .set("name", name)
+        .set("region", region)
+        .set("tier", tier)
+        .set("status", status)
+        .set("url", url)
+        .set("cloudProvider", cloudProvider)
+        .set("storageRoot", storageRoot)
+        .set("credentialId", credentialId);
+
+    return j;
+  }
 }

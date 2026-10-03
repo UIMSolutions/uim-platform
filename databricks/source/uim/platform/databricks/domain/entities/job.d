@@ -22,4 +22,23 @@ struct Job {
   int         minRetryIntervalMs;
   int         maxConcurrentRuns;
   string      clusterId;     // existing cluster or "" for new job cluster
+
+    Json toJson() const { 
+        auto j = entityToJson()
+        .set("workspaceId", workspaceId)
+        .set("name", name)
+        .set("description", description)
+        .set("status", status)
+        .set("creatorId", creatorId)
+        .set("createdTime", createdTime)
+        .set("schedule", schedule)
+        .set("taskType", taskType)
+        .set("taskSettings", taskSettings)
+        .set("maxRetries", maxRetries)
+        .set("minRetryIntervalMs", minRetryIntervalMs)
+        .set("maxConcurrentRuns", maxConcurrentRuns)
+        .set("clusterId", clusterId);
+
+    return j;
+  }
 }

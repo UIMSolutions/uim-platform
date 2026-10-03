@@ -17,4 +17,19 @@ struct MlExperiment {
   long        creationTime;     // Unix epoch ms
   long        lastUpdateTime;
   string      tags;             // comma-separated key=value pairs
+
+    Json toJson() const { 
+        auto j = entityToJson()
+        .set("workspaceId", workspaceId)
+        .set("name", name)
+        .set("artifactLocation", artifactLocation)
+        .set("lifecycleStage", lifecycleStage)
+        .set("ownerId", ownerId)
+        .set("creationTime", creationTime)
+        .set("lastUpdateTime", lastUpdateTime)
+        .set("tags", tags);
+
+    return j;
+  }
+
 }

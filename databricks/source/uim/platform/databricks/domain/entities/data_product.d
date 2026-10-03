@@ -21,4 +21,22 @@ struct DataProduct {
   string            sourceSystemId;    // BDC formation source
   long              lastSyncAt;        // Unix epoch ms, last synchronisation
   string            tags;              // comma-separated
+
+    Json toJson() const { 
+        auto j = entityToJson()
+        .set("workspaceId", workspaceId)
+        .set("name", name)
+        .set("description", description)
+        .set("provider", provider)
+        .set("version_", version_)
+        .set("status", status)
+        .set("shareMode", shareMode)
+        .set("targetCatalog", targetCatalog)
+        .set("targetSchema", targetSchema)
+        .set("sourceSystemId", sourceSystemId)
+        .set("lastSyncAt", lastSyncAt)
+        .set("tags", tags);
+
+    return j;
+  }
 }

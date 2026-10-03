@@ -19,7 +19,22 @@ struct DeltaTable {
   string      storageLocation; // URI for external tables
   string      comment;
   string      ownerId;
-  long        createdAt;
-  long        updatedAt;
   string      dataSourceFormat; // DELTA, CSV, JSON, PARQUET, ORC, AVRO, TEXT
+
+  Json toJson() const { 
+        auto j = entityToJson()
+        .set("workspaceId", workspaceId)
+        .set("catalogName", catalogName)
+        .set("schemaName", schemaName)
+        .set("tableName", tableName)
+        .set("fullName", fullName)
+        .set("tableType", tableType)
+        .set("status", status)
+        .set("storageLocation", storageLocation)
+        .set("comment", comment)
+        .set("ownerId", ownerId)
+        .set("dataSourceFormat", dataSourceFormat);
+
+    return j;
+  }
 }
