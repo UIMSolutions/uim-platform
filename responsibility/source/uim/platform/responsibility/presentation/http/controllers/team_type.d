@@ -31,12 +31,12 @@ class TeamTypeController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(pre.getString("tenantId"));
+        auto tenantId = TenantId(precheck.getString("tenantId"));
         auto items = _uc.listTypes(tenantId);
-        return Json.emptyObject
+            
+        return successResponse("Team types listed successfully", 200, Json.emptyObject
             .set("count",     items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("status",    "success").set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -44,24 +44,25 @@ class TeamTypeController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(pre.getString("tenantId"));
+        auto tenantId = TenantId(precheck.getString("tenantId"));
         auto id = TeamTypeId(precheck.id);
         auto e = _uc.getType(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "TeamType not found").set("statusCode", 404);
-        return e.toJson().set("status", "success").set("statusCode", 200);
+            return errorResponse("TeamType not found", 404);
+
+        return successResponse("TeamType retrieved successfully", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
-        auto pre = super.createHandler(req);
+        auto precheck = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(pre.getString("tenantId"));
-        auto data = pre["data"];
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto data = precheck["data"];
         import std.uuid : randomUUID;
         TeamTypeDTO dto;
-        dto.typeId      = TeamTypeId(data.getString("typeId", generateId));
+        dto.typeId      = TeamTypeId(data.getString("typeId", randomUUID));
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");
@@ -69,17 +70,21 @@ class TeamTypeController : ManageHttpController {
         dto.categoryId  = data.getString("categoryId", "");
         auto result = _uc.createType(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
+            return errorResponse(result.message, 400);
+            
+        return successResponse("TeamType created successfully", 201, Json.emptyObject
+            .set("id", result.id)
+            .set("status", "success")
+            .set("statusCode", 201));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
-        auto pre = super.updateHandler(req);
+        auto precheck = super.updateHandler(req);
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(pre.getString("tenantId"));
-        auto data = pre["data"];
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto data = precheck["data"];
         TeamTypeDTO dto;
         dto.typeId      = TeamTypeId(precheck.id);
         dto.tenantId    = tenantId;
@@ -89,20 +94,31 @@ class TeamTypeController : ManageHttpController {
         dto.categoryId  = data.getString("categoryId", "");
         auto result = _uc.updateType(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
+            return errorResponse(result.message, 404);
+            
+        return successResponse("TeamType updated successfully", 200, Json.emptyObject
+            .set("id", result.id)
+            .set("status", "success")
+            .set("statusCode", 200));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
-        auto pre = super.deleteHandler(req);
+        auto precheck = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(pre.getString("tenantId"));
+        auto tenantId = TenantId(precheck.getString("tenantId"));
         auto id = TeamTypeId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid team type id", 400);
+
         auto result = _uc.deleteType(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
-        return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
+            return errorResponse(result.message, 404);
+            
+        return successResponse("TeamType deleted successfully", 200, Json.emptyObject
+            .set("id", result.id)
+            .set("status", "success")
+            .set("statusCode", 200));
     }
 }

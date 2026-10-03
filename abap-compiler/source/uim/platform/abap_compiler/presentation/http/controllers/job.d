@@ -61,6 +61,7 @@ class JobController : ManageHttpController {
             return errorResponse("Job not found", 404);
 
         auto responseData = job.toJson();
+            
         return successResponse("Job retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -79,6 +80,7 @@ class JobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Job deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -94,6 +94,7 @@ class DocumentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("DmsDocument created successfully", "Created", 201, responseData);
     }
 
@@ -112,6 +113,7 @@ class DocumentController : ManageHttpController {
             return errorResponse("DmsDocument not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("DmsDocument retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -206,6 +208,7 @@ class DocumentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("DmsDocument updated successfully", "Updated", 200, responseData);
     }
 
@@ -224,6 +227,7 @@ class DocumentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("DmsDocument deleted successfully", "Deleted", 200, responseData);
     }
 }

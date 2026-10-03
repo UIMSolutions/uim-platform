@@ -75,6 +75,7 @@ class ResidenceRuleController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Residence rule list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -99,6 +100,7 @@ class ResidenceRuleController : ManageHttpController {
             .set("duration", rr.duration)
             .set("periodUnit", rr.periodUnit.to!string)
             .set("isActive", rr.isActive);
+            
         return successResponse("Residence rule retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -148,6 +150,7 @@ class ResidenceRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Residence rule deleted successfully", "Deleted", 200, responseData);
     }
 }

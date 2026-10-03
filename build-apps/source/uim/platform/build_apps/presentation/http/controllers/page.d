@@ -41,6 +41,7 @@ class PageController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Page list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class PageController : ManageHttpController {
             return errorResponse("Page not found", 404);
 
         auto responseData = page.toJson();
+            
         return successResponse("Page retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -89,6 +91,7 @@ class PageController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Page created successfully", "Created", 201, responseData);
     }
 
@@ -114,6 +117,7 @@ class PageController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Page updated successfully", "Updated", 200, responseData);
     }
 
@@ -132,6 +136,7 @@ class PageController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Page deleted successfully", "Deleted", 200, responseData);
     }
 }

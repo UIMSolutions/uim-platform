@@ -53,6 +53,7 @@ class ActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Action created successfully", "Created", 201, responseData);
     }
     
@@ -110,6 +111,7 @@ class ActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Action updated successfully", "Updated", 200, responseData);
     }
 

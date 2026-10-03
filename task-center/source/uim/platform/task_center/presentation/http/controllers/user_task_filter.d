@@ -49,6 +49,7 @@ class UserTaskFilterController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Filter created successfully", "Created", 201, responseData);
     }
 
@@ -68,6 +69,7 @@ class UserTaskFilterController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Filter list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -90,6 +92,7 @@ class UserTaskFilterController : ManageHttpController {
             return errorResponse("Filter not found", 404);
 
         auto responseData = f.toJson();
+            
         return successResponse("Filter retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -114,6 +117,7 @@ class UserTaskFilterController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Filter updated successfully", "Updated", 200, responseData);
     }
 
@@ -133,6 +137,7 @@ class UserTaskFilterController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Filter set as default successfully", "Updated", 200, responseData);
     }
 
@@ -153,6 +158,7 @@ class UserTaskFilterController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Filter deleted successfully", "Deleted", 200, responseData);
     }
 }

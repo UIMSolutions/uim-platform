@@ -39,6 +39,7 @@ class TransportNodeController : ManageHttpController {
         auto list = items.map!(e => e.toJson).array.toJson;
 
         auto resp = Json.emptyObject.set("count", items.length).set("resources", list);
+            
         return successResponse("Transport nodes retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -54,6 +55,7 @@ class TransportNodeController : ManageHttpController {
             return errorResponse("Transport node not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("Transport node retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -87,6 +89,7 @@ class TransportNodeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Transport node created successfully", "Created", 201, responseData);
     }
 
@@ -132,6 +135,7 @@ class TransportNodeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Transport node updated successfully", "Updated", 200, responseData);
     }
 
@@ -147,6 +151,7 @@ class TransportNodeController : ManageHttpController {
             return errorResponse(result.message, 404);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Transport node deleted successfully", "Deleted", 200, responseData);
     }
 }

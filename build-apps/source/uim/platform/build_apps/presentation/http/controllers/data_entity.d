@@ -41,6 +41,7 @@ class DataEntityController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Data entity list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class DataEntityController : ManageHttpController {
             return errorResponse("Data entity not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("Data entity retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -89,6 +91,7 @@ class DataEntityController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data entity created successfully", "Created", 201, responseData);
     }
 
@@ -116,6 +119,7 @@ class DataEntityController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data entity updated successfully", "Updated", 200, responseData);
     }
 
@@ -134,6 +138,7 @@ class DataEntityController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data entity deleted successfully", "Deleted", 200, responseData);
     }
 }

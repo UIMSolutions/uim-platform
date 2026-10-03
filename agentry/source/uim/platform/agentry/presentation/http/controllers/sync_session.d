@@ -41,6 +41,7 @@ class SyncSessionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Sync session list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -60,6 +61,7 @@ class SyncSessionController : ManageHttpController {
             return errorResponse("Sync session not found", 404);
 
         auto responseData = ses.toJson();
+            
         return successResponse("Sync session retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -85,6 +87,7 @@ class SyncSessionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Sync session created successfully", "Created", 201, responseData);
     }
 
@@ -106,6 +109,7 @@ class SyncSessionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Sync session updated successfully", "Updated", 200, responseData);
     }
 
@@ -125,6 +129,7 @@ class SyncSessionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Sync session deleted successfully", "Deleted", 200, responseData);
     }
 }

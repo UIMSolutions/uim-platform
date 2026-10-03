@@ -124,6 +124,7 @@ class AlertRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Alert rule updated successfully", "Updated", 200, responseData);
 }
 
@@ -142,6 +143,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Alert rule deleted successfully", "Deleted", 200, responseData);
 }
 

@@ -53,6 +53,7 @@ class NotificationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Notification created successfully", "Created", 201, resp);
     }
 
@@ -132,6 +133,7 @@ class NotificationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Notification updated successfully", "Updated", 200, resp);
     }
 
@@ -148,6 +150,7 @@ class NotificationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Notification deleted successfully", "Deleted", 200, responseData);
 
     }

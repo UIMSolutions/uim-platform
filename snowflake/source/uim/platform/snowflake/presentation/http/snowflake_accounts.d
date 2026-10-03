@@ -71,6 +71,7 @@ class SnowflakeAccountController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Account updated successfully", "Updated", 200, responseData);
   }
 

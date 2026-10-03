@@ -52,6 +52,7 @@ class DataSubjectRequestController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data subject request created successfully", "Created", 201, responseData);
     }
 
@@ -133,6 +134,7 @@ class DataSubjectRequestController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data subject request updated successfully", "Updated", 200, resp);
     }
 
@@ -147,6 +149,7 @@ class DataSubjectRequestController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data subject request deleted successfully", "Deleted", 200, resp);
     }
 }

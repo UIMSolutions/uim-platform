@@ -40,6 +40,7 @@ class FormationController : ManageHttpController {
             
         auto tenantId = precheck.tenantId;
         auto items = _useCase.listFormations(tenantId);
+            
         return successResponse("Formations retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));
@@ -57,6 +58,7 @@ class FormationController : ManageHttpController {
         auto e = _useCase.getFormation(tenantId, id);
         if (e.isNull)
             return errorResponse("Formation not found", 404);
+            
         return successResponse("Formation retrieved successfully", "Retrieved", 200, e.toJson()
             .set("status", "success").set("statusCode", 200));
     }
@@ -78,6 +80,7 @@ class FormationController : ManageHttpController {
         auto result = _useCase.createFormation(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
+            
         return successResponse("Formation created successfully", "Created", 201, Json.emptyObject.set("id", result.id));
             .set("statusCode", 201);
     }

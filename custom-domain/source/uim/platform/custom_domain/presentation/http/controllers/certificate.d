@@ -213,6 +213,7 @@ class CertificateController : ManageHttpController {
 
         auto result = certificates.deactivateCertificate(tenantId, id);
         if (result.hasError) return errorResponse(result.message, 404);
+            
         return successResponse("Certificate deactivated", 200, Json.emptyObject.set("id", result.id));
     }
 

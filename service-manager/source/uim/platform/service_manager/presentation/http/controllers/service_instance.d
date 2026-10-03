@@ -44,6 +44,7 @@ class ServiceInstanceController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("items", list)
             .set("totalCount", Json(items.length));
+            
         return successResponse("Service instances retrieved successfully", 200, responseData);
     }
 
@@ -98,6 +99,7 @@ class ServiceInstanceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service instance created successfully", "Created", 201, responseData);
     }
 
@@ -125,6 +127,7 @@ class ServiceInstanceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service instance updated successfully", "Updated", 200, responseData);
     }
 
@@ -143,6 +146,7 @@ class ServiceInstanceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service instance deleted successfully", "Deleted", 200, responseData);
     }
 }

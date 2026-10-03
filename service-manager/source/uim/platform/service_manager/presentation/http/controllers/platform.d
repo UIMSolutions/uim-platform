@@ -52,6 +52,7 @@ class PlatformController : ManageHttpController {
         auto response = Json.emptyObject
             .set("items", list)
             .set("totalCount", items.length);
+            
         return successResponse("Platforms retrieved successfully", 200, response);
     }
 
@@ -105,6 +106,7 @@ class PlatformController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto response = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Platform created successfully", 201, response);
     }
 
@@ -130,6 +132,7 @@ class PlatformController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Platform updated successfully", 200, responseData);
     }
 
@@ -148,6 +151,7 @@ class PlatformController : ManageHttpController {
             return errorResponse(result.message, 400);
         
         auto responseData = Json.emptyObject.set("id", id);
+            
         return successResponse("Platform deleted successfully", 200, responseData);
     }
 }

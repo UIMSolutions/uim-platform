@@ -53,6 +53,7 @@ class DataContextController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data context created successfully", "Created", 201, resp);
     }
 
@@ -128,6 +129,7 @@ class DataContextController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data context deleted successfully", "Deleted", 200, resp);
 
     }
@@ -144,6 +146,7 @@ class DataContextController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("message", "Personal data contexts deleted");
+            
         return successResponse("Personal data contexts deleted successfully", "Deleted", 200, resp);
     }
 

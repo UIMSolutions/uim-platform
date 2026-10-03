@@ -46,6 +46,7 @@ class BusinessPurposeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Business purpose created successfully", "Created", 201, responseData);
     }
 
@@ -71,6 +72,7 @@ class BusinessPurposeController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Business purposes retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -96,6 +98,7 @@ class BusinessPurposeController : ManageHttpController {
             .set("legalEntityId", bp.legalEntityId.value)
             .set("status", bp.status.to!string)
             .set("referenceDate", bp.referenceDate);
+            
         return successResponse("Business purpose retrieved successfully", "Retrieved", 200, response);
     }
 
@@ -179,6 +182,7 @@ class BusinessPurposeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto response = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Business purpose deleted successfully", "Deleted", 200, response);
     }
 }

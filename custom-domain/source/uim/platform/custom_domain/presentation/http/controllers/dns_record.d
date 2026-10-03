@@ -51,6 +51,7 @@ class DnsRecordController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("DNS record created successfully", "Created", 201, responseData);
     }
 
@@ -79,6 +80,7 @@ class DnsRecordController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", records.length)
             .set("resources", jarr);
+            
         return successResponse("DNS record list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -128,6 +130,7 @@ class DnsRecordController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("DNS record updated successfully", "Updated", 200, responseData);
     }
 
@@ -144,6 +147,7 @@ class DnsRecordController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("DNS record deleted successfully", "Deleted", 200, responseData);
     }
 }

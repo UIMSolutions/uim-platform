@@ -87,6 +87,7 @@ class ApplicationController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("", 0, responseData);
   }
 
@@ -132,6 +133,7 @@ class ApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application updated successfully", "Updated", 200, responseData);
   }
 
@@ -175,6 +177,7 @@ class ApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application deleted successfully", "Deleted", 200, responseData);
   }
 

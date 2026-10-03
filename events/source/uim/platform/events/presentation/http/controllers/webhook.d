@@ -35,6 +35,7 @@ class WebhookController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = usecase.listWebhooks(tenantId).map!(e => e.toJson).array.toJson;
+            
         return successResponse("Webhook list retrieved successfully", 200, Json.emptyObject
                 .set("count", items.length)
                 .set("resources", items));

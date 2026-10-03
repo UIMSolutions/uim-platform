@@ -77,6 +77,7 @@ class RepositoryController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Repository created successfully", "Created", 201, responseData);
     }
 
@@ -93,6 +94,7 @@ class RepositoryController : ManageHttpController {
             return errorResponse("Repository not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("Repository retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -162,6 +164,7 @@ class RepositoryController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Repository deleted successfully", "Deleted", 200, responseData);
     }
 }

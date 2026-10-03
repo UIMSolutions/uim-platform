@@ -34,6 +34,7 @@ class ServiceBindingController : ManageHttpController {
             
         auto tenantId = precheck.tenantId;
         auto items = bindings.listServiceBindings(tenantId);
+            
         return successResponse("Service bindings retrieved successfully", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));
@@ -51,6 +52,7 @@ class ServiceBindingController : ManageHttpController {
         auto e = bindings.getServiceBinding(tenantId, id);
         if (e.isNull)
             return errorResponse("Service binding not found", 404, Json.emptyObject.set("error", "Service binding not found"));
+            
         return successResponse("Service binding retrieved successfully", 200, e.toJson());
     }
 
@@ -72,6 +74,7 @@ class ServiceBindingController : ManageHttpController {
         auto result = bindings.createServiceBinding(dto);
         if (result.hasError)
             return errorResponse("Service binding creation failed", 400, Json.emptyObject.set("error", result.message));
+            
         return successResponse("Service binding created successfully", 201, Json.emptyObject.set("id", result.id));
     }
 
@@ -85,6 +88,7 @@ class ServiceBindingController : ManageHttpController {
         auto result = bindings.deleteServiceBinding(tenantId, id);
         if (result.hasError)
             return errorResponse("Service binding deletion failed", 404, Json.emptyObject.set("error", result.message));
+            
         return successResponse("Service binding deleted successfully", 200, Json.emptyObject.set("id", result.id));
     }
 }

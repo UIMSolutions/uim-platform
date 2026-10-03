@@ -60,6 +60,7 @@ class MobileApplicationController : ManageHttpController {
             return errorResponse("Mobile application not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("Mobile application retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -91,6 +92,7 @@ class MobileApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Mobile application created successfully", "Created", 201, responseData);
 
     }
@@ -123,6 +125,7 @@ class MobileApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Mobile application updated successfully", "Updated", 200, responseData);
     }
 
@@ -141,6 +144,7 @@ class MobileApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Mobile application deleted successfully", "Deleted", 200, responseData);
     }
 }

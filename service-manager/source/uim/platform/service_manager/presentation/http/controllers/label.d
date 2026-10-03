@@ -44,6 +44,7 @@ class LabelController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("items", jarr)
             .set("totalCount", items.length);
+            
         return successResponse("Labels retrieved successfully", 200, responseData);
     }
 
@@ -92,6 +93,7 @@ class LabelController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Label created successfully", 201, responseData);
     }
 
@@ -118,6 +120,7 @@ class LabelController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Label updated successfully", 200, responseData);
     }
 
@@ -137,6 +140,7 @@ class LabelController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", id);
+            
         return successResponse("Label deleted successfully", 200, responseData);
     }
 }

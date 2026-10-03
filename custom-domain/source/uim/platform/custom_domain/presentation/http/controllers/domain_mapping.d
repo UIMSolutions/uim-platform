@@ -131,6 +131,7 @@ class DomainMappingController : ManageHttpController {
         auto id = DomainMappingId(precheck.id);
         auto result = usecase.deleteDomainMapping(tenantId, id);
         if (result.hasError) return errorResponse(result.message, 404);
+            
         return successResponse("Domain mapping deleted successfully", 200, Json.emptyObject.set("id", result.id));
     }
 }

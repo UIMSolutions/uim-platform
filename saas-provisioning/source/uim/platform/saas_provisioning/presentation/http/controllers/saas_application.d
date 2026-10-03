@@ -48,6 +48,7 @@ class SaasApplicationController : ManageHttpController {
         auto arr = apps.map!(a => a.toJson).array.toJson;
 
         auto responsedata = Json.emptyObject.set("count", apps.length).set("applications", arr);
+            
         return successResponse("Applications retrieved", "Retrieved " ~ apps.length ~ " applications for tenant " ~ tenantId, 200, responsedata);
     }
 
@@ -83,6 +84,7 @@ class SaasApplicationController : ManageHttpController {
             return errorResponse("Application registration failed", result.message, 400);
 
         auto responsedata = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application registered", "Application registered with ID " ~ result.id, 201, responsedata);
     }
 
@@ -101,6 +103,7 @@ class SaasApplicationController : ManageHttpController {
             return errorResponse("Application not found", "No application found with ID " ~ id, 404);
 
         auto responsedata = app.toJson;
+            
         return successResponse("Application retrieved", "Retrieved application with ID " ~ id, 200, responsedata);
     }
 
@@ -136,6 +139,7 @@ class SaasApplicationController : ManageHttpController {
             return errorResponse("Application update failed", result.message, 404);
 
         auto responsedata = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application updated", "Updated application with ID " ~ result.id, 200, responsedata);
 
     }

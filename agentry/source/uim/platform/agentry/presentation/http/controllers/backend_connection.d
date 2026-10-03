@@ -60,6 +60,7 @@ class BackendConnectionController : ManageHttpController {
             return errorResponse("Backend connection not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("Backend connection retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -92,6 +93,7 @@ class BackendConnectionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Backend connection created successfully", "Created", 201, responseData);
     }
 
@@ -120,6 +122,7 @@ class BackendConnectionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Backend connection updated successfully", "Updated", 200, responseData);
     }
 
@@ -139,6 +142,7 @@ class BackendConnectionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Backend connection deleted successfully", "Deleted", 200, responseData);
     }
 }

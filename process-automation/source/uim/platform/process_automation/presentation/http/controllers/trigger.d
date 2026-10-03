@@ -56,6 +56,7 @@ class TriggerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Trigger created successfully", "Created", 201, responseData);
     }
 
@@ -141,6 +142,7 @@ class TriggerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Trigger updated successfully", "Updated", 200, responseData);
     }
 
@@ -157,6 +159,7 @@ class TriggerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Trigger deleted successfully", "Deleted", 200, responseData);
     }
 }

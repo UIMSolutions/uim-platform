@@ -62,6 +62,7 @@ class MeshBridgeController : ManageHttpController {
             return errorResponse("Mesh bridge not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("Mesh bridge retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -108,6 +109,7 @@ class MeshBridgeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Mesh bridge created successfully", "Created", 201, responseData);
     }
 
@@ -134,6 +136,7 @@ class MeshBridgeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Mesh bridge updated successfully", "Updated", 200, responseData);
     }
 
@@ -153,6 +156,7 @@ class MeshBridgeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Mesh bridge deleted successfully", "Deleted", 200, responseData);
     }
 }

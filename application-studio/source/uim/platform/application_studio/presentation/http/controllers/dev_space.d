@@ -41,6 +41,7 @@ class DevSpaceController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Dev space list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -60,6 +61,7 @@ class DevSpaceController : ManageHttpController {
             return errorResponse("Scan job not found", 404);
 
         auto responseData = space.toJson();
+            
         return successResponse("Dev space retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -91,6 +93,7 @@ class DevSpaceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Dev space created successfully", "Created", 201, responseData);
     }
 
@@ -118,6 +121,7 @@ class DevSpaceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Dev space updated successfully", "Updated", 200, responseData);
     }
 
@@ -137,6 +141,7 @@ class DevSpaceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Dev space deleted successfully", "Deleted", 200, responseData);
     }
 }

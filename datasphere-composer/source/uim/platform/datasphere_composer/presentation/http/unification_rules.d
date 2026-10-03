@@ -121,6 +121,7 @@ class UnificationRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Rule deleted successfully", "Deleted", 200, responseData);
     }
       }

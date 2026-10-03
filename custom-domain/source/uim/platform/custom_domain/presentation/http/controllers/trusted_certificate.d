@@ -48,6 +48,7 @@ class TrustedCertificateController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Trusted certificate created successfully", "Created", 201, responseData);
     }
 
@@ -77,6 +78,7 @@ class TrustedCertificateController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Trusted certificates retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -126,6 +128,7 @@ class TrustedCertificateController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Trusted certificate deleted successfully", "Deleted", 200, responseData);
     }
 }

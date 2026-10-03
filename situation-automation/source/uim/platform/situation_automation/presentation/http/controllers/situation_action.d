@@ -60,6 +60,7 @@ class SituationActionController : ManageHttpController {
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id);
+            
         return successResponse("Situation action created successfully", 201, resp);
     }
 
@@ -155,6 +156,7 @@ class SituationActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Situation action updated successfully", 200, responseData);
     }
 
@@ -173,6 +175,7 @@ class SituationActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Situation action deleted successfully", 200, responseData);
     }
 }

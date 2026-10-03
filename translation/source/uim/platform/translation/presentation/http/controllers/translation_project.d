@@ -59,6 +59,7 @@ class TranslationProjectController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Translation project created successfully");
+            
         return successResponse("Translation project created successfully", 201, resp);
     }
 
@@ -93,6 +94,7 @@ class TranslationProjectController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("count", projects.length)
             .set("projects", arr);
+            
         return successResponse("Translation projects retrieved successfully", 200, resp);
     }
 
@@ -138,6 +140,7 @@ class TranslationProjectController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Translation project updated successfully");
+            
         return successResponse("Translation project updated successfully", 200, resp);
     }
 

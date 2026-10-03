@@ -39,6 +39,7 @@ class CustomerSessionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Customer sessions retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -64,6 +65,7 @@ class CustomerSessionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Session created successfully", "Created", 201, responseData);
     }
 
@@ -101,6 +103,7 @@ class CustomerSessionController : ManageHttpController {
             return errorResponse(result.message, 404);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Session deleted successfully", "Deleted", 200, responseData);
     }
 }

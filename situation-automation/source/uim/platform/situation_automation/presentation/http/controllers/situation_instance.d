@@ -216,6 +216,7 @@ class SituationInstanceController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("id", result.id);
+            
         return successResponse("Situation instance deleted successfully", "Deleted", 200, resp);
     }
 }

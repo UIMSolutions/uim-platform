@@ -92,6 +92,7 @@ class ProcessingPurposeController : ManageHttpController {
             return errorResponse("Processing purpose not found", 404);
 
         auto resp = p.toJson;
+            
         return successResponse("Processing purpose retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -119,6 +120,7 @@ class ProcessingPurposeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Processing purpose updated successfully", "Updated", 200, resp);
     }
 
@@ -137,6 +139,7 @@ class ProcessingPurposeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Processing purpose deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -41,6 +41,7 @@ class ServiceBindingController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Service binding list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -60,6 +61,7 @@ class ServiceBindingController : ManageHttpController {
             return errorResponse("Service binding not found", 404);
 
         auto responseData = binding.toJson();
+            
         return successResponse("Service binding retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -89,6 +91,7 @@ class ServiceBindingController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service binding created successfully", "Created", 201, responseData);
     }
 
@@ -116,6 +119,7 @@ class ServiceBindingController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service binding updated successfully", "Updated", 200, responseData);
     }
 
@@ -133,6 +137,7 @@ class ServiceBindingController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service binding deleted successfully", "Deleted", 200, responseData);
     }
 }

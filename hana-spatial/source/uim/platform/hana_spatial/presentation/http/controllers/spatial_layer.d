@@ -75,6 +75,7 @@ class SpatialLayerController : ManageHttpController {
       auto resp = Json.emptyObject
         .set("count", items.length)
         .set("resources", jarr);
+            
         return successResponse("Spatial layers retrieved successfully", "Retrieved", 200, resp);
   }
 
@@ -127,6 +128,7 @@ class SpatialLayerController : ManageHttpController {
       auto result = usecase.remove(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);
+            
         return successResponse("Spatial layer deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
   }
 }

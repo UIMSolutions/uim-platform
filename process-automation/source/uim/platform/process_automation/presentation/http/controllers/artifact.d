@@ -54,6 +54,7 @@ class ArtifactController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Artifact created successfully", "Created", 201, resp);
     }
 
@@ -141,6 +142,7 @@ class ArtifactController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Artifact updated successfully", "Updated", 200, responseData);
     }
 
@@ -159,6 +161,7 @@ class ArtifactController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Artifact deleted successfully", "Deleted", 200, responseData);
     }
 }

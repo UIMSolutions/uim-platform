@@ -77,6 +77,7 @@ class GroupController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Group created successfully", "Created", 201, responseData);
     }
 
@@ -98,6 +99,7 @@ class GroupController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Group updated successfully", "Updated", 200, responseData);
     }
 
@@ -116,6 +118,7 @@ class GroupController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Group deleted successfully", "Deleted", 200, responseData);
     }
 }

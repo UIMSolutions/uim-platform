@@ -41,6 +41,7 @@ class ExtensionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Extension list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -60,6 +61,7 @@ class ExtensionController : ManageHttpController {
             return errorResponse("Extension not found", 404);
 
         auto responseData = extension.toJson();
+            
         return successResponse("Extension retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -89,6 +91,7 @@ class ExtensionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Extension created successfully", "Created", 201, responseData);
     }
 
@@ -117,6 +120,7 @@ class ExtensionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Extension updated successfully", "Updated", 200, responseData);
     }
 
@@ -136,6 +140,7 @@ class ExtensionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Extension deleted successfully", "Deleted", 200, responseData);
     }
 }

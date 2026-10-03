@@ -68,6 +68,7 @@ class DevSpaceTypeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Dev space type created successfully", "Created", 201, resp);
     }
 
@@ -108,6 +109,7 @@ class DevSpaceTypeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Dev space type updated successfully", "Updated", 200, resp);
     }
 
@@ -127,6 +129,7 @@ class DevSpaceTypeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Dev space type deleted successfully", "Deleted", 200, resp);
     }
 }

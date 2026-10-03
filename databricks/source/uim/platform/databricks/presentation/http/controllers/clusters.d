@@ -53,6 +53,7 @@ public:
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Cluster created successfully", "Created", 201, responseData);
   }
 
@@ -65,6 +66,7 @@ public:
       auto result = _usecase.list(req.getTenantId);
 
         auto responseData = Json.emptyObject.set("count", result.data.length).set("resources", serializeToJson(result.data));
+            
         return successResponse("Clusters retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -81,6 +83,7 @@ public:
             return errorResponse(result.message, 404);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Cluster retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -106,6 +109,7 @@ public:
             return errorResponse(result.message, 404);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Cluster updated successfully", "Updated", 200, responseData);
     }
 
@@ -122,6 +126,7 @@ public:
             return errorResponse(result.message, 404);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Cluster deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -67,6 +67,7 @@ class OperationController : ManageHttpController {
             .set("description", e.description)
             .set("errorMessage", e.errorMessage)
             .set("createdAt", e.createdAt);
+            
         return successResponse("Operation retrieved successfully", 200, responseData);
     }
 
@@ -90,6 +91,7 @@ class OperationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Operation created successfully", 201, responseData);
     }
 
@@ -115,6 +117,7 @@ class OperationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Operation updated successfully", 200, responseData);
     }
 
@@ -133,6 +136,7 @@ class OperationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Operation deleted successfully", 200, responseData);
     }
 }

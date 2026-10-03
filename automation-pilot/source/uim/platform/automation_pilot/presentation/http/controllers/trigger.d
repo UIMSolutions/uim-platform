@@ -41,6 +41,7 @@ class TriggerController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Trigger list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -57,6 +58,7 @@ class TriggerController : ManageHttpController {
             return errorResponse("Trigger not found", 404);
 
         auto responseData = trigger.toJson();
+            
         return successResponse("Trigger retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -85,6 +87,7 @@ class TriggerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Trigger created successfully", "Created", 201, responseData);
     }
 
@@ -114,6 +117,7 @@ class TriggerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Trigger updated successfully", "Updated", 200, responseData);
     }
 
@@ -132,6 +136,7 @@ class TriggerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Trigger deleted successfully", "Deleted", 200, responseData);
     }
 }

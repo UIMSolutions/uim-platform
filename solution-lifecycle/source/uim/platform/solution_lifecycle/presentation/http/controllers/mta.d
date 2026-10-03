@@ -62,6 +62,7 @@ class MtaController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto mtas = usecase.listMtas(tenantId).map!(m => m.toJson()).array.toJson;
+            
         return successResponse("MTAs retrieved successfully", "Retrieved", 200, Json.emptyObject.set("count", mtas
                 .length).set("mtas", mtas));
     }

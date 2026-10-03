@@ -72,6 +72,7 @@ class CommandController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("PilotCommand created successfully", "Created", 201, responseData);
     }
 
@@ -92,6 +93,7 @@ class CommandController : ManageHttpController {
             return errorResponse("PilotCommand not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("PilotCommand retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -121,6 +123,7 @@ class CommandController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("PilotCommand updated successfully", "Updated", 200, responseData);
     }
 
@@ -141,6 +144,7 @@ class CommandController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("PilotCommand deleted successfully", "Deleted", 200, responseData);
     }
 }

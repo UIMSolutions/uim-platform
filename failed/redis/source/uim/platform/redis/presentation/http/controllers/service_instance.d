@@ -35,6 +35,7 @@ class ServiceInstanceController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = instances.listServiceInstances(tenantId);
+            
         return successResponse("Service instances retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));

@@ -65,6 +65,7 @@ class LegalEntityController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", jarr.length)
             .set("resources", jarr);
+            
         return successResponse("Legal entity list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -116,6 +117,7 @@ class LegalEntityController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Legal entity updated successfully", "Updated", 200, responseData);
     }
 
@@ -134,6 +136,7 @@ class LegalEntityController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Legal entity deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -30,6 +30,7 @@ class SnowflakeDatabaseController : ManageHttpController {
     auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Database list retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -44,6 +45,7 @@ class SnowflakeDatabaseController : ManageHttpController {
             return errorResponse("Scan job not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("Database retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -66,6 +68,7 @@ class SnowflakeDatabaseController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Database created successfully", "Created", 201, responseData);
   }
 
@@ -87,6 +90,7 @@ class SnowflakeDatabaseController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Database updated successfully", "Updated", 200, responseData);
   }
 
@@ -105,6 +109,7 @@ class SnowflakeDatabaseController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse(
   }
 }

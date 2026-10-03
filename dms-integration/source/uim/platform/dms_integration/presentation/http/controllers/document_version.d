@@ -83,6 +83,7 @@ class DocumentVersionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("DmsDocument version created successfully", "Created", 201, responseData);
     }
 
@@ -103,6 +104,7 @@ class DocumentVersionController : ManageHttpController {
             return errorResponse("DmsDocument version not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("DmsDocument version retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -121,6 +123,7 @@ class DocumentVersionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("DmsDocument version deleted successfully", "Deleted", 200, responseData);
     }
 }

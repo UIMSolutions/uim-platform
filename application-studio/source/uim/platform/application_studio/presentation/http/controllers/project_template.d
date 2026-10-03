@@ -41,6 +41,7 @@ class ProjectTemplateController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Project template list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -60,6 +61,7 @@ class ProjectTemplateController : ManageHttpController {
             return errorResponse("Project template not found", 404);
 
         auto responseData = temp.toJson();
+            
         return successResponse("Project template retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -88,6 +90,7 @@ class ProjectTemplateController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Project template created successfully", "Created", 201, responseData);
     }
 
@@ -116,6 +119,7 @@ class ProjectTemplateController : ManageHttpController {
             return errorResponse(            result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Project template updated successfully", "Updated", 200, responseData);
     }
 
@@ -134,6 +138,7 @@ class ProjectTemplateController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Project template deleted successfully", "Deleted", 200, responseData);
     }
 }

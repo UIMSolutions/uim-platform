@@ -41,6 +41,7 @@ class ContentConnectorController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Content connector list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -60,6 +61,7 @@ class ContentConnectorController : ManageHttpController {
             return errorResponse("Content connector not found", 404);
 
         auto responseData = connector.toJson();
+            
         return successResponse("Content connector retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -86,6 +88,7 @@ class ContentConnectorController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Content connector created successfully", "Created", 201, responseData);
     }
 
@@ -114,6 +117,7 @@ class ContentConnectorController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Content connector updated successfully", "Updated", 200, responseData);
     }
 
@@ -133,6 +137,7 @@ class ContentConnectorController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Content connector deleted successfully", "Deleted", 200, responseData);
     }
 }

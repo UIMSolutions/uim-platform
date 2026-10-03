@@ -66,6 +66,7 @@ class ConfigurationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Configuration updated", "Configuration updated", 200, resp);
     }
 }

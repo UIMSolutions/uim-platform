@@ -43,11 +43,11 @@ class DeterminationLogController : ManageHttpController {
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
-    auto precheck = super.getHandler(req);
-    if (precheck.hasError)
-      return precheck;
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
         auto id = DeterminationLogId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid log id", 400);
@@ -59,27 +59,29 @@ class DeterminationLogController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("status", "success").set("statusCode", 200)
             .set("resource", e.toJson());
+            
         return successResponse("Determination log retrieved successfully", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
-        auto result = super.deleteHandler(req);
-        if (result.hasError)
-            return errorResponse(result.error, result.statusCode);
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-        auto tenantId = TenantId(result.getString("tenantId"));
-        auto id = DeterminationLogId(result.id);
+        auto tenantId = TenantId(precheck.getString("tenantId"));
+        auto id = DeterminationLogId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid log id", 400);
 
         auto deleteResult = _uc.deleteLog(tenantId, id);
         if (!deleteResult.success)
-            return errorResponse(deleteResult.error, deleteResult.statusCode);
+            return errorResponse(deleteResult.error, 400);
 
         auto responseData = Json.emptyObject
             .set("id", deleteResult.id)
             .set("status", "success")
             .set("statusCode", 200);
+            
         return successResponse("Determination log deleted successfully", 200, responseData);
     }
 

@@ -78,6 +78,7 @@ class JobController : ManageHttpController {
         }
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Job created successfully", "Created", 201, resp);
     }
 
@@ -93,6 +94,7 @@ class JobController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("total", jobs.length)
             .set("results", jarr);
+            
         return successResponse("Jobs retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -111,6 +113,7 @@ class JobController : ManageHttpController {
             return errorResponse("Job not found", 404);
 
         auto resp = job.toJson;
+            
         return successResponse("Job retrieved successfully", 200, resp);
     }
 
@@ -141,6 +144,7 @@ class JobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Job updated successfully", 200, responseData);
     }
 
@@ -161,6 +165,7 @@ class JobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Job deleted successfully", 200, responseData);
     }
 

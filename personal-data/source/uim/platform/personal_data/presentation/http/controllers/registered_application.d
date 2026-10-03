@@ -70,6 +70,7 @@ class RegisteredApplicationController : ManageHttpController {
             return errorResponse(result.message);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application registered", "Registered", 201, resp);
 
     }
@@ -173,6 +174,7 @@ class RegisteredApplicationController : ManageHttpController {
             return errorResponse(result.message);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application suspended", "Suspended", 200, resp);
     }
 
@@ -193,6 +195,7 @@ class RegisteredApplicationController : ManageHttpController {
             return errorResponse(result.message);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application deleted", "Deleted", 200, resp);
     }
 }

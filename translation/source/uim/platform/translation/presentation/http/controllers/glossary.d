@@ -55,6 +55,7 @@ class GlossaryController : ManageHttpController {
             .set("id", result.id)
             .set("message", "Glossary entry created")
             .set("statusCode", 201);
+            
         return successResponse("Glossary entry created successfully", "Created", 201, responseData);
     }
 
@@ -76,6 +77,7 @@ class GlossaryController : ManageHttpController {
             .set("count", entries.length)
             .set("entries", arr)
             .set("statusCode", 200);
+            
         return successResponse("Glossary entries retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -99,6 +101,7 @@ class GlossaryController : ManageHttpController {
             .set("id", entry.id)
             .set("message", "Glossary entry retrieved")
             .set("statusCode", 200);
+            
         return successResponse("Glossary entry retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -130,6 +133,7 @@ class GlossaryController : ManageHttpController {
             .set("id", result.id)
             .set("message", "Glossary entry updated")
             .set("statusCode", 200);
+            
         return successResponse("Glossary entry updated successfully", "Updated", 200, responseData);
     }
 

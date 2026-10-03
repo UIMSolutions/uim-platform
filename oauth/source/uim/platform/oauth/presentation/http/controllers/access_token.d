@@ -83,6 +83,7 @@ class AccessTokenController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Access token created successfully", "Created", 201, resp);
     }
 
@@ -100,6 +101,7 @@ class AccessTokenController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Access token revoked successfully", "Revoked", 200, resp);
     }
 
@@ -119,6 +121,7 @@ class AccessTokenController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Access token deleted successfully", "Deleted", 200, resp);
     }
 }

@@ -40,6 +40,7 @@ class QueueController : ManageHttpController {
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson).array.toJson)
             .set("message", "EventQueue list retrieved successfully");
+            
         return successResponse("EventQueue list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -57,6 +58,7 @@ class QueueController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("message", "EventQueue retrieved successfully")
             .set("resource", e.toJson);
+            
         return successResponse("EventQueue retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -91,6 +93,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("EventQueue created successfully", 201, responseData);
     }
 
@@ -117,6 +120,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("EventQueue updated successfully", 200, responseData);
     }
 
@@ -135,6 +139,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("EventQueue deleted successfully", 200, responseData);
     }
 }

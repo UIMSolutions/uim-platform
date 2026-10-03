@@ -53,6 +53,7 @@ class ConsentRecordController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Consent record created successfully", "Created", 201, resp);
     }
 
@@ -124,6 +125,7 @@ class ConsentRecordController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Consent record withdrawn successfully", "Withdrawn", 200, resp);
     }
 
@@ -144,6 +146,7 @@ class ConsentRecordController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Consent record deleted successfully", "Deleted", 200, resp);
     }
 }

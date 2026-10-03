@@ -40,6 +40,7 @@ class SubscriptionJobController : ManageHttpController {
         auto arr = jobs.map!(j => j.toJson).array.toJson;
 
         auto responsedata = Json.emptyObject.set("count", jobs.length).set("jobs", arr);
+            
         return successResponse("Jobs retrieved", "Retrieved " ~ jobs.length ~ " jobs for tenant " ~ tenantId, 200, responsedata);
     }
 
@@ -55,6 +56,7 @@ class SubscriptionJobController : ManageHttpController {
             return errorResponse("Job not found", "No job found with ID " ~ id, 404);
 
         auto responsedata = job.toJson;
+            
         return successResponse("Job retrieved", "Retrieved job with ID " ~ id, 200, responsedata);
 
     }

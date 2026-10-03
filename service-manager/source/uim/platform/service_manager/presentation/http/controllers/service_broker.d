@@ -43,6 +43,7 @@ class ServiceBrokerController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Service brokers retrieved successfully", 200, responseData);
     }
 
@@ -90,6 +91,7 @@ class ServiceBrokerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service broker created successfully", 201, responseData);
     }
 
@@ -116,6 +118,7 @@ class ServiceBrokerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service broker updated successfully", 200, responseData);
     }
 

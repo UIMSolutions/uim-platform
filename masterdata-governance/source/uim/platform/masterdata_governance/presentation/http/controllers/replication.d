@@ -40,6 +40,7 @@ class ReplicationController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Replication list retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -69,6 +70,7 @@ class ReplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Replication created successfully", "Created", 201, responseData);
     }
 
@@ -88,6 +90,7 @@ class ReplicationController : ManageHttpController {
             return errorResponse("Replication not found", 404);
 
         auto responseData = rep.toJson();
+            
         return successResponse("Replication retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -111,6 +114,7 @@ class ReplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Replication updated successfully", "Updated", 200, responseData);
     }
 
@@ -129,6 +133,7 @@ class ReplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Replication deleted successfully", "Deleted", 200, responseData);
     }
 }

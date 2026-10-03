@@ -53,6 +53,7 @@ class TaskDefinitionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task definition created successfully", "Created", 201, responseData);
     }
 
@@ -73,6 +74,7 @@ class TaskDefinitionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Task definitions retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -97,6 +99,7 @@ class TaskDefinitionController : ManageHttpController {
             return errorResponse("Task definition not found", 404);
 
         auto response = d.toJson();
+            
         return successResponse("Task definition retrieved successfully", 200, response);
     }
 
@@ -196,6 +199,7 @@ class TaskDefinitionController : ManageHttpController {
             return errorResponse(result.message, 400);
             
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task definition deleted successfully", "Deleted", 200, resp);
     }
 }

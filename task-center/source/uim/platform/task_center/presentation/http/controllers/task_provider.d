@@ -56,6 +56,7 @@ class TaskProviderController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provider created successfully", "Created", 201, responseData);
     }
 
@@ -72,6 +73,7 @@ class TaskProviderController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Providers retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -95,6 +97,7 @@ class TaskProviderController : ManageHttpController {
             return errorResponse("Provider not found", 404);
 
         auto responseData = provider.toJson();
+            
         return successResponse("Provider retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -125,6 +128,7 @@ class TaskProviderController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provider updated successfully", "Updated", 200, resp);
     }
 
@@ -146,6 +150,7 @@ class TaskProviderController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provider activated successfully", "Updated", 200, responseData);
     }
 
@@ -169,6 +174,7 @@ class TaskProviderController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provider deactivated successfully", "Updated", 200, responseData);
     }
 
@@ -192,6 +198,7 @@ class TaskProviderController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provider sync initiated successfully", "Updated", 200, responseData);
     }
 
@@ -212,6 +219,7 @@ class TaskProviderController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provider deleted successfully", "Deleted", 200, responseData);
     }
 }

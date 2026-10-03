@@ -36,6 +36,7 @@ class MtaOperationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto ops = usecase.listOperations(tenantId).map!(op => op.toJson()).array.toJson;
+            
         return successResponse("Operations retrieved successfully", "Retrieved", 200, Json.emptyObject.set(            "operations", ops).set("count", ops.length));
     }
 
@@ -73,6 +74,7 @@ class MtaOperationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto op = usecase.getOperation(tenantId, id);
+            
         return successResponse("Operation polled successfully", "Polled", 200, op.toJson());
     }
 

@@ -86,6 +86,7 @@ class CallController : HttpController {
         auto jarr = Json.emptyArray;
         foreach (c; calls)
             jarr ~= c.toJson();
+            
         return successResponse("RFC calls retrieved successfully", "Retrieved", 200, Json.emptyObject.set("count", cast(
                 long)calls.length).set("items", jarr));
     }

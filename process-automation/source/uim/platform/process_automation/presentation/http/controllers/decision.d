@@ -53,6 +53,7 @@ class DecisionController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Decision created successfully", "Created", 201, resp);
     }
 
@@ -136,6 +137,7 @@ class DecisionController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Decision updated successfully", "Updated", 200, resp);
     }
 
@@ -154,6 +156,7 @@ class DecisionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Decision deleted successfully", "Deleted", 200, resp);
     }
 }

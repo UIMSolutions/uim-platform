@@ -84,6 +84,7 @@ class AssignmentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto response = Json.emptyObject.set("id", Json(result.id));
+            
         return successResponse("Assignment created successfully", "Created", 201, response);
     }
 
@@ -110,6 +111,7 @@ class AssignmentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto response = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Assignment updated successfully", "Updated", 200, response);
     }
 
@@ -125,6 +127,7 @@ class AssignmentController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto response = Json.emptyObject.set("id", Json(result.id));
+            
         return successResponse("Assignment deleted successfully", "Deleted", 200, response);
     }
 }

@@ -43,6 +43,7 @@ class ServiceOfferingController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Service offerings retrieved successfully", 200, responseData);
     }
 
@@ -98,6 +99,7 @@ class ServiceOfferingController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service offering created successfully", 201, responseData);
     }
 
@@ -126,6 +128,7 @@ class ServiceOfferingController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service offering updated successfully", 200, responseData);
     }
 
@@ -145,6 +148,7 @@ class ServiceOfferingController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service offering deleted successfully", 200, responseData);
     }
 }

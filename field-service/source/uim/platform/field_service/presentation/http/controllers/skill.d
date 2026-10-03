@@ -90,6 +90,7 @@ class SkillController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Skill created successfully", "Created", 201, resp);
 
     }
@@ -116,6 +117,7 @@ class SkillController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Skill updated successfully", "Updated", 200, resp);
     }
 
@@ -134,6 +136,7 @@ class SkillController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Skill deleted successfully", 200, responseData);
     }
 }

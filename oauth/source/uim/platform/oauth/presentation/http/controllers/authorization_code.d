@@ -86,6 +86,7 @@ class AuthorizationCodeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Authorization code created successfully", "Created", 201, resp);
     }
 
@@ -103,6 +104,7 @@ class AuthorizationCodeController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("id", id);
+            
         return successResponse("Authorization code marked as used successfully", "Updated", 200, resp);
     }
 
@@ -123,6 +125,7 @@ class AuthorizationCodeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Authorization code deleted successfully", "Deleted", 200, resp);
     }
 }

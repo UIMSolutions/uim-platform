@@ -41,6 +41,7 @@ class MessagingServiceController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Messaging service list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -56,6 +57,7 @@ class MessagingServiceController : ManageHttpController {
             return errorResponse("Scan job not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("Messaging service retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -87,6 +89,7 @@ class MessagingServiceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Messaging service created successfully", "Created", 201, responseData);
     }
 
@@ -114,6 +117,7 @@ class MessagingServiceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Messaging service updated successfully", "Updated", 200, responseData);
     }
 
@@ -129,6 +133,7 @@ class MessagingServiceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Messaging service deleted successfully", "Deleted", 200, responseData);
     }
 }

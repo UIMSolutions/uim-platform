@@ -41,6 +41,7 @@ class DataConnectionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Data connection list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class DataConnectionController : ManageHttpController {
             return errorResponse("Data connection not found", 404);
 
         auto responseData = connection.toJson();
+            
         return successResponse("Data connection retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -92,6 +94,7 @@ class DataConnectionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data connection created successfully", "Created", 201, responseData);
     }
 
@@ -120,6 +123,7 @@ class DataConnectionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data connection updated successfully", "Updated", 200, responseData);
     }
 
@@ -138,6 +142,7 @@ class DataConnectionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data connection deleted successfully", "Deleted", 200, responseData);
     }
 }

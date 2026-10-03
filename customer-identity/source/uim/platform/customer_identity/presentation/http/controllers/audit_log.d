@@ -39,6 +39,7 @@ class AuditLogController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Audit logs retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -66,6 +67,7 @@ class AuditLogController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Audit event recorded successfully", "Created", 201, responseData);
     }
 
@@ -103,6 +105,7 @@ class AuditLogController : ManageHttpController {
             return errorResponse(result.message, 404);
             
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Audit log deleted successfully", "Deleted", 200, responseData);
     }
 }

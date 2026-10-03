@@ -76,6 +76,7 @@ class CompositionRunController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Composition run deleted successfully", "Deleted", 200, responseData);
   }
 }

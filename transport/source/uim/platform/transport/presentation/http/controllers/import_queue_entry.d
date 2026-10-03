@@ -41,6 +41,7 @@ class ImportQueueEntryController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Import queue entries retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -59,6 +60,7 @@ class ImportQueueEntryController : ManageHttpController {
             return errorResponse("Job not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("Import queue entry retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -85,6 +87,7 @@ class ImportQueueEntryController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Import queue entry created successfully", "Created", 201, responseData);
     }
 
@@ -137,6 +140,7 @@ class ImportQueueEntryController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Import queue entry deleted successfully", "Deleted", 200, responseData);
     }
 }

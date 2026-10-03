@@ -41,6 +41,7 @@ class ScheduledExecutionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Scheduled execution list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class ScheduledExecutionController : ManageHttpController {
             return errorResponse("Scheduled execution not found", 404);
 
         auto responseData = execution.toJson();
+            
         return successResponse("Scheduled execution retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -88,6 +90,7 @@ class ScheduledExecutionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Scheduled execution created successfully", "Created", 201, responseData);
     }
 
@@ -112,6 +115,7 @@ class ScheduledExecutionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Scheduled execution updated successfully", "Updated", 200, responseData);
     }
 
@@ -128,6 +132,7 @@ class ScheduledExecutionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Scheduled execution deleted successfully", "Deleted", 200, responseData);
     }
 }

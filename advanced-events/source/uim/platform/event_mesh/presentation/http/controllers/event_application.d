@@ -89,6 +89,7 @@ class EventApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Event application created successfully", "Created", 201, responseData);
     }
 
@@ -107,6 +108,7 @@ class EventApplicationController : ManageHttpController {
             return errorResponse("Event application not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("Event application retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -138,6 +140,7 @@ class EventApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Event application updated successfully", "Updated", 200, responseData);
 
     }
@@ -158,6 +161,7 @@ class EventApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Event application deleted successfully", "Deleted", 200, responseData);
     }
 }

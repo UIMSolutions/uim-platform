@@ -52,6 +52,7 @@ class PermissionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Permission list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -83,6 +84,7 @@ class PermissionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Permission granted successfully", "Created", 201, responseData);
     }
 
@@ -102,6 +104,7 @@ class PermissionController : ManageHttpController {
             return errorResponse("Permission not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("Permission retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -120,6 +123,7 @@ class PermissionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Permission deleted successfully", "Deleted", 200, responseData);
     }
 }

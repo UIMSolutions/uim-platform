@@ -70,6 +70,7 @@ class ProjectController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Project created successfully", "Created", 201, resp);
     }
 
@@ -112,6 +113,7 @@ class ProjectController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Project updated successfully", "Updated", 200, resp);
     }
 

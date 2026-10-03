@@ -43,6 +43,7 @@ class DataSubjectController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto response = Json.emptyObject.set("id", result.id);
+            
         return successResponse(        "Data subject created successfully", "Created", 201, response);
     }
 
@@ -112,6 +113,7 @@ class DataSubjectController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto response = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data subject updated successfully", "Updated", 200, response);
     }
 

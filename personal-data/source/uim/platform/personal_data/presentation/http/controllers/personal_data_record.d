@@ -54,6 +54,7 @@ class PersonalDataRecordController : ManageHttpController {
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id);
+            
         return successResponse("Personal data record created successfully", "Created", 201, resp);
     }
 
@@ -121,6 +122,7 @@ class PersonalDataRecordController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Personal data record deleted successfully", "Deleted", 200, responseData);
     }
 }

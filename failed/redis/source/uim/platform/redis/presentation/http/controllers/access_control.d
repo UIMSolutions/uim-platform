@@ -35,6 +35,7 @@ class AccessControlController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = accessControls.listAccessControls(tenantId);
+            
         return successResponse("Access controls retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));

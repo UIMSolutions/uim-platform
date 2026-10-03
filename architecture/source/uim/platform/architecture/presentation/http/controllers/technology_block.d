@@ -35,6 +35,7 @@ class TechnologyBlockController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto items = usecase.listBlocks(tenantId).map!(item => item.toJson()).array;
         auto itemsJson = items.toJson;
+            
         return successResponse("Technology blocks listed", 200, Json.emptyObject
             .set("count", items.length)
             .set("items", itemsJson));

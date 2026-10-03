@@ -67,6 +67,7 @@ class ScreenSetController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Screen set created successfully", "Created", 201, responseData);
     }
 
@@ -117,6 +118,7 @@ class ScreenSetController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Screen set updated successfully", "Updated", 200, responseData);
     }
 
@@ -136,6 +138,7 @@ class ScreenSetController : ManageHttpController {
             return errorResponse(result.message, 404);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Screen set deleted successfully", "Deleted", 200, responseData);
     }
 }

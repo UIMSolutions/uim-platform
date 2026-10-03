@@ -34,6 +34,7 @@ class ServiceBindingController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = bindings.listServiceBindings(tenantId);
+            
         return successResponse("Service bindings retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));

@@ -127,6 +127,7 @@ class SubscriptionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Subscription updated successfully", "Updated", 200, responseData);
   }
 

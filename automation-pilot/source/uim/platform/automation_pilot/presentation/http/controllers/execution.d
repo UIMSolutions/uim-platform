@@ -41,6 +41,7 @@ class ExecutionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Execution list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class ExecutionController : ManageHttpController {
             return errorResponse("Execution not found", 404);
 
         auto responseData = execution.toJson();
+            
         return successResponse("Execution retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -83,6 +85,7 @@ class ExecutionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Execution created successfully", "Created", 201, responseData);
     }
 
@@ -105,6 +108,7 @@ class ExecutionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Execution updated successfully", "Updated", 200, responseData);
     }
 
@@ -123,6 +127,7 @@ class ExecutionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Execution deleted successfully", "Deleted", 200, responseData);
     }
 }

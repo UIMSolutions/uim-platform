@@ -41,6 +41,7 @@ class RunConfigurationController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Run configuration list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -60,6 +61,7 @@ class RunConfigurationController : ManageHttpController {
             return errorResponse("Scan job not found", 404);
 
         auto responseData = config.toJson();
+            
         return successResponse("Run configuration retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -89,6 +91,7 @@ class RunConfigurationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Run configuration created successfully", "Created", 201, responseData);
     }
 
@@ -118,6 +121,7 @@ class RunConfigurationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Run configuration updated successfully", "Updated", 200, responseData);
     }
 
@@ -137,6 +141,7 @@ class RunConfigurationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Run configuration deleted successfully", "Deleted", 200, responseData);
     }
 }

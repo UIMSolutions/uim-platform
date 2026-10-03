@@ -36,6 +36,7 @@ class MessageClientController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto items = usecase.listClients(tenantId);
+            
         return successResponse("Message clients retrieved successfully", "Retrieved", 200, Json.emptyObject
                 .set("count", items.length)
                 .set("resources", items.map!(e => e.toJson).array.toJson));

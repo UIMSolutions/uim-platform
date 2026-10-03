@@ -53,6 +53,7 @@ class ProcessController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Process created successfully", "Created", 201, resp);
     }
 
@@ -135,6 +136,7 @@ class ProcessController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Process updated successfully", "Updated", 200, resp);
     }
 
@@ -165,6 +167,7 @@ class ProcessController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Process deployment action " ~ r.action ~" performed successfully", "Deployed", 200, resp);
     }
 
@@ -186,6 +189,7 @@ class ProcessController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Process deleted successfully", "Deleted", 200, resp);
     }
 }

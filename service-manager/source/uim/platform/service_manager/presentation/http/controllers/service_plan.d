@@ -43,6 +43,7 @@ class ServicePlanController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Service plans retrieved successfully", 200, responseData);
     }
 
@@ -96,6 +97,7 @@ class ServicePlanController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service plan created successfully", "Created", 201, responseData);
     }
 
@@ -123,6 +125,7 @@ class ServicePlanController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service plan updated successfully", "Updated", 200, responseData);
     }
 
@@ -141,6 +144,7 @@ class ServicePlanController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service plan deleted successfully", "Deleted", 200, responseData);
     }
 }

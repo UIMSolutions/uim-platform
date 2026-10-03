@@ -63,6 +63,7 @@ public:
       auto result = _usecase.list(req.getTenantId);
 
         auto responseData = Json.emptyObject.set("count", result.data.length).set("resources", serializeToJson(result.data));
+            
         return successResponse("Job runs retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -79,6 +80,7 @@ public:
             return errorResponse("Job run not found", 404);
 
         auto responseData = result.toJson();
+            
         return successResponse("Job run retrieved successfully", "Retrieved", 200, responseData);
 }
 

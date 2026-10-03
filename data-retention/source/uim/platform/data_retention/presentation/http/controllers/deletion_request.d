@@ -43,6 +43,7 @@ class DeletionRequestController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Scan job created successfully", "Created", 201, responseData);
     }
 
@@ -67,6 +68,7 @@ class DeletionRequestController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Data subject list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -137,6 +139,7 @@ class DeletionRequestController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Deletion request deleted successfully", "Deleted", 200, responseData);
     }
 }

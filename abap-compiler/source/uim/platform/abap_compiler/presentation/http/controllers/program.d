@@ -72,6 +72,7 @@ class ProgramController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Program created successfully", "Created", 201, responseData);
     }
 
@@ -90,6 +91,7 @@ class ProgramController : ManageHttpController {
             return errorResponse("Program not found", 404);
 
         auto responseData = prog.toJson();
+            
         return successResponse("Program retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -114,6 +116,7 @@ class ProgramController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Program updated successfully", "Updated", 200, responseData);
     }
 
@@ -132,6 +135,7 @@ class ProgramController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Program deleted successfully", "Deleted", 200, responseData);
     }
 }

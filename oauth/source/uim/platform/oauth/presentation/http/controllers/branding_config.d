@@ -41,6 +41,7 @@ class BrandingConfigController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Branding config list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -58,6 +59,7 @@ class BrandingConfigController : ManageHttpController {
             return errorResponse("Scan job not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("Branding config retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -88,6 +90,7 @@ class BrandingConfigController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Branding config created successfully", "Created", 201, responseData);
     }
 
@@ -118,6 +121,7 @@ class BrandingConfigController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Branding config updated successfully", "Updated", 200, responseData);
     }
 
@@ -135,6 +139,7 @@ class BrandingConfigController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Branding config deleted successfully", "Deleted", 200, responseData);
     }
 }

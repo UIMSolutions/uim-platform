@@ -58,6 +58,7 @@ class MemberFunctionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("status", "success").set("statusCode", 200)
             .set("resource", e.toJson());
+            
         return successResponse("Member function retrieved successfully", 200, responseData);
     }
 
@@ -82,6 +83,7 @@ class MemberFunctionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("status", "success").set("statusCode", 201)
             .set("id", result.id);
+            
         return successResponse("Member function created successfully", 201, responseData);
     }
 

@@ -34,6 +34,7 @@ class MetricController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = metrics.listMetrics(tenantId);
+            
         return successResponse("Metrics retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));

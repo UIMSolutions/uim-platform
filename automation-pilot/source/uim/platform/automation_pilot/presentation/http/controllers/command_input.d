@@ -116,6 +116,7 @@ class CommandInputController : ManageHttpController {
         auto result = commandInputs.updateCommandInput(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
+            
         return successResponse("PilotCommand Input updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
     }
 

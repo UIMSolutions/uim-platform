@@ -35,6 +35,7 @@ class ServicePlanController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = plans.listServicePlans(tenantId);
+            
         return successResponse("Service plans retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));

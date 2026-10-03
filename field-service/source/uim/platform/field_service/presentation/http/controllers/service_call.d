@@ -56,6 +56,7 @@ class ServiceCallController : ManageHttpController {
         auto serviceCall = usecase.getServiceCall(tenantId, id);
         if (serviceCall.isNull)
             return errorResponse("Service call not found", 404);
+            
         return successResponse("Service call retrieved successfully", "Retrieved", 200, serviceCall
                 .toJson);
     }
@@ -90,6 +91,7 @@ class ServiceCallController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service call created successfully", "Created", 201, resp);
     }
 
@@ -116,6 +118,7 @@ class ServiceCallController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service call updated successfully", "Updated", 200, resp);
     }
 
@@ -133,6 +136,7 @@ class ServiceCallController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service call deleted successfully", 200, responseData);
 
     }

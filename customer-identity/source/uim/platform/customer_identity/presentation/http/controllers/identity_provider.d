@@ -40,6 +40,7 @@ class IdentityProviderController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Identity providers retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -69,6 +70,7 @@ class IdentityProviderController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Identity provider created successfully", "Created", 201, responseData);
     }
 
@@ -117,6 +119,7 @@ class IdentityProviderController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Identity provider updated successfully", "Updated", 200, responseData);
     }
 
@@ -135,6 +138,7 @@ class IdentityProviderController : ManageHttpController {
             return errorResponse(result.message, 404);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Identity provider deleted successfully", "Deleted", 200, responseData);
     }
 }

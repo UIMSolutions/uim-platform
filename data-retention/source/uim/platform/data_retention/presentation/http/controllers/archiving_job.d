@@ -43,6 +43,7 @@ class ArchivingJobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Archiving job created successfully", 201, responseData);
     }
 
@@ -67,6 +68,7 @@ class ArchivingJobController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", jarr);
+            
         return successResponse("Archiving jobs retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -122,6 +124,7 @@ class ArchivingJobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Archiving job updated successfully", 200, responseData);
     }
 
@@ -140,6 +143,7 @@ class ArchivingJobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Archiving job deleted successfully", 200, responseData);
     }
 }

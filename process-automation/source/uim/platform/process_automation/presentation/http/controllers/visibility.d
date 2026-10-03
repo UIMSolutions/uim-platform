@@ -53,6 +53,7 @@ class VisibilityController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Visibility dashboard created successfully", "Created", 201, responseData);
     }
 
@@ -79,6 +80,7 @@ class VisibilityController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", jarr);
+            
         return successResponse("Visibility dashboard list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -134,6 +136,7 @@ class VisibilityController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Visibility dashboard updated successfully", "Updated", 200, responseData);
     }
 
@@ -153,6 +156,7 @@ class VisibilityController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Visibility dashboard deleted successfully", 200, responseData);
     }
 }

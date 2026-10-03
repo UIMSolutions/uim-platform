@@ -41,6 +41,7 @@ class ProjectMemberController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Project member list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class ProjectMemberController : ManageHttpController {
             return errorResponse("Project member not found", 404);
 
         auto responseData = member.toJson();
+            
         return successResponse("Project member retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -87,6 +89,7 @@ class ProjectMemberController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Project member created successfully", "Created", 201, responseData);
     }
 
@@ -114,6 +117,7 @@ class ProjectMemberController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Project member updated successfully", "Updated", 200, responseData);
     }
 
@@ -132,6 +136,7 @@ class ProjectMemberController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Project member deleted successfully", "Deleted", 200, responseData);
     }
 }

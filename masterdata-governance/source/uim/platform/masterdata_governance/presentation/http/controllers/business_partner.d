@@ -59,6 +59,7 @@ class BusinessPartnerController : ManageHttpController {
             return errorResponse("Business partner not found", 404);
         
         auto responseData = bp.toJson();
+            
         return successResponse("Business partner retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -115,6 +116,7 @@ class BusinessPartnerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Business partner created successfully", "Created", 201, responseData);
     }
 
@@ -157,6 +159,7 @@ class BusinessPartnerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Business partner updated successfully", "Updated", 200, responseData);
     }
 
@@ -175,6 +178,7 @@ class BusinessPartnerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Business partner deleted successfully", "Deleted", 200, responseData);
     }
 }

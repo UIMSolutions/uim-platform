@@ -92,6 +92,7 @@ class OAuthClientController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("OAuth client created successfully", "Created", 201, resp);
     }
 
@@ -118,6 +119,7 @@ class OAuthClientController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("OAuth client updated successfully", 200, responseData);
     }
 
@@ -136,6 +138,7 @@ class OAuthClientController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("OAuth client deleted successfully", 200, responseData);
     }
 }

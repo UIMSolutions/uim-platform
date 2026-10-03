@@ -35,6 +35,7 @@ class BuildController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = builds.listBuilds(tenantId);
+            
         return successResponse("Builds retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));

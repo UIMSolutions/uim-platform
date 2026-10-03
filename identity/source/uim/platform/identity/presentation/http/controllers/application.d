@@ -37,6 +37,7 @@ class ApplicationController : ManageHttpController {
 
         auto items = usecase.listApplications(tenantId);
         auto list = items.map!(e => e.toJson()).array.toJson;
+            
         return successResponse("Applications retrieved successfully", "OK", 200, Json.emptyObject
                 .set("count", items.length)
                 .set("resources", list));
@@ -82,6 +83,7 @@ class ApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application created successfully", "Created", 201, responseData);
     }
 
@@ -108,6 +110,7 @@ class ApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application updated successfully", "Updated", 200, responseData);
     }
 
@@ -123,6 +126,7 @@ class ApplicationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -41,6 +41,7 @@ class ServiceAccountController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Service account list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class ServiceAccountController : ManageHttpController {
             return errorResponse("Service account not found", 404);
 
         auto responseData = account.toJson();
+            
         return successResponse("Service account retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -86,6 +88,7 @@ class ServiceAccountController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service account created successfully", "Created", 201, responseData);
     }
 
@@ -110,6 +113,7 @@ class ServiceAccountController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service account updated successfully", "Updated", 200, responseData);
     }
 
@@ -128,6 +132,7 @@ class ServiceAccountController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service account deleted successfully", "Deleted", 200, responseData);
     }
 }

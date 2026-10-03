@@ -40,6 +40,7 @@ class SocialIdentityController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Social identities retrieved successfully", "Retrieved", 200, responseData);
     }
 

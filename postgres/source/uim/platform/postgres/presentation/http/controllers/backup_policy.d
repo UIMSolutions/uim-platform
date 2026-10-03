@@ -96,6 +96,7 @@ class BackupPolicyController : ManageHttpController {
         auto result = backupPolicies.updateBackupPolicy(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
+            
         return successResponse("Backup policy updated successfully", 200, Json.emptyObject.set("id", result.id));
     }
 
@@ -112,6 +113,7 @@ class BackupPolicyController : ManageHttpController {
         auto result = backupPolicies.deleteBackupPolicy(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 404);
+            
         return successResponse("Backup policy deleted successfully", 200, Json.emptyObject.set("id", result.id));
     }
 }

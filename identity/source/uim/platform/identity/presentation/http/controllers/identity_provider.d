@@ -53,6 +53,7 @@ class IdentityProviderController : ManageHttpController {
         auto e = usecase.getIdentityProvider(tenantId, id);
         if (e.isNull)
             return errorResponse("Identity provider not found", 404);
+            
         return successResponse("Identity provider retrieved successfully", "Retrieved", 200, Json.emptyObject
                 .set("resource", e.toJson));
     }
@@ -81,6 +82,7 @@ class IdentityProviderController : ManageHttpController {
         auto result = usecase.createIdentityProvider(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
+            
         return successResponse("Identity provider created successfully", "Created", 201, Json.emptyObject.set("id", result
                 .id));
     }
@@ -106,6 +108,7 @@ class IdentityProviderController : ManageHttpController {
         auto result = usecase.updateIdentityProvider(dto);
         if (result.hasError)
             return errorResponse(result.message, 404);
+            
         return successResponse("Identity provider updated successfully", "Updated", 200, Json.emptyObject.set("id", result
                 .id));
     }
@@ -120,6 +123,7 @@ class IdentityProviderController : ManageHttpController {
         auto result = usecase.deleteIdentityProvider(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 404);
+            
         return successResponse("Identity provider deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
                 .id));
     }

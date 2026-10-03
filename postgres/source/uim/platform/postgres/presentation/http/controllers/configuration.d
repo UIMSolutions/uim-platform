@@ -35,6 +35,7 @@ class ConfigurationController : ManageHttpController {
             
         auto tenantId = precheck.tenantId;
         auto items = configurations.listConfigurations(tenantId);
+            
         return successResponse("Configurations retrieved successfully", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));
@@ -52,6 +53,7 @@ class ConfigurationController : ManageHttpController {
         auto e = configurations.getConfiguration(tenantId, id);
         if (e.isNull)
             return errorResponse("Configuration not found", 404);
+            
         return successResponse("Configuration retrieved successfully", 200, e.toJson());
     }
 
@@ -79,6 +81,7 @@ class ConfigurationController : ManageHttpController {
         auto result = configurations.createConfiguration(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
+            
         return successResponse("Configuration created successfully", 201, Json.emptyObject.set("id", result.id));
     }
 
@@ -117,6 +120,7 @@ class ConfigurationController : ManageHttpController {
         auto result = configurations.deleteConfiguration(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 404);
+            
         return successResponse("Configuration deleted successfully", 200, Json.emptyObject.set("id", result.id));
     }
 }

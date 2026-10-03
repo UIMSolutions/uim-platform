@@ -65,6 +65,7 @@ class ApplicationGroupController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application group created successfully", "Created", 201, responseData);
 
     }
@@ -118,6 +119,7 @@ class ApplicationGroupController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application group updated successfully", "Updated", 200, responseData);
     }
 
@@ -136,6 +138,7 @@ class ApplicationGroupController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Application group deleted successfully", "Deleted", 204, responseData);
     }
 }

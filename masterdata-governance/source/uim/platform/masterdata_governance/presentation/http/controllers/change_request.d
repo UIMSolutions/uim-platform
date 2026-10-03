@@ -61,6 +61,7 @@ class ChangeRequestController : ManageHttpController {
             return errorResponse("Change request not found", 404);
 
         auto responseData = cr.toJson();
+            
         return successResponse("Change request retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -90,6 +91,7 @@ class ChangeRequestController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Change request created successfully", "Created", 201, responseData);
     }
 
@@ -134,6 +136,7 @@ class ChangeRequestController : ManageHttpController {
 
         auto responseData = Json.emptyObject
             .set("id", result.id);
+            
         return successResponse("Change request updated successfully", "Updated", 200, responseData);
     }
 
@@ -152,6 +155,7 @@ class ChangeRequestController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Change request deleted successfully", "Deleted", 200, responseData);
     }
 }

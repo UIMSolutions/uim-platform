@@ -40,6 +40,7 @@ class CustomerController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Customers retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -68,6 +69,7 @@ class CustomerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData =  Json.emptyObject.set("id", result.id);
+            
         return successResponse("Customer created successfully", "Created", 201, responseData);
     }
 

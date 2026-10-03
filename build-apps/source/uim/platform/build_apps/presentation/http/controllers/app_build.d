@@ -74,6 +74,7 @@ class AppBuildController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("App build created successfully", "Created", 201, resp);
     }
 

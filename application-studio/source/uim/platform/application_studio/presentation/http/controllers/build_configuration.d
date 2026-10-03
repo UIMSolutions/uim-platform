@@ -41,6 +41,7 @@ class BuildConfigurationController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Build configuration list retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -69,6 +70,7 @@ class BuildConfigurationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Build configuration created successfully", "Created", 201, resp);
     }
 
@@ -87,6 +89,7 @@ class BuildConfigurationController : ManageHttpController {
             return errorResponse("Build configuration not found", "NotFound", 404);
 
         Json responseData = e.toJson();
+            
         return successResponse("Build configuration retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -115,6 +118,7 @@ class BuildConfigurationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Build configuration updated successfully", "Updated", 200, responseData);
     }
 
@@ -133,6 +137,7 @@ class BuildConfigurationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Build configuration deleted successfully", "Deleted", 200, responseData);
     }
 }

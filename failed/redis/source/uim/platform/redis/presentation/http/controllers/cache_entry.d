@@ -35,6 +35,7 @@ class CacheEntryController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = cacheEntries.listCacheEntries(tenantId).map!(e => e.toJson()).array.toJson;
+            
         return successResponse("Cache entries retrieved successfully", "Retrieved", 200, Json.emptyObject
                 .set("count", items.length)
                 .set("resources", items.map!(e => e.toJson()).array.toJson));

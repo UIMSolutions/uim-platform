@@ -91,6 +91,7 @@ class CustomerController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Customer created successfully", "Created", 201, resp);
     }
 
@@ -117,6 +118,7 @@ class CustomerController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Customer updated successfully", "Updated", 200, resp);
     }
 

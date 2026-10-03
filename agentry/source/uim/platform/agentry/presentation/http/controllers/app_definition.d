@@ -40,6 +40,7 @@ class AppDefinitionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", items.length)
             .set("resources", items);
+            
         return successResponse("App definition list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -68,6 +69,7 @@ class AppDefinitionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("App definition created successfully", "Created", 201, responseData);
     }
 
@@ -86,6 +88,7 @@ class AppDefinitionController : ManageHttpController {
             return errorResponse("App definition not found", 404);
 
         auto responseData = definition.toJson();
+            
         return successResponse("App definition retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -113,6 +116,7 @@ class AppDefinitionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("App definition updated successfully", "Updated", 200, responseData);
     }
 
@@ -131,6 +135,7 @@ class AppDefinitionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("App definition deleted successfully", "Deleted", 200, responseData);
     }
 }

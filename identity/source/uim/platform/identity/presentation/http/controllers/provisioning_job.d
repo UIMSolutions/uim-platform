@@ -81,6 +81,7 @@ class ProvisioningJobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provisioning job created successfully", "Created", 201, responseData);}
 
     override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -101,6 +102,7 @@ class ProvisioningJobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provisioning job deleted successfully", "Deleted", 200, responseData);
     }
 
@@ -117,6 +119,7 @@ class ProvisioningJobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provisioning job started successfully", "Started", 200, responseData);
     }
 
@@ -135,6 +138,7 @@ class ProvisioningJobController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Provisioning job cancelled successfully", "Cancelled", 200, responseData);
     }
 

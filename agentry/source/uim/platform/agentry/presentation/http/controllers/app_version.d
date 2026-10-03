@@ -60,6 +60,7 @@ class AppVersionController : ManageHttpController {
             return errorResponse("App version not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("App version retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -89,6 +90,7 @@ class AppVersionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("App version created successfully", "Created", 201, responseData);
     }
 
@@ -116,6 +118,7 @@ class AppVersionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("App version updated successfully", "Updated", 200, responseData);
     }
 
@@ -135,6 +138,7 @@ class AppVersionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("App version deleted successfully", "Deleted", 200, responseData);
     }
 }

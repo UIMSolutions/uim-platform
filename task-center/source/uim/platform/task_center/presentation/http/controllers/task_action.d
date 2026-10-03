@@ -49,6 +49,7 @@ class TaskActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Action performed successfully", "Created", 201, resp);
     }
 
@@ -87,6 +88,7 @@ class TaskActionController : ManageHttpController {
             return errorResponse("Action not found", 404);
 
         auto response = a.toJson();
+            
         return successResponse("Action retrieved successfully", 200, response);
     }
 
@@ -105,6 +107,7 @@ class TaskActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Action deleted successfully", "Deleted", 200, resp);
     }
 }

@@ -68,6 +68,7 @@ class DataSubjectRoleController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", jarr.length)
             .set("resources", jarr);
+            
         return successResponse("Data subject role list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -86,6 +87,7 @@ class DataSubjectRoleController : ManageHttpController {
             return errorResponse("Data subject role not found", 404);
 
         auto responseData = dsr.toJson();
+            
         return successResponse("Data subject role retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -112,6 +114,7 @@ class DataSubjectRoleController : ManageHttpController {
             .set("name", r.name)
             .set("description", r.description)
             .set("isActive", r.isActive);
+            
         return successResponse("Data subject role updated successfully", "Updated", 200, response);
     }
 
@@ -130,6 +133,7 @@ class DataSubjectRoleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data subject role deleted successfully", "Deleted", 200, responseData);
     }
 }

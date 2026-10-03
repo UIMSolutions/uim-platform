@@ -61,6 +61,7 @@ class DataQualityRuleController : ManageHttpController {
             return errorResponse("Data quality rule not found", 404);
 
         auto responseData = rule.toJson();
+            
         return successResponse("Data quality rule retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -95,6 +96,7 @@ class DataQualityRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data quality rule created successfully", "Created", 201, responseData);
     }
 
@@ -131,6 +133,7 @@ class DataQualityRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data quality rule updated successfully", "Updated", 200, responseData);
     }
 
@@ -149,6 +152,7 @@ class DataQualityRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data quality rule deleted successfully", "Deleted", 200, responseData);
     }
 }

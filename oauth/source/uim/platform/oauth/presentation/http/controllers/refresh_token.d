@@ -41,6 +41,7 @@ class RefreshTokenController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Refresh token list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -58,6 +59,7 @@ class RefreshTokenController : ManageHttpController {
             return errorResponse("Refresh token not found", 404);
 
         auto responseData = token.toJson();
+            
         return successResponse("Refresh token retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -85,6 +87,7 @@ class RefreshTokenController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Refresh token created successfully", "Created", 201, responseData);
     }
 
@@ -103,6 +106,7 @@ class RefreshTokenController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("", 0, responseData);
     }
 
@@ -123,6 +127,7 @@ class RefreshTokenController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Refresh token deleted successfully", 200, responseData);
     }
 }

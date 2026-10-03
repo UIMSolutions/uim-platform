@@ -45,6 +45,7 @@ class LegalGroundController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Legal ground created successfully", "Created", 201, responseData);
     }
 
@@ -68,6 +69,7 @@ class LegalGroundController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Legal grounds retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -120,6 +122,7 @@ class LegalGroundController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Legal ground updated successfully", "Updated", 200, responseData);
     }
 
@@ -138,6 +141,7 @@ class LegalGroundController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Legal ground deleted successfully", "Deleted", 200, responseData);
     }
 }

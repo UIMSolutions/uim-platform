@@ -35,6 +35,7 @@ class ConfigurationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = configurations.listConfigurations(tenantId);
+            
         return successResponse("Configurations retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
             .set("resources", items.map!(e => e.toJson()).array.toJson));

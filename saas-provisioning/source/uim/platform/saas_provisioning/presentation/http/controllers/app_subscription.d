@@ -64,6 +64,7 @@ class AppSubscriptionController : ManageHttpController {
 
         auto arr = subs.map!(s => s.toJson).array.toJson;
         auto responsedata = Json.emptyObject.set("count", subs.length).set("subscriptions", arr);
+            
         return successResponse("subscriptions", "Retrieved " ~ subs.length ~ " subscriptions for tenant " ~ tenantId, 200, responsedata);
     }
 
@@ -103,6 +104,7 @@ class AppSubscriptionController : ManageHttpController {
             return errorResponse("Subscription not found", "No subscription found with ID " ~ id.value, 404);
 
         auto responsedata = sub.toJson;
+            
         return successResponse("Subscription retrieved", "Retrieved subscription with ID " ~ id.value, 200, responsedata);
     }
 
@@ -131,6 +133,7 @@ class AppSubscriptionController : ManageHttpController {
             return errorResponse("Subscription update failed", result.message, 400);
 
         auto responsedata = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Subscription updated", "Subscription updated with ID " ~ result.id.value, 200, responsedata);
     }
 

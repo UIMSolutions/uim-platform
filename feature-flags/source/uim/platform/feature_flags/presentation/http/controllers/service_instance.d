@@ -45,6 +45,7 @@ override protected Json listHandler(HTTPServerRequest req) {
         auto j = Json.emptyObject
         .set("count", instances.length)
             .set("resources", instances);
+            
         return successResponse("Service instance list retrieved successfully", "Retrieved", 200, j);
     }
 
@@ -68,6 +69,7 @@ override protected Json listHandler(HTTPServerRequest req) {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service instance created successfully", "Created", 201, responseData);
     }
 
@@ -111,6 +113,7 @@ override protected Json listHandler(HTTPServerRequest req) {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service instance updated successfully", "Updated", 200, responseData);
     }
 
@@ -130,6 +133,7 @@ override protected Json listHandler(HTTPServerRequest req) {
             return errorResponse(result.message, 404);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Service instance deleted successfully", "Deleted", 200, responseData);
     }
 }

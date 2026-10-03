@@ -41,6 +41,7 @@ class LogicFlowController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Logic flow list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class LogicFlowController : ManageHttpController {
             return errorResponse("Logic flow not found", 404);
 
         auto responseData = flow.toJson();
+            
         return successResponse("Logic flow retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -90,6 +92,7 @@ class LogicFlowController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Logic flow created successfully", "Created", 201, responseData);
     }
 
@@ -115,6 +118,7 @@ class LogicFlowController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Logic flow updated successfully", "Updated", 200, responseData);
     }
 
@@ -133,6 +137,7 @@ class LogicFlowController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Logic flow deleted successfully", "Deleted", 200, responseData);
     }
 }

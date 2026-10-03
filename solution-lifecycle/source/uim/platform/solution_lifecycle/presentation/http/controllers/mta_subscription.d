@@ -39,6 +39,7 @@ class MtaSubscriptionController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", subs.length)
             .set("resources", subs);
+            
         return successResponse("Subscription list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -82,6 +83,7 @@ class MtaSubscriptionController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("operationId", result.id)
             .set("message", "Subscribe operation started");
+            
         return successResponse("Subscribe operation started", "Started", 202, resp);
     } 
 
@@ -109,6 +111,7 @@ class MtaSubscriptionController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("operationId", result.id)
             .set("message", "Unsubscribe operation started");
+            
         return successResponse("Unsubscribe operation started", "Started", 202, resp);
     }
 

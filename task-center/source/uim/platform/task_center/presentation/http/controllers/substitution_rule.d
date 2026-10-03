@@ -53,6 +53,7 @@ class SubstitutionRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Substitution rule created successfully", "Created", 201, responseData);
     }
 
@@ -75,6 +76,7 @@ class SubstitutionRuleController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Substitution rule list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -97,6 +99,7 @@ class SubstitutionRuleController : ManageHttpController {
             return errorResponse("Substitution rule not found", 404);
 
         auto responseData = rule.toJson();
+            
         return successResponse("Substitution rule retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -125,6 +128,7 @@ class SubstitutionRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Substitution rule updated successfully", "Updated", 200, responseData);
     }
 
@@ -144,6 +148,7 @@ class SubstitutionRuleController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Substitution rule activated successfully", "Updated", 200, responseData);
     }
 
@@ -166,6 +171,7 @@ class SubstitutionRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Substitution rule deactivated successfully", "Updated", 200, responseData);
     }
 
@@ -186,6 +192,7 @@ class SubstitutionRuleController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Substitution rule deleted successfully", "Deleted", 200, responseData);
     }
 }

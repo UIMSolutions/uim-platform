@@ -82,6 +82,7 @@ class OAuthScopeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("OAuth scope created successfully", "Created", 201, resp);
     }
 
@@ -105,6 +106,7 @@ class OAuthScopeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("OAuth scope updated successfully", 200, responseData);
     }
 
@@ -123,6 +125,7 @@ class OAuthScopeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("OAuth scope deleted successfully", 200, responseData);
     }
 }

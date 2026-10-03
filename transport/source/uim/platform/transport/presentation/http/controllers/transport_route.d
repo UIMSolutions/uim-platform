@@ -41,6 +41,7 @@ class TransportRouteController : ManageHttpController {
         auto resp = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
+            
         return successResponse("Transport routes retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -59,6 +60,7 @@ class TransportRouteController : ManageHttpController {
             return errorResponse("Transport route not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("Transport route retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -87,6 +89,7 @@ class TransportRouteController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Transport route created successfully", "Created", 201, responseData);
     }
 
@@ -130,6 +133,7 @@ class TransportRouteController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Transport route updated successfully", "Updated", 200, responseData);
     }
 
@@ -148,6 +152,7 @@ class TransportRouteController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Transport route deleted successfully", "Deleted", 200, responseData);
     }
 }

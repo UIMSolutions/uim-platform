@@ -62,6 +62,7 @@ class SnowflakeTenantUserController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("User updated successfully", "Updated", 200, responseData);
   }
 

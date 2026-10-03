@@ -72,6 +72,7 @@ class DeviceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("MobileDevice enrolled successfully", "Created", 201, resp);
     }
 
@@ -113,6 +114,7 @@ class DeviceController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("MobileDevice updated successfully", "Updated", 200, resp);
     }
 

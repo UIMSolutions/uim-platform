@@ -41,6 +41,7 @@ class UIComponentController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("UI component list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -59,6 +60,7 @@ class UIComponentController : ManageHttpController {
             return errorResponse("UI component not found", 404);
 
         auto responseData = component.toJson();
+            
         return successResponse("UI component retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -91,6 +93,7 @@ class UIComponentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("UI component created successfully", "Created", 201, responseData);
     }
 
@@ -114,6 +117,7 @@ class UIComponentController : ManageHttpController {
             return errorResponse(            result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("UI component updated successfully", "Updated", 200, responseData);
     }
 
@@ -133,6 +137,7 @@ class UIComponentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("UI component deleted successfully", "Deleted", 200, responseData);
     }
 }

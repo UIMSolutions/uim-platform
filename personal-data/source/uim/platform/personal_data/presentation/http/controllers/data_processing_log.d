@@ -53,6 +53,7 @@ class DataProcessingLogController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data processing log entry created successfully", "Created", 201, resp);
     }
 
@@ -117,6 +118,7 @@ class DataProcessingLogController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Data Processing log entry deleted successfully", "Deleted", 200, resp);
     }
 }

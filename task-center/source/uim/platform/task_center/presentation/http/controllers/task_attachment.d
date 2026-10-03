@@ -49,6 +49,7 @@ class TaskAttachmentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Attachment created successfully", "Created", 201, responseData);
     }
 
@@ -70,6 +71,7 @@ class TaskAttachmentController : ManageHttpController {
         auto responseData = Json.emptyObject
             .set("count", list.length)
             .set("resources", list);
+            
         return successResponse("Attachment list retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -88,6 +90,7 @@ class TaskAttachmentController : ManageHttpController {
             return errorResponse("Scan job not found", 404);
 
         auto responseData = a.toJson();
+            
         return successResponse("Attachment retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -104,6 +107,7 @@ class TaskAttachmentController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Attachment deleted successfully", "Deleted", 200, responseData);
     }
 }

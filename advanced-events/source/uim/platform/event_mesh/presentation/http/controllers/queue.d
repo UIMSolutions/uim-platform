@@ -63,6 +63,7 @@ class QueueController : ManageHttpController {
             return errorResponse("EventQueue not found", 404);
 
         auto responseData = queue.toJson();
+            
         return successResponse("EventQueue retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -107,6 +108,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("EventQueue created successfully", "Created", 201, resp);
     }
 
@@ -133,6 +135,7 @@ class QueueController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("EventQueue updated successfully", "Updated", 200, resp);
     }
 

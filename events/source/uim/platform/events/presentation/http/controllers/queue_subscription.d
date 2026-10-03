@@ -36,6 +36,7 @@ class QueueSubscriptionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto items = usecase.listSubscriptions(tenantId);
+            
         return successResponse("EventQueue subscription list retrieved successfully", 200, Json.emptyObject
                 .set("count", items.length)
                 .set("resources", items.map!(e => e.toJson).array.toJson));

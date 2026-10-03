@@ -84,6 +84,7 @@ class SubscriptionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Subscription created successfully", "Created", 201, responseData);
     }
 
@@ -102,6 +103,7 @@ class SubscriptionController : ManageHttpController {
             return errorResponse("Subscription not found", 404);
 
         auto responseData = e.toJson();
+            
         return successResponse("Subscription retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -130,6 +132,7 @@ class SubscriptionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Subscription updated successfully", "Updated", 200, responseData);
     }
 
@@ -149,6 +152,7 @@ class SubscriptionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Subscription deleted successfully", "Deleted", 200, responseData);
     }
 }

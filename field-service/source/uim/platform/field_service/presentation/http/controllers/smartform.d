@@ -57,6 +57,7 @@ class SmartformController : ManageHttpController {
         auto e = usecase.getSmartform(tenantId, id);
         if (e.isNull)
             return errorResponse("Smartform not found", 404);
+            
         return successResponse("Smartform retrieved successfully", "Retrieved", 200, e.toJson);
     }
 
@@ -85,6 +86,7 @@ class SmartformController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Smartform created successfully", "Created", 201, resp);
     }
 
@@ -113,6 +115,7 @@ class SmartformController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Smartform updated successfully", "Updated", 200, resp);
     }
 
@@ -128,6 +131,7 @@ class SmartformController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Smartform deleted successfully", "Deleted", 200, resp);
     }
 }

@@ -58,6 +58,7 @@ class ActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Action created successfully", "Created", 201, resp);
     }
 
@@ -151,6 +152,7 @@ class ActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Action updated successfully", "Updated", 200, responseData);
     }
 
@@ -170,6 +172,7 @@ class ActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Action deleted successfully", "Deleted", 200, responseData);
     }
 }

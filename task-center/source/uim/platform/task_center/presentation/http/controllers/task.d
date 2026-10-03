@@ -62,6 +62,7 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task created successfully", "Created", 201, resp);
     }
 
@@ -116,6 +117,7 @@ class TaskController : ManageHttpController {
             return errorResponse("Task not found", 404);
 
         auto responseData = t.toJson();
+            
         return successResponse("Task retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -145,6 +147,7 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task updated successfully", "Updated", 200, responseData);
     }
 
@@ -168,6 +171,7 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task claimed successfully", "Claimed", 200, resp);
     }
 
@@ -200,6 +204,7 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task released successfully", "Released", 200, resp);
     }
 
@@ -226,6 +231,7 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task forwarded successfully", "Forwarded", 200, resp);
     }
 
@@ -274,6 +280,7 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task cancelled successfully", "Cancelled", 200, resp);
     }
 
@@ -293,6 +300,7 @@ class TaskController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Task deleted successfully", "Deleted", 200, resp);
     }
 

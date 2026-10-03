@@ -46,6 +46,7 @@ class DestinationController : HttpController {
 
         auto resp = Json.emptyObject.set("count", cast(long)dests.length)
             .set("items", dests);
+            
         return successResponse("Destinations retrieved successfully", "Retrieved", 200, resp);
     }
 }

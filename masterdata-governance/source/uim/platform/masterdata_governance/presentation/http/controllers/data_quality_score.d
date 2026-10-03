@@ -58,6 +58,7 @@ class DataQualityScoreController : ManageHttpController {
             return errorResponse("Data quality score not found", 404);
 
         auto responseData = score.toJson();
+            
         return successResponse("Data quality score retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -86,6 +87,7 @@ class DataQualityScoreController : ManageHttpController {
 
         auto responseData = Json.emptyObject
             .set("id", result.id);
+            
         return successResponse("Data quality score created successfully", "Created", 201, responseData);
     }
 
@@ -118,6 +120,7 @@ class DataQualityScoreController : ManageHttpController {
 
         auto responseData = Json.emptyObject
             .set("id", id);
+            
         return successResponse("Data quality score updated successfully", "Updated", 200, responseData);
 
     }
@@ -138,6 +141,7 @@ class DataQualityScoreController : ManageHttpController {
 
         auto responseData = Json.emptyObject
             .set("id", id);
+            
         return successResponse("Data quality score deleted successfully", "Deleted", 200, responseData);
     }
 }

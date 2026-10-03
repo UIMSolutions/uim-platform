@@ -38,6 +38,7 @@ class TransportActionController : ManageHttpController {
         auto list = items.map!(e => e.toJson).array.toJson;
 
         auto resp = Json.emptyObject.set("count", items.length).set("resources", list);
+            
         return successResponse("Transport actions retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -56,6 +57,7 @@ class TransportActionController : ManageHttpController {
             return errorResponse("Transport action not found", 404);
 
         auto responseData = item.toJson();
+            
         return successResponse("Transport action retrieved successfully", "Retrieved", 200, responseData);
 
     }
@@ -83,6 +85,7 @@ class TransportActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
+            
         return successResponse("Transport action recorded successfully", "Recorded", 201, responseData);
     }
 
