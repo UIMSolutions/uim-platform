@@ -20,7 +20,7 @@ class TeamMemberRepository
     }
 
     TeamMember[] findByUser(TenantId tenantId, string userId) {
-        return findByTenant(tenantId).filter!(m => m.userId == userId).array;
+        return findByTenant(tenantId).filter!(m => m.userId.value == userId).array;
     }
 
     TeamMember[] findByFunction(TenantId tenantId, string functionId) {

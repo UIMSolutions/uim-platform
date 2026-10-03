@@ -62,7 +62,7 @@ class TeamMemberController : ManageHttpController {
         auto data = precheck.data;
         import std.uuid : randomUUID;
         TeamMemberDTO dto;
-        dto.memberId     = TeamMemberId(data.getString("memberId", randomUUID()));
+        dto.memberId     = TeamMemberId(data.getString("memberId", randomUUID().toString()));
         dto.tenantId     = tenantId;
         dto.teamId       = data.getString("teamId", "");
         dto.userId       = data.getString("userId", "");

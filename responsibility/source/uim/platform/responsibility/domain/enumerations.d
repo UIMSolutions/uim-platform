@@ -42,8 +42,8 @@ unittest {
     assert("teamBased".toRuleType == RuleType.teamBased);
     assert("hierarchical".toRuleType == RuleType.hierarchical);
 
-    assert("".toRuleType == RuleType.hierarchical);
-    assert("unknown".toRuleType == RuleType.hierarchical);
+    assert("".toRuleType == RuleType.directAssignment);
+    assert("unknown".toRuleType == RuleType.directAssignment);
 
     assert(toString(RuleType.directAssignment) == "directAssignment");
     assert(toString(RuleType.businessRule) == "businessRule");
@@ -281,7 +281,7 @@ enum DeterminationStatus {
     error
 }
 
-DeterminationStatus toDeterminationStatus(string status) {
+DeterminationStatus toDeterminationStatus(string value) {
     mixin(EnumSwitch("DeterminationStatus", "success"));
 }
 
@@ -343,11 +343,20 @@ AssignmentScope[] toAssignmentScopes(string[] scopes) {
 }
 
 string toString(AssignmentScope value) {
-    return value.to!string;
+    switch (value) {
+    case AssignmentScope.global_:
+        return "global";
+    case AssignmentScope.regional:
+        return "regional";
+    case AssignmentScope.site:
+        return "site";
+    default:
+        return "global";
+    }
 }
 
 string[] toString(AssignmentScope[] scopes) {
-    return scopes.map!(s => s.to!string).array;
+    return scopes.map!(s => s.toString).array;
 }
 ///
 unittest {
@@ -377,7 +386,7 @@ enum DefinitionStatus {
     inactive
 }
 
-DefinitionStatus toDefinitionStatus(string status) {
+DefinitionStatus toDefinitionStatus(string value) {
     mixin(EnumSwitch("DefinitionStatus", "active"));
 }
 

@@ -74,8 +74,8 @@ class DeterminationLogController : ManageHttpController {
             return errorResponse("Invalid log id", 400);
 
         auto deleteResult = _uc.deleteLog(tenantId, id);
-        if (!deleteResult.success)
-            return errorResponse(deleteResult.error, 400);
+        if (deleteResult.hasError)
+            return errorResponse(deleteResult.message, 400);
 
         auto responseData = Json.emptyObject
             .set("id", deleteResult.id)

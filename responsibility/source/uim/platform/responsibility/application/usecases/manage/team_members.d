@@ -39,7 +39,7 @@ class ManageTeamMembersUseCase {
         m.role        = parseRole(dto.role);
         m.validFrom   = dto.validFrom;
         m.validTo     = dto.validTo;
-        if (m.userId.length == 0)
+        if (m.userId.isNull)
             return UsecaseResult(false, "", "userId is required");
 
         if (m.teamId.length == 0)

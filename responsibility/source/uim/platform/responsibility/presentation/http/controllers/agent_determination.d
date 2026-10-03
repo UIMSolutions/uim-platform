@@ -36,7 +36,7 @@ class AgentDeterminationController : ManageHttpController {
         json["success"]   = result.success;
         json["agents"]    = result.agents.map!(a => Json(a)).array.toJson;
         json["logId"]     = result.logId;
-        json["error"]     = result.message;
+        // json["error"]     = result.message;
         json["statusCode"] = result.success ? 200 : 422;
 
         res.writeBody(json.toString(), cast(int)(result.success ? HTTPStatus.ok : HTTPStatus.unprocessableEntity), "application/json");

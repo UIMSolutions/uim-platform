@@ -18,7 +18,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get   ("/api/v1/responsibility/definitions",    &handleList);
         router.get   ("/api/v1/responsibility/definitions/*",  &handleGet);
         router.post  ("/api/v1/responsibility/definitions",    &handleCreate);
@@ -54,7 +54,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
-        auto pre = super.createHandler(req);
+        auto precheck = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
             
@@ -62,7 +62,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto data = precheck.data;
         import std.uuid : randomUUID;
         ResponsibilityDefinitionDTO dto;
-        dto.definitionId = ResponsibilityDefinitionId(data.getString("definitionId", generateId));
+        dto.definitionId = ResponsibilityDefinitionId(data.getString("definitionId", randomUUID().toString()));
         dto.tenantId     = tenantId;
         dto.name         = data.getString("name", "");
         dto.description  = data.getString("description", "");
