@@ -20,6 +20,7 @@ class ConfigurationController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/redis/configurations",   &handleList);
         router.get("/api/v1/redis/configurations/*", &handleGet);
         router.post("/api/v1/redis/configurations",  &handleCreate);

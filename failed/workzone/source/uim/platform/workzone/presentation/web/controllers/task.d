@@ -23,6 +23,7 @@ class TaskWebController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/ui/tasks", &handleList);
     }
 

@@ -18,6 +18,7 @@ class DatabaseExtensionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/postgres/extensions",        &handleList);
         router.get("/api/v1/postgres/extensions/*",      &handleGet);
         router.post("/api/v1/postgres/extensions",       &handleCreate);

@@ -20,6 +20,7 @@ class ActionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/alert-notification/actions", &handleCreate);
         router.get("/api/v1/alert-notification/actions", &handleList);
         router.get("/api/v1/alert-notification/actions/*", &handleGet);

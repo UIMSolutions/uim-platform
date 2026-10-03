@@ -18,6 +18,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get   ("/api/v1/responsibility/definitions",    &handleList);
         router.get   ("/api/v1/responsibility/definitions/*",  &handleGet);
         router.post  ("/api/v1/responsibility/definitions",    &handleCreate);
@@ -47,7 +48,8 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto id = ResponsibilityDefinitionId(precheck.id);
         auto e = _uc.getDefinition(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Definition not found").set("statusCode", 404);
+            return errorResponse("Definition not found", 404);
+
         return e.toJson().set("status", "success").set("statusCode", 200);
     }
 
@@ -73,17 +75,18 @@ class ResponsibilityDefinitionController : ManageHttpController {
         dto.validTo      = data.getString("validTo", "");
         auto result = _uc.createDefinition(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
+
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
-        auto pre = super.updateHandler(req);
+        auto precheck = super.updateHandler(req);
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(pre.getString("tenantId"));
-        auto data = pre["data"];
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
         ResponsibilityDefinitionDTO dto;
         dto.definitionId = ResponsibilityDefinitionId(precheck.id);
         dto.tenantId     = tenantId;
@@ -94,20 +97,22 @@ class ResponsibilityDefinitionController : ManageHttpController {
         dto.validTo      = data.getString("validTo", "");
         auto result = _uc.updateDefinition(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
+            return errorResponse(result.message, 404);
+
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
-        auto pre = super.deleteHandler(req);
+        auto precheck = super.deleteHandler(req);
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(pre.getString("tenantId"));
+        auto tenantId = precheck.tenantId;
         auto id = ResponsibilityDefinitionId(precheck.id);
         auto result = _uc.deleteDefinition(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
+            return errorResponse(result.message, 404);
+
         return Json.emptyObject.set("id", result.id).set("status", "success").set("statusCode", 200);
     }
 }

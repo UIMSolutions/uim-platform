@@ -20,6 +20,7 @@ class AccessControlController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/redis/access-controls",   &handleList);
         router.get("/api/v1/redis/access-controls/*", &handleGet);
         router.post("/api/v1/redis/access-controls",  &handleCreate);

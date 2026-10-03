@@ -20,6 +20,7 @@ class DeviceController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/agentry/devices", &handleList);
         router.get("/api/v1/agentry/devices/*", &handleGet);
         router.post("/api/v1/agentry/devices", &handleCreate);

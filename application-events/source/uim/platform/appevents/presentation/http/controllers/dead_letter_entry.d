@@ -29,6 +29,7 @@ class DeadLetterEntryController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/appevents/dead-letters", &handleList);
         router.get("/api/v1/appevents/dead-letters/*", &handleGet);
         router.post("/api/v1/appevents/dead-letters", &handleCreate);

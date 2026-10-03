@@ -27,6 +27,7 @@ class DestinationController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/rfc/destinations", &handleList);
         router.post("/api/v1/rfc/destinations", &handleCreate);
         router.get("/api/v1/rfc/destinations/*", &handleGet);

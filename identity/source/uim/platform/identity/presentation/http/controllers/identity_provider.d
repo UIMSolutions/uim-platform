@@ -20,6 +20,7 @@ class IdentityProviderController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/ias/identity-providers", &handleList);
         router.get("/api/v1/ias/identity-providers/*", &handleGet);
         router.post("/api/v1/ias/identity-providers", &handleCreate);

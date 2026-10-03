@@ -25,6 +25,7 @@ class FunctionModuleController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get    ("/api/v1/rfc/functions",   &handleList);
         router.post   ("/api/v1/rfc/functions",   &handleCreate);
         router.get    ("/api/v1/rfc/functions/*",  &handleGet);

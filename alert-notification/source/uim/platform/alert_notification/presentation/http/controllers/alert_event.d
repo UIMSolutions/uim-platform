@@ -20,6 +20,7 @@ class AlertEventController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/alert-notification/events", &handlePost);
     }
 

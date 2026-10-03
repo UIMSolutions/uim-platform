@@ -20,6 +20,7 @@ class MobileApplicationController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/agentry/mobile-applications", &handleList);
         router.get("/api/v1/agentry/mobile-applications/*", &handleGet);
         router.post("/api/v1/agentry/mobile-applications", &handleCreate);

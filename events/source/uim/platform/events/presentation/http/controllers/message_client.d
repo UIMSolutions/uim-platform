@@ -20,6 +20,7 @@ class MessageClientController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/sap-event-mesh/message-clients", &handleList);
         router.get("/api/v1/sap-event-mesh/message-clients/*", &handleGet);
         router.post("/api/v1/sap-event-mesh/message-clients", &handleCreate);

@@ -20,6 +20,7 @@ class ServicePlanController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/redis/plans",   &handleList);
         router.get("/api/v1/redis/plans/*", &handleGet);
         router.post("/api/v1/redis/plans",  &handleCreate);

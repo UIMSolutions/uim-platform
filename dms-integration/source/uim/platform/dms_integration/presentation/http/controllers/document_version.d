@@ -20,6 +20,7 @@ class DocumentVersionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/dms-integration/document-versions", &handleList);
         router.get("/api/v1/dms-integration/document-versions/*", &handleGet);
         router.post("/api/v1/dms-integration/document-versions", &handleCreate);

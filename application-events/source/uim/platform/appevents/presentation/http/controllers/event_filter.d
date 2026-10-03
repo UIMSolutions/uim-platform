@@ -24,6 +24,7 @@ class EventFilterController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/appevents/filters",       &handleList);
         router.get("/api/v1/appevents/filters/*",     &handleGet);
         router.post("/api/v1/appevents/filters",      &handleCreate);

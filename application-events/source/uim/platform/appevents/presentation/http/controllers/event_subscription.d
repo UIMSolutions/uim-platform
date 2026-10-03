@@ -25,6 +25,7 @@ class EventSubscriptionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/appevents/subscriptions", &handleList);
         router.get("/api/v1/appevents/subscriptions/*", &handleGet);
         router.post("/api/v1/appevents/subscriptions", &handleCreate);

@@ -20,6 +20,7 @@ class AppVersionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/agentry/app-versions", &handleList);
         router.get("/api/v1/agentry/app-versions/*", &handleGet);
         router.post("/api/v1/agentry/app-versions", &handleCreate);

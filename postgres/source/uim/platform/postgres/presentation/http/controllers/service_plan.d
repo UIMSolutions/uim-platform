@@ -18,6 +18,7 @@ class ServicePlanController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/postgres/plans",        &handleList);
         router.get("/api/v1/postgres/plans/*",      &handleGet);
         router.post("/api/v1/postgres/plans",       &handleCreate);

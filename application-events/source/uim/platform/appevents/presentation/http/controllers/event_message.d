@@ -22,6 +22,7 @@ class EventMessageController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/appevents/messages",      &handleList);
         router.get("/api/v1/appevents/messages/*",    &handleGet);
         router.post("/api/v1/appevents/messages",     &handleCreate);

@@ -20,6 +20,7 @@ class SyncSessionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/agentry/sync-sessions", &handleList);
         router.get("/api/v1/agentry/sync-sessions/*", &handleGet);
         router.post("/api/v1/agentry/sync-sessions", &handleCreate);

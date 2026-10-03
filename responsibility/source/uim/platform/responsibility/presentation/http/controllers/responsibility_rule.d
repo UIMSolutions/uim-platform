@@ -18,6 +18,7 @@ class ResponsibilityRuleController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get   ("/api/v1/responsibility/rules",    &handleList);
         router.get   ("/api/v1/responsibility/rules/*",  &handleGet);
         router.post  ("/api/v1/responsibility/rules",    &handleCreate);

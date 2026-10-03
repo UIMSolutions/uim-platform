@@ -20,6 +20,7 @@ class ServiceBindingController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/redis/bindings",   &handleList);
         router.get("/api/v1/redis/bindings/*", &handleGet);
         router.post("/api/v1/redis/bindings",  &handleCreate);

@@ -24,6 +24,7 @@ class WorkspaceWebController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/ui/workspaces",        &handleList);
         router.get("/ui/workspaces/new",    &handleNewForm);
         router.get("/ui/workspaces/*",      &handleDetail);

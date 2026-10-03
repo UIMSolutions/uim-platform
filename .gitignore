@@ -16,3 +16,4 @@ welcome.md
 _templates/character.md
 _templates/mission.md
 agentry/build/agentry-test-defaultTest
+service/build/libuim-platform-service.a

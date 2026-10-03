@@ -20,6 +20,7 @@ class UserController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/ias/users", &handleList);
         router.get("/api/v1/ias/users/*", &handleGet);
         router.post("/api/v1/ias/users", &handleCreate);

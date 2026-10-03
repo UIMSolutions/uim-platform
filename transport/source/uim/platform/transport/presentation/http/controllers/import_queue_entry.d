@@ -20,6 +20,7 @@ class ImportQueueEntryController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/transport/queue-entries", &handleList);
         router.get("/api/v1/transport/queue-entries/*", &handleGet);
         router.post("/api/v1/transport/queue-entries", &handleCreate);

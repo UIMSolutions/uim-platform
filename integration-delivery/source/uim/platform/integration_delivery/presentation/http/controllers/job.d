@@ -20,6 +20,7 @@ class JobController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/integration-delivery/jobs", &handleList);
         router.get("/api/v1/integration-delivery/jobs/*", &handleGet);
         router.post("/api/v1/integration-delivery/jobs", &handleCreate);

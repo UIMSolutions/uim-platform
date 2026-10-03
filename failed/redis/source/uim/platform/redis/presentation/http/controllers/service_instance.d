@@ -20,6 +20,7 @@ class ServiceInstanceController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/redis/instances",   &handleList);
         router.get("/api/v1/redis/instances/*", &handleGet);
         router.post("/api/v1/redis/instances",  &handleCreate);

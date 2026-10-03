@@ -18,6 +18,7 @@ class TeamMemberController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get   ("/api/v1/responsibility/team-members",    &handleList);
         router.get   ("/api/v1/responsibility/team-members/*",  &handleGet);
         router.post  ("/api/v1/responsibility/team-members",    &handleCreate);
@@ -52,7 +53,7 @@ class TeamMemberController : ManageHttpController {
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
-        auto pre = super.createHandler(req);
+        auto precheck = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
             

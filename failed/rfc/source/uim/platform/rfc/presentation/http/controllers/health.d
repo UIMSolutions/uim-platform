@@ -15,6 +15,7 @@ class HealthController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/health", &handleHealth);
     }
 

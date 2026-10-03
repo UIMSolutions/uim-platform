@@ -22,6 +22,7 @@ class CompileController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/abap/compile", &handleCompile);
     }
 

@@ -20,6 +20,7 @@ class DeploymentTargetController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/integration-delivery/deployment-targets", &handleList);
         router.get("/api/v1/integration-delivery/deployment-targets/*", &handleGet);
         router.post("/api/v1/integration-delivery/deployment-targets", &handleCreate);

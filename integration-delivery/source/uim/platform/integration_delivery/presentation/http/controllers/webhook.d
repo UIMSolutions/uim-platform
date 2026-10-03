@@ -20,6 +20,7 @@ class WebhookController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/integration-delivery/webhooks", &handleList);
         router.get("/api/v1/integration-delivery/webhooks/*", &handleGet);
         router.post("/api/v1/integration-delivery/webhooks", &handleCreate);

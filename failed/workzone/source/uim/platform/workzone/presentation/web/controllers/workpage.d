@@ -27,6 +27,7 @@ class WorkpageWebController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/ui/workspaces/*/pages", &handleList);
     }
 

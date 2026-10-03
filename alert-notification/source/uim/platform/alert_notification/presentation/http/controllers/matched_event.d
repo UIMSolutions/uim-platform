@@ -18,6 +18,7 @@ class MatchedEventController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/alert-notification/matched-events",   &handleList);
         router.get("/api/v1/alert-notification/matched-events/*", &handleGet);
     }

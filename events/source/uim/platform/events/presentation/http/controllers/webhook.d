@@ -20,6 +20,7 @@ class WebhookController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/sap-event-mesh/webhooks", &handleList);
         router.get("/api/v1/sap-event-mesh/webhooks/*", &handleGet);
         router.post("/api/v1/sap-event-mesh/webhooks", &handleCreate);

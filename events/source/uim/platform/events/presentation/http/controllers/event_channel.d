@@ -20,6 +20,7 @@ class EventChannelController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/sap-event-mesh/event-channels", &handleList);
         router.get("/api/v1/sap-event-mesh/event-channels/*", &handleGet);
         router.post("/api/v1/sap-event-mesh/event-channels", &handleCreate);

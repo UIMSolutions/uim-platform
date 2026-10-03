@@ -31,6 +31,7 @@ class AppSubscriptionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/saas-provisioning/subscriptions", &handleList);
         router.post("/api/v1/saas-provisioning/subscriptions", &handleSubscribe);
         router.get("/api/v1/saas-provisioning/subscriptions/*", &handleGet);

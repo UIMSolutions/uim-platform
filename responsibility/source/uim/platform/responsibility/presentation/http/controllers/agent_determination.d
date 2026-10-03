@@ -18,6 +18,7 @@ class AgentDeterminationController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/responsibility/determine", &handleDetermine);
     }
 

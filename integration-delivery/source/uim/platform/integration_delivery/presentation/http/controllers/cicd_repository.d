@@ -20,6 +20,7 @@ class CicdRepositoryController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/integration-delivery/repositories", &handleList);
         router.get("/api/v1/integration-delivery/repositories/*", &handleGet);
         router.post("/api/v1/integration-delivery/repositories", &handleCreate);

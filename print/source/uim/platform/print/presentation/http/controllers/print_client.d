@@ -20,6 +20,7 @@ class PrintClientController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/print/clients", &handleList);
         router.get("/api/v1/print/clients/*", &handleGet);
         router.post("/api/v1/print/clients", &handleCreate);

@@ -20,6 +20,7 @@ class CacheEntryController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/redis/cache-entries", &handleList);
         router.get("/api/v1/redis/cache-entries/*", &handleGet);
         router.post("/api/v1/redis/cache-entries", &handleCreate);

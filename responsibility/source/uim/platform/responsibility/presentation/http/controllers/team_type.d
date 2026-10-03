@@ -18,6 +18,7 @@ class TeamTypeController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get   ("/api/v1/responsibility/team-types",    &handleList);
         router.get   ("/api/v1/responsibility/team-types/*",  &handleGet);
         router.post  ("/api/v1/responsibility/team-types",    &handleCreate);

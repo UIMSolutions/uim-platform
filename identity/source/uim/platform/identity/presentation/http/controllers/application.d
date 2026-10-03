@@ -20,6 +20,7 @@ class ApplicationController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/ias/applications", &handleList);
         router.get("/api/v1/ias/applications/*", &handleGet);
         router.post("/api/v1/ias/applications", &handleCreate);

@@ -20,6 +20,7 @@ class TransportNodeController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/transport/nodes", &handleList);
         router.get("/api/v1/transport/nodes/*", &handleGet);
         router.post("/api/v1/transport/nodes", &handleCreate);

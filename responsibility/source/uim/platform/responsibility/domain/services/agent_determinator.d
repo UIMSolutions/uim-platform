@@ -48,7 +48,7 @@ class AgentDeterminator {
         string[] agents;
         foreach (m; members) {
             if (m.role == MemberRole.responsible || m.role == MemberRole.accountable)
-                agents ~= m.userId;
+                agents ~= m.userId.value;
         }
         return agents;
     }

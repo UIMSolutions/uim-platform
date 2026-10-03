@@ -20,6 +20,7 @@ class PermissionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/dms-integration/permissions", &handleList);
         router.get("/api/v1/dms-integration/permissions/*", &handleGet);
         router.post("/api/v1/dms-integration/permissions", &handleCreate);

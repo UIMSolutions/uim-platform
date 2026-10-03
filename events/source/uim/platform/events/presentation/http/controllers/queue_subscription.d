@@ -20,6 +20,7 @@ class QueueSubscriptionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/sap-event-mesh/queue-subscriptions", &handleList);
         router.get("/api/v1/sap-event-mesh/queue-subscriptions/*", &handleGet);
         router.post("/api/v1/sap-event-mesh/queue-subscriptions", &handleCreate);

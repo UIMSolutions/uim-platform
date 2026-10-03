@@ -31,7 +31,7 @@ class MemberFunctionController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
 
-        auto tenantId = TenantId(precheck.tenantId);
+        auto tenantId = precheck.tenantId;
         auto items = _uc.listFunctions(tenantId);
         auto responseData = Json.emptyObject
             .set("count",     items.length)
@@ -46,10 +46,10 @@ class MemberFunctionController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(precheck.tenantId);
+        auto tenantId = precheck.tenantId;
         auto id = MemberFunctionId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid function ID").set("statusCode", 400);
+            return errorResponse("Invalid function ID", 400);
 
         auto e = _uc.getFunction(tenantId, id);
         if (e.isNull)
@@ -66,7 +66,7 @@ class MemberFunctionController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
 
-        auto tenantId = TenantId(precheck.tenantId);
+        auto tenantId = precheck.tenantId;
         auto data = precheck["data"];
         import std.uuid : randomUUID;
         MemberFunctionDTO dto;
@@ -90,7 +90,7 @@ class MemberFunctionController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
 
-        auto tenantId = TenantId(precheck.tenantId);
+        auto tenantId = precheck.tenantId;
         auto data = precheck["data"];
         MemberFunctionDTO dto;
         dto.functionId  = MemberFunctionId(precheck.id);
@@ -111,7 +111,7 @@ class MemberFunctionController : ManageHttpController {
         if (precheck.hasError) 
             return precheck;
             
-        auto tenantId = TenantId(precheck.tenantId);
+        auto tenantId = precheck.tenantId;
         auto id = MemberFunctionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid function ID", 400);

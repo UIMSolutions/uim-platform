@@ -20,6 +20,7 @@ class BackupPolicyController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/postgres/backup-policies", &handleList);
         router.get("/api/v1/postgres/backup-policies/*", &handleGet);
         router.post("/api/v1/postgres/backup-policies", &handleCreate);

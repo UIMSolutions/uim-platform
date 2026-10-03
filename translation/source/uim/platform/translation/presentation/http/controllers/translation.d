@@ -21,6 +21,7 @@ class TranslationController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/translation/translate", &handleTranslate);
     }
 

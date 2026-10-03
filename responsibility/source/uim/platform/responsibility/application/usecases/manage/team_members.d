@@ -41,8 +41,10 @@ class ManageTeamMembersUseCase {
         m.validTo     = dto.validTo;
         if (m.userId.length == 0)
             return UsecaseResult(false, "", "userId is required");
+
         if (m.teamId.length == 0)
             return UsecaseResult(false, "", "teamId is required");
+        
         repo.save(m);
         return UsecaseResult(true, m.id.value, "");
     }

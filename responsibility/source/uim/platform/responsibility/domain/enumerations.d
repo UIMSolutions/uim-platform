@@ -18,7 +18,7 @@ enum RuleType {
     hierarchical
 }
 
-RuleType toRuleType(string type) {
+RuleType toRuleType(string value) {
     mixin(EnumSwitch("RuleType", "directAssignment"));
 }
 
@@ -64,7 +64,7 @@ enum RuleStatus {
     draft
 }
 
-RuleStatus toRuleStatus(string status) {
+RuleStatus toRuleStatus(string value) {
     mixin(EnumSwitch("RuleStatus", "active"));
 }
 
@@ -108,7 +108,7 @@ enum TeamStatus {
     archived
 }
 
-TeamStatus toTeamStatus(string status) {
+TeamStatus toTeamStatus(string value) {
     mixin(EnumSwitch("TeamStatus", "active"));
 }
 
@@ -153,7 +153,7 @@ enum MemberRole {
     informed
 }
 
-MemberRole toMemberRole(string role) {
+MemberRole toMemberRole(string value) {
     mixin(EnumSwitch("MemberRole", "responsible"));
 }
 
@@ -198,7 +198,7 @@ enum FunctionStatus {
     inactive
 }
 
-FunctionStatus toFunctionStatus(string status) {
+FunctionStatus toFunctionStatus(string value) {
     mixin(EnumSwitch("FunctionStatus", "active"));
 }
 
@@ -239,7 +239,7 @@ enum ContextStatus {
     inactive
 }
 
-ContextStatus toContextStatus(string status) {
+ContextStatus toContextStatus(string value) {
     mixin(EnumSwitch("ContextStatus", "active"));
 }
 
@@ -285,8 +285,8 @@ DeterminationStatus toDeterminationStatus(string status) {
     mixin(EnumSwitch("DeterminationStatus", "success"));
 }
 
-DeterminationStatus[] toDeterminationStatuses(string[] statuses) {
-    return statuses.map!(s => toDeterminationStatus(s)).array;
+DeterminationStatus[] toDeterminationStatuses(string[] values) {
+    return values.map!(s => toDeterminationStatus(s)).array;
 }
 
 string toString(DeterminationStatus status) {

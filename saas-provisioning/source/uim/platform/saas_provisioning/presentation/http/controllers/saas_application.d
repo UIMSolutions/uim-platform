@@ -27,6 +27,7 @@ class SaasApplicationController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/saas-provisioning/applications", &handleList);
         router.post("/api/v1/saas-provisioning/applications", &handleCreate);
         router.get("/api/v1/saas-provisioning/applications/*", &handleGet);

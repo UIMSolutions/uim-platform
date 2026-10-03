@@ -20,6 +20,7 @@ class GroupController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/ias/groups", &handleList);
         router.get("/api/v1/ias/groups/*", &handleGet);
         router.post("/api/v1/ias/groups", &handleCreate);

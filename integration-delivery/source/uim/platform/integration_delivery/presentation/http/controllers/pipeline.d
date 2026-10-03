@@ -20,6 +20,7 @@ class PipelineController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/integration-delivery/pipelines", &handleList);
         router.get("/api/v1/integration-delivery/pipelines/*", &handleGet);
         router.post("/api/v1/integration-delivery/pipelines", &handleCreate);

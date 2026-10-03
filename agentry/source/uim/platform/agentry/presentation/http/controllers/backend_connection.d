@@ -20,6 +20,7 @@ class BackendConnectionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/agentry/backend-connections", &handleList);
         router.get("/api/v1/agentry/backend-connections/*", &handleGet);
         router.post("/api/v1/agentry/backend-connections", &handleCreate);

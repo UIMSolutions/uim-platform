@@ -20,6 +20,7 @@ class RepositoryController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/dms-integration/repositories", &handleList);
         router.get("/api/v1/dms-integration/repositories/*", &handleGet);
         router.post("/api/v1/dms-integration/repositories", &handleCreate);

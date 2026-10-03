@@ -20,6 +20,7 @@ class DocumentController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/dms-integration/documents", &handleList);
         router.get("/api/v1/dms-integration/documents/*", &handleGet);
         router.post("/api/v1/dms-integration/documents", &handleCreate);

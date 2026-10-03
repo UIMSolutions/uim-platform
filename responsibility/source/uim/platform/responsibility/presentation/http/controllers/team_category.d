@@ -18,6 +18,7 @@ class TeamCategoryController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get   ("/api/v1/responsibility/team-categories",    &handleList);
         router.get   ("/api/v1/responsibility/team-categories/*",  &handleGet);
         router.post  ("/api/v1/responsibility/team-categories",    &handleCreate);
