@@ -34,7 +34,7 @@ class EncryptionController : HttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    const data = req.json;
+    auto data = precheck.data;
     const namespaceIdStr = data.getString("namespaceId");
 
     GenerateDekRequest r;
@@ -62,7 +62,7 @@ class EncryptionController : HttpController {
     if (precheck.hasError)      return precheck;
 
     auto tenantId = precheck.tenantId;
-    const data = req.json;
+    auto data = precheck.data;
     const namespaceIdStr = data.getString("namespaceId");
 
     EncryptDekRequest r;
@@ -71,9 +71,9 @@ class EncryptionController : HttpController {
     r.keyringName = data.getString("keyringName");
     r.dek = data.getString("dek");
 
-    const result = usecase.encrypt(r);
-    if (result.hasError)
-      return errorResponse("Failed to encrypt DEK", 400);
+    auto result = usecase.encrypt(r);
+    if (!result.success)
+      return errorResponse(result.error, 400);
 
     auto resp = Json.emptyObject
       .set("encryptedDek", Json(result.encryptedDek))
@@ -90,7 +90,7 @@ class EncryptionController : HttpController {
     if (precheck.hasError)      return precheck;
 
     auto tenantId = precheck.tenantId;
-    const data = req.json;
+    auto data = precheck.data;
     const namespaceIdStr = data.getString("namespaceId");
 
     DecryptDekRequest r;
@@ -100,9 +100,9 @@ class EncryptionController : HttpController {
     r.encryptedDek = data.getString("encryptedDek");
     r.keyringVersion = data.getLong("keyringVersion");
 
-    const result = usecase.decrypt(r);
-    if (result.hasError)
-      return errorResponse("Failed to decrypt DEK", 400);
+    auto result = usecase.decrypt(r);
+    if (!result.success)
+      return errorResponse(result.error, 400);
 
     auto resp = Json.emptyObject
       .set("dek", Json(result.dek));

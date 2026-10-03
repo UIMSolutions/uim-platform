@@ -40,11 +40,10 @@ class CompileController : HttpController {
         r.sourceCode = data.getString("sourceCode");
 
         auto result = usecase.compile(r);
-        if (result.hasError)
+        if (!result.success)
             return errorResponse(result.error, 400);
 
         auto responseData = result.toJson();
-            
         return successResponse("Compilation successful", "Retrieved", 200, responseData);
     }
 
