@@ -20,7 +20,7 @@ class ManageMarketRatesUseCase {
   }
 
   // Upload (inbound port – driving adapter calls this)
-  UploadRatesResponse upload(UploadRatesRequest req) {
+  UploadRatesResponse uploadRates(UploadRatesRequest req) {
     string[] errors;
     MarketRate[] accepted;
 

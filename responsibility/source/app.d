@@ -10,6 +10,7 @@ import vibe.core.core : runApplication;
 import vibe.http.router : URLRouter;
 import vibe.http.server : HTTPServerSettings, listenHTTP;
 
+@safe:
 version (unittest) {
 } else {
     void main() {

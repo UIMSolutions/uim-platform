@@ -36,15 +36,15 @@ class ManageProvidersUseCase {
     return UsecaseResult(true, p.id.value, "");
   }
 
-  Provider getById(TenantId tenantId, ProviderId id) {
+  Provider getProvider(TenantId tenantId, ProviderId id) {
     return repo.findById(tenantId, id);
   }
 
-  Provider[] list(TenantId tenantId) {
+  Provider[] listProviders(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Provider[] listActive(TenantId tenantId) {
+  Provider[] listActiveProviders(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 

@@ -54,10 +54,18 @@ class ManageDeviceRegistrationsUseCase {
             return UsecaseResult(false, "", "Device not found");
 
         switch (status) {
-            case "locked": reg.status = DeviceStatus.locked; break;
-            case "wiped": reg.status = DeviceStatus.wiped; break;
-            case "blocked": reg.status = DeviceStatus.blocked; break;
-            default: reg.status = DeviceStatus.registered; break;
+        case "locked":
+            reg.status = DeviceStatus.locked;
+            break;
+        case "wiped":
+            reg.status = DeviceStatus.wiped;
+            break;
+        case "blocked":
+            reg.status = DeviceStatus.blocked;
+            break;
+        default:
+            reg.status = DeviceStatus.registered;
+            break;
         }
         reg.updatedAt = currentTimestamp();
         repo.update(reg);
@@ -92,14 +100,5 @@ class ManageDeviceRegistrationsUseCase {
     size_t countByApp(TenantId tenantId, MobileAppId appId) {
         return repo.countByApp(tenantId, appId);
     }
-
-        switch (s) {
-            case "ios": return AppPlatform.ios;
-            case "android": return AppPlatform.android;
-            case "windows": return AppPlatform.windows;
-            case "web": return AppPlatform.web;
-            default: return AppPlatform.ios;
-        }
-    }
-
 }
+

@@ -7,6 +7,7 @@ module app;
 
 import uim.platform.job_scheduling;
 
+@safe:
 version (unittest) {
 } else {
     void main() {

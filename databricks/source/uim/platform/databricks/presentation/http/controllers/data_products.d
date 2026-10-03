@@ -10,8 +10,23 @@ class DataProductController : ManageHttpController {
 private:
   ManageDataProductsUseCase _usecase;
 
-  static DataProductId requestId(HTTPServerRequest req) {
-    return DataProductId(req.requestPath.to!string.split("/")[$ - 1]);
+  static bool tryRequestId(HTTPServerRequest req, out DataProductId id) {
+    auto parts = req.requestPath.to!string.split("/");
+    auto lastPart = parts[$ - 1];
+    if (lastPart.length == 0)
+      return false;
+
+    id = DataProductId(lastPart);
+    return true;
+  }
+
+  static bool tryParseShareMode(string modeStr, out ShareMode shareMode) {
+    try {
+      shareMode = modeStr.to!ShareMode;
+      return true;
+    } catch (ConvException) {
+      return false;
+    }
   }
 
 public:
@@ -49,11 +64,8 @@ public:
     r.tags = data.getString("tags");
     auto modeStr = data.getString("shareMode");
     if (modeStr.length > 0) {
-      try {
-        r.shareMode = modeStr.to!ShareMode;
-      } catch (ConvException) {
+      if (!tryParseShareMode(modeStr, r.shareMode))
         return errorResponse("Invalid shareMode: " ~ modeStr, 400);
-      }
     }
     auto result = _usecase.create(r);
     if (!result.success)
@@ -87,7 +99,10 @@ public:
 
     auto tenantId = precheck.tenantId;
 
-    auto id = requestId(req);
+    DataProductId id;
+    if (!tryRequestId(req, id))
+      return errorResponse("Invalid data product id in request path", 400);
+
     auto result = _usecase.get(tenantId, id);
     if (!result.success)
       return errorResponse(result.message, 404);
@@ -106,7 +121,9 @@ public:
     auto data = precheck.data;
     UpdateDataProductRequest r;
     r.tenantId = tenantId;
-    r.id = requestId(req);
+    if (!tryRequestId(req, r.id))
+      return errorResponse("Invalid data product id in request path", 400);
+
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.version_ = data.getString("version");
@@ -115,11 +132,8 @@ public:
     r.tags = data.getString("tags");
     auto modeStr = data.getString("shareMode");
     if (modeStr.length > 0) {
-      try {
-        r.shareMode = modeStr.to!ShareMode;
-      } catch (ConvException) {
+      if (!tryParseShareMode(modeStr, r.shareMode))
         return errorResponse("Invalid shareMode: " ~ modeStr, 400);
-      }
     }
     auto result = _usecase.update(r);
     if (!result.success)
@@ -136,7 +150,10 @@ public:
 
     auto tenantId = precheck.tenantId;
 
-    auto id = requestId(req);
+    DataProductId id;
+    if (!tryRequestId(req, id))
+      return errorResponse("Invalid data product id in request path", 400);
+
     auto result = _usecase.remove(tenantId, id);
     if (!result.success)
       return errorResponse(result.message, 400);

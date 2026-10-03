@@ -6,6 +6,7 @@
 module uim.platform.marketrates.presentation.http.controllers.market_rate;
 
 import uim.platform.marketrates;
+import std.conv : to;
 
 mixin(ShowModule!());
 
@@ -76,7 +77,7 @@ class MarketRateController : ManageHttpController {
       ucReq.records ~= rec;
     }
 
-    auto result = ratesUC.upload(ucReq);
+    auto result = ratesUC.uploadRates(ucReq);
 
     auto responseData = Json.emptyObject
       .set("status", result.status.to!string)
@@ -161,15 +162,12 @@ class MarketRateController : ManageHttpController {
     ucReq.key1 = key1;
     ucReq.key2 = key2;
 
-    auto rates = ratesUC.query(ucReq);
-
-    auto arr = rates.map!toJson.array.toJson;
-
-    auto j = Json.emptyObject
-      .set("data", arr)
+    auto rates = ratesUC.query(ucReq).map!(rate => rate.toJson()).array.toJson;
+    auto responseData = Json.emptyObject
+      .set("data", rates)
       .set("count", rates.length);
 
-    return successResponse(j, "Rates retrieved successfully", 200);
+    return successResponse("Rates retrieved successfully", 200, responseData);
   }
 
   mixin(HandleTemplate!("handleListRates", "listRatesHandler"));
@@ -183,7 +181,7 @@ class MarketRateController : ManageHttpController {
       return precheck;
 
     auto id = precheck.id;
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
+    auto tenantId = precheck.tenantId;
     auto rate = ratesUC.getById(tenantId, MarketRateId(id));
 
     if (rate.isNull) 
@@ -205,12 +203,15 @@ class MarketRateController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto key1 = req.query.get("key1", "");
     auto key2 = req.query.get("key2", "");
+    auto providerCode = req.query.get("providerCode", "");
     auto category = req.query.get("category", "");
     auto fromDate = req.query.get("fromDate", "");
     auto toDate = req.query.get("toDate", "");
 
     DeleteRatesRequest ucReq;
     ucReq.tenantId = tenantId;
+    ucReq.requestedBy = req.query.get("requestedBy", "");
+    ucReq.providerCode = providerCode;
     // TODO:  ucReq.key1 = key1;
     // TODO:  ucReq.key2 = key2;
     ucReq.category = category;
@@ -237,7 +238,7 @@ class MarketRateController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto providers = providersUC.list(tenantId);
+    auto providers = providersUC.listProviders(tenantId);
 
     auto arr = Json.emptyArray;
     foreach (p; providers)
@@ -283,8 +284,8 @@ class MarketRateController : ManageHttpController {
       return precheck;
 
     auto id = precheck.id;
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto p = providersUC.getById(tenantId, ProviderId(id));
+    auto tenantId = precheck.tenantId;
+    auto p = providersUC.getProvider(tenantId, ProviderId(id));
 
     if (p.isNull)
       return errorResponse("Provider not found", 404);
@@ -327,7 +328,7 @@ class MarketRateController : ManageHttpController {
       return precheck;
 
     auto id = precheck.id;
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
+    auto tenantId = precheck.tenantId;
 
     auto result = providersUC.deleteProvider(tenantId, ProviderId(id));
     if (result.hasError)

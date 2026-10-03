@@ -7,6 +7,9 @@ module app;
 
 import uim.platform.usage_data;
 
+@safe:
+version (unittest) {
+} else {
 void main() {
   // Configuration
   auto cfg = ServiceConfig.load();
@@ -47,4 +50,5 @@ void main() {
 
   logInfo("Usage Data service listening on %s:%d", cfg.host, cfg.port);
   runApplication();
+}
 }
