@@ -228,6 +228,7 @@ string toString(FieldValueType value) {
         case FieldValueType.currency: return "currency";
         case FieldValueType.address: return "address";
         case FieldValueType.line_items: return "line_items";
+        default: return "string"; // default case
     }
 }
 string[] toString(FieldValueType[] values)
@@ -265,7 +266,7 @@ enum ConfidenceLevel {
   low,
 }
 ConfidenceLevel toConfidenceLevel(string value) {
-    mixin(EnumSwitch!"ConfidenceLevel", "medium");
+    mixin(EnumSwitch("ConfidenceLevel", "medium"));
 }
 
 ConfidenceLevel[] toConfidenceLevels(string[] values)
@@ -302,7 +303,7 @@ enum EnrichmentMatchStatus {
 }
 
 EnrichmentMatchStatus toEnrichmentMatchStatus(string value) {
-    mixin(EnumSwitch("EnrichmentMatchStatus", "EnrichmentMatchStatus.unmatched"));
+    mixin(EnumSwitch("EnrichmentMatchStatus", "unmatched"));
 }   
 
 EnrichmentMatchStatus[] toEnrichmentMatchStatuses(string[] values) {
@@ -343,7 +344,7 @@ enum FileType {
   docx,
 }
 FileType toFileType(string value) {
-    mixin(EnumSwitch("FileType", "FileType.pdf"));
+    mixin(EnumSwitch("FileType", "pdf"));
 }   
 
 FileType[] toFileTypes(string[] values)
@@ -374,7 +375,7 @@ unittest {
     assert(FileType.xlsx.toString == "xlsx");
     assert(FileType.docx.toString == "docx");   
 
-    assert(["pdf", "docx"].toFileType == [FileType.pdf, FileType.docx]);
+    assert(["pdf", "docx"].toFileTypes == [FileType.pdf, FileType.docx]);
     assert([FileType.pdf, FileType.docx].toString == ["pdf", "docx"]);
 }
 
@@ -386,7 +387,7 @@ enum SchemaStatus {
 }
 
 SchemaStatus toSchemaStatus(string value) {
-    mixin(EnumSwitch("SchemaStatus", "SchemaStatus.active"));
+    mixin(EnumSwitch("SchemaStatus", "active"));
 }
 
 SchemaStatus[] toSchemaStatuses(string[] values)
@@ -423,7 +424,7 @@ enum TemplateStatus {
 }
 
 TemplateStatus toTemplateStatus(string value) {
-    mixin(EnumSwitch("TemplateStatus", "TemplateStatus.active"));
+    mixin(EnumSwitch("TemplateStatus", "active"));
 }
 
 TemplateStatus[] toTemplateStatuses(string[] values)

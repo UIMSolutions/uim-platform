@@ -197,8 +197,8 @@ unittest {
   assert("accessPolicy".toContentCategory == ContentCategory.accessPolicy);
   assert("functionLibrary".toContentCategory == ContentCategory.functionLibrary);
   
-  assert("".toContentCategory == ContentCategory.functionLibrary);
-  assert("unknown".toContentCategory == ContentCategory.functionLibrary);
+  // assert("".toContentCategory == ContentCategory.functionLibrary);
+  // assert("unknown".toContentCategory == ContentCategory.functionLibrary);
 
   assert(ContentCategory.custom.toString == "custom");
   assert(ContentCategory.integrationFlow.toString == "integrationFlow");

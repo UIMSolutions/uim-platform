@@ -21,7 +21,7 @@ struct EnrichmentMatchResult {
 
 EnrichmentMatchResult matchEnrichmentData(ExtractionResult result, EnrichmentData[] candidates) {
   if (candidates.length == 0)
-    return EnrichmentMatchResult("", EnrichmentMatchStatus.unmatched, 0.0, []);
+    return EnrichmentMatchResult(EnrichmentDataId(""), EnrichmentMatchStatus.unmatched, 0.0, []);
 
   EnrichmentMatchResult best;
   best.status = EnrichmentMatchStatus.unmatched;

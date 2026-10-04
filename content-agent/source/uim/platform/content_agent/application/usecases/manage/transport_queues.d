@@ -35,13 +35,16 @@ class ManageTransportQueuesUseCase {
     if (req.name.isEmpty)
       return UsecaseResult(false, "", "Queue name is required");
 
-    auto queue = TransportQueue(req.tenantId, req.queueId.isNull ? TransportQueueId(createId()) : req.queueId, req.createdBy);
+    auto queue = TransportQueue(req.tenantId, TransportQueueId(createId()), req.createdBy);
     queue.name = req.name;
     queue.description = req.description;
     queue.queueType = toQueueType(req.queueType);
     queue.endpoint = req.endpoint;
     queue.authToken = req.authToken;
     queue.isDefault = req.isDefault;
+
+    if (queue.isDefault)
+      queueRepo.removeDefault(req.tenantId);
 
     queueRepo.save(queue);
     recordActivity(req.tenantId, ActivityType.queueConfigured, queue.id.value, req.name,
@@ -63,6 +66,9 @@ class ManageTransportQueuesUseCase {
       queue.authToken = req.authToken;
     queue.isDefault = req.isDefault;
     queue.updatedAt = clockSeconds();
+
+    if (queue.isDefault)
+      queueRepo.removeDefault(req.tenantId);
 
     queueRepo.update(queue);
     return UsecaseResult(true, queue.id.value, "");
@@ -92,7 +98,7 @@ class ManageTransportQueuesUseCase {
   private void recordActivity(TenantId tenantId, ActivityType actType,
       string entityId, string entityName, string desc, string by) {
    
-    auto activity = ContentActivity(tenantId, ContentActivityId(createId()), by);
+    auto activity = ContentActivity(tenantId, ContentActivityId(createId()), UserId(by));
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;

@@ -23,4 +23,8 @@ interface IExportJobRepository : ITenantRepository!(ExportJob, ExportJobId) {
   ExportJob[] findByStatus(TenantId tenantId, ExportStatus status);
   void removeByStatus(TenantId tenantId, ExportStatus status);
 
+  ExportJob[] findByPackage(TenantId tenantId, ContentPackageId packageId);
+  void removeByPackage(TenantId tenantId, ContentPackageId packageId);
+
+
 }

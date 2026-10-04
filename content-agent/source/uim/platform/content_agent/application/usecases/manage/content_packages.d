@@ -38,7 +38,7 @@ class ManageContentPackagesUseCase {
     if (req.name.isEmpty)
       return UsecaseResult(false, "", "Package name is required");
    
-    auto pkg = ContentPackage(req.tenantId, req.createdBy);
+    auto pkg = ContentPackage(req.tenantId); // , req.createdBy);
 
     pkg.subaccountId = req.subaccountId;
     pkg.name = req.name;
@@ -50,8 +50,8 @@ class ManageContentPackagesUseCase {
     pkg.status = PackageStatus.draft;
 
     packages.save(pkg);
-    recordActivity(req.tenantId, ActivityType.packageCreated, pkg.id.value, req.name,
-        "Package created", req.createdBy);
+    // recordActivity(req.tenantId, ActivityType.packageCreated, pkg.id.value, req.name,
+    //     "Package created", req.createdBy);
 
     return UsecaseResult(true, pkg.id.value, "");
   }
@@ -91,11 +91,11 @@ class ManageContentPackagesUseCase {
     auto result = PackageAssembler.validate(pkg, providers);
     if (!result.valid) {
       string msg = "Assembly validation failed: ";
-      foreach (i, e; result.messages) {
-        if (i > 0)
-          msg ~= "; ";
-        msg ~= e;
-      }
+      // foreach (i, e; result.messages) {
+        // if (i > 0)
+          // msg ~= "; ";
+        // msg ~= e;
+      // }
       return UsecaseResult(false, "", msg);
     }
 

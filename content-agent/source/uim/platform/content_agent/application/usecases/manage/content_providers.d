@@ -43,7 +43,7 @@ class ManageContentProvidersUseCase {
     provider.authToken = req.authToken;
     provider.status = ProviderStatus.active;
     provider.registeredAt = clockSeconds();
-    provider.registeredBy = req.registeredBy.value;
+    // provider.registeredBy = req.registeredBy.value;
 
     providerRepo.save(provider);
     recordActivity(req.tenantId, ActivityType.providerRegistered, provider.id.value, req.name,

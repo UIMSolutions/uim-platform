@@ -17,10 +17,10 @@ mixin(ShowModule!());
 @safe:
 
 class ManageTrainingJobsUseCase {
-  protected TrainingJobRepository jobRepo;
-  private DocumentRepository docRepo;
+  protected ITrainingJobRepository jobRepo;
+  private IDocumentRepository docRepo;
 
-  this(TrainingJobRepository jobRepo, DocumentRepository docRepo) {
+  this(ITrainingJobRepository jobRepo, IDocumentRepository docRepo) {
     this.jobRepo = jobRepo;
     this.docRepo = docRepo;
   }

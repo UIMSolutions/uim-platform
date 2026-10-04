@@ -41,7 +41,7 @@ class ManageDocumentTypesUseCase {
   }
 
   UsecaseResult updateDocumentType(UpdateDocumentTypeRequest r) {
-    if (r.documentTypeId.isEmpty)
+    if (r.documentTypeId.isNull)
       return UsecaseResult(false, "", "AiDocument type ID is required");
 
     auto existing = repo.findById(r.tenantId, r.clientId, r.documentTypeId);
@@ -50,11 +50,10 @@ class ManageDocumentTypesUseCase {
 
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
-    if (r.defaultSchemaId.length > 0) existing.defaultSchemaId = r.defaultSchemaId;
-    if (r.category.length > 0) existing.category = toCategory(r.category);
+    if (!r.defaultSchemaId.isNull) existing.defaultSchemaId = r.defaultSchemaId;
+    if (r.category.length > 0) existing.category = r.category.toDocumentCategory;
 
-    
-    existing.updatedAt = currentTimestamp;
+    existing.updatedAt = clockSeconds();
 
     repo.update(existing);
     return UsecaseResult(true, existing.id.value, "");

@@ -73,7 +73,7 @@ class DocumentTypeController : ManageHttpController {
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
-    return successResponse("AiDocument types retrieved successfully", 0, responseData);
+    return successResponse("AiDocument types retrieved successfully", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -88,7 +88,7 @@ class DocumentTypeController : ManageHttpController {
 
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-    auto dt = usecase.getDocumentType(tenantId, id, clientId);
+    auto dt = usecase.getDocumentType(tenantId, clientId, id);
     if (dt.isNull)
       return errorResponse("AiDocument type not found", 404);
 
@@ -102,7 +102,7 @@ class DocumentTypeController : ManageHttpController {
       .set("createdAt", dt.createdAt)
       .set("updatedAt", dt.updatedAt);
 
-    return successResponse("AiDocument type retrieved successfully", 0, responseData);
+    return successResponse("AiDocument type retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -145,7 +145,7 @@ class DocumentTypeController : ManageHttpController {
 
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
 
-    auto result = usecase.deleteDocumentType(tenantId, id, clientId);
+    auto result = usecase.deleteDocumentType(tenantId, clientId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

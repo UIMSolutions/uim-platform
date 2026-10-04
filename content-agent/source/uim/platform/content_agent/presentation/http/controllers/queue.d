@@ -102,6 +102,7 @@ class QueueController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateQueueRequest();
     r.tenantId = tenantId;
+    r.queueId = id;
     r.description = data.getString("description");
     r.endpoint = data.getString("endpoint");
     r.authToken = data.getString("authToken");
