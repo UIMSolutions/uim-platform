@@ -1,0 +1,66 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data_quality.application.usecases.cleanse_addresses;
+
+
+// import uim.platform.data_quality.domain.entities.address_record;
+// import uim.platform.data_quality.domain.ports.repositories.addresses;
+// import uim.platform.data_quality.domain.services.address_cleanser;
+
+import uim.platform.data_quality;
+
+mixin(ShowModule!());
+
+@safe:
+class CleanseAddressesUseCase {
+  protected IAddressRepository repo;
+  private AddressCleanser cleanser;
+
+  this(IAddressRepository repo, AddressCleanser cleanser) {
+    this.repo = repo;
+    this.cleanser = cleanser;
+  }
+
+  /// Cleanse a single address.
+  AddressRecord cleanse(CleanseAddressRequest req) {
+    auto record = AddressRecord(req.tenantId, req.sourceRecordId);
+    record.sourceRecordId = req.sourceRecordId;
+    record.inputLine1 = req.line1;
+    record.inputLine2 = req.line2;
+    record.inputCity = req.city;
+    record.inputRegion = req.region;
+    record.inputPostalCode = req.postalCode;
+    record.inputCountry = req.country;
+
+    auto cleansed = cleanser.cleanse(record);
+    repo.save(cleansed);
+    return cleansed;
+  }
+
+  /// Cleanse a batch of addresses.
+  AddressRecord[] cleanseBatch(CleanseBatchAddressRequest req) {
+    AddressRecord[] results;
+    foreach (addr; req.addresses) {
+      results ~= cleanse(addr);
+    }
+    return results;
+  }
+
+  /// Retrieve cleansed addresses by tenant.
+  AddressRecord[] getByTenant(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
+  /// Retrieve by source record.
+  AddressRecord[] getBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
+    return repo.findBySourceRecord(tenantId, sourceRecordId);
+  }
+
+  /// Retrieve by quality level.
+  AddressRecord[] getByQuality(TenantId tenantId, AddressQuality quality) {
+    return repo.findByQuality(tenantId, quality);
+  }
+}

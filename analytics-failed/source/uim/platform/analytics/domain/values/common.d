@@ -1,0 +1,72 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.analytics.domain.values.common;
+
+import uim.platform.analytics;
+
+@safe:
+/// Strongly-typed identifier wrapping a UUID string.
+struct EntityId {
+  string value;
+
+  static EntityId generate() {
+    return EntityId(generateId);
+  }
+
+  bool opEquals(const EntityId other) const {
+    return value == other.value;
+  }
+
+  size_t toHash() const nothrow @safe {
+    size_t hash;
+    foreach (c; value)
+      hash = hash * 31 + c;
+    return hash;
+  }
+
+  bool empty() const {
+    return value.length == 0;
+  }
+}
+
+Json toJson(EntityId id) {
+  return serializeToJson(id);
+}
+/// Audit metadata attached to every domain entity.
+struct AuditInfo {
+  SysTime createdAt;
+  UserId createdBy;
+  SysTime updatedAt;
+  UserId updatedBy;
+
+  static AuditInfo create(UserId userId) {
+    auto now = Clock.currTime();
+    return AuditInfo(now, userId, now, userId);
+  }
+
+  AuditInfo touch(UserId userId) const {
+    return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
+  }
+
+  Json toJson() {
+    return Json.emptyObject.set("createdAt", createdAt.toISOExtString())
+      .set("createdBy", createdBy).set("updatedAt", updatedAt.toISOExtString())
+      .set("updatedBy", updatedBy);
+  }
+}
+/// Sharing / visibility scope.
+enum Visibility {
+  Private,
+  Team,
+  Organization,
+  Public,
+}
+/// Status of an analytical artifact.
+enum ArtifactStatus {
+  Draft,
+  Published,
+  Archived,
+}

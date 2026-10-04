@@ -1,0 +1,51 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data_quality.infrastructure.persistence.repositories.cleansing_rules;
+
+// import uim.platform.data_quality.domain.entities.cleansing_rule;
+// import uim.platform.data_quality.domain.ports.repositories.cleansing_rules;
+
+import uim.platform.data_quality;
+
+mixin(ShowModule!());
+
+@safe:
+
+class CleansingRuleRepository : TenantRepository!(CleansingRule, CleansingRuleId), ICleansingRuleRepository {
+
+  size_t countByDataset(TenantId tenantId, string datasetPattern) {
+    return findByDataset(tenantId, datasetPattern).length;
+  }
+
+  CleansingRule[] filterByDataset(CleansingRule[] rules, string datasetPattern) {
+    return rules.filter!(r => r.datasetPattern == datasetPattern).array;
+  }
+
+  CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern) {
+    return filterByDataset(findByTenant(tenantId), datasetPattern);
+  }
+
+  void removeByDataset(TenantId tenantId, string datasetPattern) {
+    findByDataset(tenantId, datasetPattern).each!(entity => remove(entity));
+  }
+
+  size_t countActive(TenantId tenantId) {
+    return findActive(tenantId).length;
+  }
+
+  CleansingRule[] filterActive(CleansingRule[] rules) {
+    return rules.filter!(r => r.status == RuleStatus.active).array;
+  }
+
+  CleansingRule[] findActive(TenantId tenantId) {
+    return filterActive(findByTenant(tenantId));
+  }
+
+  void removeActive(TenantId tenantId) {
+    findActive(tenantId).each!(entity => remove(entity));
+  }
+
+}

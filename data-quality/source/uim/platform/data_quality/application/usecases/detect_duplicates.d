@@ -1,0 +1,82 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data_quality.application.usecases.detect_duplicates;
+
+// import uim.platform.data_quality.domain.entities.match_group;
+// import uim.platform.data_quality.domain.ports.repositories.match_groups;
+// import uim.platform.data_quality.domain.services.duplicate_detector;
+
+import uim.platform.data_quality;
+
+mixin(ShowModule!());
+
+@safe:
+
+
+class DetectDuplicatesUseCase {
+  protected IMatchGroupRepository repo;
+  private DuplicateDetector detector;
+
+  this(IMatchGroupRepository repo, DuplicateDetector detector) {
+    this.repo = repo;
+    this.detector = detector;
+  }
+
+  /// Run duplicate detection on a set of records.
+  MatchGroup[] detect(DetectDuplicatesRequest req) {
+    // Convert DTO records to domain RecordEntry
+    RecordEntry[] entries;
+    foreach (r; req.records) {
+      RecordEntry entry;
+      entry.recordId = r.recordId;
+      entry.fields = r.fieldValues;
+      entries ~= entry;
+    }
+
+    auto groups = detector.detect(req.tenantId, req.datasetId, req.matchFields,
+        req.strategy, req.threshold, entries);
+
+    // Persist all match groups
+    foreach (g; groups)
+      repo.save(g);
+
+    return groups;
+  }
+
+  /// Resolve a duplicate group by selecting a survivor record.
+  UsecaseResult resolve(ResolveDuplicateRequest req) {
+    auto group = repo.findById(req.groupId, req.tenantId);
+    if (group.isNull)
+      return UsecaseResult(false, "", "Match group not found");
+
+    auto g = *group;
+    g.survivorRecordId = req.survivorRecordId;
+    g.resolved = true;
+    g.resolvedAt = currentTimestamp();
+
+    // Mark the chosen survivor
+    foreach (c; g.candidates)
+      c.isSurvivor = (c.recordId == req.survivorRecordId);
+
+    repo.update(g);
+    return UsecaseResult(true, g.id.value, "");
+  }
+
+  /// Get all match groups for a dataset.
+  MatchGroup[] getByDataset(TenantId tenantId, DatasetId datasetId) {
+    return repo.findByDataset(tenantId, datasetId);
+  }
+
+  /// Get unresolved match groups.
+  MatchGroup[] getUnresolved(TenantId tenantId) {
+    return repo.findUnresolved(tenantId);
+  }
+
+  /// Get a single match group by ID.
+  MatchGroup getById(TenantId tenantId, MatchGroupId id) {
+    return repo.findById(tenantId, id);
+  }
+}
