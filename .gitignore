@@ -56,3 +56,8 @@ mobile/build/mobile-test-defaultTest
 mobile/build/mobile-test-defaultTest
 service/build/libuim-platform-service.a
 service/build/libuim-platform-service.a
+cloud-foundry/build/libuim-cloud-foundry-platform-service.a
+auditlog/build/libuim-auditlog-platform-service.a
+ai-core/build/libuim-ai-core-platform-service.a
+advanced-events/build/libuim-advanced-event-mesh-platform-service.a
+abap-compiler/build/libuim-abap-compiler-platform-service.a

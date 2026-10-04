@@ -6,6 +6,7 @@
 module uim.platform.datasphere_composer.application.usecases.manage.data_products;
 
 import uim.platform.datasphere_composer;
+import std.conv : to;
 
 mixin(ShowModule!());
 
@@ -19,9 +20,11 @@ class ManageDataProductsUseCase {
 
   UsecaseResult create(CreateDataProductRequest r) {
     DataProduct p;
-    p.id = DataProductId(r.id.length > 0 ? r.id.value : generateId);
+    p.createEntity(r.tenantId);
+    if (!r.productId.isNull)
+      p.id = r.productId;
     p.tenantId = r.tenantId;
-    p.providerId = DataProviderId(r.providerId);
+    p.providerId = r.providerId;
     p.name = r.name;
     p.description = r.description;
     p.schemaVersion = r.schemaVersion;
@@ -29,28 +32,47 @@ class ManageDataProductsUseCase {
     p.enabled = r.enabled;
     p.status = DataProductStatus.pending;
     p.metadata = r.metadata;
-    initEntity(p);
+
+    auto err = ComposerValidator.validateDataProduct(p);
+    if (err !is null)
+      return UsecaseResult(false, p.id.value, err);
 
     repo.save(p);
     return UsecaseResult(true, p.id.value, null);
   }
 
+  DataProduct[] list(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
   DataProduct[] listProducts(TenantId tenantId) {
-    return repo.findByTenant(TenantId(tenantId));
+    return list(tenantId);
+  }
+
+  DataProduct[] listByProvider(TenantId tenantId, string providerId) {
+    return repo.findByProvider(tenantId, DataProviderId(providerId));
   }
 
   DataProduct[] listProducts(TenantId tenantId, string providerId) {
-    return repo.findByProvider(TenantId(tenantId), DataProviderId(providerId));
+    return listByProvider(tenantId, providerId);
+  }
+
+  DataProduct getById(TenantId tenantId, DataProductId id) {
+    return repo.findById(tenantId, id);
+  }
+
+  DataProduct getById(TenantId tenantId, string id) {
+    return getById(tenantId, DataProductId(id));
   }
 
   DataProduct getProduct(TenantId tenantId, DataProductId id) {
-    return repo.findById(TenantId(tenantId), id);
+    return getById(tenantId, id);
   }
 
   UsecaseResult update(UpdateDataProductRequest r) {
-    auto p = repo.findById(R.tenantId, r.productId);
+    auto p = repo.findById(r.tenantId, r.productId);
     if (p.isNull)
-      return UsecaseResult(false, r.id, "Data product not found");
+      return UsecaseResult(false, r.productId.value, "Data product not found");
 
     if (r.name.length > 0)
       p.name = r.name;
@@ -58,10 +80,10 @@ class ManageDataProductsUseCase {
       p.description = r.description;
     p.enabled = r.enabled;
     if (r.status.length > 0) {
-
       try {
         p.status = r.status.to!DataProductStatus;
       } catch (Exception) {
+        return UsecaseResult(false, r.productId.value, "Invalid data product status");
       }
     }
 
@@ -70,11 +92,11 @@ class ManageDataProductsUseCase {
   }
 
   UsecaseResult remove(TenantId tenantId, DataProductId id) {
-    auto p = repo.findById(TenantId(tenantId), id);
+    auto p = repo.findById(tenantId, id);
     if (p.isNull)
-      return UsecaseResult(false, id, "Data product not found");
+      return UsecaseResult(false, id.value, "Data product not found");
       
     repo.remove(p);
-    return UsecaseResult(true, id, null);
+    return UsecaseResult(true, id.value, null);
   }
 }

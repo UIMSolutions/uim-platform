@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rfc-config
+  labels:
+    app: uim-rfc
+    component: platform-service
+data:
+  RFC_HOST: "0.0.0.0"
+  RFC_PORT: "8092"

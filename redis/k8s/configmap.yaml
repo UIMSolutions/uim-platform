@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: uim-platform
+data:
+  REDIS_HOST: "0.0.0.0"
+  REDIS_PORT: "8130"

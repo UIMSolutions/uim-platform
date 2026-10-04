@@ -249,39 +249,52 @@ class MarketRateController : ManageHttpController {
     res.writeJsonBody(p.toJson(), 200);
   }
 
-  private void handleUpdateProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id = precheck.id;
-    auto data = req.json;
-    if (data.isUndefined) {
-      writeError(res, 400, "Request body must be JSON");
-      return;
-    }
+  Json updateProviderHandler(HTTPServerRequest req) {
+    auto precheck = putHandler(req);
+    if (precheck.hasError) 
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ProviderId(precheck.id);
+    if (id.isNull) 
+      return errorResponse("Provider ID is required", 400);
+
+    auto data = precheck.data;
+    if (data.isUndefined) 
+      return errorResponse("Request body must be JSON", 400);
 
     UpdateProviderRequest ucReq;
-    ucReq.tenantId = TenantId(data.getString("tenantId", "default"));
-    ucReq.providerId = ProviderId(id);
+    ucReq.tenantId = tenantId;
+    ucReq.providerId = id;
     ucReq.name = data.getString("name");
     ucReq.description = data.getString("description");
     ucReq.contactEmail = data.getString("contactEmail");
     ucReq.isActive = data.getBoolean("isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);
-    if (result.hasError) {
-      writeError(res, 422, result.message);
-      return;
-    }
-    res.writeJsonBody(Json.emptyObject.set("updated", true), 200);
+    if (result.hasError) 
+      return errorResponse(result.message, 422);
+    
+    return successResponse("Provider updated successfully", 200, Json.emptyObject.set("updated", true));
   }
 
-  private void handleDeleteProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id = precheck.id;
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
+  mixin(HandleTemplate!("handleUpdateProvider", "updateProviderHandler"));
 
-    auto result = providersUC.deleteProvider(tenantId, ProviderId(id));
-    if (result.hasError) {
-      writeError(res, 404, result.message);
-      return;
-    }
-    res.writeJsonBody(Json.emptyObject.set("deleted", true), 200);
+  Json deleteProviderHandler(HTTPServerRequest req) {
+    auto precheck = deleteHandler(req);
+    if (precheck.hasError) 
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ProviderId(precheck.id);
+
+    auto result = providersUC.deleteProvider(tenantId, id);
+    if (result.hasError) 
+      return errorResponse(result.message, 400);
+    
+    return successResponse("Provider deleted successfully", 200, Json.emptyObject.set("deleted", true));
   }
+
+  mixin(HandleTemplate!("handleDeleteProvider", "deleteProviderHandler"));
 }
+

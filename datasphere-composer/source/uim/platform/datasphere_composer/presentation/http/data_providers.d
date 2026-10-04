@@ -29,7 +29,7 @@ class DataProviderController : ManageHttpController {
   }
 
   void handleList(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = precheck.tenantId;
+    auto tenantId = req.getTenantId;
     auto items = usecase.list(tenantId);
     auto arr = Json.emptyArray;
     foreach (item; items)
@@ -49,7 +49,7 @@ class DataProviderController : ManageHttpController {
       
     auto item = usecase.getById(tenantId, id);
     if (item.isNull)
-      return errorResponse("Scan job not found", 404);
+      return errorResponse("Data provider not found", 404);
 
     auto responseData = item.toJson();
     return successResponse("Data provider retrieved successfully", "Retrieved", 200, responseData);
@@ -65,7 +65,7 @@ class DataProviderController : ManageHttpController {
     auto data = precheck.data;
     CreateDataProviderRequest r;
     r.tenantId = tenantId;
-    r.providerId = DataProviderId(precheck.id);
+    r.id = DataProviderId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.systemType = data.getString("systemType");
@@ -88,8 +88,7 @@ class DataProviderController : ManageHttpController {
     auto data = precheck.data;
     UpdateDataProviderRequest r;
     r.tenantId = tenantId;
-    r.providerId = DataProviderId(extractId(req.requestPath.to!string));
-    r.systemType = data.getString("systemType");
+    r.id = DataProviderId(extractId(req.requestPath.to!string));
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.status = data.getString("status");

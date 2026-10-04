@@ -6,6 +6,7 @@
 module uim.platform.datasphere_composer.application.usecases.manage.data_providers;
 
 import uim.platform.datasphere_composer;
+import std.conv : to;
 
 mixin(ShowModule!());
 
@@ -16,12 +17,11 @@ class ManageDataProvidersUseCase {
   this(IDataProviderRepository repo) { this.repo = repo; }
 
   UsecaseResult create(CreateDataProviderRequest r) {
-    auto err = ComposerValidator.validateDataProvider(DataProvider(  DataProviderId(r.id), TenantId(r.tenantId), r.name, r.description));
-    if (err !is null) return UsecaseResult(false, r.id, err);
-
     DataProvider p;
-    p.id = DataProviderId(r.id.length > 0 ? r.id : currentTimestamp());
-    p.tenantId = TenantId(r.tenantId);
+    p.createEntity(r.tenantId);
+    if (!r.id.isNull)
+      p.id = r.id;
+    p.tenantId = r.tenantId;
     p.name = r.name;
     p.description = r.description;
     p.systemType = r.systemType;
@@ -29,41 +29,55 @@ class ManageDataProvidersUseCase {
     p.region = r.region;
     p.status = DataProviderStatus.active;
     p.metadata = r.metadata;
-    initEntity(p);
+
+    auto err = ComposerValidator.validateDataProvider(p);
+    if (err !is null)
+      return UsecaseResult(false, p.id.value, err);
 
     repo.save(p);
     return UsecaseResult(true, p.id.value, null);
   }
 
   DataProvider[] list(TenantId tenantId) {
-    return repo.findByTenant(TenantId(tenantId));
+    return repo.findByTenant(tenantId);
+  }
+
+  DataProvider getById(TenantId tenantId, DataProviderId id) {
+    return repo.findById(tenantId, id);
   }
 
   DataProvider getById(TenantId tenantId, string id) {
-    return repo.findById(TenantId(tenantId), DataProviderId(id));
+    return getById(tenantId, DataProviderId(id));
   }
 
   UsecaseResult update(UpdateDataProviderRequest r) {
-    auto p = repo.findById(TenantId(r.tenantId), DataProviderId(r.id));
-    if (p.isNull) return UsecaseResult(false, r.id, "Provider not found");
+    auto p = repo.findById(r.tenantId, r.id);
+    if (p.isNull) return UsecaseResult(false, r.id.value, "Provider not found");
 
     if (r.name.length > 0)          p.name = r.name;
     if (r.description.length > 0)   p.description = r.description;
-    if (r.connectionUrl.length > 0)  p.connectionUrl = r.connectionUrl;
-    if (r.region.length > 0)         p.region = r.region;
+    if (r.connectionUrl.length > 0) p.connectionUrl = r.connectionUrl;
+    if (r.region.length > 0)        p.region = r.region;
     if (r.status.length > 0) {
-      
-      try { p.status = r.status.to!DataProviderStatus; } catch (Exception) {}
+      try {
+        p.status = r.status.to!DataProviderStatus;
+      } catch (Exception) {
+        return UsecaseResult(false, r.id.value, "Invalid provider status");
+      }
     }
 
     repo.update(p);
     return UsecaseResult(true, p.id.value, null);
   }
 
+  UsecaseResult remove(TenantId tenantId, DataProviderId id) {
+    auto p = repo.findById(tenantId, id);
+    if (p.isNull) return UsecaseResult(false, id.value, "Provider not found");
+    repo.remove(p);
+    return UsecaseResult(true, id.value, null);
+  }
+
   UsecaseResult remove(TenantId tenantId, string id) {
-    auto p = repo.findById(TenantId(tenantId), DataProviderId(id));
-    if (p.isNull) return UsecaseResult(false, id, "Provider not found");
-    repo.remove(TenantId(tenantId), DataProviderId(id));
-    return UsecaseResult(true, id, null);
+    return remove(tenantId, DataProviderId(id));
   }
 }

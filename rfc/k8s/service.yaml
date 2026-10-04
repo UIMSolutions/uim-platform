@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: uim-rfc
+  labels:
+    app: uim-rfc
+    component: platform-service
+spec:
+  type: ClusterIP
+  selector:
+    app: uim-rfc
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8092
+    targetPort: 8092
