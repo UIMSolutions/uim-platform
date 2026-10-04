@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.application;
 
-public {
+public:
     import uim.platform.data_quality.application.usecases;
     import uim.platform.data_quality.application.dto;
-}

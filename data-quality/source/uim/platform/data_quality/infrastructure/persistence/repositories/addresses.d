@@ -13,7 +13,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class AddressRepository : MemoryTenantRepository!(AddressRecord, AddressId), AddressRepository {
+class AddressRepository : TenantRepository!(AddressRecord, AddressId), IAddressRepository {
 
   size_t countBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
     return findBySourceRecord(tenantId, sourceRecordId).length;
@@ -24,11 +24,19 @@ class AddressRepository : MemoryTenantRepository!(AddressRecord, AddressId), Add
   }
 
   void removeBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
-    return findBySourceRecord(tenantId, sourceRecordId).each!(e => remove(e));
+    findBySourceRecord(tenantId, sourceRecordId).each!(e => remove(e));
+  }
+
+  size_t countByQuality(TenantId tenantId, AddressQuality quality) {
+    return findByQuality(tenantId, quality).length;
   }
 
   AddressRecord[] findByQuality(TenantId tenantId, AddressQuality quality) {
     return findByTenant(tenantId).filter!(r => r.quality == quality).array;
+  }
+
+  void removeByQuality(TenantId tenantId, AddressQuality quality) {
+    findByQuality(tenantId, quality).each!(e => remove(e));
   }
 
 }

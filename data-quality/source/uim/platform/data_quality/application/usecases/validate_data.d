@@ -11,11 +11,11 @@ mixin(ShowModule!());
 
 @safe:
 class ValidateDataUseCase {
-  protected ValidationRuleRepository ruleRepo;
-  private ValidationResultRepository resultRepo;
+  protected IValidationRuleRepository ruleRepo;
+  private IValidationResultRepository resultRepo;
   private ValidationEngine engine;
 
-  this(ValidationRuleRepository ruleRepo, ValidationResultRepository resultRepo,
+  this(IValidationRuleRepository ruleRepo, IValidationResultRepository resultRepo,
       ValidationEngine engine) {
     this.ruleRepo = ruleRepo;
     this.resultRepo = resultRepo;
@@ -23,21 +23,21 @@ class ValidateDataUseCase {
   }
 
   /// Validate a single record against active rules.
-  ValidationResult validateRecord(ValidateRecordRequest req) {
+  DqValidationResult validateRecord(ValidateRecordRequest req) {
     auto rules = ruleRepo.findActive(req.tenantId);
-    auto result = engine.validate(req.recordId, req.tenantId, req.datasetId,
+    auto result = engine.validate(req.tenantId, req.recordId, req.datasetId,
         req.fieldValues, rules);
     resultRepo.save(result);
     return result;
   }
 
   /// Validate a batch of records.
-  ValidationResult[] validateBatch(ValidateBatchRequest req) {
+  DqValidationResult[] validateBatch(ValidateBatchRequest req) {
     auto rules = ruleRepo.findActive(req.tenantId);
-    ValidationResult[] results;
+    DqValidationResult[] results;
 
     foreach (rec; req.records) {
-      auto result = engine.validate(rec.recordId, req.tenantId, req.datasetId,
+      auto result = engine.validate(req.tenantId, rec.recordId, req.datasetId,
           rec.fieldValues, rules);
       resultRepo.save(result);
       results ~= result;
@@ -47,12 +47,12 @@ class ValidateDataUseCase {
   }
 
   /// Retrieve validation results for a dataset.
-  ValidationResult[] getResultsByDataset(TenantId tenantId, DatasetId datasetId) {
+  DqValidationResult[] getResultsByDataset(TenantId tenantId, DatasetId datasetId) {
     return resultRepo.findByDataset(tenantId, datasetId);
   }
 
   /// Retrieve validation result for a single record.
-  ValidationResult getResultByRecord(TenantId tenantId, RecordId recordId) {
+  DqValidationResult getResultByRecord(TenantId tenantId, RecordId recordId) {
     return resultRepo.findByRecord(tenantId, recordId);
   }
 }

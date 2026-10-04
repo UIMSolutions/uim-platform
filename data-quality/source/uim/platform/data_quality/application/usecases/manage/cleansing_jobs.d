@@ -21,9 +21,9 @@ class ManageCleansingJobsUseCase {
   }
 
   UsecaseResult createCleansingJob(CreateCleansingJobRequest req) {
-    if (req.tenantId.isEmpty)
+    if (req.tenantId.isNull)
       return UsecaseResult(false, "", "Tenant ID is required");
-    if (req.datasetId.isEmpty)
+    if (req.datasetId.isNull)
       return UsecaseResult(false, "", "Dataset ID is required");
 
     auto job = CleansingJob(req.tenantId);

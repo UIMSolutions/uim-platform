@@ -53,7 +53,7 @@ class ProfileDataUseCase {
     }
 
     profile.rating = scoreToRating(profile.overallQualityScore);
-    profile.profiledAt = profile.createdAt();
+    profile.profiledAt = currentTimestamp();
     profile.duration = (profile.profiledAt - startTime) / 10_000; // ms
 
     repo.save(profile);
@@ -90,7 +90,7 @@ class ProfileDataUseCase {
 
     foreach (rec; records) {
       auto v = fieldName in rec.fieldValues;
-      if (v.isNull) {
+      if (v is null) {
         ++nullCount;
         continue;
       }

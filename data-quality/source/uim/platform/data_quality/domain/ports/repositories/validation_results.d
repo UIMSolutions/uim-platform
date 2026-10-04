@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting validation results.
-interface IValidationResultRepository : ITenantRepository!(ValidationResult, ValidationResultId) {
+interface IValidationResultRepository : ITenantRepository!(DqValidationResult, ValidationResultId) {
 
   bool existsByRecord(TenantId tenantId, RecordId recordId);
-  ValidationResult findByRecord(TenantId tenantId, RecordId recordId);
+  DqValidationResult findByRecord(TenantId tenantId, RecordId recordId);
   void removeByRecord(TenantId tenantId, RecordId recordId);
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
-  ValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId);
+  DqValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId);
   void removeByDataset(TenantId tenantId, DatasetId datasetId);
 
 }

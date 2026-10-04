@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.domain.types;
 import uim.platform.data_quality;
+
+@safe:
 /// Unique identifier type aliases for type safety.
 struct RecordId {
   mixin(IdTemplate);
@@ -49,5 +51,4 @@ struct ProfileJobId {
 struct QualityDashboardId {
   mixin(IdTemplate);
 }
-
 

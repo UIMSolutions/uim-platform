@@ -57,7 +57,7 @@ class ProfileController : HttpController {
 
 mixin(HandleTemplate!("handleProfile", "profileHandler"));
 
-  override protected Json listHandler(HTTPServerRequest req) {
+  protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -80,7 +80,6 @@ mixin(HandleTemplate!("handleProfile", "profileHandler"));
 
     auto tenantId = precheck.tenantId;
     auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
     auto profile = usecase.getById(tenantId, id);
     if (profile.isNull)
       return errorResponse("Data profile not found", 404);

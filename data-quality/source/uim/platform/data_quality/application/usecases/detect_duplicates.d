@@ -48,11 +48,11 @@ class DetectDuplicatesUseCase {
 
   /// Resolve a duplicate group by selecting a survivor record.
   UsecaseResult resolve(ResolveDuplicateRequest req) {
-    auto group = repo.findById(req.groupId, req.tenantId);
+    auto group = repo.findById(req.tenantId, req.groupId);
     if (group.isNull)
       return UsecaseResult(false, "", "Match group not found");
 
-    auto g = *group;
+    auto g = group;
     g.survivorRecordId = req.survivorRecordId;
     g.resolved = true;
     g.resolvedAt = currentTimestamp();

@@ -21,11 +21,11 @@ class ManageCleansingRulesUseCase {
   }
 
   UsecaseResult createCleansingRule(CreateCleansingRuleRequest req) {
-    if (req.tenantId.isEmpty)
+    if (req.tenantId.isNull)
       return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
       return UsecaseResult(false, "", "Rule name is required");
-    if (req.fieldname.isEmpty)
+    if (req.fieldName.isEmpty)
       return UsecaseResult(false, "", "Field name is required");
 
     auto rule = CleansingRule(req.tenantId);
@@ -33,7 +33,7 @@ class ManageCleansingRulesUseCase {
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;
     rule.fieldName = req.fieldName;
-    rule.action = req.action;
+    rule.action = req.action.toCleansingAction;
     rule.status = RuleStatus.draft;
     rule.findPattern = req.findPattern;
     rule.replaceWith = req.replaceWith;
@@ -52,10 +52,10 @@ class ManageCleansingRulesUseCase {
   }
 
   UsecaseResult updateCleansingRule(UpdateCleansingRuleRequest req) {
-    if (req.ruleId.isEmpty)
+    if (req.id.isNull)
       return UsecaseResult(false, "", "Rule ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.ruleId);
+    auto existing = repo.findById(req.tenantId, req.id);
     if (existing.isNull)
       return UsecaseResult(false, "", "Cleansing rule not found");
 
@@ -67,8 +67,8 @@ class ManageCleansingRulesUseCase {
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;
     rule.fieldName = req.fieldName;
-    rule.action = req.action;
-    rule.status = req.status;
+    rule.action = req.action.toCleansingAction;
+    rule.status = req.status.toRuleStatus;
     rule.findPattern = req.findPattern;
     rule.replaceWith = req.replaceWith;
     rule.defaultValue = req.defaultValue;

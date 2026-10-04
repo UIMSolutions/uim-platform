@@ -19,11 +19,11 @@ class ManageValidationRulesUseCase {
   }
 
   UsecaseResult createValidationRule(CreateValidationRuleRequest req) {
-    if (req.tenantId.isEmpty)
+    if (req.tenantId.isNull)
       return UsecaseResult(false, "", "Tenant ID is required");
     if (req.name.isEmpty)
       return UsecaseResult(false, "", "Rule name is required");
-    if (req.fieldname.isEmpty)
+    if (req.fieldName.isEmpty)
       return UsecaseResult(false, "", "Field name is required");
 
     auto rule = ValidationRule(req.tenantId);
@@ -31,8 +31,8 @@ class ManageValidationRulesUseCase {
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;
     rule.fieldName = req.fieldName;
-    rule.ruleType = req.ruleType;
-    rule.severity = req.severity;
+    rule.ruleType = req.ruleType.toRuleType;
+    rule.severity = req.severity.toRuleSeverity;
     rule.status = RuleStatus.draft;
     rule.pattern = req.pattern;
     rule.minValue = req.minValue;
@@ -49,10 +49,10 @@ class ManageValidationRulesUseCase {
   }
 
   UsecaseResult updateValidationRule(UpdateValidationRuleRequest req) {
-    if (req.ruleId.isEmpty)
+    if (req.id.isNull)
       return UsecaseResult(false, "", "Rule ID is required");
 
-    auto rule = repo.findById(req.tenantId, req.ruleId);
+    auto rule = repo.findById(req.tenantId, req.id);
     if (rule.isNull)
       return UsecaseResult(false, "", "Validation rule not found");
       
@@ -63,9 +63,9 @@ class ManageValidationRulesUseCase {
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;
     rule.fieldName = req.fieldName;
-    rule.ruleType = req.ruleType;
-    rule.severity = req.severity;
-    rule.status = req.status;
+    rule.ruleType = req.ruleType.toRuleType;
+    rule.severity = req.severity.toRuleSeverity;
+    rule.status = req.status.toRuleStatus;
     rule.pattern = req.pattern;
     rule.minValue = req.minValue;
     rule.maxValue = req.maxValue;

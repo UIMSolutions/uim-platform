@@ -17,7 +17,7 @@ mixin(ShowModule!());
 class QualityScorer {
   /// Compute a quality dashboard from validation results and profile data.
   QualityDashboard computeDashboard(TenantId tenantId, DatasetId datasetId,
-      string datasetName, ValidationResult[] results, DataProfile* profile) {
+      string datasetName, DqValidationResult[] results, DataProfile profile) {
     QualityDashboard d;
     d.tenantId = tenantId;
     d.datasetId = datasetId;
@@ -63,7 +63,7 @@ class QualityScorer {
     d.validityScore = d.totalRecords > 0 ? (cast(double) valid / d.totalRecords) * 100.0 : 100.0;
 
     // Completeness and uniqueness from profile
-    if (profile !is null) {
+    if (!profile.isNull) {
       d.completenessScore = computeCompleteness(profile.columns);
       d.uniquenessScore = computeUniqueness(profile.columns);
     }

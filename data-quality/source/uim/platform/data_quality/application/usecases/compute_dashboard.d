@@ -16,11 +16,11 @@ mixin(ShowModule!());
 
 @safe:
 class ComputeDashboardUseCase {
-  protected ValidationResultRepository resultRepo;
-  private DataProfileRepository profileRepo;
+  protected IValidationResultRepository resultRepo;
+  private IDataProfileRepository profileRepo;
   private QualityScorer scorer;
 
-  this(ValidationResultRepository resultRepo, DataProfileRepository profileRepo,
+  this(IValidationResultRepository resultRepo, IDataProfileRepository profileRepo,
       QualityScorer scorer) {
     this.resultRepo = resultRepo;
     this.profileRepo = profileRepo;

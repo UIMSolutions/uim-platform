@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Result of running validation rules against a single record.
-struct ValidationResult {
+struct DqValidationResult {
   mixin TenantEntity!ValidationResultId;
 
   RecordId recordId;

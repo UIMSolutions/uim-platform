@@ -26,7 +26,7 @@ class CleanseAddressesUseCase {
 
   /// Cleanse a single address.
   AddressRecord cleanse(CleanseAddressRequest req) {
-    auto record = AddressRecord(req.tenantId, req.sourceRecordId);
+    auto record = AddressRecord(req.tenantId);
     record.sourceRecordId = req.sourceRecordId;
     record.inputLine1 = req.line1;
     record.inputLine2 = req.line2;

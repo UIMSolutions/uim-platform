@@ -30,7 +30,13 @@ class DataProfileRepository : TenantRepository!(DataProfile, DataProfileId), IDa
 
   // #region ByDataset
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
-    return findByDataset(tenantId, datasetId).length;
+    size_t count;
+    foreach (profile; findByTenant(tenantId)) {
+      if (profile.datasetId == datasetId) {
+        count++;
+      }
+    }
+    return count;
   }
 
   DataProfile[] filterByDataset(DataProfile[] profiles, DatasetId datasetId) {
@@ -42,7 +48,7 @@ class DataProfileRepository : TenantRepository!(DataProfile, DataProfileId), IDa
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
-    findByDataset(tenantId, datasetId).removeAll;
+    findByDataset(tenantId, datasetId).each!(entity => remove(entity));
   }
   // #endregion ByDataset
 
