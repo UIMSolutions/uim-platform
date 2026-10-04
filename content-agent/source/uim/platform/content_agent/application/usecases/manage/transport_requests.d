@@ -54,6 +54,8 @@ class ManageTransportRequestsUseCase {
     TransportQueue queue = req.queueId.isNull
       ? queueRepo.findDefault(req.tenantId)
       : queueRepo.findById(req.tenantId, req.queueId);
+    if (queue.isNull)
+      return UsecaseResult(false, "", "Transport queue not found");
 
     auto requestId = TransportRequestId(createId());
     auto tr = TransportRequest(req.tenantId, requestId, req.createdBy);

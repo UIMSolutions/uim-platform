@@ -45,7 +45,10 @@ class TransportController : ManageHttpController {
     r.targetSubaccount = data.getString("targetSubaccount");
     r.description = data.getString("description");
     r.mode = data.getString("mode");
-    // r.packageIds = data.getStrings("packageIds");
+    foreach (packageId; data.getStrings("packageIds")) {
+      if (packageId.length > 0)
+        r.packageIds ~= ContentPackageId(packageId);
+    }
     r.queueId = data.getString("queueId");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -101,6 +104,8 @@ class TransportController : ManageHttpController {
     auto data = precheck.data;
     auto r = ReleaseTransportRequest();
     r.requestId = data.getString("requestId");
+    if (r.requestId.isNull)
+      return errorResponse("requestId is required", 400);
     r.tenantId = tenantId;
     r.releasedBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -127,6 +132,8 @@ class TransportController : ManageHttpController {
 
     auto data = precheck.data;
     auto requestId = TransportRequestId(data.getString("requestId"));
+    if (requestId.isNull)
+      return errorResponse("requestId is required", 400);
 
     auto result = usecase.cancelTransport(tenantId, requestId);
     if (result.hasError)

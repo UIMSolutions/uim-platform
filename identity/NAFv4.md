@@ -13,9 +13,9 @@ Aligned with NATO Architecture Framework v4 (NAFv4) viewpoints.
 
 | Capability | Sub-Capability | Description |
 |---|---|---|
-| **Identity Management** | User Lifecycle | Create, update, delete, and query users across tenants |
+| **Identity Management** | IdmUser Lifecycle | Create, update, delete, and query users across tenants |
 | | Group Management | Manage user groups and authorization groups |
-| | User Authentication | Support for form, basic, certificate, token, and SPNEGO auth |
+| | IdmUser Authentication | Support for form, basic, certificate, token, and SPNEGO auth |
 | **Application Management** | Application Registration | Register OIDC/SAML applications with client credentials |
 | | Auth Scheme Configuration | Configure per-application authentication schemes |
 | | Risk-Based Auth | Enable/disable risk-based authentication per application |
@@ -36,7 +36,7 @@ Aligned with NATO Architecture Framework v4 (NAFv4) viewpoints.
 
 | Service | Interface | Protocol | Consumer |
 |---|---|---|---|
-| User Management API | REST JSON | HTTP/1.1 | Service consumers, admin tools |
+| IdmUser Management API | REST JSON | HTTP/1.1 | Service consumers, admin tools |
 | Group Management API | REST JSON | HTTP/1.1 | Service consumers |
 | Application Registry API | REST JSON | HTTP/1.1 | App developers, platform services |
 | Identity Provider API | REST JSON | HTTP/1.1 | Platform administrators |

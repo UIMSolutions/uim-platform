@@ -28,6 +28,10 @@ struct AuthResult {
   MfaType mfaType = MfaType.none;
   string sessionId;
   UserId userId;
+
+  bool hasError() const {
+    return !success;
+  }
 }
 /// --- IAUser DTOs ---
 

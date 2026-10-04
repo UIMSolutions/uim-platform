@@ -10,7 +10,7 @@ This document is maintained alongside the implementation, deployment manifests, 
 ```mermaid
 classDiagram
     %% Domain Entities
-    class User {
+    class IdmUser {
         +UserId id
         +TenantId tenantId
         +string userName
@@ -73,11 +73,11 @@ classDiagram
     %% Repository Interfaces (Ports)
     class UserRepository {
         <<interface>>
-        +save(User)
-        +findById(TenantId, UserId) User
-        +findByTenant(TenantId) User[]
-        +findByEmail(TenantId, string) User
-        +findByStatus(TenantId, UserStatus) User[]
+        +save(IdmUser)
+        +findById(TenantId, UserId) IdmUser
+        +findByTenant(TenantId) IdmUser[]
+        +findByEmail(TenantId, string) IdmUser
+        +findByStatus(TenantId, UserStatus) IdmUser[]
     }
 
     class GroupRepository {
@@ -114,9 +114,9 @@ classDiagram
         +createUser(UserDTO) UseCaseResult
         +updateUser(UserDTO) UseCaseResult
         +deleteUser(TenantId, UserId) UseCaseResult
-        +getUser(TenantId, UserId) User
-        +listUsers(TenantId) User[]
-        +findByEmail(TenantId, string) User
+        +getUser(TenantId, UserId) IdmUser
+        +listUsers(TenantId) IdmUser[]
+        +findByEmail(TenantId, string) IdmUser
     }
 
     class ManageGroupsUseCase {
@@ -175,20 +175,20 @@ classDiagram
 
     %% Persistence Adapters
     class UserRepository {
-        -User[string] store
+        -IdmUser[string] store
     }
     class FileUserRepository {
         -string dataDir
-        -User[string] store
+        -IdmUser[string] store
     }
     class MongoUserRepository {
         -MongoCollection collection
     }
 
     %% Relationships
-    User --> IDMGroup : "member of"
+    IdmUser --> IDMGroup : "member of"
     Application --> IdentityProvider : "delegates auth to"
-    ProvisioningJob --> User : "provisions"
+    ProvisioningJob --> IdmUser : "provisions"
 
     ManageUsersUseCase --> UserRepository
     ManageGroupsUseCase --> GroupRepository

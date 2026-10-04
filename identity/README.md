@@ -19,7 +19,7 @@ SAP Cloud Identity Services equivalent built with D (dlang), vibe.d, and hexagon
 | Entity | Description | Endpoints |
 |---|---|---|
 | **Users** | Full user lifecycle (create, update, delete, search by email/status/type) | `/api/v1/ias/users` |
-| **Groups** | User groups and authorization groups with member management | `/api/v1/ias/groups` |
+| **Groups** | IdmUser groups and authorization groups with member management | `/api/v1/ias/groups` |
 | **Applications** | OIDC/SAML application registration with client credentials | `/api/v1/ias/applications` |
 | **Identity Providers** | Corporate IdP federation (OIDC/SAML) with default IdP support | `/api/v1/ias/identity-providers` |
 | **Provisioning Jobs** | Async provisioning orchestration with start/cancel lifecycle | `/api/v1/ips/provisioning-jobs` |
@@ -34,7 +34,7 @@ identity/
     app.d                              # Entry point
     uim/platform/identity/
       domain/                          # Entities, repository interfaces, domain services
-        entities/                      # User, Group, Application, IdentityProvider, ProvisioningJob
+        entities/                      # IdmUser, Group, Application, IdentityProvider, ProvisioningJob
         repositories/                  # Repository port interfaces
         services/                      # IdentityValidator
         enumerations.d
