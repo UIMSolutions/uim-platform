@@ -10,13 +10,6 @@ mixin(ShowModule!());
 
 @safe:
 
-bool jsonBool(Json j, string key, bool def = false) {
-  if (j.type != Json.Type.object) return def;
-  auto v = j[key];
-  if (v.isBoolean) return v.get!bool;
-  return def;
-}
-
 int jsonInt(Json j, string key, int def = 0) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];

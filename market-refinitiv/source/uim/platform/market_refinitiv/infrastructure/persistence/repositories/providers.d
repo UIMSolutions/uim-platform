@@ -15,9 +15,7 @@ mixin(ShowModule!());
 class ProviderRepository : TenantRepository!(Provider, ProviderId), IProviderRepository {
 
   bool codeExists(TenantId tenantId, string code) {
-    foreach (p; store.values)
-      if (p.tenantId == t && p.code == code) return true;
-    return false;
+    return findByTenant(tenantId).any!(p => p.code == code);
   }
 
   Provider findByCode(TenantId tenantId, string code) {
@@ -39,7 +37,7 @@ class ProviderRepository : TenantRepository!(Provider, ProviderId), IProviderRep
   }
 
   void removeActive(TenantId tenantId) {
-    findActive(tenantId).eacH!(e => remove(e));
+    findActive(tenantId).each!(e => remove(e));
   }
   
 

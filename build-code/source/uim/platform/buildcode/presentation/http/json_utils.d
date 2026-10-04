@@ -11,7 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-Json jsonBool(bool v)     { return Json(v); }
 Json jsonInt(long v)      { return Json(v); }
 Json jsonDouble(double v) { return Json(v); }
 

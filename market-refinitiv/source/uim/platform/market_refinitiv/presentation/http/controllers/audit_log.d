@@ -24,29 +24,36 @@ class AuditLogController : ManageHttpController {
     router.get("/api/v1/market_refinitiv/auditlogs/*", &handleGet);
   }
 
-  private void handleList(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto logs = uc.list(tenantId);
+  override Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError) 
+      return precheck;
 
-    auto arr = logs.map!toJson.array.toJson();
+    auto tenantId = precheck.tenantId;
+    auto logs = uc.list(tenantId);
+    auto jsonLogs = logs.map!toJson.array.toJson();
 
     auto j = Json.emptyObject
-      .set("data", arr)
-      .set("count", logs.length);
+      .set("data", jsonLogs)
+      .set("count", jsonLogs.length);
 
-    res.writeJsonBody(j, 200);
+    return j;
   }
 
-  private void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id = precheck.id;
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto entry = uc.getById(tenantId, AuditLogId(id));
+  override Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError) 
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = AuditLogId(precheck.id);
+    auto entry = uc.getById(tenantId, id);
 
     if (entry.isNull) {
-      writeError(res, 404, "Audit log entry not found");
-      return;
+      return Json.emptyObject.set("error", "Audit log entry not found");
     }
 
-    res.writeJsonBody(entry.toJson(), 200);
+    return entry.toJson();
   }
+
 }

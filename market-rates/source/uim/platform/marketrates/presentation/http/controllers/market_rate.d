@@ -108,7 +108,7 @@ class MarketRateController : ManageHttpController {
     ucReq.providerCode = data.getString("providerCode");
     ucReq.fromDate = data.getString("fromDate");
     ucReq.toDate = data.getString("toDate");
-    ucReq.latestOnly = jsonBool(data, "latestOnly", false);
+    ucReq.latestOnly = data.getBoolean("latestOnly", false);
 
     auto instrJson = data["instruments"];
     if (instrJson.isArray) {
@@ -310,7 +310,7 @@ class MarketRateController : ManageHttpController {
     ucReq.name = data.getString("name");
     ucReq.description = data.getString("description");
     ucReq.contactEmail = data.getString("contactEmail");
-    ucReq.isActive = jsonBool(data, "isActive", true);
+    ucReq.isActive = data.getBoolean("isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);
     if (result.hasError)

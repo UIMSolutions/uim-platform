@@ -1,3 +1,5 @@
+./build/*
+./*/build/*
 carmen-ibanez.md
 dashboard.md
 dizzy-flores.md
@@ -21,3 +23,6 @@ service/build/libuim-platform-service.a
 service/build/libuim-platform-service.a
 service/build/libuim-platform-service.a
 service/build/libuim-platform-service.a
+abap-compiler/build/abap-compiler-test-defaultTest
+abap-compiler/build/libuim-abap-compiler-platform-service.a
+*.a

@@ -13,7 +13,7 @@ private string getString(Json j, string key, string def = "") {
   if (v.isString) return v.get!string;
   if (v.isInteger) return v.get!long.to!string;
   if (v.isFloat) return v.get!double.to!string;
-  if (v.isBoolean_) return v.get!bool.to!string;
+  if (v.isBoolean) return v.get!bool.to!string;
   return def;
 }
 
@@ -41,20 +41,13 @@ private double getDouble(Json j, string key, double def = 0.0) {
   return def;
 }
 
-private bool getBool(Json j, string key, bool def = false) {
-  if (j.type != Json.Type.object) return def;
-  auto v = j[key];
-  if (v.isBoolean) return v.get!bool;
-  return def;
-}
-
 private E parseEnumOrDefault(E)(string value, E deflt) {
   if (value.length == 0) return deflt;
   try {
     return value.to!E;
   } catch (Exception) {
     foreach (member; EnumMembers!E) {
-      if (member.to!string == value || cast(string) member == value) {
+      if (member.to!string == value || member.to!string == value) {
         return member;
       }
     }

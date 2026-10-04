@@ -68,8 +68,8 @@ class MarketRateController : ManageHttpController {
         rec.effectiveTime = r.getString("effectiveTime", "000000");
         rec.marketDataValue = jsonDouble(r, "marketDataValue");
         rec.securityCurrency = r.getString("securityCurrency");
-        rec.fromFactor = jsonInt(r, "fromFactor", 1);
-        rec.toFactor = jsonInt(r, "toFactor", 1);
+        rec.fromFactor = r.getInteger("fromFactor", 1);
+        rec.toFactor = r.getInteger("toFactor", 1);
         rec.priceQuotation = r.getString("priceQuotation", "direct");
         rec.additionalKey = r.getString("additionalKey");
         ucReq.records ~= rec;
@@ -79,7 +79,7 @@ class MarketRateController : ManageHttpController {
     auto result = ratesUC.upload(ucReq);
 
     auto j = Json.emptyObject
-      .set("status", result.status.to!string)
+      .set("status", result.status)
       .set("acceptedCount", result.acceptedCount)
       .set("rejectedCount", result.rejectedCount)
       .set("errors", result.messages.map!toJson.array.toJson);
@@ -104,7 +104,7 @@ class MarketRateController : ManageHttpController {
     ucReq.providerCode = body_.getString("providerCode");
     ucReq.fromDate = body_.getString("fromDate");
     ucReq.toDate = body_.getString("toDate");
-    ucReq.latestOnly = jsonBool(body_, "latestOnly", false);
+    ucReq.latestOnly = body_.getBoolean("latestOnly", false); 
 
     auto instrJson = body_["instruments"];
     if (instrJson.isArray) {
@@ -263,7 +263,7 @@ class MarketRateController : ManageHttpController {
     ucReq.name = data.getString("name");
     ucReq.description = data.getString("description");
     ucReq.contactEmail = data.getString("contactEmail");
-    ucReq.isActive = jsonBool(data, "isActive", true);
+    ucReq.isActive = data.getBoolean("isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);
     if (result.hasError) {
