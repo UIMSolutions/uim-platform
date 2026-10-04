@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProvisioningJobRepository : TenantRepository!(ProvisioningJob, ProvisioningJobId), ProvisioningJobRepository {
+class ProvisioningJobRepository : TenantRepository!(ProvisioningJob, ProvisioningJobId), IProvisioningJobRepository {
     ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status) {
         return findByTenant(tenantId).filter!(j => j.status == status).array;
     }

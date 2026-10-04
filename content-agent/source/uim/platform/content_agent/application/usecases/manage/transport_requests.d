@@ -55,11 +55,12 @@ class ManageTransportRequestsUseCase {
       ? queueRepo.findDefault(req.tenantId)
       : queueRepo.findById(req.tenantId, req.queueId);
 
-    auto tr = TransportRequest(req.tenantId, req.requestId.isNull ? TransportRequestId(createId()) : req.requestId, req.createdBy);
+    auto requestId = TransportRequestId(createId());
+    auto tr = TransportRequest(req.tenantId, requestId, req.createdBy);
     tr.sourceSubaccount = req.sourceSubaccount;
     tr.targetSubaccount = req.targetSubaccount;
     tr.description = req.description;
-    tr.mode = req.mode.to!TransportMode;
+    tr.mode = req.mode.toTransportMode;
     tr.packageIds = req.packageIds;
     tr.queueId = queue.id;
     tr.status = TransportStatus.created;
@@ -92,8 +93,7 @@ class ManageTransportRequestsUseCase {
       return UsecaseResult(false, "", "Transport request is not in a releasable state");
 
     tr.status = TransportStatus.released;
-    // tr.releasedAt = currentTimestamp;
-    // tr.updatedAt = tr.releasedAt;
+    tr.updatedAt = clockSeconds();
 
     requestRepo.update(tr);
     recordActivity(req.tenantId, ActivityType.transportReleased, tr.id.value,
@@ -123,11 +123,11 @@ class ManageTransportRequestsUseCase {
   }
 
   TransportRequest[] listByStatus(TenantId tenantId, string statusStr) {
-    auto status = statusStr.to!TransportStatus;
+    auto status = statusStr.toTransportStatus;
     return requestRepo.findByStatus(tenantId, status);
   }
 
-  private UsecaseResult recordActivity(TenantId tenantId, ActivityType actType,
+  private void recordActivity(TenantId tenantId, ActivityType actType,
     string entityId, string entityName, string desc, string by) {
    
     auto activity = ContentActivity(tenantId);
@@ -138,9 +138,7 @@ class ManageTransportRequestsUseCase {
     activity.description = desc;
     activity.performedBy = by;
     activity.timestamp = activity.createdAt;
-
     activityRepo.save(activity);
-    return UsecaseResult(true, activity.id.value, "");
   }
 
 }

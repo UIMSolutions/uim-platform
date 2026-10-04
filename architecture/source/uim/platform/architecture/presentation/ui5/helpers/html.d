@@ -41,11 +41,5 @@ string field(string label, string propertyName) {
         label) ~ "'}),new sap.m.Text({text:'{" ~ escapeJs(propertyName) ~ "}'})";
 }
 
-string escapeJs(string value) {
-    return value
-        .replace("\\", "\\\\")
-        .replace("'", "\\'")
-        .replace("\n", "\\n")
-        .replace("\r", "\\r")
-        .replace("</", "<\\/");
-}
+
+

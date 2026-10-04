@@ -18,7 +18,7 @@ struct IDMGroup {
     string name;
     string description;
     GroupType type_ = GroupType.userGroup;
-    string[] memberIds;     // User IDs belonging to this group
+    string[] memberIds;     // IdmUser IDs belonging to this group
 
     Json toJson() const {
         auto j = entityToJson

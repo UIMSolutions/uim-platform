@@ -16,36 +16,36 @@ mixin(ShowModule!());
 
 // class FileUserRepository : UserRepository {
 //     private string dataDir;
-//     private User[string] store;
+//     private IdmUser[string] store;
 
 //     this(string dataDir) { this.dataDir = dataDir; loadFromFile(); }
 
-//     void save(User entity) { store[entity.id.value] = entity; persist(); }
-//     void update(User entity) { store[entity.id.value] = entity; persist(); }
-//     void remove(User entity) { store.remove(entity.id.value); persist(); }
+//     void save(IdmUser entity) { store[entity.id.value] = entity; persist(); }
+//     void update(IdmUser entity) { store[entity.id.value] = entity; persist(); }
+//     void remove(IdmUser entity) { store.remove(entity.id.value); persist(); }
 
-//     User findById(TenantId tenantId, UserId id) {
+//     IdmUser findById(TenantId tenantId, UserId id) {
 //         if (id.value in store && store[id.value].tenantId == tenantId) return store[id.value];
-//         return User.init;
+//         return IdmUser.init;
 //     }
-//     User[] findByTenant(TenantId tenantId) {
+//     IdmUser[] findByTenant(TenantId tenantId) {
 //         return store.values.filter!(u => u.tenantId == tenantId).array;
 //     }
-//     User findByUserName(TenantId tenantId, string userName) {
+//     IdmUser findByUserName(TenantId tenantId, string userName) {
 //         foreach (u; findByTenant(tenantId)) if (u.userName == userName) return u;
-//         return User.init;
+//         return IdmUser.init;
 //     }
-//     User findByEmail(TenantId tenantId, string email) {
+//     IdmUser findByEmail(TenantId tenantId, string email) {
 //         foreach (u; findByTenant(tenantId)) if (u.email == email) return u;
-//         return User.init;
+//         return IdmUser.init;
 //     }
-//     User[] findByStatus(TenantId tenantId, UserStatus status) {
+//     IdmUser[] findByStatus(TenantId tenantId, UserStatus status) {
 //         return findByTenant(tenantId).filter!(u => u.status == status).array;
 //     }
-//     User[] findByType(TenantId tenantId, UserType type_) {
+//     IdmUser[] findByType(TenantId tenantId, UserType type_) {
 //         return findByTenant(tenantId).filter!(u => u.type_ == type_).array;
 //     }
-//     User[] findByGroup(TenantId tenantId, IDMGroupId groupId) {
+//     IdmUser[] findByGroup(TenantId tenantId, IDMGroupId groupId) {
 //         import std.algorithm : canFind;
 //         return findByTenant(tenantId).filter!(u => u.groups.canFind(groupId.value)).array;
 //     }
@@ -58,7 +58,7 @@ mixin(ShowModule!());
             
 //             auto jarr = parseJSON(readText(filePath())).array;
 //             foreach (j; jarr) {
-//                 User u;
+//                 IdmUser u;
 //                 u.id = UserId(j["id"].str);
 //                 u.tenantId = TenantId(j["tenantId"].str);
 //                 u.userName = j["userName"].str;

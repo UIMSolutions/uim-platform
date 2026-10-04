@@ -11,12 +11,12 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IUserRepository : ITenantRepository!(User, UserId) {
+interface IUserRepository : ITenantRepository!(IdmUser, UserId) {
 
-    User findByUserName(TenantId tenantId, string userName);
-    User findByEmail(TenantId tenantId, string email);
-    User[] findByStatus(TenantId tenantId, UserStatus status);
-    User[] findByType(TenantId tenantId, UserType type_);
-    User[] findByGroup(TenantId tenantId, IDMGroupId groupId);
+    IdmUser findByUserName(TenantId tenantId, string userName);
+    IdmUser findByEmail(TenantId tenantId, string email);
+    IdmUser[] findByStatus(TenantId tenantId, UserStatus status);
+    IdmUser[] findByType(TenantId tenantId, UserType type_);
+    IdmUser[] findByGroup(TenantId tenantId, IDMGroupId groupId);
 
 }

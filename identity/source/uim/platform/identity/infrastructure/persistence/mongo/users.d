@@ -18,51 +18,51 @@ mixin(ShowModule!());
 
 //     this(MongoCollection col) { this.collection = col; }
 
-//     void save(User entity) @trusted { collection.insert(entityToBson(entity)); }
-//     void update(User entity) @trusted {
+//     void save(IdmUser entity) @trusted { collection.insert(entityToBson(entity)); }
+//     void update(IdmUser entity) @trusted {
 //         collection.update(["_id": Bson(entity.id.value)], ["$set": entityToBson(entity)]);
 //     }
-//     void remove(User entity) @trusted { collection.remove(["_id": Bson(entity.id.value)]); }
+//     void remove(IdmUser entity) @trusted { collection.remove(["_id": Bson(entity.id.value)]); }
 
-//     User findById(TenantId tenantId, UserId id) @trusted {
+//     IdmUser findById(TenantId tenantId, UserId id) @trusted {
 //         auto doc = collection.findOne(["_id": Bson(id.value), "tenantId": Bson(tenantId.value)]);
-//         return doc.isNull ? User.init : bsonToEntity(doc);
+//         return doc.isNull ? IdmUser.init : bsonToEntity(doc);
 //     }
-//     User[] findByTenant(TenantId tenantId) @trusted {
-//         User[] result;
+//     IdmUser[] findByTenant(TenantId tenantId) @trusted {
+//         IdmUser[] result;
 //         foreach (doc; collection.find(["tenantId": Bson(tenantId.value)])) result ~= bsonToEntity(doc);
 //         return result;
 //     }
-//     User findByUserName(TenantId tenantId, string userName) @trusted {
+//     IdmUser findByUserName(TenantId tenantId, string userName) @trusted {
 //         auto doc = collection.findOne(["tenantId": Bson(tenantId.value), "userName": Bson(userName)]);
-//         return doc.isNull ? User.init : bsonToEntity(doc);
+//         return doc.isNull ? IdmUser.init : bsonToEntity(doc);
 //     }
-//     User findByEmail(TenantId tenantId, string email) @trusted {
+//     IdmUser findByEmail(TenantId tenantId, string email) @trusted {
 //         auto doc = collection.findOne(["tenantId": Bson(tenantId.value), "email": Bson(email)]);
-//         return doc.isNull ? User.init : bsonToEntity(doc);
+//         return doc.isNull ? IdmUser.init : bsonToEntity(doc);
 //     }
-//     User[] findByStatus(TenantId tenantId, UserStatus status) @trusted {
+//     IdmUser[] findByStatus(TenantId tenantId, UserStatus status) @trusted {
         
-//         User[] result;
+//         IdmUser[] result;
 //         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
 //             result ~= bsonToEntity(doc);
 //         return result;
 //     }
-//     User[] findByType(TenantId tenantId, UserType type_) @trusted {
+//     IdmUser[] findByType(TenantId tenantId, UserType type_) @trusted {
         
-//         User[] result;
+//         IdmUser[] result;
 //         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "type": Bson(type_.to!string)]))
 //             result ~= bsonToEntity(doc);
 //         return result;
 //     }
-//     User[] findByGroup(TenantId tenantId, IDMGroupId groupId) @trusted {
-//         User[] result;
+//     IdmUser[] findByGroup(TenantId tenantId, IDMGroupId groupId) @trusted {
+//         IdmUser[] result;
 //         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "groups": Bson(groupId.value)]))
 //             result ~= bsonToEntity(doc);
 //         return result;
 //     }
 
-//     private static Bson entityToBson(User u) @trusted {
+//     private static Bson entityToBson(IdmUser u) @trusted {
         
 //         return Bson(["_id": Bson(u.id.value), "tenantId": Bson(u.tenantId.value),
 //             "userName": Bson(u.userName), "email": Bson(u.email),
@@ -71,9 +71,9 @@ mixin(ShowModule!());
 //             "type": Bson(u.type_.to!string)]);
 //     }
 
-//     private static User bsonToEntity(Bson doc) @trusted {
+//     private static IdmUser bsonToEntity(Bson doc) @trusted {
         
-//         User u;
+//         IdmUser u;
 //         u.id = UserId(doc["_id"].get!string);
 //         u.tenantId = TenantId(doc["tenantId"].get!string);
 //         u.userName = doc["userName"].get!string;

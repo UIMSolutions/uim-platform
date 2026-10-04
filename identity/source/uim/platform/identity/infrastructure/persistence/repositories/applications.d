@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
+class ApplicationRepository : TenantRepository!(Application, ApplicationId), IApplicationRepository {
     Application findByClient(TenantId tenantId, string clientId) {
         foreach (a; findByTenant(tenantId))
             if (a.clientId == clientId) return a;

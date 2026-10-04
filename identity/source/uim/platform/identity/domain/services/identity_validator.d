@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 
 class IdentityValidator {
-    static bool isValidUser(const User u) {
+    static bool isValidUser(const IdmUser u) {
         return u.userName.length > 0 && u.email.length > 0;
     }
 

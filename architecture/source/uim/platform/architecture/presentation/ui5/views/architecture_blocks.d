@@ -138,21 +138,4 @@ class ArchitectureBlockUi5View {
         return "new sap.m.Label({text:'" ~ escapeJs(label) ~ "'}),new sap.m.Text({text:'{" ~ escapeJs(propertyName) ~ "}'})";
     }
 
-    private string escapeHtml(string value) {
-        return value
-            .replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
-            .replace("\"", "&quot;")
-            .replace("'", "&#39;");
-    }
-
-    private string escapeJs(string value) {
-        return value
-            .replace("\\", "\\\\")
-            .replace("'", "\\'")
-            .replace("\n", "\\n")
-            .replace("\r", "\\r")
-            .replace("</", "<\\/");
-    }
 }

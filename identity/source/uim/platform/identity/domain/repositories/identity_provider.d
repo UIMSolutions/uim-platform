@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
+interface IIdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
 
     IdentityProvider findByEntityId(TenantId tenantId, string entityId);
     IdentityProvider findDefault(TenantId tenantId);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class GroupRepository : TenantRepository!(IDMGroup, IDMGroupId), GroupRepository {
+class GroupRepository : TenantRepository!(IDMGroup, IDMGroupId), IGroupRepository {
     IDMGroup findByName(TenantId tenantId, string name) {
         foreach (g; findByTenant(tenantId))
             if (g.name == name) return g;

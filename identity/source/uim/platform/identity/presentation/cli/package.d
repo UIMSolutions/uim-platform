@@ -15,7 +15,7 @@ import uim.platform.identity;
 
 /// CLI view — renders identity entities to stdout
 // class IdentityCliView {
-//     void renderUsers(User[] users) {
+//     void renderUsers(IdmUser[] users) {
 //         import std.stdio : writefln;
 //         writefln("%-36s  %-30s  %-40s  %-10s", "ID", "UserName", "Email", "Status");
 //         writefln("%s", "-".replicate(120));

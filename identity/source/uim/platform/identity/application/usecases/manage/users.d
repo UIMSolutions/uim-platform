@@ -16,14 +16,14 @@ class ManageUsersUseCase {
 
     this(IUserRepository repo) { this.repo = repo; }
 
-    User getUser(TenantId tenantId, UserId id) { return repo.findById(tenantId, id); }
-    User[] listUsers(TenantId tenantId) { return repo.findByTenant(tenantId); }
-    User[] listByStatus(TenantId tenantId, UserStatus status) { return repo.findByStatus(tenantId, status); }
-    User findByEmail(TenantId tenantId, string email) { return repo.findByEmail(tenantId, email); }
+    IdmUser getUser(TenantId tenantId, UserId id) { return repo.findById(tenantId, id); }
+    IdmUser[] listUsers(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    IdmUser[] listByStatus(TenantId tenantId, UserStatus status) { return repo.findByStatus(tenantId, status); }
+    IdmUser findByEmail(TenantId tenantId, string email) { return repo.findByEmail(tenantId, email); }
 
     UsecaseResult createUser(UserDTO dto) {
         import std.digest.sha : sha256Of, toHexString;
-        auto u = User(dto.tenantId, dto.userId);
+        auto u = IdmUser(dto.tenantId, dto.userId);
         u.userName = dto.userName;
         u.email = dto.email;
         u.displayName = dto.displayName;
@@ -55,7 +55,7 @@ class ManageUsersUseCase {
 
     UsecaseResult updateUser(UserDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.userId);
-        if (existing.isNull) return UsecaseResult(false, "", "User not found");
+        if (existing.isNull) return UsecaseResult(false, "", "IdmUser not found");
 
         if (dto.displayName.length > 0) existing.displayName = dto.displayName;
         if (dto.firstName.length > 0) existing.firstName = dto.firstName;
@@ -76,7 +76,7 @@ class ManageUsersUseCase {
 
     UsecaseResult deleteUser(TenantId tenantId, UserId id) {
         auto entity = repo.findById(tenantId, id);
-        if (entity.isNull) return UsecaseResult(false, "", "User not found");
+        if (entity.isNull) return UsecaseResult(false, "", "IdmUser not found");
         repo.remove(entity);
         return UsecaseResult(true, id.value, "");
     }

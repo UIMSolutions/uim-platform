@@ -52,9 +52,9 @@ class UserController : ManageHttpController {
         auto id = UserId(precheck.id);
         auto e = usecase.getUser(tenantId, id);
         if (e.isNull)
-            return errorResponse("User not found", 404);
+            return errorResponse("IdmUser not found", 404);
 
-        return successResponse("User retrieved successfully", "Retrieved", 200, e.toJson);
+        return successResponse("IdmUser retrieved successfully", "Retrieved", 200, e.toJson);
 
     }
 
@@ -85,7 +85,7 @@ class UserController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return successResponse("User created successfully", 201, Json.emptyObject.set("id", result
+        return successResponse("IdmUser created successfully", 201, Json.emptyObject.set("id", result
                 .id));
     }
 
@@ -112,7 +112,7 @@ class UserController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return successResponse("User updated successfully", 200, Json.emptyObject.set("id", result
+        return successResponse("IdmUser updated successfully", 200, Json.emptyObject.set("id", result
                 .id));
     }
 
@@ -127,7 +127,7 @@ class UserController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 404);
 
-        return successResponse("User deleted successfully", 200, Json.emptyObject.set("id", result
+        return successResponse("IdmUser deleted successfully", 200, Json.emptyObject.set("id", result
                 .id));
     }
 }

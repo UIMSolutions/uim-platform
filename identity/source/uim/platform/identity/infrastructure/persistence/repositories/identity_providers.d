@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
+class IdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IIdentityProviderRepository {
     IdentityProvider findByEntityId(TenantId tenantId, string entityId) {
         foreach (idp; findByTenant(tenantId))
             if (idp.entityId == entityId) return idp;

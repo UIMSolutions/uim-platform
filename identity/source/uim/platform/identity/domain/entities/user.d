@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-/// Identity User entity — core identity directory record.
+/// Identity IdmUser entity — core identity directory record.
 module uim.platform.identity.domain.entities.user;
 
 import uim.platform.identity;
@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-struct User {
+struct IdmUser {
     mixin TenantEntity!(UserId);
 
     string userName;         // Unique login name

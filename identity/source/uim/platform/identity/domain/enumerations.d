@@ -59,14 +59,31 @@ enum UserType : string {
 }
 
 UserType toUserType(string value) {
-    mixin(EnumSwitch("UserType", "employee"));
+    switch(value) {
+        case "employee":  return UserType.employee;
+        case "partner":   return UserType.partner;
+        case "customer":  return UserType.customer;
+        case "public":    return UserType.public_;
+        case "onboardee": return UserType.onboardee;
+        case "external":  return UserType.external;
+        default: return UserType.employee;
+    }
 }
 
 UserType[] toUserTypes(string[] types)
     => types.map!toUserType.array;
 
-string toString(UserType type)
-    => type.to!string;
+string toString(UserType type) {
+    switch(type) {
+        case UserType.employee:  return "employee";
+        case UserType.partner:   return "partner";
+        case UserType.customer:  return "customer";
+        case UserType.public_:   return "public";
+        case UserType.onboardee: return "onboardee";
+        case UserType.external:  return "external";
+        default: return "employee";
+    }
+}
 
 string[] toString(UserType[] types)
     => types.map!toString.array;
