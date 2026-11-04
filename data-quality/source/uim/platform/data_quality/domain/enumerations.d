@@ -39,8 +39,8 @@ RuleType toRuleType(string value) {
   }
 }
 
-RuleType[] toRuleTypes(string[] values) {
-  return values.map!(toRuleType).array;
+RuleType[] toRuleType(string[] values) {
+  return values.map!toRuleType.array;
 }
 
 string toString(RuleType type) {
@@ -70,7 +70,7 @@ unittest {
   assert(toString(RuleType.custom) == "custom");
   assert(toString(RuleType.referenceData) == "referenceData");
 
-  assert(["required", "format", "range"].toRuleTypes ==
+  assert(["required", "format", "range"].toRuleType ==
       [RuleType.required, RuleType.format_, RuleType.range]);
   assert(toString([RuleType.required, RuleType.format_, RuleType.range]) ==
       ["required", "format_", "range"]);
@@ -88,8 +88,8 @@ RuleSeverity toRuleSeverity(string value) {
   mixin(EnumSwitch("RuleSeverity", "info"));
 }
 
-RuleSeverity[] toRuleSeverities(string[] values) {
-  return values.map!(toRuleSeverity).array;
+RuleSeverity[] toRuleSeverity(string[] values) {
+  return values.map!toRuleSeverity.array;
 }
 
 string toString(RuleSeverity severity) {
@@ -116,7 +116,7 @@ unittest {
   assert(toString(RuleSeverity.error) == "error");
   assert(toString(RuleSeverity.critical) == "critical");
 
-  assert(["info", "warning", "error"].toRuleSeverities ==
+  assert(["info", "warning", "error"].toRuleSeverity ==
       [RuleSeverity.info, RuleSeverity.warning, RuleSeverity.error]);
   assert(toString([RuleSeverity.info, RuleSeverity.warning, RuleSeverity.error]) ==
       ["info", "warning", "error"]);

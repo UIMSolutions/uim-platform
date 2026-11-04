@@ -90,6 +90,7 @@ class AddressController : HttpController {
   }
 
   mixin(HandleTemplate!("handleCleanseBatch", "cleanseBatchHandler"));
+  mixin(HandleTemplate!("handleList", "listHandler"));
 
   protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -99,7 +100,7 @@ class AddressController : HttpController {
     auto tenantId = precheck.tenantId;
 
     auto records = usecase.getByTenant(tenantId);
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = records.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)

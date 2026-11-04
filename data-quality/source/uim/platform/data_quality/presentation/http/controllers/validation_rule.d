@@ -46,8 +46,8 @@ class ValidationRuleController : ManageHttpController {
     r.description = data.getString("description");
     r.datasetPattern = data.getString("datasetPattern");
     r.fieldName = data.getString("fieldName");
-    r.ruleType = toRuleType(data.getString("ruleType"));
-    r.severity = data.getString("severity").to;
+    r.ruleType = data.getString("ruleType");
+    r.severity = data.getString("severity");
     r.pattern = data.getString("pattern");
     r.minValue = data.getString("minValue");
     r.maxValue = data.getString("maxValue");
@@ -58,7 +58,7 @@ class ValidationRuleController : ManageHttpController {
     r.category = data.getString("category");
     r.priority = data.getInteger("priority");
 
-    auto result = usecase.create(r);
+    auto result = usecase.createRule(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -72,8 +72,8 @@ class ValidationRuleController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto rules = usecase.listByTenant(tenantId);
-    auto list = rules.map!(item => item.toJson()).array.toJson;
+    auto rules = usecase.listRules(tenantId);
+    auto list = rules.map!(item => item.toJson()).array.toJson();
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
@@ -87,8 +87,10 @@ class ValidationRuleController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto rule = usecase.getById(tenantId, id);
+    auto id = ValidationRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid validation rule ID", 400);
+    auto rule = usecase.getRule(tenantId, id);
     if (rule.isNull)
       return errorResponse("Validation rule not found", 404);
 
@@ -102,17 +104,21 @@ class ValidationRuleController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
+    auto id = ValidationRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid validation rule ID", 400);
+
     auto data = precheck.data;
     auto r = UpdateValidationRuleRequest();
-    r.id = precheck.id;
     r.tenantId = tenantId;
+    r.id = id;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.datasetPattern = data.getString("datasetPattern");
     r.fieldName = data.getString("fieldName");
-    r.ruleType = toRuleType(data.getString("ruleType"));
-    r.severity = data.getString("severity").toRuleSeverity;
-    r.status = parseRuleStatus(data.getString("status"));
+    r.ruleType = data.getString("ruleType");
+    r.severity = data.getString("severity");
+    r.status = data.getString("status");
     r.pattern = data.getString("pattern");
     r.minValue = data.getString("minValue");
     r.maxValue = data.getString("maxValue");
@@ -123,7 +129,7 @@ class ValidationRuleController : ManageHttpController {
     r.category = data.getString("category");
     r.priority = data.getInteger("priority");
 
-    auto result = usecase.update(r);
+    auto result = usecase.updateRule(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -137,9 +143,11 @@ class ValidationRuleController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
-    auto result = usecase.deleteValidationRule(tenantId, id);
+    auto id = ValidationRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid validation rule ID", 400);
+
+    auto result = usecase.deleteRule(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

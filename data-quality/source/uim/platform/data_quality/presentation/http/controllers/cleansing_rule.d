@@ -59,10 +59,10 @@ class CleansingRuleController : ManageHttpController {
     r.priority = data.getInteger("priority");
 
     auto result = usecase.createCleansingRule(r);
-    if (result.isNull)
-      return errorResponse("Cleansing rule not found", 404);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    auto responseData = result.toJson();
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Cleansing rule created successfully", 201, responseData);
   }
 
@@ -111,7 +111,7 @@ class CleansingRuleController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdateCleansingRuleRequest();
-    r.ruleId = id;
+    r.id = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -132,10 +132,10 @@ class CleansingRuleController : ManageHttpController {
     r.priority = data.getInteger("priority");
 
     auto result = usecase.updateCleansingRule(r);
-    if (result.isNull)
-      return errorResponse("Cleansing rule not found", 404);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    auto responseData = result.toJson();
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Cleansing rule updated successfully", 200, responseData);
   }
 
@@ -150,10 +150,10 @@ class CleansingRuleController : ManageHttpController {
       return errorResponse("Invalid cleansing rule ID", 400);
 
     auto result = usecase.deleteCleansingRule(tenantId, id);
-    if (result.isNull)
-      return errorResponse("Cleansing rule not found", 404);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    auto responseData = result.toJson();
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Cleansing rule deleted successfully", 200, responseData);
   }
 

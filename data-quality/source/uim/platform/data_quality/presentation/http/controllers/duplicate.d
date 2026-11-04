@@ -11,7 +11,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class DuplicateController : HttpController {
+class DuplicateController : ManageHttpController {
   protected DetectDuplicatesUseCase usecase;
 
   this(DetectDuplicatesUseCase usecase) {
@@ -37,7 +37,7 @@ class DuplicateController : HttpController {
     auto r = DetectDuplicatesRequest();
     r.tenantId = tenantId;
     r.datasetId = DataSetId(data.getString("datasetId"));
-    r.matchFields = j.getStringsArray("matchFields");
+    r.matchFields = data.getStringsArray("matchFields");
     r.strategy = data.getString("strategy").to!MatchStrategy;
     r.threshold = data.getDouble("threshold", 70.0);
 

@@ -37,9 +37,6 @@ protected Json computeHandler(HTTPServerRequest req) {
     r.datasetName = data.getString("datasetName");
 
     auto dashboard = usecase.compute(r);
-    if (dashboard.hasError)
-      return errorResponse(dashboard.message, 400);
-
     return successResponse("Dashboard computed successfully", 200, dashboard.toJson);
   }
 

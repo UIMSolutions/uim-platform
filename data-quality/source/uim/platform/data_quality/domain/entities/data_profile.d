@@ -26,12 +26,17 @@ struct DataProfile {
   long duration; // profiling time in ms
 
   Json toJson() const {
+    auto columnsJson = Json.emptyArray;
+    foreach (column; columns) {
+      columnsJson ~= column.toJson();
+    }
+
     return entityToJson
       .set("datasetId", datasetId)
       .set("datasetName", datasetName)
       .set("totalRecords", totalRecords)
       .set("profiledRecords", profiledRecords)
-      .set("columns", columns.map!(c => c.toJson()).array)
+      .set("columns", columnsJson)
       .set("overallQualityScore", overallQualityScore)
       .set("rating", rating.to!string)
       .set("profiledAt", profiledAt)
@@ -62,6 +67,16 @@ struct ColumnProfile {
   string[] patternDistribution; // discovered patterns
 
   Json toJson() const {
+    auto topValuesJson = Json.emptyArray;
+    foreach (topValue; topValues) {
+      topValuesJson ~= Json(topValue);
+    }
+
+    auto patternDistributionJson = Json.emptyArray;
+    foreach (pattern; patternDistribution) {
+      patternDistributionJson ~= Json(pattern);
+    }
+
     return Json()
       .set("fieldName", fieldName)
       .set("detectedType", detectedType.to!string)
@@ -81,7 +96,7 @@ struct ColumnProfile {
       .set("minLength", minLength)
       .set("maxLength", maxLength)
       .set("avgLength", avgLength)
-      .set("topValues", topValues)
-      .set("patternDistribution", patternDistribution);
+      .set("topValues", topValuesJson)
+      .set("patternDistribution", patternDistributionJson);
   }
 }

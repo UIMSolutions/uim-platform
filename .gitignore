@@ -129,3 +129,9 @@ custom-domain/build/libuim-custom-domain-platform-service.a
 custom-domain/build/libuim-custom-domain-platform-service.a
 data-attribute-recommendation/build/libuim-dataattribute-recommendation-platform-service.a
 data-attribute-recommendation/build/libuim-dataattribute-recommendation-platform-service.a
+abap-compiler/build/abap-compiler-test-defaultTest
+abap-compiler/build/libuim-abap-compiler-platform-service.a
+abap-environment/build/libuim-abap-environment-platform-service.a
+advanced-events/build/libuim-advanced-event-mesh-platform-service.a
+agentry/build/libuim-agentry-platform-service.a
+ai-core/build/libuim-ai-core-platform-service.a

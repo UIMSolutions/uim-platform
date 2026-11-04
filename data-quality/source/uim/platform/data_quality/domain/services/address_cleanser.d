@@ -123,7 +123,7 @@ class AddressCleanser {
         capitalize = false;
       }
     }
-    return cast(string) result;
+    return result.idup;
   }
 
   private static string standardizeCountry(string country) {

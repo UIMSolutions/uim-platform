@@ -202,7 +202,7 @@ class DuplicateDetector {
       lastCode = code;
     }
 
-    return cast(string) result;
+    return result.idup;
   }
 
   private static char soundexCode(char c) {
@@ -249,7 +249,7 @@ class DuplicateDetector {
     result.length = s.length;
     foreach (i, c; s)
       result[i] = cast(char) toLower(cast(dchar) c);
-    return cast(string) result;
+    return result.idup;
   }
 }
 /// Input record for duplicate detection.

@@ -40,7 +40,7 @@ class CleansingJobController : ManageHttpController {
     r.tenantId = tenantId;
     r.datasetId = data.getString("datasetId");
     r.requestedBy = data.getString("requestedBy");
-    r.ruleIds = data.getStrings("ruleIds");
+    r.ruleIds = data.getStrings("ruleIds").map!(ruleId => CleansingRuleId(ruleId)).array;
 
     auto result = usecase.createCleansingJob(r);
     if (result.hasError)

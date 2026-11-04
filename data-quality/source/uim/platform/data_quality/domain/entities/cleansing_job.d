@@ -29,11 +29,16 @@ struct CleansingJob {
   long completedAt;
 
   Json toJson() const {
+    auto ruleIdsJson = Json.emptyArray;
+    foreach (ruleId; ruleIds) {
+      ruleIdsJson ~= Json(ruleId.value);
+    }
+
     Json result = entityToJson
       .set("datasetId", datasetId)
       .set("requestedBy", requestedBy)
       .set("status", status.to!string)
-      .set("ruleIds", ruleIds)
+      .set("ruleIds", ruleIdsJson)
       .set("totalRecords", totalRecords)
       .set("processedRecords", processedRecords)
       .set("cleansedRecords", cleansedRecords)
@@ -44,11 +49,6 @@ struct CleansingJob {
 
     if (errorMessage.length > 0)
       result["errorMessage"] = Json(errorMessage);
-
-    if (ruleIds.length > 0) {
-      auto ids = ruleIds.map!(id => Json(id)).array.toJson;
-      result["ruleIds"] = ids;
-    }
 
     return result;
   }

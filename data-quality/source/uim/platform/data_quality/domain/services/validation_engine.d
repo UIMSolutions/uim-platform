@@ -34,7 +34,7 @@ class ValidationEngine {
       string fieldVal = value ? *value : "";
 
       auto violation = evaluateRule(rule, fieldVal, fieldValues);
-      if (violation.ruleId.length > 0) {
+      if (!violation.ruleId.isNull) {
         result.violations ~= violation;
         ++failed;
       }

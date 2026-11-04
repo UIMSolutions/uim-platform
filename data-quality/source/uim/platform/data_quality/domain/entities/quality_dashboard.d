@@ -69,6 +69,11 @@ struct QualityDashboard {
         .set("count", s.count);
     }
 
+    auto trendJson = Json.emptyArray;
+    foreach (trendPoint; trend) {
+      trendJson ~= trendPoint.toJson();
+    }
+
     return entityToJson
       .set("datasetId", datasetId)
       .set("datasetName", datasetName)
@@ -78,7 +83,7 @@ struct QualityDashboard {
       .set("activeRules", activeRules)
       .set("violationCount", violationCount)
       .set("violationsBySeverity", sevArr)
-      .set("trend", trend)
+      .set("trend", trendJson)
       .set("scores", scores)
       .set("computedAt", computedAt);
   }

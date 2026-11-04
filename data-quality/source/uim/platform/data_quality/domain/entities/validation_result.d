@@ -26,7 +26,7 @@ struct DqValidationResult {
   Json toJson() const {
     auto violationsJson = Json.emptyArray;
     foreach (violation; violations) {
-      violationsJson.add(violation.toJson());
+      violationsJson ~= violation.toJson();
     }
 
     return entityToJson()

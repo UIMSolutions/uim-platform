@@ -26,7 +26,7 @@ class ProfileController : HttpController {
     router.get("/api/v1/profiles/*", &handleGet);
   }
 
-  protected Json profileHandler(HTTPServerRequest req) {
+  override protected Json profileHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -55,16 +55,16 @@ class ProfileController : HttpController {
     return successResponse("Data profile created successfully", "Created", 201, profile.toJson);
   }
 
-mixin(HandleTemplate!("handleProfile", "profileHandler"));
+  mixin(HandleTemplate!("handleProfile", "profileHandler"));
 
-  protected Json listHandler(HTTPServerRequest req) {
+  override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
 
-    auto profiles = usecase.listByTenant(tenantId);
+    auto profiles = usecase.listProfiles(tenantId);
     auto arr = profiles.map!(p => p.toJson).array.toJson;
 
     auto resp = Json.emptyObject
@@ -79,8 +79,8 @@ mixin(HandleTemplate!("handleProfile", "profileHandler"));
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto profile = usecase.getById(tenantId, id);
+    auto id = pDataProfileId(precheck.id);
+    auto profile = usecase.getProfile(tenantId, id);
     if (profile.isNull)
       return errorResponse("Data profile not found", 404);
 
