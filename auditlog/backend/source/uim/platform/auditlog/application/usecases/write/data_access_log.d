@@ -1,38 +1,43 @@
 /****************************************************************************************************************
-* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
-* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.usecases.write.data_access_log;
 
-
-
-
-// import uim.platform.auditlog.domain.entities.data_access_log;
-
-// import uim.platform.auditlog.domain.ports.repositories.data_access_logs;
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
 
 @safe:
-class WriteDataAccessLogUseCase {
-  protected IAuditLogRepository auditRepo;
-  private IDataAccessLogRepository dalRepo;
 
-  this(IAuditLogRepository auditRepo, IDataAccessLogRepository dalRepo) {
+/// Interactor: records a GDPR-relevant read access together with its parent audit entry.
+class WriteDataAccessLogUseCase : IWriteDataAccessLogUseCase {
+  protected IAuditLogRepository auditRepo;
+  protected IDataAccessLogRepository dalRepo;
+  protected IAuditConfigRepository configRepo;
+
+  this(IAuditLogRepository auditRepo, IDataAccessLogRepository dalRepo,
+      IAuditConfigRepository configRepo = null) {
     this.auditRepo = auditRepo;
     this.dalRepo = dalRepo;
+    this.configRepo = configRepo;
   }
 
   UsecaseResult writeLog(WriteDataAccessLogRequest req) {
     if (req.tenantId.isEmpty)
-      return UsecaseResult(false, "", "Tenant ID is required");
-
+      return UsecaseResult(false, "", "Tenant ID is required", 400);
     if (req.dataSubject.length == 0)
-      return UsecaseResult(false, "", "Data subject is required");
+      return UsecaseResult(false, "", "Data subject is required", 400);
 
-    // Create parent audit log entry
+    if (configRepo !is null) {
+      try {
+        AuditPolicy.ensureAllowed(configRepo.getByTenant(req.tenantId), AuditCategory.dataAccess, AuditSeverity.info);
+      } catch (AuditLogException e) {
+        return UsecaseResult(false, "", e.msg, 422);
+      }
+    }
+
     auto entry = AuditLogEntry(req.tenantId);
     entry.userId = req.accessedBy;
     entry.category = AuditCategory.dataAccess;
@@ -41,16 +46,13 @@ class WriteDataAccessLogUseCase {
     entry.outcome = AuditOutcome.success;
     entry.objectType = req.dataObjectType;
     entry.objectId = req.dataObjectId;
-    entry.message = "Data access: %s / %s by %s purpose=%s".format(  req.dataObjectType, req.dataObjectId, 
-      req.accessedBy, req.purpose);
-    entry.timestamp = entry.createdAt; // Set timestamp to current time in initEntity
-
+    entry.message = "Data access: %s / %s by %s purpose=%s".format(req.dataObjectType,
+      req.dataObjectId, req.accessedBy.value, req.purpose);
+    entry.timestamp = entry.createdAt;
     auditRepo.save(entry);
 
-    // Create data access record
-    auto daLog = DataAccessLog();
+    auto daLog = DataAccessLog(req.tenantId);
     daLog.auditLogId = entry.id;
-    daLog.tenantId = req.tenantId;
     daLog.accessedBy = req.accessedBy;
     daLog.dataSubject = req.dataSubject;
     daLog.dataObjectType = req.dataObjectType;
@@ -59,19 +61,24 @@ class WriteDataAccessLogUseCase {
     daLog.purpose = req.purpose;
     daLog.channel = req.channel;
     daLog.timestamp = entry.timestamp;
-
     dalRepo.save(daLog);
 
-    return UsecaseResult(true, entry.id.value, "");
+    return UsecaseResult(true, entry.id.value, "Data access recorded");
   }
 }
-
 ///
 unittest {
-//     auto iAuditLogRepository = new AuditLogRepository();
-//     auto iDataAccessLogRepository = new IDataAccessLogRepository();
-//     auto usecase = new WriteDataAccessLogUseCase(iAuditLogRepository, iDataAccessLogRepository);
-//     auto tenantId = TenantId("test-tenant");
-// 
-//     assert(usecase !is null);
+  mixin(ShowTest!("WriteDataAccessLogUseCase"));
+
+  auto logs = new AuditLogRepository();
+  auto dal = new DataAccessLogRepository();
+  auto uc = new WriteDataAccessLogUseCase(logs, dal);
+
+  WriteDataAccessLogRequest req;
+  req.tenantId = TenantId("t1");
+  assert(uc.writeLog(req).hasError); // data subject missing
+  req.dataSubject = "employee-4711";
+  assert(uc.writeLog(req).isSuccess);
+  assert(uc.writeLog(req).isSuccess);
+  assert(dal.countByTenant(req.tenantId) == 2);
 }

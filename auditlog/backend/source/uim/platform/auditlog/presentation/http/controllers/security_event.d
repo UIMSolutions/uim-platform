@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 @safe:
 class SecurityEventController : HttpController {
-  protected WriteSecurityEventUseCase useCase;
+  protected IWriteSecurityEventUseCase useCase;
 
-  this(WriteSecurityEventUseCase useCase) {
+  this(IWriteSecurityEventUseCase useCase) {
     this.useCase = useCase;
   }
 

@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.auditlog.infrastructure.persistence.repositories.data_access;
+module uim.platform.auditlog.persistence.repositories.data_access;
 
 // import uim.platform.auditlog.domain.entities.data_access_log;
-// import uim.platform.auditlog.domain.ports.repositories.data_access_logs;
+// import uim.platform.auditlog.ports.repositories.data_access_logs;
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

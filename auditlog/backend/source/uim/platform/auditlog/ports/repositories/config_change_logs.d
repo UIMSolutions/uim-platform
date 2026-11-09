@@ -10,7 +10,6 @@ module uim.platform.auditlog.ports.repositories.config_change_logs;
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
-mixin(ShowModule!());
 /// Port for persisting configuration change log records.
 @safe:
 interface IConfigChangeLogRepository : ITenantRepository!(ConfigChangeLog, ConfigChangeLogId) {

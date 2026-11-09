@@ -22,13 +22,13 @@ enum AuditCategory {
 
 AuditCategory toAuditCategory(string value) {
   switch (value.lower) {
-  case "audit.security-events":
+  case "audit.security-events", "securityevents", "security-events":
     return AuditCategory.securityEvents;
-  case "audit.configuration":
+  case "audit.configuration", "configuration":
     return AuditCategory.configuration;
-  case "audit.data-access":
+  case "audit.data-access", "dataaccess", "data-access":
     return AuditCategory.dataAccess;
-  case "audit.data-modification":
+  case "audit.data-modification", "datamodification", "data-modification":
     return AuditCategory.dataModification;
   default:
     return AuditCategory.securityEvents;
@@ -63,6 +63,9 @@ unittest {
   assert("audit.configuration".toAuditCategory == AuditCategory.configuration);
   assert("audit.data-access".toAuditCategory == AuditCategory.dataAccess);
   assert("audit.data-modification".toAuditCategory == AuditCategory.dataModification);
+  // enum member names (as used in JSON / OData payloads) are accepted as well
+  assert("dataAccess".toAuditCategory == AuditCategory.dataAccess);
+  assert("configuration".toAuditCategory == AuditCategory.configuration);
 
   assert(AuditCategory.securityEvents.toString == "audit.security-events");
   assert(AuditCategory.configuration.toString == "audit.configuration");

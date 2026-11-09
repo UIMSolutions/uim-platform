@@ -1,6 +1,6 @@
 /****************************************************************************************************************
-* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
-* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.usecases.write.audit_log;
@@ -10,39 +10,32 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class WriteAuditLogUseCase {
-  protected IAuditLogRepository logRepo;
-  private IAuditConfigRepository configRepo;
 
-  this(IAuditLogRepository logRepo, IAuditConfigRepository configRepo) {
+/// Interactor: records a generic audit log entry after checking the tenant's
+/// audit configuration (see domain service AuditPolicy).
+class WriteAuditLogUseCase : IWriteAuditLogUseCase {
+  protected IAuditLogRepository logRepo;
+  protected IAuditConfigRepository configRepo;
+  protected IAuditEventPublisher publisher;
+
+  this(IAuditLogRepository logRepo, IAuditConfigRepository configRepo,
+      IAuditEventPublisher publisher = null) {
     this.logRepo = logRepo;
     this.configRepo = configRepo;
+    this.publisher = publisher;
   }
 
   UsecaseResult writeAuditLog(WriteAuditLogRequest req) {
     if (req.tenantId.isEmpty)
-      return UsecaseResult(false, "", "Tenant ID is required");
-
+      return UsecaseResult(false, "", "Tenant ID is required", 400);
     if (req.message.length == 0)
-      return UsecaseResult(false, "", "Message is required");
+      return UsecaseResult(false, "", "Message is required", 400);
 
-    // Check if logging is enabled for this tenant/category
     auto cfg = configRepo.getByTenant(req.tenantId);
-    if (!cfg.isNull) {
-      if (cfg.status == ConfigStatus.disabled)
-        return UsecaseResult(false, "", "Audit logging is disabled for this tenant");
-
-      if (req.category == AuditCategory.dataAccess && !cfg.logDataAccess)
-        return UsecaseResult(false, "", "Data access logging is disabled");
-
-      if (req.category == AuditCategory.dataModification && !cfg.logDataModification)
-        return UsecaseResult(false, "", "Data modification logging is disabled");
-
-      if (req.category == AuditCategory.securityEvents && !cfg.logSecurityEvents)
-        return UsecaseResult(false, "", "Security event logging is disabled");
-
-      if (req.category == AuditCategory.configuration && !cfg.logConfigurationChanges)
-        return UsecaseResult(false, "", "Configuration change logging is disabled");
+    try {
+      AuditPolicy.ensureAllowed(cfg, req.category, req.severity);
+    } catch (AuditLogException e) {
+      return UsecaseResult(false, "", e.msg, 422);
     }
 
     auto entry = AuditLogEntry(req.tenantId);
@@ -57,24 +50,44 @@ class WriteAuditLogUseCase {
     entry.objectType = req.objectType;
     entry.objectId = req.objectId;
     entry.message = req.message;
-    entry.attributes = req.attributes;
+    entry.attributes = AuditPolicy.mask(cfg, req.attributes);
     entry.ipAddress = req.ipAddress;
     entry.userAgent = req.userAgent;
     entry.correlationId = req.correlationId;
     entry.originApp = req.originApp;
-    entry.timestamp = entry.createdAt; // Set timestamp to current time in initEntity
+    entry.timestamp = entry.createdAt;
 
     logRepo.save(entry);
-    return UsecaseResult(true, entry.id.value, "");
+    if (publisher !is null)
+      publisher.publish(AuditTopics.entryWritten, entry.toJson);
+
+    return UsecaseResult(true, entry.id.value, "Audit log entry created");
   }
 }
-
 ///
 unittest {
-//     auto iAuditLogRepository = new AuditLogRepository();
-//     auto iAuditConfigRepository = new IAuditConfigRepository();
-//     auto usecase = new WriteAuditLogUseCase(iAuditLogRepository, iAuditConfigRepository);
-//     auto tenantId = TenantId("test-tenant");
-// 
-//     assert(usecase !is null);
+  mixin(ShowTest!("WriteAuditLogUseCase"));
+
+  auto logs = new AuditLogRepository();
+  auto configs = new AuditConfigRepository();
+  auto uc = new WriteAuditLogUseCase(logs, configs);
+  auto tenant = TenantId("t1");
+
+  WriteAuditLogRequest req;
+  req.tenantId = tenant;
+  req.category = AuditCategory.dataModification;
+  req.message = "changed";
+  auto r = uc.writeAuditLog(req);
+  assert(r.isSuccess, r.message);
+  assert(logs.countByTenant(tenant) == 1);
+
+  // Category switched off => rejected
+  auto cfg = AuditConfig.createDefault(tenant);
+  cfg.logDataModification = false;
+  configs.save(cfg);
+  assert(!uc.writeAuditLog(req).isSuccess);
+  assert(logs.countByTenant(tenant) == 1);
+
+  req.message = "";
+  assert(uc.writeAuditLog(req).hasError);
 }

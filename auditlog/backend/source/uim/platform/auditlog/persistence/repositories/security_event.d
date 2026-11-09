@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.auditlog.infrastructure.persistence.repositories.security_event;
+module uim.platform.auditlog.persistence.repositories.security_event;
 
 // import uim.platform.auditlog.domain.entities.security_event;
-// import uim.platform.auditlog.domain.ports.repositories.security_events;
+// import uim.platform.auditlog.ports.repositories.security_events;
 // 
 // 
 import uim.platform.auditlog;
