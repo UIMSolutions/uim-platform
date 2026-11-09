@@ -25,9 +25,25 @@ class ExportController : ManageHttpController {
     super.registerRoutes(router);
 
     router.post("/api/v1/exports", &handleCreate);
+    router.get("/api/v1/exports/:id/download", &handleDownload);
     router.get("/api/v1/exports", &handleList);
     router.get("/api/v1/exports/*", &handleGet);
     router.delete_("/api/v1/exports/*", &handleDelete);
+  }
+
+  /// GET /api/v1/exports/:id/download — the rendered export file (JSON or CSV).
+  void handleDownload(HTTPServerRequest req, HTTPServerResponse res) {
+    auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+    auto id = ExportJobId(req.params.get("id", ""));
+    auto job = useCase.getExport(tenantId, id);
+    if (job.isNull) {
+      res.writeBody(`{"error":"Export job not found"}`, 404, "application/json");
+      return;
+    }
+    auto content = useCase.renderExport(tenantId, id);
+    auto isCsv = job.format_ == ExportFormat.csv;
+    res.headers["Content-Disposition"] = "attachment; filename=\"auditlog-" ~ id.value ~ (isCsv ? ".csv" : ".json") ~ "\"";
+    res.writeBody(content, 200, isCsv ? "text/csv; charset=utf-8" : "application/json");
   }
 
   override protected Json listHandler(HTTPServerRequest req) {

@@ -15,7 +15,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageRetentionUseCase {
+/// Interactor: CRUD for retention policies. Only one active default policy per tenant.
+class ManageRetentionUseCase : IManageRetentionUseCase {
   protected IRetentionPolicyRepository repo;
 
   this(IRetentionPolicyRepository repo) {
@@ -29,6 +30,9 @@ class ManageRetentionUseCase {
       return UsecaseResult(false, "", "Policy name is required");
     if (req.retentionDays <= 0)
       return UsecaseResult(false, "", "Retention days must be positive");
+
+    if (req.isDefault)
+      clearDefault(req.tenantId);
 
     auto policy = RetentionPolicy(req.tenantId);
     with (policy) {
@@ -76,6 +80,16 @@ class ManageRetentionUseCase {
     return UsecaseResult(true, policy.id.value, "");
   }
 
+  /// Make sure at most one policy is flagged as default.
+  protected void clearDefault(TenantId tenantId) {
+    foreach (p; repo.findByTenant(tenantId)) {
+      if (p.isDefault) {
+        p.isDefault = false;
+        repo.update(p);
+      }
+    }
+  }
+
   UsecaseResult deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
     auto policy = repo.findById(tenantId, policyId);
     if (policy.isNull)
@@ -88,12 +102,30 @@ class ManageRetentionUseCase {
 
 ///
 unittest {
-//     auto repo = new RetentionPolicyRepository();
-//     auto usecase = new ManageRetentionUseCase(repo);
-//     auto tenantId = TenantId("test-tenant");
-// 
-//     // Test list
-//     auto items = usecase.listPolicies(tenantId);
-//     assert(items !is null);
+  mixin(ShowTest!("ManageRetentionUseCase"));
 
+  auto uc = new ManageRetentionUseCase(new RetentionPolicyRepository());
+  auto tenant = TenantId("t1");
+
+  CreateRetentionPolicyRequest req;
+  req.tenantId = tenant;
+  req.name = "short";
+  req.retentionDays = 0;
+  assert(uc.createPolicy(req).hasError);
+
+  req.retentionDays = 30;
+  req.isDefault = true;
+  auto first = uc.createPolicy(req);
+  assert(first.isSuccess);
+  req.name = "long";
+  req.retentionDays = 365;
+  auto second = uc.createPolicy(req);
+  assert(second.isSuccess);
+
+  // the newer default replaced the older one
+  assert(!uc.getPolicy(tenant, RetentionPolicyId(first.id)).isDefault);
+  assert(uc.getPolicy(tenant, RetentionPolicyId(second.id)).isDefault);
+  assert(uc.listPolicies(tenant).length == 2);
+  assert(uc.deletePolicy(tenant, RetentionPolicyId(first.id)).isSuccess);
+  assert(uc.listPolicies(tenant).length == 1);
 }

@@ -10,6 +10,14 @@ mixin(ShowModule!());
 
 @safe:
 class ConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), IConfigChangeLogRepository {
+  this() {
+    super();
+  }
+
+  this(ITenantStore!(ConfigChangeLog, ConfigChangeLogId) store) {
+    super(store);
+  }
+
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);

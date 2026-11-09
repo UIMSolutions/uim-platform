@@ -8,7 +8,8 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class RetrieveAuditLogsUseCase {
+/// Interactor: read access to audit log entries.
+class RetrieveAuditLogsUseCase : IRetrieveAuditLogsUseCase {
   protected IAuditLogRepository repository;
 
   this(IAuditLogRepository repository) {
@@ -47,9 +48,22 @@ class RetrieveAuditLogsUseCase {
 
 ///
 unittest {
-//    auto repo = new AuditLogRepository();
-//    auto usecase = new RetrieveAuditLogsUseCase(repo);
-//    auto tenantId = TenantId("test-tenant");
-//
-//    assert(usecase !is null);
+  mixin(ShowTest!("RetrieveAuditLogsUseCase"));
+
+  auto repo = new AuditLogRepository();
+  auto tenant = TenantId("t1");
+  foreach (i; 0 .. 3) {
+    auto e = AuditLogEntry(tenant);
+    e.category = i == 0 ? AuditCategory.dataAccess : AuditCategory.configuration;
+    e.timestamp = e.createdAt + i;
+    repo.save(e);
+  }
+  auto uc = new RetrieveAuditLogsUseCase(repo);
+  assert(uc.countAuditLogs(tenant) == 3);
+  assert(uc.listAuditLogs(tenant, AuditCategory.configuration).length == 2);
+
+  AuditLogQueryRequest q;
+  q.tenantId = tenant;
+  q.limit = 2;
+  assert(uc.queryAuditLogs(q).length == 2);
 }

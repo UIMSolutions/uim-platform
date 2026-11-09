@@ -13,6 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 class DataAccessLogRepository : TenantRepository!(DataAccessLog, DataAccessLogId), IDataAccessLogRepository {
+  this() {
+    super();
+  }
+
+  this(ITenantStore!(DataAccessLog, DataAccessLogId) store) {
+    super(store);
+  }
+
 
   // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {

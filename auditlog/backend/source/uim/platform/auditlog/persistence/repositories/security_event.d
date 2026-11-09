@@ -15,6 +15,14 @@ mixin(ShowModule!());
 
 @safe:
 class SecurityEventRepository : TenantRepository!(SecurityEvent, SecurityEventId), ISecurityEventRepository {
+  this() {
+    super();
+  }
+
+  this(ITenantStore!(SecurityEvent, SecurityEventId) store) {
+    super(store);
+  }
+
 
   // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {

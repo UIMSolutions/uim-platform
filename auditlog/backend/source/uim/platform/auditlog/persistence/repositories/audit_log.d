@@ -16,6 +16,14 @@ mixin(ShowModule!());
 
 @safe:
 class AuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), IAuditLogRepository {
+  this() {
+    super();
+  }
+
+  this(ITenantStore!(AuditLogEntry, AuditLogId) store) {
+    super(store);
+  }
+
 
   // #region ByCategory
   size_t countByCategory(TenantId tenantId, AuditCategory category) {

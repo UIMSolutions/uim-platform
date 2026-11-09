@@ -15,6 +15,14 @@ mixin(ShowModule!());
 
 @safe:
 class RetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), IRetentionPolicyRepository {
+  this() {
+    super();
+  }
+
+  this(ITenantStore!(RetentionPolicy, RetentionPolicyId) store) {
+    super(store);
+  }
+
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.isDefault && p.status == RetentionStatus.active);
   }

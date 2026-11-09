@@ -8,4 +8,5 @@ public {
     import uim.platform.auditlog.application.dtos.exportjob;
     import uim.platform.auditlog.application.dtos.retentionpolicy;
     import uim.platform.auditlog.application.dtos.securityevent;
+    import uim.platform.auditlog.application.dtos.statistics;
 }

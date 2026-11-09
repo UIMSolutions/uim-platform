@@ -1,15 +1,11 @@
 /****************************************************************************************************************
-* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
-* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
+/// HTTP server entry point (composition root): REST /api/v1, OData v4, Fiori app.
 module app;
 
-
-// 
-// import uim.platform.auditlog.infrastructure.config;
-// import uim.platform.auditlog.infrastructure.container;
-// 
 import uim.platform.auditlog;
 
 @safe:
@@ -19,39 +15,44 @@ version (unittest) {
   void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
+    auto ports = container.ports;
 
     auto router = new URLRouter();
 
-    // Register all controller routes (driving adapters)
-    container.auditLogController.registerRoutes(router);
-    container.retentionController.registerRoutes(router);
-    container.auditConfigController.registerRoutes(router);
-    container.exportController.registerRoutes(router);
-    container.securityEventController.registerRoutes(router);
-    container.dataAccessController.registerRoutes(router);
-    container.configChangeController.registerRoutes(router);
-    container.healthController.registerRoutes(router);
+    // ── REST driving adapters (/api/v1) ───────────────────────────────────
+    new AuditLogController(ports.writeAuditLog, ports.retrieveAuditLogs).registerRoutes(router);
+    new RetentionController(ports.manageRetention).registerRoutes(router);
+    new AuditConfigController(ports.manageAuditConfig).registerRoutes(router);
+    new ExportController(ports.manageExports).registerRoutes(router);
+    new SecurityEventController(ports.writeSecurityEvent).registerRoutes(router);
+    new DataAccessController(ports.writeDataAccessLog).registerRoutes(router);
+    new ConfigChangeController(ports.writeConfigChange).registerRoutes(router);
+    new HealthController(config.serviceName).registerRoutes(router);
+
+    // ── OData v4 driving adapter (SAP Fiori) ──────────────────────────────
+    new AuditLogODataController(ports, config.odataPath, config.defaultTenant).registerRoutes(router);
+
+    // ── Fiori app for local development (approuter serves it on CF) ───────
+    auto frontend = new FrontendController(config.frontendDir);
+    frontend.registerRoutes(router);
+
+    // ── Background worker ────────────────────────────────────────────────
+    auto worker = new RetentionWorker(ports.enforceRetention, config.retentionTenants);
+    worker.start(config.retentionIntervalMinutes);
 
     auto settings = new HTTPServerSettings();
     settings.port = config.port;
     settings.bindAddresses = [config.host];
-
     auto listener = listenHTTP(settings, router);
+    scope (exit)
+      listener.stopListening();
 
-    writefln("==========================================================");
-    writefln("  AuditLog Service");
-    writefln("  Listening on %s:%d", config.host, config.port);
-    writefln("                                                          ");
-    writefln("  Endpoints:                                              ");
-    writefln("    POST/GET  /api/v1/auditlog                            ");
-    writefln("    CRUD      /api/v1/retention                           ");
-    writefln("    CRUD      /api/v1/configs                             ");
-    writefln("    POST/GET  /api/v1/exports                             ");
-    writefln("    POST      /api/v1/security-events                     ");
-    writefln("    POST      /api/v1/data-access                         ");
-    writefln("    POST      /api/v1/config-changes                      ");
-    writefln("    GET       /api/v1/health                              ");
-    writefln("==========================================================");
+    logInfo("%s listening on %s:%d (storage=%s, config from %s)", config.serviceName,
+      config.host, config.port, config.storage, config.sources.join(" → "));
+    logInfo("  REST   /api/v1/{auditlog,retention,configs,exports,security-events,data-access,config-changes,health}");
+    logInfo("  OData  %s  ($metadata)", config.odataPath);
+    if (frontend.available)
+      logInfo("  Fiori  /index.html  (%s)", config.frontendDir);
 
     runApplication();
   }

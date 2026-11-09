@@ -13,6 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 class ExportJobRepository : TenantRepository!(ExportJob, ExportJobId), IExportJobRepository {
+  this() {
+    super();
+  }
+
+  this(ITenantStore!(ExportJob, ExportJobId) store) {
+    super(store);
+  }
+
 
   size_t countByRequestedBy(TenantId tenantId, UserId requestedBy) {
     return findByRequestedBy(tenantId, requestedBy).length;

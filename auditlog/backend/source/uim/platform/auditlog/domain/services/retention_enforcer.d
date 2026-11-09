@@ -1,24 +1,33 @@
 /****************************************************************************************************************
-* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
-* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.services.retention_enforcer;
 
-// import uim.platform.auditlog.ports.repositories.retention_policys;
-// import uim.platform.auditlog.ports.repositories.security_events;
-// import uim.platform.auditlog.ports.repositories.data_access_logs;
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
-/// Domain service — enforces retention policies by purging expired entries.
+
 @safe:
+
+/// Result of one retention run.
+struct RetentionOutcome {
+  long cutoff; /// stdTime; records older than this were removed
+  int retentionDays; /// effective retention period
+  size_t removed; /// number of removed records over all log types
+}
+
+/// Domain service — enforces retention policies by purging expired entries.
 class RetentionEnforcer {
+  enum int defaultRetentionDays = 90; // SAP default
+  enum long hnsecsPerDay = 24L * 60 * 60 * 10_000_000L;
+
   protected IAuditLogRepository auditRepo;
-  private IRetentionPolicyRepository policyRepo;
-  private ISecurityEventRepository secRepo;
-  private IDataAccessLogRepository dalRepo;
-  private IConfigChangeLogRepository cclRepo;
+  protected IRetentionPolicyRepository policyRepo;
+  protected ISecurityEventRepository secRepo;
+  protected IDataAccessLogRepository dalRepo;
+  protected IConfigChangeLogRepository cclRepo;
 
   this(IAuditLogRepository auditRepo, IRetentionPolicyRepository policyRepo,
       ISecurityEventRepository secRepo, IDataAccessLogRepository dalRepo,
@@ -30,24 +39,56 @@ class RetentionEnforcer {
     this.cclRepo = cclRepo;
   }
 
-  /// Purge logs older than the tenant's retention policy allows.
-  long enforceForTenant(TenantId tenantId) {
-  
-
-    auto policy = policyRepo.findDefault(tenantId);
-    int days = 90; // SAP default
-    if (policyRepo.existsDefault(tenantId) && policy.retentionDays > 0)
-      days = policy.retentionDays;
-
-    // Convert days to hnsecs cutoff
-    auto now = currentTimestamp();
-    long cutoff = now - (days * 24 * 60 * 60 * 10_000_000L);
-
-    auditRepo.removeOlderThan(tenantId, cutoff);
-    secRepo.removeOlderThan(tenantId, cutoff);
-    dalRepo.removeOlderThan(tenantId, cutoff);
-    cclRepo.removeOlderThan(tenantId, cutoff);
-
-    return cutoff;
+  /// Effective retention days of a tenant (active default policy or SAP default).
+  int retentionDaysFor(TenantId tenantId) {
+    if (policyRepo.existsDefault(tenantId)) {
+      auto policy = policyRepo.findDefault(tenantId);
+      if (policy.retentionDays > 0)
+        return policy.retentionDays;
+    }
+    return defaultRetentionDays;
   }
+
+  /// Purge logs older than the tenant's retention policy allows.
+  RetentionOutcome enforceForTenant(TenantId tenantId) {
+    RetentionOutcome outcome;
+    outcome.retentionDays = retentionDaysFor(tenantId);
+    outcome.cutoff = currentTimestamp() - outcome.retentionDays * hnsecsPerDay;
+
+    auto before = total(tenantId);
+    auditRepo.removeOlderThan(tenantId, outcome.cutoff);
+    secRepo.removeOlderThan(tenantId, outcome.cutoff);
+    dalRepo.removeOlderThan(tenantId, outcome.cutoff);
+    cclRepo.removeOlderThan(tenantId, outcome.cutoff);
+    outcome.removed = before - total(tenantId);
+
+    return outcome;
+  }
+
+  private size_t total(TenantId tenantId) {
+    return auditRepo.countByTenant(tenantId) + secRepo.countByTenant(tenantId)
+      + dalRepo.countByTenant(tenantId) + cclRepo.countByTenant(tenantId);
+  }
+}
+///
+unittest {
+  mixin(ShowTest!("RetentionEnforcer"));
+
+  auto logs = new AuditLogRepository();
+  auto policies = new RetentionPolicyRepository();
+  auto enforcer = new RetentionEnforcer(logs, policies, new SecurityEventRepository(),
+    new DataAccessLogRepository(), new ConfigChangeLogRepository());
+  auto tenant = TenantId("t1");
+
+  auto old = AuditLogEntry(tenant);
+  old.timestamp = currentTimestamp() - 100 * RetentionEnforcer.hnsecsPerDay;
+  logs.save(old);
+  auto fresh = AuditLogEntry(tenant);
+  fresh.timestamp = currentTimestamp();
+  logs.save(fresh);
+
+  assert(enforcer.retentionDaysFor(tenant) == 90);
+  auto outcome = enforcer.enforceForTenant(tenant);
+  assert(outcome.removed == 1);
+  assert(logs.countByTenant(tenant) == 1);
 }

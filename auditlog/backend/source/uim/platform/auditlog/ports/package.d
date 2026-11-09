@@ -6,6 +6,7 @@
 module uim.platform.auditlog.ports;
 
 public {
+  import uim.platform.auditlog.ports.driving;
   import uim.platform.auditlog.ports.gateways;
   import uim.platform.auditlog.ports.messaging;
   import uim.platform.auditlog.ports.repositories;

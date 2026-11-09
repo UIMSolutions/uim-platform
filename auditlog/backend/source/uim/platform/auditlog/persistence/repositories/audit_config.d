@@ -12,6 +12,14 @@ mixin(ShowModule!());
 
 @safe:
 class AuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), IAuditConfigRepository {
+  this() {
+    super();
+  }
+
+  this(ITenantStore!(AuditConfig, AuditConfigId) store) {
+    super(store);
+  }
+
   // override AuditConfig[] findBy(size_t offset = 0, size_t limit = 0) {
   //   return limit == 0 
   //     ? store.byKeyValue.map!(kv => getByTenant(kv.key)).array.skip(offset)

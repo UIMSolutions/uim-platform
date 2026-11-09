@@ -9,7 +9,8 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class ManageAuditConfigUseCase { // } {
+/// Interactor: one audit configuration per tenant.
+class ManageAuditConfigUseCase : IManageAuditConfigUseCase {
   protected IAuditConfigRepository configs;
 
   this(IAuditConfigRepository configs) {
@@ -21,7 +22,7 @@ class ManageAuditConfigUseCase { // } {
       return UsecaseResult(false, "", "Tenant ID is required");
 
     // Only one config per tenant
-    if (configs.existsByTenant(req.tenantId))
+    if (configs.countByTenant(req.tenantId) > 0)
       return UsecaseResult(false, "", "Audit configuration already exists for this tenant");
 
     auto config = AuditConfig(req.tenantId);
@@ -42,7 +43,7 @@ class ManageAuditConfigUseCase { // } {
   }
 
   bool existsAuditConfig(TenantId tenantId) {
-    return configs.existsByTenant(tenantId);
+    return configs.countByTenant(tenantId) > 0;
   }
 
   AuditConfig getAuditConfig(TenantId tenantId) {
@@ -75,12 +76,19 @@ class ManageAuditConfigUseCase { // } {
 
 ///
 unittest {
-//     auto iAuditConfigRepository = new AuditConfigRepository();
-//     auto usecase = new ManageAuditConfigUseCase(iAuditConfigRepository);
-//     auto tenantId = TenantId("test-tenant");
-// 
-//     // Test list
-//     auto items = usecase.listAuditConfigs(tenantId);
-//     assert(items !is null);
+  mixin(ShowTest!("ManageAuditConfigUseCase"));
 
+  auto uc = new ManageAuditConfigUseCase(new AuditConfigRepository());
+  auto tenant = TenantId("t1");
+
+  CreateAuditConfigRequest req;
+  req.tenantId = tenant;
+  req.logDataAccess = true;
+  auto r = uc.createAuditConfig(req);
+  assert(r.isSuccess);
+  assert(uc.createAuditConfig(req).hasError); // only one per tenant
+  assert(uc.existsAuditConfig(tenant));
+  assert(uc.getAuditConfig(tenant).name == "Default");
+  assert(uc.deleteAuditConfig(tenant, AuditConfigId(r.id)).isSuccess);
+  assert(!uc.existsAuditConfig(tenant));
 }
