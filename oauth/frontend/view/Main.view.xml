@@ -1,0 +1,265 @@
+<mvc:View controllerName="uim.oauth.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>appTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+        <f:actions>
+          <Button text="{i18n>introspect}" icon="sap-icon://inspection" press=".onOpenIntrospect"/>
+          <Button text="{i18n>purgeExpired}" icon="sap-icon://eraser" press=".onPurge"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpis" binding="{/Statistics}" wrap="Wrap" class="sapUiSmallMarginBottom">
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiClients}"/>
+            <ObjectNumber number="{activeClients}" unit="/ {clients} {i18n>kpiActive}" state="Success"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiBlocked}"/>
+            <ObjectNumber number="{blockedClients}" state="{= %{blockedClients} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiAccessTokens}"/>
+            <ObjectNumber number="{activeAccessTokens}" unit="· {revokedAccessTokens} {i18n>kpiRevoked} · {expiredAccessTokens} {i18n>kpiExpired}" state="Information"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiRefreshTokens}"/>
+            <ObjectNumber number="{activeRefreshTokens}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiPendingCodes}"/>
+            <ObjectNumber number="{pendingAuthorizationCodes}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiScopes}"/>
+            <ObjectNumber number="{scopes}" unit="· {brandings} {i18n>kpiBrandings}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Clients ───────────────────────────────────────────── -->
+          <IconTabFilter key="clients" icon="sap-icon://customer-and-contacts" text="{i18n>tabClients}">
+            <Table id="clientsTable" mode="SingleSelectLeft" growing="true" growingThreshold="20"
+              items="{path: '/OAuthClients', parameters: {$orderby: 'name', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabClients}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="clientsTable"/></customData></SearchField>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="client"/></customData></Button>
+                  <Button text="{i18n>testToken}" icon="sap-icon://key" press=".onOpenTestToken"/>
+                  <Button text="{i18n>rotateSecret}" icon="sap-icon://synchronize" press=".onRotateSecret"/>
+                  <Button text="{i18n>revokeTokens}" icon="sap-icon://cancel" press=".onRevokeClientTokens"/>
+                  <Button text="{i18n>block}" icon="sap-icon://locked" press=".onSetStatus"><customData><core:CustomData key="status" value="blocked"/><core:CustomData key="table" value="clientsTable"/></customData></Button>
+                  <Button text="{i18n>activate}" icon="sap-icon://unlocked" press=".onSetStatus"><customData><core:CustomData key="status" value="active"/><core:CustomData key="table" value="clientsTable"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="clientsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colClientType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colGrantTypes}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colAllowedScopes}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colActiveTokens}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onClientPress">
+                  <ObjectIdentifier title="{name}" text="{clientId}"/>
+                  <ObjectStatus text="{path: 'clientType', formatter: '.formatter.enumText'}" icon="{path: 'clientType', formatter: '.formatter.clientTypeIcon'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                    icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  <FlexBox wrap="Wrap" items="{path: 'grantTypes', templateShareable: false}"><ObjectStatus text="{path: '', targetType: 'any', formatter: '.formatter.enumText'}" inverted="true" state="Indication05" class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/></FlexBox>
+                  <FlexBox wrap="Wrap" items="{path: 'allowedScopes', templateShareable: false}"><ObjectStatus text="{path: '', targetType: 'any'}" inverted="true" state="Indication05" class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/></FlexBox>
+                  <ObjectNumber number="{activeTokens}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Scopes ────────────────────────────────────────────── -->
+          <IconTabFilter key="scopes" icon="sap-icon://permission" text="{i18n>tabScopes}">
+            <Table id="scopesTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/OAuthScopes', parameters: {$orderby: 'applicationId,name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabScopes}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="scopesTable"/></customData></SearchField>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="scope"/></customData></Button>
+                  <Button text="{i18n>deactivate}" icon="sap-icon://pause" press=".onSetStatus"><customData><core:CustomData key="status" value="inactive"/><core:CustomData key="table" value="scopesTable"/></customData></Button>
+                  <Button text="{i18n>activate}" icon="sap-icon://play" press=".onSetStatus"><customData><core:CustomData key="status" value="active"/><core:CustomData key="table" value="scopesTable"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="scopesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colScope}"/></Column>
+                <Column><Text text="{i18n>colApplication}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colClients}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{applicationId}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <ObjectNumber number="{clientCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Access tokens ─────────────────────────────────────── -->
+          <IconTabFilter key="accessTokens" icon="sap-icon://key" text="{i18n>tabAccessTokens}">
+            <Table id="accessTokensTable" mode="SingleSelectLeft" growing="true" growingThreshold="50"
+              items="{path: '/AccessTokens', parameters: {$orderby: 'issuedAt desc'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabAccessTokens}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="accessTokensTable"/></customData></SearchField>
+                  <Button text="{i18n>revoke}" icon="sap-icon://cancel" press=".onRevoke"><customData><core:CustomData key="table" value="accessTokensTable"/><core:CustomData key="action" value="RevokeAccessToken"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="accessTokensTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colClient}"/></Column>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colGrantType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colScopes}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colIssuedAt}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colExpiresAt}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{clientId}" text="{id}"/>
+                  <Text text="{userId}"/>
+                  <Text text="{path: 'grantType', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                    tooltip="{path: 'revocationReason', formatter: '.formatter.enumText'}"/>
+                  <FlexBox wrap="Wrap" items="{path: 'scopes', templateShareable: false}"><ObjectStatus text="{path: '', targetType: 'any'}" inverted="true" state="Indication05" class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/></FlexBox>
+                  <Text text="{issuedAt}"/>
+                  <Text text="{expiresAt}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Refresh tokens ────────────────────────────────────── -->
+          <IconTabFilter key="refreshTokens" icon="sap-icon://synchronize" text="{i18n>tabRefreshTokens}">
+            <Table id="refreshTokensTable" mode="SingleSelectLeft" growing="true" growingThreshold="50"
+              items="{path: '/RefreshTokens', parameters: {$orderby: 'issuedAt desc'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRefreshTokens}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="refreshTokensTable"/></customData></SearchField>
+                  <Button text="{i18n>revoke}" icon="sap-icon://cancel" press=".onRevoke"><customData><core:CustomData key="table" value="refreshTokensTable"/><core:CustomData key="action" value="RevokeRefreshToken"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="refreshTokensTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colClient}"/></Column>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRevocationReason}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colIssuedAt}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colExpiresAt}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{clientId}" text="{id}"/>
+                  <Text text="{userId}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{path: 'revocationReason', formatter: '.formatter.enumText'}"/>
+                  <Text text="{issuedAt}"/>
+                  <Text text="{expiresAt}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Authorization codes ───────────────────────────────── -->
+          <IconTabFilter key="codes" icon="sap-icon://visits" text="{i18n>tabCodes}">
+            <Table id="codesTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/AuthorizationCodes', parameters: {$orderby: 'issuedAt desc'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabCodes}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="codesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colClient}"/></Column>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPkce}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colRedirectUri}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colExpiresAt}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{clientId}" text="{id}"/>
+                  <Text text="{userId}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{= ${codeChallengeMethod} || '–' }"/>
+                  <Text text="{redirectUri}" wrapping="false"/>
+                  <Text text="{expiresAt}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Brandings ─────────────────────────────────────────── -->
+          <IconTabFilter key="brandings" icon="sap-icon://palette" text="{i18n>tabBrandings}">
+            <Table id="brandingsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/BrandingConfigs', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabBrandings}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="branding"/></customData></Button>
+                  <Button text="{i18n>makeDefault}" icon="sap-icon://favorite" press=".onMakeDefault"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="brandingsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colPageTitle}"/></Column>
+                <Column><Text text="{i18n>colColors}"/></Column>
+                <Column><Text text="{i18n>colDefault}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colClients}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{pageTitle}"/>
+                  <HBox>
+                    <core:Icon src="sap-icon://color-fill" color="{path: 'primaryColor', formatter: '.formatter.swatch'}" tooltip="{primaryColor}" class="sapUiTinyMarginEnd"/>
+                    <core:Icon src="sap-icon://color-fill" color="{path: 'secondaryColor', formatter: '.formatter.swatch'}" tooltip="{secondaryColor}"/>
+                  </HBox>
+                  <core:Icon src="sap-icon://favorite" visible="{isDefault}" color="Critical"/>
+                  <ObjectNumber number="{clientCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

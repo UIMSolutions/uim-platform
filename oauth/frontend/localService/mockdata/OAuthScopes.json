@@ -1,0 +1,80 @@
+[
+  {
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "orders.read",
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "orders.read",
+    "applicationId": "orders",
+    "description": "Read sales orders",
+    "clientCount": 4,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "orders.write",
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "orders.write",
+    "applicationId": "orders",
+    "description": "Create and change sales orders",
+    "clientCount": 1,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "billing.read",
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "billing.read",
+    "applicationId": "billing",
+    "description": "Read invoices",
+    "clientCount": 1,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "billing.admin",
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "billing.admin",
+    "applicationId": "billing",
+    "description": "Administrate billing",
+    "clientCount": 1,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "openid",
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "openid",
+    "applicationId": "profile",
+    "description": "Sign the user in",
+    "clientCount": 2,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "profile",
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "profile",
+    "applicationId": "profile",
+    "description": "Read the user profile",
+    "clientCount": 2,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  }
+]

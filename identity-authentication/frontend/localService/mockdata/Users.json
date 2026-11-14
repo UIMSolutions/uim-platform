@@ -1,0 +1,12 @@
+[
+  { "id": "u-0001", "tenantId": "default", "userName": "jane.doe", "email": "jane.doe@example.com", "firstName": "Jane",
+    "lastName": "Doe", "displayName": "Jane Doe", "status": "active", "mfaType": "totp", "phoneNumber": "",
+    "externalIdpId": "", "globalUserId": "g-0001", "groupCount": 2, "failedLoginAttempts": 0,
+    "lastLoginAt": "2026-11-10T07:30:00Z", "passwordChangedAt": "2026-10-01T08:00:00Z", "password": null,
+    "createdBy": "admin", "createdAt": "2026-09-01T08:00:00Z", "updatedBy": "admin", "updatedAt": "2026-11-10T07:30:00Z" },
+  { "id": "u-0002", "tenantId": "default", "userName": "max.muster", "email": "max.muster@example.com", "firstName": "Max",
+    "lastName": "Muster", "displayName": "Max Muster", "status": "locked", "mfaType": "none", "phoneNumber": "+49 30 1234",
+    "externalIdpId": "", "globalUserId": "g-0002", "groupCount": 1, "failedLoginAttempts": 5,
+    "lastLoginAt": "2026-11-08T16:12:00Z", "passwordChangedAt": "2026-09-01T08:00:00Z", "password": null,
+    "createdBy": "admin", "createdAt": "2026-09-01T08:00:00Z", "updatedBy": "", "updatedAt": "2026-11-09T09:00:00Z" }
+]

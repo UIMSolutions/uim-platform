@@ -1,0 +1,21 @@
+[
+  {
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "corporate",
+    "backgroundUrl": "",
+    "customCss": "",
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "Corporate",
+    "logoUrl": "",
+    "primaryColor": "#0a6ed1",
+    "secondaryColor": "#354a5f",
+    "footerText": "© ACME Corp. — Imprint · Privacy",
+    "description": "Default login page branding",
+    "pageTitle": "ACME Sign-in",
+    "isDefault": true,
+    "clientCount": 0,
+    "tenantId": "default",
+    "updatedBy": "cli"
+  }
+]

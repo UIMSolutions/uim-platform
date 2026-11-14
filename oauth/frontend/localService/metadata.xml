@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.oauth" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="OAuthClient">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="clientType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="redirectUris" Type="Collection(Edm.String)"/>
+        <Property Name="allowedScopes" Type="Collection(Edm.String)"/>
+        <Property Name="grantTypes" Type="Collection(Edm.String)"/>
+        <Property Name="accessTokenValidity" Type="Edm.Int32"/>
+        <Property Name="refreshTokenValidity" Type="Edm.Int32"/>
+        <Property Name="contacts" Type="Collection(Edm.String)"/>
+        <Property Name="brandingId" Type="Edm.String"/>
+        <Property Name="hasSecret" Type="Edm.Boolean"/>
+        <Property Name="secretRotatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="activeTokens" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="OAuthScope">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="clientCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="AccessToken">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="grantType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="issuedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="revokedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="revocationReason" Type="Edm.String"/>
+        <Property Name="refreshTokenId" Type="Edm.String"/>
+        <Property Name="authorizationCodeId" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="RefreshToken">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="accessTokenId" Type="Edm.String"/>
+        <Property Name="replacedById" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="issuedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="revokedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="revocationReason" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="AuthorizationCode">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="redirectUri" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="codeChallengeMethod" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="issuedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="usedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </EntityType>
+      <EntityType Name="BrandingConfig">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="logoUrl" Type="Edm.String"/>
+        <Property Name="backgroundUrl" Type="Edm.String"/>
+        <Property Name="primaryColor" Type="Edm.String"/>
+        <Property Name="secondaryColor" Type="Edm.String"/>
+        <Property Name="pageTitle" Type="Edm.String"/>
+        <Property Name="footerText" Type="Edm.String"/>
+        <Property Name="customCss" Type="Edm.String"/>
+        <Property Name="isDefault" Type="Edm.Boolean"/>
+        <Property Name="clientCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="clients" Type="Edm.Int32"/>
+        <Property Name="activeClients" Type="Edm.Int32"/>
+        <Property Name="blockedClients" Type="Edm.Int32"/>
+        <Property Name="publicClients" Type="Edm.Int32"/>
+        <Property Name="scopes" Type="Edm.Int32"/>
+        <Property Name="activeAccessTokens" Type="Edm.Int32"/>
+        <Property Name="expiredAccessTokens" Type="Edm.Int32"/>
+        <Property Name="revokedAccessTokens" Type="Edm.Int32"/>
+        <Property Name="activeRefreshTokens" Type="Edm.Int32"/>
+        <Property Name="pendingAuthorizationCodes" Type="Edm.Int32"/>
+        <Property Name="brandings" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="ClientSecretResult">
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="secretRotatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="revokedTokens" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="RevocationResult">
+        <Property Name="accessTokens" Type="Edm.Int32"/>
+        <Property Name="refreshTokens" Type="Edm.Int32"/>
+        <Property Name="codes" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="TokenResult">
+        <Property Name="accessToken" Type="Edm.String"/>
+        <Property Name="tokenType" Type="Edm.String"/>
+        <Property Name="expiresIn" Type="Edm.Int32"/>
+        <Property Name="refreshToken" Type="Edm.String"/>
+        <Property Name="scope" Type="Edm.String"/>
+        <Property Name="jti" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="IntrospectionResult">
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="tokenType" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="scope" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="issuedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="jti" Type="Edm.String"/>
+      </ComplexType>
+      <Action Name="RotateClientSecret" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.oauth.ClientSecretResult"/>
+      </Action>
+      <Action Name="RevokeClientTokens" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.oauth.RevocationResult"/>
+      </Action>
+      <Action Name="RevokeAccessToken" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.oauth.RevocationResult"/>
+      </Action>
+      <Action Name="RevokeRefreshToken" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.oauth.RevocationResult"/>
+      </Action>
+      <Action Name="RequestClientToken" IsBound="false">
+        <Parameter Name="clientId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="clientSecret" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="scope" Type="Edm.String"/>
+        <ReturnType Type="uim.oauth.TokenResult"/>
+      </Action>
+      <Action Name="IntrospectToken" IsBound="false">
+        <Parameter Name="token" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="tokenTypeHint" Type="Edm.String"/>
+        <ReturnType Type="uim.oauth.IntrospectionResult"/>
+      </Action>
+      <Action Name="PurgeExpired" IsBound="false">
+        <ReturnType Type="uim.oauth.RevocationResult"/>
+      </Action>
+      <EntityContainer Name="OAuthService">
+        <EntitySet Name="OAuthClients" EntityType="uim.oauth.OAuthClient"/>
+        <EntitySet Name="OAuthScopes" EntityType="uim.oauth.OAuthScope"/>
+        <EntitySet Name="AccessTokens" EntityType="uim.oauth.AccessToken"/>
+        <EntitySet Name="RefreshTokens" EntityType="uim.oauth.RefreshToken"/>
+        <EntitySet Name="AuthorizationCodes" EntityType="uim.oauth.AuthorizationCode"/>
+        <EntitySet Name="BrandingConfigs" EntityType="uim.oauth.BrandingConfig"/>
+        <Singleton Name="Statistics" Type="uim.oauth.Statistic"/>
+        <ActionImport Name="RotateClientSecret" Action="uim.oauth.RotateClientSecret"/>
+        <ActionImport Name="RevokeClientTokens" Action="uim.oauth.RevokeClientTokens"/>
+        <ActionImport Name="RevokeAccessToken" Action="uim.oauth.RevokeAccessToken"/>
+        <ActionImport Name="RevokeRefreshToken" Action="uim.oauth.RevokeRefreshToken"/>
+        <ActionImport Name="RequestClientToken" Action="uim.oauth.RequestClientToken"/>
+        <ActionImport Name="IntrospectToken" Action="uim.oauth.IntrospectToken"/>
+        <ActionImport Name="PurgeExpired" Action="uim.oauth.PurgeExpired"/>
+      </EntityContainer>
+      <Annotations Target="uim.oauth.ClientSecretResult/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.oauth.ClientSecretResult/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.oauth.ClientSecretResult/clientSecret"><Annotation Term="Common.Label" String="Client Secret"/></Annotations>
+      <Annotations Target="uim.oauth.ClientSecretResult/secretRotatedAt"><Annotation Term="Common.Label" String="Rotated At"/></Annotations>
+      <Annotations Target="uim.oauth.ClientSecretResult/revokedTokens"><Annotation Term="Common.Label" String="Revoked Tokens"/></Annotations>
+      <Annotations Target="uim.oauth.RevocationResult/accessTokens"><Annotation Term="Common.Label" String="Access Tokens"/></Annotations>
+      <Annotations Target="uim.oauth.RevocationResult/refreshTokens"><Annotation Term="Common.Label" String="Refresh Tokens"/></Annotations>
+      <Annotations Target="uim.oauth.RevocationResult/codes"><Annotation Term="Common.Label" String="Authorization Codes"/></Annotations>
+      <Annotations Target="uim.oauth.TokenResult/accessToken"><Annotation Term="Common.Label" String="Access Token"/></Annotations>
+      <Annotations Target="uim.oauth.TokenResult/tokenType"><Annotation Term="Common.Label" String="Token Type"/></Annotations>
+      <Annotations Target="uim.oauth.TokenResult/expiresIn"><Annotation Term="Common.Label" String="Expires In (s)"/></Annotations>
+      <Annotations Target="uim.oauth.TokenResult/refreshToken"><Annotation Term="Common.Label" String="Refresh Token"/></Annotations>
+      <Annotations Target="uim.oauth.TokenResult/scope"><Annotation Term="Common.Label" String="Scope"/></Annotations>
+      <Annotations Target="uim.oauth.TokenResult/jti"><Annotation Term="Common.Label" String="Token ID"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/tokenType"><Annotation Term="Common.Label" String="Token Type"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/userId"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/scope"><Annotation Term="Common.Label" String="Scope"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/issuedAt"><Annotation Term="Common.Label" String="Issued At"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.oauth.IntrospectionResult/jti"><Annotation Term="Common.Label" String="Token ID"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/clientId"><Annotation Term="Common.Label" String="Client ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/clientType"><Annotation Term="Common.Label" String="Client Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/redirectUris"><Annotation Term="Common.Label" String="Redirect URIs"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/allowedScopes"><Annotation Term="Common.Label" String="Allowed Scopes"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/grantTypes"><Annotation Term="Common.Label" String="Grant Types"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/accessTokenValidity"><Annotation Term="Common.Label" String="Access Token Validity (s)"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/refreshTokenValidity"><Annotation Term="Common.Label" String="Refresh Token Validity (s)"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/contacts"><Annotation Term="Common.Label" String="Contacts"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/brandingId"><Annotation Term="Common.Label" String="Branding"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/hasSecret"><Annotation Term="Common.Label" String="Has Secret"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/secretRotatedAt"><Annotation Term="Common.Label" String="Secret Rotated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/clientSecret"><Annotation Term="Common.Label" String="Client Secret (shown once)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient/activeTokens"><Annotation Term="Common.Label" String="Active Tokens"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthClient">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="OAuth Client"/><PropertyValue Property="TypeNamePlural" String="OAuth Clients"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeTokens"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>clientType</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>brandingId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.OAuthService/OAuthClients">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/applicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/name"><Annotation Term="Common.Label" String="Scope"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope/clientCount"><Annotation Term="Common.Label" String="Clients"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.OAuthScope">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Scope"/><PropertyValue Property="TypeNamePlural" String="Scopes"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>applicationId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.OAuthService/OAuthScopes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.AccessToken/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/userId"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/grantType"><Annotation Term="Common.Label" String="Grant Type"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/issuedAt"><Annotation Term="Common.Label" String="Issued At"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/revokedAt"><Annotation Term="Common.Label" String="Revoked At"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/revocationReason"><Annotation Term="Common.Label" String="Revocation Reason"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/refreshTokenId"><Annotation Term="Common.Label" String="Refresh Token"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken/authorizationCodeId"><Annotation Term="Common.Label" String="Authorization Code"/></Annotations>
+      <Annotations Target="uim.oauth.AccessToken">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Access Token"/><PropertyValue Property="TypeNamePlural" String="Access Tokens"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="grantType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="issuedAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="expiresAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>clientId</PropertyPath><PropertyPath>userId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>grantType</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.OAuthService/AccessTokens">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/userId"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/accessTokenId"><Annotation Term="Common.Label" String="Access Token"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/replacedById"><Annotation Term="Common.Label" String="Replaced By"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/issuedAt"><Annotation Term="Common.Label" String="Issued At"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/revokedAt"><Annotation Term="Common.Label" String="Revoked At"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken/revocationReason"><Annotation Term="Common.Label" String="Revocation Reason"/></Annotations>
+      <Annotations Target="uim.oauth.RefreshToken">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Refresh Token"/><PropertyValue Property="TypeNamePlural" String="Refresh Tokens"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="issuedAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="expiresAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="revocationReason"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>clientId</PropertyPath><PropertyPath>userId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.OAuthService/RefreshTokens">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/userId"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/redirectUri"><Annotation Term="Common.Label" String="Redirect URI"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/codeChallengeMethod"><Annotation Term="Common.Label" String="PKCE Method"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/issuedAt"><Annotation Term="Common.Label" String="Issued At"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode/usedAt"><Annotation Term="Common.Label" String="Used At"/></Annotations>
+      <Annotations Target="uim.oauth.AuthorizationCode">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Authorization Code"/><PropertyValue Property="TypeNamePlural" String="Authorization Codes"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="codeChallengeMethod"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="expiresAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>clientId</PropertyPath><PropertyPath>userId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.OAuthService/AuthorizationCodes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/logoUrl"><Annotation Term="Common.Label" String="Logo URL"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/backgroundUrl"><Annotation Term="Common.Label" String="Background URL"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/primaryColor"><Annotation Term="Common.Label" String="Primary Color"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/secondaryColor"><Annotation Term="Common.Label" String="Secondary Color"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/pageTitle"><Annotation Term="Common.Label" String="Page Title"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/footerText"><Annotation Term="Common.Label" String="Footer Text"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/customCss"><Annotation Term="Common.Label" String="Custom CSS"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/isDefault"><Annotation Term="Common.Label" String="Default"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig/clientCount"><Annotation Term="Common.Label" String="Clients"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.oauth.BrandingConfig">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Branding"/><PropertyValue Property="TypeNamePlural" String="Brandings"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="pageTitle"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="pageTitle"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="primaryColor"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="isDefault"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>isDefault</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.OAuthService/BrandingConfigs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/clients"><Annotation Term="Common.Label" String="Clients"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/activeClients"><Annotation Term="Common.Label" String="Active Clients"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/blockedClients"><Annotation Term="Common.Label" String="Blocked Clients"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/publicClients"><Annotation Term="Common.Label" String="Public Clients"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/activeAccessTokens"><Annotation Term="Common.Label" String="Active Access Tokens"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/expiredAccessTokens"><Annotation Term="Common.Label" String="Expired Access Tokens"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/revokedAccessTokens"><Annotation Term="Common.Label" String="Revoked Access Tokens"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/activeRefreshTokens"><Annotation Term="Common.Label" String="Active Refresh Tokens"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/pendingAuthorizationCodes"><Annotation Term="Common.Label" String="Pending Codes"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic/brandings"><Annotation Term="Common.Label" String="Brandings"/></Annotations>
+      <Annotations Target="uim.oauth.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clients"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeClients"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="blockedClients"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="publicClients"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopes"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeAccessTokens"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="expiredAccessTokens"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="revokedAccessTokens"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.oauth.OAuthService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="OAuth 2.0"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

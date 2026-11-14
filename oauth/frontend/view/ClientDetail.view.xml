@@ -1,0 +1,82 @@
+<mvc:View controllerName="uim.oauth.controller.ClientDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+  height="100%">
+  <Page id="clientPage" title="{name}" showNavButton="true" navButtonPress=".onNavBack">
+    <headerContent>
+      <Button text="{i18n>rotateSecret}" icon="sap-icon://synchronize" press=".onRotateSecret" enabled="{hasSecret}"/>
+      <Button text="{i18n>revokeTokens}" icon="sap-icon://cancel" press=".onRevokeTokens"/>
+    </headerContent>
+    <content>
+      <ObjectHeader title="{name}" number="{activeTokens}" numberUnit="{i18n>colActiveTokens}" responsive="true">
+        <attributes>
+          <ObjectAttribute title="{i18n>colClientId}" text="{clientId}"/>
+          <ObjectAttribute title="{i18n>colClientType}" text="{path: 'clientType', formatter: '.formatter.enumText'}"/>
+          <ObjectAttribute title="{i18n>colSecretRotatedAt}" text="{= ${hasSecret} ? ${secretRotatedAt} : '–' }"/>
+          <ObjectAttribute title="{i18n>colCreatedBy}" text="{createdBy}"/>
+        </attributes>
+        <statuses>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+            icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+        </statuses>
+      </ObjectHeader>
+
+      <form:SimpleForm id="clientForm" editable="true" layout="ResponsiveGridLayout" title="{i18n>settings}"
+        labelSpanL="3" labelSpanM="4" columnsL="2" columnsXL="2">
+        <form:content>
+          <core:Title text="{i18n>general}"/>
+          <Label text="{i18n>colName}" required="true"/>
+          <Input value="{name}"/>
+          <Label text="{i18n>colDescription}"/>
+          <Input value="{description}"/>
+          <Label text="{i18n>colStatus}"/>
+          <Select selectedKey="{status}">
+            <core:Item key="active" text="{i18n>statusActive}"/>
+            <core:Item key="inactive" text="{i18n>statusInactive}"/>
+            <core:Item key="blocked" text="{i18n>statusBlocked}"/>
+          </Select>
+          <Label text="{i18n>colBranding}"/>
+          <Select selectedKey="{brandingId}" forceSelection="false" items="{path: '/BrandingConfigs', parameters: {$orderby: 'name'}, templateShareable: false}">
+            <core:Item key="{id}" text="{name}"/>
+          </Select>
+          <Label text="{i18n>colContacts}"/>
+          <TextArea value="{view>/edit/contacts}" rows="2" placeholder="{i18n>onePerLine}"/>
+
+          <core:Title text="{i18n>protocol}"/>
+          <Label text="{i18n>colGrantTypes}"/>
+          <MultiComboBox selectedKeys="{view>/edit/grantTypes}">
+            <core:Item key="authorization_code" text="Authorization Code"/>
+            <core:Item key="client_credentials" text="Client Credentials" enabled="{= ${clientType} === 'confidential' }"/>
+            <core:Item key="refresh_token" text="Refresh Token"/>
+          </MultiComboBox>
+          <Label text="{i18n>colAllowedScopes}"/>
+          <MultiComboBox selectedKeys="{view>/edit/allowedScopes}" items="{path: '/OAuthScopes', parameters: {$orderby: 'name'}, templateShareable: false}">
+            <core:Item key="{name}" text="{name}" additionalText="{applicationId}"/>
+          </MultiComboBox>
+          <Label text="{i18n>colRedirectUris}"/>
+          <TextArea value="{view>/edit/redirectUris}" rows="3" placeholder="https://app.example.com/callback"/>
+          <Label text="{i18n>colAccessTokenValidity}"/>
+          <StepInput value="{accessTokenValidity}" min="60" max="86400" step="60" largerStep="60" description="{path: 'accessTokenValidity', targetType: 'int', formatter: '.formatter.duration'}" width="100%"/>
+          <Label text="{i18n>colRefreshTokenValidity}"/>
+          <StepInput value="{refreshTokenValidity}" min="60" max="31536000" step="60" largerStep="60" description="{path: 'refreshTokenValidity', targetType: 'int', formatter: '.formatter.duration'}" width="100%"/>
+        </form:content>
+      </form:SimpleForm>
+
+      <Table id="clientTokensTable" headerText="{i18n>tabAccessTokens}" growing="true" noDataText="{i18n>noData}" class="sapUiResponsiveContentPadding">
+        <columns>
+          <Column><Text text="{i18n>colUser}"/></Column>
+          <Column><Text text="{i18n>colGrantType}"/></Column>
+          <Column><Text text="{i18n>colStatus}"/></Column>
+          <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colScopes}"/></Column>
+          <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colExpiresAt}"/></Column>
+        </columns>
+      </Table>
+    </content>
+    <footer>
+      <OverflowToolbar>
+        <ToolbarSpacer/>
+        <Button text="{i18n>save}" type="Emphasized" press=".onSave"/>
+        <Button text="{i18n>cancel}" press=".onCancel"/>
+      </OverflowToolbar>
+    </footer>
+  </Page>
+</mvc:View>

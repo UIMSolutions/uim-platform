@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.ias" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="userName" Type="Edm.String"/>
+        <Property Name="email" Type="Edm.String"/>
+        <Property Name="firstName" Type="Edm.String"/>
+        <Property Name="lastName" Type="Edm.String"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="mfaType" Type="Edm.String"/>
+        <Property Name="phoneNumber" Type="Edm.String"/>
+        <Property Name="externalIdpId" Type="Edm.String"/>
+        <Property Name="globalUserId" Type="Edm.String"/>
+        <Property Name="groupCount" Type="Edm.Int32"/>
+        <Property Name="failedLoginAttempts" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="passwordChangedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="password" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Group">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="memberCount" Type="Edm.Int32"/>
+        <Property Name="memberUserIds" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Application">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="protocol" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="redirectUris" Type="Edm.String"/>
+        <Property Name="allowedScopes" Type="Edm.String"/>
+        <Property Name="samlEntityId" Type="Edm.String"/>
+        <Property Name="samlAcsUrl" Type="Edm.String"/>
+        <Property Name="samlMetadataUrl" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Policy">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="rules" Type="Edm.String"/>
+        <Property Name="applicationIds" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="RiskRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="conditions" Type="Edm.String"/>
+        <Property Name="riskLevel" Type="Edm.String"/>
+        <Property Name="requiredMfa" Type="Edm.String"/>
+        <Property Name="denyAccess" Type="Edm.Boolean"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="IdentityProvider">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="idpType" Type="Edm.String"/>
+        <Property Name="metadataUrl" Type="Edm.String"/>
+        <Property Name="authorizationEndpoint" Type="Edm.String"/>
+        <Property Name="tokenEndpoint" Type="Edm.String"/>
+        <Property Name="userInfoEndpoint" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="domainHints" Type="Edm.String"/>
+        <Property Name="isDefault" Type="Edm.Boolean"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Session">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String"/>
+        <Property Name="authMethod" Type="Edm.String"/>
+        <Property Name="mfaUsed" Type="Edm.String"/>
+        <Property Name="ipAddress" Type="Edm.String"/>
+        <Property Name="userAgent" Type="Edm.String"/>
+        <Property Name="riskLevel" Type="Edm.String"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="revoked" Type="Edm.Boolean"/>
+        <Property Name="state" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Token">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String"/>
+        <Property Name="sessionId" Type="Edm.String"/>
+        <Property Name="tokenType" Type="Edm.String"/>
+        <Property Name="scopes" Type="Edm.String"/>
+        <Property Name="issuedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="revoked" Type="Edm.Boolean"/>
+        <Property Name="state" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="users" Type="Edm.Int32"/>
+        <Property Name="activeUsers" Type="Edm.Int32"/>
+        <Property Name="lockedUsers" Type="Edm.Int32"/>
+        <Property Name="inactiveUsers" Type="Edm.Int32"/>
+        <Property Name="pendingUsers" Type="Edm.Int32"/>
+        <Property Name="mfaUsers" Type="Edm.Int32"/>
+        <Property Name="mfaCoverage" Type="Edm.Int32"/>
+        <Property Name="usersWithFailedLogins" Type="Edm.Int32"/>
+        <Property Name="groups" Type="Edm.Int32"/>
+        <Property Name="applications" Type="Edm.Int32"/>
+        <Property Name="activeApplications" Type="Edm.Int32"/>
+        <Property Name="policies" Type="Edm.Int32"/>
+        <Property Name="riskRules" Type="Edm.Int32"/>
+        <Property Name="identityProviders" Type="Edm.Int32"/>
+        <Property Name="sessions" Type="Edm.Int32"/>
+        <Property Name="activeSessions" Type="Edm.Int32"/>
+        <Property Name="tokens" Type="Edm.Int32"/>
+        <Property Name="activeTokens" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <ComplexType Name="MfaEnrollment">
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="mfaType" Type="Edm.String"/>
+        <Property Name="secret" Type="Edm.String"/>
+        <Property Name="provisioningUri" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="AccessDecision">
+        <Property Name="granted" Type="Edm.Boolean"/>
+        <Property Name="denyingPolicies" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="RiskAssessment">
+        <Property Name="riskLevel" Type="Edm.String"/>
+        <Property Name="requiredMfa" Type="Edm.String"/>
+        <Property Name="denied" Type="Edm.Boolean"/>
+        <Property Name="triggeredRules" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="PurgeResult">
+        <Property Name="sessions" Type="Edm.Int32"/>
+        <Property Name="tokens" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="SetUserStatus" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="status" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ias.User"/>
+      </Action>
+      <Action Name="ResetPassword" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="newPassword" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ias.User"/>
+      </Action>
+      <Action Name="DisableMfa" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ias.User"/>
+      </Action>
+      <Action Name="RevokeUserSessions" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ias.User"/>
+      </Action>
+      <Action Name="EnrollMfa" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="mfaType" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ias.MfaEnrollment"/>
+      </Action>
+      <Action Name="AddGroupMember" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="userId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ias.Group"/>
+      </Action>
+      <Action Name="RemoveGroupMember" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="userId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ias.Group"/>
+      </Action>
+      <Action Name="RotateClientSecret" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ias.Application"/>
+      </Action>
+      <Action Name="EvaluateAccess" IsBound="false">
+        <Parameter Name="applicationId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="userId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="ipAddress" Type="Edm.String"/>
+        <Parameter Name="authMethod" Type="Edm.String"/>
+        <Parameter Name="mfaUsed" Type="Edm.Boolean"/>
+        <ReturnType Type="uim.ias.AccessDecision"/>
+      </Action>
+      <Action Name="AssessRisk" IsBound="false">
+        <Parameter Name="userId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="ipAddress" Type="Edm.String"/>
+        <Parameter Name="userAgent" Type="Edm.String"/>
+        <ReturnType Type="uim.ias.RiskAssessment"/>
+      </Action>
+      <Action Name="PurgeExpired" IsBound="false">
+        <ReturnType Type="uim.ias.PurgeResult"/>
+      </Action>
+      <EntityContainer Name="IdentityAuthenticationService">
+        <EntitySet Name="Users" EntityType="uim.ias.User"/>
+        <EntitySet Name="Groups" EntityType="uim.ias.Group"/>
+        <EntitySet Name="Applications" EntityType="uim.ias.Application"/>
+        <EntitySet Name="Policies" EntityType="uim.ias.Policy"/>
+        <EntitySet Name="RiskRules" EntityType="uim.ias.RiskRule"/>
+        <EntitySet Name="IdentityProviders" EntityType="uim.ias.IdentityProvider"/>
+        <EntitySet Name="Sessions" EntityType="uim.ias.Session"/>
+        <EntitySet Name="Tokens" EntityType="uim.ias.Token"/>
+        <Singleton Name="Statistics" Type="uim.ias.Statistic"/>
+        <ActionImport Name="SetUserStatus" Action="uim.ias.SetUserStatus" EntitySet="Users"/>
+        <ActionImport Name="ResetPassword" Action="uim.ias.ResetPassword" EntitySet="Users"/>
+        <ActionImport Name="DisableMfa" Action="uim.ias.DisableMfa" EntitySet="Users"/>
+        <ActionImport Name="RevokeUserSessions" Action="uim.ias.RevokeUserSessions" EntitySet="Users"/>
+        <ActionImport Name="EnrollMfa" Action="uim.ias.EnrollMfa"/>
+        <ActionImport Name="AddGroupMember" Action="uim.ias.AddGroupMember" EntitySet="Groups"/>
+        <ActionImport Name="RemoveGroupMember" Action="uim.ias.RemoveGroupMember" EntitySet="Groups"/>
+        <ActionImport Name="RotateClientSecret" Action="uim.ias.RotateClientSecret" EntitySet="Applications"/>
+        <ActionImport Name="EvaluateAccess" Action="uim.ias.EvaluateAccess"/>
+        <ActionImport Name="AssessRisk" Action="uim.ias.AssessRisk"/>
+        <ActionImport Name="PurgeExpired" Action="uim.ias.PurgeExpired"/>
+      </EntityContainer>
+      <Annotations Target="uim.ias.User/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.ias.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.User/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.ias.User/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.ias.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.ias.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.ias.User/userName"><Annotation Term="Common.Label" String="User Name"/></Annotations>
+      <Annotations Target="uim.ias.User/email"><Annotation Term="Common.Label" String="E-Mail"/></Annotations>
+      <Annotations Target="uim.ias.User/firstName"><Annotation Term="Common.Label" String="First Name"/></Annotations>
+      <Annotations Target="uim.ias.User/lastName"><Annotation Term="Common.Label" String="Last Name"/></Annotations>
+      <Annotations Target="uim.ias.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ias.User/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.ias.User/mfaType"><Annotation Term="Common.Label" String="Second Factor"/></Annotations>
+      <Annotations Target="uim.ias.User/phoneNumber"><Annotation Term="Common.Label" String="Phone"/></Annotations>
+      <Annotations Target="uim.ias.User/externalIdpId"><Annotation Term="Common.Label" String="External IdP"/></Annotations>
+      <Annotations Target="uim.ias.User/globalUserId"><Annotation Term="Common.Label" String="Global User ID"/></Annotations>
+      <Annotations Target="uim.ias.User/groupCount"><Annotation Term="Common.Label" String="Groups"/></Annotations>
+      <Annotations Target="uim.ias.User/failedLoginAttempts"><Annotation Term="Common.Label" String="Failed Logins"/></Annotations>
+      <Annotations Target="uim.ias.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/></Annotations>
+      <Annotations Target="uim.ias.User/passwordChangedAt"><Annotation Term="Common.Label" String="Password Changed"/></Annotations>
+      <Annotations Target="uim.ias.User/password"><Annotation Term="Common.Label" String="Initial Password"/></Annotations>
+      <Annotations Target="uim.ias.IdentityAuthenticationService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ias.Group/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.ias.Group/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.Group/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.ias.Group/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.ias.Group/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.ias.Group/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.ias.Group/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ias.Group/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ias.Group/memberCount"><Annotation Term="Common.Label" String="Members"/></Annotations>
+      <Annotations Target="uim.ias.Group/memberUserIds"><Annotation Term="Common.Label" String="Member IDs"/></Annotations>
+      <Annotations Target="uim.ias.IdentityAuthenticationService/Groups">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ias.Application/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.ias.Application/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.Application/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.ias.Application/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.ias.Application/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.ias.Application/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.ias.Application/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ias.Application/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ias.Application/protocol"><Annotation Term="Common.Label" String="Protocol"/></Annotations>
+      <Annotations Target="uim.ias.Application/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.ias.Application/clientSecret"><Annotation Term="Common.Label" String="Client Secret"/></Annotations>
+      <Annotations Target="uim.ias.Application/redirectUris"><Annotation Term="Common.Label" String="Redirect URIs"/></Annotations>
+      <Annotations Target="uim.ias.Application/allowedScopes"><Annotation Term="Common.Label" String="Allowed Scopes"/></Annotations>
+      <Annotations Target="uim.ias.Application/samlEntityId"><Annotation Term="Common.Label" String="SAML Entity ID"/></Annotations>
+      <Annotations Target="uim.ias.Application/samlAcsUrl"><Annotation Term="Common.Label" String="SAML ACS URL"/></Annotations>
+      <Annotations Target="uim.ias.Application/samlMetadataUrl"><Annotation Term="Common.Label" String="SAML Metadata URL"/></Annotations>
+      <Annotations Target="uim.ias.Application/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.ias.IdentityAuthenticationService/Applications">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ias.Policy/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.ias.Policy/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.Policy/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.ias.Policy/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.ias.Policy/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.ias.Policy/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.ias.Policy/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ias.Policy/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ias.Policy/rules"><Annotation Term="Common.Label" String="Rules"/></Annotations>
+      <Annotations Target="uim.ias.Policy/applicationIds"><Annotation Term="Common.Label" String="Applications"/></Annotations>
+      <Annotations Target="uim.ias.Policy/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.ias.IdentityAuthenticationService/Policies">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ias.RiskRule/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/conditions"><Annotation Term="Common.Label" String="Conditions"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/riskLevel"><Annotation Term="Common.Label" String="Risk Level"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/requiredMfa"><Annotation Term="Common.Label" String="Required MFA"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/denyAccess"><Annotation Term="Common.Label" String="Deny Access"/></Annotations>
+      <Annotations Target="uim.ias.RiskRule/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.ias.IdentityAuthenticationService/RiskRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/idpType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/metadataUrl"><Annotation Term="Common.Label" String="Metadata URL"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/authorizationEndpoint"><Annotation Term="Common.Label" String="Authorization Endpoint"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/tokenEndpoint"><Annotation Term="Common.Label" String="Token Endpoint"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/userInfoEndpoint"><Annotation Term="Common.Label" String="UserInfo Endpoint"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/clientSecret"><Annotation Term="Common.Label" String="Client Secret"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/domainHints"><Annotation Term="Common.Label" String="E-Mail Domains"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/isDefault"><Annotation Term="Common.Label" String="Default"/></Annotations>
+      <Annotations Target="uim.ias.IdentityProvider/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.ias.IdentityAuthenticationService/IdentityProviders">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ias.Session/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.ias.Session/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.Session/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.ias.Session/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.ias.Session/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.ias.Session/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.ias.Session/userId"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.ias.Session/applicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.ias.Session/authMethod"><Annotation Term="Common.Label" String="Authentication Method"/></Annotations>
+      <Annotations Target="uim.ias.Session/mfaUsed"><Annotation Term="Common.Label" String="Second Factor"/></Annotations>
+      <Annotations Target="uim.ias.Session/ipAddress"><Annotation Term="Common.Label" String="IP Address"/></Annotations>
+      <Annotations Target="uim.ias.Session/userAgent"><Annotation Term="Common.Label" String="User Agent"/></Annotations>
+      <Annotations Target="uim.ias.Session/riskLevel"><Annotation Term="Common.Label" String="Risk Level"/></Annotations>
+      <Annotations Target="uim.ias.Session/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.ias.Session/revoked"><Annotation Term="Common.Label" String="Revoked"/></Annotations>
+      <Annotations Target="uim.ias.Session/state"><Annotation Term="Common.Label" String="State"/></Annotations>
+      <Annotations Target="uim.ias.IdentityAuthenticationService/Sessions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ias.Token/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.ias.Token/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.Token/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.ias.Token/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.ias.Token/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.ias.Token/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.ias.Token/userId"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.ias.Token/applicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.ias.Token/sessionId"><Annotation Term="Common.Label" String="Session"/></Annotations>
+      <Annotations Target="uim.ias.Token/tokenType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.ias.Token/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.ias.Token/issuedAt"><Annotation Term="Common.Label" String="Issued At"/></Annotations>
+      <Annotations Target="uim.ias.Token/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.ias.Token/revoked"><Annotation Term="Common.Label" String="Revoked"/></Annotations>
+      <Annotations Target="uim.ias.Token/state"><Annotation Term="Common.Label" String="State"/></Annotations>
+      <Annotations Target="uim.ias.IdentityAuthenticationService/Tokens">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ias.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/users"><Annotation Term="Common.Label" String="Users"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/activeUsers"><Annotation Term="Common.Label" String="Active Users"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/lockedUsers"><Annotation Term="Common.Label" String="Locked Users"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/inactiveUsers"><Annotation Term="Common.Label" String="Inactive Users"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/pendingUsers"><Annotation Term="Common.Label" String="Pending Users"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/mfaUsers"><Annotation Term="Common.Label" String="Users with MFA"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/mfaCoverage"><Annotation Term="Common.Label" String="MFA Coverage (%)"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/usersWithFailedLogins"><Annotation Term="Common.Label" String="Users with Failed Logins"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/groups"><Annotation Term="Common.Label" String="Groups"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/applications"><Annotation Term="Common.Label" String="Applications"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/activeApplications"><Annotation Term="Common.Label" String="Active Applications"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/policies"><Annotation Term="Common.Label" String="Policies"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/riskRules"><Annotation Term="Common.Label" String="Risk Rules"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/identityProviders"><Annotation Term="Common.Label" String="Identity Providers"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/sessions"><Annotation Term="Common.Label" String="Sessions"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/activeSessions"><Annotation Term="Common.Label" String="Active Sessions"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/tokens"><Annotation Term="Common.Label" String="Tokens"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/activeTokens"><Annotation Term="Common.Label" String="Active Tokens"/></Annotations>
+      <Annotations Target="uim.ias.Statistic/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

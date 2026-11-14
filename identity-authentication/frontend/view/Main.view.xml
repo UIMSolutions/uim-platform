@@ -1,0 +1,404 @@
+<mvc:View
+  controllerName="uim.ias.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button text="{i18n>purgeExpired}" icon="sap-icon://delete" type="Transparent" press=".onPurge"/>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiUsers}"/>
+            <ObjectNumber number="{activeUsers} / {users}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLocked}"/>
+            <ObjectNumber number="{lockedUsers}" state="{= ${lockedUsers} > 0 ? 'Error' : 'Success' }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiMfaCoverage}"/>
+            <ObjectNumber number="{mfaCoverage}" unit="%" state="{= ${mfaCoverage} >= 80 ? 'Success' : 'Warning' }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiFailedLogins}"/>
+            <ObjectNumber number="{usersWithFailedLogins}" state="{= ${usersWithFailedLogins} > 0 ? 'Warning' : 'None' }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSessions}"/>
+            <ObjectNumber number="{activeSessions}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiTokens}"/>
+            <ObjectNumber number="{activeTokens}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLastLogin}"/>
+            <Text text="{path: 'lastLoginAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid id="overviewGrid" defaultSpan="XL3 L4 M6 S12" binding="{/Statistics}">
+              <GenericTile header="{i18n>tabUsers}" subheader="{i18n>kpiActive}" press=".onTilePress" app:tab="users">
+                <TileContent><NumericContent value="{activeUsers}" icon="sap-icon://person-placeholder" valueColor="Good" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiLocked}" subheader="{i18n>tabUsers}" press=".onTilePress" app:tab="users">
+                <TileContent><NumericContent value="{lockedUsers}" icon="sap-icon://locked" valueColor="Error" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiPending}" subheader="{i18n>tabUsers}" press=".onTilePress" app:tab="users">
+                <TileContent><NumericContent value="{pendingUsers}" icon="sap-icon://pending" valueColor="Critical" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiMfaCoverage}" subheader="{i18n>kpiMfaUsers}" press=".onTilePress" app:tab="users">
+                <TileContent><NumericContent value="{mfaCoverage}" scale="%" icon="sap-icon://shield"
+                  valueColor="{path: 'mfaCoverage', formatter: '.formatter.coverageColor'}" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabGroups}" press=".onTilePress" app:tab="groups">
+                <TileContent><NumericContent value="{groups}" icon="sap-icon://group" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabApps}" subheader="{i18n>kpiActive}" press=".onTilePress" app:tab="apps">
+                <TileContent><NumericContent value="{activeApplications}" icon="sap-icon://browse-folder" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabPolicies}" press=".onTilePress" app:tab="policies">
+                <TileContent><NumericContent value="{policies}" icon="sap-icon://permission" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabRiskRules}" press=".onTilePress" app:tab="risk">
+                <TileContent><NumericContent value="{riskRules}" icon="sap-icon://alert" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabIdps}" press=".onTilePress" app:tab="idps">
+                <TileContent><NumericContent value="{identityProviders}" icon="sap-icon://chain-link" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabSessions}" subheader="{i18n>kpiActive}" press=".onTilePress" app:tab="sessions">
+                <TileContent><NumericContent value="{activeSessions}" icon="sap-icon://journey-arrive" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabTokens}" subheader="{i18n>kpiActive}" press=".onTilePress" app:tab="tokens">
+                <TileContent><NumericContent value="{activeTokens}" icon="sap-icon://key" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <!-- ── Users ───────────────────────────────────────────── -->
+          <IconTabFilter key="users" icon="sap-icon://person-placeholder" text="{i18n>tabUsers}">
+            <Table id="userTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/Users', parameters: {$count: true, $orderby: 'userName'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabUsers}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="userTable"/>
+                  <Button text="{i18n>lock}" icon="sap-icon://locked" press=".onAction" app:table="userTable" app:action="SetUserStatus" app:status="locked" app:confirm="confirmLock"/>
+                  <Button text="{i18n>unlock}" icon="sap-icon://unlocked" press=".onAction" app:table="userTable" app:action="SetUserStatus" app:status="active"/>
+                  <Button text="{i18n>deactivate}" press=".onAction" app:table="userTable" app:action="SetUserStatus" app:status="inactive" app:confirm="confirmDeactivate"/>
+                  <Button text="{i18n>resetPassword}" icon="sap-icon://key" press=".onAction" app:table="userTable" app:action="ResetPassword" app:prompt="newPassword"/>
+                  <Button text="{i18n>enrollMfa}" icon="sap-icon://shield" press=".onAction" app:table="userTable" app:action="EnrollMfa" app:prompt="mfaType"/>
+                  <Button text="{i18n>disableMfa}" press=".onAction" app:table="userTable" app:action="DisableMfa" app:confirm="confirmDisableMfa"/>
+                  <Button text="{i18n>revokeSessions}" icon="sap-icon://log" press=".onAction" app:table="userTable" app:action="RevokeUserSessions"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="userTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colEmail}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMfa}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="{i18n>colGroups}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="{i18n>colFailed}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastLogin}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{displayName}" text="{userName}"/>
+                    <Text text="{email}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <ObjectStatus text="{path: 'mfaType', formatter: '.formatter.mfaText'}" icon="{path: 'mfaType', formatter: '.formatter.mfaIcon'}" state="Success"/>
+                    <Text text="{groupCount}"/>
+                    <ObjectStatus text="{failedLoginAttempts}" state="{path: 'failedLoginAttempts', formatter: '.formatter.failedState'}"/>
+                    <Text text="{path: 'lastLoginAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Groups ──────────────────────────────────────────── -->
+          <IconTabFilter key="groups" icon="sap-icon://group" text="{i18n>tabGroups}">
+            <Table id="groupTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/Groups', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabGroups}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="groupTable"/>
+                  <Button text="{i18n>addMember}" icon="sap-icon://add-employee" press=".onAction" app:table="groupTable" app:action="AddGroupMember" app:prompt="userId"/>
+                  <Button text="{i18n>removeMember}" press=".onAction" app:table="groupTable" app:action="RemoveGroupMember" app:prompt="userId"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="groupTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colMembers}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colChanged}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}"/>
+                    <Text text="{description}"/>
+                    <ObjectNumber number="{memberCount}"/>
+                    <Text text="{path: 'updatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Applications ────────────────────────────────────── -->
+          <IconTabFilter key="apps" icon="sap-icon://browse-folder" text="{i18n>tabApps}">
+            <Table id="appTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/Applications', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabApps}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="appTable"/>
+                  <Button text="{i18n>rotateSecret}" icon="sap-icon://synchronize" press=".onAction" app:table="appTable" app:action="RotateClientSecret" app:confirm="confirmRotate"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="appTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colProtocol}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colClientId}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colScopes}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colRedirectUris}"/></Column>
+                <Column><Text text="{i18n>colActive}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{protocol}"/>
+                    <Text text="{clientId}" wrapping="false"/>
+                    <Text text="{allowedScopes}"/>
+                    <Text text="{redirectUris}"/>
+                    <Switch state="{active}" enabled="false"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Policies ────────────────────────────────────────── -->
+          <IconTabFilter key="policies" icon="sap-icon://permission" text="{i18n>tabPolicies}">
+            <Table id="policyTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/Policies', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabPolicies}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="policyTable"/>
+                  <Button text="{i18n>evaluate}" icon="sap-icon://inspection" press=".onEvaluate"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="policyTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colRules}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colApplications}"/></Column>
+                <Column><Text text="{i18n>colActive}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{path: 'rules', formatter: '.formatter.rulesText'}"/>
+                    <Text text="{= ${applicationIds} ? ${applicationIds} : ${i18n>allApplications} }"/>
+                    <Switch state="{active}" enabled="false"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Risk rules ──────────────────────────────────────── -->
+          <IconTabFilter key="risk" icon="sap-icon://alert" text="{i18n>tabRiskRules}">
+            <Table id="riskTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/RiskRules', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRiskRules}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="riskTable"/>
+                  <Button text="{i18n>simulate}" icon="sap-icon://inspection" press=".onSimulate"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="riskTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colConditions}"/></Column>
+                <Column><Text text="{i18n>colRisk}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMfa}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDeny}"/></Column>
+                <Column><Text text="{i18n>colActive}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}"/>
+                    <Text text="{path: 'conditions', formatter: '.formatter.rulesText'}"/>
+                    <ObjectStatus text="{path: 'riskLevel', formatter: '.formatter.enumText'}" state="{path: 'riskLevel', formatter: '.formatter.statusState'}"/>
+                    <Text text="{path: 'requiredMfa', formatter: '.formatter.mfaText'}"/>
+                    <core:Icon src="{= ${denyAccess} ? 'sap-icon://decline' : '' }" color="Negative"/>
+                    <Switch state="{active}" enabled="false"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Identity providers ──────────────────────────────── -->
+          <IconTabFilter key="idps" icon="sap-icon://chain-link" text="{i18n>tabIdps}">
+            <Table id="idpTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/IdentityProviders', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabIdps}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="idpTable"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="idpTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDomains}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colEndpoint}"/></Column>
+                <Column><Text text="{i18n>colDefault}"/></Column>
+                <Column><Text text="{i18n>colActive}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{clientId}"/>
+                    <Text text="{path: 'idpType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{domainHints}"/>
+                    <Text text="{authorizationEndpoint}"/>
+                    <core:Icon src="{= ${isDefault} ? 'sap-icon://favorite' : '' }"/>
+                    <Switch state="{active}" enabled="false"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Sessions ────────────────────────────────────────── -->
+          <IconTabFilter key="sessions" icon="sap-icon://journey-arrive" text="{i18n>tabSessions}">
+            <Table id="sessionTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/Sessions', parameters: {$count: true, $orderby: 'createdAt desc'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSessions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>revoke}" icon="sap-icon://log" press=".onDelete" app:table="sessionTable" app:confirm="confirmRevoke"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colStarted}"/></Column>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colIp}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMfa}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRisk}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colExpires}"/></Column>
+                <Column><Text text="{i18n>colState}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <Text text="{userId}"/>
+                    <Text text="{ipAddress}"/>
+                    <Text text="{path: 'mfaUsed', formatter: '.formatter.mfaText'}"/>
+                    <ObjectStatus text="{path: 'riskLevel', formatter: '.formatter.enumText'}" state="{path: 'riskLevel', formatter: '.formatter.statusState'}"/>
+                    <Text text="{path: 'expiresAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <ObjectStatus text="{path: 'state', formatter: '.formatter.enumText'}" state="{path: 'state', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Tokens ──────────────────────────────────────────── -->
+          <IconTabFilter key="tokens" icon="sap-icon://key" text="{i18n>tabTokens}">
+            <Table id="tokenTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/Tokens', parameters: {$count: true, $orderby: 'issuedAt desc'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabTokens}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>revoke}" icon="sap-icon://log" press=".onDelete" app:table="tokenTable" app:confirm="confirmRevoke"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colIssued}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colScopes}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colExpires}"/></Column>
+                <Column><Text text="{i18n>colState}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'issuedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <Text text="{path: 'tokenType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{userId}"/>
+                    <Text text="{scopes}"/>
+                    <Text text="{path: 'expiresAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <ObjectStatus text="{path: 'state', formatter: '.formatter.enumText'}" state="{path: 'state', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

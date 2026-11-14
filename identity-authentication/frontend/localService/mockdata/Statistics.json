@@ -1,0 +1,22 @@
+{
+  "activeUsers": 21,
+  "mfaCoverage": 75,
+  "users": 24,
+  "policies": 2,
+  "applications": 3,
+  "identityProviders": 1,
+  "groups": 5,
+  "pendingUsers": 1,
+  "lockedUsers": 1,
+  "activeSessions": 12,
+  "activeApplications": 3,
+  "lastLoginAt": "2026-11-10T07:30:00Z",
+  "usersWithFailedLogins": 2,
+  "mfaUsers": 18,
+  "riskRules": 3,
+  "sessions": 40,
+  "inactiveUsers": 1,
+  "tokens": 96,
+  "activeTokens": 30,
+  "tenantId": "default"
+}

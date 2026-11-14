@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createBranding}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/branding/name}"/>
+      <Label text="{i18n>colPageTitle}"/>
+      <Input value="{view>/form/branding/pageTitle}"/>
+      <Label text="{i18n>colPrimaryColor}"/>
+      <Input value="{view>/form/branding/primaryColor}" placeholder="#0a6ed1"/>
+      <Label text="{i18n>colSecondaryColor}"/>
+      <Input value="{view>/form/branding/secondaryColor}" placeholder="#354a5f"/>
+      <Label text="{i18n>colLogoUrl}"/>
+      <Input value="{view>/form/branding/logoUrl}" placeholder="https://cdn.example.com/logo.svg"/>
+      <Label text="{i18n>colBackgroundUrl}"/>
+      <Input value="{view>/form/branding/backgroundUrl}"/>
+      <Label text="{i18n>colFooterText}"/>
+      <Input value="{view>/form/branding/footerText}"/>
+      <Label text="{i18n>colCustomCss}"/>
+      <TextArea value="{view>/form/branding/customCss}" rows="3"/>
+      <Label text="{i18n>colDefault}"/>
+      <Switch state="{view>/form/branding/isDefault}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

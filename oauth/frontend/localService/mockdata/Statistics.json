@@ -1,0 +1,14 @@
+{
+  "activeAccessTokens": 0,
+  "activeClients": 4,
+  "activeRefreshTokens": 0,
+  "blockedClients": 0,
+  "brandings": 1,
+  "clients": 4,
+  "expiredAccessTokens": 0,
+  "pendingAuthorizationCodes": 0,
+  "publicClients": 1,
+  "revokedAccessTokens": 1,
+  "scopes": 6,
+  "tenantId": "default"
+}

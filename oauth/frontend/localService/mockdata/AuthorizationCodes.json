@@ -1,0 +1,41 @@
+[
+  {
+    "clientId": "sb-order-portal",
+    "codeChallengeMethod": null,
+    "expiresAt": "2026-11-11T09:41:22Z",
+    "updatedAt": "2026-11-11T09:36:22Z",
+    "id": "0dde4951-4356-4d57-b464-042c10ac4885",
+    "userId": "jane",
+    "scopes": [
+      "openid",
+      "orders.read"
+    ],
+    "createdAt": "2026-11-11T09:36:22Z",
+    "createdBy": "jane",
+    "redirectUri": "https://portal.example.com/login/callback",
+    "usedAt": null,
+    "issuedAt": "2026-11-11T09:36:22Z",
+    "tenantId": "default",
+    "status": "expired",
+    "updatedBy": "jane"
+  },
+  {
+    "clientId": "sb-order-portal",
+    "codeChallengeMethod": null,
+    "expiresAt": "2026-11-11T09:41:22Z",
+    "updatedAt": "2026-11-11T09:36:22Z",
+    "id": "b2f18928-84bd-4692-bff8-42ee03226f59",
+    "userId": "jane",
+    "scopes": [
+      "orders.read"
+    ],
+    "createdAt": "2026-11-11T09:36:22Z",
+    "createdBy": "jane",
+    "redirectUri": "https://portal.example.com/login/callback",
+    "usedAt": "2026-11-11T09:36:22Z",
+    "issuedAt": "2026-11-11T09:36:22Z",
+    "tenantId": "default",
+    "status": "used",
+    "updatedBy": "jane"
+  }
+]

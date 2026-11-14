@@ -1,0 +1,22 @@
+[
+  {
+    "clientId": "sb-order-portal",
+    "expiresAt": "2026-11-12T09:36:22Z",
+    "updatedAt": "2026-11-11T09:36:22Z",
+    "id": "28b14873-fefc-40b0-8df6-d4099ed90c2b",
+    "userId": "jane",
+    "revocationReason": "rotated",
+    "scopes": [
+      "orders.read"
+    ],
+    "accessTokenId": "03bb9e0a-f927-4e7e-83d6-699f46ee19e9",
+    "createdAt": "2026-11-11T09:36:22Z",
+    "createdBy": "jane",
+    "issuedAt": "2026-11-11T09:36:22Z",
+    "revokedAt": "2026-11-11T09:36:22Z",
+    "replacedById": "e2d075d1-74b7-4473-b95d-e69f8a1a42b5",
+    "tenantId": "default",
+    "status": "revoked",
+    "updatedBy": "jane"
+  }
+]

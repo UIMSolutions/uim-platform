@@ -1,0 +1,24 @@
+[
+  {
+    "clientId": "sb-billing-service",
+    "expiresAt": "2026-11-11T10:06:05Z",
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "a1bba56a-f025-4da5-871e-727eb8398e73",
+    "userId": null,
+    "grantType": "client_credentials",
+    "scopes": [
+      "orders.read",
+      "billing.read"
+    ],
+    "revocationReason": "manual",
+    "refreshTokenId": null,
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "sb-billing-service",
+    "authorizationCodeId": null,
+    "issuedAt": "2026-11-11T09:36:05Z",
+    "revokedAt": "2026-11-11T09:37:26Z",
+    "tenantId": "default",
+    "status": "revoked",
+    "updatedBy": "sb-billing-service"
+  }
+]

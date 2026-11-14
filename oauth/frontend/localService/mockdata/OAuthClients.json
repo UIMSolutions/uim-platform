@@ -1,0 +1,130 @@
+[
+  {
+    "clientId": "sb-billing-service",
+    "accessTokenValidity": 1800,
+    "hasSecret": true,
+    "clientSecret": null,
+    "updatedAt": "2026-11-11T09:37:26Z",
+    "id": "billing-service",
+    "redirectUris": [],
+    "contacts": [
+      "billing-team@example.com"
+    ],
+    "grantTypes": [
+      "client_credentials"
+    ],
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "Billing Service",
+    "clientType": "confidential",
+    "allowedScopes": [
+      "orders.read",
+      "billing.read",
+      "billing.admin"
+    ],
+    "brandingId": null,
+    "refreshTokenValidity": 86400,
+    "description": "Backend job reading orders (client credentials)",
+    "secretRotatedAt": "2026-11-11T09:37:26Z",
+    "activeTokens": 0,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  },
+  {
+    "clientId": "sb-order-portal",
+    "accessTokenValidity": 3600,
+    "hasSecret": true,
+    "clientSecret": null,
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "order-portal",
+    "redirectUris": [
+      "https://portal.example.com/login/callback",
+      "http://localhost:5000/login/callback"
+    ],
+    "contacts": [],
+    "grantTypes": [
+      "authorization_code",
+      "refresh_token"
+    ],
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "Order Portal",
+    "clientType": "confidential",
+    "allowedScopes": [
+      "openid",
+      "profile",
+      "orders.read",
+      "orders.write"
+    ],
+    "brandingId": null,
+    "refreshTokenValidity": 86400,
+    "description": "Server side web app (authorization code + refresh token)",
+    "secretRotatedAt": "2026-11-11T09:36:05Z",
+    "activeTokens": 0,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "clientId": "mobile-app",
+    "accessTokenValidity": 900,
+    "hasSecret": false,
+    "clientSecret": null,
+    "updatedAt": "2026-11-11T09:36:05Z",
+    "id": "mobile-app",
+    "redirectUris": [
+      "com.example.orders:/oauth2redirect"
+    ],
+    "contacts": [],
+    "grantTypes": [
+      "authorization_code",
+      "refresh_token"
+    ],
+    "createdAt": "2026-11-11T09:36:05Z",
+    "createdBy": "cli",
+    "name": "Mobile App",
+    "clientType": "public",
+    "allowedScopes": [
+      "openid",
+      "profile",
+      "orders.read"
+    ],
+    "brandingId": null,
+    "refreshTokenValidity": 86400,
+    "description": "Native app (public client, PKCE)",
+    "secretRotatedAt": null,
+    "activeTokens": 0,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "clientId": "sb-ed5053ec-35ae-4f24-8738-1b677703806d",
+    "accessTokenValidity": 3600,
+    "hasSecret": true,
+    "clientSecret": null,
+    "updatedAt": "2026-11-11T09:36:35Z",
+    "id": "ed5053ec-35ae-4f24-8738-1b677703806d",
+    "redirectUris": [],
+    "contacts": [],
+    "grantTypes": [
+      "client_credentials"
+    ],
+    "createdAt": "2026-11-11T09:36:35Z",
+    "createdBy": "anonymous",
+    "name": "Reporting Job",
+    "clientType": "confidential",
+    "allowedScopes": [
+      "orders.read"
+    ],
+    "brandingId": null,
+    "refreshTokenValidity": 86400,
+    "description": "",
+    "secretRotatedAt": "2026-11-11T09:36:35Z",
+    "activeTokens": 0,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  }
+]
