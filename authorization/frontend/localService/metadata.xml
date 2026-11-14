@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.authorization" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Application">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="organizationId" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="apiCount" Type="Edm.Int32"/>
+        <Property Name="policyCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ApplicationApi">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String" Nullable="false"/>
+        <Property Name="applicationName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="endpoint" Type="Edm.String" Nullable="false"/>
+        <Property Name="operations" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="Policy">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String" Nullable="false"/>
+        <Property Name="applicationName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="resource" Type="Edm.String" Nullable="false"/>
+        <Property Name="action" Type="Edm.String" Nullable="false"/>
+        <Property Name="conditions" Type="Edm.String"/>
+        <Property Name="kind" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="assignmentCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Assignment">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="policyId" Type="Edm.String" Nullable="false"/>
+        <Property Name="policyName" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String"/>
+        <Property Name="applicationName" Type="Edm.String"/>
+        <Property Name="principalType" Type="Edm.String"/>
+        <Property Name="principalId" Type="Edm.String" Nullable="false"/>
+        <Property Name="validFrom" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="validTo" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="effective" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Decision">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="principalId" Type="Edm.String"/>
+        <Property Name="groups" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String"/>
+        <Property Name="applicationName" Type="Edm.String"/>
+        <Property Name="resource" Type="Edm.String"/>
+        <Property Name="action" Type="Edm.String"/>
+        <Property Name="attributes" Type="Edm.String"/>
+        <Property Name="allowed" Type="Edm.Boolean"/>
+        <Property Name="reason" Type="Edm.String"/>
+        <Property Name="matchedPolicies" Type="Edm.String"/>
+        <Property Name="channel" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="applications" Type="Edm.Int32"/>
+        <Property Name="applicationApis" Type="Edm.Int32"/>
+        <Property Name="policies" Type="Edm.Int32"/>
+        <Property Name="basePolicies" Type="Edm.Int32"/>
+        <Property Name="customPolicies" Type="Edm.Int32"/>
+        <Property Name="disabledPolicies" Type="Edm.Int32"/>
+        <Property Name="unassignedPolicies" Type="Edm.Int32"/>
+        <Property Name="assignments" Type="Edm.Int32"/>
+        <Property Name="userAssignments" Type="Edm.Int32"/>
+        <Property Name="groupAssignments" Type="Edm.Int32"/>
+        <Property Name="expiredAssignments" Type="Edm.Int32"/>
+        <Property Name="principals" Type="Edm.Int32"/>
+        <Property Name="decisions" Type="Edm.Int32"/>
+        <Property Name="permittedDecisions" Type="Edm.Int32"/>
+        <Property Name="deniedDecisions" Type="Edm.Int32"/>
+        <Property Name="lastDecisionAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </EntityType>
+      <ComplexType Name="AuthorizationResult">
+        <Property Name="allowed" Type="Edm.Boolean"/>
+        <Property Name="reason" Type="Edm.String"/>
+        <Property Name="principalId" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String"/>
+        <Property Name="resource" Type="Edm.String"/>
+        <Property Name="action" Type="Edm.String"/>
+        <Property Name="matchedPolicies" Type="Edm.String"/>
+        <Property Name="matchedPolicyIds" Type="Edm.String"/>
+        <Property Name="candidatePolicies" Type="Edm.Int32"/>
+        <Property Name="decisionId" Type="Edm.String"/>
+        <Property Name="evaluatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </ComplexType>
+      <ComplexType Name="ActionResult">
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="success" Type="Edm.Boolean"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="count" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="EvaluateAuthorization" IsBound="false">
+        <Parameter Name="principalId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="application" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="resource" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="action" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="groups" Type="Edm.String"/>
+        <Parameter Name="attributes" Type="Edm.String"/>
+        <Parameter Name="record" Type="Edm.Boolean"/>
+        <ReturnType Type="uim.authorization.AuthorizationResult"/>
+      </Action>
+      <Action Name="SeedBasePolicies" IsBound="false">
+        <Parameter Name="application" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.authorization.ActionResult"/>
+      </Action>
+      <Action Name="EnablePolicy" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.authorization.ActionResult"/>
+      </Action>
+      <Action Name="DisablePolicy" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.authorization.ActionResult"/>
+      </Action>
+      <Action Name="PruneDecisions" IsBound="false">
+        <Parameter Name="olderThanDays" Type="Edm.Int32" Nullable="false"/>
+        <ReturnType Type="uim.authorization.ActionResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.authorization.ActionResult"/>
+      </Action>
+      <EntityContainer Name="AuthorizationService">
+        <EntitySet Name="Applications" EntityType="uim.authorization.Application"/>
+        <EntitySet Name="ApplicationApis" EntityType="uim.authorization.ApplicationApi"/>
+        <EntitySet Name="Policies" EntityType="uim.authorization.Policy"/>
+        <EntitySet Name="Assignments" EntityType="uim.authorization.Assignment"/>
+        <EntitySet Name="Decisions" EntityType="uim.authorization.Decision"/>
+        <Singleton Name="Statistics" Type="uim.authorization.Statistic"/>
+        <ActionImport Name="EvaluateAuthorization" Action="uim.authorization.EvaluateAuthorization"/>
+        <ActionImport Name="SeedBasePolicies" Action="uim.authorization.SeedBasePolicies"/>
+        <ActionImport Name="EnablePolicy" Action="uim.authorization.EnablePolicy"/>
+        <ActionImport Name="DisablePolicy" Action="uim.authorization.DisablePolicy"/>
+        <ActionImport Name="PruneDecisions" Action="uim.authorization.PruneDecisions"/>
+        <ActionImport Name="SeedDemoData" Action="uim.authorization.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.authorization.AuthorizationResult/allowed"><Annotation Term="Common.Label" String="Allowed"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/reason"><Annotation Term="Common.Label" String="Reason"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/principalId"><Annotation Term="Common.Label" String="Principal"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/applicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/resource"><Annotation Term="Common.Label" String="Resource"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/action"><Annotation Term="Common.Label" String="Action"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/matchedPolicies"><Annotation Term="Common.Label" String="Matched Policies"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/matchedPolicyIds"><Annotation Term="Common.Label" String="Matched Policy IDs"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/candidatePolicies"><Annotation Term="Common.Label" String="Assigned Policies"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/decisionId"><Annotation Term="Common.Label" String="Decision"/></Annotations>
+      <Annotations Target="uim.authorization.AuthorizationResult/evaluatedAt"><Annotation Term="Common.Label" String="Evaluated At"/></Annotations>
+      <Annotations Target="uim.authorization.ActionResult/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.authorization.ActionResult/success"><Annotation Term="Common.Label" String="Success"/></Annotations>
+      <Annotations Target="uim.authorization.ActionResult/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.authorization.ActionResult/count"><Annotation Term="Common.Label" String="Count"/></Annotations>
+      <Annotations Target="uim.authorization.Application/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Application/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Application/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Application/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Application/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Application/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Application/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.authorization.Application/organizationId"><Annotation Term="Common.Label" String="Organization"/></Annotations>
+      <Annotations Target="uim.authorization.Application/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.authorization.Application/apiCount"><Annotation Term="Common.Label" String="APIs"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Application/policyCount"><Annotation Term="Common.Label" String="Policies"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Application">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Application"/><PropertyValue Property="TypeNamePlural" String="Applications"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="organizationId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="apiCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="policyCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>name</PropertyPath><PropertyPath>organizationId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.AuthorizationService/Applications">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/applicationId"><Annotation Term="Common.Label" String="Application"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/applicationName"><Annotation Term="Common.Label" String="Application Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/endpoint"><Annotation Term="Common.Label" String="Endpoint"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi/operations"><Annotation Term="Common.Label" String="Operations"/></Annotations>
+      <Annotations Target="uim.authorization.ApplicationApi">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Application API"/><PropertyValue Property="TypeNamePlural" String="Application APIs"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="endpoint"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="endpoint"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>applicationId</PropertyPath><PropertyPath>name</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.AuthorizationService/ApplicationApis">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.Policy/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/applicationId"><Annotation Term="Common.Label" String="Application"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/applicationName"><Annotation Term="Common.Label" String="Application Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/resource"><Annotation Term="Common.Label" String="Resource"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/action"><Annotation Term="Common.Label" String="Action"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/conditions"><Annotation Term="Common.Label" String="Conditions"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/kind"><Annotation Term="Common.Label" String="Kind"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.authorization.Policy/assignmentCount"><Annotation Term="Common.Label" String="Assignments"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Policy">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Policy"/><PropertyValue Property="TypeNamePlural" String="Policies"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resource"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="action"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="conditions"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kind"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="assignmentCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>applicationId</PropertyPath><PropertyPath>kind</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>resource</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.AuthorizationService/Policies">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.Assignment/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/policyId"><Annotation Term="Common.Label" String="Policy"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/policyName"><Annotation Term="Common.Label" String="Policy Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/applicationId"><Annotation Term="Common.Label" String="Application"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/applicationName"><Annotation Term="Common.Label" String="Application Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/principalType"><Annotation Term="Common.Label" String="Principal Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/principalId"><Annotation Term="Common.Label" String="Principal"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/validFrom"><Annotation Term="Common.Label" String="Valid From"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/validTo"><Annotation Term="Common.Label" String="Valid To"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment/effective"><Annotation Term="Common.Label" String="Effective"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Assignment">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Assignment"/><PropertyValue Property="TypeNamePlural" String="Assignments"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="principalId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="policyName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="principalType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="principalId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="policyName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="validTo"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="effective"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>principalType</PropertyPath><PropertyPath>principalId</PropertyPath><PropertyPath>policyId</PropertyPath><PropertyPath>applicationId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.AuthorizationService/Assignments">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.Decision/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/principalId"><Annotation Term="Common.Label" String="Principal"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/groups"><Annotation Term="Common.Label" String="Groups"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/applicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/applicationName"><Annotation Term="Common.Label" String="Application Name"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/resource"><Annotation Term="Common.Label" String="Resource"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/action"><Annotation Term="Common.Label" String="Action"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/attributes"><Annotation Term="Common.Label" String="Attributes"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/allowed"><Annotation Term="Common.Label" String="Allowed"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/reason"><Annotation Term="Common.Label" String="Reason"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/matchedPolicies"><Annotation Term="Common.Label" String="Matched Policies"/></Annotations>
+      <Annotations Target="uim.authorization.Decision/channel"><Annotation Term="Common.Label" String="Channel"/></Annotations>
+      <Annotations Target="uim.authorization.Decision">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Decision"/><PropertyValue Property="TypeNamePlural" String="Decisions"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="principalId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reason"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="principalId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resource"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="action"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="allowed"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reason"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>principalId</PropertyPath><PropertyPath>applicationId</PropertyPath><PropertyPath>allowed</PropertyPath><PropertyPath>channel</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.AuthorizationService/Decisions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/applications"><Annotation Term="Common.Label" String="Applications"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/applicationApis"><Annotation Term="Common.Label" String="Application APIs"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/policies"><Annotation Term="Common.Label" String="Policies"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/basePolicies"><Annotation Term="Common.Label" String="Base Policies"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/customPolicies"><Annotation Term="Common.Label" String="Custom Policies"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/disabledPolicies"><Annotation Term="Common.Label" String="Disabled Policies"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/unassignedPolicies"><Annotation Term="Common.Label" String="Unassigned Policies"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/assignments"><Annotation Term="Common.Label" String="Assignments"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/userAssignments"><Annotation Term="Common.Label" String="User Assignments"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/groupAssignments"><Annotation Term="Common.Label" String="Group Assignments"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/expiredAssignments"><Annotation Term="Common.Label" String="Expired Assignments"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/principals"><Annotation Term="Common.Label" String="Principals"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/decisions"><Annotation Term="Common.Label" String="Decisions"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/permittedDecisions"><Annotation Term="Common.Label" String="Permitted"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/deniedDecisions"><Annotation Term="Common.Label" String="Denied"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic/lastDecisionAt"><Annotation Term="Common.Label" String="Last Decision"/></Annotations>
+      <Annotations Target="uim.authorization.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistic"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applications"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationApis"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="policies"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="basePolicies"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="customPolicies"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="disabledPolicies"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="unassignedPolicies"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="assignments"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.authorization.AuthorizationService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Authorization Management"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

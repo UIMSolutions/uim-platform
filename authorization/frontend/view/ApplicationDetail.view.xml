@@ -1,0 +1,134 @@
+<mvc:View
+  controllerName="uim.authorization.controller.ApplicationDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:uxap="sap.uxap"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="applicationPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onNavBack"/>
+        </uxap:navigationActions>
+        <uxap:heading>
+          <Title text="{name}" wrapping="true"/>
+        </uxap:heading>
+        <uxap:expandedContent>
+          <Text text="{description}"/>
+        </uxap:expandedContent>
+        <uxap:actions>
+          <Button text="{i18n>seedBase}" press=".onSeedBase"/>
+          <Button text="{i18n>delete}" type="Reject" press=".onDelete"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+    <uxap:headerContent>
+      <HBox wrap="Wrap">
+        <VBox class="sapUiLargeMarginEnd">
+          <Label text="{i18n>organization}"/>
+          <Text text="{organizationId}"/>
+        </VBox>
+        <VBox class="sapUiLargeMarginEnd">
+          <Label text="{i18n>apis}"/>
+          <ObjectNumber number="{apiCount}" class="sapMObjectNumberLarge"/>
+        </VBox>
+        <VBox class="sapUiLargeMarginEnd">
+          <Label text="{i18n>tabPolicies}"/>
+          <ObjectNumber number="{policyCount}" class="sapMObjectNumberLarge"/>
+        </VBox>
+        <VBox>
+          <Label text="{i18n>changedAt}"/>
+          <Text text="{path: 'updatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+        </VBox>
+      </HBox>
+    </uxap:headerContent>
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>general}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" columnsL="1">
+              <Label text="{i18n>name}"/>
+              <Input value="{name}"/>
+              <Label text="{i18n>organization}"/>
+              <Input value="{organizationId}"/>
+              <Label text="{i18n>description}"/>
+              <TextArea value="{description}" rows="2"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+      <uxap:ObjectPageSection title="{i18n>apis}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="apiTable" mode="SingleSelectMaster" noDataText="{i18n>noData}"
+              items="{path: '/ApplicationApis', parameters: {$orderby: 'name'}, suspended: true}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreateApi"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteApi"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>name}"/></Column>
+                <Column><Text text="{i18n>endpoint}"/></Column>
+                <Column><Text text="{i18n>operations}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{name}"/>
+                    <Text text="{endpoint}"/>
+                    <Text text="{path: 'operations', formatter: '.formatter.joinList'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+      <uxap:ObjectPageSection title="{i18n>tabPolicies}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="appPolicyTable" noDataText="{i18n>noData}"
+              items="{path: '/Policies', parameters: {$orderby: 'name'}, suspended: true}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreatePolicy"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>name}"/></Column>
+                <Column><Text text="{i18n>resource}"/></Column>
+                <Column><Text text="{i18n>action}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>conditions}"/></Column>
+                <Column><Text text="{i18n>kind}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onPolicyPress">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{resource}"/>
+                    <Text text="{action}"/>
+                    <Text text="{path: 'conditions', formatter: '.formatter.conditionsText'}"/>
+                    <ObjectStatus text="{path: 'kind', formatter: '.formatter.enumText'}" state="{path: 'kind', formatter: '.formatter.kindState'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+    <uxap:footer>
+      <OverflowToolbar>
+        <ToolbarSpacer/>
+        <Button text="{i18n>save}" type="Emphasized" press=".onSave"/>
+        <Button text="{i18n>cancel}" press=".onCancel"/>
+      </OverflowToolbar>
+    </uxap:footer>
+  </uxap:ObjectPageLayout>
+</mvc:View>

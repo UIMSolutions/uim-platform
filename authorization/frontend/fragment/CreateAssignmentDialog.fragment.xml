@@ -1,0 +1,33 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgCreateAssignmentDialog" title="{i18n>titleCreateAssignment}" contentWidth="36rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>policy}" required="true"/>
+      <Select selectedKey="{ui>/draft/policyId}" width="100%" forceSelection="false"
+        items="{path: '/Policies', parameters: {$select: 'id,name,applicationName'}, templateShareable: false}">
+        <core:Item key="{id}" text="{applicationName} · {name}"/>
+      </Select>
+      <Label text="{i18n>principalType}"/>
+      <SegmentedButton selectedKey="{ui>/draft/principalType}">
+        <items>
+          <SegmentedButtonItem key="user" text="{i18n>user}" icon="sap-icon://employee"/>
+          <SegmentedButtonItem key="group" text="{i18n>group}" icon="sap-icon://group"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>principal}" required="true"/>
+      <Input value="{ui>/draft/principalId}"/>
+      <Label text="{i18n>validFrom}"/>
+      <DateTimePicker value="{ui>/draft/validFrom}" valueFormat="yyyy-MM-dd'T'HH:mm:ssXXX"/>
+      <Label text="{i18n>validTo}"/>
+      <DateTimePicker value="{ui>/draft/validTo}" valueFormat="yyyy-MM-dd'T'HH:mm:ssXXX"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

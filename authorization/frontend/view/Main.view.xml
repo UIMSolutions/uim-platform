@@ -1,0 +1,292 @@
+<mvc:View
+  controllerName="uim.authorization.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button text="{i18n>seedDemo}" type="Transparent" press=".onSeedDemo"/>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiApplications}"/>
+            <ObjectNumber number="{applications}" unit="{= ${applicationApis} + ' ' + ${i18n>apis} }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiPolicies}"/>
+            <ObjectNumber number="{policies}" unit="{= ${basePolicies} + ' ' + ${i18n>base} + ' · ' + ${customPolicies} + ' ' + ${i18n>custom} }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiDisabled}"/>
+            <ObjectNumber number="{disabledPolicies}" class="sapMObjectNumberLarge"
+              state="{= ${disabledPolicies} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiAssignments}"/>
+            <ObjectNumber number="{assignments}" unit="{= ${principals} + ' ' + ${i18n>principals} }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiExpired}"/>
+            <ObjectNumber number="{expiredAssignments}" class="sapMObjectNumberLarge"
+              state="{= ${expiredAssignments} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiDecisions}"/>
+            <HBox>
+              <ObjectNumber number="{permittedDecisions}" state="Success" class="sapMObjectNumberLarge sapUiSmallMarginEnd"/>
+              <ObjectNumber number="{deniedDecisions}" state="Error" class="sapMObjectNumberLarge"/>
+            </HBox>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLastDecision}"/>
+            <Text text="{path: 'lastDecisionAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Applications ─────────────────────────────────────── -->
+          <IconTabFilter key="applications" icon="sap-icon://product" text="{i18n>tabApplications}">
+            <Table id="applicationTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" itemPress=".onApplicationPress" items="{path: '/Applications', parameters: {$count: true, $orderby: 'name'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabApplications}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="16rem" search=".onSearch" app:table="applicationTable" app:fields="name,organizationId,description"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreateApplication"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteSelected" app:table="applicationTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>name}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>organization}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>apis}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>tabPolicies}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>changedAt}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{organizationId}"/>
+                    <ObjectNumber number="{apiCount}"/>
+                    <ObjectNumber number="{policyCount}"/>
+                    <Text text="{path: 'updatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Policies ─────────────────────────────────────────── -->
+          <IconTabFilter key="policies" icon="sap-icon://locked" text="{i18n>tabPolicies}">
+            <Table id="policyTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" itemPress=".onPolicyPress" items="{path: '/Policies', parameters: {$count: true, $orderby: 'applicationName,name'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabPolicies}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Select id="policyKindFilter" change=".onFilterPolicies" width="10rem">
+                    <core:Item key="" text="{i18n>allKinds}"/>
+                    <core:Item key="base" text="{i18n>kindBase}"/>
+                    <core:Item key="custom" text="{i18n>kindCustom}"/>
+                  </Select>
+                  <Select id="policyStatusFilter" change=".onFilterPolicies" width="10rem">
+                    <core:Item key="" text="{i18n>allStatuses}"/>
+                    <core:Item key="active" text="{i18n>statusActive}"/>
+                    <core:Item key="disabled" text="{i18n>statusDisabled}"/>
+                  </Select>
+                  <SearchField id="policySearch" width="14rem" search=".onFilterPolicies"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreatePolicy"/>
+                  <Button text="{i18n>enable}" press=".onEnablePolicy"/>
+                  <Button text="{i18n>disable}" press=".onDisablePolicy"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteSelected" app:table="policyTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>name}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>application}"/></Column>
+                <Column><Text text="{i18n>resource}"/></Column>
+                <Column><Text text="{i18n>action}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>conditions}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>kind}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>tabAssignments}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{applicationName}"/>
+                    <Text text="{resource}"/>
+                    <Text text="{action}"/>
+                    <Text text="{path: 'conditions', formatter: '.formatter.conditionsText'}" wrapping="true"/>
+                    <ObjectStatus text="{path: 'kind', formatter: '.formatter.enumText'}" state="{path: 'kind', formatter: '.formatter.kindState'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <ObjectNumber number="{assignmentCount}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Assignments ──────────────────────────────────────── -->
+          <IconTabFilter key="assignments" icon="sap-icon://employee-approvals" text="{i18n>tabAssignments}">
+            <Table id="assignmentTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/Assignments', parameters: {$count: true, $orderby: 'principalId'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabAssignments}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="16rem" search=".onSearch" app:table="assignmentTable" app:fields="principalId,policyName,applicationName"/>
+                  <Button text="{i18n>assign}" icon="sap-icon://add" type="Emphasized" press=".onCreateAssignment"/>
+                  <Button text="{i18n>revoke}" icon="sap-icon://delete" press=".onDeleteSelected" app:table="assignmentTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>principal}"/></Column>
+                <Column><Text text="{i18n>policy}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>application}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>validFrom}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>validTo}"/></Column>
+                <Column><Text text="{i18n>effective}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <HBox alignItems="Center">
+                      <core:Icon src="{path: 'principalType', formatter: '.formatter.principalIcon'}" class="sapUiTinyMarginEnd"/>
+                      <ObjectIdentifier title="{principalId}" text="{path: 'principalType', formatter: '.formatter.enumText'}"/>
+                    </HBox>
+                    <Link text="{policyName}" press=".onAssignmentPolicyPress"/>
+                    <Text text="{applicationName}"/>
+                    <Text text="{path: 'validFrom', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <Text text="{path: 'validTo', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <ObjectStatus icon="{= ${effective} ? 'sap-icon://accept' : 'sap-icon://pending' }"
+                      text="{= ${effective} ? ${i18n>yes} : ${i18n>no} }" state="{= ${effective} ? 'Success' : 'Warning' }"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Check (EvaluateAuthorization) ────────────────────── -->
+          <IconTabFilter key="check" icon="sap-icon://shield" text="{i18n>tabCheck}">
+            <HBox wrap="Wrap">
+              <form:SimpleForm editable="true" layout="ResponsiveGridLayout" title="{i18n>checkTitle}"
+                labelSpanL="4" labelSpanM="4" columnsL="1" columnsM="1" width="34rem">
+                <Label text="{i18n>principal}" required="true"/>
+                <Input id="checkPrincipal" value="{ui>/check/principalId}"/>
+                <Label text="{i18n>groups}"/>
+                <Input value="{ui>/check/groups}" placeholder="{i18n>groupsHint}"/>
+                <Label text="{i18n>application}" required="true"/>
+                <Input value="{ui>/check/application}" placeholder="{i18n>applicationHint}" showSuggestion="true"
+                  suggestionItems="{path: '/Applications', parameters: {$select: 'name'}, templateShareable: false}">
+                  <suggestionItems><core:Item text="{name}"/></suggestionItems>
+                </Input>
+                <Label text="{i18n>resource}" required="true"/>
+                <Input value="{ui>/check/resource}"/>
+                <Label text="{i18n>action}" required="true"/>
+                <Input value="{ui>/check/action}"/>
+                <Label text="{i18n>attributes}"/>
+                <Input value="{ui>/check/attributes}" placeholder="{i18n>attributesHint}"/>
+                <Label text="{i18n>recordDecision}"/>
+                <CheckBox selected="{ui>/check/record}"/>
+                <Label/>
+                <Button id="checkButton" text="{i18n>evaluate}" type="Emphasized" icon="sap-icon://shield" press=".onEvaluate"/>
+              </form:SimpleForm>
+              <VBox class="sapUiMediumMarginBegin sapUiSmallMarginTop" visible="{= !!${ui>/checkResult} }" width="30rem">
+                <ObjectStatus id="checkOutcome" text="{path: 'ui>/checkResult/allowed', formatter: '.formatter.allowedText'}"
+                  state="{path: 'ui>/checkResult/allowed', formatter: '.formatter.allowedState'}"
+                  icon="{path: 'ui>/checkResult/allowed', formatter: '.formatter.allowedIcon'}" class="sapMObjectStatusLarge"/>
+                <Text text="{ui>/checkResult/reason}" class="sapUiSmallMarginTop"/>
+                <form:SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanL="5" labelSpanM="5">
+                  <Label text="{i18n>matchedPolicies}"/>
+                  <Text text="{ui>/checkResult/matchedPolicies}"/>
+                  <Label text="{i18n>candidatePolicies}"/>
+                  <Text text="{ui>/checkResult/candidatePolicies}"/>
+                  <Label text="{i18n>decision}"/>
+                  <Text text="{ui>/checkResult/decisionId}"/>
+                </form:SimpleForm>
+              </VBox>
+            </HBox>
+          </IconTabFilter>
+
+          <!-- ── Decision log ─────────────────────────────────────── -->
+          <IconTabFilter key="decisions" icon="sap-icon://history" text="{i18n>tabDecisions}">
+            <Table id="decisionTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Decisions', parameters: {$count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDecisions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton id="decisionOutcomeFilter" selectedKey="" selectionChange=".onFilterDecisions">
+                    <items>
+                      <SegmentedButtonItem key="" text="{i18n>all}"/>
+                      <SegmentedButtonItem key="true" text="{i18n>permit}"/>
+                      <SegmentedButtonItem key="false" text="{i18n>deny}"/>
+                    </items>
+                  </SegmentedButton>
+                  <SearchField id="decisionSearch" width="14rem" search=".onFilterDecisions"/>
+                  <Button text="{i18n>prune}" icon="sap-icon://delete" press=".onPruneDecisions"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>time}"/></Column>
+                <Column><Text text="{i18n>principal}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>application}"/></Column>
+                <Column><Text text="{i18n>resource}"/></Column>
+                <Column><Text text="{i18n>action}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>attributes}"/></Column>
+                <Column><Text text="{i18n>decision}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>reason}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <ObjectIdentifier title="{principalId}" text="{groups}"/>
+                    <Text text="{applicationName}"/>
+                    <Text text="{resource}"/>
+                    <Text text="{action}"/>
+                    <Text text="{attributes}" wrapping="true"/>
+                    <ObjectStatus text="{path: 'allowed', formatter: '.formatter.allowedText'}" state="{path: 'allowed', formatter: '.formatter.allowedState'}"/>
+                    <Text text="{reason}" wrapping="true"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

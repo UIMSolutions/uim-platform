@@ -1,0 +1,89 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "uim.authorization",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": { "version": "2.0.0" },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/authorization/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0",
+          "localUri": "localService/metadata.xml"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "authorization-manage": {
+          "semanticObject": "AuthorizationPolicy",
+          "action": "manage",
+          "title": "{{appTitle}}",
+          "signature": { "parameters": {}, "additionalParameters": "allowed" }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "fullWidth": true,
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "uim.authorization.view.App",
+      "type": "XML",
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.f": {},
+        "sap.ui.layout": {},
+        "sap.uxap": {}
+      }
+    },
+    "contentDensities": { "compact": true, "cozy": true },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": { "bundleName": "uim.authorization.i18n.i18n", "supportedLocales": ["", "de"], "fallbackLocale": "" }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "autoExpandSelect": true,
+          "operationMode": "Server"
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "uim.authorization.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        { "pattern": ":tab:", "name": "main", "target": "main" },
+        { "pattern": "Applications/{id}", "name": "application", "target": "application" },
+        { "pattern": "Policies/{id}", "name": "policy", "target": "policy" }
+      ],
+      "targets": {
+        "main": { "id": "main", "name": "Main", "level": 1 },
+        "application": { "id": "application", "name": "ApplicationDetail", "level": 2 },
+        "policy": { "id": "policy", "name": "PolicyDetail", "level": 2 }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgCreatePolicyDialog" title="{i18n>titleCreatePolicy}" contentWidth="36rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>application}" required="true"/>
+      <Select selectedKey="{ui>/draft/applicationId}" width="100%" forceSelection="false"
+        items="{path: '/Applications', parameters: {$select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>name}" required="true"/>
+      <Input value="{ui>/draft/name}"/>
+      <Label text="{i18n>description}"/>
+      <TextArea value="{ui>/draft/description}" rows="2"/>
+      <Label text="{i18n>resource}" required="true"/>
+      <Input value="{ui>/draft/resource}" placeholder="*, Incident, Sales*"/>
+      <Label text="{i18n>action}" required="true"/>
+      <Input value="{ui>/draft/action}" placeholder="Read, Update"/>
+      <Label text="{i18n>conditions}"/>
+      <TextArea value="{ui>/draft/conditions}" rows="2" placeholder="{i18n>conditionsHint}"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,112 @@
+<mvc:View
+  controllerName="uim.authorization.controller.PolicyDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:uxap="sap.uxap"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="policyPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onNavBack"/>
+        </uxap:navigationActions>
+        <uxap:heading>
+          <Title text="{name}" wrapping="true"/>
+        </uxap:heading>
+        <uxap:expandedContent>
+          <Text text="{description}"/>
+        </uxap:expandedContent>
+        <uxap:actions>
+          <Button text="{i18n>enable}" visible="{path: 'status', targetType: 'any', formatter: '.formatter.canEnable'}" press=".onEnable"/>
+          <Button text="{i18n>disable}" visible="{path: 'status', targetType: 'any', formatter: '.formatter.canDisable'}" press=".onDisable"/>
+          <Button text="{i18n>delete}" type="Reject" press=".onDelete"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+    <uxap:headerContent>
+      <HBox wrap="Wrap">
+        <VBox class="sapUiLargeMarginEnd">
+          <Label text="{i18n>application}"/>
+          <Link text="{applicationName}" press=".onApplicationPress"/>
+        </VBox>
+        <VBox class="sapUiLargeMarginEnd">
+          <Label text="{i18n>kind}"/>
+          <ObjectStatus text="{path: 'kind', formatter: '.formatter.enumText'}" state="{path: 'kind', formatter: '.formatter.kindState'}"/>
+        </VBox>
+        <VBox class="sapUiLargeMarginEnd">
+          <Label text="{i18n>status}"/>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+        </VBox>
+        <VBox>
+          <Label text="{i18n>tabAssignments}"/>
+          <ObjectNumber number="{assignmentCount}" class="sapMObjectNumberLarge"/>
+        </VBox>
+      </HBox>
+    </uxap:headerContent>
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>rule}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <VBox>
+              <MessageStrip text="{i18n>basePolicyHint}" type="Information" showIcon="true"
+                visible="{= %{kind} === 'base' }" class="sapUiSmallMarginBottom"/>
+              <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" columnsL="1">
+                <Label text="{i18n>description}"/>
+                <TextArea value="{description}" rows="2"/>
+                <Label text="{i18n>resource}"/>
+                <Input value="{resource}" editable="{= %{kind} !== 'base' }"/>
+                <Label text="{i18n>action}"/>
+                <Input value="{action}" editable="{= %{kind} !== 'base' }"/>
+                <Label text="{i18n>conditions}"/>
+                <TextArea value="{conditions}" rows="2" editable="{= %{kind} !== 'base' }" placeholder="{i18n>conditionsHint}"/>
+              </form:SimpleForm>
+            </VBox>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+      <uxap:ObjectPageSection title="{i18n>tabAssignments}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="policyAssignmentTable" mode="SingleSelectMaster" noDataText="{i18n>noData}"
+              items="{path: '/Assignments', parameters: {$orderby: 'principalId'}, suspended: true}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>assign}" icon="sap-icon://add" press=".onAssign"/>
+                  <Button text="{i18n>revoke}" icon="sap-icon://delete" press=".onRevoke"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>principal}"/></Column>
+                <Column><Text text="{i18n>validFrom}"/></Column>
+                <Column><Text text="{i18n>validTo}"/></Column>
+                <Column><Text text="{i18n>effective}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <HBox alignItems="Center">
+                      <core:Icon src="{path: 'principalType', formatter: '.formatter.principalIcon'}" class="sapUiTinyMarginEnd"/>
+                      <Text text="{principalId}"/>
+                    </HBox>
+                    <Text text="{path: 'validFrom', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <Text text="{path: 'validTo', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <ObjectStatus text="{= ${effective} ? ${i18n>yes} : ${i18n>no} }" state="{= ${effective} ? 'Success' : 'Warning' }"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+    <uxap:footer>
+      <OverflowToolbar>
+        <ToolbarSpacer/>
+        <Button text="{i18n>save}" type="Emphasized" press=".onSave"/>
+        <Button text="{i18n>cancel}" press=".onCancel"/>
+      </OverflowToolbar>
+    </uxap:footer>
+  </uxap:ObjectPageLayout>
+</mvc:View>
