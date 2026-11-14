@@ -7,5 +7,11 @@ metadata:
     app: transport
     part-of: uim-platform
 data:
-  TRANSPORT_HOST: "0.0.0.0"
-  TRANSPORT_PORT: "8117"
+  TM_HOST: "0.0.0.0"
+  TM_PORT: "8117"
+  TM_LOG_LEVEL: "info"
+  TM_STORAGE: "file"
+  TM_DATA_DIR: "/data"
+  TM_FRONTEND_DIR: ""
+  TM_AUTO_IMPORT_INTERVAL: "15"
+  TM_AUTO_IMPORT_TENANTS: "default"

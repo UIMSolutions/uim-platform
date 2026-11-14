@@ -1,0 +1,90 @@
+_schema-version: "3.3"
+ID: uim-management
+version: 1.0.0
+description: UIM Cloud Management — D/vibe.d backend (JSON API, REST, OData v4), SAP Fiori 3 cockpit and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: management-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-management-platform-service dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-management-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /api/v1/health
+    properties:
+      MGMT_HOST: 0.0.0.0
+      MGMT_LOG_LEVEL: info
+      # Snapshots live on the (ephemeral) container disk — bind a persistent
+      # store before using this for real account data.
+      MGMT_STORAGE: file
+      MGMT_DATA_DIR: data
+      MGMT_FRONTEND_DIR: ""
+      MGMT_SEED_DEMO_DATA: "false"
+      MGMT_EVENT_PRUNE_INTERVAL: "1440"
+    provides:
+      - name: management-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: management-xsuaa
+      - name: management-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: management-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: management-xsuaa
+      - name: management-srv-api
+        group: destinations
+        properties:
+          name: management-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 60000
+
+resources:
+  - name: management-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-management-${space}
+
+  # Optional runtime overrides read from VCAP_SERVICES (credentials of the
+  # service named / tagged "management-config"), e.g. {"eventRetentionDays": "30"}
+  - name: management-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: management-config
+      config:
+        eventRetentionDays: "90"
+        workerTenants: default

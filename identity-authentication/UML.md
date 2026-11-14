@@ -1,156 +1,199 @@
 # UML — Identity Authentication Service
 
+## Components (hexagonal architecture)
 
-## Documentation update
+```mermaid
+flowchart LR
+  subgraph Driving["Driving adapters (presentation)"]
+    HTTP["http: AuthController, UserController, …"]
+    REST["rest: UserRestService (IUserApi)"]
+    OData["odata: IdentityODataController"]
+    CLI["cli: IdentityCli"]
+    GUI["gui: IdentityWindow (GtkD)"]
+    WEB["web: FrontendController (Fiori static)"]
+  end
+  subgraph Core["Application + domain"]
+    Ports["IdentityPorts (driving ports)"]
+    UC["Use cases: AuthenticateUser, IssueToken, Manage*"]
+    Stats["IdentityStatisticsService"]
+    Dom["Domain: entities, risk / policy evaluators, lifecycle, validator"]
+  end
+  subgraph Driven["Driven adapters"]
+    Repo["persistence: *Repository"]
+    Store["SnapshotTenantStore → JsonFile / Memory storage"]
+    Sec["security: Pbkdf2Password, Sha256Secret, JwtToken, TotpMfa"]
+    Msg["logging: LogEventPublisher (audit)"]
+    OTP["clients: WebhookOtpSender / LogOtpSender"]
+  end
+  HTTP & REST & OData & CLI & GUI --> Ports
+  Ports --> UC & Stats
+  UC --> Dom
+  UC --> Repo --> Store
+  UC --> Sec
+  UC --> Msg
+  Sec --> OTP
+  Fiori["frontend (UI5, uim.ias)"] -->|OData v4| Approuter["approuter (XSUAA)"] --> OData
+```
 
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
-
-## Class Diagram — Domain Entities
+## Domain model
 
 ```mermaid
 classDiagram
-    class IAUser {
-        +UserId id
-        +TenantId tenantId
-        +string username
-        +string email
-        +string firstName
-        +string lastName
-        +string status
-        +string[] groupIds
-        +Json toJson()
-    }
-    class Group {
-        +GroupId id
-        +TenantId tenantId
-        +string name
-        +string description
-        +string[] memberIds
-        +Json toJson()
-    }
-    class Application {
-        +ApplicationId id
-        +TenantId tenantId
-        +string name
-        +string displayName
-        +string clientId
-        +string redirectUri
-        +string status
-        +Json toJson()
-    }
-    class IdpConfig {
-        +IdpConfigId id
-        +TenantId tenantId
-        +ApplicationId applicationId
-        +string providerType
-        +string metadata
-        +string status
-        +Json toJson()
-    }
-    class Policy {
-        +PolicyId id
-        +TenantId tenantId
-        +ApplicationId applicationId
-        +string policyType
-        +string name
-        +Json rules
-        +Json toJson()
-    }
-    class RiskRule {
-        +RiskRuleId id
-        +TenantId tenantId
-        +ApplicationId applicationId
-        +string name
-        +string action
-        +Json conditions
-        +Json toJson()
-    }
-    class Session {
-        +SessionId id
-        +TenantId tenantId
-        +UserId userId
-        +ApplicationId applicationId
-        +long createdAt
-        +long expiresAt
-        +string ipAddress
-        +Json toJson()
-    }
-    class Token {
-        +TokenId id
-        +TenantId tenantId
-        +UserId userId
-        +ApplicationId applicationId
-        +string tokenType
-        +string value
-        +long issuedAt
-        +long expiresAt
-        +Json toJson()
-    }
-
-    Application "1" --> "0..*" IdpConfig : configures
-    Application "1" --> "0..*" Policy : governs
-    Application "1" --> "0..*" RiskRule : protects
-    IAUser "1" --> "0..*" Session : opens
-    IAUser "1" --> "0..*" Token : holds
-    IAUser "0..*" --> "0..*" Group : belongs
+  class IAUser {
+    UserId id
+    TenantId tenantId
+    string userName
+    string email
+    string passwordHash
+    UserStatus status
+    MfaType mfaType
+    string mfaSecret
+    GroupId[] groupIds
+    int failedLoginAttempts
+    long lastLoginAt
+    isActive() bool
+    hasMfa() bool
+  }
+  class IAGroup {
+    GroupId id
+    string name
+    UserId[] memberUserIds
+  }
+  class Application {
+    ApplicationId id
+    SsoProtocol protocol
+    string clientId
+    string clientSecretHash
+    string[] redirectUris
+    string[] allowedScopes
+    bool active
+  }
+  class AuthorizationPolicy {
+    PolicyId id
+    PolicyRule[] rules
+    string[] applicationIds
+    bool active
+  }
+  class PolicyRule {
+    string attribute
+    string operator_
+    string value
+  }
+  class RiskRule {
+    RiskRuleId id
+    RiskCondition[] conditions
+    RiskLevel riskLevel
+    MfaType requiredMfa
+    bool denyAccess
+  }
+  class IdpConfig {
+    IdpConfigId id
+    IdpType idpType
+    string authorizationEndpoint
+    string[] domainHints
+    bool isDefault
+  }
+  class IASession {
+    SessionId id
+    UserId userId
+    MfaType mfaUsed
+    RiskLevel riskLevel
+    long expiresAt
+    bool revoked
+  }
+  class Token {
+    TokenId id
+    SessionId sessionId
+    TokenType tokenType
+    string tokenHash
+    string[] scopes
+    long expiresAt
+    bool revoked
+  }
+  IAUser "*" -- "*" IAGroup : membership
+  AuthorizationPolicy "1" *-- "*" PolicyRule
+  AuthorizationPolicy "*" --> "*" Application : applies to
+  RiskRule "1" *-- "*" RiskCondition
+  IASession "*" --> "1" IAUser
+  Token "*" --> "1" IASession
+  Token "*" --> "1" Application
 ```
 
----
-
-## Component Diagram
+User status lifecycle (`domain/services/lifecycle.d`):
 
 ```mermaid
-flowchart TB
-    subgraph Presentation["Presentation Layer (HTTP)"]
-        C1[UserController]
-        C2[GroupController]
-        C3[ApplicationController]
-        C4[IdpConfigController]
-        C5[PolicyController]
-        C6[RiskRuleController]
-        C7[SessionController]
-        C8[TokenController]
-        HC[HealthController]
-    end
-    subgraph Application["Application Layer"]
-        UC1[ManageUsersUseCase]
-        UC2[ManageGroupsUseCase]
-        UC3[ManageApplicationsUseCase]
-        UC4[ManageSessionsUseCase]
-        UC5[ManageTokensUseCase]
-    end
-    subgraph Infrastructure["Infrastructure Layer"]
-        MEM[Memory Repositories ×8]
-        CFG[SrvConfig — port 8080]
-        CTR[Container / buildContainer]
-    end
-    C1 --> UC1
-    C3 --> UC3
-    C7 --> UC4
-    C8 --> UC5
-    MEM --> UC1
-    CTR --> UC1
-    CTR --> MEM
+stateDiagram-v2
+  [*] --> pendingVerification
+  [*] --> active
+  pendingVerification --> active
+  pendingVerification --> inactive
+  active --> locked : too many failures / admin
+  active --> inactive
+  locked --> active : unlock (resets failures)
+  locked --> inactive
+  inactive --> active
 ```
 
----
+## Ports
 
-## Sequence Diagram — IAUser Authentication Flow
+```mermaid
+classDiagram
+  class IdentityPorts {
+    IAuthenticationUseCase authentication
+    ITokenUseCase tokens
+    IManageSessionsUseCase sessions
+    IManageUsersUseCase users
+    IManageGroupsUseCase groups
+    IManageApplicationsUseCase applications
+    IManagePoliciesUseCase policies
+    IManageRiskRulesUseCase riskRules
+    IManageIdentityProvidersUseCase identityProviders
+    IIdentityStatisticsService statistics
+  }
+  class IPasswordService { hashPassword() verifyPassword() }
+  class ISecretService { randomSecret() fingerprint() matches() }
+  class ITokenService { sign() verify() generateSamlAssertion() }
+  class IMfaService { generateSecret() currentCode() validateCode() provisioningUri() sendOtp() }
+  class IOtpSender { send() }
+  class IIdentityEventPublisher { publish() }
+  class ISnapshotStorage { load() store() revision() }
+  Pbkdf2PasswordService ..|> IPasswordService
+  Sha256SecretService ..|> ISecretService
+  JwtTokenService ..|> ITokenService
+  TotpMfaService ..|> IMfaService
+  WebhookOtpSender ..|> IOtpSender
+  LogOtpSender ..|> IOtpSender
+  LogEventPublisher ..|> IIdentityEventPublisher
+  JsonFileSnapshotStorage ..|> ISnapshotStorage
+  MemorySnapshotStorage ..|> ISnapshotStorage
+```
+
+## Login and token flow
 
 ```mermaid
 sequenceDiagram
-    participant UA as IAUser Agent
-    participant AC as ApplicationController
-    participant TC as TokenController
-    participant TUC as ManageTokensUseCase
-    participant SUC as ManageSessionsUseCase
-
-    UA->>AC: GET /applications/{clientId}
-    AC-->>UA: 200 { redirectUri, idpConfig }
-
-    UA->>TC: POST /tokens { userId, applicationId, tokenType=access }
-    TC->>TUC: issueToken(dto)
-    TUC->>SUC: createSession(userId, applicationId)
-    TUC-->>TC: UsecaseResult(true, tokenId)
-    TC-->>UA: 201 { value, expiresAt }
+  participant C as Client
+  participant A as AuthenticateUserUseCase
+  participant R as RiskRules
+  participant M as IMfaService
+  participant T as IssueTokenUseCase
+  participant P as Policies
+  C->>A: login(email, password, mfaCode?)
+  A->>A: find user, check status, verify PBKDF2 hash
+  A->>R: assessRisk(rules, user, ip / agent / groups)
+  alt denied
+    A-->>C: 403
+  else second factor needed, no code
+    A->>M: sendOtp (SMS / e-mail)
+    A-->>C: 401 mfaRequired
+  else ok
+    A->>M: validateCode (TOTP)
+    A-->>C: sessionId
+  end
+  C->>T: token(sessionId, client_id, client_secret, scope)
+  T->>T: session active? client secret fingerprint? scopes allowed?
+  T->>P: findDenyingPolicies(app policies, user)
+  T-->>C: access / refresh / id token (JWT, stored as SHA-256)
+  C->>T: refresh_token
+  T->>T: rotate (old refresh token revoked); reuse ⇒ revoke session
 ```

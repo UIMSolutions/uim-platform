@@ -1,0 +1,13 @@
+# local approuter secrets
+approuter/default-env.json
+approuter/node_modules/
+approuter/resources/
+# build outputs
+backend/build/
+backend/data/
+backend/dist/
+backend/.dub/
+frontend/node_modules/
+frontend/dist/
+mta_archives/
+*.mtar

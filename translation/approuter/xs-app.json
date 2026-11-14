@@ -1,0 +1,39 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/translation/(.*)$",
+      "target": "/odata/v4/translation/$1",
+      "destination": "translation-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.TranslationViewer", "$XSAPPNAME.Translator", "$XSAPPNAME.TranslationAdmin"],
+        "default": ["$XSAPPNAME.Translator", "$XSAPPNAME.TranslationAdmin"]
+      }
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "translation-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.TranslationViewer", "$XSAPPNAME.Translator", "$XSAPPNAME.TranslationAdmin"],
+        "default": ["$XSAPPNAME.Translator", "$XSAPPNAME.TranslationAdmin"]
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.TranslationViewer", "$XSAPPNAME.Translator", "$XSAPPNAME.TranslationAdmin"]
+    }
+  ]
+}

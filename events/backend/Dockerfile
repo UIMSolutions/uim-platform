@@ -1,0 +1,34 @@
+# Build context: the uim-platform repository root (the backend depends on
+# uim-platform:service via a path dependency):
+#   docker build -f events/backend/Dockerfile -t uim-platform/event-mesh .
+FROM dlang2/ldc-ubuntu:1.40.1 AS build
+WORKDIR /build
+COPY . .
+WORKDIR /build/events/backend
+RUN dub build --build=release --config=defaultRun --compiler=ldc2 \
+ && dub build --build=release --config=cli --compiler=ldc2
+
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl libgcc-s1 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -r -s /bin/false appuser && mkdir -p /data && chown appuser:appuser /data
+WORKDIR /app
+COPY --from=build /build/events/backend/build/uim-event-mesh-platform-service /build/events/backend/build/uim-event-mesh-cli ./
+COPY --from=build /build/events/backend/config ./config
+COPY --from=build /build/events/frontend ./frontend
+USER appuser
+
+EXPOSE 8109
+ENV EVENT_MESH_HOST=0.0.0.0 \
+    EVENT_MESH_PORT=8109 \
+    EVENT_MESH_STORAGE=file \
+    EVENT_MESH_DATA_FILE=/data/event-mesh.json \
+    EVENT_MESH_FRONTEND_DIR=/app/frontend
+VOLUME ["/data"]
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:8109/health || exit 1
+
+CMD ["./uim-event-mesh-platform-service"]

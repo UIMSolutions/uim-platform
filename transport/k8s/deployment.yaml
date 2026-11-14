@@ -25,15 +25,18 @@ spec:
         envFrom:
         - configMapRef:
             name: transport-config
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
-            path: /health
+            path: /api/v1/health
             port: 8117
           initialDelaySeconds: 10
           periodSeconds: 30
         readinessProbe:
           httpGet:
-            path: /health
+            path: /api/v1/health
             port: 8117
           initialDelaySeconds: 5
           periodSeconds: 10
@@ -44,3 +47,6 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "500m"
+      volumes:
+      - name: data
+        emptyDir: {}  # replace with a PersistentVolumeClaim for durable transports

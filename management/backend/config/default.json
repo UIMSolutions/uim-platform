@@ -1,0 +1,17 @@
+{
+  "serviceName": "Cloud Management Service",
+  "host": "0.0.0.0",
+  "port": 8098,
+  "logLevel": "info",
+  "storage": "file",
+  "dataDir": "data",
+  "defaultTenant": "default",
+  "odataPath": "/odata/v4/management",
+  "apiPath": "/api/v1",
+  "restPath": "/rest/v1/",
+  "seedDemoData": true,
+  "eventRetentionDays": 90,
+  "eventPruneIntervalMinutes": 0,
+  "workerTenants": ["default"],
+  "frontendDir": "../frontend"
+}

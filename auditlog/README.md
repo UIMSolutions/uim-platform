@@ -1,592 +1,200 @@
-# UIM AuditLog Platform Service
+# UIM Audit Log Service
 
+A multi-tenant audit log service in the style of the **SAP BTP Audit Log Service**,
+built with **D / vibe.d 0.10** using hexagonal **Clean Architecture**.
+It has an **SAP Fiori 3 (UI5)** frontend, an **approuter** with XSUAA, and four
+driving adapters on the same core:
 
-## Documentation update
+| Adapter | Entry point | Purpose |
+|---|---|---|
+| REST | `/api/v1/*` | integration API for services that write audit records |
+| **OData v4** | `/odata/v4/auditlog/` | Fiori / UI5 (`$metadata`, `$filter`, `$orderby`, `$select`, `$count`, `$search`, CRUD, action) |
+| **CLI** | `uim-auditlog-cli` | administration, scripting, JSON output |
+| **GtkD GUI** | `uim-auditlog-gui` | desktop client (GTK 3) |
 
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+All adapters use only the driving ports (`AuditLogPorts`). They share data through
+the configured snapshot storage, so an entry written with the CLI appears in the
+GUI and the Fiori app.
 
-A microservice for recording, querying, and managing audit logs across
-multi-tenant cloud environments, inspired by the
-**SAP BTP Audit Log Service**. Built with **D** and **vibe.d**, following
-**Clean Architecture** and **Hexagonal Architecture** (Ports & Adapters)
-principles.
-
-Part of the [UIM Platform](https://www.....de/uim/sap) suite.
+Part of the UIM Platform suite.
 
 ## Features
 
 | Capability | Description |
 |---|---|
-| **Audit Log Writing** | Write immutable audit log entries with 4 categories (security-events, configuration, data-access, data-modification), 4 severity levels, 19 action types, tenant-scoped configuration checks (category toggles, rate limiting, disabled tenants) |
-| **Audit Log Retrieval** | Paginated search with category and time-range filters, lookup by ID, by category, by user, by correlation ID, and tenant-scoped entry counts |
-| **Retention Policies** | Full CRUD for retention policies with configurable retention days (SAP default 90), category scoping, active/inactive/expired lifecycle, and default-policy designation |
-| **Audit Configuration** | Per-tenant audit config with category toggles (data access, data modification, security events, config changes), data masking (field-level), service exclusion lists, minimum severity thresholds, and rate limiting |
-| **Export Jobs** | Create export jobs (JSON/CSV) filtered by category and time range, list and retrieve export status, immediate export simulation with record counts and download URLs |
-| **Security Events** | Enriched security event recording — login/logout, auth failures, MFA, token operations — with automatic parent audit log entry creation, IP/user-agent/IdP/auth-method tracking, risk-level classification |
-| **Data Access Logging** | GDPR-aligned data access tracking — records who accessed whose data, which fields, for what purpose, through which channel — with automatic parent audit entry |
-| **Config Change Logging** | Tracks security-critical configuration changes with old/new value pairs, change justification, and automatic parent audit entry |
-| **Retention Enforcement** | Domain service that purges expired audit data across all log types (audit entries, security events, data access logs, config change logs) based on tenant retention policies |
-| **Health Check** | Service liveness endpoint |
+| Audit log writing | 4 categories, 4 severities, 19 actions; tenant config checks (category toggles, minimum severity, excluded services, masking, rate limit) |
+| Retrieval | paginated, category and time-range filters; by id, user or correlation id |
+| Security events | login/logout/MFA/token events with risk level and an automatic parent audit entry |
+| Data access (GDPR) | who read whose data, which fields, purpose and channel |
+| Configuration changes | old/new value pairs and a justification |
+| Retention | policies (default 90 days), manual or scheduled enforcement across all record types |
+| Exports | JSON/CSV export jobs with download |
+| Statistics | per-tenant KPIs (Fiori header and tiles, GUI overview, `cli stats`) |
 
-## Architecture
+## Project layout
 
 ```
 auditlog/
-├── source/
-│   ├── app.d                                       # Entry point & composition root
-│   ├── domain/                                     # Pure business logic (no dependencies)
-│   │   ├── types.d                                 #   7 type aliases & 8 enums
-│   │   ├── entities/                               #   Core domain structs
-│   │   │   ├── audit_log_entry.d                   #     Immutable audit record + AuditAttribute
-│   │   │   ├── audit_config.d                      #     Tenant-level audit configuration
-│   │   │   ├── retention_policy.d                  #     Retention policy with category scoping
-│   │   │   ├── export_job.d                        #     Export job with status & download URL
-│   │   │   ├── security_event.d                    #     Enriched security event record
-│   │   │   ├── data_access_log.d                   #     GDPR data access tracking record
-│   │   │   └── config_change_log.d                 #     Configuration change tracking record
-│   │   ├── ports/                                  #   Repository interfaces (ports)
-│   │   │   ├── audit_log_repository.d              #     search, findByCategory/User/Correlation, CRUD
-│   │   │   ├── audit_config_repository.d           #     findByTenant, findAll, CRUD
-│   │   │   ├── retention_policy_repository.d       #     findDefault, findByTenant, CRUD
-│   │   │   ├── export_job_repository.d             #     findByTenant, CRUD
-│   │   │   ├── security_event_repository.d         #     findByUser/Outcome/TimeRange, CRUD
-│   │   │   ├── data_access_log_repository.d        #     findByAccessor/DataSubject/TimeRange, CRUD
-│   │   │   └── config_change_log_repository.d      #     findByUser/ConfigType/TimeRange, CRUD
-│   │   └── services/                               #   Stateless domain services
-│   │       ├── audit_filter_service.d              #     Paginated search, correlation lookup, counts
-│   │       └── retention_enforcer.d                #     Purge expired entries across all log types
-│   ├── application/                                #   Application layer (use cases)
-│   │   ├── dto.d                                   #     Request DTOs & UsecaseResult
-│   │   └── usecases/                              #     Application services
-│   │       ├── write_audit_log.d                   #       Write audit entry with config checks
-│   │       ├── retrieve_audit_logs.d               #       Query, getById, getByCategory/User/Correlation
-│   │       ├── manage.retention.d                  #       Retention policy CRUD
-│   │       ├── manage.audit_config.d               #       Audit config CRUD (one per tenant)
-│   │       ├── manage.exports.d                    #       Export job create/list/get/delete
-│   │       ├── write_security_event.d              #       Write enriched security event + parent log
-│   │       ├── write_data_access_log.d             #       Write data access record + parent log
-│   │       └── write_config_change.d               #       Write config change record + parent log
-│   ├── infrastructure/                             #   Technical adapters
-│   │   ├── config.d                                #     Environment-based configuration
-│   │   ├── container.d                             #     Dependency injection wiring
-│   │   └── persistence/                            #     In-memory repository implementations
-│   │       ├── in_memory_audit_log_repo.d
-│   │       ├── in_memory_retention_repo.d
-│   │       ├── in_memory_audit_config_repo.d
-│   │       ├── in_memory_export_repo.d
-│   │       ├── in_memory_security_event_repo.d
-│   │       ├── in_memory_data_access_repo.d
-│   │       └── in_memory_config_change_repo.d
-│   └── presentation/                               #   HTTP driving adapters
-│       └── http/
-│           ├── health_controller.d
-│           ├── audit_log_controller.d
-│           ├── retention_controller.d
-│           ├── audit_config_controller.d
-│           ├── export_controller.d
-│           ├── security_event_controller.d
-│           ├── data_access_controller.d
-│           └── config_change_controller.d
-└── dub.sdl
+├── mta.yaml                     MTA descriptor (backend + approuter + XSUAA)
+├── backend/                     D / vibe.d service
+│   ├── dub.sdl                  configurations: defaultRun | cli | gui | defaultTest
+│   ├── config/default.json      default configuration
+│   └── source/
+│       ├── app.d                HTTP server composition root
+│       ├── cli.d                CLI entry point
+│       ├── gui.d                GtkD entry point
+│       └── uim/platform/auditlog/
+│           ├── domain/          entities, types, enumerations, services, exceptions
+│           ├── application/     usecases/{write,retrieve,manage}, services, dtos
+│           ├── ports/           usecases, services, repositories, storages, messaging, gateways
+│           │                    + driving.d (AuditLogPorts bundle)
+│           ├── infrastructure/  configuration, logging, security (XSUAA JWT), workers, container
+│           ├── persistence/     repositories, storages (memory, JSON file), mappers, records
+│           └── presentation/
+│               ├── http/        REST controllers (/api/v1)
+│               ├── odata/       OData v4: EDM model, $metadata, query engine, serializers
+│               ├── cli/         argument parser + command dispatcher
+│               ├── gui/         GtkD main window (built only with --config=gui)
+│               ├── web/         serves frontend/ at "/" for local development
+│               └── tabular.d    table projections shared by CLI and GUI
+├── frontend/                    SAP Fiori 3 / UI5 app (namespace uim.auditlog)
+│   ├── manifest.json            OData V4 model → odata/v4/auditlog/ ($direct, no $batch)
+│   ├── view/ controller/ fragment/ model/ i18n/ (en, de)
+│   ├── localService/            metadata.xml + mock data
+│   └── test/                    QUnit (formatter) + OPA5 journey
+└── approuter/                   @sap/approuter, xs-app.json, xs-security.json
 ```
 
-## REST API
+The dependency rule: `presentation → ports ← application → domain`, and
+`persistence → ports`. Only `infrastructure/container.d` and the three entry
+points know concrete classes.
 
-### Audit Logs
+## Build and run
 
-```
-POST   /api/v1/auditlog                    Write an audit log entry
-GET    /api/v1/auditlog                    Query audit logs (paginated, filtered)
-GET    /api/v1/auditlog/{id}              Get audit log entry by ID
-```
+Requirements: `dmd` or `ldc2`, `dub`. The GUI also needs GTK 3.24 development
+libraries; gtk-d 3.11 is fetched by dub.
 
-### Retention Policies
+```sh
+cd backend
 
-```
-POST   /api/v1/retention                   Create a retention policy
-GET    /api/v1/retention                   List retention policies for tenant
-GET    /api/v1/retention/{id}             Get retention policy by ID
-PUT    /api/v1/retention/{id}             Update a retention policy
-DELETE /api/v1/retention/{id}             Delete a retention policy
-```
+# HTTP server: REST + OData v4 + Fiori app at http://localhost:8085/
+dub run
 
-### Audit Configuration
+# Command line interface
+dub build --config=cli
+./build/uim-auditlog-cli help
+./build/uim-auditlog-cli logs write --message="Role changed" --category=configuration --user=alice
+./build/uim-auditlog-cli logs list --category=securityEvents --from=2026-11-01 --json
+./build/uim-auditlog-cli retention create --name="90 days" --days=90 --default
+./build/uim-auditlog-cli retention enforce
+./build/uim-auditlog-cli exports create --format=csv && ./build/uim-auditlog-cli exports download <id> --out=audit.csv
 
-```
-POST   /api/v1/configs                     Create audit config (one per tenant)
-GET    /api/v1/configs                     List all audit configurations
-GET    /api/v1/configs/{tenantId}          Get audit config by tenant
-PUT    /api/v1/configs/{id}               Update audit config
-DELETE /api/v1/configs/{id}               Delete audit config
-```
+# Desktop GUI (GtkD)
+dub run --config=gui -- --tenant=default
 
-### Export Jobs
-
-```
-POST   /api/v1/exports                     Create an export job
-GET    /api/v1/exports                     List export jobs for tenant
-GET    /api/v1/exports/{id}               Get export job by ID
-DELETE /api/v1/exports/{id}               Delete an export job
+# Unit tests
+dub test --config=defaultTest
 ```
 
-### Security Events
+CLI exit codes: `0` success, `1` failure (not found, validation), `2` usage error.
 
+### Fiori app
+
+- **Local, without login:** `dub run` serves `../frontend` at `/` (setting
+  `frontendDir`). Open `http://localhost:8085/`.
+- **Local, with XSUAA:** put credentials in `approuter/default-env.json`
+  (git-ignored), then run `cd approuter && npm install && npm run start:local`
+  and open `http://localhost:5000`.
+- **Tests:** `frontend/test/testsuite.qunit.html`.
+
+The UI has a KPI header (Statistics singleton) and an overview with category and
+severity tiles. It has filterable audit log tables with detail navigation, plus
+tabs for security events, data access and configuration changes. Retention
+policies can be created and deleted, and retention can be enforced through the
+`EnforceRetention` action. The audit configuration is edited inline (PATCH), and
+JSON/CSV exports can be created and downloaded.
+
+### Deploy to SAP BTP (Cloud Foundry)
+
+```sh
+mbt build            # builds the D binary (binary_buildpack) and the approuter incl. frontend
+cf deploy mta_archives/uim-auditlog_1.0.0.mtar
 ```
-POST   /api/v1/security-events             Write a security event
-```
 
-### Data Access Logs
+Then assign the role collections **UIM Audit Log Viewer** or **UIM Audit Log
+Administrator**.
 
-```
-POST   /api/v1/data-access                 Write a data access log
-```
-
-### Config Change Logs
-
-```
-POST   /api/v1/config-changes              Write a config change log
-```
-
-### Health
-
-```
-GET    /api/v1/health                      → {"status":"UP","service":"auditlog"}
-```
-
-## Build and Run
-
-```bash
-# Build
-cd auditlog
-dub build
-
-# Run (default: 0.0.0.0:8085)
-./build/uim-auditlog-platform-service
-
-# Override host/port via environment
-AL_HOST=127.0.0.1 AL_PORT=9090 ./build/uim-auditlog-platform-service
-```
+> The `file` storage writes JSON snapshots to the container disk, which is
+> ephemeral on Cloud Foundry. Use it for demos only. For production, implement
+> `ISnapshotStorage` or the repository ports with a database adapter.
 
 ## Configuration
 
-| Variable | Default | Description |
-|---|---|---|
-| `AL_HOST` | `0.0.0.0` | HTTP bind address |
-| `AL_PORT` | `8085` | HTTP listen port |
+Precedence, lowest to highest: compiled defaults → `config/default.json` (or
+`AL_CONFIG_FILE`) → environment → `VCAP_SERVICES` (credentials of the service
+named or tagged `auditlog-config`). The CLI and GUI also accept `--data-dir`,
+`--storage` and `--tenant`.
 
-## Domain Model Overview
+| Key | Env | Default | Meaning |
+|---|---|---|---|
+| host / port | `AL_HOST` / `AL_PORT`, `PORT` | 0.0.0.0 / 8085 | listener |
+| storage | `AL_STORAGE` | file | `file` (shared JSON snapshots) or `memory` |
+| dataDir | `AL_DATA_DIR` | data | snapshot directory |
+| defaultTenant | `AL_DEFAULT_TENANT` | default | tenant when no JWT or `X-Tenant-Id` is given |
+| odataPath | `AL_ODATA_PATH` | /odata/v4/auditlog | OData service root |
+| retentionIntervalMinutes | `AL_RETENTION_INTERVAL` | 0 (off) | background retention worker |
+| retentionTenants | `AL_RETENTION_TENANTS` | default | tenants for the worker (comma separated) |
+| frontendDir | `AL_FRONTEND_DIR` | ../frontend | serve the Fiori app at `/` (`""` = off) |
 
-### Type Aliases
+**Tenant and identity:** taken from the XSUAA bearer token (`zid`, `user_name`),
+or from the `X-Tenant-Id` / `X-User-Id` headers. The backend decodes the token
+but does **not** verify its signature. Expose it only behind the approuter, or
+add JWKS validation.
 
-| Alias | Underlying | Purpose |
-|---|---|---|
-| `AuditLogId` | `string` | Audit log entry identifier |
-| `RetentionPolicyId` | `string` | Retention policy identifier |
-| `AuditConfigId` | `string` | Audit config identifier |
-| `ExportJobId` | `string` | Export job identifier |
-| `TenantId` | `string` | Tenant identifier |
-| `UserId` | `string` | User identifier |
-| `ServiceId` | `string` | Originating service identifier |
+## OData v4
 
-### Enumerations
+```
+GET    /odata/v4/auditlog/                      service document
+GET    /odata/v4/auditlog/$metadata             CSDL with Common.Label / Capabilities annotations
+GET    /odata/v4/auditlog/AuditLogs?$filter=category eq 'dataAccess' and contains(tolower(message),'profile')
+         &$orderby=timestamp desc&$select=message,userId&$top=50&$skip=0&$count=true
+GET    /odata/v4/auditlog/AuditLogs('<id>')
+POST   /odata/v4/auditlog/AuditLogs | SecurityEvents | DataAccessLogs | ConfigChangeLogs
+POST/PATCH/DELETE  RetentionPolicies, AuditConfigs     DELETE ExportJobs   POST ExportJobs
+GET    /odata/v4/auditlog/Statistics            singleton
+POST   /odata/v4/auditlog/EnforceRetention      unbound action → RetentionResult
+```
+
+`$batch` is not supported, so the UI5 model uses `groupId: "$direct"`.
+
+## REST API (`/api/v1`)
+
+```
+POST/GET  /auditlog                GET /auditlog/{id}
+CRUD      /retention               CRUD /configs
+POST/GET  /exports                 GET /exports/{id}   GET /exports/{id}/download   DELETE /exports/{id}
+POST      /security-events         POST /data-access   POST /config-changes
+GET       /health
+```
+
+## Domain model
 
 | Enum | Values |
 |---|---|
-| **AuditCategory** | securityEvents, configuration, dataAccess, dataModification |
-| **AuditSeverity** | info, warning, error, critical |
-| **AuditAction** | create, read_, update, delete_, login, logout, loginFailed, passwordChange, roleAssign, roleRevoke, policyChange, configChange, export_, dataAccess, consentChange, tokenIssue, tokenRevoke, mfaEnroll, mfaVerify |
-| **AuditOutcome** | success, failure, denied, error |
-| **RetentionStatus** | active, inactive, expired |
-| **ExportStatus** | pending, inProgress, completed, failed |
-| **ExportFormat** | json, csv |
-| **ConfigStatus** | enabled, disabled |
+| AuditCategory | securityEvents, configuration, dataAccess, dataModification |
+| AuditSeverity | info, warning, error, critical |
+| AuditAction | create, read, update, delete, login, logout, loginFailed, passwordChange, roleAssign, roleRevoke, policyChange, configChange, export, dataAccess, consentChange, tokenIssue, tokenRevoke, mfaEnroll, mfaVerify |
+| AuditOutcome | success, failure, denied, error |
+| RetentionStatus | active, inactive, expired |
+| ExportStatus / ExportFormat | pending, inProgress, completed, failed / json, csv |
+| ConfigStatus | enabled, disabled |
 
-### Domain Services
+Domain services: **AuditPolicy** (decides whether an entry is logged, and masks
+fields), **AuditFilterService** (search and pagination), **RetentionEnforcer**
+(purges expired records of all four stores).
 
-- **AuditFilterService** — provides paginated search over audit log entries with optional category and time-range filters, correlation-based lookup across services, and tenant-scoped entry counts
-- **RetentionEnforcer** — enforces retention policies by purging entries older than the tenant's configured retention period (default 90 days) across all four log stores (audit entries, security events, data access logs, config change logs)
-
----
-
-## UML – Architecture Diagram (PlantUML)
-
-```plantuml
-@startuml AuditLog Service – Hexagonal Architecture
-
-!define PRESENTATION_COLOR #E3F2FD
-!define APPLICATION_COLOR  #FFF3E0
-!define DOMAIN_COLOR       #E8F5E9
-!define INFRA_COLOR        #F3E5F5
-!define PORT_COLOR         #E1F5FE
-!define SERVICE_COLOR      #FFF8E1
-
-skinparam @safe: class {
-  BackgroundColor    WHITE
-  BorderColor        #37474F
-  ArrowColor         #37474F
-  FontSize           11
-}
-
-skinparam package {
-  FontSize          12
-  FontStyle         bold
-  BorderThickness   2
-}
-
-title UIM AuditLog Platform Service\nClean + Hexagonal Architecture
-
-' ============================================================
-' PRESENTATION LAYER (Driving Adapters)
-' ============================================================
-
-package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
-  skinparam packageBackgroundColor PRESENTATION_COLOR
-
-  @safe: class AuditLogController << (H,#EF5350) >> {
-    POST   /api/v1/auditlog
-    GET    /api/v1/auditlog
-    GET    /api/v1/auditlog/{id}
-  }
-
-  @safe: class RetentionController << (H,#EF5350) >> {
-    POST   /api/v1/retention
-    GET    /api/v1/retention
-    GET    /api/v1/retention/{id}
-    PUT    /api/v1/retention/{id}
-    DELETE /api/v1/retention/{id}
-  }
-
-  @safe: class AuditConfigController << (H,#EF5350) >> {
-    POST   /api/v1/configs
-    GET    /api/v1/configs
-    GET    /api/v1/configs/{tenantId}
-    PUT    /api/v1/configs/{id}
-    DELETE /api/v1/configs/{id}
-  }
-
-  @safe: class ExportController << (H,#EF5350) >> {
-    POST   /api/v1/exports
-    GET    /api/v1/exports
-    GET    /api/v1/exports/{id}
-    DELETE /api/v1/exports/{id}
-  }
-
-  @safe: class SecurityEventController << (H,#EF5350) >> {
-    POST /api/v1/security-events
-  }
-
-  @safe: class DataAccessController << (H,#EF5350) >> {
-    POST /api/v1/data-access
-  }
-
-  @safe: class ConfigChangeController << (H,#EF5350) >> {
-    POST /api/v1/config-changes
-  }
-
-  @safe: class HealthController << (H,#EF5350) >> {
-    GET /api/v1/health
-  }
-}
-
-' ============================================================
-' APPLICATION LAYER (Use Cases)
-' ============================================================
-
-package "Application Layer  «use cases»" as APP <<Rectangle>> {
-  skinparam packageBackgroundColor APPLICATION_COLOR
-
-  @safe: class WriteAuditLogUseCase << (U,#FF7043) >> {
-    + writeLog(req) : UsecaseResult
-  }
-
-  @safe: class RetrieveAuditLogsUseCase << (U,#FF7043) >> {
-    + query(req) : AuditLogEntry[]
-    + getById(tenantId, id) : AuditLogEntry*
-    + getByCategory(tenantId, cat) : AuditLogEntry[]
-    + getByUser(tenantId, userId) : AuditLogEntry[]
-    + getByCorrelation(corrId) : AuditLogEntry[]
-    + countByTenant(tenantId) : long
-  }
-
-  @safe: class ManageRetentionUseCase << (U,#FF7043) >> {
-    + createPolicy(req) : UsecaseResult
-    + getPolicy(tenantId, id) : RetentionPolicy*
-    + listPolicies(tenantId) : RetentionPolicy[]
-    + updatePolicy(req) : UsecaseResult
-    + deletePolicy(tenantId, id) : void
-  }
-
-  @safe: class ManageAuditConfigUseCase << (U,#FF7043) >> {
-    + createConfig(req) : UsecaseResult
-    + getConfig(tenantId) : AuditConfig*
-    + listConfigs() : AuditConfig[]
-    + updateConfig(req) : UsecaseResult
-    + deleteConfig(tenantId, id) : void
-  }
-
-  @safe: class ManageExportsUseCase << (U,#FF7043) >> {
-    + createExport(req) : UsecaseResult
-    + getExport(tenantId, id) : ExportJob*
-    + listExports(tenantId) : ExportJob[]
-    + deleteExport(tenantId, id) : void
-  }
-
-  @safe: class WriteSecurityEventUseCase << (U,#FF7043) >> {
-    + writeEvent(req) : UsecaseResult
-  }
-
-  @safe: class WriteDataAccessLogUseCase << (U,#FF7043) >> {
-    + writeLog(req) : UsecaseResult
-  }
-
-  @safe: class WriteConfigChangeUseCase << (U,#FF7043) >> {
-    + writeChange(req) : UsecaseResult
-  }
-}
-
-' ============================================================
-' DOMAIN LAYER (Entities, Ports, Services)
-' ============================================================
-
-package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
-  skinparam packageBackgroundColor DOMAIN_COLOR
-
-  package "Entities" as ENT {
-    @safe: class AuditLogEntry << (E,#66BB6A) >> {
-      id : AuditLogId
-      tenantId : TenantId
-      userId : UserId
-      category : AuditCategory
-      severity : AuditSeverity
-      action : AuditAction
-      outcome : AuditOutcome
-      attributes : AuditAttribute[]
-      correlationId : string
-      timestamp : long
-    }
-
-    @safe: class AuditConfig << (E,#66BB6A) >> {
-      id : AuditConfigId
-      tenantId : TenantId
-      status : ConfigStatus
-      logDataAccess : bool
-      logDataModification : bool
-      logSecurityEvents : bool
-      logConfigurationChanges : bool
-      enableDataMasking : bool
-      maskedFields : string[]
-      excludedServices : string[]
-      minimumSeverity : AuditSeverity
-      rateLimitPerSecond : int
-    }
-
-    @safe: class RetentionPolicy << (E,#66BB6A) >> {
-      id : RetentionPolicyId
-      tenantId : TenantId
-      retentionDays : int
-      categories : AuditCategory[]
-      status : RetentionStatus
-      isDefault : bool
-    }
-
-    @safe: class ExportJob << (E,#66BB6A) >> {
-      id : ExportJobId
-      tenantId : TenantId
-      format_ : ExportFormat
-      status : ExportStatus
-      categories : AuditCategory[]
-      totalRecords : long
-      downloadUrl : string
-    }
-
-    @safe: class SecurityEvent << (E,#66BB6A) >> {
-      auditLogId : AuditLogId
-      tenantId : TenantId
-      userId : UserId
-      eventType : string
-      authMethod : string
-      outcome : AuditOutcome
-      riskLevel : string
-    }
-
-    @safe: class DataAccessLog << (E,#66BB6A) >> {
-      auditLogId : AuditLogId
-      tenantId : TenantId
-      accessedBy : UserId
-      dataSubject : string
-      accessedFields : string[]
-      purpose : string
-      channel : string
-    }
-
-    @safe: class ConfigChangeLog << (E,#66BB6A) >> {
-      auditLogId : AuditLogId
-      tenantId : TenantId
-      changedBy : UserId
-      configType : string
-      changes : AuditAttribute[]
-      reason : string
-    }
-  }
-
-  package "Ports  «interfaces»" as PORTS {
-    @safe: interface  IAuditLogRepository << (P,#42A5F5) >> {
-      + findByTenant(tenantId) : AuditLogEntry[]
-      + findById(tenantId, id) : AuditLogEntry*
-      + search(tenantId, categories, from, to, limit, offset) : AuditLogEntry[]
-      + countByTenant(tenantId) : long
-      + save(entry) : void
-      + removeOlderThan(tenantId, before) : void
-    }
-
-    @safe: interface  AuditConfigRepository << (P,#42A5F5) >> {
-      + findAll() : AuditConfig[]
-      + findByTenant(tenantId) : AuditConfig*
-      + findById(id) : AuditConfig*
-      + save(config) : void
-      + update(config) : void
-      + removeById(tenantId, id) : void
-    }
-
-    @safe: interface  IRetentionPolicyRepository << (P,#42A5F5) >> {
-      + findByTenant(tenantId) : RetentionPolicy[]
-      + findById(tenantId, id) : RetentionPolicy*
-      + findDefault(tenantId) : RetentionPolicy*
-      + save(policy) : void
-      + update(policy) : void
-      + removeById(tenantId, id) : void
-    }
-
-    @safe: interface  IExportJobRepository << (P,#42A5F5) >> {
-      + findByTenant(tenantId) : ExportJob[]
-      + findById(tenantId, id) : ExportJob*
-      + save(job) : void
-      + update(job) : void
-      + removeById(tenantId, id) : void
-    }
-
-    @safe: interface  ISecurityEventRepository << (P,#42A5F5) >> {
-      + findByTenant(tenantId) : SecurityEvent[]
-      + findByUser(tenantId, userId) : SecurityEvent[]
-      + findByOutcome(tenantId, outcome) : SecurityEvent[]
-      + save(event) : void
-      + removeOlderThan(tenantId, before) : void
-    }
-
-    @safe: interface  IDataAccessLogRepository << (P,#42A5F5) >> {
-      + findByTenant(tenantId) : DataAccessLog[]
-      + findByAccessor(tenantId, userId) : DataAccessLog[]
-      + findByDataSubject(tenantId, subject) : DataAccessLog[]
-      + save(log) : void
-      + removeOlderThan(tenantId, before) : void
-    }
-
-    @safe: interface  IConfigChangeLogRepository << (P,#42A5F5) >> {
-      + findByTenant(tenantId) : ConfigChangeLog[]
-      + findByUser(tenantId, userId) : ConfigChangeLog[]
-      + findByConfigType(tenantId, type) : ConfigChangeLog[]
-      + save(log) : void
-      + removeOlderThan(tenantId, before) : void
-    }
-  }
-
-  package "Domain Services" as DSVC {
-    @safe: class AuditFilterService << (S,#FFCA28) >> {
-      + search(tenantId, categories, from, to, limit, offset)
-      + findCorrelated(correlationId)
-      + countForTenant(tenantId)
-    }
-
-    @safe: class RetentionEnforcer << (S,#FFCA28) >> {
-      + enforceForTenant(tenantId) : long
-    }
-  }
-}
-
-' ============================================================
-' INFRASTRUCTURE LAYER (Driven Adapters)
-' ============================================================
-
-package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
-  skinparam packageBackgroundColor INFRA_COLOR
-
-  @safe: class AuditLogRepository << (A,#AB47BC) >>
-  @safe: class AuditConfigRepository << (A,#AB47BC) >>
-  @safe: class RetentionPolicyRepository << (A,#AB47BC) >>
-  @safe: class ExportJobRepository << (A,#AB47BC) >>
-  @safe: class SecurityEventRepository << (A,#AB47BC) >>
-  @safe: class DataAccessLogRepository << (A,#AB47BC) >>
-  @safe: class ConfigChangeLogRepository << (A,#AB47BC) >>
-}
-
-' ============================================================
-' RELATIONSHIPS
-' ============================================================
-
-' Controllers → Use Cases
-AuditLogController --> WriteAuditLogUseCase
-AuditLogController --> RetrieveAuditLogsUseCase
-RetentionController --> ManageRetentionUseCase
-AuditConfigController --> ManageAuditConfigUseCase
-ExportController --> ManageExportsUseCase
-SecurityEventController --> WriteSecurityEventUseCase
-DataAccessController --> WriteDataAccessLogUseCase
-ConfigChangeController --> WriteConfigChangeUseCase
-
-' Use Cases → Ports
-WriteAuditLogUseCase --> IAuditLogRepository
-WriteAuditLogUseCase --> AuditConfigRepository
-RetrieveAuditLogsUseCase --> IAuditLogRepository
-ManageRetentionUseCase --> IRetentionPolicyRepository
-ManageAuditConfigUseCase --> AuditConfigRepository
-ManageExportsUseCase --> IExportJobRepository
-ManageExportsUseCase --> IAuditLogRepository
-WriteSecurityEventUseCase --> IAuditLogRepository
-WriteSecurityEventUseCase --> ISecurityEventRepository
-WriteDataAccessLogUseCase --> IAuditLogRepository
-WriteDataAccessLogUseCase --> IDataAccessLogRepository
-WriteConfigChangeUseCase --> IAuditLogRepository
-WriteConfigChangeUseCase --> IConfigChangeLogRepository
-
-' Domain Services → Ports
-AuditFilterService --> IAuditLogRepository
-RetentionEnforcer --> IAuditLogRepository
-RetentionEnforcer --> IRetentionPolicyRepository
-RetentionEnforcer --> ISecurityEventRepository
-RetentionEnforcer --> IDataAccessLogRepository
-RetentionEnforcer --> IConfigChangeLogRepository
-
-' Use Cases → Entities
-WriteAuditLogUseCase ..> AuditLogEntry
-RetrieveAuditLogsUseCase ..> AuditLogEntry
-ManageRetentionUseCase ..> RetentionPolicy
-ManageAuditConfigUseCase ..> AuditConfig
-ManageExportsUseCase ..> ExportJob
-WriteSecurityEventUseCase ..> SecurityEvent
-WriteSecurityEventUseCase ..> AuditLogEntry
-WriteDataAccessLogUseCase ..> DataAccessLog
-WriteDataAccessLogUseCase ..> AuditLogEntry
-WriteConfigChangeUseCase ..> ConfigChangeLog
-WriteConfigChangeUseCase ..> AuditLogEntry
-
-' Infrastructure implements Ports
-AuditLogRepository ..|> IAuditLogRepository
-AuditConfigRepository ..|> AuditConfigRepository
-RetentionPolicyRepository ..|> IRetentionPolicyRepository
-ExportJobRepository ..|> IExportJobRepository
-SecurityEventRepository ..|> ISecurityEventRepository
-DataAccessLogRepository ..|> IDataAccessLogRepository
-ConfigChangeLogRepository ..|> IConfigChangeLogRepository
-
-@enduml
-```
-
-## Testing
-
-```bash
-dub test
-```
+See [UML.md](UML.md) for class, component and sequence diagrams.
 
 ## License
 
-See the repository root [LICENSE](../LICENSE) file.
+Apache-2.0 © 2018-2026 Ozan Nurettin Süel

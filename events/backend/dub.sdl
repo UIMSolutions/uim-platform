@@ -1,0 +1,66 @@
+name "events"
+description "SAP Event Mesh style service — namespaces, queues, topic subscriptions, webhooks, channels and client bindings with publish/consume, redelivery and dead-lettering. D/vibe.d backend with REST, OData v4 (SAP Fiori), CLI and GtkD GUI"
+homepage "https://github.com/UIMSolutions/uim-platform"
+authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
+copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
+license "Apache-2.0"
+
+targetPath "build"
+sourcePaths "source"
+importPaths "source"
+
+// Shared platform library: uim-framework, vibe-d 0.10.x, generic OData v4 engine,
+// CLI and GtkD entity browser.
+dependency "uim-platform:service" path="../.."
+
+buildRequirements "allowWarnings" "silenceDeprecations"
+
+// ── HTTP server: REST (/api/v1/event-mesh) + OData v4 (/odata/v4/event-mesh) ──
+// dub build            (or --config=defaultRun)
+// ./build/uim-event-mesh-platform-service
+configuration "defaultRun" {
+	targetType "executable"
+	targetName "uim-event-mesh-platform-service"
+	mainSourceFile "source/app.d"
+	excludedSourceFiles "source/cli.d" "source/gui.d"
+}
+
+// ── Command line interface ──────────────────────────────────────────────────
+// dub build --config=cli
+// ./build/uim-event-mesh-cli help
+configuration "cli" {
+	targetType "executable"
+	targetName "uim-event-mesh-cli"
+	mainSourceFile "source/cli.d"
+	excludedSourceFiles "source/app.d" "source/gui.d"
+}
+
+// ── Desktop GUI (GtkD 3 / GTK 3.24) ─────────────────────────────────────────
+// dub build --config=gui
+// ./build/uim-event-mesh-gui [--tenant=<id>] [--data-file=<path>]
+configuration "gui" {
+	targetType "executable"
+	targetName "uim-event-mesh-gui"
+	mainSourceFile "source/gui.d"
+	excludedSourceFiles "source/app.d" "source/cli.d"
+	dependency "gtk-d" version="~>3.11.0"
+}
+
+// ── Libraries / unit tests (dub test) ───────────────────────────────────────
+configuration "defaultTest" {
+	targetType "library"
+	sourcePaths "tests"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "modules" {
+	targetType "library"
+	versions "show_module"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "tests" {
+	targetType "library"
+	versions "show_module" "show_test"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}

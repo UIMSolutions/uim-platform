@@ -1,72 +1,83 @@
 name "auditlog"
-description "BTP Site Manager style design-time service using D, uim-framework and vibe.d"
+description "SAP BTP Audit Log style service — D/vibe.d backend with REST, OData v4, CLI and GtkD GUI"
 homepage "https://github.com/UIMSolutions/uim/platform/auditlog"
 authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
 copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
 license "Apache-2.0"
 
-targetType "executable"
-targetName "uim-auditlog-platform-service"
 targetPath "build"
 sourcePaths "source"
 importPaths "source"
-// Dependency on the core framework
-dependency "uim-platform:service" path=".."
-// Build settings
+
+// Core framework (brings uim-framework, vibe-d 0.10.x and gtk-d)
+dependency "uim-platform:service" path="../.."
+
 buildRequirements "allowWarnings" "silenceDeprecations"
 buildOptions "ignoreDeprecations" "debugInfo"
 
-// Configurations 
+// ── HTTP server: REST (/api/v1) + OData v4 (/odata/v4/auditlog) ─────────────
+// dub build            (or --config=defaultRun)
+// ./build/uim-auditlog-platform-service
 configuration "defaultRun" {
 	targetType "executable"
+	targetName "uim-auditlog-platform-service"
+	mainSourceFile "source/app.d"
+	excludedSourceFiles "source/cli.d" "source/gui.d"
 }
 
+// ── Command line interface ──────────────────────────────────────────────────
+// dub build --config=cli
+// ./build/uim-auditlog-cli help
 configuration "cli" {
-    targetName "app-alpha"
-    versions "LaunchAlpha"
+	targetType "executable"
+	targetName "uim-auditlog-cli"
+	mainSourceFile "source/cli.d"
+	excludedSourceFiles "source/app.d" "source/gui.d"
 }
 
+// ── Desktop GUI (GtkD 3 / GTK 3.24) ─────────────────────────────────────────
+// dub build --config=gui
+// ./build/uim-auditlog-gui [--tenant=<id>] [--data-dir=<dir>]
 configuration "gui" {
-    targetName "app-alpha"
-    versions "LaunchAlpha"
+	targetType "executable"
+	targetName "uim-auditlog-gui"
+	mainSourceFile "source/gui.d"
+	excludedSourceFiles "source/app.d" "source/cli.d"
+	dependency "gtk-d" version="~>3.11.0"
 }
 
-configuration "http" {
-    targetName "app-alpha"
-    versions "LaunchAlpha"
-}
-
-configuration "web" {
-    targetName "app-beta"
-    versions "LaunchBeta"
-}
-
+// ── Libraries / unit tests ──────────────────────────────────────────────────
 configuration "defaultTest" {
 	targetType "library"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "modules" {
 	targetType "library"
 	versions "show_module"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "tests" {
 	targetType "library"
 	versions "show_module" "show_test"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "inits" {
 	targetType "library"
 	versions "show_module" "show_init"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "calls" {
 	targetType "library"
 	versions "show_module" "show_test" "show_function"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "verbose" {
 	targetType "library"
 	versions "show_module" "show_test" "show_init" "show_function"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
-

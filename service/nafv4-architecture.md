@@ -67,7 +67,9 @@ Service Library
 
 ## 3. Service View (NSV)
 
-> This is a **library** — it exposes no HTTP endpoints.
+> This is a **library**. It exposes no endpoints itself, but ships opt-in
+> adapters that give any service an OData v4 endpoint, a CLI and a GtkD GUI
+> from one EDM model (see `README.md`).
 
 | Module | Path | Purpose |
 |---|---|---|
@@ -77,6 +79,23 @@ Service Library
 | Application | `application/` | UsecaseResult, QueryResult, IdUseCase, TenantUseCase |
 | Exceptions | `exceptions/` | UIMException, ValidationException, AuthorizationException, ConfigException |
 | Tests | `tests/` | Shared test helpers |
+| Ports | `ports/` | repositories, storages (incl. IDocumentStore), services (IEntitySetProvider, IActionHandler, RequestContext) |
+| Persistence | `persistence/` | repository + storage implementations, Memory/FileDocumentStore |
+| Application services | `application/services/` | DocumentEntitySetProvider |
+| Infrastructure | `infrastructure/` | configuration (defaults → env → VCAP), security (JWT HS256/RS256), structured logging |
+| OData v4 (opt-in) | `presentation/odata/` | EDM model, $metadata with Fiori annotations, query options, $batch, controller |
+| CLI (opt-in) | `presentation/cli/` | CliApplication, generic entity commands |
+| GUI (opt-in) | `presentation/gui/` | GtkD entity browser |
+
+Generic OData v4 endpoint provided to services (`ODataController`):
+
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/`, `/$metadata` | service document, CSDL incl. UI/Common/Capabilities annotations |
+| GET | `/<Set>`, `/<Set>/$count`, `/<Set>('<key>')` | $filter, $orderby, $select, $top, $skip, $skiptoken, $count, $search |
+| POST / PATCH / DELETE | `/<Set>[('<key>')]` | per capability; Prefer: return=minimal |
+| POST | `/$batch` | multipart/mixed (change sets, Content-ID) and JSON batch |
+| POST | `/<Action>` | unbound actions |
 
 ---
 
@@ -135,3 +154,8 @@ dub.sdl consumers add:
 | AD-3 | In-memory repository mixin | Enables test-first development per service |
 | AD-4 | Strong-typed Id wrappers | Prevents id confusion across aggregate roots |
 | AD-5 | Shared UsecaseResult / QueryResult DTOs | Uniform application layer API surface |
+| AD-6 | Ports/persistence split out of `domain/` and `infrastructure/`; old module paths kept as forwarding modules | Hexagonal layout without breaking the ~50 dependent services |
+| AD-7 | One EDM model drives OData, CLI and GUI through `ODataEngine` | Identical validation, scopes and behaviour on every channel |
+| AD-8 | Protocol adapters are opt-in imports, not re-exported by `uim.platform.service` | Avoid symbol clashes with service-specific adapters (e.g. auditlog's own OData code) |
+| AD-9 | Scopes are trusted only from verified tokens (ITokenVerifier) | Decoded-but-unverified JWTs must not grant permissions |
+| AD-10 | $batch change sets execute sequentially, not atomically | Providers have no transaction port yet |

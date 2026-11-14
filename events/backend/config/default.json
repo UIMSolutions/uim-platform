@@ -1,0 +1,18 @@
+{
+  "serviceName": "uim-event-mesh",
+  "serviceVersion": "2.0.0",
+  "host": "0.0.0.0",
+  "port": 8109,
+  "storage": "file",
+  "dataFile": "data/event-mesh.json",
+  "defaultTenant": "default",
+  "restPath": "/api/v1/event-mesh",
+  "odataPath": "/odata/v4/event-mesh",
+  "maxPageSize": 200,
+  "requireAuthentication": false,
+  "jwtSecret": "",
+  "frontendDir": "../frontend",
+  "deliveryIntervalSeconds": 0,
+  "webhookTimeoutSeconds": 10,
+  "deliveryTenants": ["default"]
+}

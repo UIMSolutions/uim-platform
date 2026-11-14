@@ -1,0 +1,11 @@
+# Local approuter configuration contains XSUAA secrets — never commit
+approuter/default-env.json
+approuter/resources/
+approuter/node_modules/
+# Runtime data (JSON snapshots) and build output
+backend/data/
+backend/dist/
+backend/.dub/
+frontend/node_modules/
+frontend/dist/
+mta_archives/
