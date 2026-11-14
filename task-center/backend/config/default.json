@@ -1,0 +1,18 @@
+{
+  "serviceName": "uim-task-center",
+  "serviceVersion": "2.0.0",
+  "host": "0.0.0.0",
+  "port": 8103,
+  "storage": "file",
+  "dataFile": "data/task-center.json",
+  "defaultTenant": "default",
+  "restPath": "/api/v1/task-center",
+  "odataPath": "/odata/v4/task-center",
+  "maxPageSize": 200,
+  "requireAuthentication": false,
+  "jwtSecret": "",
+  "frontendDir": "../frontend",
+  "syncIntervalSeconds": 0,
+  "providerTimeoutSeconds": 15,
+  "syncTenants": ["default"]
+}

@@ -1,0 +1,67 @@
+name "task-center"
+description "SAP Task Center style service — a unified inbox that federates human tasks from S/4HANA, SuccessFactors, Ariba, Concur, SAP Build and custom providers: task lifecycle (claim, forward, approve/reject, escalate, resubmit), substitution with auto-forwarding, comments, attachments, saved filters and an audit trail. D/vibe.d backend with REST, OData v4 (SAP Fiori), CLI and GtkD GUI"
+homepage "https://github.com/UIMSolutions/uim-platform"
+authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
+copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
+license "Apache-2.0"
+
+targetPath "build"
+sourcePaths "source"
+importPaths "source"
+
+// Shared platform library: uim-framework, vibe-d 0.10.x, generic OData v4 engine,
+// CLI and GtkD entity browser.
+dependency "uim-platform:service" path="../.."
+
+buildRequirements "allowWarnings" "silenceDeprecations"
+
+// ── HTTP server: REST (/api/v1/task-center) + OData v4 (/odata/v4/task-center) ──
+// dub build            (or --config=defaultRun)
+// ./build/uim-task-center-platform-service
+configuration "defaultRun" {
+	targetType "executable"
+	targetName "uim-task-center-platform-service"
+	mainSourceFile "source/app.d"
+	excludedSourceFiles "source/cli.d" "source/gui.d"
+}
+
+// ── Command line interface ──────────────────────────────────────────────────
+// dub build --config=cli
+// ./build/uim-task-center-cli help
+configuration "cli" {
+	targetType "executable"
+	targetName "uim-task-center-cli"
+	mainSourceFile "source/cli.d"
+	excludedSourceFiles "source/app.d" "source/gui.d"
+}
+
+// ── Desktop GUI (GtkD 3 / GTK 3.24) ─────────────────────────────────────────
+// dub build --config=gui
+// ./build/uim-task-center-gui [--tenant=<id>] [--user=<id>] [--data-file=<path>]
+configuration "gui" {
+	targetType "executable"
+	targetName "uim-task-center-gui"
+	mainSourceFile "source/gui.d"
+	excludedSourceFiles "source/app.d" "source/cli.d"
+	dependency "gtk-d" version="~>3.11.0"
+}
+
+// ── Libraries / unit tests (dub test) ───────────────────────────────────────
+configuration "defaultTest" {
+	targetType "library"
+	sourcePaths "tests"
+	importPaths "tests"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "modules" {
+	targetType "library"
+	versions "show_module"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "tests" {
+	targetType "library"
+	versions "show_module" "show_test"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
