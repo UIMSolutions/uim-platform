@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgServicePlan" title="{i18n>titleCreateServicePlan}" contentWidth="34rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>service}" required="true"/>
+      <Input value="{ui>/draft/serviceName}"/>
+      <Label text="{i18n>serviceDisplayName}"/>
+      <Input value="{ui>/draft/serviceDisplayName}"/>
+      <Label text="{i18n>plan}" required="true"/>
+      <Input value="{ui>/draft/planName}"/>
+      <Label text="{i18n>planDisplayName}"/>
+      <Input value="{ui>/draft/planDisplayName}"/>
+      <Label text="{i18n>description}"/>
+      <Input value="{ui>/draft/description}"/>
+      <Label text="{i18n>category}"/>
+      <Select selectedKey="{ui>/draft/category}" width="100%">
+        <core:Item key="service" text="{i18n>catService}"/>
+        <core:Item key="application" text="{i18n>catApplication}"/>
+        <core:Item key="environment" text="{i18n>catEnvironmentPlan}"/>
+        <core:Item key="elasticService" text="{i18n>catElastic}"/>
+      </Select>
+      <Label text="{i18n>pricingModel}"/>
+      <Select selectedKey="{ui>/draft/pricingModel}" width="100%">
+        <core:Item key="free" text="{i18n>priceFree}"/>
+        <core:Item key="subscription" text="{i18n>priceSubscription}"/>
+        <core:Item key="consumption" text="{i18n>priceConsumption}"/>
+        <core:Item key="byol" text="{i18n>priceByol}"/>
+      </Select>
+      <Label text="{i18n>maxQuota}"/>
+      <Input value="{ui>/draft/maxQuota}" type="Number"/>
+      <Label text="{i18n>unit}"/>
+      <Input value="{ui>/draft/unit}"/>
+      <Label text="{i18n>beta}"/>
+      <CheckBox selected="{ui>/draft/isBeta}"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

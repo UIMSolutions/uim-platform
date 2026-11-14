@@ -1,0 +1,89 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "uim.translation",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": { "version": "1.0.0" },
+    "dataSources": {
+      "mainService": {
+        "uri": "odata/v4/translation/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0",
+          "localUri": "localService/metadata.xml"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "translation-manage": {
+          "semanticObject": "Translation",
+          "action": "manage",
+          "title": "{{appTitle}}",
+          "signature": { "parameters": {}, "additionalParameters": "allowed" }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "fullWidth": true,
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "uim.translation.view.App",
+      "type": "XML",
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.f": {},
+        "sap.uxap": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": { "compact": true, "cozy": true },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": { "bundleName": "uim.translation.i18n.i18n", "supportedLocales": ["", "de"], "fallbackLocale": "" }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "autoExpandSelect": true,
+          "operationMode": "Server",
+          "groupId": "$direct",
+          "updateGroupId": "$direct"
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "uim.translation.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        { "pattern": ":tab:", "name": "main", "target": "main" },
+        { "pattern": "TranslationProjects/{id}", "name": "project", "target": "project" }
+      ],
+      "targets": {
+        "main": { "id": "main", "name": "Main", "level": 1 },
+        "project": { "id": "project", "name": "ProjectDetail", "level": 2 }
+      }
+    }
+  }
+}

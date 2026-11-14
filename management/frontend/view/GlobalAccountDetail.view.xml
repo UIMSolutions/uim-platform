@@ -1,0 +1,81 @@
+<mvc:View
+  controllerName="uim.management.controller.GlobalAccountDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:uxap="sap.uxap"
+  xmlns:f="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="globalAccountPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onNavBack"/>
+        </uxap:navigationActions>
+        <uxap:heading>
+          <Title text="{displayName}" wrapping="true"/>
+        </uxap:heading>
+        <uxap:expandedContent>
+          <Text text="{companyName} · {contractNumber}"/>
+        </uxap:expandedContent>
+        <uxap:actions>
+          <Button text="{i18n>suspend}" press=".onSuspend" enabled="{path: 'status', formatter: '.formatter.canSuspend'}"/>
+          <Button text="{i18n>reactivate}" press=".onReactivate" enabled="{path: 'status', formatter: '.formatter.canReactivate'}"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <ObjectStatus title="{i18n>status}" text="{path: 'status', formatter: '.formatter.enumText'}"
+        state="{path: 'status', formatter: '.formatter.statusState'}" class="sapUiMediumMarginEnd"/>
+      <ObjectStatus title="{i18n>licenseType}" text="{path: 'licenseType', formatter: '.formatter.enumText'}" class="sapUiMediumMarginEnd"/>
+      <ObjectStatus title="{i18n>region}" text="{region}" class="sapUiMediumMarginEnd"/>
+      <VBox class="sapUiMediumMarginEnd">
+        <Label text="{i18n>subaccountUsage}"/>
+        <ProgressIndicator width="12rem" displayOnly="true"
+          percentValue="{= ${maxSubaccounts} > 0 ? Math.round(${currentSubaccounts} * 100 / ${maxSubaccounts}) : 0 }"
+          displayValue="{parts: ['currentSubaccounts', 'maxSubaccounts'], formatter: '.formatter.usage'}"/>
+      </VBox>
+      <VBox>
+        <Label text="{i18n>directoryUsage}"/>
+        <ProgressIndicator width="12rem" displayOnly="true"
+          percentValue="{= ${maxDirectories} > 0 ? Math.round(${currentDirectories} * 100 / ${maxDirectories}) : 0 }"
+          displayValue="{parts: ['currentDirectories', 'maxDirectories'], formatter: '.formatter.usage'}"/>
+      </VBox>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>general}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" columnsM="2" columnsL="2">
+              <Label text="{i18n>displayName}"/>
+              <Input value="{displayName}" change=".onChanged"/>
+              <Label text="{i18n>description}"/>
+              <Input value="{description}" change=".onChanged"/>
+              <Label text="{i18n>companyName}"/>
+              <Input value="{companyName}" change=".onChanged"/>
+              <Label text="{i18n>contactEmail}"/>
+              <Input value="{contactEmail}" type="Email" change=".onChanged"/>
+              <Label text="{i18n>costCenter}"/>
+              <Input value="{costCenter}" change=".onChanged"/>
+              <Label text="{i18n>maxSubaccounts}"/>
+              <Input value="{maxSubaccounts}" type="Number" change=".onChanged"/>
+              <Label text="{i18n>maxDirectories}"/>
+              <Input value="{maxDirectories}" type="Number" change=".onChanged"/>
+            </f:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>hierarchy}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection title="{i18n>tabDirectories}">
+            <List id="gaDirectories" noDataText="{i18n>noData}"/>
+          </uxap:ObjectPageSubSection>
+          <uxap:ObjectPageSubSection title="{i18n>tabSubaccounts}">
+            <List id="gaSubaccounts" noDataText="{i18n>noData}"/>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

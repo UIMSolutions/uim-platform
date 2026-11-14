@@ -1,0 +1,93 @@
+[
+  {
+    "defaultPriority": "high",
+    "dueInDays": 3,
+    "updatedAt": "2026-11-11T13:08:07Z",
+    "id": "po-approval",
+    "isActive": true,
+    "createdAt": "2026-11-11T13:08:07Z",
+    "createdBy": "cli",
+    "name": "Purchase Order Approval",
+    "taskSchema": "",
+    "category": "approval",
+    "taskCount": 3,
+    "openTaskCount": 2,
+    "providerId": "s4hana-procurement",
+    "requiresClaim": true,
+    "description": "",
+    "allowedActions": [
+      "approve",
+      "reject",
+      "escalate",
+      "cancel"
+    ],
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "defaultPriority": "medium",
+    "dueInDays": 5,
+    "updatedAt": "2026-11-11T13:08:07Z",
+    "id": "leave-request",
+    "isActive": true,
+    "createdAt": "2026-11-11T13:08:07Z",
+    "createdBy": "cli",
+    "name": "Leave Request",
+    "taskSchema": "",
+    "category": "approval",
+    "taskCount": 2,
+    "openTaskCount": 1,
+    "providerId": "successfactors-hr",
+    "requiresClaim": false,
+    "description": "",
+    "allowedActions": [
+      "approve",
+      "reject"
+    ],
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "defaultPriority": "medium",
+    "dueInDays": 7,
+    "updatedAt": "2026-11-11T13:08:07Z",
+    "id": "expense-review",
+    "isActive": true,
+    "createdAt": "2026-11-11T13:08:07Z",
+    "createdBy": "cli",
+    "name": "Expense Report Review",
+    "taskSchema": "",
+    "category": "review",
+    "taskCount": 0,
+    "openTaskCount": 0,
+    "providerId": "concur-expenses",
+    "requiresClaim": false,
+    "description": "",
+    "allowedActions": [],
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "defaultPriority": "low",
+    "dueInDays": 10,
+    "updatedAt": "2026-11-11T13:08:07Z",
+    "id": "onboarding",
+    "isActive": true,
+    "createdAt": "2026-11-11T13:08:07Z",
+    "createdBy": "cli",
+    "name": "Onboarding Checklist",
+    "taskSchema": "",
+    "category": "toDoItem",
+    "taskCount": 1,
+    "openTaskCount": 1,
+    "providerId": "successfactors-hr",
+    "requiresClaim": false,
+    "description": "",
+    "allowedActions": [
+      "complete",
+      "cancel"
+    ],
+    "tenantId": "default",
+    "updatedBy": "cli"
+  }
+]

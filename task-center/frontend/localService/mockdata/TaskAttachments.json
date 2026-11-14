@@ -1,0 +1,17 @@
+[
+  {
+    "mimeType": "application/pdf",
+    "updatedAt": "2026-11-11T13:08:07Z",
+    "id": "de9ab1d7-b39f-44be-90f7-8cbe106eba16",
+    "status": "available",
+    "uploadedBy": "anna",
+    "createdAt": "2026-11-11T13:08:07Z",
+    "createdBy": "anna",
+    "url": "https://documents.example.com/po/4500004711/quotation-acme.pdf",
+    "fileSize": 184320,
+    "taskId": "po-4711",
+    "tenantId": "default",
+    "fileName": "quotation-acme.pdf",
+    "updatedBy": "anna"
+  }
+]

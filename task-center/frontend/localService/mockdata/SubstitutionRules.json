@@ -1,0 +1,34 @@
+[
+  {
+    "updatedAt": "2026-11-11T13:08:07Z",
+    "id": "dora-to-ben",
+    "userId": "dora",
+    "effectiveStatus": "active",
+    "isAutoForward": true,
+    "createdAt": "2026-11-11T13:08:07Z",
+    "createdBy": "cli",
+    "startDate": "2026-11-09",
+    "endDate": "2026-11-23",
+    "substituteId": "ben",
+    "definitionId": null,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-11T13:08:07Z",
+    "id": "anna-to-carl",
+    "userId": "anna",
+    "effectiveStatus": "pending",
+    "isAutoForward": false,
+    "createdAt": "2026-11-11T13:08:07Z",
+    "createdBy": "cli",
+    "startDate": "2026-12-11",
+    "endDate": "2026-12-25",
+    "substituteId": "carl",
+    "definitionId": null,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  }
+]

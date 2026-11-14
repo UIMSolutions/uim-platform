@@ -1,0 +1,37 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgEnvironment" title="{i18n>titleCreateEnvironment}" contentWidth="34rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>subaccount}" required="true"/>
+      <Input value="{ui>/draft/subaccountId}"/>
+      <Label text="{i18n>name}" required="true"/>
+      <Input value="{ui>/draft/name}"/>
+      <Label text="{i18n>description}"/>
+      <Input value="{ui>/draft/description}"/>
+      <Label text="{i18n>environmentType}"/>
+      <Select selectedKey="{ui>/draft/environmentType}" width="100%">
+        <core:Item key="cloudFoundry" text="{i18n>envCloudFoundry}"/>
+        <core:Item key="kyma" text="{i18n>envKyma}"/>
+        <core:Item key="abap" text="{i18n>envAbap}"/>
+      </Select>
+      <Label text="{i18n>plan}"/>
+      <Input value="{ui>/draft/planName}"/>
+      <Label text="{i18n>landscape}"/>
+      <Input value="{ui>/draft/landscapeLabel}"/>
+      <Label text="{i18n>memoryQuota}"/>
+      <Input value="{ui>/draft/memoryQuotaMb}" type="Number"/>
+      <Label text="{i18n>routeQuota}"/>
+      <Input value="{ui>/draft/routeQuota}" type="Number"/>
+      <Label text="{i18n>serviceQuota}"/>
+      <Input value="{ui>/draft/serviceQuota}" type="Number"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

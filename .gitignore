@@ -209,3 +209,11 @@ management/build/libuim-management-platform-service.a
 management/build/libuim-management-platform-service.a
 market-rates/build/market-rates-test-defaultTest
 market-rates/build/market-rates-test-defaultTest
+credential-store/build/libuim-credential-store-platform-service.a
+service/build/libuim-platform-service.a
+service-manager/dub.selections.json
+agentry/backend/build/agentry-test-defaultTest
+agentry/backend/build/libuim-agentry-platform-service.a
+agentry/backend/build/uim-agentry-cli
+agentry/backend/build/uim-agentry-gui
+agentry/backend/build/uim-agentry-platform-service

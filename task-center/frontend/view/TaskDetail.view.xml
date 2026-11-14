@@ -1,0 +1,137 @@
+<mvc:View controllerName="uim.taskcenter.controller.TaskDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+  height="100%">
+  <Page id="taskPage" title="{title}" showNavButton="true" navButtonPress=".onNavBack" busy="{view>/busy}">
+    <headerContent>
+      <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+    </headerContent>
+    <content>
+      <ObjectHeader title="{title}" number="{path: 'priority', formatter: '.formatter.enumText'}" numberUnit="{i18n>colPriority}"
+        numberState="{path: 'priority', formatter: '.formatter.priorityState'}" responsive="true">
+        <statuses>
+          <ObjectStatus title="{i18n>colStatus}" text="{path: 'status', formatter: '.formatter.enumText'}"
+            state="{path: 'status', formatter: '.formatter.statusState'}"/>
+          <ObjectStatus title="{i18n>colOutcome}" text="{path: 'outcome', formatter: '.formatter.enumText'}"
+            state="{path: 'outcome', formatter: '.formatter.outcomeState'}" visible="{= %{outcome} !== 'none' }"/>
+          <ObjectStatus title="{i18n>colDue}" text="{dueDate}" state="{parts: [{path: 'dueDate', targetType: 'any'}, {path: 'isOverdue', targetType: 'any'}], formatter: '.formatter.dueState'}"/>
+        </statuses>
+        <attributes>
+          <ObjectAttribute title="{i18n>colAssignee}" text="{parts: [{path: 'assignee', targetType: 'any'}, {path: 'substitutedFor', targetType: 'any'}], formatter: '.formatter.assigneeText'}"/>
+          <ObjectAttribute title="{i18n>colClaimedBy}" text="{claimedBy}" visible="{isClaimed}"/>
+          <ObjectAttribute title="{i18n>colSource}" text="{sourceApplication}"/>
+          <ObjectAttribute title="{i18n>colCategory}" text="{path: 'category', formatter: '.formatter.enumText'}"/>
+        </attributes>
+      </ObjectHeader>
+
+      <IconTabBar id="detailTabs" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <IconTabFilter key="details" icon="sap-icon://hint" text="{i18n>tabDetails}">
+            <form:SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanM="3">
+              <Label text="{i18n>colDescription}"/>
+              <Text text="{description}"/>
+              <Label text="{i18n>colCreator}"/>
+              <Text text="{creator}"/>
+              <Label text="{i18n>colExternalId}"/>
+              <Text text="{externalTaskId}"/>
+              <Label text="{i18n>colDefinition}"/>
+              <Text text="{definitionId}"/>
+              <Label text="{i18n>colActions}"/>
+              <Text text="{path: 'allowedActions', targetType: 'any', formatter: '.formatter.actionList'}"/>
+              <Label text="{i18n>colCreatedAt}"/>
+              <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Label text="{i18n>colCompletedAt}"/>
+              <Text text="{path: 'completedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Label text="{i18n>colAttributes}"/>
+              <Text text="{path: 'customAttributes', formatter: '.formatter.prettyJson'}" renderWhitespace="true"/>
+            </form:SimpleForm>
+          </IconTabFilter>
+
+          <IconTabFilter key="comments" icon="sap-icon://comment" text="{i18n>tabComments}" count="{commentCount}">
+            <FeedInput post=".onPostComment" showIcon="false" placeholder="{i18n>commentPlaceholder}"/>
+            <List id="commentsList" noDataText="{i18n>noComments}"
+              items="{path: '/TaskComments', parameters: {$orderby: 'createdAt desc'}, suspended: true}">
+              <FeedListItem sender="{author}" text="{content}" showIcon="false"
+                timestamp="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+            </List>
+          </IconTabFilter>
+
+          <IconTabFilter key="attachments" icon="sap-icon://attachment" text="{i18n>tabAttachments}" count="{attachmentCount}">
+            <Table id="attachmentsTable" noDataText="{i18n>noData}"
+              items="{path: '/TaskAttachments', parameters: {$orderby: 'fileName'}, suspended: true}">
+              <columns>
+                <Column><Text text="{i18n>colFileName}"/></Column>
+                <Column><Text text="{i18n>colSize}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colBy}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Link text="{fileName}" href="{url}" target="_blank" enabled="{= !!%{url} }"/>
+                    <Text text="{path: 'fileSize', formatter: '.formatter.bytes'}"/>
+                    <Text text="{uploadedBy}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <IconTabFilter key="history" icon="sap-icon://history" text="{i18n>tabHistory}">
+            <Table id="historyTable" noDataText="{i18n>noData}"
+              items="{path: '/TaskActions', parameters: {$orderby: 'performedAt'}, suspended: true}">
+              <columns>
+                <Column><Text text="{i18n>colWhen}"/></Column>
+                <Column><Text text="{i18n>colAction}"/></Column>
+                <Column><Text text="{i18n>colBy}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTransition}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colComment}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'performedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <ObjectStatus text="{path: 'actionType', formatter: '.formatter.enumText'}" state="Information"/>
+                    <Text text="{performedBy}"/>
+                    <Text text="{fromStatus} → {toStatus}{= %{forwardTo} ? ' (' + %{forwardTo} + ')' : '' }"/>
+                    <Text text="{comment}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </content>
+    <footer>
+      <OverflowToolbar>
+        <ToolbarSpacer/>
+        <Button text="{i18n>actApprove}" type="Accept" press=".onDecision" visible="{view>/detail/can/approve}">
+          <customData><core:CustomData key="action" value="approve"/></customData>
+        </Button>
+        <Button text="{i18n>actReject}" type="Reject" press=".onDecision" visible="{view>/detail/can/reject}">
+          <customData><core:CustomData key="action" value="reject"/></customData>
+        </Button>
+        <Button text="{i18n>actComplete}" type="Emphasized" press=".onDecision" visible="{view>/detail/can/complete}">
+          <customData><core:CustomData key="action" value="complete"/></customData>
+        </Button>
+        <Button text="{i18n>actClaim}" press=".onAction" visible="{view>/detail/can/claim}">
+          <customData><core:CustomData key="action" value="claim"/></customData>
+        </Button>
+        <Button text="{i18n>actRelease}" press=".onAction" visible="{view>/detail/can/release}">
+          <customData><core:CustomData key="action" value="release"/></customData>
+        </Button>
+        <Button text="{i18n>actForward}" press=".onOpenForward" visible="{view>/detail/can/forward}"/>
+        <Button text="{i18n>actEscalate}" press=".onAction" visible="{view>/detail/can/escalate}">
+          <customData><core:CustomData key="action" value="escalate"/></customData>
+        </Button>
+        <Button text="{i18n>actCancel}" press=".onDecision" visible="{view>/detail/can/cancel}">
+          <customData><core:CustomData key="action" value="cancel"/></customData>
+        </Button>
+        <Button text="{i18n>actResubmit}" press=".onAction" visible="{view>/detail/can/resubmit}">
+          <customData><core:CustomData key="action" value="resubmit"/></customData>
+        </Button>
+      </OverflowToolbar>
+    </footer>
+  </Page>
+</mvc:View>

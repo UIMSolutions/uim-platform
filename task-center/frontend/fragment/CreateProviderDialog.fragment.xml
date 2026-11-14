@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createProvider}" contentWidth="36rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/provider/name}"/>
+      <Label text="{i18n>colType}"/>
+      <Select selectedKey="{view>/form/provider/providerType}">
+        <core:Item key="s4hana" text="SAP S/4HANA"/>
+        <core:Item key="successFactors" text="SAP SuccessFactors"/>
+        <core:Item key="ariba" text="SAP Ariba"/>
+        <core:Item key="fieldglass" text="SAP Fieldglass"/>
+        <core:Item key="concur" text="SAP Concur"/>
+        <core:Item key="sapBuild" text="SAP Build Process Automation"/>
+        <core:Item key="custom" text="{i18n>custom}"/>
+      </Select>
+      <Label text="{i18n>colStatus}"/>
+      <Select selectedKey="{view>/form/provider/status}">
+        <core:Item key="inactive" text="{i18n>inactive}"/>
+        <core:Item key="active" text="{i18n>active}"/>
+      </Select>
+      <Label text="{i18n>colEndpoint}"/>
+      <Input value="{view>/form/provider/endpointUrl}" placeholder="https://…/tasks"/>
+      <Label text="{i18n>colAuth}"/>
+      <Select selectedKey="{view>/form/provider/authType}">
+        <core:Item key="none" text="{i18n>authNone}"/>
+        <core:Item key="oauth2" text="OAuth 2.0 (client credentials)"/>
+        <core:Item key="basicAuth" text="Basic"/>
+        <core:Item key="apiKey" text="API key"/>
+        <core:Item key="certificate" text="{i18n>authCertificate}"/>
+        <core:Item key="saml" text="SAML bearer"/>
+      </Select>
+      <Label text="{i18n>colTokenEndpoint}"/>
+      <Input value="{view>/form/provider/authEndpointUrl}" enabled="{= ${view>/form/provider/authType} === 'oauth2' }"/>
+      <Label text="{i18n>colClientId}"/>
+      <Input value="{view>/form/provider/clientId}"/>
+      <Label text="{i18n>colSecret}"/>
+      <Input value="{view>/form/provider/clientSecret}" type="Password"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/provider/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <Dialog id="createDialog" title="{ui>/create/title}" contentWidth="34rem" resizable="true" draggable="true">
+    <content>
+      <!-- the fields are created by Main.controller#createField (factory) -->
+      <VBox id="createFields" class="sapUiSmallMargin" items="{path: 'ui>/create/fields', factory: '.createField'}"/>
+    </content>
+    <beginButton>
+      <Button text="{i18n>create}" type="Emphasized" press=".onSaveCreate"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCancelCreate"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

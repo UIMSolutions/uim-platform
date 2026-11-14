@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.taskcenter" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Task">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="priority" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="outcome" Type="Edm.String"/>
+        <Property Name="definitionId" Type="Edm.String"/>
+        <Property Name="providerId" Type="Edm.String"/>
+        <Property Name="externalTaskId" Type="Edm.String"/>
+        <Property Name="assignee" Type="Edm.String"/>
+        <Property Name="substitutedFor" Type="Edm.String"/>
+        <Property Name="creator" Type="Edm.String"/>
+        <Property Name="processor" Type="Edm.String"/>
+        <Property Name="sourceApplication" Type="Edm.String"/>
+        <Property Name="allowedActions" Type="Collection(Edm.String)"/>
+        <Property Name="availableActions" Type="Collection(Edm.String)"/>
+        <Property Name="customAttributes" Type="Edm.String"/>
+        <Property Name="isClaimed" Type="Edm.Boolean"/>
+        <Property Name="claimedBy" Type="Edm.String"/>
+        <Property Name="dueDate" Type="Edm.Date"/>
+        <Property Name="isOverdue" Type="Edm.Boolean"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="commentCount" Type="Edm.Int32"/>
+        <Property Name="attachmentCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="TaskDefinition">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="providerId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="defaultPriority" Type="Edm.String"/>
+        <Property Name="allowedActions" Type="Collection(Edm.String)"/>
+        <Property Name="taskSchema" Type="Edm.String"/>
+        <Property Name="dueInDays" Type="Edm.Int32"/>
+        <Property Name="isActive" Type="Edm.Boolean"/>
+        <Property Name="requiresClaim" Type="Edm.Boolean"/>
+        <Property Name="taskCount" Type="Edm.Int32"/>
+        <Property Name="openTaskCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="TaskProvider">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="providerType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="authType" Type="Edm.String"/>
+        <Property Name="endpointUrl" Type="Edm.String"/>
+        <Property Name="authEndpointUrl" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="hasSecret" Type="Edm.Boolean"/>
+        <Property Name="lastSyncAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastSyncError" Type="Edm.String"/>
+        <Property Name="taskCount" Type="Edm.Int32"/>
+        <Property Name="definitionCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="TaskComment">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="taskId" Type="Edm.String" Nullable="false"/>
+        <Property Name="author" Type="Edm.String"/>
+        <Property Name="content" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="TaskAttachment">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="taskId" Type="Edm.String" Nullable="false"/>
+        <Property Name="fileName" Type="Edm.String" Nullable="false"/>
+        <Property Name="fileSize" Type="Edm.Int64"/>
+        <Property Name="mimeType" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="uploadedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="TaskAction">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="taskId" Type="Edm.String"/>
+        <Property Name="actionType" Type="Edm.String"/>
+        <Property Name="performedBy" Type="Edm.String"/>
+        <Property Name="performedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="forwardTo" Type="Edm.String"/>
+        <Property Name="comment" Type="Edm.String"/>
+        <Property Name="fromStatus" Type="Edm.String"/>
+        <Property Name="toStatus" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="SubstitutionRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="substituteId" Type="Edm.String" Nullable="false"/>
+        <Property Name="definitionId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="effectiveStatus" Type="Edm.String"/>
+        <Property Name="startDate" Type="Edm.Date"/>
+        <Property Name="endDate" Type="Edm.Date"/>
+        <Property Name="isAutoForward" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="UserTaskFilter">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="criteria" Type="Edm.String"/>
+        <Property Name="isDefault" Type="Edm.Boolean"/>
+        <Property Name="odataFilter" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="tasks" Type="Edm.Int32"/>
+        <Property Name="openTasks" Type="Edm.Int32"/>
+        <Property Name="inProgressTasks" Type="Edm.Int32"/>
+        <Property Name="completedTasks" Type="Edm.Int32"/>
+        <Property Name="cancelledTasks" Type="Edm.Int32"/>
+        <Property Name="failedTasks" Type="Edm.Int32"/>
+        <Property Name="overdueTasks" Type="Edm.Int32"/>
+        <Property Name="highPriorityTasks" Type="Edm.Int32"/>
+        <Property Name="unassignedTasks" Type="Edm.Int32"/>
+        <Property Name="approvedTasks" Type="Edm.Int32"/>
+        <Property Name="rejectedTasks" Type="Edm.Int32"/>
+        <Property Name="providers" Type="Edm.Int32"/>
+        <Property Name="activeProviders" Type="Edm.Int32"/>
+        <Property Name="providersInError" Type="Edm.Int32"/>
+        <Property Name="definitions" Type="Edm.Int32"/>
+        <Property Name="activeSubstitutions" Type="Edm.Int32"/>
+        <Property Name="comments" Type="Edm.Int32"/>
+        <Property Name="attachments" Type="Edm.Int32"/>
+        <Property Name="actions" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="SyncResult">
+        <Property Name="providerId" Type="Edm.String"/>
+        <Property Name="providerName" Type="Edm.String"/>
+        <Property Name="fetched" Type="Edm.Int32"/>
+        <Property Name="created" Type="Edm.Int32"/>
+        <Property Name="updated" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="error" Type="Edm.String"/>
+        <Property Name="syncedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </ComplexType>
+      <Action Name="PerformTaskAction" IsBound="false">
+        <Parameter Name="taskId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="action" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="forwardTo" Type="Edm.String"/>
+        <Parameter Name="comment" Type="Edm.String"/>
+        <ReturnType Type="uim.taskcenter.Task"/>
+      </Action>
+      <Action Name="SyncProvider" IsBound="false">
+        <Parameter Name="providerId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.taskcenter.SyncResult"/>
+      </Action>
+      <Action Name="SyncAllProviders" IsBound="false">
+        <ReturnType Type="Collection(uim.taskcenter.SyncResult)"/>
+      </Action>
+      <EntityContainer Name="TaskCenterService">
+        <EntitySet Name="Tasks" EntityType="uim.taskcenter.Task"/>
+        <EntitySet Name="TaskDefinitions" EntityType="uim.taskcenter.TaskDefinition"/>
+        <EntitySet Name="TaskProviders" EntityType="uim.taskcenter.TaskProvider"/>
+        <EntitySet Name="TaskComments" EntityType="uim.taskcenter.TaskComment"/>
+        <EntitySet Name="TaskAttachments" EntityType="uim.taskcenter.TaskAttachment"/>
+        <EntitySet Name="TaskActions" EntityType="uim.taskcenter.TaskAction"/>
+        <EntitySet Name="SubstitutionRules" EntityType="uim.taskcenter.SubstitutionRule"/>
+        <EntitySet Name="UserTaskFilters" EntityType="uim.taskcenter.UserTaskFilter"/>
+        <Singleton Name="Statistics" Type="uim.taskcenter.Statistic"/>
+        <ActionImport Name="PerformTaskAction" Action="uim.taskcenter.PerformTaskAction"/>
+        <ActionImport Name="SyncProvider" Action="uim.taskcenter.SyncProvider"/>
+        <ActionImport Name="SyncAllProviders" Action="uim.taskcenter.SyncAllProviders"/>
+      </EntityContainer>
+      <Annotations Target="uim.taskcenter.SyncResult/providerId"><Annotation Term="Common.Label" String="Provider"/></Annotations>
+      <Annotations Target="uim.taskcenter.SyncResult/providerName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.taskcenter.SyncResult/fetched"><Annotation Term="Common.Label" String="Fetched"/></Annotations>
+      <Annotations Target="uim.taskcenter.SyncResult/created"><Annotation Term="Common.Label" String="Created"/></Annotations>
+      <Annotations Target="uim.taskcenter.SyncResult/updated"><Annotation Term="Common.Label" String="Updated"/></Annotations>
+      <Annotations Target="uim.taskcenter.SyncResult/skipped"><Annotation Term="Common.Label" String="Skipped"/></Annotations>
+      <Annotations Target="uim.taskcenter.SyncResult/error"><Annotation Term="Common.Label" String="Error"/></Annotations>
+      <Annotations Target="uim.taskcenter.SyncResult/syncedAt"><Annotation Term="Common.Label" String="Synced At"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/priority"><Annotation Term="Common.Label" String="Priority"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/outcome"><Annotation Term="Common.Label" String="Outcome"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/definitionId"><Annotation Term="Common.Label" String="Task Definition"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/providerId"><Annotation Term="Common.Label" String="Provider"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/externalTaskId"><Annotation Term="Common.Label" String="External ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/assignee"><Annotation Term="Common.Label" String="Assignee"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/substitutedFor"><Annotation Term="Common.Label" String="Substituted For"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/creator"><Annotation Term="Common.Label" String="Creator"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/processor"><Annotation Term="Common.Label" String="Processor"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/sourceApplication"><Annotation Term="Common.Label" String="Source Application"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/allowedActions"><Annotation Term="Common.Label" String="Allowed Actions"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/availableActions"><Annotation Term="Common.Label" String="Available Actions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/customAttributes"><Annotation Term="Common.Label" String="Custom Attributes (JSON)"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/isClaimed"><Annotation Term="Common.Label" String="Claimed"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/claimedBy"><Annotation Term="Common.Label" String="Claimed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/dueDate"><Annotation Term="Common.Label" String="Due Date"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/isOverdue"><Annotation Term="Common.Label" String="Overdue"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/completedAt"><Annotation Term="Common.Label" String="Completed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/commentCount"><Annotation Term="Common.Label" String="Comments"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task/attachmentCount"><Annotation Term="Common.Label" String="Attachments"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.Task">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Task"/><PropertyValue Property="TypeNamePlural" String="Tasks"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="title"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="title"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="priority"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="assignee"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dueDate"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sourceApplication"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>priority</PropertyPath><PropertyPath>category</PropertyPath><PropertyPath>assignee</PropertyPath><PropertyPath>providerId</PropertyPath><PropertyPath>definitionId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService/Tasks">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/providerId"><Annotation Term="Common.Label" String="Provider"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/defaultPriority"><Annotation Term="Common.Label" String="Default Priority"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/allowedActions"><Annotation Term="Common.Label" String="Allowed Actions"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/taskSchema"><Annotation Term="Common.Label" String="Task Schema (JSON)"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/dueInDays"><Annotation Term="Common.Label" String="Due In (days)"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/isActive"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/requiresClaim"><Annotation Term="Common.Label" String="Requires Claim"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/taskCount"><Annotation Term="Common.Label" String="Tasks"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition/openTaskCount"><Annotation Term="Common.Label" String="Unfinished Tasks"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskDefinition">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Task Definition"/><PropertyValue Property="TypeNamePlural" String="Task Definitions"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="defaultPriority"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dueInDays"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="isActive"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="openTaskCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>providerId</PropertyPath><PropertyPath>category</PropertyPath><PropertyPath>isActive</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService/TaskDefinitions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/providerType"><Annotation Term="Common.Label" String="Provider Type"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/authType"><Annotation Term="Common.Label" String="Authentication"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/endpointUrl"><Annotation Term="Common.Label" String="Task Endpoint"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/authEndpointUrl"><Annotation Term="Common.Label" String="Token Endpoint"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/clientId"><Annotation Term="Common.Label" String="Client ID / User"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/clientSecret"><Annotation Term="Common.Label" String="Client Secret / Password"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/hasSecret"><Annotation Term="Common.Label" String="Has Secret"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/lastSyncAt"><Annotation Term="Common.Label" String="Last Sync"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/lastSyncError"><Annotation Term="Common.Label" String="Last Sync Error"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/taskCount"><Annotation Term="Common.Label" String="Tasks"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider/definitionCount"><Annotation Term="Common.Label" String="Definitions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskProvider">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Task Provider"/><PropertyValue Property="TypeNamePlural" String="Task Providers"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="providerType"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="providerType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastSyncAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="taskCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="definitionCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>providerType</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>authType</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService/TaskProviders">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/taskId"><Annotation Term="Common.Label" String="Task"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/author"><Annotation Term="Common.Label" String="Author"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment/content"><Annotation Term="Common.Label" String="Comment"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskComment">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Comment"/><PropertyValue Property="TypeNamePlural" String="Comments"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="content"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="author"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="taskId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="author"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="content"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>taskId</PropertyPath><PropertyPath>author</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService/TaskComments">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/taskId"><Annotation Term="Common.Label" String="Task"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/fileName"><Annotation Term="Common.Label" String="File Name"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/fileSize"><Annotation Term="Common.Label" String="Size (bytes)"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/mimeType"><Annotation Term="Common.Label" String="MIME Type"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/url"><Annotation Term="Common.Label" String="Download URL"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment/uploadedBy"><Annotation Term="Common.Label" String="Uploaded By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAttachment">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Attachment"/><PropertyValue Property="TypeNamePlural" String="Attachments"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fileName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="mimeType"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fileName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="mimeType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fileSize"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="uploadedBy"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>taskId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService/TaskAttachments">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/taskId"><Annotation Term="Common.Label" String="Task"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/actionType"><Annotation Term="Common.Label" String="Action"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/performedBy"><Annotation Term="Common.Label" String="Performed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/performedAt"><Annotation Term="Common.Label" String="Performed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/forwardTo"><Annotation Term="Common.Label" String="Forwarded To"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/comment"><Annotation Term="Common.Label" String="Comment"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/fromStatus"><Annotation Term="Common.Label" String="From Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction/toStatus"><Annotation Term="Common.Label" String="To Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.TaskAction">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Task Action"/><PropertyValue Property="TypeNamePlural" String="Task Actions"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="actionType"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="performedBy"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="performedAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="taskId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="actionType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="performedBy"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fromStatus"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="toStatus"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>taskId</PropertyPath><PropertyPath>actionType</PropertyPath><PropertyPath>performedBy</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService/TaskActions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/userId"><Annotation Term="Common.Label" String="User"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/substituteId"><Annotation Term="Common.Label" String="Substitute"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/definitionId"><Annotation Term="Common.Label" String="Task Definition"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/effectiveStatus"><Annotation Term="Common.Label" String="Effective Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/startDate"><Annotation Term="Common.Label" String="Start Date"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/endDate"><Annotation Term="Common.Label" String="End Date"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule/isAutoForward"><Annotation Term="Common.Label" String="Auto-Forward"/></Annotations>
+      <Annotations Target="uim.taskcenter.SubstitutionRule">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Substitution Rule"/><PropertyValue Property="TypeNamePlural" String="Substitution Rules"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="substituteId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="substituteId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="startDate"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="endDate"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="isAutoForward"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="effectiveStatus"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>userId</PropertyPath><PropertyPath>substituteId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService/SubstitutionRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/userId"><Annotation Term="Common.Label" String="User"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/criteria"><Annotation Term="Common.Label" String="Criteria (type=value, …)"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/isDefault"><Annotation Term="Common.Label" String="Default"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter/odataFilter"><Annotation Term="Common.Label" String="OData $filter"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.taskcenter.UserTaskFilter">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Filter"/><PropertyValue Property="TypeNamePlural" String="Filters"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="criteria"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="criteria"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="isDefault"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>userId</PropertyPath><PropertyPath>isDefault</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService/UserTaskFilters">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/tasks"><Annotation Term="Common.Label" String="Tasks"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/openTasks"><Annotation Term="Common.Label" String="Open"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/inProgressTasks"><Annotation Term="Common.Label" String="In Progress"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/completedTasks"><Annotation Term="Common.Label" String="Completed"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/cancelledTasks"><Annotation Term="Common.Label" String="Cancelled"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/failedTasks"><Annotation Term="Common.Label" String="Failed"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/overdueTasks"><Annotation Term="Common.Label" String="Overdue"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/highPriorityTasks"><Annotation Term="Common.Label" String="High Priority"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/unassignedTasks"><Annotation Term="Common.Label" String="Unassigned"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/approvedTasks"><Annotation Term="Common.Label" String="Approved"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/rejectedTasks"><Annotation Term="Common.Label" String="Rejected"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/providers"><Annotation Term="Common.Label" String="Providers"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/activeProviders"><Annotation Term="Common.Label" String="Active Providers"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/providersInError"><Annotation Term="Common.Label" String="Providers in Error"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/definitions"><Annotation Term="Common.Label" String="Task Definitions"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/activeSubstitutions"><Annotation Term="Common.Label" String="Active Substitutions"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/comments"><Annotation Term="Common.Label" String="Comments"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/attachments"><Annotation Term="Common.Label" String="Attachments"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic/actions"><Annotation Term="Common.Label" String="Actions"/></Annotations>
+      <Annotations Target="uim.taskcenter.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tasks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="openTasks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="inProgressTasks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="completedTasks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="cancelledTasks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="failedTasks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="overdueTasks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="highPriorityTasks"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.taskcenter.TaskCenterService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Task Center"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

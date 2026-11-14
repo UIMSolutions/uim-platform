@@ -1,0 +1,29 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgLabel" title="{i18n>titleCreateLabel}" contentWidth="34rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>resourceType}"/>
+      <Select selectedKey="{ui>/draft/resourceType}" width="100%">
+        <core:Item key="subaccount" text="{i18n>resSubaccount}"/>
+        <core:Item key="globalAccount" text="{i18n>resGlobalAccount}"/>
+        <core:Item key="directory" text="{i18n>resDirectory}"/>
+        <core:Item key="environment" text="{i18n>resEnvironment}"/>
+        <core:Item key="subscription" text="{i18n>resSubscription}"/>
+      </Select>
+      <Label text="{i18n>resourceId}" required="true"/>
+      <Input value="{ui>/draft/resourceId}"/>
+      <Label text="{i18n>labelKey}" required="true"/>
+      <Input value="{ui>/draft/key}"/>
+      <Label text="{i18n>labelValuesHint}" required="true"/>
+      <Input value="{ui>/draft/valuesText}"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

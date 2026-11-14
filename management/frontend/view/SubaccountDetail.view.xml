@@ -1,0 +1,132 @@
+<mvc:View
+  controllerName="uim.management.controller.SubaccountDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:uxap="sap.uxap"
+  xmlns:f="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="subaccountPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onNavBack"/>
+        </uxap:navigationActions>
+        <uxap:heading>
+          <Title text="{displayName}" wrapping="true"/>
+        </uxap:heading>
+        <uxap:expandedContent>
+          <Text text="{subdomain} · {region}"/>
+        </uxap:expandedContent>
+        <uxap:actions>
+          <Button text="{i18n>suspend}" press=".onSuspend" enabled="{path: 'status', formatter: '.formatter.canSuspend'}"/>
+          <Button text="{i18n>reactivate}" press=".onReactivate" enabled="{path: 'status', formatter: '.formatter.canReactivate'}"/>
+          <Button text="{i18n>move}" press=".onMove"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <ObjectStatus title="{i18n>status}" text="{path: 'status', formatter: '.formatter.enumText'}"
+        state="{path: 'status', formatter: '.formatter.statusState'}" class="sapUiMediumMarginEnd"/>
+      <ObjectStatus title="{i18n>usage}" text="{path: 'usage', formatter: '.formatter.enumText'}" class="sapUiMediumMarginEnd"/>
+      <ObjectStatus title="{i18n>globalAccount}" text="{globalAccountId}" class="sapUiMediumMarginEnd"/>
+      <ObjectStatus title="{i18n>directory}" text="{= ${parentDirectoryId} || '—' }"/>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>general}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" columnsM="2" columnsL="2">
+              <Label text="{i18n>displayName}"/>
+              <Input value="{displayName}" change=".onChanged"/>
+              <Label text="{i18n>description}"/>
+              <Input value="{description}" change=".onChanged"/>
+              <Label text="{i18n>betaEnabled}"/>
+              <Switch state="{betaEnabled}" change=".onChanged"/>
+              <Label text="{i18n>usedForProduction}"/>
+              <Switch state="{usedForProduction}" change=".onChanged"/>
+              <Label text="{i18n>technicalName}"/>
+              <Text text="{technicalName}"/>
+              <Label text="{i18n>createdAt}"/>
+              <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </f:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabEnvironments}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="detailEnvironments" mode="SingleSelectMaster" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreateEnvironment"/>
+                  <Button text="{i18n>deprovision}" press=".onDeprovision"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>name}"/></Column>
+                <Column><Text text="{i18n>environmentType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>plan}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>dashboard}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabEntitlements}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="detailEntitlements" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>assign}" icon="sap-icon://add" press=".onAssignEntitlement"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>service}"/></Column>
+                <Column><Text text="{i18n>plan}"/></Column>
+                <Column width="12rem"><Text text="{i18n>quota}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabSubscriptions}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="detailSubscriptions" mode="SingleSelectMaster" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>subscribe}" icon="sap-icon://add" press=".onCreateSubscription"/>
+                  <Button text="{i18n>unsubscribe}" press=".onUnsubscribe"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>application}"/></Column>
+                <Column><Text text="{i18n>plan}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="URL"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabEvents}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <List id="detailEvents" noDataText="{i18n>noData}" growing="true" growingThreshold="20"/>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

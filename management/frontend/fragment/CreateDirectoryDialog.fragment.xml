@@ -1,0 +1,27 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgDirectory" title="{i18n>titleCreateDirectory}" contentWidth="34rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>globalAccount}" required="true"/>
+      <Input value="{ui>/draft/globalAccountId}"/>
+      <Label text="{i18n>parentDirectory}"/>
+      <Input value="{ui>/draft/parentDirectoryId}"/>
+      <Label text="{i18n>displayName}" required="true"/>
+      <Input value="{ui>/draft/displayName}"/>
+      <Label text="{i18n>description}"/>
+      <Input value="{ui>/draft/description}"/>
+      <Label text="{i18n>manageEntitlements}"/>
+      <CheckBox selected="{ui>/draft/manageEntitlements}"/>
+      <Label text="{i18n>manageAuthorizations}"/>
+      <CheckBox selected="{ui>/draft/manageAuthorizations}"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

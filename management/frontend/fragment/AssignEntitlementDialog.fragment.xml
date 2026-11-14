@@ -1,0 +1,27 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgEntitlement" title="{i18n>titleAssignEntitlement}" contentWidth="34rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>servicePlanId}" required="true"/>
+      <Input value="{ui>/draft/servicePlanId}"/>
+      <Label text="{i18n>subaccount}"/>
+      <Input value="{ui>/draft/subaccountId}"/>
+      <Label text="{i18n>globalAccount}"/>
+      <Input value="{ui>/draft/globalAccountId}"/>
+      <Label text="{i18n>quota}"/>
+      <Input value="{ui>/draft/quotaAssigned}" type="Number"/>
+      <Label text="{i18n>unlimited}"/>
+      <CheckBox selected="{ui>/draft/unlimited}"/>
+      <Label text="{i18n>autoAssign}"/>
+      <CheckBox selected="{ui>/draft/autoAssign}"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

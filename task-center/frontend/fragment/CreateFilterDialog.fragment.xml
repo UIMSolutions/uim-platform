@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createFilter}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/filter/name}"/>
+      <Label text="{i18n>colCriteria}"/>
+      <Input value="{view>/form/filter/criteria}" placeholder="assignee=$me,priority=high,status=open"/>
+      <Label text=""/>
+      <Text text="{i18n>criteriaHelp}"/>
+      <Label text="{i18n>colDefault}"/>
+      <Switch state="{view>/form/filter/isDefault}"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/filter/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

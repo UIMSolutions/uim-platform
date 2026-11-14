@@ -1,0 +1,44 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgSubaccount" title="{i18n>titleCreateSubaccount}" contentWidth="34rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>globalAccount}" required="true"/>
+      <Input value="{ui>/draft/globalAccountId}"/>
+      <Label text="{i18n>directory}"/>
+      <Input value="{ui>/draft/parentDirectoryId}"/>
+      <Label text="{i18n>displayName}" required="true"/>
+      <Input value="{ui>/draft/displayName}"/>
+      <Label text="{i18n>subdomain}" required="true"/>
+      <Input value="{ui>/draft/subdomain}"/>
+      <Label text="{i18n>description}"/>
+      <Input value="{ui>/draft/description}"/>
+      <Label text="{i18n>region}"/>
+      <Select selectedKey="{ui>/draft/region}" width="100%">
+        <core:Item key="eu10" text="{i18n>regionEu10}"/>
+        <core:Item key="us10" text="{i18n>regionUs10}"/>
+        <core:Item key="ap21" text="{i18n>regionAp21}"/>
+        <core:Item key="eu20" text="{i18n>regionEu20}"/>
+      </Select>
+      <Label text="{i18n>usage}"/>
+      <Select selectedKey="{ui>/draft/usage}" width="100%">
+        <core:Item key="development" text="{i18n>useDevelopment}"/>
+        <core:Item key="test" text="{i18n>useTest}"/>
+        <core:Item key="staging" text="{i18n>useStaging}"/>
+        <core:Item key="production" text="{i18n>useProduction}"/>
+        <core:Item key="demo" text="{i18n>useDemo}"/>
+      </Select>
+      <Label text="{i18n>betaEnabled}"/>
+      <CheckBox selected="{ui>/draft/betaEnabled}"/>
+      <Label text="{i18n>usedForProduction}"/>
+      <CheckBox selected="{ui>/draft/usedForProduction}"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

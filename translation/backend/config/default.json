@@ -1,0 +1,19 @@
+{
+  "serviceName": "Translation Hub Service",
+  "host": "0.0.0.0",
+  "port": 8096,
+  "logLevel": "info",
+  "storage": "file",
+  "dataDir": "data",
+  "defaultTenant": "default",
+  "odataPath": "/odata/v4/translation",
+  "restPath": "/api/v1/translation",
+  "jobIntervalSeconds": 5,
+  "jobTenants": ["default"],
+  "providers": ["mltr", "machineMt", "companyMltr", "llm"],
+  "defaultProvider": "machineMt",
+  "maxTextLength": 5000,
+  "maxBatchSize": 100,
+  "maxDocumentLength": 1000000,
+  "frontendDir": "../frontend"
+}

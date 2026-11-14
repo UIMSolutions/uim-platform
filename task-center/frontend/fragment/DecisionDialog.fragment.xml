@@ -1,0 +1,10 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{path: 'view>/form/decision/action', formatter: '.formatter.enumText'}" contentWidth="28rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colComment}"/>
+      <TextArea value="{view>/form/decision/comment}" rows="4" placeholder="{i18n>commentOptional}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>confirm}" type="Emphasized" press=".onConfirmDecision"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

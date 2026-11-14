@@ -1,0 +1,331 @@
+<mvc:View controllerName="uim.taskcenter.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>appTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+        <f:actions>
+          <Label text="{i18n>actingAs}" labelFor="userInput" class="sapUiTinyMarginEnd"/>
+          <Input id="userInput" value="{view>/user}" width="8rem" change=".onUserChange" tooltip="{i18n>actingAsTooltip}"/>
+          <Button text="{i18n>syncAll}" icon="sap-icon://synchronize" press=".onSyncAll"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpis" binding="{/Statistics}" wrap="Wrap" class="sapUiSmallMarginBottom">
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiOpen}"/>
+            <ObjectNumber number="{openTasks}" unit="· {inProgressTasks} {i18n>kpiInProgress}" state="Information"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiOverdue}"/>
+            <ObjectNumber number="{overdueTasks}" state="{= %{overdueTasks} > 0 ? 'Error' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiHighPriority}"/>
+            <ObjectNumber number="{highPriorityTasks}" state="{= %{highPriorityTasks} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiUnassigned}"/>
+            <ObjectNumber number="{unassignedTasks}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiDecided}"/>
+            <ObjectNumber number="{approvedTasks}" unit="{i18n>kpiApproved} · {rejectedTasks} {i18n>kpiRejected}" state="Success"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiProviders}"/>
+            <ObjectNumber number="{activeProviders}" unit="/ {providers} {i18n>kpiActive}"
+              state="{= %{providersInError} > 0 ? 'Error' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiSubstitutions}"/>
+            <ObjectNumber number="{activeSubstitutions}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Inbox ─────────────────────────────────────────────── -->
+          <IconTabFilter key="inbox" icon="sap-icon://inbox" text="{i18n>tabInbox}">
+            <Table id="tasksTable" growing="true" growingThreshold="25" mode="SingleSelectLeft"
+              items="{path: '/Tasks', parameters: {$orderby: 'dueDate', $count: true}}" noDataText="{i18n>noTasks}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabInbox}" level="H3"/>
+                  <SegmentedButton selectedKey="{view>/scope}" selectionChange=".onScopeChange">
+                    <items>
+                      <SegmentedButtonItem key="mine" text="{i18n>scopeMine}"/>
+                      <SegmentedButtonItem key="all" text="{i18n>scopeAll}"/>
+                    </items>
+                  </SegmentedButton>
+                  <Select id="savedFilter" forceSelection="false" change=".onSavedFilter" width="14rem"
+                    items="{path: '/UserTaskFilters', parameters: {$orderby: 'name'}}">
+                    <core:Item key="{odataFilter}" text="{name} ({userId})"/>
+                  </Select>
+                  <Button icon="sap-icon://clear-filter" tooltip="{i18n>clearFilter}" press=".onClearFilter"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch">
+                    <customData><core:CustomData key="table" value="tasksTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>createTask}" icon="sap-icon://add" press=".onOpenDialog">
+                    <customData><core:CustomData key="dialog" value="task"/></customData>
+                  </Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="34%"><Text text="{i18n>colTitle}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column><Text text="{i18n>colPriority}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colAssignee}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDue}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colSource}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onTaskPress">
+                  <cells>
+                    <ObjectIdentifier title="{title}" text="{= %{outcome} !== 'none' ? %{outcome} : %{category} }"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+                      state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                    <ObjectStatus text="{path: 'priority', formatter: '.formatter.enumText'}"
+                      state="{path: 'priority', formatter: '.formatter.priorityState'}"/>
+                    <Text text="{parts: [{path: 'assignee', targetType: 'any'}, {path: 'substitutedFor', targetType: 'any'}], formatter: '.formatter.assigneeText'}"/>
+                    <ObjectStatus text="{dueDate}" state="{parts: [{path: 'dueDate', targetType: 'any'}, {path: 'isOverdue', targetType: 'any'}], formatter: '.formatter.dueState'}"
+                      icon="{= %{isOverdue} ? 'sap-icon://alert' : '' }"/>
+                    <Text text="{sourceApplication}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Providers ─────────────────────────────────────────── -->
+          <IconTabFilter key="providers" icon="sap-icon://connected" text="{i18n>tabProviders}">
+            <Table id="providersTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/TaskProviders', parameters: {$orderby: 'name', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabProviders}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>sync}" icon="sap-icon://synchronize" press=".onSyncProvider"/>
+                  <Button text="{i18n>activate}" press=".onSetProperty">
+                    <customData><core:CustomData key="table" value="providersTable"/><core:CustomData key="property" value="status"/><core:CustomData key="value" value="active"/></customData>
+                  </Button>
+                  <Button text="{i18n>deactivate}" press=".onSetProperty">
+                    <customData><core:CustomData key="table" value="providersTable"/><core:CustomData key="property" value="status"/><core:CustomData key="value" value="inactive"/></customData>
+                  </Button>
+                  <Button icon="sap-icon://add" text="{i18n>create}" press=".onOpenDialog">
+                    <customData><core:CustomData key="dialog" value="provider"/></customData>
+                  </Button>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete">
+                    <customData><core:CustomData key="table" value="providersTable"/></customData>
+                  </Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastSync}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTasks}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colEndpoint}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{path: 'providerType', formatter: '.formatter.enumText'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      tooltip="{lastSyncError}"/>
+                    <Text text="{path: 'lastSyncAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <ObjectNumber number="{taskCount}" unit="· {definitionCount} {i18n>definitions}"/>
+                    <Text text="{endpointUrl}" wrapping="false"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Task definitions ──────────────────────────────────── -->
+          <IconTabFilter key="definitions" icon="sap-icon://form" text="{i18n>tabDefinitions}">
+            <Table id="definitionsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/TaskDefinitions', parameters: {$orderby: 'name', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDefinitions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>activate}" press=".onSetProperty">
+                    <customData><core:CustomData key="table" value="definitionsTable"/><core:CustomData key="property" value="isActive"/><core:CustomData key="value" value="true"/></customData>
+                  </Button>
+                  <Button text="{i18n>deactivate}" press=".onSetProperty">
+                    <customData><core:CustomData key="table" value="definitionsTable"/><core:CustomData key="property" value="isActive"/><core:CustomData key="value" value="false"/></customData>
+                  </Button>
+                  <Button icon="sap-icon://add" text="{i18n>create}" press=".onOpenDialog">
+                    <customData><core:CustomData key="dialog" value="definition"/></customData>
+                  </Button>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete">
+                    <customData><core:CustomData key="table" value="definitionsTable"/></customData>
+                  </Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colCategory}"/></Column>
+                <Column><Text text="{i18n>colPriority}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSla}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colActions}"/></Column>
+                <Column><Text text="{i18n>colActive}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colOpenTasks}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{= %{requiresClaim} ? ${i18n>requiresClaim} : '' }"/>
+                    <Text text="{path: 'category', formatter: '.formatter.enumText'}"/>
+                    <ObjectStatus text="{path: 'defaultPriority', formatter: '.formatter.enumText'}"
+                      state="{path: 'defaultPriority', formatter: '.formatter.priorityState'}"/>
+                    <Text text="{= %{dueInDays} > 0 ? %{dueInDays} + ' d' : '–' }"/>
+                    <Text text="{path: 'allowedActions', targetType: 'any', formatter: '.formatter.actionList'}"/>
+                    <ObjectStatus text="{= %{isActive} ? ${i18n>yes} : ${i18n>no} }" state="{= %{isActive} ? 'Success' : 'None' }"/>
+                    <ObjectNumber number="{openTaskCount}" unit="/ {taskCount}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Substitution rules ────────────────────────────────── -->
+          <IconTabFilter key="substitutions" icon="sap-icon://employee-pane" text="{i18n>tabSubstitutions}">
+            <Table id="substitutionsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/SubstitutionRules', parameters: {$orderby: 'userId', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSubstitutions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>activate}" press=".onSetProperty">
+                    <customData><core:CustomData key="table" value="substitutionsTable"/><core:CustomData key="property" value="status"/><core:CustomData key="value" value="active"/></customData>
+                  </Button>
+                  <Button text="{i18n>deactivate}" press=".onSetProperty">
+                    <customData><core:CustomData key="table" value="substitutionsTable"/><core:CustomData key="property" value="status"/><core:CustomData key="value" value="inactive"/></customData>
+                  </Button>
+                  <Button icon="sap-icon://add" text="{i18n>create}" press=".onOpenDialog">
+                    <customData><core:CustomData key="dialog" value="substitution"/></customData>
+                  </Button>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete">
+                    <customData><core:CustomData key="table" value="substitutionsTable"/></customData>
+                  </Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colSubstitute}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPeriod}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDefinition}"/></Column>
+                <Column><Text text="{i18n>colAutoForward}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{userId}"/>
+                    <Text text="{substituteId}"/>
+                    <Text text="{= (%{startDate} || '…') + ' – ' + (%{endDate} || '…') }"/>
+                    <Text text="{= %{definitionId} || ${i18n>allDefinitions} }"/>
+                    <ObjectStatus text="{= %{isAutoForward} ? ${i18n>yes} : ${i18n>no} }" state="{= %{isAutoForward} ? 'Information' : 'None' }"/>
+                    <ObjectStatus text="{path: 'effectiveStatus', formatter: '.formatter.enumText'}"
+                      state="{path: 'effectiveStatus', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Saved filters ─────────────────────────────────────── -->
+          <IconTabFilter key="filters" icon="sap-icon://filter" text="{i18n>tabFilters}">
+            <Table id="filtersTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/UserTaskFilters', parameters: {$orderby: 'name', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabFilters}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>makeDefault}" press=".onSetProperty">
+                    <customData><core:CustomData key="table" value="filtersTable"/><core:CustomData key="property" value="isDefault"/><core:CustomData key="value" value="true"/></customData>
+                  </Button>
+                  <Button icon="sap-icon://add" text="{i18n>create}" press=".onOpenDialog">
+                    <customData><core:CustomData key="dialog" value="filter"/></customData>
+                  </Button>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete">
+                    <customData><core:CustomData key="table" value="filtersTable"/></customData>
+                  </Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCriteria}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colODataFilter}"/></Column>
+                <Column><Text text="{i18n>colDefault}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{userId}"/>
+                    <Text text="{criteria}"/>
+                    <Text text="{odataFilter}"/>
+                    <core:Icon src="{= %{isDefault} ? 'sap-icon://favorite' : '' }"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Activity (audit trail) ────────────────────────────── -->
+          <IconTabFilter key="activity" icon="sap-icon://history" text="{i18n>tabActivity}">
+            <Table id="actionsTable" growing="true" growingThreshold="30"
+              items="{path: '/TaskActions', parameters: {$orderby: 'performedAt desc', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabActivity}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch">
+                    <customData><core:CustomData key="table" value="actionsTable"/></customData>
+                  </SearchField>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colWhen}"/></Column>
+                <Column><Text text="{i18n>colAction}"/></Column>
+                <Column><Text text="{i18n>colBy}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTask}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTransition}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colComment}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onActionPress">
+                  <cells>
+                    <Text text="{path: 'performedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <ObjectStatus text="{path: 'actionType', formatter: '.formatter.enumText'}" state="Information"/>
+                    <Text text="{performedBy}"/>
+                    <Text text="{taskId}"/>
+                    <Text text="{fromStatus} → {toStatus}{= %{forwardTo} ? ' (' + %{forwardTo} + ')' : '' }"/>
+                    <Text text="{comment}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

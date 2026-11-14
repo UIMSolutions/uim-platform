@@ -1,0 +1,50 @@
+[
+  {
+    "description": "Button labels, menu items, field labels",
+    "recommendedMaxLength": 40,
+    "id": "uiText",
+    "name": "UI Text"
+  },
+  {
+    "description": "Tooltip and help text",
+    "recommendedMaxLength": 120,
+    "id": "tooltip",
+    "name": "Tooltip"
+  },
+  {
+    "description": "Error and warning messages",
+    "recommendedMaxLength": 220,
+    "id": "errorMessage",
+    "name": "Error Message"
+  },
+  {
+    "description": "Long-form documentation and descriptions",
+    "recommendedMaxLength": 0,
+    "id": "documentation",
+    "name": "Documentation"
+  },
+  {
+    "description": "Push notifications and alert messages",
+    "recommendedMaxLength": 160,
+    "id": "notification",
+    "name": "Notification"
+  },
+  {
+    "description": "E-mail body and subject lines",
+    "recommendedMaxLength": 0,
+    "id": "emailBody",
+    "name": "E-Mail Body"
+  },
+  {
+    "description": "Report and chart titles",
+    "recommendedMaxLength": 60,
+    "id": "reportTitle",
+    "name": "Report Title"
+  },
+  {
+    "description": "Log and audit trail messages",
+    "recommendedMaxLength": 255,
+    "id": "log",
+    "name": "Log Message"
+  }
+]

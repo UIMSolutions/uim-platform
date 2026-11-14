@@ -1,0 +1,442 @@
+[
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "89887b2d-6f4d-4a52-ab7f-3cb9a9f59082",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "MSG_001",
+    "textType": "errorMessage",
+    "projectId": "3ab6702c-e20d-4a8e-9d82-d3ed9111c5e8",
+    "sourceText": "Enter your user name",
+    "translations": [],
+    "projectName": "ABAP Messages",
+    "context": "",
+    "tenantId": "default",
+    "status": "untranslated",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "45b77c8e-6b7a-4577-ae4d-febc1131daf7",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "label.password",
+    "textType": "uiText",
+    "projectId": "f197a6b0-f934-4881-9eee-8bf0bd686b46",
+    "sourceText": "Password",
+    "translations": [
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Kennwort",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "fr",
+        "text": "Mot de passe",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "es",
+        "text": "Contraseña",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Webshop",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "7636e07f-2e19-4b56-a8ae-5e4654f14dc2",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "button.delete",
+    "textType": "uiText",
+    "projectId": "f197a6b0-f934-4881-9eee-8bf0bd686b46",
+    "sourceText": "Delete",
+    "translations": [
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Löschen",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "fr",
+        "text": "Supprimer",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "es",
+        "text": "Eliminar",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Webshop",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "9bcf9c69-de55-47c3-b5a9-1f7c3e35a910",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "button.save",
+    "textType": "uiText",
+    "projectId": "f197a6b0-f934-4881-9eee-8bf0bd686b46",
+    "sourceText": "Save",
+    "translations": [
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Sichern",
+        "qualityScore": 100,
+        "glossaryHits": 0,
+        "reviewed": true
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "fr",
+        "text": "Enregistrer",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": true
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "es",
+        "text": "Guardar",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": true
+      }
+    ],
+    "projectName": "Webshop",
+    "context": "",
+    "tenantId": "default",
+    "status": "reviewed",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "530089fe-cadd-466b-b43c-343d75880ff6",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "button.post",
+    "textType": "uiText",
+    "projectId": "17d5c766-a93c-47d4-822d-136a12aeccfa",
+    "sourceText": "Post invoice",
+    "translations": [
+      {
+        "provider": "machineMt",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Post Faktura",
+        "qualityScore": 62,
+        "glossaryHits": 1,
+        "reviewed": false
+      },
+      {
+        "provider": "machineMt",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "it",
+        "text": "Post fattura",
+        "qualityScore": 73,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Billing App",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "worker"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "238d4909-24ea-42d1-a040-1d44694bdd9a",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "msg.notFound",
+    "textType": "uiText",
+    "projectId": "f197a6b0-f934-4881-9eee-8bf0bd686b46",
+    "sourceText": "Order not found",
+    "translations": [
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Auftrag nicht gefunden",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "fr",
+        "text": "Commande pas trouvé",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "es",
+        "text": "Pedido no encontrado",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Webshop",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "4a494c1f-c6db-429c-a75a-9d5de989251d",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "msg.paid",
+    "textType": "uiText",
+    "projectId": "17d5c766-a93c-47d4-822d-136a12aeccfa",
+    "sourceText": "Payment is required",
+    "translations": [
+      {
+        "provider": "machineMt",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Zahlung ist erforderlich",
+        "qualityScore": 85,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "machineMt",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "it",
+        "text": "Pagamento è obbligatorio",
+        "qualityScore": 85,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Billing App",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "worker"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "4fffd57c-4b17-4702-84ae-40c2aa46e39c",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "label.customer",
+    "textType": "uiText",
+    "projectId": "f197a6b0-f934-4881-9eee-8bf0bd686b46",
+    "sourceText": "Customer",
+    "translations": [
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Debitor",
+        "qualityScore": 95,
+        "glossaryHits": 1,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "fr",
+        "text": "Client",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "es",
+        "text": "Cliente",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Webshop",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "17d119d2-a7c6-4800-acd8-4aa092bc9884",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "title",
+    "textType": "uiText",
+    "projectId": "17d5c766-a93c-47d4-822d-136a12aeccfa",
+    "sourceText": "Invoice",
+    "translations": [
+      {
+        "provider": "machineMt",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Faktura",
+        "qualityScore": 87,
+        "glossaryHits": 1,
+        "reviewed": false
+      },
+      {
+        "provider": "machineMt",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "it",
+        "text": "Fattura",
+        "qualityScore": 85,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Billing App",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "worker"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "6d454438-a718-4ede-b989-a6f365689c85",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "msg.welcome",
+    "textType": "uiText",
+    "projectId": "f197a6b0-f934-4881-9eee-8bf0bd686b46",
+    "sourceText": "Welcome",
+    "translations": [
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Willkommen",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "fr",
+        "text": "Bienvenue",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "es",
+        "text": "Bienvenido",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Webshop",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "70001e1e-1968-43da-b168-254898a88f18",
+    "maxLength": 0,
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "button.cancel",
+    "textType": "uiText",
+    "projectId": "f197a6b0-f934-4881-9eee-8bf0bd686b46",
+    "sourceText": "Cancel",
+    "translations": [
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "de",
+        "text": "Abbrechen",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "fr",
+        "text": "Annuler",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      },
+      {
+        "provider": "companyMltr",
+        "translatedAt": "2026-11-14T07:53:07Z",
+        "language": "es",
+        "text": "Cancelar",
+        "qualityScore": 93,
+        "glossaryHits": 0,
+        "reviewed": false
+      }
+    ],
+    "projectName": "Webshop",
+    "context": "",
+    "tenantId": "default",
+    "status": "translated",
+    "updatedBy": "cli"
+  }
+]

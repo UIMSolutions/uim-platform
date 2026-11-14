@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgSubscription" title="{i18n>titleCreateSubscription}" contentWidth="34rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>subaccount}" required="true"/>
+      <Input value="{ui>/draft/subaccountId}"/>
+      <Label text="{i18n>application}" required="true"/>
+      <Input value="{ui>/draft/appName}"/>
+      <Label text="{i18n>plan}"/>
+      <Input value="{ui>/draft/planName}"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,462 @@
+<mvc:View
+  controllerName="uim.management.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns="sap.m">
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Overview singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Overview}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiGlobalAccounts}"/>
+            <ObjectNumber number="{globalAccounts}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSubaccounts}"/>
+            <ObjectNumber number="{subaccounts}" unit="{= ${activeSubaccounts} + ' ' + ${i18n>active} }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSuspended}"/>
+            <ObjectNumber number="{= ${suspendedSubaccounts} + ${suspendedGlobalAccounts} }" class="sapMObjectNumberLarge"
+              state="{= ${suspendedSubaccounts} + ${suspendedGlobalAccounts} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiEnvironments}"/>
+            <ObjectNumber number="{environments}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSubscriptions}"/>
+            <ObjectNumber number="{subscriptions}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiOverQuota}"/>
+            <ObjectNumber number="{overQuotaEntitlements}" class="sapMObjectNumberLarge"
+              state="{= ${overQuotaEntitlements} > 0 ? 'Error' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLastEvent}"/>
+            <Text text="{path: 'lastEventAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid defaultSpan="XL3 L4 M6 S12" binding="{/Overview}">
+              <GenericTile header="{i18n>tabGlobalAccounts}" subheader="{= ${activeGlobalAccounts} + ' ' + ${i18n>active} }" press=".onTile" app:tab="globalAccounts" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+                <TileContent><NumericContent value="{globalAccounts}" icon="sap-icon://world" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabDirectories}" subheader="{i18n>hierarchy}" press=".onTile" app:tab="directories" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+                <TileContent><NumericContent value="{directories}" icon="sap-icon://folder" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabSubaccounts}" subheader="{= ${activeSubaccounts} + ' ' + ${i18n>active} }" press=".onTile" app:tab="subaccounts" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+                <TileContent><NumericContent value="{subaccounts}" icon="sap-icon://folder-full" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabEntitlements}" subheader="{= ${quotaUsed} + ' / ' + ${quotaAssigned} + ' ' + ${i18n>quotaUsedShort} }" press=".onTile" app:tab="entitlements" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+                <TileContent><NumericContent value="{entitlements}" icon="sap-icon://sales-quote"
+                  valueColor="{= ${overQuotaEntitlements} > 0 ? 'Error' : 'Neutral' }" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabEnvironments}" subheader="Cloud Foundry · Kyma · ABAP" press=".onTile" app:tab="environments" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+                <TileContent><NumericContent value="{environments}" icon="sap-icon://cloud" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabSubscriptions}" subheader="SaaS" press=".onTile" app:tab="subscriptions" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+                <TileContent><NumericContent value="{subscriptions}" icon="sap-icon://cart" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabServicePlans}" subheader="{i18n>catalog}" press=".onTile" app:tab="servicePlans" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+                <TileContent><NumericContent value="{servicePlans}" icon="sap-icon://product" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabEvents}" subheader="{= ${warningEvents} + ' ' + ${i18n>warnings} }" press=".onTile" app:tab="events" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+                <TileContent><NumericContent value="{events}" icon="sap-icon://history"
+                  valueColor="{= ${warningEvents} > 0 ? 'Critical' : 'Neutral' }" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <!-- ── Global accounts ──────────────────────────────────── -->
+          <IconTabFilter key="globalAccounts" icon="sap-icon://world" text="{i18n>tabGlobalAccounts}">
+            <Table id="globalAccountTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/GlobalAccounts', parameters: {$count: true, $orderby: 'displayName'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabGlobalAccounts}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="16rem" search=".onSearch" app:table="globalAccountTable" app:fields="displayName,companyName,region,contractNumber"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreateGlobalAccount"/>
+                  <Button text="{i18n>suspend}" press=".onSuspendGlobalAccount"/>
+                  <Button text="{i18n>reactivate}" press=".onReactivateGlobalAccount"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteSelected" app:table="globalAccountTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>displayName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>companyName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>licenseType}"/></Column>
+                <Column><Text text="{i18n>region}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>subaccountUsage}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>directoryUsage}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onGlobalAccountPress">
+                  <cells>
+                    <ObjectIdentifier title="{displayName}" text="{contractNumber}"/>
+                    <Text text="{companyName}"/>
+                    <Text text="{path: 'licenseType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{region}"/>
+                    <Text text="{parts: ['currentSubaccounts', 'maxSubaccounts'], formatter: '.formatter.usage'}"/>
+                    <Text text="{parts: ['currentDirectories', 'maxDirectories'], formatter: '.formatter.usage'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Directories ──────────────────────────────────────── -->
+          <IconTabFilter key="directories" icon="sap-icon://folder" text="{i18n>tabDirectories}">
+            <Table id="directoryTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/Directories', parameters: {$count: true, $orderby: 'displayName'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDirectories}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreateDirectory"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteSelected" app:table="directoryTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>displayName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>globalAccount}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>parentDirectory}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>features}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>tabSubaccounts}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{displayName}" text="{description}"/>
+                    <Text text="{globalAccountId}"/>
+                    <Text text="{parentDirectoryId}"/>
+                    <Text text="{path: 'features', formatter: '.formatter.joinList'}"/>
+                    <ObjectNumber number="{subaccountCount}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Subaccounts ──────────────────────────────────────── -->
+          <IconTabFilter key="subaccounts" icon="sap-icon://folder-full" text="{i18n>tabSubaccounts}">
+            <Table id="subaccountTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/Subaccounts', parameters: {$count: true, $orderby: 'displayName'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSubaccounts}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Select id="subaccountStatusFilter" change=".onFilterSubaccounts" width="10rem">
+                    <core:Item key="" text="{i18n>allStatuses}"/>
+                    <core:Item key="active" text="{i18n>stActive}"/>
+                    <core:Item key="suspended" text="{i18n>stSuspended}"/>
+                  </Select>
+                  <SearchField id="subaccountSearch" width="16rem" search=".onFilterSubaccounts"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreateSubaccount"/>
+                  <Button text="{i18n>suspend}" press=".onSuspendSubaccount"/>
+                  <Button text="{i18n>reactivate}" press=".onReactivateSubaccount"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteSelected" app:table="subaccountTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>displayName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>subdomain}"/></Column>
+                <Column><Text text="{i18n>region}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>usage}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>globalAccount}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onSubaccountPress">
+                  <cells>
+                    <ObjectIdentifier title="{displayName}" text="{description}"/>
+                    <Text text="{subdomain}"/>
+                    <Text text="{region}"/>
+                    <Text text="{path: 'usage', formatter: '.formatter.enumText'}"/>
+                    <Text text="{globalAccountId}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Entitlements ─────────────────────────────────────── -->
+          <IconTabFilter key="entitlements" icon="sap-icon://sales-quote" text="{i18n>tabEntitlements}">
+            <Table id="entitlementTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/Entitlements', parameters: {$count: true, $orderby: 'serviceName'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabEntitlements}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>assign}" icon="sap-icon://add" type="Emphasized" press=".onAssignEntitlement"/>
+                  <Button text="{i18n>revoke}" press=".onRevokeEntitlement"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteSelected" app:table="entitlementTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>service}"/></Column>
+                <Column><Text text="{i18n>plan}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>assignedTo}"/></Column>
+                <Column width="12rem"><Text text="{i18n>quota}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{serviceName}" text="{path: 'category', formatter: '.formatter.enumText'}"/>
+                    <Text text="{= ${planDisplayName} || ${planName} }"/>
+                    <Text text="{= ${subaccountId} || ${directoryId} || ${globalAccountId} }"/>
+                    <ProgressIndicator percentValue="{parts: ['quotaUsed', 'quotaAssigned', 'unlimited'], formatter: '.formatter.quotaPercent'}"
+                      displayValue="{parts: ['quotaUsed', 'quotaAssigned', 'unlimited'], formatter: '.formatter.quota'}"
+                      state="{= ${quotaUsed} > ${quotaAssigned} &amp;&amp; !${unlimited} ? 'Error' : 'Success' }" displayOnly="true"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Environments ─────────────────────────────────────── -->
+          <IconTabFilter key="environments" icon="sap-icon://cloud" text="{i18n>tabEnvironments}">
+            <Table id="environmentTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/Environments', parameters: {$count: true, $orderby: 'name'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabEnvironments}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreateEnvironment"/>
+                  <Button text="{i18n>deprovision}" icon="sap-icon://delete" press=".onDeleteSelected" app:table="environmentTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>name}"/></Column>
+                <Column><Text text="{i18n>environmentType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>plan}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>landscape}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>subaccount}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{technicalKey}"/>
+                    <Text text="{path: 'environmentType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{planName}"/>
+                    <Text text="{landscapeLabel}"/>
+                    <Text text="{subaccountId}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Subscriptions ────────────────────────────────────── -->
+          <IconTabFilter key="subscriptions" icon="sap-icon://cart" text="{i18n>tabSubscriptions}">
+            <Table id="subscriptionTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/Subscriptions', parameters: {$count: true, $orderby: 'appName'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSubscriptions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>subscribe}" icon="sap-icon://add" type="Emphasized" press=".onCreateSubscription"/>
+                  <Button text="{i18n>unsubscribe}" press=".onUnsubscribe"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>application}"/></Column>
+                <Column><Text text="{i18n>plan}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>subaccount}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>subscribedAt}"/></Column>
+                <Column><Text text="{i18n>status}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{= ${appDisplayName} || ${appName} }" text="{appUrl}"/>
+                    <Text text="{planName}"/>
+                    <Text text="{subaccountId}"/>
+                    <Text text="{path: 'subscribedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Service plans ────────────────────────────────────── -->
+          <IconTabFilter key="servicePlans" icon="sap-icon://product" text="{i18n>tabServicePlans}">
+            <Table id="servicePlanTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/ServicePlans', parameters: {$count: true, $orderby: 'serviceName,planName'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabServicePlans}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="16rem" search=".onSearch" app:table="servicePlanTable" app:fields="serviceName,serviceDisplayName,planName,description"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreateServicePlan"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteSelected" app:table="servicePlanTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>service}"/></Column>
+                <Column><Text text="{i18n>plan}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>category}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>pricingModel}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>regions}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>maxQuota}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{= ${serviceDisplayName} || ${serviceName} }" text="{serviceName}"/>
+                    <ObjectStatus text="{= ${planDisplayName} || ${planName} }" state="{= ${isBeta} ? 'Warning' : 'None' }"
+                      icon="{= ${isBeta} ? 'sap-icon://lab' : '' }"/>
+                    <Text text="{path: 'category', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'pricingModel', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'availableRegions', formatter: '.formatter.joinList'}"/>
+                    <ObjectNumber number="{= ${maxQuota} > 0 ? ${maxQuota} : '∞' }" unit="{unit}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Labels ───────────────────────────────────────────── -->
+          <IconTabFilter key="labels" icon="sap-icon://tag" text="{i18n>tabLabels}">
+            <Table id="labelTable" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              mode="SingleSelectMaster" items="{path: '/Labels', parameters: {$count: true, $orderby: 'key'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabLabels}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreateLabel"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDeleteSelected" app:table="labelTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>labelKey}"/></Column>
+                <Column><Text text="{i18n>labelValues}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>resourceType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>resourceId}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{key}"/>
+                    <Text text="{path: 'values', formatter: '.formatter.joinList'}"/>
+                    <Text text="{path: 'resourceType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{resourceId}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Events ───────────────────────────────────────────── -->
+          <IconTabFilter key="events" icon="sap-icon://history" text="{i18n>tabEvents}">
+            <Table id="eventTable" growing="true" growingThreshold="50" growingScrollToLoad="true" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Events', parameters: {$count: true, $orderby: 'timestamp desc'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabEvents}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Select id="eventCategoryFilter" change=".onFilterEvents" width="14rem">
+                    <core:Item key="" text="{i18n>allCategories}"/>
+                    <core:Item key="globalAccountChange" text="{i18n>catGlobalAccount}"/>
+                    <core:Item key="directoryChange" text="{i18n>catDirectory}"/>
+                    <core:Item key="subaccountLifecycle" text="{i18n>catSubaccount}"/>
+                    <core:Item key="entitlementChange" text="{i18n>catEntitlement}"/>
+                    <core:Item key="environmentLifecycle" text="{i18n>catEnvironment}"/>
+                    <core:Item key="subscriptionLifecycle" text="{i18n>catSubscription}"/>
+                    <core:Item key="quotaChange" text="{i18n>catQuota}"/>
+                  </Select>
+                  <Select id="eventSeverityFilter" change=".onFilterEvents" width="10rem">
+                    <core:Item key="" text="{i18n>allSeverities}"/>
+                    <core:Item key="critical" text="{i18n>sevCritical}"/>
+                    <core:Item key="error" text="{i18n>sevError}"/>
+                    <core:Item key="warning" text="{i18n>sevWarning}"/>
+                    <core:Item key="info" text="{i18n>sevInfo}"/>
+                  </Select>
+                  <SearchField id="eventSearch" width="16rem" search=".onFilterEvents"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="12rem"><Text text="{i18n>time}"/></Column>
+                <Column><Text text="{i18n>eventType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>category}"/></Column>
+                <Column><Text text="{i18n>description}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>initiatedBy}"/></Column>
+                <Column><Text text="{i18n>severity}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'timestamp', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{eventType}"/>
+                    <Text text="{path: 'category', formatter: '.formatter.enumText'}"/>
+                    <Text text="{description}"/>
+                    <Text text="{initiatedBy}"/>
+                    <ObjectStatus text="{path: 'severity', formatter: '.formatter.enumText'}" state="{path: 'severity', formatter: '.formatter.severityState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

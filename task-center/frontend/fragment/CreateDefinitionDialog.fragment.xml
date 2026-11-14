@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createDefinition}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/definition/name}"/>
+      <Label text="{i18n>colProvider}"/>
+      <Select selectedKey="{view>/form/definition/providerId}" forceSelection="false"
+        items="{path: '/TaskProviders', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name}"/></Select>
+      <Label text="{i18n>colCategory}"/>
+      <Select selectedKey="{view>/form/definition/category}">
+        <core:Item key="approval" text="{i18n>catApproval}"/>
+        <core:Item key="review" text="{i18n>catReview}"/>
+        <core:Item key="toDoItem" text="{i18n>catToDo}"/>
+        <core:Item key="notification" text="{i18n>catNotification}"/>
+        <core:Item key="action" text="{i18n>catAction}"/>
+        <core:Item key="workflow" text="{i18n>catWorkflow}"/>
+        <core:Item key="informational" text="{i18n>catInformational}"/>
+      </Select>
+      <Label text="{i18n>colPriority}"/>
+      <Select selectedKey="{view>/form/definition/defaultPriority}">
+        <core:Item key="low" text="{i18n>prioLow}"/>
+        <core:Item key="medium" text="{i18n>prioMedium}"/>
+        <core:Item key="high" text="{i18n>prioHigh}"/>
+        <core:Item key="veryHigh" text="{i18n>prioVeryHigh}"/>
+      </Select>
+      <Label text="{i18n>colSla}"/>
+      <StepInput value="{view>/form/definition/dueInDays}" min="0" max="3650"/>
+      <Label text="{i18n>colActions}"/>
+      <Input value="{view>/form/definition/allowedActions}" placeholder="approve, reject, escalate"/>
+      <Label text="{i18n>requiresClaim}"/>
+      <Switch state="{view>/form/definition/requiresClaim}"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/definition/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

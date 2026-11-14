@@ -1,0 +1,53 @@
+[
+  {
+    "targetTerm": "facture",
+    "mandatory": true,
+    "updatedAt": "2026-11-14T07:53:06Z",
+    "id": "5caeb46a-371a-4302-aacc-163aae15bc2a",
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:06Z",
+    "name": "invoice (en→fr)",
+    "domainName": "",
+    "caseSensitive": false,
+    "sourceTerm": "invoice",
+    "sourceLanguage": "en",
+    "context": "",
+    "tenantId": "default",
+    "targetLanguage": "fr",
+    "updatedBy": "cli"
+  },
+  {
+    "targetTerm": "Debitor",
+    "mandatory": false,
+    "updatedAt": "2026-11-14T07:53:06Z",
+    "id": "ce1365c6-5af7-4d7f-a8e3-310f744aa1a6",
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:06Z",
+    "name": "customer (en→de)",
+    "domainName": "",
+    "caseSensitive": false,
+    "sourceTerm": "customer",
+    "sourceLanguage": "en",
+    "context": "Accounts receivable",
+    "tenantId": "default",
+    "targetLanguage": "de",
+    "updatedBy": "cli"
+  },
+  {
+    "targetTerm": "Faktura",
+    "mandatory": true,
+    "updatedAt": "2026-11-14T07:53:06Z",
+    "id": "a47b4888-00f8-42ef-8170-955ea0dae16f",
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:06Z",
+    "name": "invoice (en→de)",
+    "domainName": "FI",
+    "caseSensitive": false,
+    "sourceTerm": "invoice",
+    "sourceLanguage": "en",
+    "context": "SAP FI terminology",
+    "tenantId": "default",
+    "targetLanguage": "de",
+    "updatedBy": "cli"
+  }
+]

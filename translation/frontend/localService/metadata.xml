@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.translation" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="TranslationProject">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="projectType" Type="Edm.String"/>
+        <Property Name="sourceLanguage" Type="Edm.String"/>
+        <Property Name="targetLanguages" Type="Collection(Edm.String)"/>
+        <Property Name="provider" Type="Edm.String"/>
+        <Property Name="domainName" Type="Edm.String"/>
+        <Property Name="repositoryUrl" Type="Edm.String"/>
+        <Property Name="baseBranch" Type="Edm.String"/>
+        <Property Name="abapSystemId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="textCount" Type="Edm.Int32"/>
+        <Property Name="completionPercent" Type="Edm.Int32"/>
+        <Property Name="lastTranslatedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="ProjectText">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="projectId" Type="Edm.String"/>
+        <Property Name="projectName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="sourceText" Type="Edm.String"/>
+        <Property Name="textType" Type="Edm.String"/>
+        <Property Name="maxLength" Type="Edm.Int32"/>
+        <Property Name="context" Type="Edm.String"/>
+        <Property Name="translations" Type="Collection(uim.translation.TextTranslation)"/>
+        <Property Name="status" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="GlossaryEntry">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="sourceLanguage" Type="Edm.String"/>
+        <Property Name="targetLanguage" Type="Edm.String"/>
+        <Property Name="sourceTerm" Type="Edm.String"/>
+        <Property Name="targetTerm" Type="Edm.String"/>
+        <Property Name="domainName" Type="Edm.String"/>
+        <Property Name="context" Type="Edm.String"/>
+        <Property Name="mandatory" Type="Edm.Boolean"/>
+        <Property Name="caseSensitive" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="TranslationJob">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="jobType" Type="Edm.String"/>
+        <Property Name="projectId" Type="Edm.String"/>
+        <Property Name="sourceLanguage" Type="Edm.String"/>
+        <Property Name="targetLanguage" Type="Edm.String"/>
+        <Property Name="provider" Type="Edm.String"/>
+        <Property Name="domainName" Type="Edm.String"/>
+        <Property Name="contentType" Type="Edm.String"/>
+        <Property Name="content" Type="Edm.String"/>
+        <Property Name="translatedContent" Type="Edm.String"/>
+        <Property Name="characterCount" Type="Edm.Int32"/>
+        <Property Name="qualityScore" Type="Edm.Int32"/>
+        <Property Name="qualityLevel" Type="Edm.String"/>
+        <Property Name="glossaryHits" Type="Edm.Int32"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="attempts" Type="Edm.Int32"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Language">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="nativeName" Type="Edm.String"/>
+        <Property Name="rightToLeft" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="TranslationDomain">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="TextType">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="recommendedMaxLength" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Provider">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="available" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="projects" Type="Edm.Int32"/>
+        <Property Name="projectsActive" Type="Edm.Int32"/>
+        <Property Name="projectsCompleted" Type="Edm.Int32"/>
+        <Property Name="projectsArchived" Type="Edm.Int32"/>
+        <Property Name="texts" Type="Edm.Int32"/>
+        <Property Name="textsTranslated" Type="Edm.Int32"/>
+        <Property Name="textsReviewed" Type="Edm.Int32"/>
+        <Property Name="translations" Type="Edm.Int32"/>
+        <Property Name="averageQuality" Type="Edm.Int32"/>
+        <Property Name="glossaryEntries" Type="Edm.Int32"/>
+        <Property Name="glossaryMandatory" Type="Edm.Int32"/>
+        <Property Name="jobs" Type="Edm.Int32"/>
+        <Property Name="jobsPending" Type="Edm.Int32"/>
+        <Property Name="jobsCompleted" Type="Edm.Int32"/>
+        <Property Name="jobsFailed" Type="Edm.Int32"/>
+        <Property Name="jobsCancelled" Type="Edm.Int32"/>
+        <Property Name="charactersTranslated" Type="Edm.Int32"/>
+        <Property Name="targetLanguages" Type="Collection(Edm.String)"/>
+        <Property Name="lastTranslatedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <ComplexType Name="TextTranslation">
+        <Property Name="language" Type="Edm.String"/>
+        <Property Name="text" Type="Edm.String"/>
+        <Property Name="provider" Type="Edm.String"/>
+        <Property Name="qualityScore" Type="Edm.Int32"/>
+        <Property Name="glossaryHits" Type="Edm.Int32"/>
+        <Property Name="reviewed" Type="Edm.Boolean"/>
+        <Property Name="translatedAt" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <ComplexType Name="TranslatedText">
+        <Property Name="sourceText" Type="Edm.String"/>
+        <Property Name="translatedText" Type="Edm.String"/>
+        <Property Name="qualityScore" Type="Edm.Int32"/>
+        <Property Name="qualityLevel" Type="Edm.String"/>
+        <Property Name="glossaryHits" Type="Edm.Int32"/>
+        <Property Name="truncationRisk" Type="Edm.Boolean"/>
+      </ComplexType>
+      <ComplexType Name="TranslateTextsResult">
+        <Property Name="sourceLanguage" Type="Edm.String"/>
+        <Property Name="targetLanguage" Type="Edm.String"/>
+        <Property Name="provider" Type="Edm.String"/>
+        <Property Name="domainName" Type="Edm.String"/>
+        <Property Name="textType" Type="Edm.String"/>
+        <Property Name="count" Type="Edm.Int32"/>
+        <Property Name="averageQuality" Type="Edm.Int32"/>
+        <Property Name="glossaryHits" Type="Edm.Int32"/>
+        <Property Name="translations" Type="Collection(uim.translation.TranslatedText)"/>
+      </ComplexType>
+      <ComplexType Name="DocumentTranslationResult">
+        <Property Name="sourceLanguage" Type="Edm.String"/>
+        <Property Name="targetLanguage" Type="Edm.String"/>
+        <Property Name="provider" Type="Edm.String"/>
+        <Property Name="contentType" Type="Edm.String"/>
+        <Property Name="translatedContent" Type="Edm.String"/>
+        <Property Name="characterCount" Type="Edm.Int32"/>
+        <Property Name="qualityScore" Type="Edm.Int32"/>
+        <Property Name="qualityLevel" Type="Edm.String"/>
+        <Property Name="glossaryHits" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="JobRunReport">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="processed" Type="Edm.Int32"/>
+        <Property Name="completed" Type="Edm.Int32"/>
+        <Property Name="failed" Type="Edm.Int32"/>
+        <Property Name="messages" Type="Collection(Edm.String)"/>
+        <Property Name="ranAt" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <Action Name="ActivateTranslationProject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.TranslationProject"/>
+      </Action>
+      <Action Name="TranslateTranslationProject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="force" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.TranslationProject"/>
+      </Action>
+      <Action Name="ArchiveTranslationProject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.TranslationProject"/>
+      </Action>
+      <Action Name="ReopenTranslationProject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.TranslationProject"/>
+      </Action>
+      <Action Name="TranslateProjectText" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.ProjectText"/>
+      </Action>
+      <Action Name="SetTranslationProjectText" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="language" Type="Edm.String"/>
+        <Parameter Name="text" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.ProjectText"/>
+      </Action>
+      <Action Name="ReviewProjectText" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="language" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.ProjectText"/>
+      </Action>
+      <Action Name="ProcessTranslationJob" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.TranslationJob"/>
+      </Action>
+      <Action Name="CancelTranslationJob" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.TranslationJob"/>
+      </Action>
+      <Action Name="RetryTranslationJob" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.TranslationJob"/>
+      </Action>
+      <Action Name="TranslateTexts" IsBound="false">
+        <Parameter Name="sourceLanguage" Type="Edm.String"/>
+        <Parameter Name="targetLanguage" Type="Edm.String"/>
+        <Parameter Name="texts" Type="Collection(Edm.String)"/>
+        <Parameter Name="provider" Type="Edm.String"/>
+        <Parameter Name="domainName" Type="Edm.String"/>
+        <Parameter Name="textType" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.TranslateTextsResult"/>
+      </Action>
+      <Action Name="TranslateDocument" IsBound="false">
+        <Parameter Name="sourceLanguage" Type="Edm.String"/>
+        <Parameter Name="targetLanguage" Type="Edm.String"/>
+        <Parameter Name="content" Type="Edm.String"/>
+        <Parameter Name="contentType" Type="Edm.String"/>
+        <Parameter Name="provider" Type="Edm.String"/>
+        <Parameter Name="domainName" Type="Edm.String"/>
+        <ReturnType Type="uim.translation.DocumentTranslationResult"/>
+      </Action>
+      <Action Name="ProcessJobs" IsBound="false">
+        <ReturnType Type="uim.translation.JobRunReport"/>
+      </Action>
+      <EntityContainer Name="TranslationService">
+        <EntitySet Name="TranslationProjects" EntityType="uim.translation.TranslationProject"/>
+        <EntitySet Name="ProjectTexts" EntityType="uim.translation.ProjectText"/>
+        <EntitySet Name="GlossaryEntries" EntityType="uim.translation.GlossaryEntry"/>
+        <EntitySet Name="TranslationJobs" EntityType="uim.translation.TranslationJob"/>
+        <EntitySet Name="Languages" EntityType="uim.translation.Language"/>
+        <EntitySet Name="TranslationDomains" EntityType="uim.translation.TranslationDomain"/>
+        <EntitySet Name="TextTypes" EntityType="uim.translation.TextType"/>
+        <EntitySet Name="Providers" EntityType="uim.translation.Provider"/>
+        <Singleton Name="Statistics" Type="uim.translation.Statistic"/>
+        <ActionImport Name="ActivateTranslationProject" Action="uim.translation.ActivateTranslationProject"/>
+        <ActionImport Name="TranslateTranslationProject" Action="uim.translation.TranslateTranslationProject"/>
+        <ActionImport Name="ArchiveTranslationProject" Action="uim.translation.ArchiveTranslationProject"/>
+        <ActionImport Name="ReopenTranslationProject" Action="uim.translation.ReopenTranslationProject"/>
+        <ActionImport Name="TranslateProjectText" Action="uim.translation.TranslateProjectText"/>
+        <ActionImport Name="SetTranslationProjectText" Action="uim.translation.SetTranslationProjectText"/>
+        <ActionImport Name="ReviewProjectText" Action="uim.translation.ReviewProjectText"/>
+        <ActionImport Name="ProcessTranslationJob" Action="uim.translation.ProcessTranslationJob"/>
+        <ActionImport Name="CancelTranslationJob" Action="uim.translation.CancelTranslationJob"/>
+        <ActionImport Name="RetryTranslationJob" Action="uim.translation.RetryTranslationJob"/>
+        <ActionImport Name="TranslateTexts" Action="uim.translation.TranslateTexts"/>
+        <ActionImport Name="TranslateDocument" Action="uim.translation.TranslateDocument"/>
+        <ActionImport Name="ProcessJobs" Action="uim.translation.ProcessJobs"/>
+      </EntityContainer>
+      <Annotations Target="uim.translation.TranslationProject/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/projectType"><Annotation Term="Common.Label" String="Project Type"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/sourceLanguage"><Annotation Term="Common.Label" String="Source Language"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/targetLanguages"><Annotation Term="Common.Label" String="Target Languages"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/provider"><Annotation Term="Common.Label" String="Provider"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/domainName"><Annotation Term="Common.Label" String="Domain Name"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/repositoryUrl"><Annotation Term="Common.Label" String="Repository URL"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/baseBranch"><Annotation Term="Common.Label" String="Base Branch"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/abapSystemId"><Annotation Term="Common.Label" String="ABAP System ID"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/textCount"><Annotation Term="Common.Label" String="Text Count"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/completionPercent"><Annotation Term="Common.Label" String="Completion Percent"/></Annotations>
+      <Annotations Target="uim.translation.TranslationProject/lastTranslatedAt"><Annotation Term="Common.Label" String="Last Translated At"/></Annotations>
+      <Annotations Target="uim.translation.TranslationService/TranslationProjects">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.translation.ProjectText/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/projectId"><Annotation Term="Common.Label" String="Project ID"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/projectName"><Annotation Term="Common.Label" String="Project Name"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/sourceText"><Annotation Term="Common.Label" String="Source Text"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/textType"><Annotation Term="Common.Label" String="Text Type"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/maxLength"><Annotation Term="Common.Label" String="Max Length"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/context"><Annotation Term="Common.Label" String="Context"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/translations"><Annotation Term="Common.Label" String="Translations"/></Annotations>
+      <Annotations Target="uim.translation.ProjectText/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.translation.TranslationService/ProjectTexts">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/sourceLanguage"><Annotation Term="Common.Label" String="Source Language"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/targetLanguage"><Annotation Term="Common.Label" String="Target Language"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/sourceTerm"><Annotation Term="Common.Label" String="Source Term"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/targetTerm"><Annotation Term="Common.Label" String="Target Term"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/domainName"><Annotation Term="Common.Label" String="Domain Name"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/context"><Annotation Term="Common.Label" String="Context"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/mandatory"><Annotation Term="Common.Label" String="Mandatory"/></Annotations>
+      <Annotations Target="uim.translation.GlossaryEntry/caseSensitive"><Annotation Term="Common.Label" String="Case Sensitive"/></Annotations>
+      <Annotations Target="uim.translation.TranslationService/GlossaryEntries">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.translation.TranslationJob/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/jobType"><Annotation Term="Common.Label" String="Job Type"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/projectId"><Annotation Term="Common.Label" String="Project ID"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/sourceLanguage"><Annotation Term="Common.Label" String="Source Language"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/targetLanguage"><Annotation Term="Common.Label" String="Target Language"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/provider"><Annotation Term="Common.Label" String="Provider"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/domainName"><Annotation Term="Common.Label" String="Domain Name"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/contentType"><Annotation Term="Common.Label" String="Content Type"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/content"><Annotation Term="Common.Label" String="Content"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/translatedContent"><Annotation Term="Common.Label" String="Translated Content"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/characterCount"><Annotation Term="Common.Label" String="Character Count"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/qualityScore"><Annotation Term="Common.Label" String="Quality Score"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/qualityLevel"><Annotation Term="Common.Label" String="Quality Level"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/glossaryHits"><Annotation Term="Common.Label" String="Glossary Hits"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/attempts"><Annotation Term="Common.Label" String="Attempts"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/startedAt"><Annotation Term="Common.Label" String="Started At"/></Annotations>
+      <Annotations Target="uim.translation.TranslationJob/completedAt"><Annotation Term="Common.Label" String="Completed At"/></Annotations>
+      <Annotations Target="uim.translation.TranslationService/TranslationJobs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.translation.Language/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.translation.Language/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.translation.Language/nativeName"><Annotation Term="Common.Label" String="Native Name"/></Annotations>
+      <Annotations Target="uim.translation.Language/rightToLeft"><Annotation Term="Common.Label" String="Right To Left"/></Annotations>
+      <Annotations Target="uim.translation.TranslationService/Languages">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.translation.TranslationDomain/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.translation.TranslationDomain/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.translation.TranslationService/TranslationDomains">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.translation.TextType/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.translation.TextType/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.translation.TextType/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.translation.TextType/recommendedMaxLength"><Annotation Term="Common.Label" String="Recommended Max Length"/></Annotations>
+      <Annotations Target="uim.translation.TranslationService/TextTypes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.translation.Provider/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.translation.Provider/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.translation.Provider/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.translation.Provider/available"><Annotation Term="Common.Label" String="Available"/></Annotations>
+      <Annotations Target="uim.translation.TranslationService/Providers">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.translation.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/projects"><Annotation Term="Common.Label" String="Projects"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/projectsActive"><Annotation Term="Common.Label" String="Projects Active"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/projectsCompleted"><Annotation Term="Common.Label" String="Projects Completed"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/projectsArchived"><Annotation Term="Common.Label" String="Projects Archived"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/texts"><Annotation Term="Common.Label" String="Texts"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/textsTranslated"><Annotation Term="Common.Label" String="Texts Translated"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/textsReviewed"><Annotation Term="Common.Label" String="Texts Reviewed"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/translations"><Annotation Term="Common.Label" String="Translations"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/averageQuality"><Annotation Term="Common.Label" String="Average Quality"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/glossaryEntries"><Annotation Term="Common.Label" String="Glossary Entries"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/glossaryMandatory"><Annotation Term="Common.Label" String="Glossary Mandatory"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/jobs"><Annotation Term="Common.Label" String="Jobs"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/jobsPending"><Annotation Term="Common.Label" String="Jobs Pending"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/jobsCompleted"><Annotation Term="Common.Label" String="Jobs Completed"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/jobsFailed"><Annotation Term="Common.Label" String="Jobs Failed"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/jobsCancelled"><Annotation Term="Common.Label" String="Jobs Cancelled"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/charactersTranslated"><Annotation Term="Common.Label" String="Characters Translated"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/targetLanguages"><Annotation Term="Common.Label" String="Target Languages"/></Annotations>
+      <Annotations Target="uim.translation.Statistic/lastTranslatedAt"><Annotation Term="Common.Label" String="Last Translated At"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

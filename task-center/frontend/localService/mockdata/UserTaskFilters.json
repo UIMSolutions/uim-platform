@@ -1,0 +1,16 @@
+[
+  {
+    "updatedAt": "2026-11-11T13:08:07Z",
+    "id": "anna-urgent",
+    "userId": "anna",
+    "odataFilter": "assignee eq 'anna' and (priority eq 'high' or priority eq 'veryHigh') and (status eq 'open' or status eq 'inProgress')",
+    "createdAt": "2026-11-11T13:08:07Z",
+    "createdBy": "anna",
+    "name": "My urgent approvals",
+    "criteria": "assignee=$me,priority=high,priority=veryHigh,status=open,status=inProgress",
+    "description": "",
+    "isDefault": true,
+    "tenantId": "default",
+    "updatedBy": "anna"
+  }
+]

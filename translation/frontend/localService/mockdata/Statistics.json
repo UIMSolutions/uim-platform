@@ -1,0 +1,28 @@
+{
+  "jobsFailed": 0,
+  "lastTranslatedAt": "2026-11-14T07:53:07Z",
+  "glossaryMandatory": 2,
+  "jobsCompleted": 2,
+  "tenantId": "default",
+  "jobsCancelled": 0,
+  "texts": 11,
+  "projectsArchived": 0,
+  "averageQuality": 90,
+  "textsTranslated": 10,
+  "glossaryEntries": 3,
+  "translations": 27,
+  "charactersTranslated": 272,
+  "textsReviewed": 1,
+  "projectsActive": 0,
+  "projects": 3,
+  "jobs": 3,
+  "targetLanguages": [
+    "de",
+    "es",
+    "fr",
+    "it",
+    "ja"
+  ],
+  "projectsCompleted": 2,
+  "jobsPending": 1
+}

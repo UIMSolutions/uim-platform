@@ -1,0 +1,22 @@
+{
+  "actions": 6,
+  "activeProviders": 2,
+  "activeSubstitutions": 1,
+  "approvedTasks": 2,
+  "attachments": 1,
+  "cancelledTasks": 0,
+  "comments": 4,
+  "completedTasks": 2,
+  "definitions": 4,
+  "failedTasks": 0,
+  "highPriorityTasks": 2,
+  "inProgressTasks": 1,
+  "openTasks": 4,
+  "overdueTasks": 1,
+  "providers": 3,
+  "providersInError": 0,
+  "rejectedTasks": 0,
+  "tasks": 7,
+  "tenantId": "default",
+  "unassignedTasks": 1
+}

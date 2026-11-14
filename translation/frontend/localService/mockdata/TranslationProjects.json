@@ -1,0 +1,78 @@
+[
+  {
+    "status": "draft",
+    "lastTranslatedAt": null,
+    "provider": "machineMt",
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "3ab6702c-e20d-4a8e-9d82-d3ed9111c5e8",
+    "baseBranch": "",
+    "abapSystemId": "S4H",
+    "repositoryUrl": "",
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:07Z",
+    "name": "ABAP Messages",
+    "domainName": "",
+    "completionPercent": 0,
+    "description": "",
+    "projectType": "abap",
+    "sourceLanguage": "en",
+    "textCount": 1,
+    "tenantId": "default",
+    "targetLanguages": [
+      "de",
+      "ja"
+    ],
+    "updatedBy": "cli"
+  },
+  {
+    "status": "completed",
+    "lastTranslatedAt": "2026-11-14T07:53:07Z",
+    "provider": "companyMltr",
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "f197a6b0-f934-4881-9eee-8bf0bd686b46",
+    "baseBranch": "",
+    "abapSystemId": "",
+    "repositoryUrl": "",
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:06Z",
+    "name": "Webshop",
+    "domainName": "",
+    "completionPercent": 100,
+    "description": "Storefront UI texts",
+    "projectType": "api",
+    "sourceLanguage": "en",
+    "textCount": 7,
+    "tenantId": "default",
+    "targetLanguages": [
+      "de",
+      "fr",
+      "es"
+    ],
+    "updatedBy": "cli"
+  },
+  {
+    "status": "completed",
+    "lastTranslatedAt": "2026-11-14T07:53:07Z",
+    "provider": "machineMt",
+    "updatedAt": "2026-11-14T07:53:07Z",
+    "id": "17d5c766-a93c-47d4-822d-136a12aeccfa",
+    "baseBranch": "main",
+    "abapSystemId": "",
+    "repositoryUrl": "https://github.com/acme/billing.git",
+    "createdBy": "cli",
+    "createdAt": "2026-11-14T07:53:06Z",
+    "name": "Billing App",
+    "domainName": "FI",
+    "completionPercent": 100,
+    "description": "Fiori billing app",
+    "projectType": "git",
+    "sourceLanguage": "en",
+    "textCount": 3,
+    "tenantId": "default",
+    "targetLanguages": [
+      "de",
+      "it"
+    ],
+    "updatedBy": "worker"
+  }
+]

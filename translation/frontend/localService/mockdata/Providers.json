@@ -1,0 +1,26 @@
+[
+  {
+    "description": "Multilingual text repository: verified translations of SAP terminology",
+    "available": true,
+    "id": "mltr",
+    "name": "SAP MLTR"
+  },
+  {
+    "description": "Neural machine translation",
+    "available": true,
+    "id": "machineMt",
+    "name": "Neural MT"
+  },
+  {
+    "description": "Company glossary first (optional entries applied), then machine translation",
+    "available": true,
+    "id": "companyMltr",
+    "name": "Company MLTR"
+  },
+  {
+    "description": "Large language model via the generative AI hub",
+    "available": true,
+    "id": "llm",
+    "name": "LLM"
+  }
+]

@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createTask}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colTitle}" required="true"/>
+      <Input value="{view>/form/task/title}"/>
+      <Label text="{i18n>colDefinition}"/>
+      <Select selectedKey="{view>/form/task/definitionId}" forceSelection="false"
+        items="{path: '/TaskDefinitions', parameters: {$orderby: 'name', $filter: 'isActive eq true'}}"><core:Item key="{id}" text="{name}"/></Select>
+      <Label text="{i18n>colAssignee}"/>
+      <Input value="{view>/form/task/assignee}" placeholder="{i18n>assigneeHint}"/>
+      <Label text="{i18n>colPriority}"/>
+      <Select selectedKey="{view>/form/task/priority}" forceSelection="false">
+        <core:Item key="" text="{i18n>fromDefinition}"/>
+        <core:Item key="low" text="{i18n>prioLow}"/>
+        <core:Item key="medium" text="{i18n>prioMedium}"/>
+        <core:Item key="high" text="{i18n>prioHigh}"/>
+        <core:Item key="veryHigh" text="{i18n>prioVeryHigh}"/>
+      </Select>
+      <Label text="{i18n>colDue}"/>
+      <DatePicker value="{view>/form/task/dueDate}" valueFormat="yyyy-MM-dd" placeholder="{i18n>fromDefinition}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/task/description}" rows="3"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

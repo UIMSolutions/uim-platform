@@ -1,0 +1,82 @@
+[
+  {
+    "id": "AU",
+    "name": "Automotive"
+  },
+  {
+    "id": "BA",
+    "name": "Banking"
+  },
+  {
+    "id": "CS",
+    "name": "Customer Service"
+  },
+  {
+    "id": "ED",
+    "name": "Education"
+  },
+  {
+    "id": "EN",
+    "name": "Energy"
+  },
+  {
+    "id": "FI",
+    "name": "Finance"
+  },
+  {
+    "id": "GV",
+    "name": "Government"
+  },
+  {
+    "id": "HC",
+    "name": "Healthcare"
+  },
+  {
+    "id": "HR",
+    "name": "Human Resources"
+  },
+  {
+    "id": "IN",
+    "name": "Insurance"
+  },
+  {
+    "id": "IT",
+    "name": "Information Technology"
+  },
+  {
+    "id": "LE",
+    "name": "Legal"
+  },
+  {
+    "id": "LO",
+    "name": "Logistics"
+  },
+  {
+    "id": "MA",
+    "name": "Manufacturing"
+  },
+  {
+    "id": "MK",
+    "name": "Marketing"
+  },
+  {
+    "id": "RE",
+    "name": "Retail"
+  },
+  {
+    "id": "SA",
+    "name": "Sales"
+  },
+  {
+    "id": "SC",
+    "name": "Supply Chain"
+  },
+  {
+    "id": "TC",
+    "name": "Telecommunications"
+  },
+  {
+    "id": "TR",
+    "name": "Travel"
+  }
+]

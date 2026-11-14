@@ -1,0 +1,102 @@
+<mvc:View
+  controllerName="uim.translation.controller.ProjectDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:uxap="sap.uxap"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="projectPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:expandedHeading>
+          <Title text="{name}" wrapping="true"/>
+        </uxap:expandedHeading>
+        <uxap:snappedHeading>
+          <Title text="{name}"/>
+        </uxap:snappedHeading>
+        <uxap:expandedContent>
+          <Text text="{description}"/>
+        </uxap:expandedContent>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onClose"/>
+        </uxap:navigationActions>
+        <uxap:actions>
+          <Button id="translateProjectButton" text="{i18n>translateAll}" icon="sap-icon://translate" type="Emphasized" press=".onTranslate"/>
+          <Button text="{i18n>retranslate}" press=".onRetranslate"/>
+          <Button text="{i18n>activate}" visible="{path: 'status', targetType: 'any', formatter: '.formatter.isDraft'}" press=".onActivate"/>
+          <Button text="{i18n>archive}" visible="{path: 'status', targetType: 'any', formatter: '.formatter.isOpen'}" press=".onArchive"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <ObjectStatus title="{i18n>colStatus}" text="{path: 'status', formatter: '.formatter.enumText'}"
+        state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"
+        class="sapUiMediumMarginEnd"/>
+      <VBox class="sapUiMediumMarginEnd" width="14rem">
+        <Label text="{i18n>colCompletion}"/>
+        <ProgressIndicator percentValue="{path: 'completionPercent', targetType: 'any', formatter: '.formatter.percent'}" displayValue="{completionPercent} %"
+          state="{path: 'completionPercent', targetType: 'any', formatter: '.formatter.percentState'}" showValue="true"/>
+      </VBox>
+      <ObjectAttribute title="{i18n>colLanguages}" class="sapUiMediumMarginEnd"
+        text="{parts: ['sourceLanguage', {path: 'targetLanguages', targetType: 'any', mode: 'OneTime'}], formatter: '.formatter.languagePair'}"/>
+      <ObjectAttribute title="{i18n>colProvider}" text="{path: 'provider', formatter: '.formatter.enumText'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>lblLastTranslated}"
+        text="{path: 'lastTranslatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionTexts}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <!-- filtered by projectId in the controller; starts suspended until the id is known -->
+            <Table id="projectTextTable" mode="SingleSelectLeft" growing="true" growingThreshold="50"
+              items="{path: '/ProjectTexts', parameters: {$orderby: 'name', $select: 'translations'}, suspended: true}" noDataText="{i18n>noTexts}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabTexts} ({textCount})" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>addText}" icon="sap-icon://add" press=".onAddText"/>
+                  <Button text="{i18n>setTranslation}" icon="sap-icon://edit" press=".onSetTranslation"/>
+                  <Button text="{i18n>review}" icon="sap-icon://accept" press=".onReviewText"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="13rem"><Text text="{i18n>colKey}"/></Column>
+                <Column><Text text="{i18n>colSourceText}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTranslations}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{textType}"/>
+                    <Text text="{sourceText}"/>
+                    <Text text="{path: 'translations', targetType: 'any', mode: 'OneTime', formatter: '.formatter.translations'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionSettings}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" editable="false">
+              <Label text="{i18n>colType}"/><Text text="{projectType}"/>
+              <Label text="{i18n>colDomain}"/><Text text="{= ${domainName} || '—' }"/>
+              <Label text="{i18n>lblRepository}"/><Text text="{= ${repositoryUrl} ? ${repositoryUrl} + ' (' + ${baseBranch} + ')' : '—' }"/>
+              <Label text="{i18n>lblAbapSystem}"/><Text text="{= ${abapSystemId} || '—' }"/>
+              <Label text="{i18n>lblCreated}"/>
+              <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

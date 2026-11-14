@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>actForward}" contentWidth="28rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>forwardTo}" required="true"/>
+      <Input value="{view>/form/forward/forwardTo}"/>
+      <Label text="{i18n>colComment}"/>
+      <TextArea value="{view>/form/forward/comment}" rows="3"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>actForward}" type="Emphasized" press=".onConfirmForward"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

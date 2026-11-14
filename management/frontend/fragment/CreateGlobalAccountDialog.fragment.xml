@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form">
+  <Dialog id="dlgGlobalAccount" title="{i18n>titleCreateGlobalAccount}" contentWidth="34rem" draggable="true" resizable="true">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>displayName}" required="true"/>
+      <Input value="{ui>/draft/displayName}"/>
+      <Label text="{i18n>description}"/>
+      <Input value="{ui>/draft/description}"/>
+      <Label text="{i18n>region}"/>
+      <Select selectedKey="{ui>/draft/region}" width="100%">
+        <core:Item key="eu10" text="{i18n>regionEu10}"/>
+        <core:Item key="us10" text="{i18n>regionUs10}"/>
+        <core:Item key="ap21" text="{i18n>regionAp21}"/>
+        <core:Item key="eu20" text="{i18n>regionEu20}"/>
+      </Select>
+      <Label text="{i18n>licenseType}"/>
+      <Select selectedKey="{ui>/draft/licenseType}" width="100%">
+        <core:Item key="enterprise" text="{i18n>licEnterprise}"/>
+        <core:Item key="trial" text="{i18n>licTrial}"/>
+        <core:Item key="partner" text="{i18n>licPartner}"/>
+        <core:Item key="internal" text="{i18n>licInternal}"/>
+      </Select>
+      <Label text="{i18n>companyName}"/>
+      <Input value="{ui>/draft/companyName}"/>
+      <Label text="{i18n>contactEmail}"/>
+      <Input value="{ui>/draft/contactEmail}" type="Email"/>
+      <Label text="{i18n>contractNumber}"/>
+      <Input value="{ui>/draft/contractNumber}"/>
+      <Label text="{i18n>costCenter}"/>
+      <Input value="{ui>/draft/costCenter}"/>
+      <Label text="{i18n>maxSubaccounts}"/>
+      <Input value="{ui>/draft/maxSubaccounts}" type="Number"/>
+      <Label text="{i18n>maxDirectories}"/>
+      <Input value="{ui>/draft/maxDirectories}" type="Number"/>
+    </f:SimpleForm>
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onCreateSave"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCreateCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

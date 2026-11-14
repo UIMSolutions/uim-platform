@@ -1,0 +1,371 @@
+<mvc:View
+  controllerName="uim.translation.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <!-- One tab per OData entity set; actions call unbound OData actions -->
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button id="processJobsButton" text="{i18n>processJobs}" icon="sap-icon://process" press=".onProcessJobs"/>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{path: '/Statistics', parameters: {$select: 'targetLanguages'}}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiProjects}"/>
+            <ObjectNumber number="{projects}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiCompleted}"/>
+            <ObjectNumber number="{projectsCompleted}" class="sapMObjectNumberLarge" state="Success"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiTexts}"/>
+            <ObjectNumber number="{textsTranslated} / {texts}" class="sapMObjectNumberLarge"
+              state="{= %{textsTranslated} &lt; %{texts} ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiReviewed}"/>
+            <ObjectNumber number="{textsReviewed}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiQuality}"/>
+            <ObjectNumber number="{averageQuality}" unit="/ 100" class="sapMObjectNumberLarge"
+              state="{path: 'averageQuality', targetType: 'any', formatter: '.formatter.qualityState'}"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiJobsPending}"/>
+            <ObjectNumber number="{jobsPending}" class="sapMObjectNumberLarge" state="{= %{jobsPending} > 0 ? 'Information' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiJobsFailed}"/>
+            <ObjectNumber number="{jobsFailed}" class="sapMObjectNumberLarge" state="{= %{jobsFailed} > 0 ? 'Error' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiGlossary}"/>
+            <ObjectNumber number="{glossaryEntries}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLanguages}"/>
+            <Text text="{path: 'targetLanguages', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}" class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid defaultSpan="XL3 L4 M6 S12" binding="{path: '/Statistics', parameters: {$select: 'targetLanguages'}}">
+              <GenericTile header="{i18n>tabTranslate}" subheader="{i18n>tabTranslateSub}" press=".onTile" app:tab="translate">
+                <TileContent><ImageContent src="sap-icon://translate"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabProjects}" subheader="{i18n>kpiCompleted}: {projectsCompleted}" press=".onTile" app:tab="projects">
+                <TileContent><NumericContent value="{projects}" icon="sap-icon://project-definition-triangle-2" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabTexts}" subheader="{i18n>kpiTranslations}: {translations}" press=".onTile" app:tab="texts">
+                <TileContent><NumericContent value="{texts}" icon="sap-icon://text" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabGlossary}" subheader="{i18n>kpiMandatory}: {glossaryMandatory}" press=".onTile" app:tab="glossary">
+                <TileContent><NumericContent value="{glossaryEntries}" icon="sap-icon://course-book" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabJobs}" subheader="{i18n>kpiJobsPending}: {jobsPending} · {i18n>kpiJobsFailed}: {jobsFailed}" press=".onTile" app:tab="jobs">
+                <TileContent><NumericContent value="{jobs}" icon="sap-icon://batch-payments" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabLanguages}" subheader="{i18n>kpiLanguages}: {path: 'targetLanguages', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}" press=".onTile" app:tab="languages">
+                <TileContent><ImageContent src="sap-icon://world"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <!-- ── Translator workbench ───────────────────────────────── -->
+          <IconTabFilter key="translate" icon="sap-icon://translate" text="{i18n>tabTranslate}">
+            <VBox>
+              <OverflowToolbar>
+                <Label text="{i18n>lblFrom}"/>
+                <Select id="sourceLanguageSelect" selectedKey="{ui>/translator/sourceLanguage}" width="11rem"
+                  items="{path: '/Languages', parameters: {$orderby: 'id'}, templateShareable: false}">
+                  <core:Item key="{id}" text="{id} – {name}"/>
+                </Select>
+                <Button icon="sap-icon://switch-views" tooltip="{i18n>swap}" press=".onSwapLanguages"/>
+                <Label text="{i18n>lblTo}"/>
+                <Select id="targetLanguageSelect" selectedKey="{ui>/translator/targetLanguage}" width="11rem"
+                  items="{path: '/Languages', parameters: {$orderby: 'id'}, templateShareable: false}">
+                  <core:Item key="{id}" text="{id} – {name}"/>
+                </Select>
+                <Label text="{i18n>colProvider}"/>
+                <Select selectedKey="{ui>/translator/provider}" width="10rem"
+                  items="{path: '/Providers', filters: [{path: 'available', operator: 'EQ', value1: true}], templateShareable: false}">
+                  <core:Item key="{id}" text="{name}"/>
+                </Select>
+                <Label text="{i18n>colDomain}"/>
+                <Select selectedKey="{ui>/translator/domainName}" width="12rem" forceSelection="false"
+                  items="{path: '/TranslationDomains', parameters: {$orderby: 'name'}, templateShareable: false}">
+                  <core:Item key="{id}" text="{name}"/>
+                </Select>
+                <Label text="{i18n>colTextType}"/>
+                <Select selectedKey="{ui>/translator/textType}" width="10rem"
+                  items="{path: '/TextTypes', templateShareable: false}">
+                  <core:Item key="{id}" text="{name}"/>
+                </Select>
+              </OverflowToolbar>
+              <TextArea id="translatorInput" value="{ui>/translator/input}" rows="6" width="100%" growing="true"
+                placeholder="{i18n>translatorPlaceholder}"/>
+              <HBox justifyContent="End" class="sapUiTinyMarginBottom">
+                <Button text="{i18n>submitJob}" icon="sap-icon://batch-payments" press=".onSubmitJob" class="sapUiTinyMarginEnd"/>
+                <Button id="translateButton" text="{i18n>translate}" icon="sap-icon://translate" type="Emphasized" press=".onTranslate"/>
+              </HBox>
+              <Table id="translationResultTable" items="{ui>/translator/results}" noDataText="{i18n>noTranslation}">
+                <headerToolbar>
+                  <OverflowToolbar>
+                    <Title text="{i18n>results}" level="H3"/>
+                    <ToolbarSpacer/>
+                    <Text text="{ui>/translator/summary}"/>
+                  </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                  <Column><Text text="{i18n>colSourceText}"/></Column>
+                  <Column><Text text="{i18n>colTranslation}"/></Column>
+                  <Column width="9rem"><Text text="{i18n>colQuality}"/></Column>
+                  <Column width="7rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colGlossaryHits}"/></Column>
+                </columns>
+                <items>
+                  <ColumnListItem>
+                    <cells>
+                      <Text text="{ui>sourceText}"/>
+                      <ObjectIdentifier title="{ui>translatedText}" text="{= ${ui>truncationRisk} ? ${i18n>truncationRisk} : '' }"/>
+                      <ObjectStatus text="{ui>qualityScore} · {path: 'ui>qualityLevel', formatter: '.formatter.enumText'}"
+                        state="{path: 'ui>qualityLevel', formatter: '.formatter.statusState'}"/>
+                      <Text text="{ui>glossaryHits}"/>
+                    </cells>
+                  </ColumnListItem>
+                </items>
+              </Table>
+            </VBox>
+          </IconTabFilter>
+
+          <!-- ── Projects ── -->
+          <IconTabFilter key="projects" icon="sap-icon://project-definition-triangle-2" text="{i18n>tabProjects}">
+            <Table id="projectTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/TranslationProjects', parameters: {$count: true, $orderby: 'name', $select: 'targetLanguages'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabProjects}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('projectTable', 'name', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('TranslationProjects')"/>
+                  <Button text="{i18n>activate}" press=".onAction('projectTable', 'ActivateTranslationProject', '')"/>
+                  <Button text="{i18n>translateAll}" icon="sap-icon://translate" press=".onAction('projectTable', 'TranslateTranslationProject', '')"/>
+                  <Button text="{i18n>archive}" press=".onAction('projectTable', 'ArchiveTranslationProject', '')"/>
+                  <Button text="{i18n>reopen}" press=".onAction('projectTable', 'ReopenTranslationProject', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('projectTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="6rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLanguages}"/></Column>
+                <Column width="9rem" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colProvider}"/></Column>
+                <Column width="5rem" hAlign="End"><Text text="{i18n>colTexts}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colCompletion}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onProjectPress">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{projectType}"/>
+                    <Text text="{parts: ['sourceLanguage', {path: 'targetLanguages', targetType: 'any', mode: 'OneTime'}], formatter: '.formatter.languagePair'}"/>
+                    <Text text="{path: 'provider', formatter: '.formatter.enumText'}"/>
+                    <ObjectNumber number="{textCount}"/>
+                    <ProgressIndicator percentValue="{path: 'completionPercent', targetType: 'any', formatter: '.formatter.percent'}" displayValue="{completionPercent} %"
+                      state="{path: 'completionPercent', targetType: 'any', formatter: '.formatter.percentState'}" showValue="true"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Texts ── -->
+          <IconTabFilter key="texts" icon="sap-icon://text" text="{i18n>tabTexts}">
+            <Table id="textTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ProjectTexts', parameters: {$count: true, $orderby: 'projectName,name', $select: 'translations'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabTexts}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Select width="10rem" change=".onStatusFilter('textTable', $event)">
+                    <core:Item key="all" text="{i18n>allStatuses}"/>
+                    <core:Item key="untranslated" text="Untranslated"/>
+                    <core:Item key="partial" text="Partial"/>
+                    <core:Item key="translated" text="Translated"/>
+                    <core:Item key="reviewed" text="Reviewed"/>
+                  </Select>
+                  <SearchField width="14rem" search=".onSearch('textTable', 'sourceText', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('ProjectTexts')"/>
+                  <Button text="{i18n>translate}" icon="sap-icon://translate" press=".onAction('textTable', 'TranslateProjectText', '')"/>
+                  <Button text="{i18n>setTranslation}" icon="sap-icon://edit" press=".onAction('textTable', 'SetTranslationProjectText', 'language,text')"/>
+                  <Button text="{i18n>review}" icon="sap-icon://accept" press=".onAction('textTable', 'ReviewProjectText', 'language')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('textTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="13rem"><Text text="{i18n>colKey}"/></Column>
+                <Column width="9rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colProject}"/></Column>
+                <Column><Text text="{i18n>colSourceText}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colTranslations}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{textType}"/>
+                    <Text text="{projectName}"/>
+                    <Text text="{sourceText}"/>
+                    <Text text="{path: 'translations', targetType: 'any', mode: 'OneTime', formatter: '.formatter.translations'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Glossary ── -->
+          <IconTabFilter key="glossary" icon="sap-icon://course-book" text="{i18n>tabGlossary}">
+            <Table id="glossaryTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/GlossaryEntries', parameters: {$count: true, $orderby: 'sourceTerm'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabGlossary}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('glossaryTable', 'sourceTerm', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('GlossaryEntries')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('glossaryTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colSourceTerm}"/></Column>
+                <Column><Text text="{i18n>colTargetTerm}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colPair}"/></Column>
+                <Column width="7rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDomain}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colMandatory}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colContext}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{sourceTerm}"/>
+                    <Text text="{targetTerm}"/>
+                    <Text text="{sourceLanguage} → {targetLanguage}"/>
+                    <Text text="{domainName}"/>
+                    <ObjectStatus text="{= ${mandatory} ? ${i18n>mandatory} : ${i18n>optional} }" state="{= ${mandatory} ? 'Information' : 'None' }"/>
+                    <Text text="{context}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Jobs ── -->
+          <IconTabFilter key="jobs" icon="sap-icon://batch-payments" text="{i18n>tabJobs}">
+            <Table id="jobTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/TranslationJobs', parameters: {$count: true, $orderby: 'createdAt desc'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabJobs}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Select width="10rem" change=".onStatusFilter('jobTable', $event)">
+                    <core:Item key="all" text="{i18n>allStatuses}"/>
+                    <core:Item key="pending" text="Pending"/>
+                    <core:Item key="processing" text="Processing"/>
+                    <core:Item key="completed" text="Completed"/>
+                    <core:Item key="failed" text="Failed"/>
+                    <core:Item key="cancelled" text="Cancelled"/>
+                  </Select>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('TranslationJobs')"/>
+                  <Button text="{i18n>processNow}" icon="sap-icon://process" press=".onAction('jobTable', 'ProcessTranslationJob', '')"/>
+                  <Button text="{i18n>cancelJob}" press=".onAction('jobTable', 'CancelTranslationJob', '')"/>
+                  <Button text="{i18n>retry}" icon="sap-icon://restart" press=".onAction('jobTable', 'RetryTranslationJob', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('jobTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSubmitted}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colQuality}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colResult}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{path: 'provider', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{statusMessage}"/>
+                    <ObjectStatus text="{= %{qualityScore} ? %{qualityScore} + ' · ' + %{qualityLevel} : '' }"
+                      state="{path: 'qualityScore', targetType: 'any', formatter: '.formatter.qualityState'}"/>
+                    <Text text="{= ${translatedContent} || ${statusMessage} }" maxLines="3"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Languages (reference data) ── -->
+          <IconTabFilter key="languages" icon="sap-icon://world" text="{i18n>tabLanguages}">
+            <Table id="languageTable" growing="true" growingThreshold="100"
+              items="{path: '/Languages', parameters: {$count: true, $orderby: 'id'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabLanguages}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('languageTable', 'name', $event)"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="6rem"><Text text="{i18n>colCode}"/></Column>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colNativeName}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colDirection}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{id}"/>
+                    <Text text="{name}"/>
+                    <Text text="{nativeName}"/>
+                    <Text text="{= ${rightToLeft} ? ${i18n>rtl} : ${i18n>ltr} }"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>
