@@ -1,7 +1,7 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_studio.domain.entities.extension;
 
@@ -11,33 +11,19 @@ mixin(ShowModule!());
 
 @safe:
 
+/// An extension of the catalogue (VS Code compatible tool package).
 struct Extension {
-    mixin TenantEntity!(ExtensionId);
+  mixin TenantEntity!ExtensionId;
 
-    string name;
-    string description;
-    ExtensionScope scope_ = ExtensionScope.predefined;
-    ExtensionStatus status = ExtensionStatus.active;
-    string version_;
-    string publisher;
-    string category;
-    string dependencies;
-    string capabilities;
-    string iconUrl;
-    
-    Json toJson() const {
-        auto j = entityToJson
-            .set("name", name)
-            .set("description", description)
-            .set("scope", scope_.to!string)
-            .set("status", status.to!string)
-            .set("version", version_)
-            .set("publisher", publisher)
-            .set("category", category)
-            .set("dependencies", dependencies)
-            .set("capabilities", capabilities)
-            .set("iconUrl", iconUrl);
-
-        return j;
-    }
+  string name; /// unique per tenant, "publisher.package", e.g. "sap.fiori-tools"
+  string displayName;
+  string description;
+  ExtensionScope scope_ = ExtensionScope.additional; /// "scope"
+  ExtensionStatus status = ExtensionStatus.active;
+  string version_ = "1.0.0"; /// "version", semantic version
+  string publisher;
+  string category;
+  string[] dependencies; /// extension names that must be installed as well
+  string[] capabilities;
+  string iconUrl;
 }

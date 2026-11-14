@@ -1,12 +1,11 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+/// REST controllers.
 module uim.platform.application_studio.presentation.http.controllers;
 
 public {
-    import uim.platform.application_studio.presentation.http.controllers.build_configuration;
-    import uim.platform.application_studio.presentation.http.controllers.dev_space;
-    import uim.platform.application_studio.presentation.http.controllers.dev_space_type;
-    import uim.platform.application_studio.presentation.http.controllers.extension;
-    import uim.platform.application_studio.presentation.http.controllers.project;
-    import uim.platform.application_studio.presentation.http.controllers.project_template;
-    import uim.platform.application_studio.presentation.http.controllers.run_configuration;
-    import uim.platform.application_studio.presentation.http.controllers.service_binding;
+  import uim.platform.application_studio.presentation.http.controllers.resources;
 }

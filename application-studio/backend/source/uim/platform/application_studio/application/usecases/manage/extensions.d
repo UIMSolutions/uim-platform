@@ -1,7 +1,7 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_studio.application.usecases.manage.extensions;
 
@@ -11,58 +11,86 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageExtensionsUseCase {
-    private IExtensionRepository extensions;
+/// Interactor: extensions of the catalogue. Predefined extensions are part of
+/// dev space types and cannot be changed, withdrawn or deleted.
+class ManageExtensionsUseCase
+  : ResourceUseCase!(Extension, ExtensionId, CreateExtensionRequest, UpdateExtensionRequest),
+  IManageExtensionsUseCase {
 
-    this(IExtensionRepository extensions) {
-        this.extensions = extensions;
-    }
+  this(StudioRepositories repos, IStudioEventPublisher publisher) {
+    super(repos, repos.extensions, publisher, "Extension", "studio.extension");
+  }
 
-    Extension getExtension(TenantId tenantId, ExtensionId id) {
-        return extensions.findById(tenantId, id);
-    }
+  override protected Extension build(CreateExtensionRequest r) {
+    auto e = Extension(r.tenantId);
+    assignMatching(e, r.spec);
+    e.name = e.name.strip;
+    validate(e.scope_ != ExtensionScope.predefined, "Scope 'predefined' is reserved for the SAP catalogue");
+    check(e);
+    ensureUnique(repos.extensions.findByName(r.tenantId, e.name), e, "the catalogue");
+    e.status = ExtensionStatus.active;
+    return e;
+  }
 
-    Extension[] listExtensions(TenantId tenantId) {
-        return extensions.findByTenant(tenantId);
-    }
+  override protected void apply(ref Extension e, ExtensionSpec spec) {
+    requireNotPredefined(e, "changed");
+    assignMatching(e, spec, ["name", "scope_"]);
+    check(e);
+  }
 
-    UsecaseResult createExtension(ExtensionDTO dto) {
-        auto e = Extension(dto.tenantId); //, dto.createdBy);        
-        e.id = dto.extensionId;
-        e.name = dto.name;
-        e.description = dto.description;
-        e.version_ = dto.version_;
-        e.publisher = dto.publisher;
-        e.category = dto.category;
-        e.dependencies = dto.dependencies;
-        e.capabilities = dto.capabilities;
-        e.iconUrl = dto.iconUrl;
-        if (!StudioValidator.isValidExtension(e))
-            return UsecaseResult(false, "", "Invalid extension data");
+  protected void check(ref Extension e) {
+    validateCatalogName("Extension", e.name);
+    if (e.displayName.strip.length == 0)
+      e.displayName = e.name;
+    validateDisplayName("Extension display", e.displayName);
+    validateSemVer("Extension", e.version_);
+    e.dependencies = normalizedNames(e.dependencies);
+    e.capabilities = normalizedNames(e.capabilities);
+    validate(!e.dependencies.canFind(e.name), "Extension '" ~ e.name ~ "' cannot depend on itself");
+    requireExtensions(e.tenantId, e.dependencies, false);
+  }
 
-        extensions.save(e);
-        return UsecaseResult(true, e.id.value, "");
-    }
+  protected static void requireNotPredefined(const ref Extension e, string what) {
+    ensureState(e.scope_ != ExtensionScope.predefined, "Predefined extension '" ~ e.name ~ "' cannot be " ~ what);
+  }
 
-    UsecaseResult updateExtension(ExtensionDTO dto) {
-        auto existing = extensions.findById(dto.tenantId, dto.extensionId);
-        if (existing.isNull)
-            return UsecaseResult(false, "", "Extension not found");
+  override protected void beforeRemove(Extension e) {
+    requireNotPredefined(e, "deleted");
+    auto t = e.tenantId;
+    auto spaces = repos.devSpaces.findByExtension(t, e.name);
+    ensureState(spaces.length == 0, "Extension '" ~ e.name ~ "' is installed in dev space(s) "
+        ~ spaces.map!(d => d.name).join(", "));
+    auto types = repos.devSpaceTypes.findByTenant(t).filter!(x => x.predefinedExtensions.canFind(e.name)).array;
+    ensureState(types.length == 0, "Extension '" ~ e.name ~ "' is part of dev space type(s) "
+        ~ types.map!(x => x.name).join(", "));
+    auto templates = repos.projectTemplates.findByTenant(t).filter!(x => x.requiredExtensions.canFind(e.name)).array;
+    ensureState(templates.length == 0, "Extension '" ~ e.name ~ "' is required by template(s) "
+        ~ templates.map!(x => x.name).join(", "));
+    auto dependents = repos.extensions.findByTenant(t).filter!(x => x.dependencies.canFind(e.name)).array;
+    ensureState(dependents.length == 0, "Extension '" ~ e.name ~ "' is a dependency of "
+        ~ dependents.map!(x => x.name).join(", "));
+  }
 
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.version_.length > 0) existing.version_ = dto.version_;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-        extensions.update(existing);
-        return UsecaseResult(true, existing.id.value, "");
-    }
+  UsecaseResult activate(TenantId tenantId, ExtensionId id, UserId actor) {
+    return transition(tenantId, id, actor, "activated", (ref Extension e) {
+      ensureState(e.status != ExtensionStatus.active, "Extension '" ~ e.name ~ "' is already active");
+      e.status = ExtensionStatus.active;
+    });
+  }
 
-    UsecaseResult deleteExtension(TenantId tenantId, ExtensionId id) {
-        auto extension = extensions.findById(tenantId, id);
-        if (extension.isNull)
-            return UsecaseResult(false, "", "Extension not found");
+  UsecaseResult deactivate(TenantId tenantId, ExtensionId id, UserId actor) {
+    return transition(tenantId, id, actor, "deactivated", (ref Extension e) {
+      requireNotPredefined(e, "deactivated");
+      ensureState(e.status == ExtensionStatus.active, "Extension '" ~ e.name ~ "' is not active");
+      e.status = ExtensionStatus.inactive;
+    });
+  }
 
-        extensions.remove(extension);
-        return UsecaseResult(true, extension.id.value, "");
-    }
+  UsecaseResult deprecate(TenantId tenantId, ExtensionId id, UserId actor) {
+    return transition(tenantId, id, actor, "deprecated", (ref Extension e) {
+      requireNotPredefined(e, "deprecated");
+      ensureState(e.status != ExtensionStatus.deprecated_, "Extension '" ~ e.name ~ "' is already deprecated");
+      e.status = ExtensionStatus.deprecated_;
+    });
+  }
 }

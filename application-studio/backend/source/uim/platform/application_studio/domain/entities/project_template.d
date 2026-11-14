@@ -1,7 +1,7 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_studio.domain.entities.project_template;
 
@@ -11,30 +11,18 @@ mixin(ShowModule!());
 
 @safe:
 
+/// A project template (generator): scaffolds files and needs extensions.
 struct ProjectTemplate {
-    mixin TenantEntity!(ProjectTemplateId);
+  mixin TenantEntity!ProjectTemplateId;
 
-    string name;
-    string title; // TODO: SAP Fiori Launchpad title?
-    string description;
-    TemplateCategory category = TemplateCategory.general;
-    ProjectType targetProjectType = ProjectType.basic;
-    string version_;
-    string requiredExtensions;
-    string scaffoldConfig;
-    string defaultFiles;
-    string iconUrl;
-
-    Json toJson() const {
-        return entityToJson
-            .set("name", name)
-            .set("description", description)
-            .set("category", category.to!string)
-            .set("targetProjectType", targetProjectType.to!string)
-            .set("version", version_)
-            .set("requiredExtensions", requiredExtensions)
-            .set("scaffoldConfig", scaffoldConfig)
-            .set("defaultFiles", defaultFiles)
-            .set("iconUrl", iconUrl);
-    }
+  string name; /// unique per tenant, e.g. "fiori-list-report"
+  string title;
+  string description;
+  TemplateCategory category = TemplateCategory.general;
+  ProjectType targetProjectType = ProjectType.basic;
+  string version_ = "1.0.0"; /// "version"
+  string[] requiredExtensions; /// extension names the dev space must have
+  string[] scaffoldFiles; /// relative paths created in the project
+  KeyValue[] parameters; /// generator defaults, e.g. odataVersion=4
+  string iconUrl;
 }

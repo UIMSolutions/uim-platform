@@ -1,7 +1,7 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_studio.domain.entities.dev_space_type;
 
@@ -11,27 +11,16 @@ mixin(ShowModule!());
 
 @safe:
 
+/// A dev space type: a preconfigured tool set ("SAP Fiori", "Full-Stack Cloud
+/// Application", ...) — its predefined extensions are installed in every dev space of the type.
 struct DevSpaceType {
-    mixin TenantEntity!(DevSpaceTypeId);
+  mixin TenantEntity!DevSpaceTypeId;
 
-    string name;
-    string description;
-    DevSpaceTypeCategory category = DevSpaceTypeCategory.predefined;
-    string predefinedExtensions;
-    string supportedProjectTypes;
-    string runtimeStack;
-    string iconUrl;
-    
-    Json toJson() const {
-        auto j = entityToJson
-            .set("name", name)
-            .set("description", description)
-            .set("category", category.to!string)
-            .set("predefinedExtensions", predefinedExtensions)
-            .set("supportedProjectTypes", supportedProjectTypes)
-            .set("runtimeStack", runtimeStack)
-            .set("iconUrl", iconUrl);
-
-        return j;
-    }
+  string name; /// unique per tenant, e.g. "SAP Fiori"
+  string description;
+  DevSpaceTypeCategory category = DevSpaceTypeCategory.custom;
+  string[] predefinedExtensions; /// extension names
+  ProjectType[] supportedProjectTypes; /// empty = all
+  string runtimeStack; /// e.g. "Node.js 20, Java 21"
+  string iconUrl;
 }

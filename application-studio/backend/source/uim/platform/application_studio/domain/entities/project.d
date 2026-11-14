@@ -1,7 +1,7 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_studio.domain.entities.project;
 
@@ -11,33 +11,23 @@ mixin(ShowModule!());
 
 @safe:
 
+/// A project inside a dev space, optionally generated from a template.
 struct Project {
-    mixin TenantEntity!(ProjectId);
+  mixin TenantEntity!ProjectId;
 
-    DevSpaceId devSpaceId;
-    string name;
-    string description;
-    ProjectType projectType = ProjectType.basic;
-    ProjectStatus status = ProjectStatus.active;
-    ProjectTemplateId templateId;
-    string rootPath;
-    string gitRepositoryUrl;
-    string gitBranch;
-    string namespace_;
-    
-    Json toJson() const {
-        auto j = entityToJson
-            .set("devSpaceId", devSpaceId)
-            .set("name", name)
-            .set("description", description)
-            .set("projectType", projectType.to!string)
-            .set("status", status.to!string)
-            .set("templateId", templateId)
-            .set("rootPath", rootPath)
-            .set("gitRepositoryUrl", gitRepositoryUrl)
-            .set("gitBranch", gitBranch)
-            .set("namespace", namespace_);
+  DevSpaceId devSpaceId;
+  string devSpaceName;
+  string name; /// unique per dev space: lowercase letters, digits, "-", "_", "."
+  string description;
+  ProjectType projectType = ProjectType.basic;
+  ProjectStatus status = ProjectStatus.active;
+  string statusMessage;
 
-        return j;
-    }
+  ProjectTemplateId templateId;
+  string templateName;
+  string rootPath; /// derived: /home/user/projects/<name>
+  string namespace_; /// "namespace", e.g. "com.acme.travel"
+  string gitRepositoryUrl;
+  string gitBranch = "main";
+  string[] files; /// scaffolded files
 }

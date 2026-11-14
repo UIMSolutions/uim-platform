@@ -1,7 +1,7 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_studio.application.usecases.manage.build_configurations;
 
@@ -11,62 +11,120 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageBuildConfigurationsUseCase {
-    private BuildConfigurationRepository configurations;
+/// Interactor: build configurations. Builds and deployments are queued here
+/// (status building / deploying) and executed by the reconciler; the project
+/// mirrors the progress (building / deploying / active).
+class ManageBuildConfigurationsUseCase
+  : ResourceUseCase!(BuildConfiguration, BuildConfigurationId, CreateBuildConfigurationRequest, UpdateBuildConfigurationRequest),
+  IManageBuildConfigurationsUseCase {
 
-    this(BuildConfigurationRepository configurations) {
-        this.configurations = configurations;
+  protected ProjectStatusSync projectStatus;
+
+  this(StudioRepositories repos, ProjectStatusSync projectStatus, IStudioEventPublisher publisher) {
+    super(repos, repos.buildConfigurations, publisher, "Build configuration", "studio.build-configuration");
+    this.projectStatus = projectStatus;
+  }
+
+  override protected BuildConfiguration build(CreateBuildConfigurationRequest r) {
+    auto p = requireProject(r.tenantId, r.parentId, "add build configurations");
+    auto bc = BuildConfiguration(r.tenantId);
+    bc.projectId = p.id;
+    bc.projectName = p.name;
+    bc.devSpaceId = p.devSpaceId;
+    assignMatching(bc, r.spec);
+    check(bc, p);
+    ensureUnique(repos.buildConfigurations.findByProjectAndName(r.tenantId, p.id, bc.name), bc, "project " ~ p.name);
+    bc.status = BuildStatus.pending;
+    return bc;
+  }
+
+  override protected void apply(ref BuildConfiguration bc, BuildConfigurationSpec spec) {
+    ensureState(!bc.status.isBusy, "Build configuration '" ~ bc.name ~ "' is " ~ enumText(bc.status));
+    auto oldTarget = bc.deployTarget;
+    auto oldArtifact = defaultArtifactPath(oldTarget, bc.projectName);
+    auto oldCommand = defaultDeployCommand(oldTarget, bc.artifactPath);
+    assignMatching(bc, spec, ["name"]);
+    if (bc.deployTarget != oldTarget) {
+      // derived defaults follow the new target; explicit values are kept
+      if (bc.artifactPath == oldArtifact)
+        bc.artifactPath = "";
+      if (bc.deployCommand == oldCommand)
+        bc.deployCommand = "";
     }
+    check(bc, repos.projects.findById(bc.tenantId, bc.projectId));
+  }
 
-    BuildConfiguration getBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {
-        return configurations.findById(tenantId, id);
-    }
+  protected static void check(ref BuildConfiguration bc, const Project p) {
+    validateDisplayName("Build configuration", bc.name);
+    bc.buildCommand = bc.buildCommand.strip;
+    validate(bc.buildCommand.length > 0, "Build command is required (e.g. 'mbt build' or 'npm run build')");
+    if (bc.deployTarget == DeployTarget.cloudFoundry && bc.mtaDescriptor.strip.length == 0)
+      bc.mtaDescriptor = "mta.yaml";
+    validateDeployTarget(p.projectType, bc.deployTarget, bc.mtaDescriptor.strip);
+    if (bc.artifactPath.strip.length == 0)
+      bc.artifactPath = defaultArtifactPath(bc.deployTarget, bc.projectName);
+    if (bc.deployCommand.strip.length == 0)
+      bc.deployCommand = defaultDeployCommand(bc.deployTarget, bc.artifactPath);
+  }
 
-    BuildConfiguration[] listBuildConfigurations(TenantId tenantId) {
-        return configurations.findByTenant(tenantId);
-    }
+  override protected void beforeRemove(BuildConfiguration bc) {
+    ensureState(!bc.status.isBusy, "Build configuration '" ~ bc.name ~ "' is " ~ enumText(bc.status)
+        ~ " — cancel it first");
+  }
 
-    BuildConfiguration[] listBuildConfigurations(TenantId tenantId, ProjectId projectId) {
-        return configurations.findByProject(tenantId, projectId);
-    }
+  protected void requireWorkspace(TenantId tenantId, const BuildConfiguration bc, string what) {
+    requireProject(tenantId, bc.projectId, what);
+    requireRunning(requireDevSpace(tenantId, bc.devSpaceId), what);
+  }
 
-    UsecaseResult createBuildConfiguration(BuildConfigurationDTO dto) {
-        auto e = BuildConfiguration(dto.tenantId, dto.configId.isNull ? BuildConfigurationId(createId()) : dto.configId, dto.createdBy);
-        e.projectId = dto.projectId;
-        e.name = dto.name;
-        e.description = dto.description;
-        e.buildCommand = dto.buildCommand;
-        e.deployCommand = dto.deployCommand;
-        e.artifactPath = dto.artifactPath;
-        e.mtaDescriptor = dto.mtaDescriptor;
-        if (!StudioValidator.isValidBuildConfiguration(e))
-            return UsecaseResult(false, "", "Invalid build configuration data");
+  protected static BuildRun newRun(const BuildConfiguration bc, BuildPhase phase, BuildStatus status) {
+    BuildRun run;
+    run.runId = bc.name.toLower.replace(" ", "-") ~ "-" ~ (bc.history.length + 1).to!string;
+    run.phase = phase;
+    run.status = status;
+    run.startedAt = nowStdTime();
+    return run;
+  }
 
-        configurations.save(e);
-        return UsecaseResult(true, dto.configId.value, "");
-    }
+  UsecaseResult build(TenantId tenantId, BuildConfigurationId id, UserId actor) {
+    auto result = transition(tenantId, id, actor, "build queued", (ref BuildConfiguration bc) {
+      ensureCanBuild(bc);
+      requireWorkspace(tenantId, bc, "build");
+      bc.status = BuildStatus.building;
+      bc.statusMessage = "Running '" ~ bc.buildCommand ~ "'";
+      recordRun(bc, newRun(bc, BuildPhase.build, BuildStatus.building));
+    });
+    if (result.isSuccess)
+      projectStatus.sync(tenantId, require(tenantId, id).projectId);
+    return result;
+  }
 
-    UsecaseResult updateBuildConfiguration(BuildConfigurationDTO dto) {
-        auto existing = configurations.findById(dto.tenantId, dto.configId);
-        if (existing.isNull)
-            return UsecaseResult(false, "", "Build configuration not found");
+  UsecaseResult deploy(TenantId tenantId, BuildConfigurationId id, UserId actor) {
+    auto result = transition(tenantId, id, actor, "deployment queued", (ref BuildConfiguration bc) {
+      ensureCanDeploy(bc);
+      requireWorkspace(tenantId, bc, "deploy");
+      bc.status = BuildStatus.deploying;
+      bc.statusMessage = "Running '" ~ bc.deployCommand ~ "'";
+      recordRun(bc, newRun(bc, BuildPhase.deploy, BuildStatus.deploying));
+    });
+    if (result.isSuccess)
+      projectStatus.sync(tenantId, require(tenantId, id).projectId);
+    return result;
+  }
 
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.buildCommand.length > 0) existing.buildCommand = dto.buildCommand;
-        if (dto.deployCommand.length > 0) existing.deployCommand = dto.deployCommand;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-
-        configurations.update(existing);
-        return UsecaseResult(true, dto.configId.value, "");
-    }
-
-    UsecaseResult deleteBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {
-        auto config = configurations.findById(tenantId, id);
-        if (config.isNull)
-            return UsecaseResult(false, "", "Build configuration not found");
-
-        configurations.remove(config);
-        return UsecaseResult(true, config.id.value, "");
-    }
+  UsecaseResult cancel(TenantId tenantId, BuildConfigurationId id, UserId actor) {
+    auto result = transition(tenantId, id, actor, "cancelled", (ref BuildConfiguration bc) {
+      ensureState(bc.status.isBusy, "Build configuration '" ~ bc.name ~ "' has nothing to cancel");
+      bc.status = BuildStatus.cancelled;
+      bc.statusMessage = "Cancelled by " ~ (actor.isEmpty ? "user" : actor.value);
+      if (bc.history.length > 0) {
+        bc.history[$ - 1].status = BuildStatus.cancelled;
+        bc.history[$ - 1].finishedAt = nowStdTime();
+        bc.history[$ - 1].message = bc.statusMessage;
+      }
+    });
+    if (result.isSuccess)
+      projectStatus.sync(tenantId, require(tenantId, id).projectId);
+    return result;
+  }
 }

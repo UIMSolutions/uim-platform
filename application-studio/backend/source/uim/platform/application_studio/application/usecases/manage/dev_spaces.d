@@ -1,7 +1,7 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_studio.application.usecases.manage.dev_spaces;
 
@@ -11,65 +11,163 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageDevSpacesUseCase {
-    private IDevSpaceRepository repo;
+/// Interactor: dev spaces. Starts, stops, resumes and deletions are requested
+/// here and completed asynchronously by the reconciler.
+class ManageDevSpacesUseCase
+  : ResourceUseCase!(DevSpace, DevSpaceId, CreateDevSpaceRequest, UpdateDevSpaceRequest),
+  IManageDevSpacesUseCase {
 
-    this(IDevSpaceRepository repo) {
-        this.repo = repo;
+  this(StudioRepositories repos, IStudioEventPublisher publisher) {
+    super(repos, repos.devSpaces, publisher, "Dev space", "studio.dev-space");
+  }
+
+  override protected DevSpace build(CreateDevSpaceRequest r) {
+    auto ds = DevSpace(r.tenantId);
+    assignMatching(ds, r.spec);
+    validateDevSpaceName(ds.name);
+    validateEmail("Owner", ds.owner);
+    validate(ds.region.strip.length > 0, "Region is required");
+    ensureUnique(repos.devSpaces.findByName(r.tenantId, ds.name), ds, "this tenant");
+
+    auto type = requireType(r.tenantId, ds.devSpaceTypeId);
+    ds.devSpaceTypeName = type.name;
+    ds.extensions = resolveAdditional(type, ds.extensions);
+    validateSizing(ds);
+
+    auto samePlan = repos.devSpaces.findByTenant(r.tenantId).filter!(o => o.plan == ds.plan).array;
+    ensureCapacity(ds.plan, samePlan.length);
+    ensureRunSlot(ds.plan, samePlan.count!(o => o.status.occupiesCompute));
+
+    ds.status = DevSpaceStatus.starting;
+    ds.statusMessage = "Start requested";
+    return ds;
+  }
+
+  /// Name, type and plan are fixed. Extensions and sizes change only while the
+  /// dev space does not run (stopped, hibernated or failed).
+  override protected void apply(ref DevSpace ds, DevSpaceSpec spec) {
+    ensureState(!ds.status.isTransitional, "Dev space '" ~ ds.name ~ "' is " ~ enumText(ds.status) ~ " — try again later");
+    auto type = requireType(ds.tenantId, ds.devSpaceTypeId);
+    auto extensions = resolveAdditional(type, spec.extensions);
+    auto reconfigured = extensions != ds.extensions || spec.memoryLimitMb != ds.memoryLimitMb
+      || spec.diskLimitGb != ds.diskLimitGb;
+    if (reconfigured)
+      ensureState(!ds.status.occupiesCompute, "Stop dev space '" ~ ds.name ~ "' before changing its extensions or sizes");
+    assignMatching(ds, spec, ["name", "devSpaceTypeId", "plan", "extensions"]);
+    if (reconfigured)
+      checkExtensionsStillCover(ds, effectiveExtensions(type, ds), effectiveExtensions(type, withExtensions(ds, extensions)));
+    ds.extensions = extensions;
+    validateEmail("Owner", ds.owner);
+    validate(ds.region.strip.length > 0, "Region is required");
+    validateSizing(ds);
+  }
+
+  /// Additional extensions: normalised, active, dependencies added, minus the type's predefined ones.
+  protected string[] resolveAdditional(const DevSpaceType type, const string[] requested) {
+    auto names = normalizedNames(requested);
+    requireExtensions(type.tenantId, names, true);
+    auto tenant = type.tenantId;
+    auto closure = withDependencies(names, (n) => repos.extensions.findByName(tenant, n));
+    requireExtensions(type.tenantId, closure, false); // dependencies must exist
+    return closure.filter!(n => !type.predefinedExtensions.canFind(n)).array;
+  }
+
+  protected static DevSpace withExtensions(DevSpace ds, string[] extensions) {
+    ds.extensions = extensions;
+    return ds;
+  }
+
+  /// Extensions required by the templates of existing projects must remain installed.
+  protected void checkExtensionsStillCover(const DevSpace ds, const string[] before, const string[] after) {
+    foreach (p; repos.projects.findByDevSpace(ds.tenantId, ds.id)) {
+      if (p.templateId.isEmpty)
+        continue;
+      auto t = repos.projectTemplates.findById(ds.tenantId, p.templateId);
+      if (t.isNull)
+        continue;
+      auto missing = missingNames(t.requiredExtensions, after);
+      ensureState(missing.length == 0, "Project '" ~ p.name ~ "' needs extension(s) " ~ missing.join(", ")
+          ~ " (template " ~ t.name ~ ")");
     }
+  }
 
-    DevSpace getDevSpace(TenantId tenantId, DevSpaceId id) {
-        return repo.findById(tenantId, id);
-    }
+  override protected void beforeRemove(DevSpace ds) {
+    ensureState(canTransition(ds.status, DevSpaceStatus.deleting), "Dev space '" ~ ds.name
+        ~ "' cannot be deleted while " ~ enumText(ds.status) ~ (ds.status.occupiesCompute ? " — stop it first" : ""));
+  }
 
-    DevSpace[] listDevSpaces(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
-    }
+  override protected bool retire(ref DevSpace ds) {
+    transitionTo(ds, DevSpaceStatus.deleting);
+    ds.statusMessage = "Deletion requested";
+    return true;
+  }
 
-    DevSpace[] listDevSpaces(TenantId tenantId, string owner) {
-        return repo.findByOwner(tenantId, owner);
-    }
+  protected void requireRunSlot(const DevSpace ds) {
+    auto running = repos.devSpaces.findByTenant(ds.tenantId)
+      .count!(o => o.id != ds.id && o.plan == ds.plan && o.status.occupiesCompute);
+    ensureRunSlot(ds.plan, running);
+  }
 
-    UsecaseResult createDevSpace(DevSpaceDTO dto) {
-        DevSpace e;
-        e.id = dto.spaceId;
-        e.tenantId = dto.tenantId;
-        e.name = dto.name;
-        e.description = dto.description;
-        e.devSpaceTypeId = dto.typeId;
-        e.extensions = dto.extensions;
-        e.owner = dto.owner;
-        e.region = dto.region;
-        e.hibernateAfterDays = dto.hibernateAfterDays;
-        e.memoryLimit = dto.memoryLimit;
-        e.diskLimit = dto.diskLimit;
-        e.createdBy = dto.createdBy;
-        if (!StudioValidator.isValidDevSpace(e))
-            return UsecaseResult(false, "", "Invalid dev space data");
-        repo.save(e);
-        return UsecaseResult(true, dto.spaceId.value, "");
-    }
+  UsecaseResult start(TenantId tenantId, DevSpaceId id, UserId actor) {
+    return transition(tenantId, id, actor, "start requested", (ref DevSpace ds) {
+      ensureState(ds.status == DevSpaceStatus.stopped || ds.status == DevSpaceStatus.hibernated
+        || ds.status == DevSpaceStatus.error, "Dev space '" ~ ds.name ~ "' is " ~ enumText(ds.status));
+      requireRunSlot(ds);
+      transitionTo(ds, ds.status == DevSpaceStatus.hibernated ? DevSpaceStatus.resuming : DevSpaceStatus.starting);
+      ds.statusMessage = "Start requested";
+    });
+  }
 
-    UsecaseResult updateDevSpace(DevSpaceDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.spaceId);
-        if (existing.isNull)
-            return UsecaseResult(false, "", "Dev space not found");
+  UsecaseResult stop(TenantId tenantId, DevSpaceId id, UserId actor) {
+    return transition(tenantId, id, actor, "stop requested", (ref DevSpace ds) {
+      ensureState(ds.status == DevSpaceStatus.running, "Dev space '" ~ ds.name ~ "' is not running ("
+          ~ enumText(ds.status) ~ ")");
+      transitionTo(ds, DevSpaceStatus.stopping);
+      ds.statusMessage = "Stop requested";
+    });
+  }
 
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.extensions.length > 0) existing.extensions = dto.extensions;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+  /// Developer activity: postpones hibernation; a hibernated dev space resumes.
+  UsecaseResult touch(TenantId tenantId, DevSpaceId id, UserId actor) {
+    return transition(tenantId, id, actor, "accessed", (ref DevSpace ds) {
+      if (ds.status == DevSpaceStatus.hibernated) {
+        requireRunSlot(ds);
+        transitionTo(ds, DevSpaceStatus.resuming);
+        ds.statusMessage = "Resuming after access";
+      } else
+        ensureState(ds.status == DevSpaceStatus.running, "Dev space '" ~ ds.name ~ "' is " ~ enumText(ds.status));
+      ds.lastAccessedAt = nowStdTime();
+    });
+  }
 
-        repo.update(existing);
-        return UsecaseResult(true, dto.spaceId.value, "");
-    }
+  UsecaseResult addExtension(TenantId tenantId, DevSpaceId id, string extension, UserId actor) {
+    return transition(tenantId, id, actor, "extension added", (ref DevSpace ds) {
+      auto name = extension.strip;
+      validate(name.length > 0, "Parameter 'extension' is required");
+      ensureState(!ds.status.occupiesCompute && !ds.status.isTransitional,
+        "Stop dev space '" ~ ds.name ~ "' before changing its extensions");
+      auto type = requireType(tenantId, ds.devSpaceTypeId);
+      ensureState(!effectiveExtensions(type, ds).canFind(name), "Dev space '" ~ ds.name ~ "' already has '" ~ name ~ "'");
+      ds.extensions = resolveAdditional(type, ds.extensions ~ name);
+    });
+  }
 
-    UsecaseResult deleteDevSpace(TenantId tenantId, DevSpaceId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
-            return UsecaseResult(false, "", "Dev space not found");
-
-        repo.remove(entity);
-        return UsecaseResult(true, entity.id.value, "");
-    }
+  UsecaseResult removeExtension(TenantId tenantId, DevSpaceId id, string extension, UserId actor) {
+    return transition(tenantId, id, actor, "extension removed", (ref DevSpace ds) {
+      auto name = extension.strip;
+      ensureState(!ds.status.occupiesCompute && !ds.status.isTransitional,
+        "Stop dev space '" ~ ds.name ~ "' before changing its extensions");
+      auto type = requireType(tenantId, ds.devSpaceTypeId);
+      ensureState(!type.predefinedExtensions.canFind(name), "'" ~ name ~ "' is predefined by dev space type "
+          ~ type.name ~ " and cannot be removed");
+      ensureState(ds.extensions.canFind(name), "Dev space '" ~ ds.name ~ "' has no additional extension '" ~ name ~ "'");
+      auto remaining = ds.extensions.filter!(n => n != name).array;
+      foreach (other; remaining) {
+        auto e = repos.extensions.findByName(tenantId, other);
+        ensureState(!e.dependencies.canFind(name), "'" ~ name ~ "' is needed by extension " ~ other);
+      }
+      checkExtensionsStillCover(ds, effectiveExtensions(type, ds), effectiveExtensions(type, withExtensions(ds, remaining)));
+      ds.extensions = remaining;
+    });
+  }
 }

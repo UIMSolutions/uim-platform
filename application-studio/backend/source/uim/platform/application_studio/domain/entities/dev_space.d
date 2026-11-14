@@ -1,7 +1,7 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.application_studio.domain.entities.dev_space;
 
@@ -11,37 +11,28 @@ mixin(ShowModule!());
 
 @safe:
 
+/// A dev space: a developer's cloud workspace of a given type. Starting,
+/// stopping, hibernation and deletion are completed by the reconciler.
 struct DevSpace {
-    mixin TenantEntity!(DevSpaceId);
+  mixin TenantEntity!DevSpaceId;
 
-    string name;
-    string description;
-    DevSpaceStatus status = DevSpaceStatus.stopped;
-    DevSpacePlan plan = DevSpacePlan.standard;
-    DevSpaceTypeId devSpaceTypeId;
-    string extensions;
-    string owner;
-    string region;
-    long lastAccessedAt;
-    string hibernateAfterDays;
-    string memoryLimit;
-    string diskLimit;
-    
-    Json toJson() const {
-        auto j = entityToJson
-            .set("name", name)
-            .set("description", description)
-            .set("status", status.to!string)
-            .set("plan", plan.to!string)
-            .set("devSpaceTypeId", devSpaceTypeId)
-            .set("extensions", extensions)
-            .set("owner", owner)
-            .set("region", region)
-            .set("lastAccessedAt", lastAccessedAt)
-            .set("hibernateAfterDays", hibernateAfterDays)
-            .set("memoryLimit", memoryLimit)
-            .set("diskLimit", diskLimit);
+  string name; /// unique per tenant: letters, digits, "_" (max. 40)
+  string description;
+  DevSpaceTypeId devSpaceTypeId;
+  string devSpaceTypeName;
+  DevSpacePlan plan = DevSpacePlan.standard;
+  DevSpaceStatus status = DevSpaceStatus.starting;
+  string statusMessage;
 
-        return j;
-    }
+  string owner; /// e-mail of the developer
+  string region = "eu10";
+  /// Additional extensions (names) on top of the type's predefined ones.
+  string[] extensions;
+  int hibernateAfterDays = 7; /// 0 = never
+  int memoryLimitMb = 4096;
+  int diskLimitGb = 10;
+
+  string url; /// workspace URL, set when running
+  long lastAccessedAt;
+  long startedAt;
 }
