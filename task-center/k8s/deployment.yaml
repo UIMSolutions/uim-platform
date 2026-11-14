@@ -7,7 +7,9 @@ metadata:
     app: task-center
     part-of: uim-platform
 spec:
-  replicas: 1
+  replicas: 1 # file storage: one writer only
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: task-center
@@ -16,6 +18,10 @@ spec:
       labels:
         app: task-center
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
       containers:
       - name: task-center
         image: uim-platform/task-center:latest
@@ -25,18 +31,23 @@ spec:
         envFrom:
         - configMapRef:
             name: task-center-config
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
             path: /health
             port: 8103
           initialDelaySeconds: 10
           periodSeconds: 30
+          timeoutSeconds: 5
         readinessProbe:
           httpGet:
             path: /health
             port: 8103
           initialDelaySeconds: 5
           periodSeconds: 10
+          timeoutSeconds: 5
         resources:
           requests:
             memory: "64Mi"
@@ -44,3 +55,11 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "500m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: [ "ALL" ]
+      volumes:
+      - name: data
+        emptyDir: {} # replace with a PersistentVolumeClaim for durable tasks

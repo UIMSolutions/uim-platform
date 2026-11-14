@@ -1,0 +1,108 @@
+doctype html
+html(lang="en", data-theme="corporate")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title= view.title
+    link(rel="stylesheet", type="text/css", href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css")
+    script(src="https://cdn.tailwindcss.com/3.4.15")
+  body.min-h-screen.bg-base-200
+    .navbar.bg-base-100.shadow-sm.px-4
+      .flex-1
+        span.text-xl.font-semibold= view.title
+      .flex-none.gap-2
+        span.badge.badge-outline tenant #{view.tenant}
+        span.badge.badge-ghost v#{view.version_}
+        a.btn.btn-sm.btn-primary(href="/app/index.html") Fiori app
+    main.p-4.space-y-6.max-w-7xl.mx-auto
+      .stats.stats-vertical.lg_stats-horizontal.shadow.w-full.bg-base-100
+        - foreach (f; view.figures)
+          .stat
+            .stat-title= f[0]
+            .stat-value.text-primary= f[1]
+
+      .card.bg-base-100.shadow
+        .card-body
+          h2.card-title Applications
+          .overflow-x-auto
+            table.table.table-zebra
+              thead
+                tr
+                  th Name
+                  th Organization
+                  th APIs
+                  th Policies
+              tbody
+                - foreach (a; view.applications)
+                  tr
+                    td.font-medium= a[0]
+                    td= a[1]
+                    td= a[2]
+                    td= a[3]
+
+      .card.bg-base-100.shadow
+        .card-body
+          h2.card-title Policies
+          .overflow-x-auto
+            table.table.table-sm
+              thead
+                tr
+                  th Name
+                  th Application
+                  th Resource
+                  th Action
+                  th Conditions
+                  th Kind
+                  th Status
+                  th Assignments
+              tbody
+                - foreach (p; view.policies)
+                  tr
+                    td.font-medium= p[0]
+                    td= p[1]
+                    td
+                      code= p[2]
+                    td= p[3]
+                    td.text-xs= p[4]
+                    td
+                      - if (p[5] == "base")
+                        span.badge.badge-info.badge-sm base
+                      - else
+                        span.badge.badge-ghost.badge-sm custom
+                    td
+                      - if (p[6] == "active")
+                        span.badge.badge-success.badge-sm active
+                      - else
+                        span.badge.badge-warning.badge-sm disabled
+                    td= p[7]
+
+      .card.bg-base-100.shadow
+        .card-body
+          h2.card-title Latest decisions
+          .overflow-x-auto
+            table.table.table-sm
+              thead
+                tr
+                  th Time (UTC)
+                  th Principal
+                  th Application
+                  th Resource
+                  th Action
+                  th Decision
+                  th Reason
+              tbody
+                - foreach (d; view.decisions)
+                  tr
+                    td.whitespace-nowrap= d[0]
+                    td= d[1]
+                    td= d[2]
+                    td= d[3]
+                    td= d[4]
+                    td
+                      - if (d[5] == "true")
+                        span.badge.badge-success permit
+                      - else
+                        span.badge.badge-error deny
+                    td.text-xs= d[6]
+    footer.footer.footer-center.p-4.text-base-content.opacity-60
+      p UIM Authorization Management · OData /odata/v4/authorization · JSON /api/v1 · REST /rest/v1/authorization

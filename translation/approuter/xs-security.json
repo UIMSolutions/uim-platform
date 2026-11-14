@@ -1,0 +1,25 @@
+{
+  "xsappname": "uim-translation",
+  "tenant-mode": "dedicated",
+  "description": "UIM Translation Hub service",
+  "scopes": [
+    { "name": "$XSAPPNAME.TranslationViewer", "description": "Read projects, texts, glossary, jobs and reference data" },
+    { "name": "$XSAPPNAME.Translator", "description": "Translate texts and documents, maintain texts and translations, submit and run jobs" },
+    { "name": "$XSAPPNAME.TranslationAdmin", "description": "Maintain projects and the company glossary, archive and delete" }
+  ],
+  "role-templates": [
+    { "name": "TranslationViewer", "description": "Translation viewer", "scope-references": ["$XSAPPNAME.TranslationViewer"] },
+    { "name": "Translator", "description": "Translator",
+      "scope-references": ["$XSAPPNAME.Translator", "$XSAPPNAME.TranslationViewer"] },
+    { "name": "TranslationAdmin", "description": "Translation administrator",
+      "scope-references": ["$XSAPPNAME.TranslationAdmin", "$XSAPPNAME.Translator", "$XSAPPNAME.TranslationViewer"] }
+  ],
+  "role-collections": [
+    { "name": "UIM Translation Viewer", "role-template-references": ["$XSAPPNAME.TranslationViewer"] },
+    { "name": "UIM Translator", "role-template-references": ["$XSAPPNAME.Translator"] },
+    { "name": "UIM Translation Administrator", "role-template-references": ["$XSAPPNAME.TranslationAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

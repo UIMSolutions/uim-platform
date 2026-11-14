@@ -27,16 +27,19 @@ spec:
             name: application-studio-config
         livenessProbe:
           httpGet:
-            path: /health
+            path: /api/v1/health
             port: 8111
           initialDelaySeconds: 10
           periodSeconds: 30
         readinessProbe:
           httpGet:
-            path: /health
+            path: /api/v1/health
             port: 8111
           initialDelaySeconds: 5
           periodSeconds: 10
+        volumeMounts:
+        - name: data
+          mountPath: /data
         resources:
           requests:
             memory: "64Mi"
@@ -44,3 +47,6 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "500m"
+      volumes:
+      - name: data
+        emptyDir: {}

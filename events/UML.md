@@ -1,330 +1,452 @@
-# UML — SAP Event Mesh Service
+# UML — Event Mesh
 
+These diagrams describe the 2.0 implementation in
+`backend/source/uim/platform/events/`.
 
-## Documentation update
-
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
-
-## Class Diagram — Domain Entities
-
-```mermaid
-classDiagram
-    class MessagingService {
-        +MessagingServiceId id
-        +TenantId tenantId
-        +string name
-        +string description
-        +string namespace
-        +MessagingServiceStatus status
-        +MessagingServicePlan plan
-        +string region
-        +string datacenter
-        +string tokenEndpoint
-        +string messagingEndpoint
-        +Json toJson()
-    }
-
-    class MessageClient {
-        +MessageClientId id
-        +TenantId tenantId
-        +MessagingServiceId serviceId
-        +string name
-        +MessageClientStatus status
-        +MessageClientProtocol protocol
-        +string xsappname
-        +string clientId
-        +string namespace
-        +string permittedNamespace
-        +Json toJson()
-    }
-
-    class EventQueue {
-        +QueueId id
-        +TenantId tenantId
-        +MessagingServiceId serviceId
-        +string name
-        +QueueStatus status
-        +QueueAccessType accessType
-        +string maxMessageSizeBytes
-        +string maxQueueSizeBytes
-        +string maxConsumers
-        +string deadLetterQueue
-        +bool egressEnabled
-        +bool ingressEnabled
-        +Json toJson()
-    }
-
-    class QueueSubscription {
-        +QueueSubscriptionId id
-        +TenantId tenantId
-        +QueueId queueId
-        +MessagingServiceId serviceId
-        +string name
-        +QueueSubscriptionStatus status
-        +string topicPattern
-        +string namespace
-        +Json toJson()
-    }
-
-    class Webhook {
-        +WebhookId id
-        +TenantId tenantId
-        +MessagingServiceId serviceId
-        +QueueSubscriptionId subscriptionId
-        +string name
-        +WebhookStatus status
-        +string url
-        +WebhookAuthType authenticationType
-        +WebhookDeliveryMode deliveryMode
-        +string pushInterval
-        +Json toJson()
-    }
-
-    class EventChannel {
-        +EventChannelId id
-        +TenantId tenantId
-        +MessagingServiceId serviceId
-        +string name
-        +EventChannelStatus status
-        +EventChannelType channelType
-        +string namespace
-        +string topicName
-        +string asyncapiDefinition
-        +Json toJson()
-    }
-
-    class MessageBinding {
-        +MessageBindingId id
-        +TenantId tenantId
-        +MessageClientId clientId
-        +MessagingServiceId serviceId
-        +QueueId queueId
-        +EventChannelId channelId
-        +MessageBindingStatus status
-        +MessageBindingPermission permission
-        +Json toJson()
-    }
-
-    MessagingService "1" --> "0..*" MessageClient : hosts
-    MessagingService "1" --> "0..*" EventQueue : owns
-    MessagingService "1" --> "0..*" EventChannel : defines
-    EventQueue "1" --> "0..*" QueueSubscription : has
-    QueueSubscription "1" --> "0..*" Webhook : triggers
-    MessageClient "1" --> "0..*" MessageBinding : bound via
-    EventQueue "1" --> "0..*" MessageBinding : bound in
-    EventChannel "1" --> "0..*" MessageBinding : bound in
-```
-
----
-
-## Class Diagram — Repository Interfaces
-
-```mermaid
-classDiagram
-    class MessagingServiceRepository {
-        <<interface>>
-        +findByTenant(TenantId) MessagingService[]
-        +findById(TenantId, MessagingServiceId) MessagingService
-        +findByStatus(TenantId, MessagingServiceStatus) MessagingService[]
-        +findByNamespace(TenantId, string) MessagingService[]
-        +save(MessagingService)
-        +update(MessagingService)
-        +remove(MessagingService)
-    }
-
-    class QueueRepository {
-        <<interface>>
-        +findByTenant(TenantId) EventQueue[]
-        +findByService(TenantId, MessagingServiceId) EventQueue[]
-        +findByStatus(TenantId, QueueStatus) EventQueue[]
-        +removeByService(TenantId, MessagingServiceId)
-    }
-
-    class WebhookRepository {
-        <<interface>>
-        +findByService(TenantId, MessagingServiceId) Webhook[]
-        +findByStatus(TenantId, WebhookStatus) Webhook[]
-        +findBySubscription(TenantId, QueueSubscriptionId) Webhook[]
-    }
-
-    class MessagingServiceRepository {
-        -MessagingService[] store
-        +findByStatus() MessagingService[]
-        +findByNamespace() MessagingService[]
-    }
-
-    MemoryMessagingServiceRepository ..|> MessagingServiceRepository
-```
-
----
-
-## Use Case Diagram
+## Component diagram (hexagonal architecture)
 
 ```mermaid
 flowchart LR
-    subgraph Actor
-        A[Platform Consumer]
-    end
-    subgraph UseCases["Application Use Cases"]
-        UC1[Manage Messaging Services]
-        UC2[Manage Message Clients]
-        UC3[Manage Queues]
-        UC4[Manage EventQueue Subscriptions]
-        UC5[Manage Webhooks]
-        UC6[Manage Event Channels]
-        UC7[Manage Message Bindings]
-    end
-    A --> UC1
-    A --> UC2
-    A --> UC3
-    A --> UC4
-    A --> UC5
-    A --> UC6
-    A --> UC7
+  subgraph Clients
+    Fiori[SAP Fiori 3 app]
+    Apps[Publishing / consuming apps]
+    Admin[Operator shell]
+    Desk[Desktop user]
+    Hook[(Webhook endpoint)]
+  end
+
+  subgraph BTP[SAP BTP]
+    AR[approuter + XSUAA]
+  end
+
+  subgraph Presentation[presentation — driving adapters]
+    OD[ODataController\n/odata/v4/event-mesh]
+    REST[EventsRestController\n/api/v1/event-mesh]
+    CLI[CLI commands\nuim-event-mesh-cli]
+    GUI[GtkD entity browser\nuim-event-mesh-gui]
+    WEB[FrontendController /app]
+    ENG{{ODataEngine\nEDM model + providers}}
+  end
+
+  subgraph Application
+    UC[Manage* use cases]
+    MSG[PublishEvents · ConsumeMessages\nDeliverWebhooks]
+    SVC[EventsStatisticsService · DemoData]
+  end
+
+  subgraph Domain
+    ENT[Entities]
+    POL[topic router · quota policy\ndead letter policy · topics]
+  end
+
+  subgraph Ports
+    PIN[driving: usecases · messaging · services]
+    POUT[driven: repositories · storages · gateways]
+  end
+
+  subgraph Persistence
+    REPO[DocumentRepository × 8]
+    MAP[mappers · records]
+    STORE[(Memory / File\nDocumentStore)]
+  end
+
+  subgraph Infrastructure
+    CFG[configuration]
+    SEC[security: XSUAA RS256 / HS256]
+    LOG[structured logging]
+    HTTPC[HttpWebhookClient]
+    WRK[WebhookDeliveryWorker]
+    CONT[EventsContainer]
+  end
+
+  Fiori --> AR --> OD
+  Apps --> REST
+  Apps --> OD
+  Admin --> CLI
+  Desk --> GUI
+  OD --> ENG
+  REST --> ENG
+  CLI --> ENG
+  GUI --> ENG
+  ENG --> PIN
+  PIN -.implemented by.-> UC
+  PIN -.implemented by.-> MSG
+  PIN -.implemented by.-> SVC
+  UC --> ENT
+  MSG --> POL
+  UC --> POUT
+  MSG --> POUT
+  POUT -.implemented by.-> REPO
+  POUT -.implemented by.-> HTTPC
+  REPO --> MAP --> STORE
+  HTTPC --> Hook
+  WRK --> MSG
+  CONT -.wires.-> ENG
+  OD --> SEC
+  REST --> SEC
 ```
 
----
+Dependencies point inwards: `presentation → ports → application → domain`.
+`persistence` and `infrastructure.clients` implement driven ports. Only
+`EventsContainer`, the composition root, knows the concrete classes.
 
-## Component Diagram
+## Domain class diagram
+
+```mermaid
+classDiagram
+  direction LR
+  class MessagingService {
+    +MessagingServiceId id
+    +TenantId tenantId
+    +string name
+    +string namespace
+    +MessagingServiceStatus status
+    +MessagingServicePlan plan
+    +string region
+    +int maxConnections
+    +int maxQueues
+    +int maxQueueDepth
+    +long maxMessageSize
+    +string tokenEndpoint
+    +string messagingEndpoint
+    +isActive() bool
+    +validate()
+  }
+  class MessageClient {
+    +MessageClientId id
+    +MessagingServiceId serviceId
+    +string name
+    +MessageClientStatus status
+    +MessageClientProtocol protocol
+    +string clientId
+    -string clientSecret
+    +string tokenUrl
+    +string permittedNamespace
+    +validate()
+  }
+  class EventQueue {
+    +QueueId id
+    +MessagingServiceId serviceId
+    +string name
+    +QueueStatus status
+    +QueueAccessType accessType
+    +int maxDepth
+    +long maxMessageSize
+    +long messageTtlSeconds
+    +int maxRedeliveryCount
+    +QueueId deadLetterQueueId
+    +bool ingressEnabled
+    +bool egressEnabled
+    +acceptsMessages() bool
+    +deliversMessages() bool
+    +validate()
+  }
+  class QueueSubscription {
+    +QueueSubscriptionId id
+    +QueueId queueId
+    +MessagingServiceId serviceId
+    +string topicPattern
+    +QueueSubscriptionStatus status
+    +validate()
+  }
+  class Webhook {
+    +WebhookId id
+    +QueueId queueId
+    +string url
+    +string headers
+    +WebhookStatus status
+    +WebhookAuthType authenticationType
+    -string credentials
+    +WebhookDeliveryMode deliveryMode
+    +int batchSize
+    +long deliveredCount
+    +long failedCount
+    +long lastDeliveryAt
+    +string lastError
+    +headerMap() string[string]
+    +validate()
+  }
+  class EventChannel {
+    +EventChannelId id
+    +MessagingServiceId serviceId
+    +string topicName
+    +EventChannelType channelType
+    +EventChannelStatus status
+    +string asyncapiDefinition
+    +int retentionHours
+    +int partitions
+    +validate()
+  }
+  class MessageBinding {
+    +MessageBindingId id
+    +MessageClientId clientId
+    +QueueId queueId
+    +EventChannelId channelId
+    +MessageBindingPermission permission
+    +MessageBindingStatus status
+    +validate()
+  }
+  class QueueMessage {
+    +QueueMessageId id
+    +QueueId queueId
+    +string correlationId
+    +string topic
+    +string payload
+    +string contentType
+    +QueueMessageState state
+    +int deliveryCount
+    +long expiresAt
+    +MessageClientId publisherId
+    +QueueId originalQueueId
+    +isExpired(now) bool
+  }
+
+  MessagingService "1" *-- "0..*" MessageClient
+  MessagingService "1" *-- "0..*" EventQueue
+  MessagingService "1" *-- "0..*" EventChannel
+  EventQueue "1" *-- "0..*" QueueSubscription : routes into
+  EventQueue "1" *-- "0..*" QueueMessage : stores
+  EventQueue "0..1" --> "0..1" EventQueue : deadLetterQueue
+  EventQueue "1" <-- "0..*" Webhook : pushes
+  MessageClient "1" *-- "0..*" MessageBinding
+  MessageBinding --> EventQueue : or
+  MessageBinding --> EventChannel : or
+```
+
+Every entity mixes in `TenantEntity` (`tenantId`, `createdAt/By`,
+`updatedAt/By`).
+
+### Enumerations and domain services
+
+```mermaid
+classDiagram
+  class MessagingServicePlan { <<enum>> dev standard premium }
+  class QueueAccessType { <<enum>> exclusive nonExclusive }
+  class WebhookAuthType { <<enum>> none basic oauth2 apiKey }
+  class WebhookDeliveryMode { <<enum>> atLeastOnce atMostOnce }
+  class MessageBindingPermission { <<enum>> publish subscribe publishSubscribe manage }
+  class QueueMessageState { <<enum>> queued deadLettered }
+  class DeliveryOutcome { <<enum>> remove retry deadLetter discard }
+
+  class topics {
+    <<module>>
+    +isValidNamespace(ns) bool
+    +isValidTopic(topic) bool
+    +isValidTopicPattern(pattern) bool
+    +isInNamespace(topic, ns) bool
+    +isPatternInNamespace(pattern, ns) bool
+    +topicMatches(pattern, topic) bool
+  }
+  class topic_router { <<module>> +routeTopic(subscriptions, topic) QueueId[] }
+  class quota_policy {
+    <<module>>
+    +planDefaults(plan) ServiceQuota
+    +quotaOf(service) ServiceQuota
+    +effectiveDepth(queue, service) int
+    +effectiveMessageSize(queue, service) long
+  }
+  class dead_letter_policy { <<module>> +deliveryOutcome(ok, message, queue, mode) DeliveryOutcome }
+  class EventsException {
+    +EventsErrorKind kind
+    invalid · notFound · conflict · ruleViolation · quotaExceeded · gateway
+  }
+```
+
+| Plan | Clients | Queues | Queue depth | Message size |
+|---|---|---|---|---|
+| dev | 10 | 10 | 1 000 | 64 KB |
+| standard | 100 | 100 | 100 000 | 1 MB |
+| premium | 1 000 | 1 000 | 1 000 000 | 10 MB |
+
+## Ports and application
+
+```mermaid
+classDiagram
+  direction LR
+  class EventsPorts {
+    services : IManageMessagingServices
+    clients : IManageMessageClients
+    queues : IManageQueues
+    subscriptions : IManageQueueSubscriptions
+    webhooks : IManageWebhooks
+    channels : IManageEventChannels
+    bindings : IManageMessageBindings
+    publisher : IPublishEvents
+    consumer : IConsumeMessages
+    delivery : IDeliverWebhooks
+    statistics : IEventsStatistics
+  }
+  class IPublishEvents { <<interface>> +publish(PublishEventRequest) PublishResult }
+  class IConsumeMessages {
+    <<interface>>
+    +listMessages(t, queueId) QueueMessage[]
+    +consume(ConsumeMessagesRequest) QueueMessage[]
+    +acknowledge(t, id)
+    +purge(t, queueId) size_t
+    +removeExpired(t) size_t
+  }
+  class IDeliverWebhooks {
+    <<interface>>
+    +deliver(t, webhookId, actor) DeliveryResult
+    +deliverAll(t, actor) DeliveryResult[]
+  }
+  class IEntityRepository~E, Id~ {
+    <<interface>>
+    +findAll(t) E[]
+    +findById(t, id) E
+    +existsById(t, id) bool
+    +countAll(t) size_t
+    +save(e)
+    +removeById(t, id) bool
+  }
+  class IQueueMessageRepository {
+    <<interface>>
+    +findByQueue(t, q) QueueMessage[]
+    +countByQueue(t, q) size_t
+    +removeByQueue(t, q) size_t
+  }
+  class IWebhookEndpointGateway { <<interface>> +push(WebhookRequest) WebhookResponse }
+  class IDocumentStore { <<interface>> all · get · put · remove · count }
+
+  class PublishEventsUseCase
+  class ConsumeMessagesUseCase
+  class DeliverWebhooksUseCase
+  class DocumentRepository~E, Id, toRecord, fromRecord~
+  class HttpWebhookClient
+  class RecordingWebhookGateway
+
+  IPublishEvents <|.. PublishEventsUseCase
+  IConsumeMessages <|.. ConsumeMessagesUseCase
+  IDeliverWebhooks <|.. DeliverWebhooksUseCase
+  IEntityRepository <|-- IQueueMessageRepository
+  IEntityRepository <|.. DocumentRepository
+  IWebhookEndpointGateway <|.. HttpWebhookClient
+  IWebhookEndpointGateway <|.. RecordingWebhookGateway
+  DeliverWebhooksUseCase --> IWebhookEndpointGateway
+  DocumentRepository --> IDocumentStore
+```
+
+The seven `Manage*UseCase` classes follow the same pattern: `list`, `get`,
+`create` (validation, references, uniqueness, quotas), `update` (PATCH
+semantics through `Patch!T`) and `delete` (dependency checks and cascades).
+
+## State machines
+
+### Queue message
+
+```mermaid
+stateDiagram-v2
+  [*] --> queued : publish (topic matches subscription,\nqueue accepts, depth/size ok)
+  queued --> [*] : consume / acknowledge / purge
+  queued --> [*] : webhook 2xx, or atMostOnce attempt
+  queued --> queued : webhook failure\n(deliveryCount < maxRedeliveryCount)
+  queued --> deadLettered : redeliveries exhausted\nand dead letter queue set
+  queued --> [*] : redeliveries exhausted, no DLQ (discard)
+  queued --> [*] : TTL expired
+  deadLettered --> [*] : consume / acknowledge / purge
+```
+
+### Webhook
+
+```mermaid
+stateDiagram-v2
+  [*] --> active
+  active --> paused : PATCH status=paused
+  paused --> active : PATCH status=active (clears lastError)
+  active --> failed : PATCH status=failed
+  failed --> active : PATCH status=active
+  note right of active : only active webhooks are delivered\n(worker, DeliverWebhook, CLI deliver)
+```
+
+## Sequence: publish an event (OData)
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant App as Publisher (client "webshop")
+  participant OD as ODataController
+  participant EN as ODataEngine
+  participant PU as PublishEventsUseCase
+  participant R as Repositories
+  participant D as topic router / quota policy
+
+  App->>OD: POST /odata/v4/event-mesh/PublishEvent {topic, payload, clientId}
+  OD->>EN: invoke(ctx, "PublishEvent") — scope Publish, parameter types
+  EN->>PU: publish(PublishEventRequest)
+  PU->>R: client, service, channel by topic, client bindings
+  PU->>PU: active? topic valid and in namespace? publish binding?
+  PU->>D: quotaOf(service) — payload size
+  PU->>R: subscriptions of the service
+  PU->>D: routeTopic(subscriptions, topic)
+  loop every matching queue
+    PU->>R: queue, countByQueue
+    alt accepts and depth/size within effective limits
+      PU->>R: save(QueueMessage copy, TTL → expiresAt)
+    else
+      PU-->>PU: rejectedQueueIds += queue
+    end
+  end
+  PU-->>EN: PublishResult
+  EN-->>OD: JSON
+  OD-->>App: 200 {messageId, queueIds, rejectedQueueIds}
+```
+
+## Sequence: webhook delivery with redelivery and dead-lettering
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant W as WebhookDeliveryWorker (timer)
+  participant DU as DeliverWebhooksUseCase
+  participant R as Repositories
+  participant P as dead letter policy
+  participant G as HttpWebhookClient
+  participant E as Endpoint
+
+  W->>R: removeExpired(tenant)
+  W->>DU: deliverAll(tenant)
+  loop every active webhook
+    DU->>R: queue, messages (oldest first, ≤ batchSize)
+    loop every message
+      DU->>G: push(url, headers + X-Event-Topic/X-Message-Id, auth)
+      G->>E: POST payload (Basic / API key / OAuth2 bearer)
+      E-->>G: HTTP status
+      G-->>DU: WebhookResponse
+      DU->>P: deliveryOutcome(ok, message, queue, mode)
+      alt remove
+        DU->>R: removeById
+      else retry
+        DU->>R: save(deliveryCount+1, lastError)
+      else deadLetter
+        DU->>R: move to deadLetterQueueId (state deadLettered)
+      else discard
+        DU->>R: removeById
+      end
+    end
+    DU->>R: save(webhook counters, lastDeliveryAt, lastError)
+  end
+```
+
+## Deployment diagram
 
 ```mermaid
 flowchart TB
-    subgraph Presentation["Presentation Layer (HTTP)"]
-        C1[MessagingServiceController]
-        C2[MessageClientController]
-        C3[QueueController]
-        C4[QueueSubscriptionController]
-        C5[WebhookController]
-        C6[EventChannelController]
-        C7[MessageBindingController]
-        HC[HealthController]
-    end
+  subgraph CF[SAP BTP Cloud Foundry space]
+    AR[event-mesh-approuter\n@sap/approuter + Fiori resources]
+    SRV[event-mesh-srv\nbinary_buildpack\nuim-event-mesh-platform-service]
+    UAA[(event-mesh-xsuaa\nxsuaa / application)]
+    CFG[(event-mesh-config\nuser-provided)]
+  end
+  Browser((Browser)) -->|HTTPS| AR
+  AR -->|destination event-mesh-srv\nforwardAuthToken| SRV
+  AR -.-> UAA
+  SRV -.VCAP_SERVICES.-> UAA
+  SRV -.VCAP_SERVICES.-> CFG
+  SRV -->|HTTPS push| EXT[(Webhook endpoints)]
 
-    subgraph Application["Application Layer"]
-        UC1[ManageMessagingServicesUseCase]
-        UC2[ManageMessageClientsUseCase]
-        UC3[ManageQueuesUseCase]
-        UC4[ManageQueueSubscriptionsUseCase]
-        UC5[ManageWebhooksUseCase]
-        UC6[ManageEventChannelsUseCase]
-        UC7[ManageMessageBindingsUseCase]
-    end
-
-    subgraph Domain["Domain Layer"]
-        E1[MessagingService]
-        E2[MessageClient]
-        E3[EventQueue]
-        E4[QueueSubscription]
-        E5[Webhook]
-        E6[EventChannel]
-        E7[MessageBinding]
-        V[EventsValidator]
-    end
-
-    subgraph Infrastructure["Infrastructure Layer"]
-        CFG[Config]
-        CTR[Container]
-        MEM1[MemoryMessagingServiceRepository]
-        MEM2[MemoryMessageClientRepository]
-        MEM3[MemoryQueueRepository]
-        MEM4[MemoryQueueSubscriptionRepository]
-        MEM5[MemoryWebhookRepository]
-        MEM6[MemoryEventChannelRepository]
-        MEM7[MemoryMessageBindingRepository]
-    end
-
-    C1 --> UC1
-    C2 --> UC2
-    C3 --> UC3
-    C4 --> UC4
-    C5 --> UC5
-    C6 --> UC6
-    C7 --> UC7
-
-    UC1 --> E1
-    UC1 --> V
-    UC2 --> E2
-    UC3 --> E3
-    UC4 --> E4
-    UC5 --> E5
-    UC6 --> E6
-    UC7 --> E7
-
-    MEM1 --> E1
-    MEM2 --> E2
-    MEM3 --> E3
-    MEM4 --> E4
-    MEM5 --> E5
-    MEM6 --> E6
-    MEM7 --> E7
-
-    CTR --> UC1
-    CTR --> MEM1
-```
-
----
-
-## Sequence Diagram — Create EventQueue with Subscription and Webhook
-
-```mermaid
-sequenceDiagram
-    participant Client as API Client
-    participant QC as QueueController
-    participant QUC as ManageQueuesUseCase
-    participant QR as QueueRepository
-
-    participant SC as QueueSubscriptionController
-    participant SUC as ManageQueueSubscriptionsUseCase
-    participant SR as QueueSubscriptionRepository
-
-    participant WC as WebhookController
-    participant WUC as ManageWebhooksUseCase
-    participant WR as WebhookRepository
-
-    Client->>QC: POST /queues { name, serviceId }
-    QC->>QUC: createQueue(dto)
-    QUC->>QR: save(queue)
-    QR-->>QUC: ok
-    QUC-->>QC: UsecaseResult(true, queueId)
-    QC-->>Client: 201 { id }
-
-    Client->>SC: POST /queue-subscriptions { queueId, topicPattern }
-    SC->>SUC: createSubscription(dto)
-    SUC->>SR: save(subscription)
-    SR-->>SUC: ok
-    SUC-->>SC: UsecaseResult(true, subscriptionId)
-    SC-->>Client: 201 { id }
-
-    Client->>WC: POST /webhooks { subscriptionId, url }
-    WC->>WUC: createWebhook(dto)
-    WUC->>WR: save(webhook)
-    WR-->>WUC: ok
-    WUC-->>WC: UsecaseResult(true, webhookId)
-    WC-->>Client: 201 { id }
-```
-
----
-
-## Sequence Diagram — Publish Event via Event Channel
-
-```mermaid
-sequenceDiagram
-    participant P as Publisher Client
-    participant EC as EventChannelController
-    participant ECUC as ManageEventChannelsUseCase
-    participant ECR as EventChannelRepository
-    participant MBC as MessageBindingController
-    participant MBUC as ManageMessageBindingsUseCase
-
-    P->>EC: POST /event-channels { namespace, topicName }
-    EC->>ECUC: createChannel(dto)
-    ECUC->>ECR: save(channel)
-    ECR-->>ECUC: ok
-    ECUC-->>EC: UsecaseResult(true, channelId)
-    EC-->>P: 201 { id }
-
-    P->>MBC: POST /message-bindings { clientId, channelId, permission=publish }
-    MBC->>MBUC: createBinding(dto)
-    MBUC-->>MBC: UsecaseResult(true, bindingId)
-    MBC-->>P: 201 { id }
+  subgraph K8s[Kubernetes namespace uim-platform]
+    POD[Deployment uim-event-mesh\n1 replica, /data volume]
+    SVCK[Service uim-event-mesh :8109]
+  end
+  SVCK --> POD
 ```

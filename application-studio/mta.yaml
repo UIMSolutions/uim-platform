@@ -1,0 +1,89 @@
+_schema-version: "3.3"
+ID: uim-application-studio
+version: 1.0.0
+description: UIM Application Studio — D/vibe.d backend (REST + OData v4), SAP Fiori 3 UI and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: application-studio-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-application-studio-platform-service dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-application-studio-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /api/v1/health
+    properties:
+      APPLICATION_STUDIO_HOST: 0.0.0.0
+      APPLICATION_STUDIO_LOG_LEVEL: info
+      # Snapshots live on the (ephemeral) container disk — bind a persistent
+      # store before using this for real data.
+      APPLICATION_STUDIO_STORAGE: file
+      APPLICATION_STUDIO_DATA_DIR: data
+      APPLICATION_STUDIO_FRONTEND_DIR: ""
+      APPLICATION_STUDIO_RECONCILE_INTERVAL: "10"
+    provides:
+      - name: application-studio-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: application-studio-xsuaa
+      - name: application-studio-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: application-studio-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: application-studio-xsuaa
+      - name: application-studio-srv-api
+        group: destinations
+        properties:
+          name: application-studio-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 60000
+
+resources:
+  - name: application-studio-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-application-studio-${space}
+
+  # Optional runtime overrides read from VCAP_SERVICES (credentials of the
+  # service named / tagged "application-studio-config"), e.g. {"reconcileTenants": "t1,t2"}
+  - name: application-studio-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: application-studio-config
+      config:
+        reconcileTenants: default
+        seedCatalog: true

@@ -49,3 +49,11 @@ spec:
           runAsNonRoot: true
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
+        volumeMounts:
+        # JSON snapshots (projects, texts, glossary, jobs); replace with a
+        # PersistentVolumeClaim to keep data across restarts
+        - name: data
+          mountPath: /app/data
+      volumes:
+      - name: data
+        emptyDir: {}

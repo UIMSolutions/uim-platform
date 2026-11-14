@@ -105,44 +105,173 @@ classDiagram
 
 ---
 
-## Component Diagram
+## Deployment / Component Diagram
+
+```mermaid
+flowchart LR
+    subgraph BTP["SAP BTP · Cloud Foundry (mta.yaml)"]
+        AR["approuter<br/>@sap/approuter + Fiori app (resources/)"]
+        XS[(XSUAA<br/>auditlog-xsuaa)]
+        UPS[(auditlog-config<br/>user-provided)]
+        SRV["auditlog-srv<br/>D / vibe.d binary"]
+    end
+    Browser["Browser<br/>SAP Fiori 3 / UI5"] -->|HTTPS| AR
+    AR -->|login / token| XS
+    AR -->|"destination auditlog-srv<br/>/odata/v4/auditlog, /api/v1"| SRV
+    SRV -.->|VCAP_SERVICES| UPS
+    Admin["Administrator"] --> CLI["uim-auditlog-cli"]
+    Admin --> GUI["uim-auditlog-gui (GtkD)"]
+    CLI & GUI & SRV --- DATA[("JSON snapshots<br/>dataDir")]
+```
+
+## Component Diagram — Hexagonal Architecture
 
 ```mermaid
 flowchart TB
-    subgraph Presentation["Presentation Layer (HTTP)"]
-        C1[AuditLogEntryController]
-        C2[SecurityEventController]
-        C3[DataAccessLogController]
-        C4[ConfigChangeLogController]
-        C5[RetentionPolicyController]
-        C6[AuditConfigController]
-        C7[ExportJobController]
-        HC[HealthController]
+    subgraph Presentation["presentation (driving adapters)"]
+        REST["http/controllers<br/>REST /api/v1"]
+        OD["odata<br/>AuditLogODataController · EDM model ·<br/>\$metadata · query engine · serializers"]
+        CLIA["cli<br/>CliArgs · AuditLogCli"]
+        GUIA["gui<br/>AuditLogWindow · TablePage"]
+        WEB["web<br/>FrontendController"]
+        TAB["tabular<br/>Table projections"]
     end
-    subgraph Application["Application Layer"]
-        UC1[ManageAuditLogEntriesUseCase]
-        UC2[ManageSecurityEventsUseCase]
-        UC3[ManageDataAccessLogsUseCase]
-        UC4[ManageConfigChangeLogsUseCase]
-        UC5[ManageRetentionPoliciesUseCase]
-        UC6[ManageAuditConfigsUseCase]
-        UC7[ManageExportJobsUseCase]
-        RET[RetentionEnforcementService]
+    subgraph Ports["ports"]
+        DP["driving.d — AuditLogPorts<br/>I*UseCase · IAuditStatisticsService"]
+        RP["repositories — I*Repository"]
+        SP["storages — ISnapshotStorage"]
+        MP["messaging — IAuditEventPublisher"]
     end
-    subgraph Infrastructure["Infrastructure Layer"]
-        MEM[Memory Repositories ×7]
-        CFG[SrvConfig — port 8085]
-        CTR[Container / buildContainer]
+    subgraph Application["application"]
+        UCW["usecases/write<br/>AuditLog · SecurityEvent · DataAccess · ConfigChange"]
+        UCR["usecases/retrieve<br/>AuditLogs · Records"]
+        UCM["usecases/manage<br/>Retention · AuditConfig · Exports · EnforceRetention"]
+        AS["services<br/>AuditStatisticsService"]
+    end
+    subgraph Domain["domain"]
+        ENT["entities · types · enumerations"]
+        DS["services<br/>AuditPolicy · AuditFilterService · RetentionEnforcer"]
+    end
+    subgraph Persistence["persistence (driven adapters)"]
+        REPO["repositories ×7"]
+        STO["storages<br/>memory · JsonFileSnapshotStorage · SnapshotTenantStore"]
+        MAP["mappers · records"]
+    end
+    subgraph Infrastructure["infrastructure"]
+        CFG["configuration<br/>defaults → file → env → VCAP_SERVICES"]
+        SEC["security<br/>XSUAA JWT → RequestIdentity"]
+        WRK["workers<br/>RetentionWorker"]
+        LOG["logging<br/>LogEventPublisher"]
+        CTR["container<br/>Container.ports()"]
     end
 
-    C1 --> UC1
-    C2 --> UC2
-    C5 --> UC5
-    C7 --> UC7
-    UC2 --> RET
-    MEM --> UC1
-    CTR --> UC1
-    CTR --> MEM
+    REST & OD & CLIA & GUIA --> DP
+    CLIA & GUIA --> TAB
+    OD --> SEC
+    WRK --> DP
+    DP -.implemented by.-> UCW & UCR & UCM & AS
+    UCW & UCR & UCM & AS --> DS & ENT
+    UCW & UCR & UCM & AS --> RP
+    UCW & UCM --> MP
+    REPO -.implements.-> RP
+    REPO --> STO --> SP
+    STO --> MAP
+    LOG -.implements.-> MP
+    CTR --> REPO & UCW & UCR & UCM & AS & CFG
+```
+
+## Class Diagram — Driving Adapters
+
+```mermaid
+classDiagram
+    class AuditLogPorts {
+        +IWriteAuditLogUseCase writeAuditLog
+        +IRetrieveAuditLogsUseCase retrieveAuditLogs
+        +IBrowseAuditRecordsUseCase browseRecords
+        +IWriteSecurityEventUseCase writeSecurityEvent
+        +IWriteDataAccessLogUseCase writeDataAccessLog
+        +IWriteConfigChangeUseCase writeConfigChange
+        +IManageRetentionUseCase manageRetention
+        +IEnforceRetentionUseCase enforceRetention
+        +IManageAuditConfigUseCase manageAuditConfig
+        +IManageExportsUseCase manageExports
+        +IAuditStatisticsService statistics
+    }
+    class Container {
+        +AuditLogConfig config
+        +ports() AuditLogPorts
+    }
+    class AuditLogODataController {
+        -ODataServiceModel model
+        +registerRoutes(URLRouter)
+    }
+    class AuditLogCli {
+        +run(string[] argv) int
+    }
+    class CliArgs {
+        +string[] positional
+        +string[string] options
+        +parse(string[]) CliArgs$
+    }
+    class AuditLogWindow {
+        +refreshAll()
+    }
+    class TablePage {
+        +reload()
+        +selectedId() string
+    }
+    class Table {
+        +string[] headers
+        +string[][] rows
+        +render() string
+    }
+    Container --> AuditLogPorts
+    AuditLogODataController --> AuditLogPorts
+    AuditLogCli --> AuditLogPorts
+    AuditLogCli --> CliArgs
+    AuditLogCli --> Table
+    AuditLogWindow --> AuditLogPorts
+    AuditLogWindow *-- TablePage
+    TablePage --> Table
+```
+
+## Sequence Diagram — Fiori reads audit logs
+
+```mermaid
+sequenceDiagram
+    participant UI as UI5 ODataModel (V4)
+    participant AR as approuter
+    participant OD as AuditLogODataController
+    participant ID as resolveIdentity
+    participant UC as IRetrieveAuditLogsUseCase
+    participant Q as ODataQuery
+    UI->>AR: GET odata/v4/auditlog/AuditLogs?$filter=…&$orderby=timestamp desc&$count=true
+    AR->>OD: forward + Bearer JWT
+    OD->>ID: Authorization / X-Tenant-Id
+    ID-->>OD: RequestIdentity(tenantId, userId)
+    OD->>UC: queryAuditLogs(tenant)
+    UC-->>OD: AuditLogEntry[]
+    OD->>Q: toOData(entries) → filter, order, count, skip/top, select
+    Q-->>OD: rows
+    OD-->>UI: 200 {"@odata.context", "@odata.count", "value": [...]}
+```
+
+## Sequence Diagram — CLI retention enforcement
+
+```mermaid
+sequenceDiagram
+    actor Admin
+    participant CLI as AuditLogCli
+    participant UC as EnforceRetentionUseCase
+    participant RE as RetentionEnforcer
+    participant ST as SnapshotTenantStore (file)
+    Admin->>CLI: uim-auditlog-cli retention enforce --tenant=t1
+    CLI->>UC: enforce(TenantId("t1"))
+    UC->>RE: enforceForTenant(t1)
+    RE->>ST: refresh() / remove expired records
+    ST-->>RE: removed count (snapshot persisted)
+    UC-->>CLI: UsecaseResult("Removed n expired records")
+    CLI-->>Admin: exit 0
 ```
 
 ---
