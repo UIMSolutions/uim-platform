@@ -1,0 +1,21 @@
+{
+  "warnings": 3,
+  "channelsOpen": 1,
+  "certificatesExpiring": 1,
+  "tenantId": "default",
+  "logEntries": 11,
+  "nextCertificateExpiryAt": "2026-12-01T00:00:00Z",
+  "destinations": 7,
+  "connectors": 2,
+  "connectorsConnected": 1,
+  "lastEventAt": "2026-11-14T00:34:18Z",
+  "errors": 1,
+  "destinationsUnreachable": 3,
+  "accessRules": 3,
+  "certificatesExpired": 0,
+  "destinationsReachable": 4,
+  "destinationsMisconfigured": 0,
+  "channels": 2,
+  "certificates": 2,
+  "connectorsDisconnected": 1
+}

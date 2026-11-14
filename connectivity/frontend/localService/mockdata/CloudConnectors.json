@@ -1,0 +1,42 @@
+[
+  {
+    "statusMessage": "Registered",
+    "lastHeartbeatAt": "2026-11-14T00:34:17Z",
+    "updatedAt": "2026-11-14T00:34:17Z",
+    "id": "db71b2e5-7c1c-4447-84f5-380d33f551f7",
+    "host": "scc-fra.corp.local",
+    "locationId": "fra",
+    "createdBy": "admin",
+    "createdAt": "2026-11-14T00:34:17Z",
+    "name": "Frankfurt DC",
+    "subaccountId": "sa-prod",
+    "tunnelEndpoint": "",
+    "connectedAt": "2026-11-14T00:34:17Z",
+    "port": 8443,
+    "description": "",
+    "connectorVersion": "2.18.1",
+    "tenantId": "default",
+    "status": "connected",
+    "updatedBy": "admin"
+  },
+  {
+    "statusMessage": "Maintenance",
+    "lastHeartbeatAt": "2026-11-14T00:34:17Z",
+    "updatedAt": "2026-11-14T00:34:18Z",
+    "id": "f11f2c15-b1ea-44f4-9bc1-827ef7b8f080",
+    "host": "scc-wdf.corp.local",
+    "locationId": "wdf",
+    "createdBy": "admin",
+    "createdAt": "2026-11-14T00:34:17Z",
+    "name": "Walldorf DC",
+    "subaccountId": "sa-prod",
+    "tunnelEndpoint": "",
+    "connectedAt": "2026-11-14T00:34:17Z",
+    "port": 8443,
+    "description": "",
+    "connectorVersion": "2.17.3",
+    "tenantId": "default",
+    "status": "maintenance",
+    "updatedBy": "admin"
+  }
+]

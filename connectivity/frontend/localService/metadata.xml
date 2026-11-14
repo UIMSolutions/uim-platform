@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.connectivity" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Destination">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String"/>
+        <Property Name="destinationType" Type="Edm.String"/>
+        <Property Name="authenticationType" Type="Edm.String"/>
+        <Property Name="proxyType" Type="Edm.String"/>
+        <Property Name="user" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="tokenServiceUrl" Type="Edm.String"/>
+        <Property Name="tokenServiceUser" Type="Edm.String"/>
+        <Property Name="tokenServicePassword" Type="Edm.String"/>
+        <Property Name="certificateId" Type="Edm.String"/>
+        <Property Name="cloudConnectorLocationId" Type="Edm.String"/>
+        <Property Name="properties" Type="Collection(uim.connectivity.KeyValue)"/>
+        <Property Name="additionalHeaders" Type="Collection(uim.connectivity.KeyValue)"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="lastCheckedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="latencyMs" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="CloudConnector">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="subaccountId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="locationId" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="connectorVersion" Type="Edm.String"/>
+        <Property Name="host" Type="Edm.String"/>
+        <Property Name="port" Type="Edm.Int32"/>
+        <Property Name="tunnelEndpoint" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="connectedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="lastHeartbeatAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="ServiceChannel">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="connectorId" Type="Edm.String"/>
+        <Property Name="connectorName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="channelType" Type="Edm.String"/>
+        <Property Name="virtualHost" Type="Edm.String"/>
+        <Property Name="virtualPort" Type="Edm.Int32"/>
+        <Property Name="backendHost" Type="Edm.String"/>
+        <Property Name="backendPort" Type="Edm.Int32"/>
+        <Property Name="connectionCount" Type="Edm.Int32"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="openedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="closedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="AccessRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="connectorId" Type="Edm.String"/>
+        <Property Name="connectorName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="protocol" Type="Edm.String"/>
+        <Property Name="virtualHost" Type="Edm.String"/>
+        <Property Name="virtualPort" Type="Edm.Int32"/>
+        <Property Name="internalHost" Type="Edm.String"/>
+        <Property Name="internalPort" Type="Edm.Int32"/>
+        <Property Name="urlPathPrefix" Type="Edm.String"/>
+        <Property Name="includeSubPaths" Type="Edm.Boolean"/>
+        <Property Name="policy" Type="Edm.String"/>
+        <Property Name="principalPropagation" Type="Edm.Boolean"/>
+        <Property Name="enabled" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Certificate">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="certificateType" Type="Edm.String"/>
+        <Property Name="usage" Type="Edm.String"/>
+        <Property Name="subjectDN" Type="Edm.String"/>
+        <Property Name="issuerDN" Type="Edm.String"/>
+        <Property Name="serialNumber" Type="Edm.String"/>
+        <Property Name="fingerprint" Type="Edm.String"/>
+        <Property Name="issuedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="revokedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="ConnectivityLog">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="eventType" Type="Edm.String"/>
+        <Property Name="severity" Type="Edm.String"/>
+        <Property Name="sourceType" Type="Edm.String"/>
+        <Property Name="sourceId" Type="Edm.String"/>
+        <Property Name="sourceName" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="remoteHost" Type="Edm.String"/>
+        <Property Name="remotePort" Type="Edm.Int32"/>
+        <Property Name="occurredAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="destinations" Type="Edm.Int32"/>
+        <Property Name="destinationsReachable" Type="Edm.Int32"/>
+        <Property Name="destinationsUnreachable" Type="Edm.Int32"/>
+        <Property Name="destinationsMisconfigured" Type="Edm.Int32"/>
+        <Property Name="connectors" Type="Edm.Int32"/>
+        <Property Name="connectorsConnected" Type="Edm.Int32"/>
+        <Property Name="connectorsDisconnected" Type="Edm.Int32"/>
+        <Property Name="channels" Type="Edm.Int32"/>
+        <Property Name="channelsOpen" Type="Edm.Int32"/>
+        <Property Name="accessRules" Type="Edm.Int32"/>
+        <Property Name="certificates" Type="Edm.Int32"/>
+        <Property Name="certificatesExpiring" Type="Edm.Int32"/>
+        <Property Name="certificatesExpired" Type="Edm.Int32"/>
+        <Property Name="logEntries" Type="Edm.Int32"/>
+        <Property Name="warnings" Type="Edm.Int32"/>
+        <Property Name="errors" Type="Edm.Int32"/>
+        <Property Name="lastEventAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="nextCertificateExpiryAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <ComplexType Name="KeyValue">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="HealthCheckResult">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="examined" Type="Edm.Int32"/>
+        <Property Name="changed" Type="Edm.Int32"/>
+        <Property Name="changes" Type="Collection(Edm.String)"/>
+        <Property Name="checkedAt" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <ComplexType Name="AccessCheckResult">
+        <Property Name="allowed" Type="Edm.Boolean"/>
+        <Property Name="connectorId" Type="Edm.String"/>
+        <Property Name="connectorName" Type="Edm.String"/>
+        <Property Name="protocol" Type="Edm.String"/>
+        <Property Name="virtualHost" Type="Edm.String"/>
+        <Property Name="virtualPort" Type="Edm.Int32"/>
+        <Property Name="path" Type="Edm.String"/>
+        <Property Name="ruleId" Type="Edm.String"/>
+        <Property Name="ruleName" Type="Edm.String"/>
+        <Property Name="internalHost" Type="Edm.String"/>
+        <Property Name="internalPort" Type="Edm.Int32"/>
+        <Property Name="principalPropagation" Type="Edm.Boolean"/>
+        <Property Name="reason" Type="Edm.String"/>
+      </ComplexType>
+      <Action Name="CheckDestination" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.Destination"/>
+      </Action>
+      <Action Name="HeartbeatCloudConnector" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="connectorVersion" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.CloudConnector"/>
+      </Action>
+      <Action Name="DisconnectCloudConnector" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.CloudConnector"/>
+      </Action>
+      <Action Name="ReconnectCloudConnector" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.CloudConnector"/>
+      </Action>
+      <Action Name="StartMaintenanceCloudConnector" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.CloudConnector"/>
+      </Action>
+      <Action Name="OpenServiceChannel" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.ServiceChannel"/>
+      </Action>
+      <Action Name="CloseServiceChannel" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.ServiceChannel"/>
+      </Action>
+      <Action Name="EnableAccessRule" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.AccessRule"/>
+      </Action>
+      <Action Name="DisableAccessRule" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.AccessRule"/>
+      </Action>
+      <Action Name="RevokeCertificate" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.Certificate"/>
+      </Action>
+      <Action Name="RenewCertificate" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="validDays" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.Certificate"/>
+      </Action>
+      <Action Name="RunHealthCheck" IsBound="false">
+        <ReturnType Type="uim.connectivity.HealthCheckResult"/>
+      </Action>
+      <Action Name="CheckAccess" IsBound="false">
+        <Parameter Name="connector" Type="Edm.String"/>
+        <Parameter Name="url" Type="Edm.String"/>
+        <ReturnType Type="uim.connectivity.AccessCheckResult"/>
+      </Action>
+      <EntityContainer Name="ConnectivityService">
+        <EntitySet Name="Destinations" EntityType="uim.connectivity.Destination"/>
+        <EntitySet Name="CloudConnectors" EntityType="uim.connectivity.CloudConnector"/>
+        <EntitySet Name="ServiceChannels" EntityType="uim.connectivity.ServiceChannel"/>
+        <EntitySet Name="AccessRules" EntityType="uim.connectivity.AccessRule"/>
+        <EntitySet Name="Certificates" EntityType="uim.connectivity.Certificate"/>
+        <EntitySet Name="ConnectivityLogs" EntityType="uim.connectivity.ConnectivityLog"/>
+        <Singleton Name="Statistics" Type="uim.connectivity.Statistic"/>
+        <ActionImport Name="CheckDestination" Action="uim.connectivity.CheckDestination"/>
+        <ActionImport Name="HeartbeatCloudConnector" Action="uim.connectivity.HeartbeatCloudConnector"/>
+        <ActionImport Name="DisconnectCloudConnector" Action="uim.connectivity.DisconnectCloudConnector"/>
+        <ActionImport Name="ReconnectCloudConnector" Action="uim.connectivity.ReconnectCloudConnector"/>
+        <ActionImport Name="StartMaintenanceCloudConnector" Action="uim.connectivity.StartMaintenanceCloudConnector"/>
+        <ActionImport Name="OpenServiceChannel" Action="uim.connectivity.OpenServiceChannel"/>
+        <ActionImport Name="CloseServiceChannel" Action="uim.connectivity.CloseServiceChannel"/>
+        <ActionImport Name="EnableAccessRule" Action="uim.connectivity.EnableAccessRule"/>
+        <ActionImport Name="DisableAccessRule" Action="uim.connectivity.DisableAccessRule"/>
+        <ActionImport Name="RevokeCertificate" Action="uim.connectivity.RevokeCertificate"/>
+        <ActionImport Name="RenewCertificate" Action="uim.connectivity.RenewCertificate"/>
+        <ActionImport Name="RunHealthCheck" Action="uim.connectivity.RunHealthCheck"/>
+        <ActionImport Name="CheckAccess" Action="uim.connectivity.CheckAccess"/>
+      </EntityContainer>
+      <Annotations Target="uim.connectivity.Destination/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/url"><Annotation Term="Common.Label" String="URL"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/destinationType"><Annotation Term="Common.Label" String="Destination Type"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/authenticationType"><Annotation Term="Common.Label" String="Authentication Type"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/proxyType"><Annotation Term="Common.Label" String="Proxy Type"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/user"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/clientSecret"><Annotation Term="Common.Label" String="Client Secret"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/tokenServiceUrl"><Annotation Term="Common.Label" String="Token Service URL"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/tokenServiceUser"><Annotation Term="Common.Label" String="Token Service User"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/tokenServicePassword"><Annotation Term="Common.Label" String="Token Service Password"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/certificateId"><Annotation Term="Common.Label" String="Certificate ID"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/cloudConnectorLocationId"><Annotation Term="Common.Label" String="Cloud Connector Location ID"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/properties"><Annotation Term="Common.Label" String="Properties"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/additionalHeaders"><Annotation Term="Common.Label" String="Additional Headers"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/lastCheckedAt"><Annotation Term="Common.Label" String="Last Checked At"/></Annotations>
+      <Annotations Target="uim.connectivity.Destination/latencyMs"><Annotation Term="Common.Label" String="Latency Ms"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityService/Destinations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/subaccountId"><Annotation Term="Common.Label" String="Subaccount ID"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/locationId"><Annotation Term="Common.Label" String="Location ID"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/connectorVersion"><Annotation Term="Common.Label" String="Connector Version"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/host"><Annotation Term="Common.Label" String="Host"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/port"><Annotation Term="Common.Label" String="Port"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/tunnelEndpoint"><Annotation Term="Common.Label" String="Tunnel Endpoint"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/connectedAt"><Annotation Term="Common.Label" String="Connected At"/></Annotations>
+      <Annotations Target="uim.connectivity.CloudConnector/lastHeartbeatAt"><Annotation Term="Common.Label" String="Last Heartbeat At"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityService/CloudConnectors">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/connectorId"><Annotation Term="Common.Label" String="Connector ID"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/connectorName"><Annotation Term="Common.Label" String="Connector Name"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/channelType"><Annotation Term="Common.Label" String="Channel Type"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/virtualHost"><Annotation Term="Common.Label" String="Virtual Host"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/virtualPort"><Annotation Term="Common.Label" String="Virtual Port"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/backendHost"><Annotation Term="Common.Label" String="Backend Host"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/backendPort"><Annotation Term="Common.Label" String="Backend Port"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/connectionCount"><Annotation Term="Common.Label" String="Connection Count"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/openedAt"><Annotation Term="Common.Label" String="Opened At"/></Annotations>
+      <Annotations Target="uim.connectivity.ServiceChannel/closedAt"><Annotation Term="Common.Label" String="Closed At"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityService/ServiceChannels">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/connectorId"><Annotation Term="Common.Label" String="Connector ID"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/connectorName"><Annotation Term="Common.Label" String="Connector Name"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/protocol"><Annotation Term="Common.Label" String="Protocol"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/virtualHost"><Annotation Term="Common.Label" String="Virtual Host"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/virtualPort"><Annotation Term="Common.Label" String="Virtual Port"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/internalHost"><Annotation Term="Common.Label" String="Internal Host"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/internalPort"><Annotation Term="Common.Label" String="Internal Port"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/urlPathPrefix"><Annotation Term="Common.Label" String="URL Path Prefix"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/includeSubPaths"><Annotation Term="Common.Label" String="Include Sub Paths"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/policy"><Annotation Term="Common.Label" String="Policy"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/principalPropagation"><Annotation Term="Common.Label" String="Principal Propagation"/></Annotations>
+      <Annotations Target="uim.connectivity.AccessRule/enabled"><Annotation Term="Common.Label" String="Enabled"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityService/AccessRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.connectivity.Certificate/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/certificateType"><Annotation Term="Common.Label" String="Certificate Type"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/usage"><Annotation Term="Common.Label" String="Usage"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/subjectDN"><Annotation Term="Common.Label" String="Subject DN"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/issuerDN"><Annotation Term="Common.Label" String="Issuer DN"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/serialNumber"><Annotation Term="Common.Label" String="Serial Number"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/fingerprint"><Annotation Term="Common.Label" String="Fingerprint"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/issuedAt"><Annotation Term="Common.Label" String="Issued At"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.connectivity.Certificate/revokedAt"><Annotation Term="Common.Label" String="Revoked At"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityService/Certificates">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/eventType"><Annotation Term="Common.Label" String="Event Type"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/severity"><Annotation Term="Common.Label" String="Severity"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/sourceType"><Annotation Term="Common.Label" String="Source Type"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/sourceId"><Annotation Term="Common.Label" String="Source ID"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/sourceName"><Annotation Term="Common.Label" String="Source Name"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/remoteHost"><Annotation Term="Common.Label" String="Remote Host"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/remotePort"><Annotation Term="Common.Label" String="Remote Port"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityLog/occurredAt"><Annotation Term="Common.Label" String="Occurred At"/></Annotations>
+      <Annotations Target="uim.connectivity.ConnectivityService/ConnectivityLogs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.connectivity.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/destinations"><Annotation Term="Common.Label" String="Destinations"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/destinationsReachable"><Annotation Term="Common.Label" String="Destinations Reachable"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/destinationsUnreachable"><Annotation Term="Common.Label" String="Destinations Unreachable"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/destinationsMisconfigured"><Annotation Term="Common.Label" String="Destinations Misconfigured"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/connectors"><Annotation Term="Common.Label" String="Connectors"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/connectorsConnected"><Annotation Term="Common.Label" String="Connectors Connected"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/connectorsDisconnected"><Annotation Term="Common.Label" String="Connectors Disconnected"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/channels"><Annotation Term="Common.Label" String="Channels"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/channelsOpen"><Annotation Term="Common.Label" String="Channels Open"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/accessRules"><Annotation Term="Common.Label" String="Access Rules"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/certificates"><Annotation Term="Common.Label" String="Certificates"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/certificatesExpiring"><Annotation Term="Common.Label" String="Certificates Expiring"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/certificatesExpired"><Annotation Term="Common.Label" String="Certificates Expired"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/logEntries"><Annotation Term="Common.Label" String="Log Entries"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/warnings"><Annotation Term="Common.Label" String="Warnings"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/errors"><Annotation Term="Common.Label" String="Errors"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/lastEventAt"><Annotation Term="Common.Label" String="Last Event At"/></Annotations>
+      <Annotations Target="uim.connectivity.Statistic/nextCertificateExpiryAt"><Annotation Term="Common.Label" String="Next Certificate Expiry At"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

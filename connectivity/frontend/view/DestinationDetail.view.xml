@@ -1,0 +1,111 @@
+<mvc:View
+  controllerName="uim.connectivity.controller.DestinationDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:uxap="sap.uxap"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="destinationPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:expandedHeading>
+          <Title text="{name}" wrapping="true"/>
+        </uxap:expandedHeading>
+        <uxap:snappedHeading>
+          <Title text="{name}"/>
+        </uxap:snappedHeading>
+        <uxap:expandedContent>
+          <Text text="{description}"/>
+        </uxap:expandedContent>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onClose"/>
+        </uxap:navigationActions>
+        <uxap:actions>
+          <Button id="checkButton" text="{i18n>checkConnection}" icon="sap-icon://connected" type="Emphasized" press=".onCheck"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <ObjectStatus title="{i18n>colStatus}" text="{path: 'status', formatter: '.formatter.enumText'}"
+        state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"
+        class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colType}" text="{destinationType}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colProxy}" text="{path: 'proxyType', formatter: '.formatter.enumText'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>lblLatency}" text="{path: 'latencyMs', targetType: 'any', formatter: '.formatter.latency'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>lblLastCheck}"
+        text="{path: 'lastCheckedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionConnection}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" editable="false">
+              <Label text="{i18n>colUrl}"/><Text text="{url}"/>
+              <Label text="{i18n>lblLocation}"/><Text text="{= ${proxyType} === 'onPremise' ? (${cloudConnectorLocationId} || '(default)') : '—' }"/>
+              <Label text="{i18n>lblStatusMessage}"/><Text text="{statusMessage}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionAuthentication}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" editable="false">
+              <Label text="{i18n>colAuthentication}"/><Text text="{path: 'authenticationType', formatter: '.formatter.enumText'}"/>
+              <Label text="{i18n>lblUser}"/><Text text="{user}"/>
+              <Label text="{i18n>lblPassword}"/><Text text="{password}"/>
+              <Label text="{i18n>lblClientId}"/><Text text="{clientId}"/>
+              <Label text="{i18n>lblClientSecret}"/><Text text="{clientSecret}"/>
+              <Label text="{i18n>lblTokenService}"/><Text text="{tokenServiceUrl}"/>
+              <Label text="{i18n>lblCertificate}"/><Text text="{certificateId}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionProperties}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <!-- complex collections come with the entity (no navigation request) -->
+            <form:SimpleForm layout="ColumnLayout" columnsM="1" columnsL="2" editable="false">
+              <Label text="{i18n>lblProperties}"/>
+              <Text text="{path: 'properties', targetType: 'any', mode: 'OneTime', formatter: '.formatter.keyValues'}"/>
+              <Label text="{i18n>lblHeaders}"/>
+              <Text text="{path: 'additionalHeaders', targetType: 'any', mode: 'OneTime', formatter: '.formatter.keyValues'}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabLogs}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <!-- filtered by sourceId in the controller; starts suspended until the id is known -->
+            <Table id="destinationLogTable" growing="true" growingThreshold="20"
+              items="{path: '/ConnectivityLogs', parameters: {$orderby: 'occurredAt desc'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colOccurred}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colSeverity}"/></Column>
+                <Column width="13rem"><Text text="{i18n>colEvent}"/></Column>
+                <Column><Text text="{i18n>colMessage}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'occurredAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <ObjectStatus text="{severity}" state="{path: 'severity', formatter: '.formatter.statusState'}"/>
+                    <Text text="{path: 'eventType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{message}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

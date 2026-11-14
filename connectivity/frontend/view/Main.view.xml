@@ -1,0 +1,344 @@
+<mvc:View
+  controllerName="uim.connectivity.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <!-- One tab per OData entity set; actions call unbound OData actions -->
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button id="healthCheckButton" text="{i18n>healthCheck}" icon="sap-icon://stethoscope" type="Emphasized" press=".onHealthCheck"/>
+          <Button id="accessCheckButton" text="{i18n>accessCheck}" icon="sap-icon://shield" press=".onAccessCheck"/>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiDestinations}"/>
+            <ObjectNumber number="{destinations}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiReachable}"/>
+            <ObjectNumber number="{destinationsReachable}" class="sapMObjectNumberLarge" state="Success"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiUnreachable}"/>
+            <ObjectNumber number="{= %{destinationsUnreachable} + %{destinationsMisconfigured} }" class="sapMObjectNumberLarge"
+              state="{= %{destinationsUnreachable} + %{destinationsMisconfigured} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiConnectors}"/>
+            <ObjectNumber number="{connectorsConnected} / {connectors}" class="sapMObjectNumberLarge"
+              state="{= %{connectorsDisconnected} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiChannelsOpen}"/>
+            <ObjectNumber number="{channelsOpen} / {channels}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiCertificatesExpiring}"/>
+            <ObjectNumber number="{certificatesExpiring}" class="sapMObjectNumberLarge" state="{= %{certificatesExpiring} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiCertificatesExpired}"/>
+            <ObjectNumber number="{certificatesExpired}" class="sapMObjectNumberLarge" state="{= %{certificatesExpired} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiErrors}"/>
+            <ObjectNumber number="{errors}" class="sapMObjectNumberLarge" state="{= %{errors} > 0 ? 'Error' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiNextExpiry}"/>
+            <Text text="{path: 'nextCertificateExpiryAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid defaultSpan="XL3 L4 M6 S12" binding="{/Statistics}">
+              <GenericTile header="{i18n>tabDestinations}" subheader="{i18n>kpiReachable}: {destinationsReachable}" press=".onTile" app:tab="destinations">
+                <TileContent><NumericContent value="{destinations}" icon="sap-icon://chain-link" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabConnectors}" subheader="{i18n>tabConnectorsSub}: {connectorsConnected}" press=".onTile" app:tab="connectors">
+                <TileContent><NumericContent value="{connectors}" icon="sap-icon://connected" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabChannels}" subheader="{i18n>tabChannelsSub}: {channelsOpen}" press=".onTile" app:tab="channels">
+                <TileContent><NumericContent value="{channels}" icon="sap-icon://journey-arrive" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabRules}" press=".onTile" app:tab="accessRules">
+                <TileContent><NumericContent value="{accessRules}" icon="sap-icon://shield" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabCertificates}" subheader="{i18n>kpiCertificatesExpiring}: {certificatesExpiring}" press=".onTile" app:tab="certificates">
+                <TileContent><NumericContent value="{certificates}" icon="sap-icon://locked" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabLogs}" subheader="{i18n>kpiWarnings}: {warnings} · {i18n>kpiErrors}: {errors}" press=".onTile" app:tab="logs">
+                <TileContent><NumericContent value="{logEntries}" icon="sap-icon://activity-items" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <!-- ── Destinations ── -->
+          <IconTabFilter key="destinations" icon="sap-icon://chain-link" text="{i18n>tabDestinations}">
+            <Table id="destinationTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Destinations', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDestinations}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('destinationTable', 'name', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('Destinations')"/>
+                  <Button text="{i18n>checkConnection}" icon="sap-icon://connected" press=".onAction('destinationTable', 'CheckDestination', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('destinationTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="5rem"><Text text="{i18n>colType}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colProxy}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colAuthentication}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colUrl}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onDestinationPress">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{destinationType}"/>
+                    <Text text="{path: 'proxyType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'authenticationType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{url}" wrapping="false"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Cloud Connectors ── -->
+          <IconTabFilter key="connectors" icon="sap-icon://connected" text="{i18n>tabConnectors}">
+            <Table id="connectorTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/CloudConnectors', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabConnectors}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('connectorTable', 'name', $event)"/>
+                  <Button text="{i18n>register}" icon="sap-icon://add" press=".onCreate('CloudConnectors')"/>
+                  <Button text="{i18n>heartbeat}" press=".onAction('connectorTable', 'HeartbeatCloudConnector', 'connectorVersion')"/>
+                  <Button text="{i18n>reconnect}" press=".onAction('connectorTable', 'ReconnectCloudConnector', '')"/>
+                  <Button text="{i18n>disconnect}" press=".onAction('connectorTable', 'DisconnectCloudConnector', '')"/>
+                  <Button text="{i18n>maintenance}" press=".onAction('connectorTable', 'StartMaintenanceCloudConnector', '')"/>
+                  <Button text="{i18n>unregister}" icon="sap-icon://delete" press=".onDelete('connectorTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colLocation}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colHost}"/></Column>
+                <Column width="7rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colVersion}"/></Column>
+                <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colHeartbeat}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{subaccountId}"/>
+                    <Text text="{= ${locationId} || '(default)' }"/>
+                    <Text text="{parts: ['host', {path: 'port', targetType: 'any'}], formatter: '.formatter.hostPort'}"/>
+                    <Text text="{connectorVersion}"/>
+                    <Text text="{path: 'lastHeartbeatAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Service Channels ── -->
+          <IconTabFilter key="channels" icon="sap-icon://journey-arrive" text="{i18n>tabChannels}">
+            <Table id="channelTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ServiceChannels', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabChannels}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('channelTable', 'name', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('ServiceChannels')"/>
+                  <Button text="{i18n>open}" press=".onAction('channelTable', 'OpenServiceChannel', '')"/>
+                  <Button text="{i18n>close}" press=".onAction('channelTable', 'CloseServiceChannel', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('channelTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colConnector}"/></Column>
+                <Column width="5rem"><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colVirtual}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colBackend}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{connectorName}"/>
+                    <Text text="{channelType}"/>
+                    <Text text="{parts: ['virtualHost', {path: 'virtualPort', targetType: 'any'}], formatter: '.formatter.hostPort'}"/>
+                    <Text text="{parts: ['backendHost', {path: 'backendPort', targetType: 'any'}], formatter: '.formatter.hostPort'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Access Rules ── -->
+          <IconTabFilter key="accessRules" icon="sap-icon://shield" text="{i18n>tabRules}">
+            <Table id="ruleTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/AccessRules', parameters: {$count: true, $orderby: 'connectorName,name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRules}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('ruleTable', 'name', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('AccessRules')"/>
+                  <Button text="{i18n>enable}" press=".onAction('ruleTable', 'EnableAccessRule', '')"/>
+                  <Button text="{i18n>disable}" press=".onAction('ruleTable', 'DisableAccessRule', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('ruleTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colResource}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colConnector}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colInternal}"/></Column>
+                <Column width="6rem"><Text text="{i18n>colPolicy}"/></Column>
+                <Column width="6rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPrincipal}"/></Column>
+                <Column width="6rem"><Text text="{i18n>colEnabled}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}"
+                      text="{parts: ['protocol', 'virtualHost', {path: 'virtualPort', targetType: 'any'}, 'urlPathPrefix', {path: 'includeSubPaths', targetType: 'any'}], formatter: '.formatter.resource'}"/>
+                    <Text text="{connectorName}"/>
+                    <Text text="{parts: ['internalHost', {path: 'internalPort', targetType: 'any'}], formatter: '.formatter.hostPort'}"/>
+                    <ObjectStatus text="{policy}" state="{path: 'policy', formatter: '.formatter.statusState'}"/>
+                    <Text text="{= %{principalPropagation} ? '✓' : '' }"/>
+                    <ObjectStatus text="{= %{enabled} ? 'enabled' : 'disabled' }" state="{= %{enabled} ? 'Success' : 'Warning' }"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Certificates ── -->
+          <IconTabFilter key="certificates" icon="sap-icon://locked" text="{i18n>tabCertificates}">
+            <Table id="certificateTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Certificates', parameters: {$count: true, $orderby: 'expiresAt'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabCertificates}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('certificateTable', 'name', $event)"/>
+                  <Button text="{i18n>upload}" icon="sap-icon://add" press=".onCreate('Certificates')"/>
+                  <Button text="{i18n>renew}" press=".onAction('certificateTable', 'RenewCertificate', 'validDays')"/>
+                  <Button text="{i18n>revoke}" press=".onAction('certificateTable', 'RevokeCertificate', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('certificateTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="6rem"><Text text="{i18n>colType}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colUsage}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSubject}"/></Column>
+                <Column width="11rem"><Text text="{i18n>colExpires}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{certificateType}"/>
+                    <Text text="{path: 'usage', formatter: '.formatter.enumText'}"/>
+                    <Text text="{subjectDN}"/>
+                    <Text text="{path: 'expiresAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Event Log ── -->
+          <IconTabFilter key="logs" icon="sap-icon://activity-items" text="{i18n>tabLogs}">
+            <Table id="logTable" growing="true" growingThreshold="100" sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/ConnectivityLogs', parameters: {$count: true, $orderby: 'occurredAt desc'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabLogs}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton selectionChange=".onSeverityFilter" selectedKey="all">
+                    <items>
+                      <SegmentedButtonItem key="all" text="{i18n>all}"/>
+                      <SegmentedButtonItem key="warning" text="{i18n>kpiWarnings}"/>
+                      <SegmentedButtonItem key="error" text="{i18n>kpiErrors}"/>
+                      <SegmentedButtonItem key="critical" text="{i18n>critical}"/>
+                    </items>
+                  </SegmentedButton>
+                  <SearchField width="14rem" search=".onSearch('logTable', 'message', $event)"/>
+                  <Button text="{i18n>recordEvent}" icon="sap-icon://add" press=".onCreate('ConnectivityLogs')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('logTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colOccurred}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colSeverity}"/></Column>
+                <Column width="13rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colEvent}"/></Column>
+                <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSource}"/></Column>
+                <Column><Text text="{i18n>colMessage}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'occurredAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <ObjectStatus text="{severity}" state="{path: 'severity', formatter: '.formatter.statusState'}" icon="{path: 'severity', formatter: '.formatter.statusIcon'}"/>
+                    <Text text="{path: 'eventType', formatter: '.formatter.enumText'}"/>
+                    <ObjectIdentifier title="{sourceName}" text="{path: 'sourceType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{message}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>
