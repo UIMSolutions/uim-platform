@@ -1,0 +1,27 @@
+[
+  {
+    "clientId": "",
+    "tokenEndpoint": "",
+    "inboundServices": [],
+    "clientSecret": "",
+    "updatedAt": "2026-11-11T14:25:18Z",
+    "id": "293f8fc9-078f-41a9-8204-dc5366fb5da2",
+    "direction": "inbound",
+    "authMethod": "basicAuthentication",
+    "communicationPassword": "********",
+    "systemInstanceId": "a85fdf68-7f95-4d4c-966e-d8e05e548d9f",
+    "outboundServices": [],
+    "communicationUser": "COMM",
+    "createdBy": "",
+    "createdAt": "2026-11-11T14:25:18Z",
+    "systemName": "dev",
+    "name": "Travel",
+    "scenarioId": "SAP_COM_0510",
+    "communicationSystem": "",
+    "description": "",
+    "certificateId": "",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": ""
+  }
+]

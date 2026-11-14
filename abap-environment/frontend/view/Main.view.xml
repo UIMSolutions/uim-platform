@@ -1,0 +1,422 @@
+<mvc:View
+  controllerName="uim.abap.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <!-- Generated layout: one tab per OData entity set; actions call unbound OData actions -->
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button id="reconcileButton" text="{i18n>reconcile}" icon="sap-icon://synchronize" type="Emphasized" press=".onReconcile"/>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSystems}"/>
+            <ObjectNumber number="{systems}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiActive}"/>
+            <ObjectNumber number="{systemsActive}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiComponents}"/>
+            <ObjectNumber number="{softwareComponents}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiTransportsOpen}"/>
+            <ObjectNumber number="{transportsOpen}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiTransportsReleased}"/>
+            <ObjectNumber number="{transportsReleased}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiUsers}"/>
+            <ObjectNumber number="{businessUsers}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLocked}"/>
+            <ObjectNumber number="{usersLocked}" class="sapMObjectNumberLarge" state="{= ${usersLocked} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiJobsFailed}"/>
+            <ObjectNumber number="{jobsFailed}" class="sapMObjectNumberLarge" state="{= ${jobsFailed} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiPending}"/>
+            <ObjectNumber number="{pendingReconciliation}" class="sapMObjectNumberLarge" state="{= ${pendingReconciliation} > 0 ? 'Information' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiNextJob}"/>
+            <Text text="{path: 'nextJobAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid defaultSpan="XL3 L4 M6 S12" binding="{/Statistics}">
+              <GenericTile header="{i18n>tabSystems}" subheader="{i18n>tabSystemsSub}: {systemsActive}" press=".onTile" app:tab="systems">
+                <TileContent><NumericContent value="{systems}" icon="sap-icon://it-system" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabComponents}" subheader="{i18n>tabComponentsSub}: {componentsCloned}" press=".onTile" app:tab="softwareComponents">
+                <TileContent><NumericContent value="{softwareComponents}" icon="sap-icon://source-code" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabArrangements}" press=".onTile" app:tab="communicationArrangements">
+                <TileContent><NumericContent value="{communicationArrangements}" icon="sap-icon://chain-link" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabBindings}" subheader="{i18n>tabBindingsSub}: {serviceBindingsPublished}" press=".onTile" app:tab="serviceBindings">
+                <TileContent><NumericContent value="{serviceBindings}" icon="sap-icon://internet-browser" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabRoles}" press=".onTile" app:tab="businessRoles">
+                <TileContent><NumericContent value="{businessRoles}" icon="sap-icon://role" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabUsers}" subheader="{i18n>tabUsersSub}: {usersLocked}" press=".onTile" app:tab="businessUsers">
+                <TileContent><NumericContent value="{businessUsers}" icon="sap-icon://employee" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabTransports}" subheader="{i18n>tabTransportsSub}: {transportsImported}" press=".onTile" app:tab="transports">
+                <TileContent><NumericContent value="{transportsOpen}" icon="sap-icon://shipping-status" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabJobs}" subheader="{i18n>tabJobsSub}: {jobsScheduled}" press=".onTile" app:tab="applicationJobs">
+                <TileContent><NumericContent value="{applicationJobs}" icon="sap-icon://history" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <!-- ── Systems ── -->
+          <IconTabFilter key="systems" icon="sap-icon://it-system" text="{i18n>tabSystems}">
+            <Table id="systemTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Systems', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSystems}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('systemTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('Systems')"/>
+                  <Button text="{i18n>suspend}" press=".onAction('systemTable', 'SuspendSystem', '')"/>
+                  <Button text="{i18n>resume}" press=".onAction('systemTable', 'ResumeSystem', '')"/>
+                  <Button text="{i18n>upgrade}" press=".onAction('systemTable', 'UpgradeSystem', 'softwareVersion')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('systemTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="5rem"><Text text="{i18n>colSid}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colPlan}"/></Column>
+                <Column width="6rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRegion}"/></Column>
+                <Column width="6rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colVersion}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colServiceUrl}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onSystemPress">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{sapSystemId}"/>
+                    <Text text="{path: 'plan', formatter: '.formatter.enumText'}"/>
+                    <Text text="{region}"/>
+                    <Text text="{softwareVersion}"/>
+                    <Link text="{serviceUrl}" href="{serviceUrl}" target="_blank"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── SoftwareComponents ── -->
+          <IconTabFilter key="softwareComponents" icon="sap-icon://source-code" text="{i18n>tabComponents}">
+            <Table id="componentTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/SoftwareComponents', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabComponents}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('componentTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('SoftwareComponents')"/>
+                  <Button text="{i18n>clone}" press=".onAction('componentTable', 'CloneSoftwareComponent', '')"/>
+                  <Button text="{i18n>pull}" press=".onAction('componentTable', 'PullSoftwareComponent', '')"/>
+                  <Button text="{i18n>checkout}" press=".onAction('componentTable', 'CheckoutSoftwareComponent', 'branch')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('componentTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colSystem}"/></Column>
+                <Column width="10rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colType}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colBranch}"/></Column>
+                <Column width="7rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCommit}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{systemName}"/>
+                    <Text text="{path: 'componentType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{branch}"/>
+                    <Text text="{currentCommitId}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── CommunicationArrangements ── -->
+          <IconTabFilter key="communicationArrangements" icon="sap-icon://chain-link" text="{i18n>tabArrangements}">
+            <Table id="arrangementTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/CommunicationArrangements', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabArrangements}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('arrangementTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('CommunicationArrangements')"/>
+                  <Button text="{i18n>activate}" press=".onAction('arrangementTable', 'ActivateCommunicationArrangement', '')"/>
+                  <Button text="{i18n>deactivate}" press=".onAction('arrangementTable', 'DeactivateCommunicationArrangement', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('arrangementTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colSystem}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPartner}"/></Column>
+                <Column width="7rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDirection}"/></Column>
+                <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colAuth}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{scenarioId}"/>
+                    <Text text="{systemName}"/>
+                    <Text text="{communicationSystem}"/>
+                    <Text text="{path: 'direction', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'authMethod', formatter: '.formatter.enumText'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── ServiceBindings ── -->
+          <IconTabFilter key="serviceBindings" icon="sap-icon://internet-browser" text="{i18n>tabBindings}">
+            <Table id="bindingTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ServiceBindings', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabBindings}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('bindingTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('ServiceBindings')"/>
+                  <Button text="{i18n>publish}" press=".onAction('bindingTable', 'PublishServiceBinding', '')"/>
+                  <Button text="{i18n>unpublish}" press=".onAction('bindingTable', 'UnpublishServiceBinding', '')"/>
+                  <Button text="{i18n>deprecate}" press=".onAction('bindingTable', 'DeprecateServiceBinding', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('bindingTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colSystem}"/></Column>
+                <Column width="10rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colServiceUrl}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{serviceDefinition}"/>
+                    <Text text="{systemName}"/>
+                    <Text text="{path: 'bindingType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{serviceUrl}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── BusinessRoles ── -->
+          <IconTabFilter key="businessRoles" icon="sap-icon://role" text="{i18n>tabRoles}">
+            <Table id="roleTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/BusinessRoles', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRoles}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('roleTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('BusinessRoles')"/>
+                  <Button text="{i18n>addCatalog}" press=".onAction('roleTable', 'AddCatalogBusinessRole', 'catalog')"/>
+                  <Button text="{i18n>removeCatalog}" press=".onAction('roleTable', 'RemoveCatalogBusinessRole', 'catalog')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('roleTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colSystem}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCatalogs}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRestrictions}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{systemName}"/>
+                    <Text text="{path: 'roleType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'businessCatalogs', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                    <Text text="{path: 'restrictionTypes', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── BusinessUsers ── -->
+          <IconTabFilter key="businessUsers" icon="sap-icon://employee" text="{i18n>tabUsers}">
+            <Table id="userTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/BusinessUsers', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabUsers}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('userTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('BusinessUsers')"/>
+                  <Button text="{i18n>lock}" press=".onAction('userTable', 'LockBusinessUser', '')"/>
+                  <Button text="{i18n>unlock}" press=".onAction('userTable', 'UnlockBusinessUser', '')"/>
+                  <Button text="{i18n>resetPassword}" press=".onAction('userTable', 'ResetPasswordBusinessUser', '')"/>
+                  <Button text="{i18n>assignRole}" press=".onAction('userTable', 'AssignRoleBusinessUser', 'role')"/>
+                  <Button text="{i18n>unassignRole}" press=".onAction('userTable', 'UnassignRoleBusinessUser', 'role')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('userTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colFullName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colSystem}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRoles}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{email}"/>
+                    <Text text="{firstName} {lastName}"/>
+                    <Text text="{systemName}"/>
+                    <Text text="{path: 'roles', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── TransportRequests ── -->
+          <IconTabFilter key="transports" icon="sap-icon://shipping-status" text="{i18n>tabTransports}">
+            <Table id="transportTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/TransportRequests', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabTransports}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('transportTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('TransportRequests')"/>
+                  <Button text="{i18n>addTask}" press=".onAction('transportTable', 'AddTaskTransportRequest', 'objects,owner,description')"/>
+                  <Button text="{i18n>releaseTask}" press=".onAction('transportTable', 'ReleaseTaskTransportRequest', 'task')"/>
+                  <Button text="{i18n>release}" press=".onAction('transportTable', 'ReleaseTransportRequest', '')"/>
+                  <Button text="{i18n>import}" press=".onAction('transportTable', 'ImportTransportRequest', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('transportTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="9rem"><Text text="{i18n>colNumber}"/></Column>
+                <Column width="7rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colOwner}"/></Column>
+                <Column width="9rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRoute}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTasks}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{owner}"/>
+                    <Text text="{path: 'transportType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{sourceSystemName} → {targetSystemName}"/>
+                    <Text text="{path: 'tasks', targetType: 'any', mode: 'OneTime', formatter: '.formatter.tasks'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── ApplicationJobs ── -->
+          <IconTabFilter key="applicationJobs" icon="sap-icon://history" text="{i18n>tabJobs}">
+            <Table id="jobTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ApplicationJobs', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabJobs}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('jobTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('ApplicationJobs')"/>
+                  <Button text="{i18n>run}" press=".onAction('jobTable', 'RunApplicationJob', '')"/>
+                  <Button text="{i18n>cancelJob}" press=".onAction('jobTable', 'CancelApplicationJob', '')"/>
+                  <Button text="{i18n>reactivate}" press=".onAction('jobTable', 'ReactivateApplicationJob', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('jobTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colSystem}"/></Column>
+                <Column width="7rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colFrequency}"/></Column>
+                <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colNextRun}"/></Column>
+                <Column width="5rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRuns}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{jobTemplateName}"/>
+                    <Text text="{systemName}"/>
+                    <Text text="{path: 'frequency', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'scheduledAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <ObjectNumber number="{runCount}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

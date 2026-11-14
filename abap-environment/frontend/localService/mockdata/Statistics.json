@@ -1,0 +1,21 @@
+{
+  "systems": 2,
+  "systemsActive": 2,
+  "businessRoles": 1,
+  "componentsCloned": 1,
+  "transportsImported": 0,
+  "serviceBindings": 1,
+  "transportsReleased": 0,
+  "jobsScheduled": 0,
+  "nextJobAt": null,
+  "softwareComponents": 2,
+  "serviceBindingsPublished": 1,
+  "communicationArrangements": 1,
+  "businessUsers": 1,
+  "usersLocked": 0,
+  "transportsOpen": 1,
+  "pendingReconciliation": 1,
+  "applicationJobs": 1,
+  "tenantId": "default",
+  "jobsFailed": 0
+}

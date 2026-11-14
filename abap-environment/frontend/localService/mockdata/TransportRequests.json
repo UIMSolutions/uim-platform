@@ -1,0 +1,36 @@
+[
+  {
+    "targetSystemId": "b301f51a-a5bb-4a0a-a011-3653a9a37636",
+    "tasks": [
+      {
+        "owner": "JANE.DOE",
+        "createdAt": "2026-11-11T14:29:22Z",
+        "objects": [
+          "R3TR CLAS ZCL_TRAVEL",
+          "R3TR DDLS ZI_TRAVEL"
+        ],
+        "description": "Travel app v1",
+        "taskId": "DEVK900001-01",
+        "status": "released",
+        "releasedAt": "2026-11-11T14:29:22Z"
+      }
+    ],
+    "transportType": "workbench",
+    "statusMessage": "",
+    "updatedAt": "2026-11-11T14:29:22Z",
+    "id": "23a0c002-f685-4332-8df0-3b8a2ca27091",
+    "releasedAt": null,
+    "owner": "JANE.DOE",
+    "sourceSystemName": "dev",
+    "createdBy": "",
+    "createdAt": "2026-11-11T14:29:22Z",
+    "name": "DEVK900001",
+    "sourceSystemId": "a85fdf68-7f95-4d4c-966e-d8e05e548d9f",
+    "description": "Travel app v1",
+    "targetSystemName": "prd",
+    "importedAt": null,
+    "tenantId": "default",
+    "status": "modifiable",
+    "updatedBy": ""
+  }
+]

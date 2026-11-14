@@ -1,0 +1,241 @@
+<mvc:View
+  controllerName="uim.abap.controller.SystemDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:uxap="sap.uxap"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="systemPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:expandedHeading>
+          <Title text="{name} ({sapSystemId})" wrapping="true"/>
+        </uxap:expandedHeading>
+        <uxap:snappedHeading>
+          <Title text="{name} ({sapSystemId})"/>
+        </uxap:snappedHeading>
+        <uxap:expandedContent>
+          <Text text="{description}"/>
+        </uxap:expandedContent>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onClose"/>
+        </uxap:navigationActions>
+        <uxap:actions>
+          <Button text="{i18n>resume}" press=".onSystemAction('ResumeSystem', '')" enabled="{= ${status} === 'suspended' }"/>
+          <Button text="{i18n>suspend}" press=".onSystemAction('SuspendSystem', '')" enabled="{= ${status} === 'active' }"/>
+          <Button text="{i18n>upgrade}" press=".onSystemAction('UpgradeSystem', 'softwareVersion')" enabled="{= ${status} === 'active' }"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <ObjectStatus title="{i18n>colStatus}" text="{path: 'status', formatter: '.formatter.enumText'}"
+        state="{path: 'status', formatter: '.formatter.statusState'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colPlan}" text="{path: 'plan', formatter: '.formatter.enumText'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colRegion}" text="{region}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colVersion}" text="{softwareVersion}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>lblStatusMessage}" text="{statusMessage}" visible="{= !!${statusMessage} }"/>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionGeneral}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" editable="false">
+              <Label text="{i18n>lblSubaccount}"/><Text text="{subaccountId}"/>
+              <Label text="{i18n>lblAdmin}"/><Text text="{adminEmail}"/>
+              <Label text="{i18n>lblAbapRuntime}"/><Text text="{abapRuntimeSize} GB"/>
+              <Label text="{i18n>lblHanaMemory}"/><Text text="{hanaMemorySize} GB"/>
+              <Label text="{i18n>lblStack}"/><Text text="{stackVersion}"/>
+              <Label text="{i18n>lblActivated}"/>
+              <Text text="{path: 'activatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionConnectivity}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" editable="false">
+              <Label text="{i18n>colServiceUrl}"/><Link text="{serviceUrl}" href="{serviceUrl}" target="_blank"/>
+              <Label text="{i18n>lblWebSocket}"/><Text text="{webSocketUrl}"/>
+              <Label text="{i18n>lblClient}"/><Text text="{sapClient}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionComponents}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envComponentTable" items="{path: '/SoftwareComponents', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colBranch}"/></Column>
+                <Column><Text text="{i18n>colCommit}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{branch}"/>
+                    <Text text="{currentCommitId}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionBindings}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envBindingTable" items="{path: '/ServiceBindings', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colServiceUrl}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{serviceDefinition}"/>
+                    <Text text="{path: 'bindingType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{serviceUrl}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionArrangements}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envArrangementTable" items="{path: '/CommunicationArrangements', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colPartner}"/></Column>
+                <Column><Text text="{i18n>colAuth}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{scenarioId}"/>
+                    <Text text="{communicationSystem}"/>
+                    <Text text="{path: 'authMethod', formatter: '.formatter.enumText'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionUsers}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envUserTable" items="{path: '/BusinessUsers', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colRoles}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{email}"/>
+                    <Text text="{path: 'roles', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionRoles}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envRoleTable" items="{path: '/BusinessRoles', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colCatalogs}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{path: 'roleType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'businessCatalogs', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionTransports}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envTransportTable" items="{path: '/TransportRequests', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colNumber}"/></Column>
+                <Column><Text text="{i18n>colRoute}"/></Column>
+                <Column><Text text="{i18n>colTasks}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{sourceSystemName} → {targetSystemName}"/>
+                    <Text text="{path: 'tasks', targetType: 'any', mode: 'OneTime', formatter: '.formatter.tasks'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionJobs}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envJobTable" items="{path: '/ApplicationJobs', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colFrequency}"/></Column>
+                <Column><Text text="{i18n>colNextRun}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{jobTemplateName}"/>
+                    <Text text="{path: 'frequency', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'scheduledAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

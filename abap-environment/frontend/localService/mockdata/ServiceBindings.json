@@ -1,0 +1,22 @@
+[
+  {
+    "publishedAt": "2026-11-11T14:29:22Z",
+    "updatedAt": "2026-11-11T14:29:22Z",
+    "id": "2fdbb6d8-5178-431c-a1ef-e100d7096bc2",
+    "serviceDefinition": "ZUI_TRAVEL",
+    "systemInstanceId": "a85fdf68-7f95-4d4c-966e-d8e05e548d9f",
+    "createdBy": "",
+    "createdAt": "2026-11-11T14:29:22Z",
+    "systemName": "dev",
+    "name": "ZUI_TRAVEL_O4",
+    "metadataUrl": "/sap/opu/odata4/sap/zui_travel_o4/srvd_a2x/sap/zui_travel/0001/$metadata",
+    "bindingType": "odataV4Ui",
+    "serviceVersion": "0001",
+    "serviceUrl": "/sap/opu/odata4/sap/zui_travel_o4/srvd_a2x/sap/zui_travel/0001/",
+    "description": "Travel UI service",
+    "endpoints": [],
+    "tenantId": "default",
+    "status": "published",
+    "updatedBy": ""
+  }
+]

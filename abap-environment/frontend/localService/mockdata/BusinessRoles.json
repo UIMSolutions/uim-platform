@@ -1,0 +1,19 @@
+[
+  {
+    "roleType": "unrestricted",
+    "updatedAt": "2026-11-11T14:29:22Z",
+    "id": "61ea9746-aa5e-41ee-8f1e-d2ff9f31eb2b",
+    "systemInstanceId": "a85fdf68-7f95-4d4c-966e-d8e05e548d9f",
+    "createdBy": "",
+    "createdAt": "2026-11-11T14:29:22Z",
+    "systemName": "dev",
+    "name": "Z_BR_TRAVEL_PROCESSOR",
+    "restrictionTypes": [],
+    "description": "Travel processor",
+    "businessCatalogs": [
+      "Z_BC_TRAVEL"
+    ],
+    "tenantId": "default",
+    "updatedBy": ""
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "cronExpression": "",
+    "executionHistory": [
+      {
+        "startedAt": "2026-11-11T14:29:22Z",
+        "message": "",
+        "finishedAt": null,
+        "returnCode": 0,
+        "runId": "728ea19c-0001",
+        "status": "running"
+      }
+    ],
+    "runCount": 0,
+    "jobTemplateName": "SAP_CORE_DELETE_LOGS",
+    "updatedAt": "2026-11-11T14:29:22Z",
+    "id": "728ea19c-e8bb-456f-ae87-d34ce52a9d6e",
+    "parameters": [
+      {
+        "key": "olderThanDays",
+        "value": "30"
+      }
+    ],
+    "systemInstanceId": "a85fdf68-7f95-4d4c-966e-d8e05e548d9f",
+    "frequency": "daily",
+    "createdBy": "",
+    "createdAt": "2026-11-11T14:29:22Z",
+    "systemName": "dev",
+    "name": "Delete application logs",
+    "active": true,
+    "lastRunAt": null,
+    "description": "",
+    "scheduledAt": "2026-11-11T14:29:22Z",
+    "tenantId": "default",
+    "status": "running",
+    "updatedBy": ""
+  }
+]

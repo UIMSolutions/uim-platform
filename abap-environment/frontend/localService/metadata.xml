@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.abap" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="System">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="subaccountId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="plan" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="sapSystemId" Type="Edm.String"/>
+        <Property Name="adminEmail" Type="Edm.String"/>
+        <Property Name="abapRuntimeSize" Type="Edm.Int32"/>
+        <Property Name="hanaMemorySize" Type="Edm.Int32"/>
+        <Property Name="serviceUrl" Type="Edm.String"/>
+        <Property Name="webSocketUrl" Type="Edm.String"/>
+        <Property Name="sapClient" Type="Edm.String"/>
+        <Property Name="softwareVersion" Type="Edm.String"/>
+        <Property Name="stackVersion" Type="Edm.String"/>
+        <Property Name="activatedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="SoftwareComponent">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="systemInstanceId" Type="Edm.String"/>
+        <Property Name="systemName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="componentType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="repositoryUrl" Type="Edm.String"/>
+        <Property Name="branch" Type="Edm.String"/>
+        <Property Name="branchStrategy" Type="Edm.String"/>
+        <Property Name="currentCommitId" Type="Edm.String"/>
+        <Property Name="commitHistory" Type="Collection(uim.abap.ComponentCommit)"/>
+        <Property Name="namespace" Type="Edm.String"/>
+        <Property Name="softwareComponentVersion" Type="Edm.String"/>
+        <Property Name="clonedBy" Type="Edm.String"/>
+        <Property Name="clonedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="lastPulledAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="CommunicationArrangement">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="systemInstanceId" Type="Edm.String"/>
+        <Property Name="systemName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="scenarioId" Type="Edm.String"/>
+        <Property Name="direction" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="communicationSystem" Type="Edm.String"/>
+        <Property Name="authMethod" Type="Edm.String"/>
+        <Property Name="communicationUser" Type="Edm.String"/>
+        <Property Name="communicationPassword" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="tokenEndpoint" Type="Edm.String"/>
+        <Property Name="certificateId" Type="Edm.String"/>
+        <Property Name="inboundServices" Type="Collection(uim.abap.CommunicationEndpoint)"/>
+        <Property Name="outboundServices" Type="Collection(uim.abap.CommunicationEndpoint)"/>
+      </EntityType>
+      <EntityType Name="ServiceBinding">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="systemInstanceId" Type="Edm.String"/>
+        <Property Name="systemName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="serviceDefinition" Type="Edm.String"/>
+        <Property Name="bindingType" Type="Edm.String"/>
+        <Property Name="serviceVersion" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="endpoints" Type="Collection(uim.abap.ExposedEndpoint)"/>
+        <Property Name="serviceUrl" Type="Edm.String"/>
+        <Property Name="metadataUrl" Type="Edm.String"/>
+        <Property Name="publishedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="BusinessRole">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="systemInstanceId" Type="Edm.String"/>
+        <Property Name="systemName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="roleType" Type="Edm.String"/>
+        <Property Name="businessCatalogs" Type="Collection(Edm.String)"/>
+        <Property Name="restrictionTypes" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="BusinessUser">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="systemInstanceId" Type="Edm.String"/>
+        <Property Name="systemName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="firstName" Type="Edm.String"/>
+        <Property Name="lastName" Type="Edm.String"/>
+        <Property Name="email" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="roles" Type="Collection(Edm.String)"/>
+        <Property Name="roleAssignments" Type="Collection(uim.abap.RoleAssignment)"/>
+        <Property Name="passwordChangeRequired" Type="Edm.Boolean"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="failedLoginAttempts" Type="Edm.Int32"/>
+        <Property Name="lockedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="TransportRequest">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="sourceSystemId" Type="Edm.String"/>
+        <Property Name="sourceSystemName" Type="Edm.String"/>
+        <Property Name="targetSystemId" Type="Edm.String"/>
+        <Property Name="targetSystemName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="transportType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="tasks" Type="Collection(uim.abap.TransportTask)"/>
+        <Property Name="releasedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="importedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="ApplicationJob">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="systemInstanceId" Type="Edm.String"/>
+        <Property Name="systemName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="jobTemplateName" Type="Edm.String"/>
+        <Property Name="frequency" Type="Edm.String"/>
+        <Property Name="scheduledAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="cronExpression" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="parameters" Type="Collection(uim.abap.KeyValue)"/>
+        <Property Name="executionHistory" Type="Collection(uim.abap.JobExecutionLog)"/>
+        <Property Name="runCount" Type="Edm.Int32"/>
+        <Property Name="lastRunAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="systems" Type="Edm.Int32"/>
+        <Property Name="systemsActive" Type="Edm.Int32"/>
+        <Property Name="softwareComponents" Type="Edm.Int32"/>
+        <Property Name="componentsCloned" Type="Edm.Int32"/>
+        <Property Name="communicationArrangements" Type="Edm.Int32"/>
+        <Property Name="serviceBindings" Type="Edm.Int32"/>
+        <Property Name="serviceBindingsPublished" Type="Edm.Int32"/>
+        <Property Name="businessUsers" Type="Edm.Int32"/>
+        <Property Name="usersLocked" Type="Edm.Int32"/>
+        <Property Name="businessRoles" Type="Edm.Int32"/>
+        <Property Name="transportsOpen" Type="Edm.Int32"/>
+        <Property Name="transportsReleased" Type="Edm.Int32"/>
+        <Property Name="transportsImported" Type="Edm.Int32"/>
+        <Property Name="applicationJobs" Type="Edm.Int32"/>
+        <Property Name="jobsScheduled" Type="Edm.Int32"/>
+        <Property Name="jobsFailed" Type="Edm.Int32"/>
+        <Property Name="pendingReconciliation" Type="Edm.Int32"/>
+        <Property Name="nextJobAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <ComplexType Name="ComponentCommit">
+        <Property Name="commitId" Type="Edm.String"/>
+        <Property Name="branch" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="author" Type="Edm.String"/>
+        <Property Name="committedAt" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <ComplexType Name="CommunicationEndpoint">
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String"/>
+        <Property Name="protocol" Type="Edm.String"/>
+        <Property Name="port" Type="Edm.Int32"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+      </ComplexType>
+      <ComplexType Name="ExposedEndpoint">
+        <Property Name="path" Type="Edm.String"/>
+        <Property Name="serviceName" Type="Edm.String"/>
+        <Property Name="serviceVersion" Type="Edm.String"/>
+        <Property Name="requiresAuth" Type="Edm.Boolean"/>
+      </ComplexType>
+      <ComplexType Name="RoleAssignment">
+        <Property Name="roleId" Type="Edm.String"/>
+        <Property Name="roleName" Type="Edm.String"/>
+        <Property Name="assignedAt" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <ComplexType Name="TransportTask">
+        <Property Name="taskId" Type="Edm.String"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="objects" Type="Collection(Edm.String)"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="releasedAt" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <ComplexType Name="KeyValue">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="JobExecutionLog">
+        <Property Name="runId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="finishedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="returnCode" Type="Edm.Int32"/>
+        <Property Name="message" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ReconcileResult">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="examined" Type="Edm.Int32"/>
+        <Property Name="advanced" Type="Edm.Int32"/>
+        <Property Name="changes" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <Action Name="SuspendSystem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.System"/>
+      </Action>
+      <Action Name="ResumeSystem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.System"/>
+      </Action>
+      <Action Name="UpgradeSystem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="softwareVersion" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.System"/>
+      </Action>
+      <Action Name="CloneSoftwareComponent" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.SoftwareComponent"/>
+      </Action>
+      <Action Name="PullSoftwareComponent" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.SoftwareComponent"/>
+      </Action>
+      <Action Name="CheckoutSoftwareComponent" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="branch" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.SoftwareComponent"/>
+      </Action>
+      <Action Name="ActivateCommunicationArrangement" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.CommunicationArrangement"/>
+      </Action>
+      <Action Name="DeactivateCommunicationArrangement" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.CommunicationArrangement"/>
+      </Action>
+      <Action Name="PublishServiceBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.ServiceBinding"/>
+      </Action>
+      <Action Name="UnpublishServiceBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.ServiceBinding"/>
+      </Action>
+      <Action Name="DeprecateServiceBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.ServiceBinding"/>
+      </Action>
+      <Action Name="AddCatalogBusinessRole" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="catalog" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.BusinessRole"/>
+      </Action>
+      <Action Name="RemoveCatalogBusinessRole" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="catalog" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.BusinessRole"/>
+      </Action>
+      <Action Name="LockBusinessUser" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.BusinessUser"/>
+      </Action>
+      <Action Name="UnlockBusinessUser" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.BusinessUser"/>
+      </Action>
+      <Action Name="ResetPasswordBusinessUser" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.BusinessUser"/>
+      </Action>
+      <Action Name="AssignRoleBusinessUser" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="role" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.BusinessUser"/>
+      </Action>
+      <Action Name="UnassignRoleBusinessUser" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="role" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.BusinessUser"/>
+      </Action>
+      <Action Name="AddTaskTransportRequest" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="objects" Type="Edm.String"/>
+        <Parameter Name="owner" Type="Edm.String"/>
+        <Parameter Name="description" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.TransportRequest"/>
+      </Action>
+      <Action Name="ReleaseTaskTransportRequest" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="task" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.TransportRequest"/>
+      </Action>
+      <Action Name="ReleaseTransportRequest" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.TransportRequest"/>
+      </Action>
+      <Action Name="ImportTransportRequest" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.TransportRequest"/>
+      </Action>
+      <Action Name="RunApplicationJob" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.ApplicationJob"/>
+      </Action>
+      <Action Name="CancelApplicationJob" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.ApplicationJob"/>
+      </Action>
+      <Action Name="ReactivateApplicationJob" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.abap.ApplicationJob"/>
+      </Action>
+      <Action Name="Reconcile" IsBound="false">
+        <ReturnType Type="uim.abap.ReconcileResult"/>
+      </Action>
+      <EntityContainer Name="AbapEnvironmentService">
+        <EntitySet Name="Systems" EntityType="uim.abap.System"/>
+        <EntitySet Name="SoftwareComponents" EntityType="uim.abap.SoftwareComponent"/>
+        <EntitySet Name="CommunicationArrangements" EntityType="uim.abap.CommunicationArrangement"/>
+        <EntitySet Name="ServiceBindings" EntityType="uim.abap.ServiceBinding"/>
+        <EntitySet Name="BusinessRoles" EntityType="uim.abap.BusinessRole"/>
+        <EntitySet Name="BusinessUsers" EntityType="uim.abap.BusinessUser"/>
+        <EntitySet Name="TransportRequests" EntityType="uim.abap.TransportRequest"/>
+        <EntitySet Name="ApplicationJobs" EntityType="uim.abap.ApplicationJob"/>
+        <Singleton Name="Statistics" Type="uim.abap.Statistic"/>
+        <ActionImport Name="SuspendSystem" Action="uim.abap.SuspendSystem"/>
+        <ActionImport Name="ResumeSystem" Action="uim.abap.ResumeSystem"/>
+        <ActionImport Name="UpgradeSystem" Action="uim.abap.UpgradeSystem"/>
+        <ActionImport Name="CloneSoftwareComponent" Action="uim.abap.CloneSoftwareComponent"/>
+        <ActionImport Name="PullSoftwareComponent" Action="uim.abap.PullSoftwareComponent"/>
+        <ActionImport Name="CheckoutSoftwareComponent" Action="uim.abap.CheckoutSoftwareComponent"/>
+        <ActionImport Name="ActivateCommunicationArrangement" Action="uim.abap.ActivateCommunicationArrangement"/>
+        <ActionImport Name="DeactivateCommunicationArrangement" Action="uim.abap.DeactivateCommunicationArrangement"/>
+        <ActionImport Name="PublishServiceBinding" Action="uim.abap.PublishServiceBinding"/>
+        <ActionImport Name="UnpublishServiceBinding" Action="uim.abap.UnpublishServiceBinding"/>
+        <ActionImport Name="DeprecateServiceBinding" Action="uim.abap.DeprecateServiceBinding"/>
+        <ActionImport Name="AddCatalogBusinessRole" Action="uim.abap.AddCatalogBusinessRole"/>
+        <ActionImport Name="RemoveCatalogBusinessRole" Action="uim.abap.RemoveCatalogBusinessRole"/>
+        <ActionImport Name="LockBusinessUser" Action="uim.abap.LockBusinessUser"/>
+        <ActionImport Name="UnlockBusinessUser" Action="uim.abap.UnlockBusinessUser"/>
+        <ActionImport Name="ResetPasswordBusinessUser" Action="uim.abap.ResetPasswordBusinessUser"/>
+        <ActionImport Name="AssignRoleBusinessUser" Action="uim.abap.AssignRoleBusinessUser"/>
+        <ActionImport Name="UnassignRoleBusinessUser" Action="uim.abap.UnassignRoleBusinessUser"/>
+        <ActionImport Name="AddTaskTransportRequest" Action="uim.abap.AddTaskTransportRequest"/>
+        <ActionImport Name="ReleaseTaskTransportRequest" Action="uim.abap.ReleaseTaskTransportRequest"/>
+        <ActionImport Name="ReleaseTransportRequest" Action="uim.abap.ReleaseTransportRequest"/>
+        <ActionImport Name="ImportTransportRequest" Action="uim.abap.ImportTransportRequest"/>
+        <ActionImport Name="RunApplicationJob" Action="uim.abap.RunApplicationJob"/>
+        <ActionImport Name="CancelApplicationJob" Action="uim.abap.CancelApplicationJob"/>
+        <ActionImport Name="ReactivateApplicationJob" Action="uim.abap.ReactivateApplicationJob"/>
+        <ActionImport Name="Reconcile" Action="uim.abap.Reconcile"/>
+      </EntityContainer>
+      <Annotations Target="uim.abap.System/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.System/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.abap.System/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.abap.System/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.abap.System/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.abap.System/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.abap.System/subaccountId"><Annotation Term="Common.Label" String="Subaccount ID"/></Annotations>
+      <Annotations Target="uim.abap.System/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.abap.System/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.abap.System/plan"><Annotation Term="Common.Label" String="Plan"/></Annotations>
+      <Annotations Target="uim.abap.System/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.abap.System/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.abap.System/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.abap.System/sapSystemId"><Annotation Term="Common.Label" String="Sap System ID"/></Annotations>
+      <Annotations Target="uim.abap.System/adminEmail"><Annotation Term="Common.Label" String="Admin Email"/></Annotations>
+      <Annotations Target="uim.abap.System/abapRuntimeSize"><Annotation Term="Common.Label" String="Abap Runtime Size"/></Annotations>
+      <Annotations Target="uim.abap.System/hanaMemorySize"><Annotation Term="Common.Label" String="Hana Memory Size"/></Annotations>
+      <Annotations Target="uim.abap.System/serviceUrl"><Annotation Term="Common.Label" String="Service URL"/></Annotations>
+      <Annotations Target="uim.abap.System/webSocketUrl"><Annotation Term="Common.Label" String="Web Socket URL"/></Annotations>
+      <Annotations Target="uim.abap.System/sapClient"><Annotation Term="Common.Label" String="Sap Client"/></Annotations>
+      <Annotations Target="uim.abap.System/softwareVersion"><Annotation Term="Common.Label" String="Software Version"/></Annotations>
+      <Annotations Target="uim.abap.System/stackVersion"><Annotation Term="Common.Label" String="Stack Version"/></Annotations>
+      <Annotations Target="uim.abap.System/activatedAt"><Annotation Term="Common.Label" String="Activated At"/></Annotations>
+      <Annotations Target="uim.abap.AbapEnvironmentService/Systems">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/systemInstanceId"><Annotation Term="Common.Label" String="System Instance ID"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/systemName"><Annotation Term="Common.Label" String="System Name"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/componentType"><Annotation Term="Common.Label" String="Component Type"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/repositoryUrl"><Annotation Term="Common.Label" String="Repository URL"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/branch"><Annotation Term="Common.Label" String="Branch"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/branchStrategy"><Annotation Term="Common.Label" String="Branch Strategy"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/currentCommitId"><Annotation Term="Common.Label" String="Current Commit ID"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/commitHistory"><Annotation Term="Common.Label" String="Commit History"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/namespace"><Annotation Term="Common.Label" String="Namespace"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/softwareComponentVersion"><Annotation Term="Common.Label" String="Software Component Version"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/clonedBy"><Annotation Term="Common.Label" String="Cloned By"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/clonedAt"><Annotation Term="Common.Label" String="Cloned At"/></Annotations>
+      <Annotations Target="uim.abap.SoftwareComponent/lastPulledAt"><Annotation Term="Common.Label" String="Last Pulled At"/></Annotations>
+      <Annotations Target="uim.abap.AbapEnvironmentService/SoftwareComponents">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/systemInstanceId"><Annotation Term="Common.Label" String="System Instance ID"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/systemName"><Annotation Term="Common.Label" String="System Name"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/scenarioId"><Annotation Term="Common.Label" String="Scenario ID"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/direction"><Annotation Term="Common.Label" String="Direction"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/communicationSystem"><Annotation Term="Common.Label" String="Communication System"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/authMethod"><Annotation Term="Common.Label" String="Auth Method"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/communicationUser"><Annotation Term="Common.Label" String="Communication User"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/communicationPassword"><Annotation Term="Common.Label" String="Communication Password"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/clientSecret"><Annotation Term="Common.Label" String="Client Secret"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/tokenEndpoint"><Annotation Term="Common.Label" String="Token Endpoint"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/certificateId"><Annotation Term="Common.Label" String="Certificate ID"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/inboundServices"><Annotation Term="Common.Label" String="Inbound Services"/></Annotations>
+      <Annotations Target="uim.abap.CommunicationArrangement/outboundServices"><Annotation Term="Common.Label" String="Outbound Services"/></Annotations>
+      <Annotations Target="uim.abap.AbapEnvironmentService/CommunicationArrangements">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/systemInstanceId"><Annotation Term="Common.Label" String="System Instance ID"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/systemName"><Annotation Term="Common.Label" String="System Name"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/serviceDefinition"><Annotation Term="Common.Label" String="Service Definition"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/bindingType"><Annotation Term="Common.Label" String="Binding Type"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/serviceVersion"><Annotation Term="Common.Label" String="Service Version"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/endpoints"><Annotation Term="Common.Label" String="Endpoints"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/serviceUrl"><Annotation Term="Common.Label" String="Service URL"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/metadataUrl"><Annotation Term="Common.Label" String="Metadata URL"/></Annotations>
+      <Annotations Target="uim.abap.ServiceBinding/publishedAt"><Annotation Term="Common.Label" String="Published At"/></Annotations>
+      <Annotations Target="uim.abap.AbapEnvironmentService/ServiceBindings">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.abap.BusinessRole/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/systemInstanceId"><Annotation Term="Common.Label" String="System Instance ID"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/systemName"><Annotation Term="Common.Label" String="System Name"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/roleType"><Annotation Term="Common.Label" String="Role Type"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/businessCatalogs"><Annotation Term="Common.Label" String="Business Catalogs"/></Annotations>
+      <Annotations Target="uim.abap.BusinessRole/restrictionTypes"><Annotation Term="Common.Label" String="Restriction Types"/></Annotations>
+      <Annotations Target="uim.abap.AbapEnvironmentService/BusinessRoles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.abap.BusinessUser/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/systemInstanceId"><Annotation Term="Common.Label" String="System Instance ID"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/systemName"><Annotation Term="Common.Label" String="System Name"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/firstName"><Annotation Term="Common.Label" String="First Name"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/lastName"><Annotation Term="Common.Label" String="Last Name"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/email"><Annotation Term="Common.Label" String="Email"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/roles"><Annotation Term="Common.Label" String="Roles"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/roleAssignments"><Annotation Term="Common.Label" String="Role Assignments"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/passwordChangeRequired"><Annotation Term="Common.Label" String="Password Change Required"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/lastLoginAt"><Annotation Term="Common.Label" String="Last Login At"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/failedLoginAttempts"><Annotation Term="Common.Label" String="Failed Login Attempts"/></Annotations>
+      <Annotations Target="uim.abap.BusinessUser/lockedAt"><Annotation Term="Common.Label" String="Locked At"/></Annotations>
+      <Annotations Target="uim.abap.AbapEnvironmentService/BusinessUsers">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.abap.TransportRequest/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/sourceSystemId"><Annotation Term="Common.Label" String="Source System ID"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/sourceSystemName"><Annotation Term="Common.Label" String="Source System Name"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/targetSystemId"><Annotation Term="Common.Label" String="Target System ID"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/targetSystemName"><Annotation Term="Common.Label" String="Target System Name"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/owner"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/transportType"><Annotation Term="Common.Label" String="Transport Type"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/tasks"><Annotation Term="Common.Label" String="Tasks"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/releasedAt"><Annotation Term="Common.Label" String="Released At"/></Annotations>
+      <Annotations Target="uim.abap.TransportRequest/importedAt"><Annotation Term="Common.Label" String="Imported At"/></Annotations>
+      <Annotations Target="uim.abap.AbapEnvironmentService/TransportRequests">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/systemInstanceId"><Annotation Term="Common.Label" String="System Instance ID"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/systemName"><Annotation Term="Common.Label" String="System Name"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/jobTemplateName"><Annotation Term="Common.Label" String="Job Template Name"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/frequency"><Annotation Term="Common.Label" String="Frequency"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/scheduledAt"><Annotation Term="Common.Label" String="Scheduled At"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/cronExpression"><Annotation Term="Common.Label" String="Cron Expression"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/parameters"><Annotation Term="Common.Label" String="Parameters"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/executionHistory"><Annotation Term="Common.Label" String="Execution History"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/runCount"><Annotation Term="Common.Label" String="Run Count"/></Annotations>
+      <Annotations Target="uim.abap.ApplicationJob/lastRunAt"><Annotation Term="Common.Label" String="Last Run At"/></Annotations>
+      <Annotations Target="uim.abap.AbapEnvironmentService/ApplicationJobs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.abap.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/systems"><Annotation Term="Common.Label" String="Systems"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/systemsActive"><Annotation Term="Common.Label" String="Systems Active"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/softwareComponents"><Annotation Term="Common.Label" String="Software Components"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/componentsCloned"><Annotation Term="Common.Label" String="Components Cloned"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/communicationArrangements"><Annotation Term="Common.Label" String="Communication Arrangements"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/serviceBindings"><Annotation Term="Common.Label" String="Service Bindings"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/serviceBindingsPublished"><Annotation Term="Common.Label" String="Service Bindings Published"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/businessUsers"><Annotation Term="Common.Label" String="Business Users"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/usersLocked"><Annotation Term="Common.Label" String="Users Locked"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/businessRoles"><Annotation Term="Common.Label" String="Business Roles"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/transportsOpen"><Annotation Term="Common.Label" String="Transports Open"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/transportsReleased"><Annotation Term="Common.Label" String="Transports Released"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/transportsImported"><Annotation Term="Common.Label" String="Transports Imported"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/applicationJobs"><Annotation Term="Common.Label" String="Application Jobs"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/jobsScheduled"><Annotation Term="Common.Label" String="Jobs Scheduled"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/jobsFailed"><Annotation Term="Common.Label" String="Jobs Failed"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/pendingReconciliation"><Annotation Term="Common.Label" String="Pending Reconciliation"/></Annotations>
+      <Annotations Target="uim.abap.Statistic/nextJobAt"><Annotation Term="Common.Label" String="Next Job At"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
