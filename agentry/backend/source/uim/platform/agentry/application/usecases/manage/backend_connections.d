@@ -11,109 +11,163 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageBackendConnectionsUseCase {
-    protected IBackendConnectionRepository repo;
+class ManageBackendConnectionsUseCase : IManageBackendConnectionsUseCase {
+  protected IBackendConnectionRepository repo;
+  protected IBackendProbe probe;
+  protected IAgentryEventPublisher events;
 
-    this(IBackendConnectionRepository repo) {
-        this.repo = repo;
+  /// probe may be null — testBackendConnection then reports "not configured".
+  this(IBackendConnectionRepository repo, IBackendProbe probe = null, IAgentryEventPublisher events = null) {
+    this.repo = repo;
+    this.probe = probe;
+    this.events = events is null ? new NullEventPublisher : events;
+  }
+
+  BackendConnection[] listBackendConnections(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
+  BackendConnection[] listByBackendType(TenantId tenantId, BackendType backendType) {
+    return repo.findByBackendType(tenantId, backendType);
+  }
+
+  BackendConnection[] listByStatus(TenantId tenantId, ConnectionStatus status) {
+    return repo.findByStatus(tenantId, status);
+  }
+
+  BackendConnection getBackendConnection(TenantId tenantId, BackendConnectionId id) {
+    return repo.findById(tenantId, id);
+  }
+
+  UsecaseResult createBackendConnection(BackendConnectionDTO dto) {
+    if (!dto.connectionId.isNull && repo.existsById(dto.tenantId, dto.connectionId))
+      return conflict("Backend connection '" ~ dto.connectionId.value ~ "' already exists");
+
+    auto conn = newEntity!(BackendConnection)(dto.tenantId, dto.connectionId, dto.createdBy);
+    conn.status = ConnectionStatus.inactive;
+    string[] errors;
+    apply(conn, dto, errors);
+    errors ~= AgentryValidator.validate(conn);
+    if (errors.length)
+      return invalid(errors);
+    if (repo.findByTenant(dto.tenantId).any!(c => c.name == conn.name))
+      return conflict("A backend connection named '" ~ conn.name ~ "' already exists");
+
+    repo.save(conn);
+    return created(conn.id.value, "Backend connection created");
+  }
+
+  UsecaseResult updateBackendConnection(BackendConnectionDTO dto) {
+    auto conn = repo.findById(dto.tenantId, dto.connectionId);
+    if (conn.isNull)
+      return notFound("Backend connection", dto.connectionId.value);
+
+    auto oldUrl = conn.backendUrl;
+    string[] errors;
+    apply(conn, dto, errors);
+    errors ~= AgentryValidator.validate(conn);
+    if (errors.length)
+      return invalid(errors);
+    // a changed endpoint invalidates the last test result
+    if (conn.backendUrl != oldUrl && dto.status.length == 0)
+      conn.status = ConnectionStatus.inactive;
+
+    touch(conn, dto.updatedBy);
+    repo.update(conn);
+    return succeeded(conn.id.value, "Backend connection updated");
+  }
+
+  UsecaseResult testBackendConnection(TenantId tenantId, BackendConnectionId id, UserId by) {
+    auto conn = repo.findById(tenantId, id);
+    if (conn.isNull)
+      return notFound("Backend connection", id.value);
+
+    BackendProbeResult probeResult;
+    if (probe is null)
+      probeResult = BackendProbeResult(false, 0, 0, "No connectivity probe configured");
+    else {
+      try
+        probeResult = probe.probe(conn);
+      catch (Exception e)
+        probeResult = BackendProbeResult(false, 0, 0, e.msg);
     }
 
-    BackendConnection getBackendConnection(TenantId tenantId, BackendConnectionId id) {
-        return repo.findById(tenantId, id);
-    }
+    conn.status = probeResult.reachable ? ConnectionStatus.active : ConnectionStatus.error;
+    conn.lastTestedAt = nowStdTime();
+    conn.lastTestedBy = by.value;
+    touch(conn, by);
+    repo.update(conn);
 
-    BackendConnection[] listBackendConnections(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
-    }
+    auto data = Json.emptyObject
+      .set("reachable", probeResult.reachable)
+      .set("statusCode", probeResult.statusCode)
+      .set("latencyMs", probeResult.latencyMs)
+      .set("message", probeResult.message);
+    events.publish(AgentryTopics.connectionTested, data.clone.set("tenantId", tenantId.value).set("id", id.value));
+    return succeeded(conn.id.value, probeResult.reachable
+        ? "Backend reachable (%d ms)".format(probeResult.latencyMs)
+        : "Backend not reachable: " ~ probeResult.message, 200, data);
+  }
 
-    BackendConnection[] listByBackendType(TenantId tenantId, BackendType backendType) {
-        return repo.findByBackendType(tenantId, backendType);
-    }
+  UsecaseResult deleteBackendConnection(TenantId tenantId, BackendConnectionId id) {
+    auto conn = repo.findById(tenantId, id);
+    if (conn.isNull)
+      return notFound("Backend connection", id.value);
+    repo.remove(conn);
+    return succeeded(conn.id.value, "Backend connection deleted");
+  }
 
-    BackendConnection[] listByStatus(TenantId tenantId, ConnectionStatus status) {
-        return repo.findByStatus(tenantId, status);
-    }
-
-    UsecaseResult createBackendConnection(BackendConnectionDTO dto) {
-        auto conn = BackendConnection(dto.tenantId, dto.connectionId, dto.createdBy);
-        conn.name = dto.name;
-        conn.description = dto.description;
-        conn.backendUrl = dto.backendUrl;
-        conn.clientId = dto.clientId;
-        conn.authMethod = dto.authMethod;
-        conn.sysId = dto.sysId;
-        conn.sysNumber = dto.sysNumber;
-        conn.client = dto.client;
-        conn.language = dto.language;
-        conn.destinationName = dto.destinationName;
-        conn.sslEnabled = dto.sslEnabled;
-        conn.certificateFingerprint = dto.certificateFingerprint;
-
-        if (!AgentryValidator.isValidBackendConnection(conn))
-            return UsecaseResult(false, "", "Invalid backend connection data");
-
-        repo.save(conn);
-        return UsecaseResult(true, conn.id.value, "");
-    }
-
-    UsecaseResult updateBackendConnection(BackendConnectionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.connectionId);
-        if (existing.isNull)
-            return UsecaseResult(false, "", "Backend connection not found");
-
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.backendUrl.length > 0) existing.backendUrl = dto.backendUrl;
-        if (dto.destinationName.length > 0) existing.destinationName = dto.destinationName;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
-
-        repo.update(existing);
-        return UsecaseResult(true, existing.id.value, "");
-    }
-
-    UsecaseResult deleteBackendConnection(TenantId tenantId, BackendConnectionId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
-            return UsecaseResult(false, "", "Backend connection not found");
-
-        repo.remove(entity);
-        return UsecaseResult(true, entity.id.value, "");
-    }
+  protected void apply(ref BackendConnection conn, const BackendConnectionDTO dto, ref string[] errors) {
+    assignIf(conn.name, dto.name);
+    assignIf(conn.description, dto.description);
+    assignIf(conn.backendUrl, dto.backendUrl);
+    assignIf(conn.clientId, dto.clientId);
+    assignIf(conn.authMethod, dto.authMethod);
+    assignIf(conn.sysId, dto.sysId);
+    assignIf(conn.sysNumber, dto.sysNumber);
+    assignIf(conn.client, dto.client);
+    assignIf(conn.language, dto.language);
+    assignIf(conn.destinationName, dto.destinationName);
+    assignIf(conn.certificateFingerprint, dto.certificateFingerprint);
+    conn.sslEnabled = dto.sslEnabled;
+    readEnum(dto.backendType, conn.backendType, "backendType", errors);
+    readEnum(dto.status, conn.status, "status", errors);
+  }
 }
 
 ///
 unittest {
-    // auto repo = new BackendConnectionRepository();
-    // auto usecase = new ManageBackendConnectionsUseCase(repo);
-    // auto tenantId = TenantId("test-tenant");
+  mixin(ShowTest!("ManageBackendConnectionsUseCase"));
 
-    // // Test create
-    // BackendConnectionDTO createDto;
-    // createDto.tenantId = tenantId;
-    // createDto.backendConnectionId = BackendConnectionId("backendConnection-1");
-    // createDto.name = "Test BackendConnection";
-    // auto createResult = usecase.createBackendConnection(createDto);
-    // assert(createResult.success, createResult.message);
+  class FakeProbe : IBackendProbe {
+    BackendProbeResult probe(const BackendConnection c) {
+      return BackendProbeResult(c.backendUrl.canFind("ok"), 200, 12, "HTTP 200");
+    }
+  }
 
-    // // Test list
-    // auto items = usecase.listBackendConnections(tenantId);
-    // assert(items.length == 1);
+  auto uc = new ManageBackendConnectionsUseCase(new BackendConnectionRepository(), new FakeProbe);
+  auto t = TenantId("t1");
+  BackendConnectionDTO dto;
+  dto.tenantId = t;
+  dto.name = "S/4HANA QA";
+  dto.backendUrl = "https://ok.example.com";
+  dto.backendType = "s4hana";
+  dto.authMethod = "oauth2";
+  dto.sslEnabled = true;
+  auto r = uc.createBackendConnection(dto);
+  assert(r.isSuccess, r.message);
+  auto id = BackendConnectionId(r.id);
+  assert(uc.createBackendConnection(dto).code == 409);
 
-    // // Test get
-    // auto item = usecase.getBackendConnection(tenantId, BackendConnectionId("backendConnection-1"));
-    // assert(!item.isNull);
+  auto tested = uc.testBackendConnection(t, id, UserId("admin"));
+  assert(tested.isSuccess && tested.data["reachable"].get!bool);
+  assert(uc.getBackendConnection(t, id).status == ConnectionStatus.active);
+  assert(uc.getBackendConnection(t, id).lastTestedBy == "admin");
 
-    // // Test update
-    // BackendConnectionDTO updateDto;
-    // updateDto.tenantId = tenantId;
-    // updateDto.backendConnectionId = BackendConnectionId("backendConnection-1");
-    // updateDto.name = "Updated BackendConnection";
-    // auto updateResult = usecase.updateBackendConnection(updateDto);
-    // assert(updateResult.success, updateResult.message);
-
-    // // Test delete
-    // auto deleteResult = usecase.deleteBackendConnection(tenantId, BackendConnectionId("backendConnection-1"));
-    // assert(deleteResult.success, deleteResult.message);
-    // assert(usecase.listBackendConnections(tenantId).length == 0);
-
+  dto.connectionId = id;
+  dto.backendUrl = "https://down.example.com";
+  assert(uc.updateBackendConnection(dto).isSuccess);
+  assert(uc.getBackendConnection(t, id).status == ConnectionStatus.inactive);
+  uc.testBackendConnection(t, id, UserId("admin"));
+  assert(uc.getBackendConnection(t, id).status == ConnectionStatus.error);
 }

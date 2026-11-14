@@ -11,59 +11,36 @@ mixin(ShowModule!());
 
 @safe:
 
-struct AuthContext {
-    int userId;
+/// Resolve the caller (XSUAA bearer token or X-Tenant-Id / X-User-Id headers).
+/// Authentication itself is enforced by the approuter (xs-app.json).
+RequestIdentity identifyCaller(HTTPServerRequest req, HTTPServerResponse res) {
+  return resolveIdentity(req.headers.get("Authorization", ""), req.headers.get("X-Tenant-Id", ""),
+    req.headers.get("X-User-Id", ""), "default");
 }
 
-// Helper-Funktion für die Auth-Prüfung
-AuthContext authenticate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto authHeader = req.headers.get("Authorization", "");
-    if (authHeader != "SecretToken")
-        throw new HTTPStatusException(HTTPStatus.unauthorized);
-    return AuthContext(42);
-}
-
-void logResponse(HTTPServerRequest req, HTTPServerResponse res) @safe {
-    if (res.statusCode >= 500) {
-        // CRITICAL / SERVER FEHLER
-        logError("HTTP 5xx Serverfehler auf %s %s (Status: %d)", req.method, req.path, res.statusCode);
-    } else if (res.statusCode >= 400) {
-        // WARNING / CLIENT FEHLER
-        logWarn("HTTP 4xx Clientfehler auf %s %s (Status: %d)", req.method, req.path, res.statusCode);
-    } else {
-        // INFORMATIONS-MELDUNG (Standard)
-        logInfo("HTTP Request erfolgreich: %s %s (Status: %d)", req.method, req.path, res.statusCode);
-    }
-}
-
+/// vibe.d REST interface for app definitions (registered under <restPath>/app-definitions).
 interface IAppDefinitionApi {
-    @headerParam("tenantId", "X-Tenant-Id")
-    @before!authenticate("auth")
-    // @after!logResponse
-    @path("/") @method(HTTPMethod.GET)
-    AppDefinition[] getAppDefinitions(string tenantId, AuthContext auth);
+  @before!identifyCaller("identity")
+  @path("/") @method(HTTPMethod.GET)
+  Json[] getAppDefinitions(RequestIdentity identity);
 
-    @headerParam("tenantId", "X-Tenant-Id")
-    @before!authenticate("auth")    
-    // @after!logResponse
-    @path("/:id") @method(HTTPMethod.GET)
-    AppDefinition getAppDefinition(string tenantId, string _id, AuthContext auth);
+  @before!identifyCaller("identity")
+  @path("/:id") @method(HTTPMethod.GET)
+  Json getAppDefinition(string _id, RequestIdentity identity);
 
-    @headerParam("tenantId", "X-Tenant-Id")
-    @before!authenticate("auth")
-    // @after!logResponse
-    @path("/") @method(HTTPMethod.POST)
-    AppDefinitionResponse createAppDefinition(string tenantId, AppDefinitionDTO request, AuthContext auth);
+  @before!identifyCaller("identity")
+  @path("/") @method(HTTPMethod.POST)
+  Json createAppDefinition(Json request, RequestIdentity identity);
 
-    @headerParam("tenantId", "X-Tenant-Id")
-    @before!authenticate("auth")
-    // @after!logResponse
-    @path("/:id") @method(HTTPMethod.PUT)
-    void updateAppDefinition(string tenantId, string _id, AppDefinitionDTO request, AuthContext auth);
+  @before!identifyCaller("identity")
+  @path("/:id") @method(HTTPMethod.PUT)
+  Json updateAppDefinition(string _id, Json request, RequestIdentity identity);
 
-    @headerParam("tenantId", "X-Tenant-Id")
-    @before!authenticate("auth")
-    // @after!logResponse
-    @path("/:id") @method(HTTPMethod.DELETE)
-    void deleteAppDefinition(string tenantId, string _id, AuthContext auth);
+  @before!identifyCaller("identity")
+  @path("/:id/publish") @method(HTTPMethod.POST)
+  Json publishAppDefinition(string _id, RequestIdentity identity);
+
+  @before!identifyCaller("identity")
+  @path("/:id") @method(HTTPMethod.DELETE)
+  void deleteAppDefinition(string _id, RequestIdentity identity);
 }

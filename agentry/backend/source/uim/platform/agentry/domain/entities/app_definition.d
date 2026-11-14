@@ -35,7 +35,7 @@ struct AppDefinition {
             .set("applicationId", applicationId.value)
             .set("name", name)
             .set("description", description)
-            .set("status", status.to!string)
+            .set("status", enumValue(status))
             .set("definitionFormat", definitionFormat)
             .set("schemaVersion", schemaVersion)
             .set("authoredBy", authoredBy.value)

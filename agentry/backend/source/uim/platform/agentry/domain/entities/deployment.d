@@ -34,8 +34,8 @@ struct Deployment {
         auto j = entityToJson
             .set("mobileApplicationId", mobileApplicationId.value)
             .set("appVersionId", appVersionId.value)
-            .set("status", status.to!string)
-            .set("scope", scope_.to!string)
+            .set("status", enumValue(status))
+            .set("scope", enumValue(scope_))
             .set("targetDeviceId", targetDeviceId)
             .set("targetGroupName", targetGroupName)
             .set("scheduledAt", scheduledAt)

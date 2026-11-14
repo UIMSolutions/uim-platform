@@ -11,108 +11,204 @@ mixin(ShowModule!());
 
 @safe:
 
-/// Use case for managing app definitions.
-class ManageAppDefinitionsUseCase {
-    protected IAppDefinitionRepository repo;
+class ManageAppDefinitionsUseCase : IManageAppDefinitionsUseCase {
+  protected IAppDefinitionRepository repo;
+  protected IMobileApplicationRepository applications;
+  protected IAgentryEventPublisher events;
 
-    this(IAppDefinitionRepository repo) {
-        this.repo = repo;
+  /// applications may be null (no referential check).
+  this(IAppDefinitionRepository repo, IMobileApplicationRepository applications = null,
+      IAgentryEventPublisher events = null) {
+    this.repo = repo;
+    this.applications = applications;
+    this.events = events is null ? new NullEventPublisher : events;
+  }
+
+  AppDefinition[] listDefinitions(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
+  AppDefinition[] listDefinitions(TenantId tenantId, MobileApplicationId appId) {
+    return repo.findByMobileApplication(tenantId, appId);
+  }
+
+  AppDefinition[] listByStatus(TenantId tenantId, DefinitionStatus status) {
+    return repo.findByStatus(tenantId, status);
+  }
+
+  AppDefinition getDefinition(TenantId tenantId, AppDefinitionId id) {
+    return repo.findById(tenantId, id);
+  }
+
+  UsecaseResult createDefinition(AppDefinitionDTO dto) {
+    return guarded(() {
+      if (!dto.definitionId.isNull && repo.existsById(dto.tenantId, dto.definitionId))
+        return conflict("App definition '" ~ dto.definitionId.value ~ "' already exists");
+
+      auto def = newEntity!(AppDefinition)(dto.tenantId, dto.definitionId, dto.createdBy);
+      def.applicationId = dto.applicationId;
+      def.definitionFormat = "json";
+      def.authoredBy = dto.authoredBy.isNull ? dto.createdBy : dto.authoredBy;
+      apply(def, dto);
+
+      auto errors = AgentryValidator.validate(def);
+      if (dto.status.length > 0 && dto.status != "draft")
+        errors ~= "new definitions start as draft — use publishDefinition";
+      if (errors.length)
+        return invalid(errors);
+      if (applications !is null && !applications.existsById(dto.tenantId, def.applicationId))
+        return rejected("Mobile application '" ~ def.applicationId.value ~ "' does not exist");
+
+      recordValidation(def);
+      repo.save(def);
+      return created(def.id.value, "App definition created");
+    });
+  }
+
+  UsecaseResult updateDefinition(AppDefinitionDTO dto) {
+    return guarded(() {
+      auto def = repo.findById(dto.tenantId, dto.definitionId);
+      if (def.isNull)
+        return notFound("App definition", dto.definitionId.value);
+
+      bool contentChanged = (dto.definitionContent.length > 0 && dto.definitionContent != def.definitionContent)
+        || (dto.definitionFormat.length > 0 && dto.definitionFormat != def.definitionFormat);
+      if (contentChanged && def.status != DefinitionStatus.draft)
+        return rejected("Only draft definitions can change their metadata — archive and reopen it first");
+
+      apply(def, dto);
+      string[] errors;
+      DefinitionStatus status = def.status;
+      readEnum(dto.status, status, "status", errors);
+      errors ~= AgentryValidator.validate(def);
+      if (errors.length)
+        return invalid(errors);
+      if (status == DefinitionStatus.published && def.status != DefinitionStatus.published)
+        return publish(def, dto.updatedBy);
+      ensureTransition("AppDefinition", def.status, status);
+      def.status = status;
+
+      recordValidation(def);
+      touch(def, dto.updatedBy);
+      repo.update(def);
+      return succeeded(def.id.value, "App definition updated");
+    });
+  }
+
+  UsecaseResult validateDefinition(TenantId tenantId, AppDefinitionId id) {
+    auto def = repo.findById(tenantId, id);
+    if (def.isNull)
+      return notFound("App definition", id.value);
+    auto errors = recordValidation(def);
+    def.update();
+    repo.update(def);
+    auto list = Json.emptyArray;
+    foreach (e; errors)
+      list ~= Json(e);
+    return succeeded(def.id.value, errors.length ? "Validation failed" : "Validation passed", 200,
+      Json.emptyObject.set("validationPassed", errors.length == 0).set("errors", list));
+  }
+
+  UsecaseResult publishDefinition(TenantId tenantId, AppDefinitionId id, UserId by) {
+    return guarded(() {
+      auto def = repo.findById(tenantId, id);
+      if (def.isNull)
+        return notFound("App definition", id.value);
+      return publish(def, by);
+    });
+  }
+
+  UsecaseResult archiveDefinition(TenantId tenantId, AppDefinitionId id, UserId by) {
+    return guarded(() {
+      auto def = repo.findById(tenantId, id);
+      if (def.isNull)
+        return notFound("App definition", id.value);
+      ensureTransition("AppDefinition", def.status, DefinitionStatus.archived);
+      def.status = DefinitionStatus.archived;
+      touch(def, by);
+      repo.update(def);
+      return succeeded(def.id.value, "App definition archived");
+    });
+  }
+
+  UsecaseResult deleteDefinition(TenantId tenantId, AppDefinitionId id) {
+    auto def = repo.findById(tenantId, id);
+    if (def.isNull)
+      return notFound("App definition", id.value);
+    if (def.status == DefinitionStatus.published)
+      return rejected("Published definitions cannot be deleted — archive it first", id.value);
+    repo.remove(def);
+    return succeeded(def.id.value, "App definition deleted");
+  }
+
+  protected UsecaseResult publish(ref AppDefinition def, UserId by) {
+    ensureTransition("AppDefinition", def.status, DefinitionStatus.published);
+    auto errors = recordValidation(def);
+    if (errors.length) {
+      repo.update(def);
+      return rejected("Definition does not validate: " ~ errors.join("; "), def.id.value);
     }
+    def.status = DefinitionStatus.published;
+    def.publishedAt = nowStdTime();
+    touch(def, by);
+    repo.update(def);
+    events.publish(AgentryTopics.definitionPublished, Json.emptyObject
+        .set("tenantId", def.tenantId.value).set("id", def.id.value)
+        .set("applicationId", def.applicationId.value).set("schemaVersion", def.schemaVersion));
+    return succeeded(def.id.value, "App definition published");
+  }
 
-    AppDefinition getDefinition(TenantId tenantId, AppDefinitionId id) {
-        return repo.findById(tenantId, id);
-    }
+  protected string[] recordValidation(ref AppDefinition def) {
+    auto errors = AgentryValidator.validateContent(def);
+    def.validationPassed = errors.length == 0;
+    def.validationErrors = errors.join("; ");
+    return errors;
+  }
 
-    AppDefinition[] listDefinitions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
-    }
-
-    AppDefinition[] listDefinitions(TenantId tenantId, MobileApplicationId appId) {
-        return repo.findByMobileApplication(tenantId, appId);
-    }
-
-    AppDefinition[] listByStatus(TenantId tenantId, DefinitionStatus status) {
-        return repo.findByStatus(tenantId, status);
-    }
-
-    UsecaseResult createDefinition(AppDefinitionDTO dto) {
-        auto entity = AppDefinition(dto.tenantId, dto.definitionId, dto.createdBy);
-        entity.applicationId = dto.applicationId;
-        entity.name = dto.name;
-        entity.description = dto.description;
-        entity.definitionContent = dto.definitionContent;
-        entity.definitionFormat = dto.definitionFormat;
-        entity.schemaVersion = dto.schemaVersion;
-        entity.authoredBy = dto.authoredBy;
-        entity.targetPlatform = dto.targetPlatform;
-        entity.businessObjectModel = dto.businessObjectModel;
-
-        if (!AgentryValidator.isValidAppDefinition(entity))
-            return UsecaseResult(false, "", "Invalid app definition data");
-
-        repo.save(entity);
-        return UsecaseResult(true, entity.id.value, "App definition created successfully");
-    }
-
-    UsecaseResult updateDefinition(AppDefinitionDTO dto) {
-        auto entity = repo.findById(dto.tenantId, dto.definitionId);
-        if (entity.isNull)
-            return UsecaseResult(false, "", "App definition not found");
-
-        if (dto.name.length > 0) entity.name = dto.name;
-        if (dto.description.length > 0) entity.description = dto.description;
-        if (dto.definitionContent.length > 0) entity.definitionContent = dto.definitionContent;
-        if (dto.schemaVersion.length > 0) entity.schemaVersion = dto.schemaVersion;
-        if (!dto.updatedBy.isNull) entity.updatedBy = dto.updatedBy;
-        if (dto.targetPlatform.length > 0) entity.targetPlatform = dto.targetPlatform;
-
-        repo.update(entity);
-        return UsecaseResult(true, entity.id.value, "");
-    }
-
-    UsecaseResult deleteDefinition(TenantId tenantId, AppDefinitionId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
-            return UsecaseResult(false, "", "App definition not found");
-
-        repo.remove(entity);
-        return UsecaseResult(true, entity.id.value, "App definition deleted successfully");
-    }
+  protected void apply(ref AppDefinition def, const AppDefinitionDTO dto) {
+    if (!dto.applicationId.isNull)
+      def.applicationId = dto.applicationId;
+    assignIf(def.name, dto.name);
+    assignIf(def.description, dto.description);
+    assignIf(def.definitionContent, dto.definitionContent);
+    assignIf(def.definitionFormat, dto.definitionFormat);
+    assignIf(def.schemaVersion, dto.schemaVersion);
+    assignIf(def.targetPlatform, dto.targetPlatform);
+    assignIf(def.businessObjectModel, dto.businessObjectModel);
+  }
 }
 
 ///
 unittest {
-//     auto repo = new AppDefinitionRepository();
-//     auto usecase = new ManageAppDefinitionsUseCase(repo);
-//     auto tenantId = TenantId("test-tenant");
-// 
-//     // Test create
-//     AppDefinitionDTO createDto;
-//     createDto.tenantId = tenantId;
-//     createDto.appDefinitionId = AppDefinitionId("appDefinition-1");
-//     createDto.name = "Test AppDefinition";
-//     auto createResult = usecase.createDefinition(createDto);
-//     assert(createResult.success, createResult.message);
-// 
-//     // Test list
-//     auto items = usecase.listDefinitions(tenantId);
-//     assert(items.length == 1);
-// 
-//     // Test get
-//     auto item = usecase.getDefinition(tenantId, AppDefinitionId("appDefinition-1"));
-//     assert(!item.isNull);
-// 
-//     // Test update
-//     AppDefinitionDTO updateDto;
-//     updateDto.tenantId = tenantId;
-//     updateDto.appDefinitionId = AppDefinitionId("appDefinition-1");
-//     updateDto.name = "Updated AppDefinition";
-//     auto updateResult = usecase.updateDefinition(updateDto);
-//     assert(updateResult.success, updateResult.message);
-// 
-//     // Test delete
-//     auto deleteResult = usecase.deleteDefinition(tenantId, AppDefinitionId("appDefinition-1"));
-//     assert(deleteResult.success, deleteResult.message);
-//     assert(usecase.listDefinitions(tenantId).length == 0);
+  mixin(ShowTest!("ManageAppDefinitionsUseCase"));
 
+  auto uc = new ManageAppDefinitionsUseCase(new AppDefinitionRepository());
+  auto t = TenantId("t1");
+
+  AppDefinitionDTO dto;
+  dto.tenantId = t;
+  dto.applicationId = MobileApplicationId("app-1");
+  dto.name = "Work Orders";
+  dto.definitionFormat = "json";
+  dto.definitionContent = "{broken";
+  auto r = uc.createDefinition(dto);
+  assert(r.isSuccess, r.message);
+  auto id = AppDefinitionId(r.id);
+  assert(!uc.getDefinition(t, id).validationPassed);
+
+  assert(uc.publishDefinition(t, id, UserId("u")).code == 422); // does not validate
+
+  dto.definitionId = id;
+  dto.definitionContent = `{"screens": [{"name": "WorkOrderList"}]}`;
+  assert(uc.updateDefinition(dto).isSuccess);
+  assert(uc.publishDefinition(t, id, UserId("u")).isSuccess);
+  assert(uc.getDefinition(t, id).status == DefinitionStatus.published);
+  assert(uc.getDefinition(t, id).publishedAt > 0);
+
+  assert(uc.updateDefinition(dto).isSuccess); // unchanged content is fine
+  dto.definitionContent = `{"screens": []}`;
+  assert(uc.updateDefinition(dto).code == 422); // published content is immutable
+  assert(uc.deleteDefinition(t, id).code == 422);
+  assert(uc.archiveDefinition(t, id, UserId("u")).isSuccess);
+  assert(uc.deleteDefinition(t, id).isSuccess);
 }

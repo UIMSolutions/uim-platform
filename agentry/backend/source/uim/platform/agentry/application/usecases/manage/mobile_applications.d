@@ -11,111 +11,143 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageMobileApplicationsUseCase {
-    protected IMobileApplicationRepository repo;
+class ManageMobileApplicationsUseCase : IManageMobileApplicationsUseCase {
+  protected IMobileApplicationRepository repo;
+  protected IAgentryEventPublisher events;
 
-    this(IMobileApplicationRepository repo) {
-        this.repo = repo;
-    }
+  this(IMobileApplicationRepository repo, IAgentryEventPublisher events = null) {
+    this.repo = repo;
+    this.events = events is null ? new NullEventPublisher : events;
+  }
 
-    MobileApplication getMobileApplication(TenantId tenantId, MobileApplicationId id) {
-        return repo.findById(tenantId, id);
-    }
+  MobileApplication[] listMobileApplications(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
 
-    MobileApplication[] listMobileApplications(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
-    }
+  MobileApplication[] listByStatus(TenantId tenantId, AppStatus status) {
+    return repo.findByStatus(tenantId, status);
+  }
 
-    MobileApplication[] listByStatus(TenantId tenantId, AppStatus status) {
-        return repo.findByStatus(tenantId, status);
-    }
+  MobileApplication[] listByPlatform(TenantId tenantId, AppPlatform platform) {
+    return repo.findByPlatform(tenantId, platform);
+  }
 
-    MobileApplication[] listByPlatform(TenantId tenantId, AppPlatform platform) {
-        return repo.findByPlatform(tenantId, platform);
-    }
+  MobileApplication getMobileApplication(TenantId tenantId, MobileApplicationId id) {
+    return repo.findById(tenantId, id);
+  }
 
-    UsecaseResult createMobileApplication(MobileApplicationDTO dto) {
-        auto app = MobileApplication(dto.tenantId, dto.applicationId, dto.createdBy);
-        app.name = dto.name;
-        app.description = dto.description;
-        app.iconUrl = dto.iconUrl;
-        app.category = dto.category;
-        app.vendor = dto.vendor;
-        app.contactEmail = dto.contactEmail;
-        app.backendSystemId = dto.backendSystemId;
-        app.offlineCapable = dto.offlineCapable;
-        app.pushNotificationsEnabled = dto.pushNotificationsEnabled;
-        app.minOsVersion = dto.minOsVersion;
-        app.packageName = dto.packageName;
+  UsecaseResult createMobileApplication(MobileApplicationDTO dto) {
+    return guarded(() {
+      if (!dto.applicationId.isNull && repo.existsById(dto.tenantId, dto.applicationId))
+        return conflict("Mobile application '" ~ dto.applicationId.value ~ "' already exists");
 
-        if (!AgentryValidator.isValidMobileApplication(app))
-            return UsecaseResult(false, "", "Invalid mobile application data");
+      auto app = newEntity!(MobileApplication)(dto.tenantId, dto.applicationId, dto.createdBy);
+      string[] errors;
+      apply(app, dto, errors);
+      AppStatus status = AppStatus.draft;
+      if (readEnum(dto.status, status, "status", errors))
+        ensureTransition("MobileApplication", AppStatus.draft, status);
+      app.status = status;
+      errors ~= AgentryValidator.validate(app);
+      if (errors.length)
+        return invalid(errors);
 
-        repo.save(app);
-        return UsecaseResult(true, app.id.value, "");
-    }
+      if (repo.findByTenant(dto.tenantId).any!(a => a.packageName == app.packageName))
+        return conflict("Package name '" ~ app.packageName ~ "' is already registered");
 
-    UsecaseResult updateMobileApplication(MobileApplicationDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.applicationId);
-        if (existing.isNull)
-            return UsecaseResult(false, "", "Mobile application not found");
+      repo.save(app);
+      return created(app.id.value, "Mobile application created");
+    });
+  }
 
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.iconUrl.length > 0) existing.iconUrl = dto.iconUrl;
-        if (dto.category.length > 0) existing.category = dto.category;
-        if (dto.vendor.length > 0) existing.vendor = dto.vendor;
-        if (dto.contactEmail.length > 0) existing.contactEmail = dto.contactEmail;
-        if (dto.minOsVersion.length > 0) existing.minOsVersion = dto.minOsVersion;
-        if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+  UsecaseResult updateMobileApplication(MobileApplicationDTO dto) {
+    return guarded(() {
+      auto app = repo.findById(dto.tenantId, dto.applicationId);
+      if (app.isNull)
+        return notFound("Mobile application", dto.applicationId.value);
 
-        repo.update(existing);
-        return UsecaseResult(true, existing.id.value, "");
-    }
+      string[] errors;
+      apply(app, dto, errors);
+      AppStatus status = app.status;
+      if (readEnum(dto.status, status, "status", errors))
+        ensureTransition("MobileApplication", app.status, status);
+      app.status = status;
+      errors ~= AgentryValidator.validate(app);
+      if (errors.length)
+        return invalid(errors);
 
-    UsecaseResult deleteMobileApplication(TenantId tenantId, MobileApplicationId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
-            return UsecaseResult(false, "", "Mobile application not found");
+      touch(app, dto.updatedBy);
+      repo.update(app);
+      return succeeded(app.id.value, "Mobile application updated");
+    });
+  }
 
-        repo.remove(entity);
-        return UsecaseResult(true, entity.id.value, "");
-    }
+  UsecaseResult setMobileApplicationStatus(TenantId tenantId, MobileApplicationId id, AppStatus status, UserId by) {
+    return guarded(() {
+      auto app = repo.findById(tenantId, id);
+      if (app.isNull)
+        return notFound("Mobile application", id.value);
+      ensureTransition("MobileApplication", app.status, status);
+      auto previous = app.status;
+      app.status = status;
+      touch(app, by);
+      repo.update(app);
+      events.publish(AgentryTopics.applicationStatusChanged, Json.emptyObject
+          .set("tenantId", tenantId.value).set("id", id.value)
+          .set("from", enumValue(previous)).set("to", enumValue(status)));
+      return succeeded(app.id.value, "Mobile application is now " ~ enumValue(status));
+    });
+  }
+
+  UsecaseResult deleteMobileApplication(TenantId tenantId, MobileApplicationId id) {
+    auto app = repo.findById(tenantId, id);
+    if (app.isNull)
+      return notFound("Mobile application", id.value);
+    repo.remove(app);
+    return succeeded(app.id.value, "Mobile application deleted");
+  }
+
+  /// Copy the editable fields (strings only if supplied).
+  protected void apply(ref MobileApplication app, const MobileApplicationDTO dto, ref string[] errors) {
+    assignIf(app.name, dto.name);
+    assignIf(app.description, dto.description);
+    assignIf(app.iconUrl, dto.iconUrl);
+    assignIf(app.category, dto.category);
+    assignIf(app.vendor, dto.vendor);
+    assignIf(app.contactEmail, dto.contactEmail);
+    assignIf(app.backendSystemId, dto.backendSystemId);
+    assignIf(app.minOsVersion, dto.minOsVersion);
+    assignIf(app.packageName, dto.packageName);
+    app.offlineCapable = dto.offlineCapable;
+    app.pushNotificationsEnabled = dto.pushNotificationsEnabled;
+    readEnum(dto.platform, app.platform, "platform", errors);
+  }
 }
 
 ///
 unittest {
-//     auto repo = new MobileApplicationRepository();
-//     auto usecase = new ManageMobileApplicationsUseCase(repo);
-//     auto tenantId = TenantId("test-tenant");
-// 
-//     // Test create
-//     MobileApplicationDTO createDto;
-//     createDto.tenantId = tenantId;
-//     createDto.mobileApplicationId = MobileApplicationId("mobileApplication-1");
-//     createDto.name = "Test MobileApplication";
-//     auto createResult = usecase.createMobileApplication(createDto);
-//     assert(createResult.success, createResult.message);
-// 
-//     // Test list
-//     auto items = usecase.listMobileApplications(tenantId);
-//     assert(items.length == 1);
-// 
-//     // Test get
-//     auto item = usecase.getMobileApplication(tenantId, MobileApplicationId("mobileApplication-1"));
-//     assert(!item.isNull);
-// 
-//     // Test update
-//     MobileApplicationDTO updateDto;
-//     updateDto.tenantId = tenantId;
-//     updateDto.mobileApplicationId = MobileApplicationId("mobileApplication-1");
-//     updateDto.name = "Updated MobileApplication";
-//     auto updateResult = usecase.updateMobileApplication(updateDto);
-//     assert(updateResult.success, updateResult.message);
-// 
-//     // Test delete
-//     auto deleteResult = usecase.deleteMobileApplication(tenantId, MobileApplicationId("mobileApplication-1"));
-//     assert(deleteResult.success, deleteResult.message);
-//     assert(usecase.listMobileApplications(tenantId).length == 0);
+  mixin(ShowTest!("ManageMobileApplicationsUseCase"));
 
+  auto uc = new ManageMobileApplicationsUseCase(new MobileApplicationRepository());
+  auto t = TenantId("t1");
+
+  MobileApplicationDTO dto;
+  dto.tenantId = t;
+  dto.name = "Work Manager";
+  dto.packageName = "com.example.workmanager";
+  dto.platform = "ios";
+  auto r = uc.createMobileApplication(dto);
+  assert(r.isSuccess, r.message);
+  auto id = MobileApplicationId(r.id);
+  assert(uc.getMobileApplication(t, id).platform == AppPlatform.ios);
+
+  assert(uc.createMobileApplication(dto).code == 409); // duplicate package
+
+  dto.packageName = "invalid";
+  assert(uc.createMobileApplication(dto).code == 400);
+
+  assert(uc.setMobileApplicationStatus(t, id, AppStatus.active, UserId("u")).isSuccess);
+  assert(uc.setMobileApplicationStatus(t, id, AppStatus.draft, UserId("u")).code == 422);
+  assert(uc.deleteMobileApplication(t, id).isSuccess);
+  assert(uc.deleteMobileApplication(t, id).code == 404);
 }

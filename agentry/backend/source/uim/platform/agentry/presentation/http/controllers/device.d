@@ -11,131 +11,109 @@ mixin(ShowModule!());
 
 @safe:
 
+/// REST adapter for devices:
+///   GET/POST {base}/devices   GET/PUT/DELETE {base}/devices/:id
 class DeviceController : ManageHttpController {
-    protected ManageDevicesUseCase usecase;
+  protected IManageDevicesUseCase usecase;
+  protected string basePath;
 
-    this(ManageDevicesUseCase usecase) {
-        this.usecase = usecase;
-    }
+  this(IManageDevicesUseCase usecase, string apiPath = "/api/v1/agentry") {
+    this.usecase = usecase;
+    this.basePath = apiPath.stripRight("/") ~ "/devices";
+  }
 
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
-        
-        router.get("/api/v1/agentry/devices", &handleList);
-        router.get("/api/v1/agentry/devices/*", &handleGet);
-        router.post("/api/v1/agentry/devices", &handleCreate);
-        router.put("/api/v1/agentry/devices/*", &handleUpdate);
-        router.delete_("/api/v1/agentry/devices/*", &handleDelete);
-    }
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    router.get(basePath, &handleList);
+    router.get(basePath ~ "/*", &handleGet);
+    router.post(basePath, &handleCreate);
+    router.put(basePath ~ "/*", &handleUpdate);
+    router.delete_(basePath ~ "/*", &handleDelete);
+  }
 
-        auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto items = usecase.listDevices(tenantId);
-        auto list = items.map!(e => e.toJson()).array.toJson;
-        auto resp = Json.emptyObject
-            .set("count", items.length)
-            .set("resources", list);
+    auto items = usecase.listDevices(precheck.tenantId);
+    auto resp = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", items.map!(e => e.toJson()).array.toJson);
+    return successResponse("Device list retrieved", "Retrieved", 200, resp);
+  }
 
-        return successResponse("MobileDevice list retrieved successfully", "Retrieved", 200, resp);
-    }
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    DeviceDTO dto;
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.tenantId = precheck.tenantId;
+    dto.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto tenantId = precheck.tenantId;
-        auto data = precheck.data;
-        DeviceDTO dto;
-        dto.deviceId = DeviceId(precheck.id);
-        dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
-        dto.tenantId = tenantId;
-        dto.deviceName = data.getString("deviceName");
-        dto.deviceModel = data.getString("deviceModel");
-        dto.manufacturer = data.getString("manufacturer");
-        dto.osVersion = data.getString("osVersion");
-        dto.appVersionInstalled = data.getString("appVersionInstalled");
-        dto.pushToken = data.getString("pushToken");
-        dto.userId = data.getString("userId");
-        dto.userEmail = data.getString("userEmail");
-        dto.groupName = data.getString("groupName");
-        dto.isManaged = data.getBoolean("isManaged");
-        dto.mdmDeviceId = data.getString("mdmDeviceId");
+    auto result = usecase.enrollDevice(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Created", 201, Json.emptyObject.set("id", result.id));
+  }
 
-        auto result = usecase.enrollDevice(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto resp = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("MobileDevice enrolled successfully", "Created", 201, resp);
-    }
+    auto id = DeviceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid device ID", 400);
+    auto entity = usecase.getDevice(precheck.tenantId, id);
+    if (entity.isNull)
+      return errorResponse("Device not found", 404);
+    return successResponse("Device retrieved", "Retrieved", 200, entity.toJson);
+  }
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
-        auto id = DeviceId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid device ID", 400);
+    auto id = DeviceId(precheck.id);
+    auto current = usecase.getDevice(precheck.tenantId, id);
+    if (current.isNull)
+      return errorResponse("Device not found", 404);
 
-        auto e = usecase.getDevice(tenantId, id);
-        if (e.isNull)
-            return errorResponse("MobileDevice not found", 404);
+    // merge: start from the stored values, overlay the supplied ones
+    auto dto = DeviceDTO.fromEntity(current);
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.deviceId = id;
+    dto.tenantId = precheck.tenantId;
+    dto.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-        return successResponse("MobileDevice retrieved successfully", "Retrieved", 200, e.toJson);
-    }
+    auto result = usecase.updateDevice(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Updated", 200, Json.emptyObject.set("id", result.id));
+  }
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-        auto data = precheck.data;
-        DeviceDTO dto;
-        dto.deviceId = DeviceId(precheck.id);
-        dto.tenantId = tenantId;
-        dto.osVersion = data.getString("osVersion");
-        dto.appVersionInstalled = data.getString("appVersionInstalled");
-        dto.groupName = data.getString("groupName");
-        dto.pushToken = data.getString("pushToken");
-
-        auto result = usecase.updateDevice(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto resp = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("MobileDevice updated successfully", "Updated", 200, resp);
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
-        auto id = DeviceId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid device ID", 400);
-
-        auto result = usecase.removeDevice(tenantId, id);
-        if (result.hasError)
-            return errorResponse(result.message, 404);
-
-        auto resp = Json.emptyObject
-            .set("id", id);
-
-        return successResponse("MobileDevice removed successfully", "Deleted", 200, resp);
-    }
+    auto id = DeviceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid device ID", 400);
+    auto result = usecase.removeDevice(precheck.tenantId, id);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Deleted", 200, Json.emptyObject.set("id", id.value));
+  }
 }

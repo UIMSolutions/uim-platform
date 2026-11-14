@@ -11,138 +11,109 @@ mixin(ShowModule!());
 
 @safe:
 
+/// REST adapter for backend connections:
+///   GET/POST {base}/backend-connections   GET/PUT/DELETE {base}/backend-connections/:id
 class BackendConnectionController : ManageHttpController {
-    protected ManageBackendConnectionsUseCase usecase;
+  protected IManageBackendConnectionsUseCase usecase;
+  protected string basePath;
 
-    this(ManageBackendConnectionsUseCase usecase) {
-        this.usecase = usecase;
-    }
+  this(IManageBackendConnectionsUseCase usecase, string apiPath = "/api/v1/agentry") {
+    this.usecase = usecase;
+    this.basePath = apiPath.stripRight("/") ~ "/backend-connections";
+  }
 
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
-        
-        router.get("/api/v1/agentry/backend-connections", &handleList);
-        router.get("/api/v1/agentry/backend-connections/*", &handleGet);
-        router.post("/api/v1/agentry/backend-connections", &handleCreate);
-        router.put("/api/v1/agentry/backend-connections/*", &handleUpdate);
-        router.delete_("/api/v1/agentry/backend-connections/*", &handleDelete);
-    }
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    router.get(basePath, &handleList);
+    router.get(basePath ~ "/*", &handleGet);
+    router.post(basePath, &handleCreate);
+    router.put(basePath ~ "/*", &handleUpdate);
+    router.delete_(basePath ~ "/*", &handleDelete);
+  }
 
-        auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto connections = usecase.listBackendConnections(tenantId);
-        auto jsConnections = connections.map!(e => e.toJson()).array.toJson;
-        auto resp = Json.emptyObject
-            .set("count", connections.length)
-            .set("resources", jsConnections);
+    auto items = usecase.listBackendConnections(precheck.tenantId);
+    auto resp = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", items.map!(e => e.toJson()).array.toJson);
+    return successResponse("Backend connection list retrieved", "Retrieved", 200, resp);
+  }
 
-        return successResponse("Backend connection list retrieved successfully", "Retrieved", 200, resp);
-    }
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    BackendConnectionDTO dto;
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.tenantId = precheck.tenantId;
+    dto.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto tenantId = precheck.tenantId;
+    auto result = usecase.createBackendConnection(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Created", 201, Json.emptyObject.set("id", result.id));
+  }
 
-        auto id = BackendConnectionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid backend connection ID", 400);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto e = usecase.getBackendConnection(tenantId, id);
-        if (e.isNull)
-            return errorResponse("Backend connection not found", 404);
+    auto id = BackendConnectionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid backend connection ID", 400);
+    auto entity = usecase.getBackendConnection(precheck.tenantId, id);
+    if (entity.isNull)
+      return errorResponse("Backend connection not found", 404);
+    return successResponse("Backend connection retrieved", "Retrieved", 200, entity.toJson);
+  }
 
-        auto responseData = e.toJson();
-            
-        return successResponse("Backend connection retrieved successfully", "Retrieved", 200, responseData);
-    }
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto id = BackendConnectionId(precheck.id);
+    auto current = usecase.getBackendConnection(precheck.tenantId, id);
+    if (current.isNull)
+      return errorResponse("Backend connection not found", 404);
 
-        auto tenantId = precheck.tenantId;
+    // merge: start from the stored values, overlay the supplied ones
+    auto dto = BackendConnectionDTO.fromEntity(current);
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.connectionId = id;
+    dto.tenantId = precheck.tenantId;
+    dto.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto data = precheck.data;
-        BackendConnectionDTO dto;
-        dto.connectionId = BackendConnectionId(data.getString("id"));
-        dto.tenantId = tenantId;
-        dto.name = data.getString("name");
-        dto.description = data.getString("description");
-        dto.backendUrl = data.getString("backendUrl");
-        dto.clientId = data.getString("clientId");
-        dto.authMethod = data.getString("authMethod");
-        dto.sysId = data.getString("sysId");
-        dto.sysNumber = data.getString("sysNumber");
-        dto.client = data.getString("client");
-        dto.language = data.getString("language");
-        dto.destinationName = data.getString("destinationName");
-        dto.sslEnabled = data.getBoolean("sslEnabled");
-        dto.certificateFingerprint = data.getString("certificateFingerprint");
+    auto result = usecase.updateBackendConnection(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Updated", 200, Json.emptyObject.set("id", result.id));
+  }
 
-        auto result = usecase.createBackendConnection(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Backend connection created successfully", "Created", 201, responseData);
-    }
-
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto id = BackendConnectionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid backend connection ID", 400);
-
-        auto data = precheck.data;
-        BackendConnectionDTO dto;
-        dto.connectionId = id;
-        dto.tenantId = tenantId;
-        dto.name = data.getString("name");
-        dto.description = data.getString("description");
-        dto.backendUrl = data.getString("backendUrl");
-        dto.destinationName = data.getString("destinationName");
-
-        auto result = usecase.updateBackendConnection(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Backend connection updated successfully", "Updated", 200, responseData);
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto id = BackendConnectionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid backend connection ID", 400);
-
-        auto result = usecase.deleteBackendConnection(tenantId, id);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Backend connection deleted successfully", "Deleted", 200, responseData);
-    }
+    auto id = BackendConnectionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid backend connection ID", 400);
+    auto result = usecase.deleteBackendConnection(precheck.tenantId, id);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Deleted", 200, Json.emptyObject.set("id", id.value));
+  }
 }

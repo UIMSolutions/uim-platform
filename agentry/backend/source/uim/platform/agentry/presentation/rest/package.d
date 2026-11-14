@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.agentry.presentation.rest;
 
-public:
-    import uim.platform.agentry.presentation.rest.interfaces;
-    import uim.platform.agentry.presentation.rest.services;
-    import uim.platform.agentry.presentation.rest.tests;
+public {
+  import uim.platform.agentry.presentation.rest.interfaces;
+  import uim.platform.agentry.presentation.rest.services;
+}

@@ -35,8 +35,8 @@ struct BackendConnection {
         auto j = entityToJson
             .set("name", name)
             .set("description", description)
-            .set("backendType", backendType.to!string)
-            .set("status", status.to!string)
+            .set("backendType", enumValue(backendType))
+            .set("status", enumValue(status))
             .set("backendUrl", backendUrl)
             .set("clientId", clientId)
             .set("authMethod", authMethod)

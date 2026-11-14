@@ -11,125 +11,109 @@ mixin(ShowModule!());
 
 @safe:
 
+/// REST adapter for sync sessions:
+///   GET/POST {base}/sync-sessions   GET/PUT/DELETE {base}/sync-sessions/:id
 class SyncSessionController : ManageHttpController {
-    private ManageSyncSessionsUseCase usecase;
+  protected IManageSyncSessionsUseCase usecase;
+  protected string basePath;
 
-    this(ManageSyncSessionsUseCase usecase) {
-        this.usecase = usecase;
-    }
+  this(IManageSyncSessionsUseCase usecase, string apiPath = "/api/v1/agentry") {
+    this.usecase = usecase;
+    this.basePath = apiPath.stripRight("/") ~ "/sync-sessions";
+  }
 
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
-        
-        router.get("/api/v1/agentry/sync-sessions", &handleList);
-        router.get("/api/v1/agentry/sync-sessions/*", &handleGet);
-        router.post("/api/v1/agentry/sync-sessions", &handleCreate);
-        router.put("/api/v1/agentry/sync-sessions/*", &handleUpdate);
-        router.delete_("/api/v1/agentry/sync-sessions/*", &handleDelete);
-    }
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    router.get(basePath, &handleList);
+    router.get(basePath ~ "/*", &handleGet);
+    router.post(basePath, &handleCreate);
+    router.put(basePath ~ "/*", &handleUpdate);
+    router.delete_(basePath ~ "/*", &handleDelete);
+  }
 
-        auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto items = usecase.listSyncSessions(tenantId);
-        auto list = items.map!(item => item.toJson()).array.toJson;
+    auto items = usecase.listSyncSessions(precheck.tenantId);
+    auto resp = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", items.map!(e => e.toJson()).array.toJson);
+    return successResponse("Sync session list retrieved", "Retrieved", 200, resp);
+  }
 
-        auto responseData = Json.emptyObject
-            .set("count", items.length)
-            .set("resources", list);
-            
-        return successResponse("Sync session list retrieved successfully", "Retrieved", 200, responseData);
-    }
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    SyncSessionDTO dto;
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.tenantId = precheck.tenantId;
+    dto.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto tenantId = precheck.tenantId;
+    auto result = usecase.createSyncSession(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Created", 201, Json.emptyObject.set("id", result.id));
+  }
 
-        auto id = SyncSessionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid sync session ID", 400);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto ses = usecase.getSyncSession(tenantId, id);
-        if (ses.isNull)
-            return errorResponse("Sync session not found", 404);
+    auto id = SyncSessionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid sync session ID", 400);
+    auto entity = usecase.getSyncSession(precheck.tenantId, id);
+    if (entity.isNull)
+      return errorResponse("Sync session not found", 404);
+    return successResponse("Sync session retrieved", "Retrieved", 200, entity.toJson);
+  }
 
-        auto responseData = ses.toJson();
-            
-        return successResponse("Sync session retrieved successfully", "Retrieved", 200, responseData);
-    }
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto id = SyncSessionId(precheck.id);
+    auto current = usecase.getSyncSession(precheck.tenantId, id);
+    if (current.isNull)
+      return errorResponse("Sync session not found", 404);
 
-        auto tenantId = precheck.tenantId;
+    // merge: start from the stored values, overlay the supplied ones
+    auto dto = SyncSessionDTO.fromEntity(current);
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.sessionId = id;
+    dto.tenantId = precheck.tenantId;
+    dto.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto data = precheck.data;
-        SyncSessionDTO dto;
-        dto.sessionId = SyncSessionId(precheck.id);
-        dto.deviceId = DeviceId(data.getString("deviceId"));
-        dto.applicationId = MobileApplicationId(data.getString("applicationId"));
-        dto.connectionId = BackendConnectionId(data.getString("connectionId"));
-        dto.tenantId = tenantId;
-        dto.triggeredBy = data.getString("triggeredBy");
-        dto.clientAppVersion = data.getString("clientAppVersion");
+    auto result = usecase.updateSyncSession(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Updated", 200, Json.emptyObject.set("id", result.id));
+  }
 
-        auto result = usecase.createSyncSession(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Sync session created successfully", "Created", 201, responseData);
-    }
-
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto data = precheck.data;
-        SyncSessionDTO dto;
-        dto.sessionId = SyncSessionId(precheck.id);
-        dto.tenantId = tenantId;
-        dto.status = data.getString("status");
-
-        auto result = usecase.updateSyncSession(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Sync session updated successfully", "Updated", 200, responseData);
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto id = SyncSessionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid sync session ID", 400);
-
-        auto result = usecase.deleteSyncSession(tenantId, id);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Sync session deleted successfully", "Deleted", 200, responseData);
-    }
+    auto id = SyncSessionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid sync session ID", 400);
+    auto result = usecase.deleteSyncSession(precheck.tenantId, id);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Deleted", 200, Json.emptyObject.set("id", id.value));
+  }
 }

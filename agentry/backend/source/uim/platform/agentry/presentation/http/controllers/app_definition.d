@@ -11,131 +11,109 @@ mixin(ShowModule!());
 
 @safe:
 
-/// Controller for managing app definitions via HTTP requests.
+/// REST adapter for app definitions:
+///   GET/POST {base}/app-definitions   GET/PUT/DELETE {base}/app-definitions/:id
 class AppDefinitionController : ManageHttpController {
-    protected ManageAppDefinitionsUseCase usecase;
+  protected IManageAppDefinitionsUseCase usecase;
+  protected string basePath;
 
-    this(ManageAppDefinitionsUseCase usecase) {
-        this.usecase = usecase;
-    }
+  this(IManageAppDefinitionsUseCase usecase, string apiPath = "/api/v1/agentry") {
+    this.usecase = usecase;
+    this.basePath = apiPath.stripRight("/") ~ "/app-definitions";
+  }
 
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
 
-        router.get("/api/v1/agentry/app-definitions", &handleList);
-        router.get("/api/v1/agentry/app-definitions/*", &handleGet);
-        router.post("/api/v1/agentry/app-definitions", &handleCreate);
-        router.put("/api/v1/agentry/app-definitions/*", &handleUpdate);
-        router.delete_("/api/v1/agentry/app-definitions/*", &handleDelete);
-    }
+    router.get(basePath, &handleList);
+    router.get(basePath ~ "/*", &handleGet);
+    router.post(basePath, &handleCreate);
+    router.put(basePath ~ "/*", &handleUpdate);
+    router.delete_(basePath ~ "/*", &handleDelete);
+  }
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-        auto items = usecase.listDefinitions(tenantId).map!(e => e.toJson()).array.toJson;
+    auto items = usecase.listDefinitions(precheck.tenantId);
+    auto resp = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", items.map!(e => e.toJson()).array.toJson);
+    return successResponse("App definition list retrieved", "Retrieved", 200, resp);
+  }
 
-        auto responseData = Json.emptyObject
-            .set("count", items.length)
-            .set("resources", items);
-            
-        return successResponse("App definition list retrieved successfully", "Retrieved", 200, responseData);
-    }
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    AppDefinitionDTO dto;
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.tenantId = precheck.tenantId;
+    dto.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto tenantId = precheck.tenantId;
-        auto data = precheck.data;
-        AppDefinitionDTO dto;
-        dto.definitionId = AppDefinitionId(precheck.id);
-        dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
-        dto.tenantId = tenantId;
-        dto.name = data.getString("name");
-        dto.description = data.getString("description");
-        dto.definitionContent = data.getString("definitionContent");
-        dto.definitionFormat = data.getString("definitionFormat");
-        dto.schemaVersion = data.getString("schemaVersion");
-        dto.authoredBy = data.getString("authoredBy");
-        dto.targetPlatform = data.getString("targetPlatform");
-        dto.businessObjectModel = data.getString("businessObjectModel");
+    auto result = usecase.createDefinition(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Created", 201, Json.emptyObject.set("id", result.id));
+  }
 
-        auto result = usecase.createDefinition(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("App definition created successfully", "Created", 201, responseData);
-    }
+    auto id = AppDefinitionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid app definition ID", 400);
+    auto entity = usecase.getDefinition(precheck.tenantId, id);
+    if (entity.isNull)
+      return errorResponse("App definition not found", 404);
+    return successResponse("App definition retrieved", "Retrieved", 200, entity.toJson);
+  }
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-        auto id = AppDefinitionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid app definition ID", 400);
+    auto id = AppDefinitionId(precheck.id);
+    auto current = usecase.getDefinition(precheck.tenantId, id);
+    if (current.isNull)
+      return errorResponse("App definition not found", 404);
 
-        auto definition = usecase.getDefinition(tenantId, id);
-        if (definition.isNull)
-            return errorResponse("App definition not found", 404);
+    // merge: start from the stored values, overlay the supplied ones
+    auto dto = AppDefinitionDTO.fromEntity(current);
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.definitionId = id;
+    dto.tenantId = precheck.tenantId;
+    dto.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto responseData = definition.toJson();
-            
-        return successResponse("App definition retrieved successfully", "Retrieved", 200, responseData);
-    }
+    auto result = usecase.updateDefinition(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Updated", 200, Json.emptyObject.set("id", result.id));
+  }
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-        auto data = precheck.data;
-        auto id = AppDefinitionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid app definition ID", 400);
-
-        AppDefinitionDTO dto;
-        dto.definitionId = id;
-        dto.tenantId = tenantId;
-        dto.name = data.getString("name");
-        dto.description = data.getString("description");
-        dto.definitionContent = data.getString("definitionContent");
-        dto.schemaVersion = data.getString("schemaVersion");
-
-        auto result = usecase.updateDefinition(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("App definition updated successfully", "Updated", 200, responseData);
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-        auto id = AppDefinitionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid app definition ID", 400);
-
-        auto result = usecase.deleteDefinition(tenantId, id);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("App definition deleted successfully", "Deleted", 200, responseData);
-    }
+    auto id = AppDefinitionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid app definition ID", 400);
+    auto result = usecase.deleteDefinition(precheck.tenantId, id);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Deleted", 200, Json.emptyObject.set("id", id.value));
+  }
 }

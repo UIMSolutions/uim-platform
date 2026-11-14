@@ -11,132 +11,109 @@ mixin(ShowModule!());
 
 @safe:
 
+/// REST adapter for deployments:
+///   GET/POST {base}/deployments   GET/PUT/DELETE {base}/deployments/:id
 class DeploymentController : ManageHttpController {
-    protected ManageDeploymentsUseCase usecase;
+  protected IManageDeploymentsUseCase usecase;
+  protected string basePath;
 
-    this(ManageDeploymentsUseCase usecase) {
-        this.usecase = usecase;
-    }
+  this(IManageDeploymentsUseCase usecase, string apiPath = "/api/v1/agentry") {
+    this.usecase = usecase;
+    this.basePath = apiPath.stripRight("/") ~ "/deployments";
+  }
 
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
 
-        router.get("/api/v1/agentry/deployments", &handleList);
-        router.get("/api/v1/agentry/deployments/*", &handleGet);
-        router.post("/api/v1/agentry/deployments", &handleCreate);
-        router.put("/api/v1/agentry/deployments/*", &handleUpdate);
-        router.delete_("/api/v1/agentry/deployments/*", &handleDelete);
-    }
+    router.get(basePath, &handleList);
+    router.get(basePath ~ "/*", &handleGet);
+    router.post(basePath, &handleCreate);
+    router.put(basePath ~ "/*", &handleUpdate);
+    router.delete_(basePath ~ "/*", &handleDelete);
+  }
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto items = usecase.listDeployments(precheck.tenantId);
+    auto resp = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", items.map!(e => e.toJson()).array.toJson);
+    return successResponse("Deployment list retrieved", "Retrieved", 200, resp);
+  }
 
-        auto items = usecase.listDeployments(tenantId);
-        auto list = items.map!(e => e.toJson()).array.toJson;
-        auto resp = Json.emptyObject
-            .set("count", items.length)
-            .set("resources", list);
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        return successResponse("Deployment list retrieved successfully", "Retrieved", 200, resp);
-    }
+    DeploymentDTO dto;
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.tenantId = precheck.tenantId;
+    dto.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto result = usecase.createDeployment(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Created", 201, Json.emptyObject.set("id", result.id));
+  }
 
-        auto tenantId = precheck.tenantId;
-        auto data = precheck.data;
-        DeploymentDTO dto;
-        dto.deploymentId = DeploymentId(precheck.id);
-        dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
-        dto.versionId = AppVersionId(data.getString("appVersionId"));
-        dto.tenantId = tenantId;
-        dto.scope_ = data.getString("scope");
-        dto.targetDeviceId = data.getString("targetDeviceId");
-        dto.targetGroupName = data.getString("targetGroupName");
-        dto.scheduledAt = data.getLong("scheduledAt");
-        dto.deployedBy = data.getString("deployedBy");
-        dto.notes = data.getString("notes");
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto result = usecase.createDeployment(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto id = DeploymentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid deployment ID", 400);
+    auto entity = usecase.getDeployment(precheck.tenantId, id);
+    if (entity.isNull)
+      return errorResponse("Deployment not found", 404);
+    return successResponse("Deployment retrieved", "Retrieved", 200, entity.toJson);
+  }
 
-        auto responseData = Json.emptyObject.set("id", result.id);
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        return successResponse("Deployment created successfully", "Created", 201, responseData);
-    }
+    auto id = DeploymentId(precheck.id);
+    auto current = usecase.getDeployment(precheck.tenantId, id);
+    if (current.isNull)
+      return errorResponse("Deployment not found", 404);
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    // merge: start from the stored values, overlay the supplied ones
+    auto dto = DeploymentDTO.fromEntity(current);
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.deploymentId = id;
+    dto.tenantId = precheck.tenantId;
+    dto.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
+    auto result = usecase.updateDeployment(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Updated", 200, Json.emptyObject.set("id", result.id));
+  }
 
-        auto id = DeploymentId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid deployment ID", 400);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto e = usecase.getDeployment(tenantId, id);
-        if (e.isNull)
-            return errorResponse("Deployment not found", 404);
-
-        auto responseData = e.toJson();
-
-        return successResponse("Deployment retrieved successfully", "Retrieved", 200, responseData);
-    }
-
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto id = DeploymentId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid deployment ID", 400);
-
-        auto data = precheck.data;
-        DeploymentDTO dto;
-        dto.deploymentId = id;
-        dto.tenantId = tenantId;
-        dto.notes = data.getString("notes");
-        dto.scheduledAt = data.getLong("scheduledAt");
-
-        auto result = usecase.updateDeployment(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Deployment updated successfully", "Updated", 200, responseData);
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto id = DeploymentId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid deployment ID", 400);
-
-        auto result = usecase.deleteDeployment(tenantId, id);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Deployment deleted successfully", "Deleted", 200, responseData);
-    }
+    auto id = DeploymentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid deployment ID", 400);
+    auto result = usecase.deleteDeployment(precheck.tenantId, id);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Deleted", 200, Json.emptyObject.set("id", id.value));
+  }
 }

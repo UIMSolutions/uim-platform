@@ -11,140 +11,109 @@ mixin(ShowModule!());
 
 @safe:
 
+/// REST adapter for mobile applications:
+///   GET/POST {base}/mobile-applications   GET/PUT/DELETE {base}/mobile-applications/:id
 class MobileApplicationController : ManageHttpController {
-    private ManageMobileApplicationsUseCase usecase;
+  protected IManageMobileApplicationsUseCase usecase;
+  protected string basePath;
 
-    this(ManageMobileApplicationsUseCase usecase) {
-        this.usecase = usecase;
-    }
+  this(IManageMobileApplicationsUseCase usecase, string apiPath = "/api/v1/agentry") {
+    this.usecase = usecase;
+    this.basePath = apiPath.stripRight("/") ~ "/mobile-applications";
+  }
 
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
-        
-        router.get("/api/v1/agentry/mobile-applications", &handleList);
-        router.get("/api/v1/agentry/mobile-applications/*", &handleGet);
-        router.post("/api/v1/agentry/mobile-applications", &handleCreate);
-        router.put("/api/v1/agentry/mobile-applications/*", &handleUpdate);
-        router.delete_("/api/v1/agentry/mobile-applications/*", &handleDelete);
-    }
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    router.get(basePath, &handleList);
+    router.get(basePath ~ "/*", &handleGet);
+    router.post(basePath, &handleCreate);
+    router.put(basePath ~ "/*", &handleUpdate);
+    router.delete_(basePath ~ "/*", &handleDelete);
+  }
 
-        auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto items = usecase.listMobileApplications(tenantId);
-        auto list = items.map!(e => e.toJson()).array.toJson;
-        auto resp = Json.emptyObject
-            .set("count", items.length)
-            .set("resources", list);
+    auto items = usecase.listMobileApplications(precheck.tenantId);
+    auto resp = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", items.map!(e => e.toJson()).array.toJson);
+    return successResponse("Mobile application list retrieved", "Retrieved", 200, resp);
+  }
 
-        return successResponse("Mobile application list retrieved successfully", "Retrieved", 200, resp);
-    }
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    MobileApplicationDTO dto;
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.tenantId = precheck.tenantId;
+    dto.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto tenantId = precheck.tenantId;
+    auto result = usecase.createMobileApplication(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Created", 201, Json.emptyObject.set("id", result.id));
+  }
 
-        auto id = MobileApplicationId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid mobile application ID", 400);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto e = usecase.getMobileApplication(tenantId, id);
-        if (e.isNull)
-            return errorResponse("Mobile application not found", 404);
+    auto id = MobileApplicationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid mobile application ID", 400);
+    auto entity = usecase.getMobileApplication(precheck.tenantId, id);
+    if (entity.isNull)
+      return errorResponse("Mobile application not found", 404);
+    return successResponse("Mobile application retrieved", "Retrieved", 200, entity.toJson);
+  }
 
-        auto responseData = e.toJson();
-            
-        return successResponse("Mobile application retrieved successfully", "Retrieved", 200, responseData);
-    }
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto id = MobileApplicationId(precheck.id);
+    auto current = usecase.getMobileApplication(precheck.tenantId, id);
+    if (current.isNull)
+      return errorResponse("Mobile application not found", 404);
 
-        auto tenantId = precheck.tenantId;
+    // merge: start from the stored values, overlay the supplied ones
+    auto dto = MobileApplicationDTO.fromEntity(current);
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.applicationId = id;
+    dto.tenantId = precheck.tenantId;
+    dto.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto data = precheck.data;
-        MobileApplicationDTO dto;
-        dto.applicationId = MobileApplicationId(precheck.id);
-        dto.tenantId = tenantId;
-        dto.name = data.getString("name");
-        dto.description = data.getString("description");
-        dto.iconUrl = data.getString("iconUrl");
-        dto.category = data.getString("category");
-        dto.vendor = data.getString("vendor");
-        dto.contactEmail = data.getString("contactEmail");
-        dto.backendSystemId = data.getString("backendSystemId");
-        dto.offlineCapable = data.getBoolean("offlineCapable");
-        dto.pushNotificationsEnabled = data.getBoolean("pushNotificationsEnabled");
-        dto.minOsVersion = data.getString("minOsVersion");
-        dto.packageName = data.getString("packageName");
+    auto result = usecase.updateMobileApplication(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Updated", 200, Json.emptyObject.set("id", result.id));
+  }
 
-        auto result = usecase.createMobileApplication(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Mobile application created successfully", "Created", 201, responseData);
-
-    }
-
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto id = MobileApplicationId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid mobile application ID", 400);
-
-        auto data = precheck.data;
-        MobileApplicationDTO dto;
-        dto.applicationId = id;
-        dto.tenantId = tenantId;
-        dto.name = data.getString("name");
-        dto.description = data.getString("description");
-        dto.iconUrl = data.getString("iconUrl");
-        dto.category = data.getString("category");
-        dto.vendor = data.getString("vendor");
-        dto.contactEmail = data.getString("contactEmail");
-        dto.minOsVersion = data.getString("minOsVersion");
-
-        auto result = usecase.updateMobileApplication(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Mobile application updated successfully", "Updated", 200, responseData);
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-        auto id = MobileApplicationId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid mobile application ID", 400);
-
-        auto result = usecase.deleteMobileApplication(tenantId, id);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("Mobile application deleted successfully", "Deleted", 200, responseData);
-    }
+    auto id = MobileApplicationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid mobile application ID", 400);
+    auto result = usecase.deleteMobileApplication(precheck.tenantId, id);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Deleted", 200, Json.emptyObject.set("id", id.value));
+  }
 }

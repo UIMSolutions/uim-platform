@@ -33,7 +33,7 @@ struct AppVersion {
             .set("definitionId", definitionId.value)
             .set("versionNumber", versionNumber)
             .set("releaseNotes", releaseNotes)
-            .set("status", status.to!string)
+            .set("status", enumValue(status))
             .set("builtAt", builtAt)
             .set("publishedAt", publishedAt)
             .set("artifactUrl", artifactUrl)

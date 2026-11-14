@@ -6,5 +6,6 @@
 module uim.platform.agentry.application.usecases;
 
 public {
-    import uim.platform.agentry.application.usecases.manage;
+  import uim.platform.agentry.application.usecases.support;
+  import uim.platform.agentry.application.usecases.manage;
 }

@@ -11,134 +11,109 @@ mixin(ShowModule!());
 
 @safe:
 
+/// REST adapter for app versions:
+///   GET/POST {base}/app-versions   GET/PUT/DELETE {base}/app-versions/:id
 class AppVersionController : ManageHttpController {
-    protected ManageAppVersionsUseCase usecase;
+  protected IManageAppVersionsUseCase usecase;
+  protected string basePath;
 
-    this(ManageAppVersionsUseCase usecase) {
-        this.usecase = usecase;
-    }
+  this(IManageAppVersionsUseCase usecase, string apiPath = "/api/v1/agentry") {
+    this.usecase = usecase;
+    this.basePath = apiPath.stripRight("/") ~ "/app-versions";
+  }
 
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
-        
-        router.get("/api/v1/agentry/app-versions", &handleList);
-        router.get("/api/v1/agentry/app-versions/*", &handleGet);
-        router.post("/api/v1/agentry/app-versions", &handleCreate);
-        router.put("/api/v1/agentry/app-versions/*", &handleUpdate);
-        router.delete_("/api/v1/agentry/app-versions/*", &handleDelete);
-    }
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    router.get(basePath, &handleList);
+    router.get(basePath ~ "/*", &handleGet);
+    router.post(basePath, &handleCreate);
+    router.put(basePath ~ "/*", &handleUpdate);
+    router.delete_(basePath ~ "/*", &handleDelete);
+  }
 
-        auto tenantId = precheck.tenantId;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto versions = usecase.listAppVersions(tenantId);
-        auto jsVersions = versions.map!(e => e.toJson()).array.toJson;
+    auto items = usecase.listAppVersions(precheck.tenantId);
+    auto resp = Json.emptyObject
+      .set("count", items.length)
+      .set("resources", items.map!(e => e.toJson()).array.toJson);
+    return successResponse("App version list retrieved", "Retrieved", 200, resp);
+  }
 
-        auto resp = Json.emptyObject
-            .set("count", versions.length)
-            .set("resources", jsVersions);
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        return successResponse("App version list retrieved successfully", "Retrieved", 200, resp);
-    }
+    AppVersionDTO dto;
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.tenantId = precheck.tenantId;
+    dto.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto result = usecase.createAppVersion(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Created", 201, Json.emptyObject.set("id", result.id));
+  }
 
-        auto tenantId = precheck.tenantId;
-        auto id = AppVersionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid app version ID", 400);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto e = usecase.getAppVersion(tenantId, id);
-        if (e.isNull)
-            return errorResponse("App version not found", 404);
+    auto id = AppVersionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid app version ID", 400);
+    auto entity = usecase.getAppVersion(precheck.tenantId, id);
+    if (entity.isNull)
+      return errorResponse("App version not found", 404);
+    return successResponse("App version retrieved", "Retrieved", 200, entity.toJson);
+  }
 
-        auto responseData = e.toJson();
-            
-        return successResponse("App version retrieved successfully", "Retrieved", 200, responseData);
-    }
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto id = AppVersionId(precheck.id);
+    auto current = usecase.getAppVersion(precheck.tenantId, id);
+    if (current.isNull)
+      return errorResponse("App version not found", 404);
 
-        auto tenantId = precheck.tenantId;
+    // merge: start from the stored values, overlay the supplied ones
+    auto dto = AppVersionDTO.fromEntity(current);
+    try
+      readPayload(dto, precheck.data);
+    catch (PayloadException e)
+      return errorResponse(e.msg, 400);
+    dto.versionId = id;
+    dto.tenantId = precheck.tenantId;
+    dto.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto data = precheck.data;
-        AppVersionDTO dto;
-        dto.versionId = AppVersionId(data.getString("id"));
-        dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
-        dto.definitionId = AppDefinitionId(data.getString("definitionId"));
-        dto.tenantId = tenantId;
-        dto.versionNumber = data.getString("versionNumber");
-        dto.releaseNotes = data.getString("releaseNotes");
-        dto.artifactUrl = data.getString("artifactUrl");
-        dto.checksum = data.getString("checksum");
-        dto.minOsVersion = data.getString("minOsVersion");
-        dto.changeLog = data.getString("changeLog");
-        dto.isMandatoryUpdate = data.getBoolean("isMandatoryUpdate");
+    auto result = usecase.updateAppVersion(dto);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Updated", 200, Json.emptyObject.set("id", result.id));
+  }
 
-        auto result = usecase.createAppVersion(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("App version created successfully", "Created", 201, responseData);
-    }
-
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto id = AppVersionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid app version ID", 400);
-
-        auto data = precheck.data;
-        AppVersionDTO dto;
-        dto.versionId = id;
-        dto.tenantId = tenantId;
-        dto.releaseNotes = data.getString("releaseNotes");
-        dto.artifactUrl = data.getString("artifactUrl");
-        dto.changeLog = data.getString("changeLog");
-
-        auto result = usecase.updateAppVersion(dto);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("App version updated successfully", "Updated", 200, responseData);
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-        auto id = AppVersionId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid app version ID", 400);
-
-        auto result = usecase.deleteAppVersion(tenantId, id);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-            
-        return successResponse("App version deleted successfully", "Deleted", 200, responseData);
-    }
+    auto id = AppVersionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid app version ID", 400);
+    auto result = usecase.deleteAppVersion(precheck.tenantId, id);
+    if (!result.isSuccess)
+      return errorResponse(result.message, httpStatusOf(result));
+    return successResponse(result.message, "Deleted", 200, Json.emptyObject.set("id", id.value));
+  }
 }

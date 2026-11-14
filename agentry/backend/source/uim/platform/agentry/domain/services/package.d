@@ -6,5 +6,6 @@
 module uim.platform.agentry.domain.services;
 
 public {
-    import uim.platform.agentry.domain.services.agentry_validator;
+  import uim.platform.agentry.domain.services.agentry_validator;
+  import uim.platform.agentry.domain.services.lifecycle;
 }

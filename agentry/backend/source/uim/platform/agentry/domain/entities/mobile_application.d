@@ -32,8 +32,8 @@ struct MobileApplication {
         auto j = entityToJson
             .set("name", name)
             .set("description", description)
-            .set("platform", platform.to!string)
-            .set("status", status.to!string)
+            .set("platform", enumValue(platform))
+            .set("status", enumValue(status))
             .set("iconUrl", iconUrl)
             .set("category", category)
             .set("vendor", vendor)

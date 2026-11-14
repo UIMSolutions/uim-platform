@@ -11,60 +11,64 @@ mixin(ShowModule!());
 
 @safe:
 
-struct AppDefinitionRequest {
-    string name;
-    string version_;
-    string description;
-}
-
-/// DTO für partielle Updates (PATCH)
-struct AppDefinitionPatchRequest {
-    Nullable!string name;
-    Nullable!string version_;
-    Nullable!string description;
-}
-
-/// DTO für die Antwort
-struct AppDefinitionResponse {
-    string tenantId;
-    string id;
-    string message;
-    ulong code;
-    // string description;
-}
-
+/// Implementation of IAppDefinitionApi on top of the driving port.
 class AppDefinitionService : IAppDefinitionApi {
-    private ManageAppDefinitionsUseCase usecase;
+  private IManageAppDefinitionsUseCase usecase;
 
-    this(ManageAppDefinitionsUseCase usecase) {
-        this.usecase = usecase;
-    }
+  this(IManageAppDefinitionsUseCase usecase) {
+    this.usecase = usecase;
+  }
 
-    override AppDefinition[] getAppDefinitions(string tenantId, AuthContext auth) {
-        return usecase.listDefinitions(TenantId(tenantId));
-    }
+  Json[] getAppDefinitions(RequestIdentity identity) {
+    return usecase.listDefinitions(identity.tenantId).map!(d => d.toJson).array;
+  }
 
-    override AppDefinition getAppDefinition(string tenantId, string _id, AuthContext auth) {
-        return usecase.getDefinition(TenantId(tenantId), AppDefinitionId(_id));
-    }
+  Json getAppDefinition(string _id, RequestIdentity identity) {
+    return require(identity.tenantId, _id).toJson;
+  }
 
-    override AppDefinitionResponse createAppDefinition(string tenantId, AppDefinitionDTO request, AuthContext auth) {
-        auto result = usecase.createDefinition(request);
-        return AppDefinitionResponse(tenantId, result.id, result.message, result.code);
-    }
+  Json createAppDefinition(Json request, RequestIdentity identity) {
+    AppDefinitionDTO dto;
+    read(dto, request);
+    dto.tenantId = identity.tenantId;
+    dto.createdBy = identity.userId;
+    return respond(usecase.createDefinition(dto));
+  }
 
-    override void updateAppDefinition(string tenantId, string _id, AppDefinitionDTO request, AuthContext auth) {
-        usecase.updateDefinition(request);
-    }
+  Json updateAppDefinition(string _id, Json request, RequestIdentity identity) {
+    auto dto = AppDefinitionDTO.fromEntity(require(identity.tenantId, _id));
+    read(dto, request);
+    dto.definitionId = AppDefinitionId(_id);
+    dto.tenantId = identity.tenantId;
+    dto.updatedBy = identity.userId;
+    return respond(usecase.updateDefinition(dto));
+  }
 
-    // @path("/:id") @method(HTTPMethod.PATCH)
-    // AppDefinitionResponse patchApp(
-    //     @headerParam("X-Tenant-ID") string tenantId,
-    //     string _id,
-    //     AppDefinitionPatchRequest req
-    // );
+  Json publishAppDefinition(string _id, RequestIdentity identity) {
+    return respond(usecase.publishDefinition(identity.tenantId, AppDefinitionId(_id), identity.userId));
+  }
 
-    override void deleteAppDefinition(string tenantId, string _id, AuthContext auth) {
-        usecase.deleteDefinition(TenantId(tenantId), AppDefinitionId(_id));
-    }
+  void deleteAppDefinition(string _id, RequestIdentity identity) {
+    respond(usecase.deleteDefinition(identity.tenantId, AppDefinitionId(_id)));
+  }
+
+  private AppDefinition require(TenantId tenantId, string id) {
+    auto def = usecase.getDefinition(tenantId, AppDefinitionId(id));
+    if (def.isNull)
+      throw new HTTPStatusException(HTTPStatus.notFound, "App definition '" ~ id ~ "' not found");
+    return def;
+  }
+
+  private static void read(ref AppDefinitionDTO dto, Json request) {
+    try
+      readPayload(dto, request);
+    catch (PayloadException e)
+      throw new HTTPStatusException(HTTPStatus.badRequest, e.msg);
+  }
+
+  private static Json respond(UsecaseResult result) {
+    if (!result.isSuccess)
+      throw new HTTPStatusException(cast(HTTPStatus) httpStatusOf(result), result.message);
+    return Json.emptyObject.set("id", result.id).set("message", result.message);
+  }
 }
