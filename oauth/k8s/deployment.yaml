@@ -1,42 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oauth
+  name: uim-oauth
   namespace: uim-platform
   labels:
-    app: oauth
+    app: uim-oauth
     part-of: uim-platform
 spec:
-  replicas: 1
+  replicas: 1 # file storage: one writer only
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
-      app: oauth
+      app: uim-oauth
   template:
     metadata:
       labels:
-        app: oauth
+        app: uim-oauth
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
       containers:
-      - name: oauth
+      - name: uim-oauth
         image: uim-platform/oauth:latest
         ports:
         - containerPort: 8114
           protocol: TCP
         envFrom:
         - configMapRef:
-            name: oauth-config
+            name: uim-oauth-config
+        - secretRef:
+            name: uim-oauth-signing
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
             path: /health
             port: 8114
           initialDelaySeconds: 10
           periodSeconds: 30
+          timeoutSeconds: 5
         readinessProbe:
           httpGet:
             path: /health
             port: 8114
           initialDelaySeconds: 5
           periodSeconds: 10
+          timeoutSeconds: 5
         resources:
           requests:
             memory: "64Mi"
@@ -44,3 +57,11 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "500m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: [ "ALL" ]
+      volumes:
+      - name: data
+        emptyDir: {} # replace with a PersistentVolumeClaim: tokens and clients live here

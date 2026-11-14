@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: oauth
+  name: uim-oauth
   namespace: uim-platform
   labels:
-    app: oauth
+    app: uim-oauth
     part-of: uim-platform
 spec:
   type: ClusterIP
   selector:
-    app: oauth
+    app: uim-oauth
   ports:
   - name: http
     port: 8114

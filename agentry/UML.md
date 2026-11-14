@@ -1,194 +1,180 @@
-# UML Diagrams — Agentry Service
+# UML — Agentry Service
 
+## Component diagram
 
-## Documentation update
+```mermaid
+flowchart LR
+  subgraph Clients
+    Fiori[SAP Fiori 3 / UI5 app]
+    CLI[uim-agentry-cli]
+    GUI[uim-agentry-gui · GtkD]
+    Ext[REST clients]
+  end
+  AR[approuter · XSUAA]
+  Fiori --> AR
+  AR -->|/odata/v4/agentry| OData
+  AR -->|/api/v1 · /rest/v1| REST
+  Ext --> REST
 
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+  subgraph Backend[backend · vibe.d]
+    OData[presentation/odata]
+    REST[presentation/http · rest]
+    CLIA[presentation/cli]
+    GUIA[presentation/gui]
+    Ports((AgentryPorts))
+    UC[application/usecases + statistics]
+    Dom[domain · validator · lifecycle]
+    Repo[persistence/repositories]
+    Store[(JSON snapshots · dataDir)]
+    Probe[infrastructure/clients · HttpBackendProbe]
+    Pub[infrastructure/logging · LogEventPublisher]
+    WD[infrastructure/workers · SyncWatchdog]
+  end
+  CLI --> CLIA
+  GUI --> GUIA
+  OData & REST & CLIA & GUIA --> Ports --> UC --> Dom
+  UC --> Repo --> Store
+  UC --> Probe --> SAP[(SAP backend)]
+  UC --> Pub
+  WD --> Ports
+```
 
-## Class Diagram
+## Class diagram — domain and ports
 
 ```mermaid
 classDiagram
-    class MobileApplication {
-        +string id
-        +string name
-        +AppPlatform platform
-        +AppStatus status
-        +string packageName
-        +bool offlineCapable
-        +bool pushNotificationsEnabled
-    }
-    class AppDefinition {
-        +string id
-        +string mobileApplicationId
-        +string name
-        +string definitionContent
-        +string definitionFormat
-        +DefinitionStatus status
-        +bool validationPassed
-    }
-    class AppVersion {
-        +string id
-        +string mobileApplicationId
-        +string definitionId
-        +string versionNumber
-        +AppVersionStatus status
-        +bool isMandatoryUpdate
-    }
-    class MobileDevice {
-        +string id
-        +string mobileApplicationId
-        +string deviceName
-        +AppPlatform platform
-        +string osVersion
-        +DeviceStatus status
-        +string groupName
-    }
-    class SyncSession {
-        +string id
-        +string deviceId
-        +string mobileApplicationId
-        +string backendConnectionId
-        +SyncStatus status
-        +SyncDirection direction
-        +long bytesSent
-        +long bytesReceived
-    }
-    class BackendConnection {
-        +string id
-        +string name
-        +BackendType backendType
-        +ConnectionStatus status
-        +string backendUrl
-        +string authMethod
-        +bool sslEnabled
-    }
-    class Deployment {
-        +string id
-        +string mobileApplicationId
-        +string appVersionId
-        +DeploymentStatus status
-        +DeploymentScope scope
-        +long devicesTotal
-        +long devicesSucceeded
-    }
+  class MobileApplication { name; packageName; platform: AppPlatform; status: AppStatus; offlineCapable; pushNotificationsEnabled }
+  class AppDefinition { applicationId; name; definitionFormat; definitionContent; status: DefinitionStatus; validationPassed; publishedAt }
+  class AppVersion { mobileApplicationId; definitionId; versionNumber; artifactUrl; status: AppVersionStatus; isMandatoryUpdate }
+  class MobileDevice { mobileApplicationId; deviceName; platform; osVersion; status: DeviceStatus; groupName; lastSeenAt }
+  class SyncSession { deviceId; applicationId; connectionId; status: SyncStatus; direction; bytesSent; bytesReceived }
+  class BackendConnection { name; backendType; backendUrl; authMethod; status: ConnectionStatus; lastTestedAt }
+  class Deployment { appVersionId; scope_: DeploymentScope; targetGroupName; status: DeploymentStatus; devicesTotal; devicesSucceeded }
 
-    AppDefinition --> MobileApplication : defines
-    AppVersion --> MobileApplication : version of
-    AppVersion --> AppDefinition : built from
-    MobileDevice --> MobileApplication : enrolled in
-    SyncSession --> MobileDevice : initiated by
-    SyncSession --> MobileApplication : syncs
-    SyncSession --> BackendConnection : connects to
-    Deployment --> MobileApplication : deploys
-    Deployment --> AppVersion : targets
+  MobileApplication "1" o-- "*" AppDefinition
+  MobileApplication "1" o-- "*" AppVersion
+  AppDefinition "1" o-- "*" AppVersion
+  MobileApplication "1" o-- "*" MobileDevice
+  MobileDevice "1" o-- "*" SyncSession
+  BackendConnection "1" o-- "*" SyncSession
+  AppVersion "1" o-- "*" Deployment
+
+  class AgentryPorts {
+    IManageMobileApplicationsUseCase mobileApplications
+    IManageAppDefinitionsUseCase appDefinitions
+    IManageAppVersionsUseCase appVersions
+    IManageDevicesUseCase devices
+    IManageSyncSessionsUseCase syncSessions
+    IManageBackendConnectionsUseCase backendConnections
+    IManageDeploymentsUseCase deployments
+    IAgentryStatisticsService statistics
+  }
+  class ManageDeploymentsUseCase { createDeployment(); startDeployment(); completeDeployment(); rollbackDeployment() }
+  ManageDeploymentsUseCase ..|> IManageDeploymentsUseCase
+  ManageDeploymentsUseCase --> IDeploymentRepository
+  ManageDeploymentsUseCase --> IAppVersionRepository
+  ManageDeploymentsUseCase --> IDeviceRepository
+  ManageDeploymentsUseCase --> IAgentryEventPublisher
+  class ManageBackendConnectionsUseCase { testBackendConnection() }
+  ManageBackendConnectionsUseCase --> IBackendProbe
+  DeploymentRepository ..|> IDeploymentRepository
+  DeploymentRepository --> SnapshotTenantStore
+  SnapshotTenantStore --> ISnapshotStorage
+  JsonFileSnapshotStorage ..|> ISnapshotStorage
 ```
 
-## Component Diagram
-
-```mermaid
-flowchart TB
-    subgraph Presentation["Presentation Layer"]
-        REST["REST API\n/api/v1/agentry/..."]
-    end
-
-    subgraph Application["Application Layer"]
-        UC1["ManageMobileApplicationsUseCase"]
-        UC2["ManageAppDefinitionsUseCase"]
-        UC3["ManageAppVersionsUseCase"]
-        UC4["ManageDevicesUseCase"]
-        UC5["ManageSyncSessionsUseCase"]
-        UC6["ManageBackendConnectionsUseCase"]
-        UC7["ManageDeploymentsUseCase"]
-    end
-
-    subgraph Domain["Domain Layer"]
-        Entities["Entities\nMobileApplication · AppDefinition\nAppVersion · MobileDevice\nSyncSession · BackendConnection\nDeployment"]
-        Ports["Repository Interfaces\n(Ports)"]
-        Validator["AgentryValidator"]
-    end
-
-    subgraph Infrastructure["Infrastructure Layer"]
-        Repos["Memory Repositories\n(Adapters)"]
-        Config["SrvConfig\n(AGENTRY_HOST/PORT)"]
-        Container["DI Container"]
-    end
-
-    REST --> UC1 & UC2 & UC3 & UC4 & UC5 & UC6 & UC7
-    UC1 & UC2 & UC3 & UC4 & UC5 & UC6 & UC7 --> Entities
-    UC1 & UC2 & UC3 & UC4 & UC5 & UC6 & UC7 --> Ports
-    UC1 & UC2 & UC3 --> Validator
-    Ports --> Repos
-    Config --> Container
-    Container --> Repos
-```
-
-## Sequence Diagram — MobileDevice Enrollment
+## Sequence — release and roll out a version (OData)
 
 ```mermaid
 sequenceDiagram
-    actor Client
-    participant DC as DeviceController
-    participant UC as ManageDevicesUseCase
-    participant V as AgentryValidator
-    participant R as DeviceRepository
-
-    Client->>DC: POST /api/v1/agentry/devices
-    DC->>UC: enrollDevice(DeviceDTO)
-    UC->>V: isValidDevice(device)
-    V-->>UC: true
-    UC->>R: save(device)
-    R-->>UC: ok
-    UC-->>DC: UsecaseResult(success, id)
-    DC-->>Client: 201 Created { id }
+  actor Admin as Fiori user
+  participant OD as AgentryODataController
+  participant DefUC as ManageAppDefinitionsUseCase
+  participant VerUC as ManageAppVersionsUseCase
+  participant DepUC as ManageDeploymentsUseCase
+  Admin->>OD: POST PublishAppDefinition {id}
+  OD->>DefUC: publishDefinition()
+  DefUC->>DefUC: validateContent() · ensureTransition(draft→published)
+  Admin->>OD: POST PublishAppVersion {id}
+  OD->>VerUC: publishAppVersion()
+  VerUC->>VerUC: definition published? artifactUrl set?
+  Admin->>OD: POST Deployments {appVersionId, scope: group}
+  OD->>DepUC: createDeployment() — 422 unless version published
+  Admin->>OD: POST StartDeployment {id}
+  DepUC->>DepUC: resolve target devices → devicesTotal
+  Admin->>OD: POST CompleteDeployment {id, devicesSucceeded}
 ```
 
-## Sequence Diagram — Data Synchronisation
+## Sequence — data synchronisation
 
 ```mermaid
 sequenceDiagram
-    actor MobileApp
-    participant SC as SyncSessionController
-    participant UC as ManageSyncSessionsUseCase
-    participant R as SyncSessionRepository
-    participant BC as BackendConnection
-
-    MobileApp->>SC: POST /api/v1/agentry/sync-sessions
-    SC->>UC: createSyncSession(SyncSessionDTO)
-    UC->>R: save(session)
-    R-->>UC: ok
-    UC-->>SC: UsecaseResult(success, id)
-    SC-->>MobileApp: 201 Created { id }
-
-    MobileApp->>SC: PUT /api/v1/agentry/sync-sessions/{id}
-    note over MobileApp,SC: Update status to completed
-    SC->>UC: updateSyncSession(dto)
-    UC->>R: update(session)
-    R-->>UC: ok
-    UC-->>SC: UsecaseResult(success, id)
-    SC-->>MobileApp: 200 OK
+  participant Dev as Device / CLI
+  participant UC as ManageSyncSessionsUseCase
+  participant DR as IDeviceRepository
+  Dev->>UC: createSyncSession(device, app, connection)
+  UC->>DR: device suspended / removed? → 422
+  Dev->>UC: startSyncSession() (pending → inProgress)
+  Dev->>UC: completeSyncSession(metrics)
+  UC->>DR: lastSeenAt, appVersionInstalled, enrolled → active
+  Note over UC: SyncWatchdogWorker fails sessions in progress longer than syncTimeoutMinutes
 ```
 
-## State Diagram — Mobile Application Lifecycle
+## State diagrams
 
 ```mermaid
 stateDiagram-v2
-    [*] --> draft : create
-    draft --> active : publish
-    active --> deprecated_ : deprecate
-    deprecated_ --> archived : archive
-    draft --> archived : discard
+  direction LR
+  state "App definition" as D {
+    [*] --> draft
+    draft --> published: publish (valid metadata)
+    draft --> archived
+    published --> archived
+    archived --> draft
+  }
 ```
-
-## State Diagram — Deployment Lifecycle
 
 ```mermaid
 stateDiagram-v2
-    [*] --> pending : create deployment
-    pending --> deploying : start rollout
-    deploying --> deployed : all devices updated
-    deploying --> failed : error during rollout
-    failed --> rolledBack : rollback triggered
-    deployed --> [*]
+  direction LR
+  state "App version" as V {
+    [*] --> pending
+    pending --> published
+    pending --> withdrawn
+    published --> deprecated
+    deprecated --> published
+    published --> withdrawn
+    deprecated --> withdrawn
+    withdrawn --> [*]
+  }
+```
+
+```mermaid
+stateDiagram-v2
+  direction LR
+  state "Deployment" as P {
+    [*] --> pending
+    pending --> deploying: start
+    pending --> failed
+    deploying --> deployed: complete
+    deploying --> failed: complete (0 succeeded)
+    failed --> pending: retry
+    deployed --> rolledBack
+    failed --> rolledBack
     rolledBack --> [*]
+  }
+```
+
+```mermaid
+stateDiagram-v2
+  direction LR
+  state "Sync session" as S {
+    [*] --> pending
+    pending --> inProgress
+    pending --> cancelled
+    inProgress --> completed
+    inProgress --> failed
+    inProgress --> cancelled
+    failed --> pending: retry
+  }
 ```

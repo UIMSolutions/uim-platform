@@ -1,0 +1,53 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": { "logoutEndpoint": "/do/logout" },
+  "routes": [
+    {
+      "source": "^/odata/v4/oauth/(.*)$",
+      "target": "/odata/v4/oauth/$1",
+      "destination": "oauth-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": "$XSAPPNAME.Read"
+    },
+    {
+      "source": "^/api/v1/oauth/(.*)$",
+      "target": "/api/v1/oauth/$1",
+      "destination": "oauth-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": "$XSAPPNAME.Read"
+    },
+    {
+      "source": "^/oauth/authorize$",
+      "target": "/oauth/authorize",
+      "destination": "oauth-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/oauth/(token|introspect|revoke|branding)$",
+      "target": "/oauth/$1",
+      "destination": "oauth-srv",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/\\.well-known/oauth-authorization-server$",
+      "destination": "oauth-srv",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/health$",
+      "destination": "oauth-srv",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

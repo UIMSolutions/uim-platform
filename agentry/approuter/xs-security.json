@@ -1,0 +1,28 @@
+{
+  "xsappname": "uim-agentry",
+  "tenant-mode": "dedicated",
+  "description": "UIM Agentry mobile platform",
+  "scopes": [
+    { "name": "$XSAPPNAME.AgentryViewer", "description": "Read applications, devices, sync sessions and deployments" },
+    { "name": "$XSAPPNAME.AgentryAdmin", "description": "Manage applications, definitions, versions, devices, connections and deployments" }
+  ],
+  "role-templates": [
+    {
+      "name": "AgentryViewer",
+      "description": "Agentry viewer",
+      "scope-references": ["$XSAPPNAME.AgentryViewer"]
+    },
+    {
+      "name": "AgentryAdmin",
+      "description": "Agentry administrator",
+      "scope-references": ["$XSAPPNAME.AgentryAdmin", "$XSAPPNAME.AgentryViewer"]
+    }
+  ],
+  "role-collections": [
+    { "name": "UIM Agentry Viewer", "role-template-references": ["$XSAPPNAME.AgentryViewer"] },
+    { "name": "UIM Agentry Administrator", "role-template-references": ["$XSAPPNAME.AgentryAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

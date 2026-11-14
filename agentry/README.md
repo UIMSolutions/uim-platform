@@ -1,158 +1,151 @@
 # Agentry Service
 
-## Documentation update
+A metadata-driven mobile application platform in the style of **SAP BTP Agentry**: author app definitions, release versions, enroll devices, track data synchronisation with SAP backends and roll out deployments.
 
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+- **Backend:** D + vibe.d 0.10.x, hexagonal / clean architecture
+- **Interfaces:** REST (`/api/v1`), vibe.d REST interface (`/rest/v1`), **OData v4** (`/odata/v4/agentry`), **command line** (`uim-agentry-cli`), **GtkD desktop GUI** (`uim-agentry-gui`)
+- **Frontend:** SAP Fiori 3 / UI5 app on the OData v4 service
+- **Deployment:** SAP BTP Cloud Foundry (`mta.yaml`, approuter + XSUAA), Docker/Podman, Kubernetes
 
-A microservice providing metadata-driven mobile application platform capabilities similar to **SAP BTP Agentry**. Built with D and vibe.d using a combination of clean and hexagonal architecture.
+## Project layout
 
-## Overview
-
-Agentry enables customers to develop, test, and operate metadata-driven mobile applications that extend the functionality of SAP backend systems (S/4HANA, ECC, BTP) to mobile users. The service manages the full application lifecycle — from authoring metadata-driven app definitions to deploying app versions to enrolled devices and monitoring synchronisation sessions.
-
-## Features
-
-- **Mobile Application Management** — Register and manage mobile application catalogs across iOS, Android, Windows, and web platforms with lifecycle tracking (draft → active → deprecated → archived)
-- **Metadata-driven App Definitions** — Author and version structured app definitions (XML/JSON) describing screens, fields, transmissions, actions, and business rules without native code changes
-- **App Version Publishing** — Build and publish versioned app packages linked to a definition, with checksums, artifact URLs, mandatory-update flags, and release notes
-- **MobileDevice Enrollment** — Enroll and manage mobile devices per application with push-token registration, OS version tracking, MDM integration, and group assignment
-- **Data Synchronisation Sessions** — Monitor bidirectional data sync sessions between enrolled devices and SAP backends, tracking bytes/records transferred and error details
-- **Backend Connections** — Configure and test connections to SAP backend systems (S/4HANA, ECC, BTP, CRM) supporting basic auth, OAuth 2.0, and SAML
-- **Deployments** — Orchestrate app version rollouts to individual devices, device groups, or entire tenants with status tracking (pending → deploying → deployed) and rollback support
+```
+agentry/
+├── mta.yaml                    MTA descriptor: backend + approuter + XSUAA
+├── backend/                    D / vibe.d service
+│   ├── dub.sdl                 configurations: defaultRun (server), cli, gui, defaultTest …
+│   ├── config/default.json     default configuration
+│   ├── source/app.d            HTTP server composition root
+│   ├── source/cli.d            CLI entry point
+│   ├── source/gui.d            GtkD entry point
+│   └── source/uim/platform/agentry/
+│       ├── domain/             entities, types, enumerations, services (validator, lifecycle), exceptions
+│       ├── ports/              driving (usecases, services, AgentryPorts) + driven (repositories, storages, messaging, gateways)
+│       ├── application/        use cases, statistics service, DTOs
+│       ├── persistence/        repositories, JSON snapshot storage, mappers, records
+│       ├── infrastructure/     configuration, logging, security (XSUAA/JWT), clients (backend probe), workers, DI container
+│       └── presentation/       http, rest, odata, web, cli, gui (+ shared payloads / tabular)
+├── frontend/                   SAP Fiori 3 / UI5 app (view, controller, model, i18n, localService, test)
+├── approuter/                  @sap/approuter: xs-app.json, xs-security.json, default-env.json (local only)
+└── k8s/                        Kubernetes manifests
+```
 
 ## Architecture
 
+Dependencies point inwards only. Every presentation adapter (REST, REST interface, OData, CLI, GUI) receives the same `AgentryPorts` bundle of driving-port interfaces from the DI `Container`, so business rules exist exactly once.
+
 ```
-+-----------------------------------------------------------+
-|                    Presentation Layer                      |
-|  MobileApplicationController  AppDefinitionController     |
-|  AppVersionController  DeviceController                   |
-|  SyncSessionController  BackendConnectionController       |
-|  DeploymentController  HealthController                   |
-+-----------------------------------------------------------+
-|                    Application Layer                       |
-|  ManageMobileApplicationsUseCase  ManageAppDefinitionsUC  |
-|  ManageAppVersionsUseCase  ManageDevicesUseCase           |
-|  ManageSyncSessionsUseCase  ManageBackendConnectionsUC    |
-|  ManageDeploymentsUseCase                                 |
-+-----------------------------------------------------------+
-|                     Domain Layer                           |
-|  Entities  Repository Interfaces  AgentryValidator        |
-+-----------------------------------------------------------+
-|                  Infrastructure Layer                      |
-|  Repositories  SrvConfig  Container                       |
-+-----------------------------------------------------------+
+ REST ─┐  OData ─┐  CLI ─┐  GtkD ─┐
+       └─────────┴──────┴────────┴──▶ AgentryPorts (IManage…UseCase, IAgentryStatisticsService)
+                                          │
+                                 application/usecases ──▶ domain (validator, lifecycle rules)
+                                          │
+              ┌───────────────────────────┼─────────────────────────────┐
+     I…Repository ports            IBackendProbe              IAgentryEventPublisher
+              │                           │                             │
+ persistence (memory | JSON snapshots)  HttpBackendProbe        LogEventPublisher
 ```
 
-### Hexagonal Architecture (Ports & Adapters)
+### Business rules
 
-| Port (Interface)                 | Adapter (Implementation)        |
-| -------------------------------- | ------------------------------- |
-| `IMobileApplicationRepository` | `MobileApplicationRepository` |
-| `IAppDefinitionRepository`     | `AppDefinitionRepository`     |
-| `IAppVersionRepository`        | `AppVersionRepository`        |
-| `IDeviceRepository`            | `DeviceRepository`            |
-| `ISyncSessionRepository`       | `SyncSessionRepository`       |
-| `IBackendConnectionRepository` | `BackendConnectionRepository` |
-| `IDeploymentRepository`        | `DeploymentRepository`        |
+| Object | Lifecycle | Notable rules |
+|---|---|---|
+| Mobile application | draft → active ⇄ deprecated → archived | unique package name per tenant, reverse-domain package name |
+| App definition | draft → published → archived → draft | metadata (JSON/XML) is syntax-checked; only valid drafts can be published; published metadata is immutable |
+| App version | pending → published ⇄ deprecated → withdrawn | requires a published definition of the same application and an artifact URL; version numbers unique per app |
+| Device | enrolled → active ⇄ suspended → removed | inherits the application platform; a completed sync activates it and records the installed version |
+| Sync session | pending → inProgress → completed / failed / cancelled (failed → pending = retry) | suspended/removed devices may not sync; watchdog fails sessions running longer than `syncTimeoutMinutes` |
+| Backend connection | inactive / active / error / testing | `TestBackendConnection` probes the URL; changing the URL resets the status |
+| Deployment | pending → deploying → deployed / failed → rolledBack | only published versions; start resolves target devices by scope (device / group / tenant); rollback records the previously deployed version |
 
-## API Endpoints
+Use case results map to HTTP status codes uniformly: `400` invalid input, `404` not found, `409` duplicate, `422` business rule / lifecycle violation.
 
-| Method                        | Endpoint                                     | Description                  |
-| ----------------------------- | -------------------------------------------- | ---------------------------- |
-| GET                           | `/api/v1/health`                           | Health check                 |
-| **Mobile Applications** |                                              |                              |
-| GET                           | `/api/v1/agentry/mobile-applications`      | List all mobile applications |
-| GET                           | `/api/v1/agentry/mobile-applications/{id}` | Get mobile application by ID |
-| POST                          | `/api/v1/agentry/mobile-applications`      | Register mobile application  |
-| PUT                           | `/api/v1/agentry/mobile-applications/{id}` | Update mobile application    |
-| DELETE                        | `/api/v1/agentry/mobile-applications/{id}` | Delete mobile application    |
-| **App Definitions**     |                                              |                              |
-| GET                           | `/api/v1/agentry/app-definitions`          | List all app definitions     |
-| GET                           | `/api/v1/agentry/app-definitions/{id}`     | Get app definition by ID     |
-| POST                          | `/api/v1/agentry/app-definitions`          | Create app definition        |
-| PUT                           | `/api/v1/agentry/app-definitions/{id}`     | Update app definition        |
-| DELETE                        | `/api/v1/agentry/app-definitions/{id}`     | Delete app definition        |
-| **App Versions**        |                                              |                              |
-| GET                           | `/api/v1/agentry/app-versions`             | List all app versions        |
-| GET                           | `/api/v1/agentry/app-versions/{id}`        | Get app version by ID        |
-| POST                          | `/api/v1/agentry/app-versions`             | Publish app version          |
-| PUT                           | `/api/v1/agentry/app-versions/{id}`        | Update app version           |
-| DELETE                        | `/api/v1/agentry/app-versions/{id}`        | Delete app version           |
-| **Devices**             |                                              |                              |
-| GET                           | `/api/v1/agentry/devices`                  | List all enrolled devices    |
-| GET                           | `/api/v1/agentry/devices/{id}`             | Get device by ID             |
-| POST                          | `/api/v1/agentry/devices`                  | Enroll device                |
-| PUT                           | `/api/v1/agentry/devices/{id}`             | Update device                |
-| DELETE                        | `/api/v1/agentry/devices/{id}`             | Remove device                |
-| **Sync Sessions**       |                                              |                              |
-| GET                           | `/api/v1/agentry/sync-sessions`            | List all sync sessions       |
-| GET                           | `/api/v1/agentry/sync-sessions/{id}`       | Get sync session by ID       |
-| POST                          | `/api/v1/agentry/sync-sessions`            | Create sync session          |
-| PUT                           | `/api/v1/agentry/sync-sessions/{id}`       | Update sync session          |
-| DELETE                        | `/api/v1/agentry/sync-sessions/{id}`       | Delete sync session          |
-| **Backend Connections** |                                              |                              |
-| GET                           | `/api/v1/agentry/backend-connections`      | List all backend connections |
-| GET                           | `/api/v1/agentry/backend-connections/{id}` | Get backend connection by ID |
-| POST                          | `/api/v1/agentry/backend-connections`      | Create backend connection    |
-| PUT                           | `/api/v1/agentry/backend-connections/{id}` | Update backend connection    |
-| DELETE                        | `/api/v1/agentry/backend-connections/{id}` | Delete backend connection    |
-| **Deployments**         |                                              |                              |
-| GET                           | `/api/v1/agentry/deployments`              | List all deployments         |
-| GET                           | `/api/v1/agentry/deployments/{id}`         | Get deployment by ID         |
-| POST                          | `/api/v1/agentry/deployments`              | Create deployment            |
-| PUT                           | `/api/v1/agentry/deployments/{id}`         | Update deployment            |
-| DELETE                        | `/api/v1/agentry/deployments/{id}`         | Delete deployment            |
+## Building and running
+
+```bash
+cd backend
+dub build                      # server  → build/uim-agentry-platform-service
+dub build --config=cli         # CLI     → build/uim-agentry-cli
+dub build --config=gui         # GtkD    → build/uim-agentry-gui   (needs GTK 3.24)
+dub test                       # unit tests
+```
+
+Server, CLI and GUI share the same data when `storage` is `file` (one JSON snapshot per collection in `dataDir`, written atomically and reloaded when another process changes it).
+
+```bash
+./build/uim-agentry-platform-service          # http://localhost:8117 — Fiori app at /index.html
+./build/uim-agentry-cli help
+./build/uim-agentry-gui --tenant=default
+```
+
+### CLI examples
+
+```bash
+uim-agentry-cli apps create --name="Field Service" --package=com.example.fs --platform=ios --offline
+uim-agentry-cli definitions create --app=<appId> --name=Main --file=definition.json
+uim-agentry-cli definitions publish <defId>
+uim-agentry-cli versions create --app=<appId> --definition=<defId> --version=1.0.0 --artifact=https://cdn/fs.ipa
+uim-agentry-cli versions publish <verId>
+uim-agentry-cli devices enroll --app=<appId> --name=Tech-01 --os=17.4 --group=north
+uim-agentry-cli deployments create --version=<verId> --scope=group --group=north
+uim-agentry-cli deployments start <depId>
+uim-agentry-cli connections test <conId>
+uim-agentry-cli stats --json
+```
+
+Exit codes: `0` success, `1` rejected by the service, `2` usage error.
 
 ## Configuration
 
-| Environment Variable | Default     | Description      |
-| -------------------- | ----------- | ---------------- |
-| `AGENTRY_HOST`     | `0.0.0.0` | Bind address     |
-| `AGENTRY_PORT`     | `8117`    | HTTP listen port |
+Precedence (lowest → highest): compiled defaults → `config/default.json` (or `AGENTRY_CONFIG_FILE`) → environment → `VCAP_SERVICES` credentials of a service named/tagged `agentry-config`.
 
-## Running
+| Key | Environment | Default |
+|---|---|---|
+| `host` / `port` | `AGENTRY_HOST` / `AGENTRY_PORT`, `PORT` | `0.0.0.0` / `8117` |
+| `logLevel` | `AGENTRY_LOG_LEVEL` | `info` |
+| `storage` | `AGENTRY_STORAGE` | `file` (`memory` = volatile) |
+| `dataDir` | `AGENTRY_DATA_DIR` | `data` |
+| `defaultTenant` | `AGENTRY_DEFAULT_TENANT` | `default` |
+| `odataPath` | `AGENTRY_ODATA_PATH` | `/odata/v4/agentry` |
+| `frontendDir` | `AGENTRY_FRONTEND_DIR` | `../frontend` (`""` = off) |
+| `probeTimeoutSeconds` | `AGENTRY_PROBE_TIMEOUT` | `5` (`0` disables connectivity tests) |
+| `watchdogIntervalMinutes` | `AGENTRY_WATCHDOG_INTERVAL` | `0` (off) |
+| `syncTimeoutMinutes` | `AGENTRY_SYNC_TIMEOUT` | `60` |
+| `watchdogTenants` | `AGENTRY_WATCHDOG_TENANTS` | `default` |
 
-### Locally with DUB
+The tenant is taken from the XSUAA JWT (`zid`) when present, otherwise from `X-Tenant-Id`; the acting user from the token or `X-User-Id`. **JWT signatures are not verified by the backend** — it relies on the approuter; do not expose it directly.
+
+## APIs
+
+### OData v4 — `/odata/v4/agentry/`
+
+Entity sets (full CRUD, `$filter $orderby $select $top $skip $count $search`): `MobileApplications`, `AppDefinitions`, `AppVersions`, `Devices`, `SyncSessions`, `BackendConnections`, `Deployments`; singleton `Statistics`.
+
+Unbound actions (`POST`, JSON body with `id` plus parameters, returns the entity):
+`SetMobileApplicationStatus(status)`, `ValidateAppDefinition`, `PublishAppDefinition`, `ArchiveAppDefinition`, `PublishAppVersion`, `WithdrawAppVersion`, `SetDeviceStatus(status)`, `StartSyncSession`, `CompleteSyncSession(bytesSent, bytesReceived, recordsSent, recordsReceived)`, `FailSyncSession(errorMessage)`, `CancelSyncSession`, `TestBackendConnection`, `StartDeployment`, `CompleteDeployment(devicesSucceeded, devicesFailed)`, `RollbackDeployment`.
+
+`$batch` is not supported — the UI5 model uses `groupId: "$direct"`. `Edm.Int64` values are sent as strings when the client requests `IEEE754Compatible=true`.
+
+### REST — `/api/v1/agentry/<resource>`
+
+`GET/POST /<resource>`, `GET/PUT/DELETE /<resource>/:id` for `mobile-applications`, `app-definitions`, `app-versions`, `devices`, `sync-sessions`, `backend-connections`, `deployments`. `PUT` merges the supplied fields into the stored entity. Health: `GET /api/v1/health`.
+
+### vibe.d REST interface — `/rest/v1/agentry/app-definitions`
+
+`GET /`, `GET /:id`, `POST /`, `PUT /:id`, `POST /:id/publish`, `DELETE /:id`.
+
+## Deployment
 
 ```bash
-dub run --config=defaultRun
+mbt build && cf deploy mta_archives/uim-agentry_1.0.0.mtar          # SAP BTP Cloud Foundry
+docker build -f agentry/backend/Dockerfile -t uim-platform/agentry .  # from the uim-platform root
+kubectl apply -f k8s/
 ```
 
-### Docker
+For a local approuter see [approuter/README.md](approuter/README.md). The Fiori app can also run standalone with `cd frontend && npm start` (UI5 tooling); tests are under `frontend/test/testsuite.qunit.html`.
 
-```bash
-docker build -t uim-agentry .
-docker run -p 8117:8117 -e AGENTRY_HOST=0.0.0.0 -e AGENTRY_PORT=8117 uim-agentry
-```
-
-### Podman
-
-```bash
-podman build -f Containerfile -t uim-agentry .
-podman run -p 8117:8117 uim-agentry
-```
-
-### Kubernetes
-
-```bash
-kubectl apply -f k8s/configmap.yaml
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-```
-
-## Domain Model
-
-| Entity                | Key Fields                                                                  |
-| --------------------- | --------------------------------------------------------------------------- |
-| `MobileApplication` | name, platform, status, packageName, offlineCapable                         |
-| `AppDefinition`     | mobileApplicationId, definitionContent, definitionFormat, status            |
-| `AppVersion`        | mobileApplicationId, definitionId, versionNumber, status, isMandatoryUpdate |
-| `MobileDevice`            | mobileApplicationId, deviceName, platform, osVersion, status, groupName     |
-| `SyncSession`       | deviceId, backendConnectionId, status, direction, bytesSent, bytesReceived  |
-| `BackendConnection` | name, backendUrl, backendType, authMethod, sslEnabled                       |
-| `Deployment`        | mobileApplicationId, appVersionId, status, scope, devicesTotal              |
+See [UML.md](UML.md) for diagrams and [NAFv4.md](NAFv4.md) for the architecture framework views.
 
 ## License
 
-Apache-2.0 — Copyright (c) 2018-2026, Ozan Nurettin Suel
+Apache-2.0 — Copyright (c) 2018-2026 Ozan Nurettin Suel

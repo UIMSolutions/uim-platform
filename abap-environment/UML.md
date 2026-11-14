@@ -1,240 +1,438 @@
 # UML — ABAP Environment Service
 
-
-## Documentation update
-
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+Diagrams of the hexagonal backend (`backend/source/uim/platform/abap_environment`), the
+Fiori frontend and the BTP deployment. All diagrams are Mermaid.
 
 ## Class Diagram — Domain Entities
+
+All aggregates mix in `TenantEntity` (`tenantId`, `id`, `createdBy/At`, `updatedBy/At`).
+Every aggregate except `SystemInstance` belongs to one system; transports belong to their
+source system and reference a target system.
 
 ```mermaid
 classDiagram
     class SystemInstance {
         +SystemInstanceId id
-        +TenantId tenantId
+        +SubaccountId subaccountId
         +string name
-        +string description
-        +string systemId
-        +string systemType
-        +string status
+        +SystemPlan plan
+        +SystemStatus status
         +string region
+        +string sapSystemId
+        +string adminEmail
+        +int abapRuntimeSize
+        +int hanaMemorySize
         +string serviceUrl
-        +Json toJson()
+        +string webSocketUrl
+        +string sapClient
+        +string softwareVersion
+        +long activatedAt
     }
     class SoftwareComponent {
         +SoftwareComponentId id
-        +TenantId tenantId
-        +SystemInstanceId instanceId
         +string name
-        +string version
-        +string packageName
-        +string status
-        +Json toJson()
+        +ComponentType componentType
+        +ComponentStatus status
+        +string repositoryUrl
+        +string branch
+        +BranchStrategy branchStrategy
+        +string currentCommitId
+        +ComponentCommit[] commitHistory
+        +string namespace
+        +long clonedAt
+        +long lastPulledAt
     }
     class CommunicationArrangement {
         +CommunicationArrangementId id
-        +TenantId tenantId
-        +SystemInstanceId instanceId
         +string name
-        +string communicationScenario
-        +string authenticationType
-        +string status
-        +Json toJson()
+        +CommunicationScenarioId scenarioId
+        +CommunicationDirection direction
+        +ArrangementStatus status
+        +string communicationSystem
+        +CommunicationAuthMethod authMethod
+        +string communicationUser
+        +string communicationPassword «secret»
+        +string clientId
+        +string clientSecret «secret»
+        +string tokenEndpoint
+        +string certificateId
+        +CommunicationEndpoint[] inboundServices
+        +CommunicationEndpoint[] outboundServices
     }
     class ServiceBinding {
         +ServiceBindingId id
-        +TenantId tenantId
-        +SystemInstanceId instanceId
-        +string bindingType
-        +string credentials
-        +string status
-        +Json toJson()
-    }
-    class BusinessUser {
-        +BusinessUserId id
-        +TenantId tenantId
-        +SystemInstanceId instanceId
-        +string username
-        +string email
-        +string firstName
-        +string lastName
-        +string status
-        +Json toJson()
+        +string name
+        +string serviceDefinition
+        +BindingType bindingType
+        +string serviceVersion
+        +BindingStatus status
+        +ExposedEndpoint[] endpoints
+        +string serviceUrl
+        +string metadataUrl
+        +long publishedAt
     }
     class BusinessRole {
         +BusinessRoleId id
-        +TenantId tenantId
-        +SystemInstanceId instanceId
-        +string roleName
-        +string roleTemplate
-        +string description
-        +Json toJson()
+        +string name
+        +RoleType roleType
+        +string[] businessCatalogs
+        +string[] restrictionTypes
+    }
+    class BusinessUser {
+        +BusinessUserId id
+        +string name
+        +string firstName
+        +string lastName
+        +string email
+        +UserStatus status
+        +string[] roles
+        +RoleAssignment[] roleAssignments
+        +bool passwordChangeRequired
+        +int failedLoginAttempts
+        +long lockedAt
     }
     class TransportRequest {
         +TransportRequestId id
-        +TenantId tenantId
-        +SystemInstanceId instanceId
-        +string name
-        +string category
-        +string status
+        +string name «SIDK9nnnnn»
+        +string description
         +string owner
-        +Json toJson()
-    }
-    class CatalogAssignment {
-        +CatalogAssignmentId id
-        +TenantId tenantId
-        +BusinessRoleId roleId
-        +string catalogId
-        +string catalogName
-        +string assignmentStatus
-        +Json toJson()
+        +TransportType transportType
+        +TransportStatus status
+        +TransportTask[] tasks
+        +long releasedAt
+        +long importedAt
     }
     class ApplicationJob {
         +ApplicationJobId id
-        +TenantId tenantId
-        +SystemInstanceId instanceId
-        +string jobName
-        +string jobTemplate
-        +string status
+        +string name
+        +string jobTemplateName
+        +JobFrequency frequency
+        +long scheduledAt
         +string cronExpression
-        +Json toJson()
+        +bool active
+        +JobStatus status
+        +KeyValue[] parameters
+        +JobExecutionLog[] executionHistory
+        +int runCount
     }
-    class ExecutionLog {
-        +ExecutionLogId id
-        +TenantId tenantId
-        +string jobId
-        +string status
-        +string message
+    class TransportTask {
+        +string taskId
+        +string owner
+        +TransportStatus status
+        +string[] objects
+        +long releasedAt
+    }
+    class RoleAssignment {
+        +BusinessRoleId roleId
+        +string roleName
+        +long assignedAt
+    }
+    class JobExecutionLog {
+        +string runId
+        +JobStatus status
         +long startedAt
         +long finishedAt
-        +Json toJson()
+        +int returnCode
+        +string message
+    }
+    class ComponentCommit {
+        +string commitId
+        +string branch
+        +string message
+        +string author
+        +long committedAt
     }
 
-    SystemInstance "1" --> "0..*" SoftwareComponent : hosts
-    SystemInstance "1" --> "0..*" CommunicationArrangement : configures
-    SystemInstance "1" --> "0..*" ServiceBinding : provides
-    SystemInstance "1" --> "0..*" BusinessUser : manages
-    SystemInstance "1" --> "0..*" BusinessRole : owns
-    SystemInstance "1" --> "0..*" TransportRequest : tracks
-    SystemInstance "1" --> "0..*" ApplicationJob : schedules
-    BusinessRole "1" --> "0..*" CatalogAssignment : assigns
-    ApplicationJob "1" --> "0..*" ExecutionLog : records
+    SystemInstance "1" o-- "*" SoftwareComponent : systemInstanceId
+    SystemInstance "1" o-- "*" CommunicationArrangement : systemInstanceId
+    SystemInstance "1" o-- "*" ServiceBinding : systemInstanceId
+    SystemInstance "1" o-- "*" BusinessRole : systemInstanceId
+    SystemInstance "1" o-- "*" BusinessUser : systemInstanceId
+    SystemInstance "1" o-- "*" ApplicationJob : systemInstanceId
+    SystemInstance "1" o-- "*" TransportRequest : sourceSystemId
+    TransportRequest "*" --> "0..1" SystemInstance : targetSystemId
+    TransportRequest *-- "*" TransportTask
+    BusinessUser *-- "*" RoleAssignment
+    RoleAssignment --> BusinessRole : roleId
+    ApplicationJob *-- "*" JobExecutionLog
+    SoftwareComponent *-- "*" ComponentCommit
 ```
 
----
+Deleting a system deletes all objects of the system; transports from other systems that
+wait for an import into it fail. A business role that is assigned to users cannot be deleted.
 
-## Component Diagram
+## State Diagram — Lifecycles driven by actions and the reconciler
+
+```mermaid
+stateDiagram-v2
+    state "SystemInstance" as Sys {
+        [*] --> provisioning : create
+        provisioning --> active : reconcile
+        active --> updating : upgrade / resize
+        updating --> active : reconcile
+        active --> suspended : suspend
+        suspended --> active : resume
+        active --> deleting : delete
+        suspended --> deleting : delete
+        error --> deleting : delete
+        deleting --> [*] : reconcile (cascade)
+    }
+    state "SoftwareComponent" as Sc {
+        [*] --> notCloned : create
+        notCloned --> cloning : clone
+        cloning --> cloned : reconcile
+        cloning --> scError : branch unreadable
+        cloned --> pulling : pull / checkout
+        pulling --> cloned : reconcile
+        scError --> cloning : clone
+    }
+    state "TransportRequest" as Tr {
+        [*] --> modifiable : create
+        modifiable --> released : release (all tasks released)
+        released --> importing : import
+        importing --> imported : reconcile
+        importing --> trError : import fails
+        trError --> importing : import
+    }
+    state "ApplicationJob" as Job {
+        [*] --> scheduled : create
+        scheduled --> running : due (reconcile) / run
+        running --> scheduled : reconcile (recurring)
+        running --> completed : reconcile (rc = 0)
+        running --> failed : reconcile (rc ≠ 0)
+        scheduled --> canceled : cancel
+        running --> canceled : cancel
+        canceled --> scheduled : reactivate
+        completed --> scheduled : reactivate
+        failed --> scheduled : reactivate
+    }
+```
+
+Action-only transitions: service binding `unpublished → published → deprecated`
+(and back to `unpublished`), communication arrangement `active ⇄ inactive`, business
+user `active → locked → active`. Components, imports and jobs only progress while their
+system (for imports: the target system) is active.
+
+## Component Diagram — Hexagonal Architecture
+
+```mermaid
+flowchart LR
+    subgraph Driving["Driving adapters (presentation)"]
+        REST["http · AbapRestController<br/>/api/v1"]
+        OD["odata · AbapODataController<br/>/odata/v4/abap-environment + $metadata"]
+        CLI["cli · AbapCli"]
+        GUI["gui · AbapWindow (GtkD)"]
+        WEB["web · FrontendController<br/>Fiori app (local dev)"]
+        REG["resources · ResourceRegistry<br/>8 × ResourceAdapter"]
+    end
+    subgraph Core["Application core"]
+        PORTS["ports · AbapPorts<br/>IManageResource&lt;…&gt; × 8<br/>IReconcileUseCase · IAbapStatisticsService"]
+        UC["application · ResourceUseCase&lt;…&gt; × 8<br/>ReconcileUseCase · AbapStatisticsService<br/>CascadeDeleter"]
+        DOM["domain · entities · names & SIDs<br/>system lifecycle · communication policy<br/>transport policy · job schedule · service URLs"]
+    end
+    subgraph Driven["Driven adapters"]
+        REPO["persistence · 8 repositories<br/>RecordMapper&lt;T&gt;"]
+        STORE["storages · SnapshotTenantStore<br/>JsonFileSnapshotStorage"]
+        GW["clients · SimulatedLandscapeGateway<br/>(IAbapLandscapeGateway)"]
+        PUB["logging · LogEventPublisher<br/>(IAbapEventPublisher)"]
+    end
+    INFRA["infrastructure · AbapConfig · identity · ReconcileWorker · Container"]
+
+    REST --> REG
+    OD --> REG
+    CLI --> REG
+    GUI --> REG
+    REG --> PORTS
+    PORTS --> UC
+    UC --> DOM
+    UC --> REPO
+    UC --> GW
+    UC --> PUB
+    REPO --> STORE
+    STORE --> FILES[("data/*.json")]
+    INFRA -. wires .-> UC
+    INFRA -. wires .-> REPO
+    INFRA -. runs .-> PORTS
+```
+
+Dependencies point inwards: presentation knows only `AbapPorts`; use cases know only
+port interfaces (`AbapRepositories`, `IAbapLandscapeGateway`, `IAbapEventPublisher`).
+
+## Class Diagram — Generic use cases and adapters
+
+```mermaid
+classDiagram
+    class IManageResource~TEntity,TId,TCreate,TUpdate~ {
+        <<interface>>
+        +create(TCreate) UsecaseResult
+        +update(TUpdate) UsecaseResult
+        +remove(TenantId, TId, UserId) UsecaseResult
+        +get(TenantId, TId) TEntity
+        +list(TenantId) TEntity[]
+    }
+    class ResourceUseCase~TEntity,TId,TCreate,TUpdate~ {
+        <<abstract>>
+        #AbapRepositories repos
+        #IAbapEventPublisher publisher
+        #build(TCreate) TEntity*
+        #apply(ref TEntity, TSpec)*
+        #beforeRemove(TEntity)
+        #retire(ref TEntity) bool
+        #transition(tenant, id, actor, verb, change) UsecaseResult
+        #requireActiveSystem(tenant, id, forWhat) SystemInstance
+        #ensureUnique(existing, candidate, scope)
+    }
+    class ManageSystemsUseCase {
+        +suspend()
+        +resume()
+        +upgrade(softwareVersion)
+        #retire() bool
+    }
+    class ManageTransportRequestsUseCase {
+        +addTask(owner, description, objects)
+        +releaseTask(taskId)
+        +release()
+        +import_()
+    }
+    class IResourceAdapter {
+        <<interface>>
+        +path() / setName() / typeName()
+        +fields() / inputFields() / recordTypes()
+        +columns() / actions()
+        +list() / get() / create() / update() / remove() / invoke()
+    }
+    class ResourceAdapter~TEntity,TId,TCreate,TUpdate~ {
+        +column(header, field)
+        +action(name, label, handler, parameters)
+        +secret(field)
+        #payload(TEntity) Json
+        #unmask(Json) Json
+    }
+    class ResourceRegistry {
+        +adapters() IResourceAdapter[]
+        +byPath(path) / bySet(set) / byODataAction(name)
+        +resolve(adapter, tenant, idOrName) string
+        +withReferences(tenant, body) Json
+        +statistics(tenant) / reconcile(tenant) Json
+    }
+    IManageResource <|.. ResourceUseCase
+    ResourceUseCase <|-- ManageSystemsUseCase
+    ResourceUseCase <|-- ManageTransportRequestsUseCase
+    IResourceAdapter <|.. ResourceAdapter
+    ResourceAdapter --> IManageResource : port
+    ResourceRegistry o-- "8" IResourceAdapter
+```
+
+The other six interactors (`ManageSoftwareComponentsUseCase`, `ManageCommunicationArrangementsUseCase`,
+`ManageServiceBindingsUseCase`, `ManageBusinessRolesUseCase`, `ManageBusinessUsersUseCase`,
+`ManageApplicationJobsUseCase`) follow the same pattern. Persistence mirrors it:
+`SystemScopedRepository<TEntity, TId>` provides `findByName` / `findBySystem` for all
+system-scoped aggregates.
+
+## Sequence Diagram — Fiori releases and imports a transport
+
+```mermaid
+sequenceDiagram
+    actor Dev as Developer
+    participant UI as Fiori app (Main.controller)
+    participant AR as Approuter (XSUAA)
+    participant OD as AbapODataController
+    participant REG as ResourceRegistry
+    participant UC as ManageTransportRequestsUseCase
+    participant POL as transport policy
+    participant REPO as TransportRequestRepository
+
+    Dev->>UI: select DEVK900001, press "Release"
+    UI->>AR: POST /odata/v4/abap-environment/ReleaseTransportRequest {"id": "…"}
+    AR->>OD: forward + JWT (AbapDeveloper scope checked)
+    OD->>REG: byODataAction("ReleaseTransportRequest")
+    REG->>UC: release(tenant, id, user)
+    UC->>REPO: findById
+    UC->>POL: ensureReleasable(request)
+    alt a task is still modifiable
+        POL-->>UC: AbapConflictException
+        UC-->>OD: UsecaseResult(code 409)
+        OD-->>UI: 409 {"error": {"code": "Conflict", …}}
+    else releasable
+        UC->>REPO: update(status = released)
+        UC-->>OD: success
+        OD-->>UI: 200 TransportRequest
+        Dev->>UI: press "Import"
+        UI->>OD: POST ImportTransportRequest → status importing
+    end
+```
+
+## Sequence Diagram — Reconciliation
+
+```mermaid
+sequenceDiagram
+    participant W as ReconcileWorker (timer)
+    participant R as ReconcileUseCase
+    participant REPOS as AbapRepositories
+    participant GW as IAbapLandscapeGateway
+    participant C as CascadeDeleter
+    participant P as IAbapEventPublisher
+
+    W->>R: reconcile(tenant)
+    loop systems
+        alt provisioning
+            R->>GW: provision(system)
+            GW-->>R: serviceUrl, webSocketUrl, stack
+            R->>REPOS: update(active)
+        else deleting
+            R->>C: clearSystem(tenant, id)
+            R->>GW: deprovision(system)
+            R->>REPOS: remove(system)
+        end
+        R->>P: abap.system.*
+    end
+    loop components cloning / pulling (active system)
+        R->>GW: headCommit(repositoryUrl, branch)
+        R->>REPOS: update(cloned + commit) or error
+    end
+    loop transports importing (active target)
+        R->>GW: importTransport(request, target)
+        R->>REPOS: update(imported | error)
+    end
+    loop jobs due or running
+        R->>GW: runJob(job)
+        R->>REPOS: update(completed | failed | rescheduled)
+    end
+    R-->>W: ReconcileReport(examined, advanced, changes)
+```
+
+## Sequence Diagram — CLI and server share data
+
+```mermaid
+sequenceDiagram
+    actor Admin
+    participant CLI as uim-abap-cli
+    participant FS as data/*.json
+    participant SRV as server (SnapshotTenantStore)
+
+    Admin->>CLI: systems create --name=dev …
+    CLI->>FS: write systems.json (temp file + rename)
+    SRV->>FS: revision changed? → reload before next read
+    SRV-->>SRV: reconciler provisions "dev"
+    SRV->>FS: write systems.json
+    Admin->>CLI: systems get dev
+    CLI->>FS: reload → status active
+```
+
+## Deployment Diagram — SAP BTP (Cloud Foundry)
 
 ```mermaid
 flowchart TB
-    subgraph Presentation["Presentation Layer (HTTP)"]
-        C1[SystemInstanceController]
-        C2[SoftwareComponentController]
-        C3[CommunicationArrangementController]
-        C4[ServiceBindingController]
-        C5[BusinessUserController]
-        C6[BusinessRoleController]
-        C7[TransportRequestController]
-        C8[CatalogAssignmentController]
-        C9[ApplicationJobController]
-        HC[HealthController]
+    User(["Browser"]) -->|HTTPS| AR
+    subgraph CF["Cloud Foundry space (mta.yaml)"]
+        AR["abap-environment-approuter<br/>@sap/approuter · Fiori app in resources/"]
+        SRV["abap-environment-srv<br/>binary buildpack · uim-abap-environment-platform-service"]
+        XSUAA[("abap-environment-xsuaa<br/>xsuaa / application")]
+        CFG[("abap-config<br/>user-provided")]
     end
-    subgraph Application["Application Layer"]
-        UC1[ManageSystemInstancesUseCase]
-        UC2[ManageSoftwareComponentsUseCase]
-        UC3[ManageCommunicationArrangementsUseCase]
-        UC4[ManageServiceBindingsUseCase]
-        UC5[ManageBusinessUsersUseCase]
-        UC6[ManageBusinessRolesUseCase]
-        UC7[ManageTransportRequestsUseCase]
-        UC8[ManageCatalogAssignmentsUseCase]
-        UC9[ManageApplicationJobsUseCase]
-    end
-    subgraph Domain["Domain Layer"]
-        E1[SystemInstance]
-        E2[SoftwareComponent]
-        E3[CommunicationArrangement]
-        E4[ServiceBinding]
-        E5[BusinessUser]
-        E6[BusinessRole]
-        E7[TransportRequest]
-        E8[CatalogAssignment]
-        E9[ApplicationJob]
-        E10[ExecutionLog]
-    end
-    subgraph Infrastructure["Infrastructure Layer"]
-        MEM[Memory Repositories ×10]
-        CFG[SrvConfig — port 10000]
-        CTR[Container / buildContainer]
-    end
-
-    C1 --> UC1
-    C2 --> UC2
-    C3 --> UC3
-    C5 --> UC5
-    C6 --> UC6
-    C7 --> UC7
-    C9 --> UC9
-
-    UC1 --> E1
-    UC5 --> E5
-    UC6 --> E6
-    UC9 --> E9
-
-    MEM --> E1
-    CTR --> UC1
-    CTR --> MEM
-```
-
----
-
-## Sequence Diagram — Transport Request Release
-
-```mermaid
-sequenceDiagram
-    participant Client
-    participant TC as TransportRequestController
-    participant TUC as ManageTransportRequestsUseCase
-    participant TR as TransportRequestRepository
-
-    Client->>TC: POST /transports { name, category, instanceId }
-    TC->>TUC: createTransportRequest(dto)
-    TUC->>TR: save(transportRequest)
-    TR-->>TUC: ok
-    TUC-->>TC: UsecaseResult(true, id)
-    TC-->>Client: 201 { id }
-
-    Client->>TC: POST /transports/release/{id}
-    TC->>TUC: releaseTransportRequest(id)
-    TUC->>TR: findById(id)
-    TR-->>TUC: transportRequest
-    TUC->>TUC: validate status = "modifiable"
-    TUC->>TR: update(status = "released")
-    TUC-->>TC: UsecaseResult(true, id)
-    TC-->>Client: 200 { id }
-```
-
----
-
-## Sequence Diagram — Business User Lifecycle
-
-```mermaid
-sequenceDiagram
-    participant Admin
-    participant BC as BusinessUserController
-    participant BUC as ManageBusinessUsersUseCase
-    participant BR as IBusinessUserRepository
-
-    Admin->>BC: POST /business-users { username, email }
-    BC->>BUC: createBusinessUser(dto)
-    BUC->>BR: save(user)
-    BR-->>BUC: ok
-    BUC-->>BC: UsecaseResult(true, id)
-    BC-->>Admin: 201 { id }
-
-    Admin->>BC: POST /business-users/lock/{id}
-    BC->>BUC: lockUser(id)
-    BUC->>BR: findById(id) → update status=locked
-    BUC-->>BC: UsecaseResult(true, id)
-    BC-->>Admin: 200 { id }
+    AR -->|"destination abap-environment-srv<br/>/odata/v4/abap-environment · /api/v1"| SRV
+    AR -. login / token .-> XSUAA
+    SRV -. VCAP_SERVICES .-> XSUAA
+    SRV -. VCAP_SERVICES .-> CFG
+    Desk(["Desktop: uim-abap-gui / uim-abap-cli"]) -->|"same data dir (local)"| Local[("backend/data/*.json")]
 ```

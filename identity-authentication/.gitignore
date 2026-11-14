@@ -1,0 +1,15 @@
+# local secrets (simulated VCAP_SERVICES)
+approuter/default-env.json
+approuter/node_modules/
+approuter/resources/
+frontend/node_modules/
+frontend/dist/
+# runtime data written by server / CLI / GUI
+backend/data/
+data/
+# dub
+backend/.dub/
+# MTA build output
+mta_archives/
+.mta/
+*.mtar

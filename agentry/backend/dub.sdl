@@ -1,49 +1,84 @@
 name "agentry"
-description "Agentry Service - Metadata-driven mobile application platform for developing, testing and operating SAP Agentry mobile apps with backend integration"
+description "Agentry Service - Metadata-driven mobile application platform (SAP Agentry style) — D/vibe.d backend with REST, OData v4, CLI and GtkD GUI"
+homepage "https://github.com/UIMSolutions/uim/platform/agentry"
 authors "Ozan Nurettin Suel"
 copyright "Copyright (c) 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
 
-// Target settings
-targetType "executable"
-targetName "uim-agentry-platform-service"
 targetPath "build"
-
-// Source and import paths
 sourcePaths "source"
 importPaths "source"
 
-dependency "uim-platform:service" path=".."
+// Core framework (brings uim-framework and vibe-d 0.10.x)
+dependency "uim-platform:service" path="../.."
 
+buildRequirements "allowWarnings" "silenceDeprecations"
+buildOptions "ignoreDeprecations" "debugInfo"
+
+// ── HTTP server: REST (/api/v1, /rest/v1) + OData v4 (/odata/v4/agentry) ────
+// dub build            (or --config=defaultRun)
+// ./build/uim-agentry-platform-service
 configuration "defaultRun" {
-    targetType "executable"
+	targetType "executable"
+	targetName "uim-agentry-platform-service"
+	mainSourceFile "source/app.d"
+	excludedSourceFiles "source/cli.d" "source/gui.d"
 }
 
+// ── Command line interface ──────────────────────────────────────────────────
+// dub build --config=cli
+// ./build/uim-agentry-cli help
+configuration "cli" {
+	targetType "executable"
+	targetName "uim-agentry-cli"
+	mainSourceFile "source/cli.d"
+	excludedSourceFiles "source/app.d" "source/gui.d"
+}
+
+// ── Desktop GUI (GtkD 3 / GTK 3.24) ─────────────────────────────────────────
+// dub build --config=gui
+// ./build/uim-agentry-gui [--tenant=<id>] [--data-dir=<dir>]
+configuration "gui" {
+	targetType "executable"
+	targetName "uim-agentry-gui"
+	mainSourceFile "source/gui.d"
+	excludedSourceFiles "source/app.d" "source/cli.d"
+	dependency "gtk-d" version="~>3.11.0"
+}
+
+// ── Libraries / unit tests ──────────────────────────────────────────────────
 configuration "defaultTest" {
-    targetType "library"
+	targetType "library"
+	targetName "uim-agentry-platform-service"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "modules" {
-    targetType "library"
-    versions "show_module"
+	targetType "library"
+	versions "show_module"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "tests" {
-    targetType "library"
-    versions "show_module" "show_test"
+	targetType "library"
+	versions "show_module" "show_test"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "inits" {
-    targetType "library"
-    versions "show_module" "show_init"
+	targetType "library"
+	versions "show_module" "show_init"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "calls" {
-    targetType "library"
-    versions "show_module" "show_calls"
+	targetType "library"
+	versions "show_module" "show_test" "show_function"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }
 
 configuration "verbose" {
-    targetType "library"
-    versions "show_module" "show_test" "show_init" "show_calls"
+	targetType "library"
+	versions "show_module" "show_test" "show_init" "show_function"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
 }

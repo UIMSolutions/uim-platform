@@ -1,0 +1,14 @@
+{
+  "name": "uim-kyma-approuter",
+  "version": "1.0.0",
+  "description": "Approuter (XSUAA login, routing) for the UIM Kyma Runtime service",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node node_modules/@sap/approuter/approuter.js",
+    "start:local": "rm -rf resources && cp -r ../frontend resources && node node_modules/@sap/approuter/approuter.js"
+  },
+  "dependencies": {
+    "@sap/approuter": "^16.8.0"
+  }
+}

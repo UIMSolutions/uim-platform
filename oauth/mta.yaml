@@ -1,0 +1,88 @@
+_schema-version: "3.3"
+ID: uim-oauth
+version: 2.0.0
+description: UIM OAuth 2.0 service — D/vibe.d backend (OAuth 2.0 endpoints, REST, OData v4), SAP Fiori 3 UI and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: oauth-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun --compiler=ldc2
+        - dub build --build=release --config=cli --compiler=ldc2
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-oauth-platform-service build/uim-oauth-cli dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-oauth-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /health
+    properties:
+      OAUTH_HOST: 0.0.0.0
+      # The snapshot lives on the (ephemeral) container disk — single instance only.
+      OAUTH_STORAGE: file
+      OAUTH_DATA_FILE: data/oauth.json
+      OAUTH_FRONTEND_DIR: ""
+      OAUTH_PURGE_INTERVAL_SECONDS: "3600"
+    provides:
+      - name: oauth-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: oauth-xsuaa
+      - name: oauth-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: oauth-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: oauth-xsuaa
+      - name: oauth-srv-api
+        group: destinations
+        properties:
+          name: oauth-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 60000
+
+resources:
+  - name: oauth-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-oauth-${space}
+
+  # Runtime overrides read from VCAP_SERVICES (credentials of the service named
+  # "oauth-config"). Set a real signing secret before the first deployment:
+  #   cf update-user-provided-service oauth-config -p '{"signingSecret":"<48+ random chars>","issuer":"https://<route>"}'
+  - name: oauth-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: oauth-config
+      config:
+        purgeTenants: ["default"]

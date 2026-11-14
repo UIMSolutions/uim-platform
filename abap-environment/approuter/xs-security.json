@@ -1,0 +1,25 @@
+{
+  "xsappname": "uim-abap-environment",
+  "tenant-mode": "dedicated",
+  "description": "UIM ABAP Environment service",
+  "scopes": [
+    { "name": "$XSAPPNAME.AbapViewer", "description": "Read systems, development objects, users, transports and jobs" },
+    { "name": "$XSAPPNAME.AbapDeveloper", "description": "Manage software components, service bindings, communication, transports and jobs" },
+    { "name": "$XSAPPNAME.AbapAdmin", "description": "Provision systems and manage business users and roles" }
+  ],
+  "role-templates": [
+    { "name": "AbapViewer", "description": "ABAP environment viewer", "scope-references": ["$XSAPPNAME.AbapViewer"] },
+    { "name": "AbapDeveloper", "description": "ABAP environment developer",
+      "scope-references": ["$XSAPPNAME.AbapDeveloper", "$XSAPPNAME.AbapViewer"] },
+    { "name": "AbapAdmin", "description": "ABAP environment administrator",
+      "scope-references": ["$XSAPPNAME.AbapAdmin", "$XSAPPNAME.AbapDeveloper", "$XSAPPNAME.AbapViewer"] }
+  ],
+  "role-collections": [
+    { "name": "UIM ABAP Environment Viewer", "role-template-references": ["$XSAPPNAME.AbapViewer"] },
+    { "name": "UIM ABAP Environment Developer", "role-template-references": ["$XSAPPNAME.AbapDeveloper"] },
+    { "name": "UIM ABAP Environment Administrator", "role-template-references": ["$XSAPPNAME.AbapAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

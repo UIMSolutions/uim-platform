@@ -1,11 +1,20 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: oauth-config
+  name: uim-oauth-config
   namespace: uim-platform
   labels:
-    app: oauth
+    app: uim-oauth
     part-of: uim-platform
 data:
   OAUTH_HOST: "0.0.0.0"
   OAUTH_PORT: "8114"
+  OAUTH_STORAGE: "file"
+  OAUTH_DATA_FILE: "/data/oauth.json"
+  OAUTH_FRONTEND_DIR: "/app/frontend"
+  OAUTH_PURGE_INTERVAL_SECONDS: "3600"
+  OAUTH_ISSUER: "https://oauth.uim-platform.example.com"
+---
+# The token signing key. Create it out of band, e.g.:
+#   kubectl -n uim-platform create secret generic uim-oauth-signing \
+#     --from-literal=OAUTH_SIGNING_SECRET="$(openssl rand -base64 48)"

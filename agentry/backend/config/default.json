@@ -1,0 +1,17 @@
+{
+  "serviceName": "Agentry Service",
+  "host": "0.0.0.0",
+  "port": 8117,
+  "logLevel": "info",
+  "storage": "file",
+  "dataDir": "data",
+  "defaultTenant": "default",
+  "apiPath": "/api/v1/agentry",
+  "restPath": "/rest/v1/agentry",
+  "odataPath": "/odata/v4/agentry",
+  "frontendDir": "../frontend",
+  "probeTimeoutSeconds": 5,
+  "watchdogIntervalMinutes": 0,
+  "syncTimeoutMinutes": 60,
+  "watchdogTenants": ["default"]
+}

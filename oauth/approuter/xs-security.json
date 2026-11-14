@@ -1,0 +1,18 @@
+{
+  "xsappname": "uim-oauth",
+  "tenant-mode": "dedicated",
+  "description": "UIM OAuth 2.0 service — clients, scopes, tokens and branding",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read clients, scopes, tokens, codes and brandings" },
+    { "name": "$XSAPPNAME.Manage", "description": "Register clients, rotate secrets, maintain scopes and brandings, revoke tokens" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "Administrator", "description": "Operate the OAuth service", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Manage"] }
+  ],
+  "role-collections": [
+    { "name": "OAuthViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "OAuthAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

@@ -1,0 +1,25 @@
+{
+  "xsappname": "uim-kyma",
+  "tenant-mode": "dedicated",
+  "description": "UIM Kyma Runtime service",
+  "scopes": [
+    { "name": "$XSAPPNAME.KymaViewer", "description": "Read runtimes, workloads and statistics" },
+    { "name": "$XSAPPNAME.KymaDeveloper", "description": "Manage namespaces, functions, API rules, services and subscriptions" },
+    { "name": "$XSAPPNAME.KymaAdmin", "description": "Provision runtimes and manage modules and applications" }
+  ],
+  "role-templates": [
+    { "name": "KymaViewer", "description": "Kyma viewer", "scope-references": ["$XSAPPNAME.KymaViewer"] },
+    { "name": "KymaDeveloper", "description": "Kyma developer",
+      "scope-references": ["$XSAPPNAME.KymaDeveloper", "$XSAPPNAME.KymaViewer"] },
+    { "name": "KymaAdmin", "description": "Kyma administrator",
+      "scope-references": ["$XSAPPNAME.KymaAdmin", "$XSAPPNAME.KymaDeveloper", "$XSAPPNAME.KymaViewer"] }
+  ],
+  "role-collections": [
+    { "name": "UIM Kyma Viewer", "role-template-references": ["$XSAPPNAME.KymaViewer"] },
+    { "name": "UIM Kyma Developer", "role-template-references": ["$XSAPPNAME.KymaDeveloper"] },
+    { "name": "UIM Kyma Administrator", "role-template-references": ["$XSAPPNAME.KymaAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

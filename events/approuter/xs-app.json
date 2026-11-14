@@ -1,0 +1,34 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": { "logoutEndpoint": "/do/logout" },
+  "routes": [
+    {
+      "source": "^/odata/v4/event-mesh/(.*)$",
+      "target": "/odata/v4/event-mesh/$1",
+      "destination": "event-mesh-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": "$XSAPPNAME.Read"
+    },
+    {
+      "source": "^/api/v1/event-mesh/(.*)$",
+      "target": "/api/v1/event-mesh/$1",
+      "destination": "event-mesh-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": "$XSAPPNAME.Read"
+    },
+    {
+      "source": "^/health$",
+      "destination": "event-mesh-srv",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

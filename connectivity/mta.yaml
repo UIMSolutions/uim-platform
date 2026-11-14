@@ -1,0 +1,90 @@
+_schema-version: "3.3"
+ID: uim-connectivity
+version: 1.0.0
+description: UIM Connectivity — D/vibe.d backend (REST + OData v4), SAP Fiori 3 UI and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: connectivity-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-connectivity-platform-service dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-connectivity-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /api/v1/health
+    properties:
+      CONN_HOST: 0.0.0.0
+      CONN_LOG_LEVEL: info
+      # Snapshots live on the (ephemeral) container disk — bind a persistent
+      # store before using this for real data.
+      CONN_STORAGE: file
+      CONN_DATA_DIR: data
+      CONN_FRONTEND_DIR: ""
+      CONN_HEALTH_CHECK_INTERVAL: "30"
+    provides:
+      - name: connectivity-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: connectivity-xsuaa
+      - name: connectivity-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: connectivity-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: connectivity-xsuaa
+      - name: connectivity-srv-api
+        group: destinations
+        properties:
+          name: connectivity-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 60000
+
+resources:
+  - name: connectivity-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-connectivity-${space}
+
+  # Optional runtime overrides read from VCAP_SERVICES (credentials of the
+  # service named / tagged "connectivity-config"), e.g. {"healthCheckTenants": "t1,t2"}
+  - name: connectivity-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: connectivity-config
+      config:
+        healthCheckTenants: default
+        heartbeatTimeoutSeconds: "300"
+        certificateWarningDays: "30"

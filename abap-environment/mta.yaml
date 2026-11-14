@@ -1,0 +1,88 @@
+_schema-version: "3.3"
+ID: uim-abap-environment
+version: 1.0.0
+description: UIM ABAP Environment — D/vibe.d backend (REST + OData v4), SAP Fiori 3 UI and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: abap-environment-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-abap-environment-platform-service dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-abap-environment-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /api/v1/health
+    properties:
+      ABAP_HOST: 0.0.0.0
+      ABAP_LOG_LEVEL: info
+      # Snapshots live on the (ephemeral) container disk — bind a persistent
+      # store before using this for real data.
+      ABAP_STORAGE: file
+      ABAP_DATA_DIR: data
+      ABAP_FRONTEND_DIR: ""
+      ABAP_RECONCILE_INTERVAL: "15"
+    provides:
+      - name: abap-environment-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: abap-environment-xsuaa
+      - name: abap-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: abap-environment-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: abap-environment-xsuaa
+      - name: abap-environment-srv-api
+        group: destinations
+        properties:
+          name: abap-environment-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 60000
+
+resources:
+  - name: abap-environment-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-abap-environment-${space}
+
+  # Optional runtime overrides read from VCAP_SERVICES (credentials of the
+  # service named / tagged "abap-config"), e.g. {"reconcileTenants": "t1,t2"}
+  - name: abap-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: abap-config
+      config:
+        reconcileTenants: default
