@@ -1,0 +1,24 @@
+{
+  "serviceName": "uim-oauth",
+  "serviceVersion": "2.0.0",
+  "host": "0.0.0.0",
+  "port": 8114,
+  "storage": "file",
+  "dataFile": "data/oauth.json",
+  "defaultTenant": "default",
+  "restPath": "/api/v1/oauth",
+  "odataPath": "/odata/v4/oauth",
+  "oauthPath": "/oauth",
+  "issuer": "",
+  "maxPageSize": 200,
+  "requireAuthentication": false,
+  "jwtSecret": "",
+  "signingSecret": "",
+  "authorizationCodeValiditySeconds": 300,
+  "trustUserHeader": false,
+  "frontendDir": "../frontend",
+  "purgeIntervalSeconds": 3600,
+  "purgeTenants": [
+    "default"
+  ]
+}

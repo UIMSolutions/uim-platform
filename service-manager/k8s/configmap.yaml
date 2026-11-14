@@ -6,3 +6,11 @@ metadata:
 data:
   SERVICE_MANAGER_HOST: "0.0.0.0"
   SERVICE_MANAGER_PORT: "8113"
+  SERVICE_MANAGER_STORAGE: "file"
+  SERVICE_MANAGER_DATA_FILE: "/data/service-manager.json"
+  SERVICE_MANAGER_DEFAULT_TENANT: "default"
+  SERVICE_MANAGER_SYNC_PROVISIONING: "true"
+  SERVICE_MANAGER_CATALOG_SYNC_MINUTES: "15"
+  SERVICE_MANAGER_CATALOG_SYNC_TENANTS: '["default"]'
+  # Set to "true" together with the secret below to require HS256 bearer tokens
+  SERVICE_MANAGER_REQUIRE_AUTHENTICATION: "false"

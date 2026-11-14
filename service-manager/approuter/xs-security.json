@@ -1,0 +1,22 @@
+{
+  "xsappname": "uim-service-manager",
+  "tenant-mode": "dedicated",
+  "description": "UIM Service Manager — platforms, brokers, catalog, instances and bindings",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read all service manager resources" },
+    { "name": "$XSAPPNAME.Write", "description": "Provision instances, create bindings and labels" },
+    { "name": "$XSAPPNAME.Admin", "description": "Register platforms and brokers, maintain the catalog, complete operations" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "Developer", "description": "Consume services", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Write"] },
+    { "name": "Administrator", "description": "Operate the service manager",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Write", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "ServiceManagerViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "ServiceManagerDeveloper", "role-template-references": ["$XSAPPNAME.Developer"] },
+    { "name": "ServiceManagerAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

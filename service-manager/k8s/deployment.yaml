@@ -6,7 +6,11 @@ metadata:
   labels:
     app: service-manager
 spec:
+  # The JSON file store is single-writer: keep one replica (or plug in a
+  # database backed IDocumentStore before scaling out).
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: service-manager
@@ -15,6 +19,9 @@ spec:
       labels:
         app: service-manager
     spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 999
       containers:
       - name: service-manager
         image: uim-platform/service-manager:latest
@@ -23,6 +30,16 @@ spec:
         envFrom:
         - configMapRef:
             name: service-manager-config
+        env:
+        - name: SERVICE_MANAGER_JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: service-manager-secrets
+              key: jwtSecret
+              optional: true
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
             path: /health
@@ -42,3 +59,18 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: service-manager-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: service-manager-data
+  namespace: uim-platform
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
