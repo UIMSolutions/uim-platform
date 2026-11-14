@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog id="brokerDialog" title="{i18n>registerBroker}" contentWidth="30rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/newBroker/name}"/>
+      <Label text="{i18n>brokerUrl}" required="true"/>
+      <Input value="{view>/newBroker/brokerUrl}" type="Url" placeholder="https://broker.example.com"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/newBroker/description}"/>
+      <Label text="{i18n>credentials}"/>
+      <Input value="{view>/newBroker/credentials}" type="Password" placeholder="user:password"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>register}" type="Emphasized" press=".onRegisterBroker"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -7,7 +7,7 @@
 ///
 ///   GET    /api/v1/<resource>[?<field>=<value>…]     → { "items": [...], "count": n }
 ///   POST   /api/v1/<resource>                        → 201 created resource
-///   GET    /api/v1/<resource>/<id>
+///   GET    /api/v1/<resource>/<id>            (<id> may also be a unique name)
 ///   PATCH  /api/v1/<resource>/<id>   (PUT accepted)  partial update
 ///   DELETE /api/v1/<resource>/<id>                   → 204
 ///   POST   /api/v1/<resource>/<id>/<action>          e.g. /dev-spaces/<id>/add-extension {"extension": "..."}
@@ -77,28 +77,28 @@ class StudioRestController {
     }));
 
     router.get(base ~ "/:id", (req, res) => guard(res, () {
-      auto row = adapter.get(identityOf(req).tenantId, req.params["id"]);
-      if (row.type == Json.Type.null_)
-        throw new ResourceError(404, "NotFound", adapter.typeName ~ " '" ~ req.params["id"] ~ "' not found");
-      writeJson(res, 200, row);
+      auto tenantId = identityOf(req).tenantId;
+      writeJson(res, 200, adapter.get(tenantId, idOf(req, adapter, tenantId)));
     }));
 
     auto updateHandler = (HTTPServerRequest req, HTTPServerResponse res) => guard(res, () {
       auto who = identityOf(req);
-      writeJson(res, 200, adapter.update(who, req.params["id"], registry.withReferences(who.tenantId, body(req))));
+      writeJson(res, 200, adapter.update(who, idOf(req, adapter, who.tenantId), registry.withReferences(who.tenantId, body(req))));
     });
     router.patch(base ~ "/:id", updateHandler);
     router.put(base ~ "/:id", updateHandler);
 
     router.delete_(base ~ "/:id", (req, res) => guard(res, () {
-      adapter.remove(identityOf(req), req.params["id"]);
+      auto who = identityOf(req);
+      adapter.remove(who, idOf(req, adapter, who.tenantId));
       res.statusCode = 204;
       res.writeVoidBody();
     }));
 
     router.post(base ~ "/:id/:action", (req, res) => guard(res, () {
       auto params = req.contentType == "application/json" ? body(req) : Json.emptyObject;
-      writeJson(res, 200, adapter.invoke(identityOf(req), req.params["id"], req.params["action"], params));
+      auto who = identityOf(req);
+      writeJson(res, 200, adapter.invoke(who, idOf(req, adapter, who.tenantId), req.params["action"], params));
     }));
   }
 
@@ -141,6 +141,11 @@ class StudioRestController {
   }
 
   // ── helpers ────────────────────────────────────────────────────────────
+
+  /// The ":id" path parameter as an id — a unique name is accepted as well (404 if neither).
+  protected string idOf(HTTPServerRequest req, IResourceAdapter adapter, TenantId tenantId) {
+    return registry.resolve(adapter, tenantId, req.params["id"]);
+  }
 
   protected RequestIdentity identityOf(HTTPServerRequest req) {
     return resolveIdentity(req.headers.get("Authorization", ""), req.headers.get("X-Tenant-Id", ""),

@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.servicemanager" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Platform">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="subaccountId" Type="Edm.String"/>
+        <Property Name="brokerUrl" Type="Edm.String"/>
+        <Property Name="credentials" Type="Edm.String"/>
+        <Property Name="hasCredentials" Type="Edm.Boolean"/>
+        <Property Name="instanceCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ServiceBroker">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="brokerUrl" Type="Edm.String" Nullable="false"/>
+        <Property Name="credentials" Type="Edm.String"/>
+        <Property Name="hasCredentials" Type="Edm.Boolean"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="lastCatalogFetch" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="catalogError" Type="Edm.String"/>
+        <Property Name="offeringCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ServiceOffering">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="brokerId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="catalogId" Type="Edm.String"/>
+        <Property Name="catalogName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="bindable" Type="Edm.Boolean"/>
+        <Property Name="instancesRetrievable" Type="Edm.Boolean"/>
+        <Property Name="bindingsRetrievable" Type="Edm.Boolean"/>
+        <Property Name="planUpdateable" Type="Edm.Boolean"/>
+        <Property Name="metadata" Type="Edm.String"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="planCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ServicePlan">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="offeringId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="catalogId" Type="Edm.String"/>
+        <Property Name="catalogName" Type="Edm.String"/>
+        <Property Name="pricing" Type="Edm.String"/>
+        <Property Name="free" Type="Edm.Boolean"/>
+        <Property Name="bindable" Type="Edm.Boolean"/>
+        <Property Name="planUpdateable" Type="Edm.Boolean"/>
+        <Property Name="maxInstances" Type="Edm.Int32"/>
+        <Property Name="schemas" Type="Edm.String"/>
+        <Property Name="metadata" Type="Edm.String"/>
+        <Property Name="instanceCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ServiceInstance">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="planId" Type="Edm.String" Nullable="false"/>
+        <Property Name="offeringId" Type="Edm.String"/>
+        <Property Name="platformId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="context" Type="Edm.String"/>
+        <Property Name="parameters" Type="Edm.String"/>
+        <Property Name="dashboardUrl" Type="Edm.String"/>
+        <Property Name="shared" Type="Edm.Boolean"/>
+        <Property Name="usable" Type="Edm.Boolean"/>
+        <Property Name="lastOperationId" Type="Edm.String"/>
+        <Property Name="bindingCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ServiceBinding">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="instanceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="credentials" Type="Edm.String"/>
+        <Property Name="parameters" Type="Edm.String"/>
+        <Property Name="bindResource" Type="Edm.String"/>
+        <Property Name="context" Type="Edm.String"/>
+        <Property Name="lastOperationId" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Operation">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="resourceType" Type="Edm.String"/>
+        <Property Name="resourceId" Type="Edm.String"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+        <Property Name="rescheduleCount" Type="Edm.Int32"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </EntityType>
+      <EntityType Name="Label">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="resourceType" Type="Edm.String" Nullable="false"/>
+        <Property Name="resourceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="value" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="platforms" Type="Edm.Int32"/>
+        <Property Name="activePlatforms" Type="Edm.Int32"/>
+        <Property Name="brokers" Type="Edm.Int32"/>
+        <Property Name="activeBrokers" Type="Edm.Int32"/>
+        <Property Name="failedBrokers" Type="Edm.Int32"/>
+        <Property Name="offerings" Type="Edm.Int32"/>
+        <Property Name="availableOfferings" Type="Edm.Int32"/>
+        <Property Name="plans" Type="Edm.Int32"/>
+        <Property Name="instances" Type="Edm.Int32"/>
+        <Property Name="readyInstances" Type="Edm.Int32"/>
+        <Property Name="pendingInstances" Type="Edm.Int32"/>
+        <Property Name="failedInstances" Type="Edm.Int32"/>
+        <Property Name="bindings" Type="Edm.Int32"/>
+        <Property Name="operations" Type="Edm.Int32"/>
+        <Property Name="runningOperations" Type="Edm.Int32"/>
+        <Property Name="failedOperations" Type="Edm.Int32"/>
+        <Property Name="labels" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="CatalogSyncResult">
+        <Property Name="brokerId" Type="Edm.String"/>
+        <Property Name="brokerName" Type="Edm.String"/>
+        <Property Name="succeeded" Type="Edm.Boolean"/>
+        <Property Name="error" Type="Edm.String"/>
+        <Property Name="offeringsCreated" Type="Edm.Int32"/>
+        <Property Name="offeringsUpdated" Type="Edm.Int32"/>
+        <Property Name="offeringsRemoved" Type="Edm.Int32"/>
+        <Property Name="plansCreated" Type="Edm.Int32"/>
+        <Property Name="plansUpdated" Type="Edm.Int32"/>
+        <Property Name="syncedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </ComplexType>
+      <ComplexType Name="OperationResult">
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="resourceType" Type="Edm.String"/>
+        <Property Name="resourceId" Type="Edm.String"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+      </ComplexType>
+      <Action Name="SyncBrokerCatalog" IsBound="false">
+        <Parameter Name="brokerId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.servicemanager.CatalogSyncResult"/>
+      </Action>
+      <Action Name="CompleteOperation" IsBound="false">
+        <Parameter Name="operationId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="succeeded" Type="Edm.Boolean" Nullable="false"/>
+        <Parameter Name="errorMessage" Type="Edm.String"/>
+        <ReturnType Type="uim.servicemanager.OperationResult"/>
+      </Action>
+      <EntityContainer Name="ServiceManagerService">
+        <EntitySet Name="Platforms" EntityType="uim.servicemanager.Platform"/>
+        <EntitySet Name="ServiceBrokers" EntityType="uim.servicemanager.ServiceBroker"/>
+        <EntitySet Name="ServiceOfferings" EntityType="uim.servicemanager.ServiceOffering"/>
+        <EntitySet Name="ServicePlans" EntityType="uim.servicemanager.ServicePlan"/>
+        <EntitySet Name="ServiceInstances" EntityType="uim.servicemanager.ServiceInstance"/>
+        <EntitySet Name="ServiceBindings" EntityType="uim.servicemanager.ServiceBinding"/>
+        <EntitySet Name="Operations" EntityType="uim.servicemanager.Operation"/>
+        <EntitySet Name="Labels" EntityType="uim.servicemanager.Label"/>
+        <Singleton Name="Statistics" Type="uim.servicemanager.Statistic"/>
+        <ActionImport Name="SyncBrokerCatalog" Action="uim.servicemanager.SyncBrokerCatalog"/>
+        <ActionImport Name="CompleteOperation" Action="uim.servicemanager.CompleteOperation"/>
+      </EntityContainer>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/brokerId"><Annotation Term="Common.Label" String="Broker"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/brokerName"><Annotation Term="Common.Label" String="Broker Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/succeeded"><Annotation Term="Common.Label" String="Succeeded"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/error"><Annotation Term="Common.Label" String="Error"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/offeringsCreated"><Annotation Term="Common.Label" String="Offerings Created"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/offeringsUpdated"><Annotation Term="Common.Label" String="Offerings Updated"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/offeringsRemoved"><Annotation Term="Common.Label" String="Offerings Removed"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/plansCreated"><Annotation Term="Common.Label" String="Plans Created"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/plansUpdated"><Annotation Term="Common.Label" String="Plans Updated"/></Annotations>
+      <Annotations Target="uim.servicemanager.CatalogSyncResult/syncedAt"><Annotation Term="Common.Label" String="Synced At"/></Annotations>
+      <Annotations Target="uim.servicemanager.OperationResult/id"><Annotation Term="Common.Label" String="Operation"/></Annotations>
+      <Annotations Target="uim.servicemanager.OperationResult/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.servicemanager.OperationResult/resourceType"><Annotation Term="Common.Label" String="Resource Type"/></Annotations>
+      <Annotations Target="uim.servicemanager.OperationResult/resourceId"><Annotation Term="Common.Label" String="Resource"/></Annotations>
+      <Annotations Target="uim.servicemanager.OperationResult/errorMessage"><Annotation Term="Common.Label" String="Error"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/type"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/subaccountId"><Annotation Term="Common.Label" String="Subaccount"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/brokerUrl"><Annotation Term="Common.Label" String="Broker URL"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/credentials"><Annotation Term="Common.Label" String="Credentials"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/hasCredentials"><Annotation Term="Common.Label" String="Has Credentials"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform/instanceCount"><Annotation Term="Common.Label" String="Instances"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Platform">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Platform"/><PropertyValue Property="TypeNamePlural" String="Platforms"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="type"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="region"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="instanceCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>name</PropertyPath><PropertyPath>type</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>region</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService/Platforms">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/brokerUrl"><Annotation Term="Common.Label" String="Broker URL"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/credentials"><Annotation Term="Common.Label" String="Credentials (user:password)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/hasCredentials"><Annotation Term="Common.Label" String="Has Credentials"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/lastCatalogFetch"><Annotation Term="Common.Label" String="Last Catalog Fetch"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/catalogError"><Annotation Term="Common.Label" String="Catalog Error"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker/offeringCount"><Annotation Term="Common.Label" String="Offerings"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBroker">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Service Broker"/><PropertyValue Property="TypeNamePlural" String="Service Brokers"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="brokerUrl"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="brokerUrl"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="offeringCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastCatalogFetch"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>name</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService/ServiceBrokers">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/brokerId"><Annotation Term="Common.Label" String="Broker"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/catalogId"><Annotation Term="Common.Label" String="Catalog ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/catalogName"><Annotation Term="Common.Label" String="Catalog Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/bindable"><Annotation Term="Common.Label" String="Bindable"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/instancesRetrievable"><Annotation Term="Common.Label" String="Instances Retrievable"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/bindingsRetrievable"><Annotation Term="Common.Label" String="Bindings Retrievable"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/planUpdateable"><Annotation Term="Common.Label" String="Plan Updateable"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/metadata"><Annotation Term="Common.Label" String="Metadata (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering/planCount"><Annotation Term="Common.Label" String="Plans"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceOffering">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Service Offering"/><PropertyValue Property="TypeNamePlural" String="Service Offerings"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindable"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="planCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>name</PropertyPath><PropertyPath>category</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>brokerId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService/ServiceOfferings">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/offeringId"><Annotation Term="Common.Label" String="Offering"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/catalogId"><Annotation Term="Common.Label" String="Catalog ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/catalogName"><Annotation Term="Common.Label" String="Catalog Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/pricing"><Annotation Term="Common.Label" String="Pricing"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/free"><Annotation Term="Common.Label" String="Free"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/bindable"><Annotation Term="Common.Label" String="Bindable"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/planUpdateable"><Annotation Term="Common.Label" String="Plan Updateable"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/maxInstances"><Annotation Term="Common.Label" String="Max. Instances"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/schemas"><Annotation Term="Common.Label" String="Schemas (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/metadata"><Annotation Term="Common.Label" String="Metadata (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan/instanceCount"><Annotation Term="Common.Label" String="Instances"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServicePlan">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Service Plan"/><PropertyValue Property="TypeNamePlural" String="Service Plans"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="offeringId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="pricing"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="maxInstances"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="instanceCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>name</PropertyPath><PropertyPath>offeringId</PropertyPath><PropertyPath>pricing</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService/ServicePlans">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/planId"><Annotation Term="Common.Label" String="Plan"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/offeringId"><Annotation Term="Common.Label" String="Offering"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/platformId"><Annotation Term="Common.Label" String="Platform"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/context"><Annotation Term="Common.Label" String="Context (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/parameters"><Annotation Term="Common.Label" String="Parameters (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/dashboardUrl"><Annotation Term="Common.Label" String="Dashboard"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/shared"><Annotation Term="Common.Label" String="Shared"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/usable"><Annotation Term="Common.Label" String="Usable"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/lastOperationId"><Annotation Term="Common.Label" String="Last Operation"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance/bindingCount"><Annotation Term="Common.Label" String="Bindings"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceInstance">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Service Instance"/><PropertyValue Property="TypeNamePlural" String="Service Instances"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="planId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="platformId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindingCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="shared"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>name</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>planId</PropertyPath><PropertyPath>platformId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService/ServiceInstances">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/instanceId"><Annotation Term="Common.Label" String="Instance"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/credentials"><Annotation Term="Common.Label" String="Credentials (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/parameters"><Annotation Term="Common.Label" String="Parameters (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/bindResource"><Annotation Term="Common.Label" String="Bind Resource (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/context"><Annotation Term="Common.Label" String="Context (JSON)"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding/lastOperationId"><Annotation Term="Common.Label" String="Last Operation"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.ServiceBinding">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Service Binding"/><PropertyValue Property="TypeNamePlural" String="Service Bindings"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="instanceId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>name</PropertyPath><PropertyPath>instanceId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService/ServiceBindings">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.Operation/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/resourceType"><Annotation Term="Common.Label" String="Resource Type"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/resourceId"><Annotation Term="Common.Label" String="Resource"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/type"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/errorMessage"><Annotation Term="Common.Label" String="Error"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/rescheduleCount"><Annotation Term="Common.Label" String="Reschedules"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/startedAt"><Annotation Term="Common.Label" String="Started At"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation/completedAt"><Annotation Term="Common.Label" String="Completed At"/></Annotations>
+      <Annotations Target="uim.servicemanager.Operation">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Operation"/><PropertyValue Property="TypeNamePlural" String="Operations"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="type"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="startedAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="completedAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>type</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>resourceType</PropertyPath><PropertyPath>resourceId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService/Operations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.Label/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/resourceType"><Annotation Term="Common.Label" String="Resource Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/resourceId"><Annotation Term="Common.Label" String="Resource"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label/value"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.servicemanager.Label">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Label"/><PropertyValue Property="TypeNamePlural" String="Labels"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="key"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="value"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="key"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="value"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceType</PropertyPath><PropertyPath>resourceId</PropertyPath><PropertyPath>key</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService/Labels">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/platforms"><Annotation Term="Common.Label" String="Platforms"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/activePlatforms"><Annotation Term="Common.Label" String="Active Platforms"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/brokers"><Annotation Term="Common.Label" String="Brokers"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/activeBrokers"><Annotation Term="Common.Label" String="Active Brokers"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/failedBrokers"><Annotation Term="Common.Label" String="Failed Brokers"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/offerings"><Annotation Term="Common.Label" String="Offerings"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/availableOfferings"><Annotation Term="Common.Label" String="Available Offerings"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/plans"><Annotation Term="Common.Label" String="Plans"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/instances"><Annotation Term="Common.Label" String="Instances"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/readyInstances"><Annotation Term="Common.Label" String="Ready Instances"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/pendingInstances"><Annotation Term="Common.Label" String="Pending Instances"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/failedInstances"><Annotation Term="Common.Label" String="Failed Instances"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/bindings"><Annotation Term="Common.Label" String="Bindings"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/operations"><Annotation Term="Common.Label" String="Operations"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/runningOperations"><Annotation Term="Common.Label" String="Running Operations"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/failedOperations"><Annotation Term="Common.Label" String="Failed Operations"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.servicemanager.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistic"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="platforms"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activePlatforms"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="brokers"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeBrokers"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="failedBrokers"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="offerings"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="availableOfferings"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="plans"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.servicemanager.ServiceManagerService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Service Manager"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

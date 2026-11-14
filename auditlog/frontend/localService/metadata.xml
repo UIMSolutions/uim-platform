@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.auditlog" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="AuditLog">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="severity" Type="Edm.String"/>
+        <Property Name="action" Type="Edm.String"/>
+        <Property Name="outcome" Type="Edm.String"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="userName" Type="Edm.String"/>
+        <Property Name="serviceId" Type="Edm.String"/>
+        <Property Name="serviceName" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String"/>
+        <Property Name="objectId" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="attributes" Type="Collection(uim.auditlog.AuditAttribute)"/>
+        <Property Name="ipAddress" Type="Edm.String"/>
+        <Property Name="userAgent" Type="Edm.String"/>
+        <Property Name="correlationId" Type="Edm.String"/>
+        <Property Name="originApp" Type="Edm.String"/>
+        <Property Name="formatVersion" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="SecurityEvent">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset"/>
+        <Property Name="auditLogId" Type="Edm.String"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="userName" Type="Edm.String"/>
+        <Property Name="eventType" Type="Edm.String"/>
+        <Property Name="ipAddress" Type="Edm.String"/>
+        <Property Name="userAgent" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="identityProvider" Type="Edm.String"/>
+        <Property Name="authMethod" Type="Edm.String"/>
+        <Property Name="outcome" Type="Edm.String"/>
+        <Property Name="failureReason" Type="Edm.String"/>
+        <Property Name="riskLevel" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DataAccessLog">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset"/>
+        <Property Name="auditLogId" Type="Edm.String"/>
+        <Property Name="accessedBy" Type="Edm.String"/>
+        <Property Name="dataSubject" Type="Edm.String"/>
+        <Property Name="dataObjectType" Type="Edm.String"/>
+        <Property Name="dataObjectId" Type="Edm.String"/>
+        <Property Name="accessedFields" Type="Collection(Edm.String)"/>
+        <Property Name="purpose" Type="Edm.String"/>
+        <Property Name="channel" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ConfigChangeLog">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset"/>
+        <Property Name="auditLogId" Type="Edm.String"/>
+        <Property Name="changedBy" Type="Edm.String"/>
+        <Property Name="configType" Type="Edm.String"/>
+        <Property Name="configObjectId" Type="Edm.String"/>
+        <Property Name="changes" Type="Collection(uim.auditlog.AuditAttribute)"/>
+        <Property Name="reason" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="RetentionPolicy">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="retentionDays" Type="Edm.Int32"/>
+        <Property Name="categories" Type="Collection(Edm.String)"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="isDefault" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="AuditConfig">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="logDataAccess" Type="Edm.Boolean"/>
+        <Property Name="logDataModification" Type="Edm.Boolean"/>
+        <Property Name="logSecurityEvents" Type="Edm.Boolean"/>
+        <Property Name="logConfigurationChanges" Type="Edm.Boolean"/>
+        <Property Name="enableDataMasking" Type="Edm.Boolean"/>
+        <Property Name="maskedFields" Type="Collection(Edm.String)"/>
+        <Property Name="excludedServices" Type="Collection(Edm.String)"/>
+        <Property Name="minimumSeverity" Type="Edm.String"/>
+        <Property Name="rateLimitPerSecond" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ExportJob">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="requestedBy" Type="Edm.String"/>
+        <Property Name="format" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="categories" Type="Collection(Edm.String)"/>
+        <Property Name="timeFrom" Type="Edm.DateTimeOffset"/>
+        <Property Name="timeTo" Type="Edm.DateTimeOffset"/>
+        <Property Name="downloadUrl" Type="Edm.String"/>
+        <Property Name="totalRecords" Type="Edm.Int32"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="totalEntries" Type="Edm.Int32"/>
+        <Property Name="securityEvents" Type="Edm.Int32"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="dataAccessLogs" Type="Edm.Int32"/>
+        <Property Name="configChanges" Type="Edm.Int32"/>
+        <Property Name="retentionPolicies" Type="Edm.Int32"/>
+        <Property Name="exportJobs" Type="Edm.Int32"/>
+        <Property Name="retentionDays" Type="Edm.Int32"/>
+        <Property Name="lastEntryAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="categorySecurityEvents" Type="Edm.Int32"/>
+        <Property Name="categoryConfiguration" Type="Edm.Int32"/>
+        <Property Name="categoryDataAccess" Type="Edm.Int32"/>
+        <Property Name="categoryDataModification" Type="Edm.Int32"/>
+        <Property Name="severityInfo" Type="Edm.Int32"/>
+        <Property Name="severityWarning" Type="Edm.Int32"/>
+        <Property Name="severityError" Type="Edm.Int32"/>
+        <Property Name="severityCritical" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="AuditAttribute">
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="oldValue" Type="Edm.String"/>
+        <Property Name="newValue" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="RetentionResult">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="retentionDays" Type="Edm.Int32"/>
+        <Property Name="removed" Type="Edm.Int32"/>
+        <Property Name="cutoff" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <Action Name="EnforceRetention" IsBound="false">
+        <ReturnType Type="uim.auditlog.RetentionResult"/>
+      </Action>
+      <EntityContainer Name="AuditLogService">
+        <EntitySet Name="AuditLogs" EntityType="uim.auditlog.AuditLog"/>
+        <EntitySet Name="SecurityEvents" EntityType="uim.auditlog.SecurityEvent"/>
+        <EntitySet Name="DataAccessLogs" EntityType="uim.auditlog.DataAccessLog"/>
+        <EntitySet Name="ConfigChangeLogs" EntityType="uim.auditlog.ConfigChangeLog"/>
+        <EntitySet Name="RetentionPolicies" EntityType="uim.auditlog.RetentionPolicy"/>
+        <EntitySet Name="AuditConfigs" EntityType="uim.auditlog.AuditConfig"/>
+        <EntitySet Name="ExportJobs" EntityType="uim.auditlog.ExportJob"/>
+        <Singleton Name="Statistics" Type="uim.auditlog.Statistic"/>
+        <ActionImport Name="EnforceRetention" Action="uim.auditlog.EnforceRetention"/>
+      </EntityContainer>
+      <Annotations Target="uim.auditlog.AuditLog/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/timestamp"><Annotation Term="Common.Label" String="Time"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/severity"><Annotation Term="Common.Label" String="Severity"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/action"><Annotation Term="Common.Label" String="Action"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/outcome"><Annotation Term="Common.Label" String="Outcome"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/userId"><Annotation Term="Common.Label" String="User ID"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/userName"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/serviceId"><Annotation Term="Common.Label" String="Service ID"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/serviceName"><Annotation Term="Common.Label" String="Service"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/objectType"><Annotation Term="Common.Label" String="Object Type"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/objectId"><Annotation Term="Common.Label" String="Object ID"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/attributes"><Annotation Term="Common.Label" String="Attributes"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/ipAddress"><Annotation Term="Common.Label" String="IP Address"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/userAgent"><Annotation Term="Common.Label" String="User Agent"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/correlationId"><Annotation Term="Common.Label" String="Correlation ID"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/originApp"><Annotation Term="Common.Label" String="Origin Application"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLog/formatVersion"><Annotation Term="Common.Label" String="Format Version"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLogService/AuditLogs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/timestamp"><Annotation Term="Common.Label" String="Time"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/auditLogId"><Annotation Term="Common.Label" String="Audit Log ID"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/userId"><Annotation Term="Common.Label" String="User ID"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/userName"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/eventType"><Annotation Term="Common.Label" String="Event Type"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/ipAddress"><Annotation Term="Common.Label" String="IP Address"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/userAgent"><Annotation Term="Common.Label" String="User Agent"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/identityProvider"><Annotation Term="Common.Label" String="Identity Provider"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/authMethod"><Annotation Term="Common.Label" String="Auth Method"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/outcome"><Annotation Term="Common.Label" String="Outcome"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/failureReason"><Annotation Term="Common.Label" String="Failure Reason"/></Annotations>
+      <Annotations Target="uim.auditlog.SecurityEvent/riskLevel"><Annotation Term="Common.Label" String="Risk Level"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLogService/SecurityEvents">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/timestamp"><Annotation Term="Common.Label" String="Time"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/auditLogId"><Annotation Term="Common.Label" String="Audit Log ID"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/accessedBy"><Annotation Term="Common.Label" String="Accessed By"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/dataSubject"><Annotation Term="Common.Label" String="Data Subject"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/dataObjectType"><Annotation Term="Common.Label" String="Object Type"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/dataObjectId"><Annotation Term="Common.Label" String="Object ID"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/accessedFields"><Annotation Term="Common.Label" String="Accessed Fields"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/purpose"><Annotation Term="Common.Label" String="Purpose"/></Annotations>
+      <Annotations Target="uim.auditlog.DataAccessLog/channel"><Annotation Term="Common.Label" String="Channel"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLogService/DataAccessLogs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/timestamp"><Annotation Term="Common.Label" String="Time"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/auditLogId"><Annotation Term="Common.Label" String="Audit Log ID"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/changedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/configType"><Annotation Term="Common.Label" String="Configuration Type"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/configObjectId"><Annotation Term="Common.Label" String="Configuration Object"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/changes"><Annotation Term="Common.Label" String="Changes"/></Annotations>
+      <Annotations Target="uim.auditlog.ConfigChangeLog/reason"><Annotation Term="Common.Label" String="Reason"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLogService/ConfigChangeLogs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/retentionDays"><Annotation Term="Common.Label" String="Retention (Days)"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/categories"><Annotation Term="Common.Label" String="Categories"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.auditlog.RetentionPolicy/isDefault"><Annotation Term="Common.Label" String="Default"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLogService/RetentionPolicies">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/logDataAccess"><Annotation Term="Common.Label" String="Log Data Access"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/logDataModification"><Annotation Term="Common.Label" String="Log Data Modification"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/logSecurityEvents"><Annotation Term="Common.Label" String="Log Security Events"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/logConfigurationChanges"><Annotation Term="Common.Label" String="Log Configuration Changes"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/enableDataMasking"><Annotation Term="Common.Label" String="Data Masking"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/maskedFields"><Annotation Term="Common.Label" String="Masked Fields"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/excludedServices"><Annotation Term="Common.Label" String="Excluded Services"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/minimumSeverity"><Annotation Term="Common.Label" String="Minimum Severity"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditConfig/rateLimitPerSecond"><Annotation Term="Common.Label" String="Rate Limit / s"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLogService/AuditConfigs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/requestedBy"><Annotation Term="Common.Label" String="Requested By"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/format"><Annotation Term="Common.Label" String="Format"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/categories"><Annotation Term="Common.Label" String="Categories"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/timeFrom"><Annotation Term="Common.Label" String="From"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/timeTo"><Annotation Term="Common.Label" String="To"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/downloadUrl"><Annotation Term="Common.Label" String="Download"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/totalRecords"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/completedAt"><Annotation Term="Common.Label" String="Completed At"/></Annotations>
+      <Annotations Target="uim.auditlog.ExportJob/errorMessage"><Annotation Term="Common.Label" String="Error"/></Annotations>
+      <Annotations Target="uim.auditlog.AuditLogService/ExportJobs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.auditlog.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/totalEntries"><Annotation Term="Common.Label" String="Audit Entries"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/securityEvents"><Annotation Term="Common.Label" String="Security Events"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/failedLogins"><Annotation Term="Common.Label" String="Failed Security Events"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/dataAccessLogs"><Annotation Term="Common.Label" String="Data Accesses"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/configChanges"><Annotation Term="Common.Label" String="Configuration Changes"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/retentionPolicies"><Annotation Term="Common.Label" String="Retention Policies"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/exportJobs"><Annotation Term="Common.Label" String="Export Jobs"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/retentionDays"><Annotation Term="Common.Label" String="Effective Retention (Days)"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/lastEntryAt"><Annotation Term="Common.Label" String="Last Entry"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/categorySecurityEvents"><Annotation Term="Common.Label" String="Security Events (Category)"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/categoryConfiguration"><Annotation Term="Common.Label" String="Configuration (Category)"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/categoryDataAccess"><Annotation Term="Common.Label" String="Data Access (Category)"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/categoryDataModification"><Annotation Term="Common.Label" String="Data Modification (Category)"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/severityInfo"><Annotation Term="Common.Label" String="Info"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/severityWarning"><Annotation Term="Common.Label" String="Warning"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/severityError"><Annotation Term="Common.Label" String="Error"/></Annotations>
+      <Annotations Target="uim.auditlog.Statistic/severityCritical"><Annotation Term="Common.Label" String="Critical"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

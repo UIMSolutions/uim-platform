@@ -1,0 +1,6 @@
+<mvc:View controllerName="uim.servicemanager.controller.App"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" displayBlock="true">
+  <Shell appWidthLimited="false">
+    <App id="app" busy="{view>/busy}"/>
+  </Shell>
+</mvc:View>

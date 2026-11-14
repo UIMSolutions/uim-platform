@@ -1,0 +1,18 @@
+[
+  {
+    "id": "5f7c1d2e-0001-4000-8000-000000000001", "tenantId": "default",
+    "createdBy": "admin", "createdAt": "2026-11-01T09:00:00Z", "updatedBy": "admin", "updatedAt": "2026-11-05T14:30:00Z",
+    "name": "Field Service", "description": "Work orders and time confirmation for technicians",
+    "platform": "ios", "status": "active", "iconUrl": "", "category": "Service", "vendor": "UIM",
+    "contactEmail": "mobile@example.com", "backendSystemId": "S4Q", "offlineCapable": true,
+    "pushNotificationsEnabled": true, "minOsVersion": "16.0", "packageName": "com.example.fieldservice"
+  },
+  {
+    "id": "5f7c1d2e-0002-4000-8000-000000000002", "tenantId": "default",
+    "createdBy": "admin", "createdAt": "2026-11-03T10:00:00Z", "updatedBy": "admin", "updatedAt": "2026-11-03T10:00:00Z",
+    "name": "Inventory", "description": "Warehouse counts and goods movements",
+    "platform": "android", "status": "draft", "iconUrl": "", "category": "Logistics", "vendor": "UIM",
+    "contactEmail": "", "backendSystemId": "S4Q", "offlineCapable": true,
+    "pushNotificationsEnabled": false, "minOsVersion": "12", "packageName": "com.example.inventory"
+  }
+]

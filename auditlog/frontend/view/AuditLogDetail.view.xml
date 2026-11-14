@@ -1,0 +1,61 @@
+<mvc:View
+  controllerName="uim.auditlog.controller.AuditLogDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <Page id="detailPage" title="{i18n>detailTitle}" showNavButton="true" navButtonPress=".onNavBack">
+    <ObjectHeader
+      title="{message}"
+      number="{path: 'severity', formatter: '.formatter.enumText'}"
+      responsive="true">
+      <statuses>
+        <ObjectStatus title="{i18n>colOutcome}" text="{path: 'outcome', formatter: '.formatter.enumText'}"
+          state="{path: 'outcome', formatter: '.formatter.outcomeState'}"/>
+        <ObjectStatus title="{i18n>colSeverity}" text="{path: 'severity', formatter: '.formatter.enumText'}"
+          state="{path: 'severity', formatter: '.formatter.severityState'}"/>
+      </statuses>
+      <attributes>
+        <ObjectAttribute title="{i18n>colTime}"
+          text="{path: 'timestamp', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'long'}}"/>
+        <ObjectAttribute title="{i18n>colCategory}" text="{path: 'category', formatter: '.formatter.enumText'}"/>
+        <ObjectAttribute title="ID" text="{id}"/>
+      </attributes>
+    </ObjectHeader>
+
+    <form:SimpleForm title="{i18n>sectionWho}" layout="ResponsiveGridLayout" labelSpanL="3" columnsL="2" columnsXL="2">
+      <Label text="{i18n>colUser}"/>
+      <Text text="{parts: ['userName', 'userId'], formatter: '.formatter.userText'}"/>
+      <Label text="{i18n>colAction}"/>
+      <Text text="{path: 'action', formatter: '.formatter.enumText'}"/>
+      <Label text="{i18n>colObject}"/>
+      <Text text="{objectType} {objectId}"/>
+      <Label text="{i18n>service}"/>
+      <Text text="{serviceName} {serviceId}"/>
+      <Label text="{i18n>colIp}"/>
+      <Text text="{ipAddress}"/>
+      <Label text="{i18n>userAgent}"/>
+      <Text text="{userAgent}"/>
+      <Label text="{i18n>correlationId}"/>
+      <Text text="{correlationId}"/>
+      <Label text="{i18n>originApp}"/>
+      <Text text="{originApp}"/>
+    </form:SimpleForm>
+
+    <Table headerText="{i18n>attributes}" items="{attributes}" noDataText="{i18n>noAttributes}">
+      <columns>
+        <Column><Text text="{i18n>attribute}"/></Column>
+        <Column><Text text="{i18n>oldValue}"/></Column>
+        <Column><Text text="{i18n>newValue}"/></Column>
+      </columns>
+      <items>
+        <ColumnListItem>
+          <cells>
+            <Text text="{name}"/>
+            <Text text="{oldValue}"/>
+            <Text text="{newValue}"/>
+          </cells>
+        </ColumnListItem>
+      </items>
+    </Table>
+  </Page>
+</mvc:View>

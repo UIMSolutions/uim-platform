@@ -1,0 +1,299 @@
+<mvc:View controllerName="uim.servicemanager.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>appTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+        <f:actions>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpis" binding="{/Statistics}" wrap="Wrap" class="sapUiSmallMarginBottom">
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiInstances}"/>
+            <ObjectNumber number="{readyInstances}" unit="/ {instances} {i18n>kpiReady}" state="Success"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiPending}"/>
+            <ObjectNumber number="{pendingInstances}" state="Information"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiFailed}"/>
+            <ObjectNumber number="{failedInstances}" state="Error"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiBindings}"/>
+            <ObjectNumber number="{bindings}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiCatalog}"/>
+            <ObjectNumber number="{availableOfferings}" unit="{i18n>kpiOfferings} · {plans} {i18n>kpiPlans}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiBrokers}"/>
+            <ObjectNumber number="{activeBrokers}" unit="/ {brokers}" state="{= %{failedBrokers} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiOperations}"/>
+            <ObjectNumber number="{runningOperations}" unit="{i18n>kpiRunning} · {failedOperations} {i18n>kpiFailedOps}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" stretchContentHeight="false"
+        class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Instances ─────────────────────────────────────────── -->
+          <IconTabFilter key="instances" icon="sap-icon://product" text="{i18n>tabInstances}">
+            <Table id="instancesTable" mode="SingleSelectLeft" growing="true" growingThreshold="20"
+              items="{path: '/ServiceInstances', parameters: {$orderby: 'name', $count: true}}"
+              noDataText="{i18n>noInstances}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabInstances}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="instancesTable"/></customData></SearchField>
+                  <Button text="{i18n>provision}" type="Emphasized" icon="sap-icon://add" press=".onOpenProvision"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="instancesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPlan}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colPlatform}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colBindings}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colShared}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onInstancePress">
+                  <ObjectIdentifier title="{name}" text="{id}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                    icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  <Text text="{planId}"/>
+                  <Text text="{platformId}"/>
+                  <ObjectNumber number="{bindingCount}"/>
+                  <Text text="{= %{shared} ? '✓' : '' }"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Bindings ──────────────────────────────────────────── -->
+          <IconTabFilter key="bindings" icon="sap-icon://chain-link" text="{i18n>tabBindings}">
+            <Table id="bindingsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/ServiceBindings', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabBindings}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>createBinding}" type="Emphasized" icon="sap-icon://add" press=".onOpenBinding"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="bindingsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colInstance}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCreated}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{id}"/>
+                  <Text text="{instanceId}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{createdAt}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Catalog ───────────────────────────────────────────── -->
+          <IconTabFilter key="catalog" icon="sap-icon://course-book" text="{i18n>tabCatalog}">
+            <Table id="offeringsTable" growing="true" items="{path: '/ServiceOfferings', parameters: {$orderby: 'name'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>offerings}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="offeringsTable"/></customData></SearchField>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colCategory}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colBindable}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colPlans}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{path: 'category', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{= %{bindable} ? '✓' : '' }"/>
+                  <ObjectNumber number="{planCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+            <Table id="plansTable" growing="true" class="sapUiMediumMarginTop"
+              items="{path: '/ServicePlans', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar><Title text="{i18n>plans}" level="H3"/></OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colOffering}"/></Column>
+                <Column><Text text="{i18n>colPricing}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colQuota}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colInstances}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{offeringId}"/>
+                  <ObjectStatus text="{path: 'pricing', formatter: '.formatter.enumText'}" state="{= %{free} ? 'Success' : 'Information' }"/>
+                  <Text text="{= %{maxInstances} > 0 ? %{maxInstances} : '∞' }"/>
+                  <ObjectNumber number="{instanceCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Brokers ───────────────────────────────────────────── -->
+          <IconTabFilter key="brokers" icon="sap-icon://connected" text="{i18n>tabBrokers}">
+            <Table id="brokersTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/ServiceBrokers', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabBrokers}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>registerBroker}" type="Emphasized" icon="sap-icon://add" press=".onOpenBroker"/>
+                  <Button text="{i18n>syncCatalog}" icon="sap-icon://synchronize" press=".onSyncCatalog"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="brokersTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colOfferings}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastFetch}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colCatalogError}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{brokerUrl}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <ObjectNumber number="{offeringCount}"/>
+                  <Text text="{lastCatalogFetch}"/>
+                  <Text text="{catalogError}" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Platforms ─────────────────────────────────────────── -->
+          <IconTabFilter key="platforms" icon="sap-icon://it-host" text="{i18n>tabPlatforms}">
+            <Table id="platformsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/Platforms', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabPlatforms}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>registerPlatform}" type="Emphasized" icon="sap-icon://add" press=".onOpenPlatform"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="platformsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRegion}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colInstances}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{path: 'type', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{region}"/>
+                  <ObjectNumber number="{instanceCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Operations ────────────────────────────────────────── -->
+          <IconTabFilter key="operations" icon="sap-icon://activity-items" text="{i18n>tabOperations}">
+            <Table id="operationsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/Operations', parameters: {$orderby: 'createdAt desc'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabOperations}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>completeOk}" icon="sap-icon://accept" press=".onCompleteOperation"><customData><core:CustomData key="succeeded" value="true"/></customData></Button>
+                  <Button text="{i18n>completeFailed}" icon="sap-icon://decline" press=".onCompleteOperation"><customData><core:CustomData key="succeeded" value="false"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="operationsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colDescription}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStarted}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colCompleted}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{description}" text="{errorMessage}"/>
+                  <Text text="{path: 'type', formatter: '.formatter.enumText'} · {path: 'resourceType', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                    icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  <Text text="{startedAt}"/>
+                  <Text text="{completedAt}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Labels ────────────────────────────────────────────── -->
+          <IconTabFilter key="labels" icon="sap-icon://tag" text="{i18n>tabLabels}">
+            <Table id="labelsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/Labels', parameters: {$orderby: 'key'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabLabels}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="labelsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colKey}"/></Column>
+                <Column><Text text="{i18n>colValue}"/></Column>
+                <Column><Text text="{i18n>colResourceType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colResource}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{key}"/>
+                  <Text text="{value}"/>
+                  <Text text="{path: 'resourceType', formatter: '.formatter.enumText'}"/>
+                  <Text text="{resourceId}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.agentry" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="MobileApplication">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="platform" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="iconUrl" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="vendor" Type="Edm.String"/>
+        <Property Name="contactEmail" Type="Edm.String"/>
+        <Property Name="backendSystemId" Type="Edm.String"/>
+        <Property Name="offlineCapable" Type="Edm.Boolean"/>
+        <Property Name="pushNotificationsEnabled" Type="Edm.Boolean"/>
+        <Property Name="minOsVersion" Type="Edm.String"/>
+        <Property Name="packageName" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="AppDefinition">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="applicationId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="definitionContent" Type="Edm.String"/>
+        <Property Name="definitionFormat" Type="Edm.String"/>
+        <Property Name="schemaVersion" Type="Edm.String"/>
+        <Property Name="authoredBy" Type="Edm.String"/>
+        <Property Name="targetPlatform" Type="Edm.String"/>
+        <Property Name="businessObjectModel" Type="Edm.String"/>
+        <Property Name="validationPassed" Type="Edm.Boolean"/>
+        <Property Name="validationErrors" Type="Edm.String"/>
+        <Property Name="publishedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="AppVersion">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="mobileApplicationId" Type="Edm.String"/>
+        <Property Name="definitionId" Type="Edm.String"/>
+        <Property Name="versionNumber" Type="Edm.String"/>
+        <Property Name="releaseNotes" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="builtAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="publishedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="artifactUrl" Type="Edm.String"/>
+        <Property Name="checksum" Type="Edm.String"/>
+        <Property Name="minOsVersion" Type="Edm.String"/>
+        <Property Name="changeLog" Type="Edm.String"/>
+        <Property Name="isMandatoryUpdate" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Device">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="mobileApplicationId" Type="Edm.String"/>
+        <Property Name="deviceName" Type="Edm.String"/>
+        <Property Name="deviceModel" Type="Edm.String"/>
+        <Property Name="manufacturer" Type="Edm.String"/>
+        <Property Name="platform" Type="Edm.String"/>
+        <Property Name="osVersion" Type="Edm.String"/>
+        <Property Name="appVersionInstalled" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="enrolledAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="lastSeenAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="userEmail" Type="Edm.String"/>
+        <Property Name="groupName" Type="Edm.String"/>
+        <Property Name="isManaged" Type="Edm.Boolean"/>
+        <Property Name="mdmDeviceId" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="SyncSession">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="deviceId" Type="Edm.String"/>
+        <Property Name="applicationId" Type="Edm.String"/>
+        <Property Name="connectionId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="direction" Type="Edm.String"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="bytesSent" Type="Edm.Int64"/>
+        <Property Name="bytesReceived" Type="Edm.Int64"/>
+        <Property Name="recordsSent" Type="Edm.Int64"/>
+        <Property Name="recordsReceived" Type="Edm.Int64"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+        <Property Name="clientAppVersion" Type="Edm.String"/>
+        <Property Name="triggeredBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="BackendConnection">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="backendType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="backendUrl" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="authMethod" Type="Edm.String"/>
+        <Property Name="sysId" Type="Edm.String"/>
+        <Property Name="sysNumber" Type="Edm.String"/>
+        <Property Name="client" Type="Edm.String"/>
+        <Property Name="language" Type="Edm.String"/>
+        <Property Name="destinationName" Type="Edm.String"/>
+        <Property Name="lastTestedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="lastTestedBy" Type="Edm.String"/>
+        <Property Name="sslEnabled" Type="Edm.Boolean"/>
+        <Property Name="certificateFingerprint" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Deployment">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="mobileApplicationId" Type="Edm.String"/>
+        <Property Name="appVersionId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="scope" Type="Edm.String"/>
+        <Property Name="targetDeviceId" Type="Edm.String"/>
+        <Property Name="targetGroupName" Type="Edm.String"/>
+        <Property Name="scheduledAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="rollbackVersionId" Type="Edm.String"/>
+        <Property Name="deployedBy" Type="Edm.String"/>
+        <Property Name="notes" Type="Edm.String"/>
+        <Property Name="devicesTotal" Type="Edm.Int32"/>
+        <Property Name="devicesSucceeded" Type="Edm.Int32"/>
+        <Property Name="devicesFailed" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="mobileApplications" Type="Edm.Int32"/>
+        <Property Name="activeApplications" Type="Edm.Int32"/>
+        <Property Name="appDefinitions" Type="Edm.Int32"/>
+        <Property Name="publishedDefinitions" Type="Edm.Int32"/>
+        <Property Name="appVersions" Type="Edm.Int32"/>
+        <Property Name="publishedVersions" Type="Edm.Int32"/>
+        <Property Name="devices" Type="Edm.Int32"/>
+        <Property Name="activeDevices" Type="Edm.Int32"/>
+        <Property Name="suspendedDevices" Type="Edm.Int32"/>
+        <Property Name="syncSessions" Type="Edm.Int32"/>
+        <Property Name="runningSyncs" Type="Edm.Int32"/>
+        <Property Name="failedSyncs" Type="Edm.Int32"/>
+        <Property Name="backendConnections" Type="Edm.Int32"/>
+        <Property Name="connectionErrors" Type="Edm.Int32"/>
+        <Property Name="deployments" Type="Edm.Int32"/>
+        <Property Name="runningDeployments" Type="Edm.Int32"/>
+        <Property Name="failedDeployments" Type="Edm.Int32"/>
+        <Property Name="bytesTransferred" Type="Edm.Int64"/>
+        <Property Name="recordsTransferred" Type="Edm.Int64"/>
+        <Property Name="lastSyncAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="devicesIos" Type="Edm.Int32"/>
+        <Property Name="devicesAndroid" Type="Edm.Int32"/>
+        <Property Name="devicesWindows" Type="Edm.Int32"/>
+        <Property Name="devicesWeb" Type="Edm.Int32"/>
+        <Property Name="devicesCross" Type="Edm.Int32"/>
+      </EntityType>
+      <Action Name="SetMobileApplicationStatus" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="status" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.MobileApplication"/>
+      </Action>
+      <Action Name="ValidateAppDefinition" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.AppDefinition"/>
+      </Action>
+      <Action Name="PublishAppDefinition" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.AppDefinition"/>
+      </Action>
+      <Action Name="ArchiveAppDefinition" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.AppDefinition"/>
+      </Action>
+      <Action Name="PublishAppVersion" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.AppVersion"/>
+      </Action>
+      <Action Name="WithdrawAppVersion" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.AppVersion"/>
+      </Action>
+      <Action Name="SetDeviceStatus" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="status" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.Device"/>
+      </Action>
+      <Action Name="StartSyncSession" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.SyncSession"/>
+      </Action>
+      <Action Name="CompleteSyncSession" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="bytesSent" Type="Edm.Int64"/>
+        <Parameter Name="bytesReceived" Type="Edm.Int64"/>
+        <Parameter Name="recordsSent" Type="Edm.Int64"/>
+        <Parameter Name="recordsReceived" Type="Edm.Int64"/>
+        <ReturnType Type="uim.agentry.SyncSession"/>
+      </Action>
+      <Action Name="FailSyncSession" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="errorMessage" Type="Edm.String"/>
+        <ReturnType Type="uim.agentry.SyncSession"/>
+      </Action>
+      <Action Name="CancelSyncSession" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.SyncSession"/>
+      </Action>
+      <Action Name="TestBackendConnection" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.BackendConnection"/>
+      </Action>
+      <Action Name="StartDeployment" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.Deployment"/>
+      </Action>
+      <Action Name="CompleteDeployment" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="devicesSucceeded" Type="Edm.Int32"/>
+        <Parameter Name="devicesFailed" Type="Edm.Int32"/>
+        <ReturnType Type="uim.agentry.Deployment"/>
+      </Action>
+      <Action Name="RollbackDeployment" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.agentry.Deployment"/>
+      </Action>
+      <EntityContainer Name="AgentryService">
+        <EntitySet Name="MobileApplications" EntityType="uim.agentry.MobileApplication"/>
+        <EntitySet Name="AppDefinitions" EntityType="uim.agentry.AppDefinition"/>
+        <EntitySet Name="AppVersions" EntityType="uim.agentry.AppVersion"/>
+        <EntitySet Name="Devices" EntityType="uim.agentry.Device"/>
+        <EntitySet Name="SyncSessions" EntityType="uim.agentry.SyncSession"/>
+        <EntitySet Name="BackendConnections" EntityType="uim.agentry.BackendConnection"/>
+        <EntitySet Name="Deployments" EntityType="uim.agentry.Deployment"/>
+        <Singleton Name="Statistics" Type="uim.agentry.Statistic"/>
+        <ActionImport Name="SetMobileApplicationStatus" Action="uim.agentry.SetMobileApplicationStatus" EntitySet="MobileApplications"/>
+        <ActionImport Name="ValidateAppDefinition" Action="uim.agentry.ValidateAppDefinition" EntitySet="AppDefinitions"/>
+        <ActionImport Name="PublishAppDefinition" Action="uim.agentry.PublishAppDefinition" EntitySet="AppDefinitions"/>
+        <ActionImport Name="ArchiveAppDefinition" Action="uim.agentry.ArchiveAppDefinition" EntitySet="AppDefinitions"/>
+        <ActionImport Name="PublishAppVersion" Action="uim.agentry.PublishAppVersion" EntitySet="AppVersions"/>
+        <ActionImport Name="WithdrawAppVersion" Action="uim.agentry.WithdrawAppVersion" EntitySet="AppVersions"/>
+        <ActionImport Name="SetDeviceStatus" Action="uim.agentry.SetDeviceStatus" EntitySet="Devices"/>
+        <ActionImport Name="StartSyncSession" Action="uim.agentry.StartSyncSession" EntitySet="SyncSessions"/>
+        <ActionImport Name="CompleteSyncSession" Action="uim.agentry.CompleteSyncSession" EntitySet="SyncSessions"/>
+        <ActionImport Name="FailSyncSession" Action="uim.agentry.FailSyncSession" EntitySet="SyncSessions"/>
+        <ActionImport Name="CancelSyncSession" Action="uim.agentry.CancelSyncSession" EntitySet="SyncSessions"/>
+        <ActionImport Name="TestBackendConnection" Action="uim.agentry.TestBackendConnection" EntitySet="BackendConnections"/>
+        <ActionImport Name="StartDeployment" Action="uim.agentry.StartDeployment" EntitySet="Deployments"/>
+        <ActionImport Name="CompleteDeployment" Action="uim.agentry.CompleteDeployment" EntitySet="Deployments"/>
+        <ActionImport Name="RollbackDeployment" Action="uim.agentry.RollbackDeployment" EntitySet="Deployments"/>
+      </EntityContainer>
+      <Annotations Target="uim.agentry.MobileApplication/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/platform"><Annotation Term="Common.Label" String="Platform"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/iconUrl"><Annotation Term="Common.Label" String="Icon URL"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/vendor"><Annotation Term="Common.Label" String="Vendor"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/contactEmail"><Annotation Term="Common.Label" String="Contact Email"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/backendSystemId"><Annotation Term="Common.Label" String="Backend System Id"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/offlineCapable"><Annotation Term="Common.Label" String="Offline Capable"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/pushNotificationsEnabled"><Annotation Term="Common.Label" String="Push Notifications Enabled"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/minOsVersion"><Annotation Term="Common.Label" String="Min. OS Version"/></Annotations>
+      <Annotations Target="uim.agentry.MobileApplication/packageName"><Annotation Term="Common.Label" String="Package Name"/></Annotations>
+      <Annotations Target="uim.agentry.AgentryService/MobileApplications">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/applicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/definitionContent"><Annotation Term="Common.Label" String="Definition Content"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/definitionFormat"><Annotation Term="Common.Label" String="Definition Format"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/schemaVersion"><Annotation Term="Common.Label" String="Schema Version"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/authoredBy"><Annotation Term="Common.Label" String="Authored By"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/targetPlatform"><Annotation Term="Common.Label" String="Target Platform"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/businessObjectModel"><Annotation Term="Common.Label" String="Business Object Model"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/validationPassed"><Annotation Term="Common.Label" String="Validation Passed"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/validationErrors"><Annotation Term="Common.Label" String="Validation Errors"/></Annotations>
+      <Annotations Target="uim.agentry.AppDefinition/publishedAt"><Annotation Term="Common.Label" String="Published At"/></Annotations>
+      <Annotations Target="uim.agentry.AgentryService/AppDefinitions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.agentry.AppVersion/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/mobileApplicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/definitionId"><Annotation Term="Common.Label" String="Definition"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/versionNumber"><Annotation Term="Common.Label" String="Version Number"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/releaseNotes"><Annotation Term="Common.Label" String="Release Notes"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/builtAt"><Annotation Term="Common.Label" String="Built At"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/publishedAt"><Annotation Term="Common.Label" String="Published At"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/artifactUrl"><Annotation Term="Common.Label" String="Artifact URL"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/checksum"><Annotation Term="Common.Label" String="Checksum"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/minOsVersion"><Annotation Term="Common.Label" String="Min. OS Version"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/changeLog"><Annotation Term="Common.Label" String="Change Log"/></Annotations>
+      <Annotations Target="uim.agentry.AppVersion/isMandatoryUpdate"><Annotation Term="Common.Label" String="Mandatory Update"/></Annotations>
+      <Annotations Target="uim.agentry.AgentryService/AppVersions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.agentry.Device/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.agentry.Device/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.agentry.Device/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.agentry.Device/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.agentry.Device/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.agentry.Device/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.agentry.Device/mobileApplicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.agentry.Device/deviceName"><Annotation Term="Common.Label" String="Device Name"/></Annotations>
+      <Annotations Target="uim.agentry.Device/deviceModel"><Annotation Term="Common.Label" String="Device Model"/></Annotations>
+      <Annotations Target="uim.agentry.Device/manufacturer"><Annotation Term="Common.Label" String="Manufacturer"/></Annotations>
+      <Annotations Target="uim.agentry.Device/platform"><Annotation Term="Common.Label" String="Platform"/></Annotations>
+      <Annotations Target="uim.agentry.Device/osVersion"><Annotation Term="Common.Label" String="OS Version"/></Annotations>
+      <Annotations Target="uim.agentry.Device/appVersionInstalled"><Annotation Term="Common.Label" String="App Version Installed"/></Annotations>
+      <Annotations Target="uim.agentry.Device/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.agentry.Device/enrolledAt"><Annotation Term="Common.Label" String="Enrolled At"/></Annotations>
+      <Annotations Target="uim.agentry.Device/lastSeenAt"><Annotation Term="Common.Label" String="Last Seen At"/></Annotations>
+      <Annotations Target="uim.agentry.Device/userId"><Annotation Term="Common.Label" String="User ID"/></Annotations>
+      <Annotations Target="uim.agentry.Device/userEmail"><Annotation Term="Common.Label" String="User Email"/></Annotations>
+      <Annotations Target="uim.agentry.Device/groupName"><Annotation Term="Common.Label" String="Group Name"/></Annotations>
+      <Annotations Target="uim.agentry.Device/isManaged"><Annotation Term="Common.Label" String="Managed"/></Annotations>
+      <Annotations Target="uim.agentry.Device/mdmDeviceId"><Annotation Term="Common.Label" String="MDM Device ID"/></Annotations>
+      <Annotations Target="uim.agentry.AgentryService/Devices">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.agentry.SyncSession/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/deviceId"><Annotation Term="Common.Label" String="Device"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/applicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/connectionId"><Annotation Term="Common.Label" String="Backend Connection"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/direction"><Annotation Term="Common.Label" String="Direction"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/startedAt"><Annotation Term="Common.Label" String="Started At"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/completedAt"><Annotation Term="Common.Label" String="Completed At"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/bytesSent"><Annotation Term="Common.Label" String="Bytes Sent"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/bytesReceived"><Annotation Term="Common.Label" String="Bytes Received"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/recordsSent"><Annotation Term="Common.Label" String="Records Sent"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/recordsReceived"><Annotation Term="Common.Label" String="Records Received"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/errorMessage"><Annotation Term="Common.Label" String="Error Message"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/clientAppVersion"><Annotation Term="Common.Label" String="Client App Version"/></Annotations>
+      <Annotations Target="uim.agentry.SyncSession/triggeredBy"><Annotation Term="Common.Label" String="Triggered By"/></Annotations>
+      <Annotations Target="uim.agentry.AgentryService/SyncSessions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/backendType"><Annotation Term="Common.Label" String="Backend Type"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/backendUrl"><Annotation Term="Common.Label" String="Backend URL"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/authMethod"><Annotation Term="Common.Label" String="Auth Method"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/sysId"><Annotation Term="Common.Label" String="System ID"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/sysNumber"><Annotation Term="Common.Label" String="System Number"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/client"><Annotation Term="Common.Label" String="Client"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/language"><Annotation Term="Common.Label" String="Language"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/destinationName"><Annotation Term="Common.Label" String="Destination Name"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/lastTestedAt"><Annotation Term="Common.Label" String="Last Tested At"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/lastTestedBy"><Annotation Term="Common.Label" String="Last Tested By"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/sslEnabled"><Annotation Term="Common.Label" String="SSL"/></Annotations>
+      <Annotations Target="uim.agentry.BackendConnection/certificateFingerprint"><Annotation Term="Common.Label" String="Certificate Fingerprint"/></Annotations>
+      <Annotations Target="uim.agentry.AgentryService/BackendConnections">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.agentry.Deployment/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/updatedBy"><Annotation Term="Common.Label" String="Changed By"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/updatedAt"><Annotation Term="Common.Label" String="Changed At"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/mobileApplicationId"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/appVersionId"><Annotation Term="Common.Label" String="App Version"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/scope"><Annotation Term="Common.Label" String="Scope"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/targetDeviceId"><Annotation Term="Common.Label" String="Target Device Id"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/targetGroupName"><Annotation Term="Common.Label" String="Target Group Name"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/scheduledAt"><Annotation Term="Common.Label" String="Scheduled At"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/startedAt"><Annotation Term="Common.Label" String="Started At"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/completedAt"><Annotation Term="Common.Label" String="Completed At"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/rollbackVersionId"><Annotation Term="Common.Label" String="Rollback Version Id"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/deployedBy"><Annotation Term="Common.Label" String="Deployed By"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/notes"><Annotation Term="Common.Label" String="Notes"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/devicesTotal"><Annotation Term="Common.Label" String="Devices Total"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/devicesSucceeded"><Annotation Term="Common.Label" String="Devices Succeeded"/></Annotations>
+      <Annotations Target="uim.agentry.Deployment/devicesFailed"><Annotation Term="Common.Label" String="Devices Failed"/></Annotations>
+      <Annotations Target="uim.agentry.AgentryService/Deployments">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.agentry.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/mobileApplications"><Annotation Term="Common.Label" String="Applications"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/activeApplications"><Annotation Term="Common.Label" String="Active Applications"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/appDefinitions"><Annotation Term="Common.Label" String="Definitions"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/publishedDefinitions"><Annotation Term="Common.Label" String="Published Definitions"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/appVersions"><Annotation Term="Common.Label" String="Versions"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/publishedVersions"><Annotation Term="Common.Label" String="Published Versions"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/devices"><Annotation Term="Common.Label" String="Devices"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/activeDevices"><Annotation Term="Common.Label" String="Active Devices"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/suspendedDevices"><Annotation Term="Common.Label" String="Suspended Devices"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/syncSessions"><Annotation Term="Common.Label" String="Sync Sessions"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/runningSyncs"><Annotation Term="Common.Label" String="Running Syncs"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/failedSyncs"><Annotation Term="Common.Label" String="Failed Syncs"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/backendConnections"><Annotation Term="Common.Label" String="Backend Connections"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/connectionErrors"><Annotation Term="Common.Label" String="Connection Errors"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/deployments"><Annotation Term="Common.Label" String="Deployments"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/runningDeployments"><Annotation Term="Common.Label" String="Running Deployments"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/failedDeployments"><Annotation Term="Common.Label" String="Failed Deployments"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/bytesTransferred"><Annotation Term="Common.Label" String="Bytes Transferred"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/recordsTransferred"><Annotation Term="Common.Label" String="Records Transferred"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/lastSyncAt"><Annotation Term="Common.Label" String="Last Sync"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/devicesIos"><Annotation Term="Common.Label" String="iOS Devices"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/devicesAndroid"><Annotation Term="Common.Label" String="Android Devices"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/devicesWindows"><Annotation Term="Common.Label" String="Windows Devices"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/devicesWeb"><Annotation Term="Common.Label" String="Web Clients"/></Annotations>
+      <Annotations Target="uim.agentry.Statistic/devicesCross"><Annotation Term="Common.Label" String="Cross-Platform Devices"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

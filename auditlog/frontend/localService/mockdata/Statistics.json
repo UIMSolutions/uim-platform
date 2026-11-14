@@ -1,0 +1,7 @@
+{
+  "tenantId": "default", "totalEntries": 2, "securityEvents": 1, "failedLogins": 1, "dataAccessLogs": 0,
+  "configChanges": 1, "retentionPolicies": 0, "exportJobs": 0, "retentionDays": 90,
+  "lastEntryAt": "2026-11-09T08:20:00Z",
+  "categorySecurityEvents": 1, "categoryConfiguration": 1, "categoryDataAccess": 0, "categoryDataModification": 0,
+  "severityInfo": 1, "severityWarning": 1, "severityError": 0, "severityCritical": 0
+}

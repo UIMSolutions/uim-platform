@@ -1,0 +1,18 @@
+[
+  {
+    "id": "a1", "tenantId": "default", "timestamp": "2026-11-09T08:15:00Z",
+    "category": "securityEvents", "severity": "warning", "action": "loginFailed", "outcome": "failure",
+    "userId": "bob", "userName": "Bob", "serviceId": "identity", "serviceName": "Identity Authentication",
+    "objectType": "user", "objectId": "bob", "message": "Login failed: invalid password",
+    "attributes": [], "ipAddress": "10.0.0.5", "userAgent": "Mozilla/5.0", "correlationId": "c-1",
+    "originApp": "launchpad", "formatVersion": "1.0"
+  },
+  {
+    "id": "a2", "tenantId": "default", "timestamp": "2026-11-09T08:20:00Z",
+    "category": "configuration", "severity": "info", "action": "configChange", "outcome": "success",
+    "userId": "alice", "userName": "Alice", "serviceId": "auth", "serviceName": "Authorization",
+    "objectType": "role", "objectId": "Admin", "message": "Role collection changed",
+    "attributes": [{ "name": "members", "oldValue": "3", "newValue": "4" }],
+    "ipAddress": "10.0.0.9", "userAgent": "cli", "correlationId": "c-2", "originApp": "cockpit", "formatVersion": "1.0"
+  }
+]

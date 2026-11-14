@@ -1,0 +1,76 @@
+<mvc:View controllerName="uim.servicemanager.controller.InstanceDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:form="sap.ui.layout.form" height="100%">
+  <Page id="detailPage" title="{i18n>instanceDetail}" showNavButton="true" navButtonPress=".onNavBack">
+    <headerContent>
+      <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+    </headerContent>
+    <content>
+      <ObjectHeader title="{name}" number="{bindingCount}" numberUnit="{i18n>colBindings}" responsive="true">
+        <statuses>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+            icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+        </statuses>
+        <attributes>
+          <ObjectAttribute title="{i18n>colPlan}" text="{planId}"/>
+          <ObjectAttribute title="{i18n>colOffering}" text="{offeringId}"/>
+          <ObjectAttribute title="{i18n>colPlatform}" text="{platformId}"/>
+          <ObjectAttribute title="{i18n>dashboard}" text="{dashboardUrl}" active="true" press=".onOpenDashboard"/>
+        </attributes>
+      </ObjectHeader>
+      <IconTabBar expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <IconTabFilter key="general" text="{i18n>general}">
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3">
+              <Label text="{i18n>colName}"/>
+              <Text text="{name}"/>
+              <Label text="{i18n>colShared}"/>
+              <Switch state="{shared}"/>
+              <Label text="{i18n>usable}"/>
+              <Switch state="{usable}"/>
+              <Label text="{i18n>parameters}"/>
+              <TextArea value="{parameters}" rows="5" growing="true" placeholder="{i18n>jsonPlaceholder}"/>
+              <Label text="{i18n>colCreated}"/>
+              <Text text="{createdAt} · {createdBy}"/>
+              <Label text="{i18n>changed}"/>
+              <Text text="{updatedAt} · {updatedBy}"/>
+            </form:SimpleForm>
+          </IconTabFilter>
+          <IconTabFilter key="bindings" text="{i18n>tabBindings}">
+            <Table id="detailBindings" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column><Text text="{i18n>credentials}"/></Column>
+              </columns>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter key="operations" text="{i18n>tabOperations}">
+            <Table id="detailOperations" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colDescription}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column><Text text="{i18n>colCompleted}"/></Column>
+              </columns>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter key="labels" text="{i18n>tabLabels}">
+            <Table id="detailLabels" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Input value="{view>/newLabel/key}" placeholder="{i18n>colKey}" width="10rem"/>
+                  <Input value="{view>/newLabel/value}" placeholder="{i18n>colValue}" width="14rem"/>
+                  <Button text="{i18n>addLabel}" icon="sap-icon://add" press=".onAddLabel"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colKey}"/></Column>
+                <Column><Text text="{i18n>colValue}"/></Column>
+                <Column width="4rem"/>
+              </columns>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </content>
+  </Page>
+</mvc:View>

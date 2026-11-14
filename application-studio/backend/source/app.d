@@ -1,86 +1,64 @@
 /****************************************************************************************************************
-* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
-* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
+/// HTTP server entry point (composition root): REST /api/v1, OData v4, Fiori app.
 module app;
 
 import uim.platform.application_studio;
 
+@safe:
+
 version (unittest) {
-}
-else {
+} else {
   void main() {
     auto config = loadConfig();
+    configureLogging(config.logLevel);
     auto container = buildContainer(config);
+    auto registry = new ResourceRegistry(container.ports);
 
     auto router = new URLRouter();
 
-    // Register all controllers
-    container.devSpaceController.registerRoutes(router);
-    container.devSpaceTypeController.registerRoutes(router);
-    container.extensionController.registerRoutes(router);
-    container.projectController.registerRoutes(router);
-    container.projectTemplateController.registerRoutes(router);
-    container.serviceBindingController.registerRoutes(router);
-    container.runConfigurationController.registerRoutes(router);
-    container.buildConfigurationController.registerRoutes(router);
-    container.healthController.registerRoutes(router);
+    // ── REST driving adapter (/api/v1) ─────────────────────────────────────
+    new HealthController(config.serviceName).registerRoutes(router);
+    new StudioRestController(registry, config.defaultTenant).registerRoutes(router);
+    // legacy prefix of the previous version (/api/v1/application-studio/<resource>)
+    new StudioRestController(registry, config.defaultTenant, "/api/v1/application-studio").registerRoutes(router);
 
-    writeln("====================================================");
-    writeln("  Application Studio Service");
-    writeln("====================================================");
-    writeln("  Endpoints:");
-    writeln("    GET    /api/v1/application-studio/dev-spaces");
-    writeln("    POST   /api/v1/application-studio/dev-spaces");
-    writeln("    GET    /api/v1/application-studio/dev-spaces/:id");
-    writeln("    PUT    /api/v1/application-studio/dev-spaces/:id");
-    writeln("    DELETE /api/v1/application-studio/dev-spaces/:id");
-    writeln("    GET    /api/v1/application-studio/dev-space-types");
-    writeln("    POST   /api/v1/application-studio/dev-space-types");
-    writeln("    GET    /api/v1/application-studio/dev-space-types/:id");
-    writeln("    PUT    /api/v1/application-studio/dev-space-types/:id");
-    writeln("    DELETE /api/v1/application-studio/dev-space-types/:id");
-    writeln("    GET    /api/v1/application-studio/extensions");
-    writeln("    POST   /api/v1/application-studio/extensions");
-    writeln("    GET    /api/v1/application-studio/extensions/:id");
-    writeln("    PUT    /api/v1/application-studio/extensions/:id");
-    writeln("    DELETE /api/v1/application-studio/extensions/:id");
-    writeln("    GET    /api/v1/application-studio/projects");
-    writeln("    POST   /api/v1/application-studio/projects");
-    writeln("    GET    /api/v1/application-studio/projects/:id");
-    writeln("    PUT    /api/v1/application-studio/projects/:id");
-    writeln("    DELETE /api/v1/application-studio/projects/:id");
-    writeln("    GET    /api/v1/application-studio/project-templates");
-    writeln("    POST   /api/v1/application-studio/project-templates");
-    writeln("    GET    /api/v1/application-studio/project-templates/:id");
-    writeln("    PUT    /api/v1/application-studio/project-templates/:id");
-    writeln("    DELETE /api/v1/application-studio/project-templates/:id");
-    writeln("    GET    /api/v1/application-studio/service-bindings");
-    writeln("    POST   /api/v1/application-studio/service-bindings");
-    writeln("    GET    /api/v1/application-studio/service-bindings/:id");
-    writeln("    PUT    /api/v1/application-studio/service-bindings/:id");
-    writeln("    DELETE /api/v1/application-studio/service-bindings/:id");
-    writeln("    GET    /api/v1/application-studio/run-configurations");
-    writeln("    POST   /api/v1/application-studio/run-configurations");
-    writeln("    GET    /api/v1/application-studio/run-configurations/:id");
-    writeln("    PUT    /api/v1/application-studio/run-configurations/:id");
-    writeln("    DELETE /api/v1/application-studio/run-configurations/:id");
-    writeln("    GET    /api/v1/application-studio/build-configurations");
-    writeln("    POST   /api/v1/application-studio/build-configurations");
-    writeln("    GET    /api/v1/application-studio/build-configurations/:id");
-    writeln("    PUT    /api/v1/application-studio/build-configurations/:id");
-    writeln("    DELETE /api/v1/application-studio/build-configurations/:id");
-    writeln("    GET    /health");
-    writeln("====================================================");
-    writefln("  Listening on %s:%d", config.host, config.port);
-    writeln("====================================================");
+    // ── OData v4 driving adapter (SAP Fiori) ───────────────────────────────
+    new StudioODataController(registry, config.odataPath, config.defaultTenant).registerRoutes(router);
+
+    // ── Fiori app for local development (approuter serves it on CF) ────────
+    auto frontend = new FrontendController(config.frontendDir);
+    frontend.registerRoutes(router);
+
+    // ── Predefined SAP catalogue for the default tenant ────────────────────
+    if (config.seedCatalog) {
+      auto seeded = container.ports.catalog.seed(TenantId(config.defaultTenant), UserId("system"));
+      if (seeded.created > 0)
+        logInfo("studio: catalogue for '%s' — %d item(s) installed", config.defaultTenant, seeded.created);
+    }
+
+    // ── Background reconciler (dev spaces, connections, runs, builds) ──────
+    auto worker = new ReconcileWorker(container.ports.reconciler, config.reconcileTenants);
+    worker.start(config.reconcileIntervalSeconds);
 
     auto settings = new HTTPServerSettings();
     settings.port = config.port;
     settings.bindAddresses = [config.host];
     auto listener = listenHTTP(settings, router);
-    scope (exit) listener.stopListening();
+    scope (exit)
+      listener.stopListening();
+
+    logInfo("%s listening on %s:%d (storage=%s, config from %s)", config.serviceName,
+      config.host, config.port, config.storage, config.sources.join(" → "));
+    logInfo("  REST   /api/v1/{%s,statistics,reconcile,catalog/seed,resources,health}",
+      registry.adapters.map!(a => a.path).join(","));
+    logInfo("  OData  %s  ($metadata)", config.odataPath);
+    if (frontend.available)
+      logInfo("  Fiori  /index.html  (%s)", config.frontendDir);
+
     runApplication();
-}
+  }
 }

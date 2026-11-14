@@ -1,0 +1,387 @@
+<mvc:View
+  controllerName="uim.agentry.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiApps}"/>
+            <ObjectNumber number="{activeApplications} / {mobileApplications}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiDevices}"/>
+            <ObjectNumber number="{activeDevices} / {devices}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiPublishedVersions}"/>
+            <ObjectNumber number="{publishedVersions}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRunningSyncs}"/>
+            <ObjectNumber number="{runningSyncs}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiFailedSyncs}"/>
+            <ObjectNumber number="{failedSyncs}" state="{= ${failedSyncs} > 0 ? 'Error' : 'None' }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiTransferred}"/>
+            <ObjectNumber number="{path: 'bytesTransferred', targetType: 'any', formatter: '.formatter.bytes'}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiConnectionErrors}"/>
+            <ObjectNumber number="{connectionErrors}" state="{= ${connectionErrors} > 0 ? 'Error' : 'Success' }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLastSync}"/>
+            <Text text="{path: 'lastSyncAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid id="overviewGrid" defaultSpan="XL3 L4 M6 S12" binding="{/Statistics}">
+              <GenericTile header="{i18n>tabApps}" subheader="{i18n>kpiActive}" press=".onTilePress" app:tab="apps">
+                <TileContent><NumericContent value="{activeApplications}" icon="sap-icon://iphone" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabDefinitions}" subheader="{i18n>kpiPublished}" press=".onTilePress" app:tab="definitions">
+                <TileContent><NumericContent value="{publishedDefinitions}" icon="sap-icon://document-text" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabVersions}" subheader="{i18n>kpiPublished}" press=".onTilePress" app:tab="versions">
+                <TileContent><NumericContent value="{publishedVersions}" icon="sap-icon://product" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabDevices}" subheader="{i18n>kpiActive}" press=".onTilePress" app:tab="devices">
+                <TileContent><NumericContent value="{activeDevices}" icon="sap-icon://iphone-2" valueColor="Good" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiSuspended}" subheader="{i18n>tabDevices}" press=".onTilePress" app:tab="devices">
+                <TileContent><NumericContent value="{suspendedDevices}" icon="sap-icon://locked" valueColor="Critical" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiFailedSyncs}" subheader="{i18n>tabSyncs}" press=".onTilePress" app:tab="syncs">
+                <TileContent><NumericContent value="{failedSyncs}" icon="sap-icon://synchronize" valueColor="Error" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiConnectionErrors}" subheader="{i18n>tabConnections}" press=".onTilePress" app:tab="connections">
+                <TileContent><NumericContent value="{connectionErrors}" icon="sap-icon://disconnected" valueColor="Error" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiRunningDeployments}" subheader="{i18n>tabDeployments}" press=".onTilePress" app:tab="deployments">
+                <TileContent><NumericContent value="{runningDeployments}" icon="sap-icon://shipping-status" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>platformIos}" subheader="{i18n>tabDevices}" press=".onTilePress" app:tab="devices">
+                <TileContent><NumericContent value="{devicesIos}" icon="sap-icon://iphone" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>platformAndroid}" subheader="{i18n>tabDevices}" press=".onTilePress" app:tab="devices">
+                <TileContent><NumericContent value="{devicesAndroid}" icon="sap-icon://iphone" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>platformWindows}" subheader="{i18n>tabDevices}" press=".onTilePress" app:tab="devices">
+                <TileContent><NumericContent value="{devicesWindows}" icon="sap-icon://laptop" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>platformWeb}" subheader="{i18n>tabDevices}" press=".onTilePress" app:tab="devices">
+                <TileContent><NumericContent value="{devicesWeb}" icon="sap-icon://world" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <IconTabFilter key="apps" icon="sap-icon://iphone" text="{i18n>tabApps}">
+            <Table id="appTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/MobileApplications', parameters: {$count: true, $orderby: 'name'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabApps}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="appTable"/>
+                  <Button text="{i18n>activate}" icon="sap-icon://activate" press=".onAction" app:table="appTable" app:action="SetMobileApplicationStatus" app:status="active"/>
+                  <Button text="{i18n>deprecate}" press=".onAction" app:table="appTable" app:action="SetMobileApplicationStatus" app:status="deprecated"/>
+                  <Button text="{i18n>archive}" press=".onAction" app:table="appTable" app:action="SetMobileApplicationStatus" app:status="archived" app:confirm="confirmArchive"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="appTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPlatform}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colVendor}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colOffline}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colChanged}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{packageName}"/>
+                    <HBox alignItems="Center"><core:Icon src="{path: 'platform', formatter: '.formatter.platformIcon'}"/><Text class="sapUiTinyMarginBegin" text="{path: 'platform', formatter: '.formatter.platformText'}"/></HBox>
+                    <Text text="{vendor}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <CheckBox selected="{offlineCapable}" editable="false"/>
+                    <Text text="{path: 'updatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter key="definitions" icon="sap-icon://document-text" text="{i18n>tabDefinitions}">
+            <Table id="definitionTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/AppDefinitions', parameters: {$count: true, $orderby: 'name'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDefinitions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="definitionTable"/>
+                  <Button text="{i18n>validate}" icon="sap-icon://validate" press=".onAction" app:table="definitionTable" app:action="ValidateAppDefinition"/>
+                  <Button text="{i18n>publish}" icon="sap-icon://upload-to-cloud" press=".onAction" app:table="definitionTable" app:action="PublishAppDefinition"/>
+                  <Button text="{i18n>archive}" press=".onAction" app:table="definitionTable" app:action="ArchiveAppDefinition" app:confirm="confirmArchive"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="definitionTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colFormat}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colSchema}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colValid}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colPublished}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{definitionFormat}"/>
+                    <Text text="{schemaVersion}"/>
+                    <core:Icon src="{path: 'validationPassed', formatter: '.formatter.validIcon'}" tooltip="{validationErrors}" color="{= ${validationPassed} ? 'Positive' : 'Negative' }"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{path: 'publishedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter key="versions" icon="sap-icon://product" text="{i18n>tabVersions}">
+            <Table id="versionTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/AppVersions', parameters: {$count: true, $orderby: 'versionNumber'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabVersions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="versionTable"/>
+                  <Button text="{i18n>publish}" icon="sap-icon://upload-to-cloud" press=".onAction" app:table="versionTable" app:action="PublishAppVersion"/>
+                  <Button text="{i18n>withdraw}" press=".onAction" app:table="versionTable" app:action="WithdrawAppVersion" app:confirm="confirmWithdraw"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="versionTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colVersion}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colApplication}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMandatory}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPublished}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{versionNumber}" text="{releaseNotes}"/>
+                    <Text text="{mobileApplicationId}"/>
+                    <CheckBox selected="{isMandatoryUpdate}" editable="false"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{path: 'publishedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter key="devices" icon="sap-icon://iphone-2" text="{i18n>tabDevices}">
+            <Table id="deviceTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/Devices', parameters: {$count: true, $orderby: 'deviceName'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDevices}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="deviceTable"/>
+                  <Button text="{i18n>activate}" icon="sap-icon://activate" press=".onAction" app:table="deviceTable" app:action="SetDeviceStatus" app:status="active"/>
+                  <Button text="{i18n>suspend}" icon="sap-icon://locked" press=".onAction" app:table="deviceTable" app:action="SetDeviceStatus" app:status="suspended"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="deviceTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colDevice}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPlatform}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colOs}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colAppVersion}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colGroup}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastSeen}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{deviceName}" text="{deviceModel}"/>
+                    <Text text="{path: 'platform', formatter: '.formatter.platformText'}"/>
+                    <Text text="{osVersion}"/>
+                    <Text text="{appVersionInstalled}"/>
+                    <Text text="{groupName}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{path: 'lastSeenAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter key="syncs" icon="sap-icon://synchronize" text="{i18n>tabSyncs}">
+            <Table id="syncTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/SyncSessions', parameters: {$count: true, $orderby: 'startedAt desc'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSyncs}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="syncTable"/>
+                  <Button text="{i18n>start}" icon="sap-icon://media-play" press=".onAction" app:table="syncTable" app:action="StartSyncSession"/>
+                  <Button text="{i18n>complete}" icon="sap-icon://complete" press=".onAction" app:table="syncTable" app:action="CompleteSyncSession"/>
+                  <Button text="{i18n>cancelSync}" press=".onAction" app:table="syncTable" app:action="CancelSyncSession"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="syncTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colStarted}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDevice}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDirection}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colRecords}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colTransferred}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colError}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'startedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                    <Text text="{deviceId}"/>
+                    <Text text="{path: 'direction', formatter: '.formatter.enumText'}"/>
+                    <Text text="{parts: [{path: 'recordsSent', targetType: 'any'}, {path: 'recordsReceived', targetType: 'any'}], formatter: '.formatter.sum'}"/>
+                    <Text text="{parts: [{path: 'bytesSent', targetType: 'any'}, {path: 'bytesReceived', targetType: 'any'}], formatter: '.formatter.bytesSum'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{errorMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter key="connections" icon="sap-icon://connected" text="{i18n>tabConnections}">
+            <Table id="connectionTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/BackendConnections', parameters: {$count: true, $orderby: 'name'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabConnections}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="connectionTable"/>
+                  <Button text="{i18n>test}" icon="sap-icon://connected" press=".onAction" app:table="connectionTable" app:action="TestBackendConnection"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="connectionTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colAuth}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colSsl}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastTest}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{backendUrl}"/>
+                    <Text text="{path: 'backendType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{authMethod}"/>
+                    <CheckBox selected="{sslEnabled}" editable="false"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{path: 'lastTestedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+          <IconTabFilter key="deployments" icon="sap-icon://shipping-status" text="{i18n>tabDeployments}">
+            <Table id="deploymentTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="SingleSelectLeft"
+              items="{path: '/Deployments', parameters: {$count: true, $orderby: 'createdAt desc'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDeployments}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate" app:table="deploymentTable"/>
+                  <Button text="{i18n>start}" icon="sap-icon://media-play" press=".onAction" app:table="deploymentTable" app:action="StartDeployment"/>
+                  <Button text="{i18n>complete}" icon="sap-icon://complete" press=".onAction" app:table="deploymentTable" app:action="CompleteDeployment"/>
+                  <Button text="{i18n>rollback}" icon="sap-icon://undo" press=".onAction" app:table="deploymentTable" app:action="RollbackDeployment" app:confirm="confirmRollback"/>
+                  <Button icon="sap-icon://delete" tooltip="{i18n>delete}" press=".onDelete" app:table="deploymentTable"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colVersion}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colScope}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTarget}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colProgress}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colStarted}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{appVersionId}"/>
+                    <Text text="{path: 'scope', formatter: '.formatter.enumText'}"/>
+                    <Text text="{parts: ['scope', 'targetDeviceId', 'targetGroupName'], formatter: '.formatter.deploymentTarget'}"/>
+                    <ProgressIndicator percentValue="{parts: ['devicesSucceeded', 'devicesFailed', 'devicesTotal'], formatter: '.formatter.deploymentPercent'}" displayValue="{devicesSucceeded} / {devicesTotal}" state="{= ${devicesFailed} > 0 ? 'Warning' : 'Success' }"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{path: 'startedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

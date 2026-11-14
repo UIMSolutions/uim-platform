@@ -34,6 +34,8 @@ struct StudioConfig {
   /// Run the reconciler every N seconds in the server (0 = off).
   int reconcileIntervalSeconds = 10;
   string[] reconcileTenants = ["default"];
+  /// Install the predefined SAP catalogue into the default tenant on server start.
+  bool seedCatalog = true;
   /// Serve the Fiori app from this directory at "/" (local development; "" = off).
   string frontendDir = "../frontend";
 
@@ -57,6 +59,8 @@ struct StudioConfig {
       reconcileIntervalSeconds = cast(int) jsonLong(*v, reconcileIntervalSeconds);
     if (auto v = "reconcileTenants" in values)
       reconcileTenants = jsonStrings(*v);
+    if (auto v = "seedCatalog" in values)
+      seedCatalog = jsonBool(*v, seedCatalog);
     sources ~= source;
   }
 
@@ -82,6 +86,7 @@ struct StudioConfig {
       .set("odataPath", odataPath)
       .set("reconcileIntervalSeconds", reconcileIntervalSeconds)
       .set("reconcileTenants", tenants)
+      .set("seedCatalog", seedCatalog)
       .set("frontendDir", frontendDir)
       .set("sources", origins);
   }
@@ -119,6 +124,7 @@ StudioConfig loadConfig() {
   fromEnv("APPLICATION_STUDIO_ODATA_PATH", "odataPath");
   fromEnv("APPLICATION_STUDIO_RECONCILE_INTERVAL", "reconcileIntervalSeconds");
   fromEnv("APPLICATION_STUDIO_RECONCILE_TENANTS", "reconcileTenants");
+  fromEnv("APPLICATION_STUDIO_SEED_CATALOG", "seedCatalog");
   fromEnv("APPLICATION_STUDIO_FRONTEND_DIR", "frontendDir");
   try {
     if (env.length > 0)
@@ -182,10 +188,11 @@ unittest {
   mixin(ShowTest!("StudioConfig"));
 
   StudioConfig cfg;
-  cfg.apply(parseJsonString(`{"port": 9000, "storage": "memory", "reconcileTenants": "a, b"}`), "test");
+  cfg.apply(parseJsonString(`{"port": 9000, "storage": "memory", "reconcileTenants": "a, b", "seedCatalog": "off"}`), "test");
   assert(cfg.port == 9000);
   assert(!cfg.usesFileStorage);
   assert(cfg.reconcileTenants == ["a", "b"]);
+  assert(!cfg.seedCatalog);
 
   auto vcap = parseJsonString(`{"user-provided": [{"name": "application-studio-config", "credentials": {"port": "9100"}}]}`);
   cfg.apply(findServiceCredentials(vcap, "application-studio-config"), "vcap");

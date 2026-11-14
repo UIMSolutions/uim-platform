@@ -127,12 +127,12 @@ class TablePage : Box {
 
 /// Fields edited in a multi-line text area (structured lists as JSON).
 private bool isMultiline(string field) {
-  return field == "inboundServices" || field == "outboundServices" || field == "endpoints";
+  return field == "parameters" || field == "environment" || field == "description";
 }
 
 /// Fields entered without echo.
 private bool isSecret(string field) {
-  return field == "communicationPassword" || field == "clientSecret";
+  return field == "credentials";
 }
 
 /// The editable text of a payload value (inverse of the codec's lenient parsing).
@@ -213,6 +213,15 @@ class StudioWindow : MainWindow {
         status.push(0, "Reconciled: %d of %d resource(s) advanced".format(r["advanced"].get!long, r["examined"].get!long));
       }));
     header.packEnd(reconcile);
+
+    auto seed = new Button("Seed Catalogue");
+    seed.setTooltipText("Install the predefined SAP dev space types, extensions and templates");
+    seed.addOnClicked((Button _) => guarded(() {
+        auto r = registry.seedCatalog(who);
+        refreshAll();
+        status.push(0, "Catalogue: %d created, %d already present".format(r["created"].get!long, r["skipped"].get!long));
+      }));
+    header.packEnd(seed);
 
     tenantEntry = new Entry(who.tenantId.value);
     tenantEntry.setPlaceholderText("tenant");

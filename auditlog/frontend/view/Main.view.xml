@@ -1,0 +1,361 @@
+<mvc:View
+  controllerName="uim.auditlog.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns="sap.m">
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiEntries}"/>
+            <ObjectNumber number="{totalEntries}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSecurityEvents}"/>
+            <ObjectNumber number="{securityEvents}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiFailed}"/>
+            <ObjectNumber number="{failedLogins}" class="sapMObjectNumberLarge" state="{= ${failedLogins} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiDataAccess}"/>
+            <ObjectNumber number="{dataAccessLogs}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiConfigChanges}"/>
+            <ObjectNumber number="{configChanges}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRetention}"/>
+            <ObjectNumber number="{retentionDays}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLastEntry}"/>
+            <Text text="{path: 'lastEntryAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid defaultSpan="XL3 L4 M6 S12" binding="{/Statistics}">
+              <GenericTile header="{i18n>catSecurityEvents}" subheader="audit.security-events" press=".onTileSecurity">
+                <TileContent><NumericContent value="{categorySecurityEvents}" icon="sap-icon://shield" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>catConfiguration}" subheader="audit.configuration" press=".onTileConfig">
+                <TileContent><NumericContent value="{categoryConfiguration}" icon="sap-icon://action-settings" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>catDataAccess}" subheader="audit.data-access" press=".onTileDataAccess">
+                <TileContent><NumericContent value="{categoryDataAccess}" icon="sap-icon://show" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>catDataModification}" subheader="audit.data-modification">
+                <TileContent><NumericContent value="{categoryDataModification}" icon="sap-icon://edit" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>sevCritical}" subheader="{i18n>severity}">
+                <TileContent><NumericContent value="{severityCritical}" valueColor="Error" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>sevError}" subheader="{i18n>severity}">
+                <TileContent><NumericContent value="{severityError}" valueColor="Error" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>sevWarning}" subheader="{i18n>severity}">
+                <TileContent><NumericContent value="{severityWarning}" valueColor="Critical" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>sevInfo}" subheader="{i18n>severity}">
+                <TileContent><NumericContent value="{severityInfo}" valueColor="Good" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <!-- ── Audit logs ───────────────────────────────────────── -->
+          <IconTabFilter key="logs" icon="sap-icon://list" text="{i18n>tabAuditLogs}">
+            <Table id="auditLogTable" growing="true" growingThreshold="50" growingScrollToLoad="true"
+              sticky="ColumnHeaders,HeaderToolbar" mode="None"
+              items="{path: '/AuditLogs', parameters: {$count: true, $orderby: 'timestamp desc'}}"
+              noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabAuditLogs}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Select id="categoryFilter" change=".onFilterLogs" width="14rem">
+                    <core:Item key="" text="{i18n>allCategories}"/>
+                    <core:Item key="securityEvents" text="{i18n>catSecurityEvents}"/>
+                    <core:Item key="configuration" text="{i18n>catConfiguration}"/>
+                    <core:Item key="dataAccess" text="{i18n>catDataAccess}"/>
+                    <core:Item key="dataModification" text="{i18n>catDataModification}"/>
+                  </Select>
+                  <Select id="severityFilter" change=".onFilterLogs" width="10rem">
+                    <core:Item key="" text="{i18n>allSeverities}"/>
+                    <core:Item key="critical" text="{i18n>sevCritical}"/>
+                    <core:Item key="error" text="{i18n>sevError}"/>
+                    <core:Item key="warning" text="{i18n>sevWarning}"/>
+                    <core:Item key="info" text="{i18n>sevInfo}"/>
+                  </Select>
+                  <SearchField id="logSearch" width="16rem" search=".onFilterLogs" placeholder="{i18n>searchPlaceholder}"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colCategory}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colSeverity}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="9rem"><Text text="{i18n>colAction}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="7rem"><Text text="{i18n>colOutcome}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" width="9rem"><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colMessage}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onAuditLogPress">
+                  <cells>
+                    <Text text="{path: 'timestamp', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{path: 'category', formatter: '.formatter.enumText'}"/>
+                    <ObjectStatus text="{path: 'severity', formatter: '.formatter.enumText'}"
+                      state="{path: 'severity', formatter: '.formatter.severityState'}"/>
+                    <Text text="{path: 'action', formatter: '.formatter.enumText'}"/>
+                    <ObjectStatus text="{path: 'outcome', formatter: '.formatter.enumText'}"
+                      state="{path: 'outcome', formatter: '.formatter.outcomeState'}"/>
+                    <Text text="{parts: ['userName', 'userId'], formatter: '.formatter.userText'}"/>
+                    <Text text="{message}" maxLines="2"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Security events ──────────────────────────────────── -->
+          <IconTabFilter key="security" icon="sap-icon://shield" text="{i18n>tabSecurity}">
+            <Table id="securityTable" growing="true" growingThreshold="50" sticky="ColumnHeaders"
+              items="{path: '/SecurityEvents', parameters: {$orderby: 'timestamp desc'}}" noDataText="{i18n>noData}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colEventType}"/></Column>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colOutcome}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colIp}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colAuthMethod}"/></Column>
+                <Column><Text text="{i18n>colRisk}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colFailureReason}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'timestamp', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{path: 'eventType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{parts: ['userName', 'userId'], formatter: '.formatter.userText'}"/>
+                    <ObjectStatus text="{path: 'outcome', formatter: '.formatter.enumText'}"
+                      state="{path: 'outcome', formatter: '.formatter.outcomeState'}"/>
+                    <Text text="{ipAddress}"/>
+                    <Text text="{authMethod}"/>
+                    <ObjectStatus text="{riskLevel}" state="{path: 'riskLevel', formatter: '.formatter.riskState'}"/>
+                    <Text text="{failureReason}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Data access (GDPR) ───────────────────────────────── -->
+          <IconTabFilter key="dataAccess" icon="sap-icon://show" text="{i18n>tabDataAccess}">
+            <Table id="dataAccessTable" growing="true" growingThreshold="50" sticky="ColumnHeaders"
+              items="{path: '/DataAccessLogs', parameters: {$orderby: 'timestamp desc'}}" noDataText="{i18n>noData}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colAccessedBy}"/></Column>
+                <Column><Text text="{i18n>colDataSubject}"/></Column>
+                <Column><Text text="{i18n>colObject}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colFields}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPurpose}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colChannel}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'timestamp', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{accessedBy}"/>
+                    <Text text="{dataSubject}"/>
+                    <ObjectIdentifier title="{dataObjectType}" text="{dataObjectId}"/>
+                    <Text text="{path: 'accessedFields', formatter: '.formatter.joinList'}"/>
+                    <Text text="{purpose}"/>
+                    <Text text="{channel}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Configuration changes ────────────────────────────── -->
+          <IconTabFilter key="configChanges" icon="sap-icon://action-settings" text="{i18n>tabConfigChanges}">
+            <Table id="configChangeTable" growing="true" growingThreshold="50" sticky="ColumnHeaders"
+              items="{path: '/ConfigChangeLogs', parameters: {$orderby: 'timestamp desc'}}" noDataText="{i18n>noData}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colChangedBy}"/></Column>
+                <Column><Text text="{i18n>colConfigType}"/></Column>
+                <Column><Text text="{i18n>colObject}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colChanges}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colReason}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'timestamp', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{changedBy}"/>
+                    <Text text="{configType}"/>
+                    <Text text="{configObjectId}"/>
+                    <Text text="{path: 'changes', formatter: '.formatter.attributes'}"/>
+                    <Text text="{reason}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Retention policies ───────────────────────────────── -->
+          <IconTabFilter key="retention" icon="sap-icon://history" text="{i18n>tabRetention}">
+            <Table id="retentionTable" mode="SingleSelectLeft"
+              items="{path: '/RetentionPolicies', parameters: {$orderby: 'name'}}" noDataText="{i18n>noPolicies}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRetention}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreatePolicy"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDeletePolicy"/>
+                  <Button text="{i18n>enforceRetention}" icon="sap-icon://journey-change" type="Emphasized" press=".onEnforceRetention"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column hAlign="End" width="8rem"><Text text="{i18n>colDays}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCategories}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column width="6rem" hAlign="Center"><Text text="{i18n>colDefault}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <ObjectNumber number="{retentionDays}" unit="{i18n>days}"/>
+                    <Text text="{path: 'categories', formatter: '.formatter.joinList'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+                      state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <core:Icon src="sap-icon://accept" visible="{isDefault}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Audit configuration ──────────────────────────────── -->
+          <IconTabFilter key="auditConfig" icon="sap-icon://settings" text="{i18n>tabAuditConfig}">
+            <Table id="auditConfigTable" items="{/AuditConfigs}" noDataText="{i18n>noConfig}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabAuditConfig}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>createConfig}" icon="sap-icon://add" press=".onCreateConfig"
+                    visible="{= !${ui>/hasConfig} }"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="Center"><Text text="{i18n>catDataAccess}"/></Column>
+                <Column hAlign="Center"><Text text="{i18n>catDataModification}"/></Column>
+                <Column hAlign="Center"><Text text="{i18n>catSecurityEvents}"/></Column>
+                <Column hAlign="Center"><Text text="{i18n>catConfiguration}"/></Column>
+                <Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMasking}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMinSeverity}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Input value="{name}" change=".onConfigChanged"/>
+                    <Switch state="{= ${status} === 'enabled' }" change=".onConfigStatus" customTextOn=" " customTextOff=" "/>
+                    <CheckBox selected="{logDataAccess}" select=".onConfigChanged"/>
+                    <CheckBox selected="{logDataModification}" select=".onConfigChanged"/>
+                    <CheckBox selected="{logSecurityEvents}" select=".onConfigChanged"/>
+                    <CheckBox selected="{logConfigurationChanges}" select=".onConfigChanged"/>
+                    <CheckBox selected="{enableDataMasking}" select=".onConfigChanged"/>
+                    <Select selectedKey="{minimumSeverity}" change=".onConfigChanged">
+                      <core:Item key="info" text="{i18n>sevInfo}"/>
+                      <core:Item key="warning" text="{i18n>sevWarning}"/>
+                      <core:Item key="error" text="{i18n>sevError}"/>
+                      <core:Item key="critical" text="{i18n>sevCritical}"/>
+                    </Select>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Exports ──────────────────────────────────────────── -->
+          <IconTabFilter key="exports" icon="sap-icon://download" text="{i18n>tabExports}">
+            <Table id="exportTable" mode="SingleSelectLeft"
+              items="{path: '/ExportJobs', parameters: {$orderby: 'createdAt desc'}}" noDataText="{i18n>noExports}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabExports}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton selectedKey="{ui>/newExport/format}">
+                    <items>
+                      <SegmentedButtonItem key="json" text="JSON"/>
+                      <SegmentedButtonItem key="csv" text="CSV"/>
+                    </items>
+                  </SegmentedButton>
+                  <Button text="{i18n>createExport}" icon="sap-icon://add" type="Emphasized" press=".onCreateExport"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDeleteExport"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colCreated}"/></Column>
+                <Column width="6rem"><Text text="{i18n>colFormat}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End" width="7rem"><Text text="{i18n>colRecords}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRequestedBy}"/></Column>
+                <Column><Text text="{i18n>colDownload}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{= ${format}.toUpperCase() }"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+                      state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <ObjectNumber number="{totalRecords}"/>
+                    <Text text="{requestedBy}"/>
+                    <Link text="{i18n>download}" href="{path: 'downloadUrl', formatter: '.formatter.downloadHref'}"
+                      target="_blank" enabled="{= ${status} === 'completed' }"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

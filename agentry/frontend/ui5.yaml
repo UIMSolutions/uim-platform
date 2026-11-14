@@ -1,0 +1,8 @@
+specVersion: "3.0"
+metadata:
+  name: uim.agentry
+type: application
+resources:
+  configuration:
+    paths:
+      webapp: .

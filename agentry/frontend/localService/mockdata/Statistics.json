@@ -1,0 +1,8 @@
+{
+  "tenantId": "default", "mobileApplications": 2, "activeApplications": 1, "appDefinitions": 2, "publishedDefinitions": 1,
+  "appVersions": 3, "publishedVersions": 1, "devices": 12, "activeDevices": 10, "suspendedDevices": 1,
+  "syncSessions": 40, "runningSyncs": 2, "failedSyncs": 3, "backendConnections": 2, "connectionErrors": 0,
+  "deployments": 4, "runningDeployments": 1, "failedDeployments": 0, "bytesTransferred": "52428800",
+  "recordsTransferred": "18230", "lastSyncAt": "2026-11-09T08:20:00Z",
+  "devicesIos": 7, "devicesAndroid": 5, "devicesWindows": 0, "devicesWeb": 0, "devicesCross": 0
+}

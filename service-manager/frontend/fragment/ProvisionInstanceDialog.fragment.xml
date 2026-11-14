@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog id="provisionDialog" title="{i18n>provision}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/newInstance/name}" placeholder="my-app-db"/>
+      <Label text="{i18n>colOffering}" required="true"/>
+      <Select id="offeringSelect" forceSelection="false" change=".onOfferingChange"
+        items="{path: '/ServiceOfferings', parameters: {$filter: 'status eq \'available\'', $orderby: 'name'}}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colPlan}" required="true"/>
+      <Select id="planSelect" forceSelection="false" selectedKey="{view>/newInstance/planId}"
+        items="{path: '/ServicePlans', parameters: {$orderby: 'name'}, suspended: true}">
+        <core:Item key="{id}" text="{name} ({pricing})"/>
+      </Select>
+      <Label text="{i18n>colPlatform}"/>
+      <Select forceSelection="false" selectedKey="{view>/newInstance/platformId}"
+        items="{path: '/Platforms', parameters: {$filter: 'status eq \'active\'', $orderby: 'name'}}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>parameters}"/>
+      <TextArea value="{view>/newInstance/parameters}" rows="4" placeholder="{i18n>jsonPlaceholder}"/>
+      <Label text="{i18n>colShared}"/>
+      <Switch state="{view>/newInstance/shared}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>provision}" type="Emphasized" press=".onProvision"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

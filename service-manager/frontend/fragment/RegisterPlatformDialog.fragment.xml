@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog id="platformDialog" title="{i18n>registerPlatform}" contentWidth="28rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/newPlatform/name}"/>
+      <Label text="{i18n>colType}"/>
+      <Select selectedKey="{view>/newPlatform/type}">
+        <core:Item key="cloudFoundry" text="Cloud Foundry"/>
+        <core:Item key="kubernetes" text="Kubernetes"/>
+        <core:Item key="kyma" text="Kyma"/>
+        <core:Item key="neo" text="Neo"/>
+        <core:Item key="other" text="{i18n>other}"/>
+      </Select>
+      <Label text="{i18n>colRegion}"/>
+      <Input value="{view>/newPlatform/region}" placeholder="eu10"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/newPlatform/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>register}" type="Emphasized" press=".onRegisterPlatform"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>
