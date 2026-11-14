@@ -1,0 +1,29 @@
+[
+  {
+    "authenticationType": "none",
+    "clientId": "",
+    "tokenUrl": "",
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "erp-webhook",
+    "queueId": "orders-created",
+    "serviceId": "sales-orders",
+    "deliveredCount": 0,
+    "deliveryMode": "atLeastOnce",
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "ERP order inbox",
+    "url": "https://erp.example.com/api/order-events",
+    "exemptHandshake": false,
+    "hasCredentials": false,
+    "batchSize": 10,
+    "credentials": null,
+    "headers": "{\"X-Source\": \"uim-event-mesh\"}",
+    "lastDeliveryAt": null,
+    "lastError": "",
+    "description": "Paused demo endpoint — set a reachable URL and activate it",
+    "failedCount": 0,
+    "tenantId": "default",
+    "status": "paused",
+    "updatedBy": "cli"
+  }
+]

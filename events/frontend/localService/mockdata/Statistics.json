@@ -1,0 +1,15 @@
+{
+	"channels": 2,
+	"services": 2,
+	"deadLetteredMessages": 0,
+	"bindings": 3,
+	"queues": 3,
+	"subscriptions": 2,
+	"webhooks": 1,
+	"activeServices": 2,
+	"clients": 2,
+	"deliveredMessages": 0,
+	"queuedMessages": 5,
+	"tenantId": "default",
+	"failingWebhooks": 0
+}

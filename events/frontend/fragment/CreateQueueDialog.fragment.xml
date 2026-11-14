@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createQueue}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colService}" required="true"/>
+      <Select selectedKey="{view>/form/queue/serviceId}" forceSelection="false" items="{path: '/MessagingServices', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name} ({namespace})"/></Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/queue/name}" placeholder="acme/sales/orders/created"/>
+      <Label text="{i18n>colAccessType}"/>
+      <Select selectedKey="{view>/form/queue/accessType}">
+        <core:Item key="nonExclusive" text="{i18n>nonExclusive}"/>
+        <core:Item key="exclusive" text="{i18n>exclusive}"/>
+      </Select>
+      <Label text="{i18n>colMaxDepth}"/>
+      <StepInput value="{view>/form/queue/maxDepth}" min="0" step="100"/>
+      <Label text="{i18n>colTtl}"/>
+      <StepInput value="{view>/form/queue/messageTtlSeconds}" min="0" step="3600"/>
+      <Label text="{i18n>colRedeliveries}"/>
+      <StepInput value="{view>/form/queue/maxRedeliveryCount}" min="0" max="100"/>
+      <Label text="{i18n>colDeadLetterQueue}"/>
+      <Select selectedKey="{view>/form/queue/deadLetterQueueId}" forceSelection="false" items="{path: '/Queues', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name}"/></Select>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/queue/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

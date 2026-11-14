@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createSubscription}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colQueue}" required="true"/>
+      <Select selectedKey="{view>/form/subscription/queueId}" forceSelection="false" items="{path: '/Queues', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name}"/></Select>
+      <Label text="{i18n>colTopicPattern}" required="true"/>
+      <Input value="{view>/form/subscription/topicPattern}" placeholder="acme/sales/orders/ce/*"/>
+      <Label text=""/>
+      <Text text="{i18n>patternHelp}"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/subscription/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

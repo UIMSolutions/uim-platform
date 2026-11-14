@@ -1,0 +1,30 @@
+[
+  {
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "37a13f0e-3679-4112-9980-fcf1013455c4",
+    "queueId": "orders-created",
+    "topicPattern": "acme/sales/orders/ce/created",
+    "serviceId": "sales-orders",
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "acme/sales/orders/ce/created",
+    "description": "",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "32c603e3-e68d-4ac4-bdf5-feac26c224fc",
+    "queueId": "orders-audit",
+    "topicPattern": "acme/sales/orders/#",
+    "serviceId": "sales-orders",
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "acme/sales/orders/#",
+    "description": "",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  }
+]

@@ -1,0 +1,320 @@
+<mvc:View controllerName="uim.eventmesh.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>appTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+        <f:actions>
+          <Button text="{i18n>publishEvent}" type="Emphasized" icon="sap-icon://paper-plane" press=".onOpenPublish"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpis" binding="{/Statistics}" wrap="Wrap" class="sapUiSmallMarginBottom">
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiServices}"/>
+            <ObjectNumber number="{activeServices}" unit="/ {services} {i18n>kpiActive}" state="Success"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiQueues}"/>
+            <ObjectNumber number="{queues}" unit="· {subscriptions} {i18n>kpiSubscriptions}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiQueued}"/>
+            <ObjectNumber number="{queuedMessages}" state="Information"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiDeadLettered}"/>
+            <ObjectNumber number="{deadLetteredMessages}" state="{= %{deadLetteredMessages} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiWebhooks}"/>
+            <ObjectNumber number="{webhooks}" unit="· {failingWebhooks} {i18n>kpiFailing}" state="{= %{failingWebhooks} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiDelivered}"/>
+            <ObjectNumber number="{deliveredMessages}" state="Success"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>kpiClients}"/>
+            <ObjectNumber number="{clients}" unit="· {bindings} {i18n>kpiBindings} · {channels} {i18n>kpiChannels}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Queues ────────────────────────────────────────────── -->
+          <IconTabFilter key="queues" icon="sap-icon://inbox" text="{i18n>tabQueues}">
+            <Table id="queuesTable" mode="SingleSelectLeft" growing="true" growingThreshold="20"
+              items="{path: '/Queues', parameters: {$orderby: 'name', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabQueues}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="queuesTable"/></customData></SearchField>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="queue"/></customData></Button>
+                  <Button text="{i18n>purge}" icon="sap-icon://eraser" press=".onPurge"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="queuesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colMessages}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colAccessType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colSubscriptions}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDeadLetterQueue}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onQueuePress">
+                  <ObjectIdentifier title="{name}" text="{serviceId}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                    icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  <ObjectNumber number="{messageCount}" state="{parts: [{path: 'messageCount', targetType: 'any'}, {path: 'maxDepth', targetType: 'any'}], formatter: '.formatter.fillState'}"/>
+                  <Text text="{path: 'accessType', formatter: '.formatter.enumText'}"/>
+                  <ObjectNumber number="{subscriptionCount}"/>
+                  <Text text="{deadLetterQueueId}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Subscriptions ─────────────────────────────────────── -->
+          <IconTabFilter key="subscriptions" icon="sap-icon://filter" text="{i18n>tabSubscriptions}">
+            <Table id="subscriptionsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/QueueSubscriptions', parameters: {$orderby: 'topicPattern'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSubscriptions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="subscription"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="subscriptionsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colTopicPattern}"/></Column>
+                <Column><Text text="{i18n>colQueue}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{topicPattern}" text="{description}"/>
+                  <Text text="{queueId}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Webhooks ──────────────────────────────────────────── -->
+          <IconTabFilter key="webhooks" icon="sap-icon://world" text="{i18n>tabWebhooks}">
+            <Table id="webhooksTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/Webhooks', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabWebhooks}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="webhook"/></customData></Button>
+                  <Button text="{i18n>deliverNow}" icon="sap-icon://paper-plane" press=".onDeliver"/>
+                  <Button text="{i18n>activate}" icon="sap-icon://media-play" press=".onWebhookStatus"><customData><core:CustomData key="status" value="active"/></customData></Button>
+                  <Button text="{i18n>pause}" icon="sap-icon://media-pause" press=".onWebhookStatus"><customData><core:CustomData key="status" value="paused"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="webhooksTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colQueue}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDeliveryMode}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colDelivered}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colFailed}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastError}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{url}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                    icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  <Text text="{queueId}"/>
+                  <Text text="{path: 'deliveryMode', formatter: '.formatter.enumText'}"/>
+                  <ObjectNumber number="{deliveredCount}" state="Success"/>
+                  <ObjectNumber number="{failedCount}" state="{= %{failedCount} > 0 ? 'Error' : 'None' }"/>
+                  <Text text="{lastError}" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Messages ──────────────────────────────────────────── -->
+          <IconTabFilter key="messages" icon="sap-icon://email" text="{i18n>tabMessages}">
+            <Table id="messagesTable" mode="SingleSelectLeft" growing="true" growingThreshold="50"
+              items="{path: '/QueueMessages', parameters: {$orderby: 'createdAt desc'}}" noDataText="{i18n>noMessages}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabMessages}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="messagesTable"/></customData></SearchField>
+                  <Button text="{i18n>acknowledge}" icon="sap-icon://accept" press=".onDelete"><customData><core:CustomData key="table" value="messagesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colTopic}"/></Column>
+                <Column><Text text="{i18n>colQueue}"/></Column>
+                <Column><Text text="{i18n>colState}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colSize}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPublished}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colPayload}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{topic}" text="{correlationId}"/>
+                  <Text text="{queueId}"/>
+                  <ObjectStatus text="{path: 'state', formatter: '.formatter.enumText'}" state="{path: 'state', formatter: '.formatter.statusState'}"/>
+                  <Text text="{path: 'size', targetType: 'any', formatter: '.formatter.bytes'}"/>
+                  <Text text="{createdAt}"/>
+                  <Text text="{payload}" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Messaging services ────────────────────────────────── -->
+          <IconTabFilter key="services" icon="sap-icon://cloud" text="{i18n>tabServices}">
+            <Table id="servicesTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/MessagingServices', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabServices}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="service"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="servicesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colNamespace}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPlan}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colQueues}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colClients}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLimits}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{namespace}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{path: 'plan', formatter: '.formatter.enumText'}"/>
+                  <ObjectNumber number="{queueCount}" unit="/ {maxQueues}"/>
+                  <ObjectNumber number="{clientCount}" unit="/ {maxConnections}"/>
+                  <Text text="{parts: ['i18n>limitDepth', {path: 'maxQueueDepth', targetType: 'any'}, 'i18n>limitSize', {path: 'maxMessageSize', targetType: 'any'}], formatter: '.formatter.limits'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Clients & bindings ────────────────────────────────── -->
+          <IconTabFilter key="clients" icon="sap-icon://role" text="{i18n>tabClients}">
+            <Table id="clientsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/MessageClients', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabClients}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="client"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="clientsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colProtocol}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPermittedNamespace}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colOAuthClient}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colBindings}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{serviceId}"/>
+                  <Text text="{path: 'protocol', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{permittedNamespace}"/>
+                  <Text text="{clientId}"/>
+                  <ObjectNumber number="{bindingCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="bindingsTable" mode="SingleSelectLeft" growing="true" class="sapUiMediumMarginTop"
+              items="{path: '/MessageBindings', parameters: {$orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabBindings}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="binding"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="bindingsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colClient}"/></Column>
+                <Column><Text text="{i18n>colTarget}"/></Column>
+                <Column><Text text="{i18n>colPermission}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{name}"/>
+                  <Text text="{clientId}"/>
+                  <Text text="{parts: ['queueId', 'channelId'], formatter: '.formatter.bindingTarget'}"/>
+                  <Text text="{path: 'permission', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Event channels ────────────────────────────────────── -->
+          <IconTabFilter key="channels" icon="sap-icon://share-2" text="{i18n>tabChannels}">
+            <Table id="channelsTable" mode="SingleSelectLeft" growing="true"
+              items="{path: '/EventChannels', parameters: {$orderby: 'topicName'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabChannels}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="channel"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="channelsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colTopic}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colBindings}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{topicName}"/>
+                  <Text text="{path: 'channelType', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <ObjectNumber number="{bindingCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.eventmesh" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="MessagingService">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="namespace" Type="Edm.String" Nullable="false"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="plan" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="maxConnections" Type="Edm.Int32"/>
+        <Property Name="maxQueues" Type="Edm.Int32"/>
+        <Property Name="maxQueueDepth" Type="Edm.Int32"/>
+        <Property Name="maxMessageSize" Type="Edm.Int64"/>
+        <Property Name="tokenEndpoint" Type="Edm.String"/>
+        <Property Name="messagingEndpoint" Type="Edm.String"/>
+        <Property Name="clientCount" Type="Edm.Int32"/>
+        <Property Name="queueCount" Type="Edm.Int32"/>
+        <Property Name="channelCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="MessageClient">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="serviceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="protocol" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="hasSecret" Type="Edm.Boolean"/>
+        <Property Name="tokenUrl" Type="Edm.String"/>
+        <Property Name="permittedNamespace" Type="Edm.String"/>
+        <Property Name="bindingCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Queue">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="serviceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="accessType" Type="Edm.String"/>
+        <Property Name="maxDepth" Type="Edm.Int32"/>
+        <Property Name="maxMessageSize" Type="Edm.Int64"/>
+        <Property Name="messageTtlSeconds" Type="Edm.Int64"/>
+        <Property Name="maxRedeliveryCount" Type="Edm.Int32"/>
+        <Property Name="deadLetterQueueId" Type="Edm.String"/>
+        <Property Name="ingressEnabled" Type="Edm.Boolean"/>
+        <Property Name="egressEnabled" Type="Edm.Boolean"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="messageCount" Type="Edm.Int32"/>
+        <Property Name="subscriptionCount" Type="Edm.Int32"/>
+        <Property Name="webhookCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="QueueSubscription">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="queueId" Type="Edm.String" Nullable="false"/>
+        <Property Name="serviceId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="topicPattern" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="Webhook">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="queueId" Type="Edm.String" Nullable="false"/>
+        <Property Name="serviceId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String" Nullable="false"/>
+        <Property Name="headers" Type="Edm.String"/>
+        <Property Name="exemptHandshake" Type="Edm.Boolean"/>
+        <Property Name="authenticationType" Type="Edm.String"/>
+        <Property Name="credentials" Type="Edm.String"/>
+        <Property Name="hasCredentials" Type="Edm.Boolean"/>
+        <Property Name="tokenUrl" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="deliveryMode" Type="Edm.String"/>
+        <Property Name="batchSize" Type="Edm.Int32"/>
+        <Property Name="deliveredCount" Type="Edm.Int64"/>
+        <Property Name="failedCount" Type="Edm.Int64"/>
+        <Property Name="lastDeliveryAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastError" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="EventChannel">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="serviceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="channelType" Type="Edm.String"/>
+        <Property Name="topicName" Type="Edm.String" Nullable="false"/>
+        <Property Name="asyncapiDefinition" Type="Edm.String"/>
+        <Property Name="retentionHours" Type="Edm.Int32"/>
+        <Property Name="partitions" Type="Edm.Int32"/>
+        <Property Name="bindingCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="MessageBinding">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String" Nullable="false"/>
+        <Property Name="serviceId" Type="Edm.String"/>
+        <Property Name="queueId" Type="Edm.String"/>
+        <Property Name="channelId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="permission" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="QueueMessage">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="queueId" Type="Edm.String"/>
+        <Property Name="serviceId" Type="Edm.String"/>
+        <Property Name="correlationId" Type="Edm.String"/>
+        <Property Name="topic" Type="Edm.String"/>
+        <Property Name="payload" Type="Edm.String"/>
+        <Property Name="contentType" Type="Edm.String"/>
+        <Property Name="state" Type="Edm.String"/>
+        <Property Name="size" Type="Edm.Int64"/>
+        <Property Name="deliveryCount" Type="Edm.Int32"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="publisherId" Type="Edm.String"/>
+        <Property Name="originalQueueId" Type="Edm.String"/>
+        <Property Name="lastError" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="services" Type="Edm.Int32"/>
+        <Property Name="activeServices" Type="Edm.Int32"/>
+        <Property Name="clients" Type="Edm.Int32"/>
+        <Property Name="queues" Type="Edm.Int32"/>
+        <Property Name="subscriptions" Type="Edm.Int32"/>
+        <Property Name="webhooks" Type="Edm.Int32"/>
+        <Property Name="failingWebhooks" Type="Edm.Int32"/>
+        <Property Name="channels" Type="Edm.Int32"/>
+        <Property Name="bindings" Type="Edm.Int32"/>
+        <Property Name="queuedMessages" Type="Edm.Int32"/>
+        <Property Name="deadLetteredMessages" Type="Edm.Int32"/>
+        <Property Name="deliveredMessages" Type="Edm.Int64"/>
+      </EntityType>
+      <ComplexType Name="PublishResult">
+        <Property Name="messageId" Type="Edm.String"/>
+        <Property Name="topic" Type="Edm.String"/>
+        <Property Name="delivered" Type="Edm.Int32"/>
+        <Property Name="queueIds" Type="Collection(Edm.String)"/>
+        <Property Name="rejectedQueueIds" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <ComplexType Name="DeliveryResult">
+        <Property Name="webhookId" Type="Edm.String"/>
+        <Property Name="webhookName" Type="Edm.String"/>
+        <Property Name="attempted" Type="Edm.Int32"/>
+        <Property Name="delivered" Type="Edm.Int32"/>
+        <Property Name="retried" Type="Edm.Int32"/>
+        <Property Name="deadLettered" Type="Edm.Int32"/>
+        <Property Name="discarded" Type="Edm.Int32"/>
+        <Property Name="lastError" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="PurgeResult">
+        <Property Name="queueId" Type="Edm.String"/>
+        <Property Name="removed" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="PublishEvent" IsBound="false">
+        <Parameter Name="topic" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="payload" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="serviceId" Type="Edm.String"/>
+        <Parameter Name="clientId" Type="Edm.String"/>
+        <Parameter Name="contentType" Type="Edm.String"/>
+        <ReturnType Type="uim.eventmesh.PublishResult"/>
+      </Action>
+      <Action Name="ConsumeMessages" IsBound="false">
+        <Parameter Name="queueId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="clientId" Type="Edm.String"/>
+        <Parameter Name="maxMessages" Type="Edm.Int32"/>
+        <ReturnType Type="Collection(uim.eventmesh.QueueMessage)"/>
+      </Action>
+      <Action Name="PurgeQueue" IsBound="false">
+        <Parameter Name="queueId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.eventmesh.PurgeResult"/>
+      </Action>
+      <Action Name="DeliverWebhook" IsBound="false">
+        <Parameter Name="webhookId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.eventmesh.DeliveryResult"/>
+      </Action>
+      <EntityContainer Name="EventMeshService">
+        <EntitySet Name="MessagingServices" EntityType="uim.eventmesh.MessagingService"/>
+        <EntitySet Name="MessageClients" EntityType="uim.eventmesh.MessageClient"/>
+        <EntitySet Name="Queues" EntityType="uim.eventmesh.Queue"/>
+        <EntitySet Name="QueueSubscriptions" EntityType="uim.eventmesh.QueueSubscription"/>
+        <EntitySet Name="Webhooks" EntityType="uim.eventmesh.Webhook"/>
+        <EntitySet Name="EventChannels" EntityType="uim.eventmesh.EventChannel"/>
+        <EntitySet Name="MessageBindings" EntityType="uim.eventmesh.MessageBinding"/>
+        <EntitySet Name="QueueMessages" EntityType="uim.eventmesh.QueueMessage"/>
+        <Singleton Name="Statistics" Type="uim.eventmesh.Statistic"/>
+        <ActionImport Name="PublishEvent" Action="uim.eventmesh.PublishEvent"/>
+        <ActionImport Name="ConsumeMessages" Action="uim.eventmesh.ConsumeMessages"/>
+        <ActionImport Name="PurgeQueue" Action="uim.eventmesh.PurgeQueue"/>
+        <ActionImport Name="DeliverWebhook" Action="uim.eventmesh.DeliverWebhook"/>
+      </EntityContainer>
+      <Annotations Target="uim.eventmesh.PublishResult/messageId"><Annotation Term="Common.Label" String="Message ID"/></Annotations>
+      <Annotations Target="uim.eventmesh.PublishResult/topic"><Annotation Term="Common.Label" String="Topic"/></Annotations>
+      <Annotations Target="uim.eventmesh.PublishResult/delivered"><Annotation Term="Common.Label" String="Queues"/></Annotations>
+      <Annotations Target="uim.eventmesh.PublishResult/queueIds"><Annotation Term="Common.Label" String="Queues"/></Annotations>
+      <Annotations Target="uim.eventmesh.PublishResult/rejectedQueueIds"><Annotation Term="Common.Label" String="Rejected Queues"/></Annotations>
+      <Annotations Target="uim.eventmesh.DeliveryResult/webhookId"><Annotation Term="Common.Label" String="Webhook"/></Annotations>
+      <Annotations Target="uim.eventmesh.DeliveryResult/webhookName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.eventmesh.DeliveryResult/attempted"><Annotation Term="Common.Label" String="Attempted"/></Annotations>
+      <Annotations Target="uim.eventmesh.DeliveryResult/delivered"><Annotation Term="Common.Label" String="Delivered"/></Annotations>
+      <Annotations Target="uim.eventmesh.DeliveryResult/retried"><Annotation Term="Common.Label" String="Retried"/></Annotations>
+      <Annotations Target="uim.eventmesh.DeliveryResult/deadLettered"><Annotation Term="Common.Label" String="Dead Lettered"/></Annotations>
+      <Annotations Target="uim.eventmesh.DeliveryResult/discarded"><Annotation Term="Common.Label" String="Discarded"/></Annotations>
+      <Annotations Target="uim.eventmesh.DeliveryResult/lastError"><Annotation Term="Common.Label" String="Last Error"/></Annotations>
+      <Annotations Target="uim.eventmesh.PurgeResult/queueId"><Annotation Term="Common.Label" String="Queue"/></Annotations>
+      <Annotations Target="uim.eventmesh.PurgeResult/removed"><Annotation Term="Common.Label" String="Removed"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/namespace"><Annotation Term="Common.Label" String="Namespace"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/plan"><Annotation Term="Common.Label" String="Plan"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/maxConnections"><Annotation Term="Common.Label" String="Max. Clients"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/maxQueues"><Annotation Term="Common.Label" String="Max. Queues"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/maxQueueDepth"><Annotation Term="Common.Label" String="Max. Queue Depth"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/maxMessageSize"><Annotation Term="Common.Label" String="Max. Message Size (bytes)"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/tokenEndpoint"><Annotation Term="Common.Label" String="Token Endpoint"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/messagingEndpoint"><Annotation Term="Common.Label" String="Messaging Endpoint"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/clientCount"><Annotation Term="Common.Label" String="Clients"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/queueCount"><Annotation Term="Common.Label" String="Queues"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService/channelCount"><Annotation Term="Common.Label" String="Channels"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessagingService">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Messaging Service"/><PropertyValue Property="TypeNamePlural" String="Messaging Services"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="namespace"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="namespace"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="plan"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="queueCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>name</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>plan</PropertyPath><PropertyPath>region</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService/MessagingServices">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/serviceId"><Annotation Term="Common.Label" String="Messaging Service"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/protocol"><Annotation Term="Common.Label" String="Protocol"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/clientId"><Annotation Term="Common.Label" String="OAuth Client ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/clientSecret"><Annotation Term="Common.Label" String="Client Secret"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/hasSecret"><Annotation Term="Common.Label" String="Has Secret"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/tokenUrl"><Annotation Term="Common.Label" String="Token URL"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/permittedNamespace"><Annotation Term="Common.Label" String="Permitted Namespace"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient/bindingCount"><Annotation Term="Common.Label" String="Bindings"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageClient">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Message Client"/><PropertyValue Property="TypeNamePlural" String="Message Clients"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="protocol"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="permittedNamespace"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindingCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>serviceId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>protocol</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService/MessageClients">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.Queue/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/serviceId"><Annotation Term="Common.Label" String="Messaging Service"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/name"><Annotation Term="Common.Label" String="Name"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/accessType"><Annotation Term="Common.Label" String="Access Type"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/maxDepth"><Annotation Term="Common.Label" String="Max. Depth"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/maxMessageSize"><Annotation Term="Common.Label" String="Max. Message Size (bytes)"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/messageTtlSeconds"><Annotation Term="Common.Label" String="Message TTL (s)"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/maxRedeliveryCount"><Annotation Term="Common.Label" String="Max. Redeliveries"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/deadLetterQueueId"><Annotation Term="Common.Label" String="Dead Letter Queue"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/ingressEnabled"><Annotation Term="Common.Label" String="Ingress"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/egressEnabled"><Annotation Term="Common.Label" String="Egress"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/owner"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/messageCount"><Annotation Term="Common.Label" String="Messages"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/subscriptionCount"><Annotation Term="Common.Label" String="Subscriptions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue/webhookCount"><Annotation Term="Common.Label" String="Webhooks"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Queue">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Queue"/><PropertyValue Property="TypeNamePlural" String="Queues"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="accessType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="messageCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptionCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deadLetterQueueId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>serviceId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>accessType</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService/Queues">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/queueId"><Annotation Term="Common.Label" String="Queue"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/serviceId"><Annotation Term="Common.Label" String="Messaging Service"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription/topicPattern"><Annotation Term="Common.Label" String="Topic Pattern"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueSubscription">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Queue Subscription"/><PropertyValue Property="TypeNamePlural" String="Queue Subscriptions"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="topicPattern"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="queueId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="topicPattern"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="queueId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>queueId</PropertyPath><PropertyPath>serviceId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService/QueueSubscriptions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/queueId"><Annotation Term="Common.Label" String="Queue"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/serviceId"><Annotation Term="Common.Label" String="Messaging Service"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/url"><Annotation Term="Common.Label" String="Endpoint URL"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/headers"><Annotation Term="Common.Label" String="Headers (JSON)"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/exemptHandshake"><Annotation Term="Common.Label" String="Exempt Handshake"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/authenticationType"><Annotation Term="Common.Label" String="Authentication"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/credentials"><Annotation Term="Common.Label" String="Credentials"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/hasCredentials"><Annotation Term="Common.Label" String="Has Credentials"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/tokenUrl"><Annotation Term="Common.Label" String="Token URL"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/clientId"><Annotation Term="Common.Label" String="OAuth Client ID"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/deliveryMode"><Annotation Term="Common.Label" String="Delivery Mode"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/batchSize"><Annotation Term="Common.Label" String="Batch Size"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/deliveredCount"><Annotation Term="Common.Label" String="Delivered"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/failedCount"><Annotation Term="Common.Label" String="Failed"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/lastDeliveryAt"><Annotation Term="Common.Label" String="Last Delivery"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook/lastError"><Annotation Term="Common.Label" String="Last Error"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.Webhook">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Webhook"/><PropertyValue Property="TypeNamePlural" String="Webhooks"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deliveryMode"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deliveredCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="failedCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastError"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>queueId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>authenticationType</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService/Webhooks">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/serviceId"><Annotation Term="Common.Label" String="Messaging Service"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/channelType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/topicName"><Annotation Term="Common.Label" String="Topic"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/asyncapiDefinition"><Annotation Term="Common.Label" String="AsyncAPI Definition"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/retentionHours"><Annotation Term="Common.Label" String="Retention (h)"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/partitions"><Annotation Term="Common.Label" String="Partitions"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel/bindingCount"><Annotation Term="Common.Label" String="Bindings"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.EventChannel">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Event Channel"/><PropertyValue Property="TypeNamePlural" String="Event Channels"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="topicName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="topicName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="channelType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindingCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>serviceId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>channelType</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService/EventChannels">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/clientId"><Annotation Term="Common.Label" String="Message Client"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/serviceId"><Annotation Term="Common.Label" String="Messaging Service"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/queueId"><Annotation Term="Common.Label" String="Queue"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/channelId"><Annotation Term="Common.Label" String="Event Channel"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding/permission"><Annotation Term="Common.Label" String="Permission"/></Annotations>
+      <Annotations Target="uim.eventmesh.MessageBinding">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Message Binding"/><PropertyValue Property="TypeNamePlural" String="Message Bindings"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="permission"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clientId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="queueId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="channelId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="permission"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>clientId</PropertyPath><PropertyPath>queueId</PropertyPath><PropertyPath>channelId</PropertyPath><PropertyPath>permission</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService/MessageBindings">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/id"><Annotation Term="Common.Label" String="ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/queueId"><Annotation Term="Common.Label" String="Queue"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/serviceId"><Annotation Term="Common.Label" String="Messaging Service"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/correlationId"><Annotation Term="Common.Label" String="Message ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/topic"><Annotation Term="Common.Label" String="Topic"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/payload"><Annotation Term="Common.Label" String="Payload"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/contentType"><Annotation Term="Common.Label" String="Content Type"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/state"><Annotation Term="Common.Label" String="State"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/size"><Annotation Term="Common.Label" String="Size (bytes)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/deliveryCount"><Annotation Term="Common.Label" String="Failed Deliveries"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/expiresAt"><Annotation Term="Common.Label" String="Expires At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/publisherId"><Annotation Term="Common.Label" String="Publisher"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/originalQueueId"><Annotation Term="Common.Label" String="Original Queue"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage/lastError"><Annotation Term="Common.Label" String="Last Error"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.eventmesh.QueueMessage">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Message"/><PropertyValue Property="TypeNamePlural" String="Messages"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="topic"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="correlationId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="topic"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="queueId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="state"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="size"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deliveryCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>queueId</PropertyPath><PropertyPath>topic</PropertyPath><PropertyPath>state</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService/QueueMessages">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/services"><Annotation Term="Common.Label" String="Messaging Services"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/activeServices"><Annotation Term="Common.Label" String="Active Services"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/clients"><Annotation Term="Common.Label" String="Clients"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/queues"><Annotation Term="Common.Label" String="Queues"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/subscriptions"><Annotation Term="Common.Label" String="Subscriptions"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/webhooks"><Annotation Term="Common.Label" String="Webhooks"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/failingWebhooks"><Annotation Term="Common.Label" String="Failing Webhooks"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/channels"><Annotation Term="Common.Label" String="Channels"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/bindings"><Annotation Term="Common.Label" String="Bindings"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/queuedMessages"><Annotation Term="Common.Label" String="Queued Messages"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/deadLetteredMessages"><Annotation Term="Common.Label" String="Dead Lettered Messages"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic/deliveredMessages"><Annotation Term="Common.Label" String="Delivered by Webhooks"/></Annotations>
+      <Annotations Target="uim.eventmesh.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="services"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeServices"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="clients"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="queues"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptions"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="webhooks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="failingWebhooks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="channels"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.eventmesh.EventMeshService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Event Mesh"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

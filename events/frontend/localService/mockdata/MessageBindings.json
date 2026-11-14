@@ -1,0 +1,50 @@
+[
+  {
+    "clientId": "webshop",
+    "channelId": "order-created",
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "4b9c81e5-093c-47aa-9394-1586ff9dcb24",
+    "serviceId": "sales-orders",
+    "queueId": null,
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "Web Shop → Order created",
+    "permission": "publish",
+    "description": "",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "clientId": "webshop",
+    "channelId": "order-cancelled",
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "b76ea72c-7152-4090-b194-d1e5f4137225",
+    "serviceId": "sales-orders",
+    "queueId": null,
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "Web Shop → Order cancelled",
+    "permission": "publish",
+    "description": "",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "clientId": "erp",
+    "channelId": null,
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "8fcaa0ca-ce27-418e-9c56-f34007cf5abe",
+    "serviceId": "sales-orders",
+    "queueId": "orders-created",
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "ERP Connector → acme/sales/orders/created",
+    "permission": "subscribe",
+    "description": "",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  }
+]

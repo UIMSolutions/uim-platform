@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createBinding}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colClient}" required="true"/>
+      <Select selectedKey="{view>/form/binding/clientId}" forceSelection="false" items="{path: '/MessageClients', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name}"/></Select>
+      <Label text="{i18n>colTarget}"/>
+      <SegmentedButton selectedKey="{view>/form/binding/target}">
+        <items>
+          <SegmentedButtonItem key="queue" text="{i18n>colQueue}"/>
+          <SegmentedButtonItem key="channel" text="{i18n>colChannel}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colQueue}" visible="{= ${view>/form/binding/target} === 'queue' }"/>
+      <Select visible="{= ${view>/form/binding/target} === 'queue' }" selectedKey="{view>/form/binding/queueId}" forceSelection="false" items="{path: '/Queues', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name}"/></Select>
+      <Label text="{i18n>colChannel}" visible="{= ${view>/form/binding/target} === 'channel' }"/>
+      <Select visible="{= ${view>/form/binding/target} === 'channel' }" selectedKey="{view>/form/binding/channelId}" forceSelection="false" items="{path: '/EventChannels', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name} ({topicName})"/></Select>
+      <Label text="{i18n>colPermission}"/>
+      <Select selectedKey="{view>/form/binding/permission}">
+        <core:Item key="publishSubscribe" text="{i18n>permPublishSubscribe}"/>
+        <core:Item key="publish" text="{i18n>permPublish}"/>
+        <core:Item key="subscribe" text="{i18n>permSubscribe}"/>
+        <core:Item key="manage" text="{i18n>permManage}"/>
+      </Select>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

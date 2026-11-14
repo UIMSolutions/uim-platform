@@ -1,0 +1,40 @@
+[
+  {
+    "clientId": "sb-webshop",
+    "hasSecret": true,
+    "clientSecret": null,
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "webshop",
+    "serviceId": "sales-orders",
+    "permittedNamespace": "acme/sales/orders",
+    "tokenUrl": "",
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "Web Shop",
+    "protocol": "httprest",
+    "description": "Publishes order events",
+    "bindingCount": 2,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "clientId": "sb-erp",
+    "hasSecret": true,
+    "clientSecret": null,
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "erp",
+    "serviceId": "sales-orders",
+    "permittedNamespace": "acme/sales/orders",
+    "tokenUrl": "",
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "ERP Connector",
+    "protocol": "amqp10",
+    "description": "Consumes new orders",
+    "bindingCount": 1,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  }
+]

@@ -1,0 +1,79 @@
+<mvc:View controllerName="uim.eventmesh.controller.QueueDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="queuePage" showFooter="false">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:breadcrumbs>
+          <Breadcrumbs><Link text="{i18n>tabQueues}" press=".onNavBack"/></Breadcrumbs>
+        </f:breadcrumbs>
+        <f:heading><Title text="{name}" level="H2"/></f:heading>
+        <f:expandedContent><Text text="{description}"/></f:expandedContent>
+        <f:actions>
+          <Button text="{i18n>consume}" type="Emphasized" icon="sap-icon://download" press=".onConsume"/>
+          <Button text="{i18n>purge}" icon="sap-icon://eraser" press=".onPurge"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+        <f:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" press=".onNavBack" tooltip="{i18n>close}"/>
+        </f:navigationActions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:header>
+      <f:DynamicPageHeader>
+        <HBox wrap="Wrap">
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>colStatus}"/>
+            <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>colMessages}"/>
+            <ObjectNumber number="{messageCount}" unit="{= %{maxDepth} > 0 ? '/ ' + %{maxDepth} : '' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>colDeadLetterQueue}"/>
+            <Text text="{= %{deadLetterQueueId} || '–' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd">
+            <Label text="{i18n>colRedeliveries}"/>
+            <Text text="{maxRedeliveryCount}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+    <f:content>
+      <VBox>
+        <form:SimpleForm editable="false" layout="ResponsiveGridLayout" columnsL="2" columnsXL="2" title="{i18n>settings}">
+          <Label text="{i18n>colService}"/><Text text="{serviceId}"/>
+          <Label text="{i18n>colAccessType}"/><Text text="{path: 'accessType', formatter: '.formatter.enumText'}"/>
+          <Label text="{i18n>colTtl}"/><Text text="{= %{messageTtlSeconds} > 0 ? %{messageTtlSeconds} + ' s' : '–' }"/>
+          <Label text="{i18n>colMaxSize}"/><Text text="{path: 'maxMessageSize', targetType: 'any', formatter: '.formatter.optionalBytes'}"/>
+          <Label text="{i18n>colIngress}"/><Switch state="{ingressEnabled}" change=".onToggle"><customData><core:CustomData key="property" value="ingressEnabled"/></customData></Switch>
+          <Label text="{i18n>colEgress}"/><Switch state="{egressEnabled}" change=".onToggle"><customData><core:CustomData key="property" value="egressEnabled"/></customData></Switch>
+          <Label text="{i18n>colOwner}"/><Text text="{owner}"/>
+        </form:SimpleForm>
+
+        <Table id="detailSubscriptions" headerText="{i18n>tabSubscriptions}" noDataText="{i18n>noData}"
+          items="{path: '/QueueSubscriptions', suspended: true}">
+          <columns>
+            <Column><Text text="{i18n>colTopicPattern}"/></Column>
+            <Column><Text text="{i18n>colStatus}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <Text text="{topicPattern}"/>
+              <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <List id="detailMessages" headerText="{i18n>tabMessages}" noDataText="{i18n>noMessages}" growing="true"
+          items="{path: '/QueueMessages', suspended: true, parameters: {$orderby: 'createdAt'}}" class="sapUiMediumMarginTop">
+          <FeedListItem sender="{topic}" timestamp="{createdAt}" text="{path: 'payload', formatter: '.formatter.prettyJson'}"
+            info="{= ${path: 'state', formatter: '.formatter.enumText'} + (%{deliveryCount} > 0 ? ' · ' + %{deliveryCount} + ' ✗ ' + %{lastError} : '') }"
+            showIcon="false"/>
+        </List>
+      </VBox>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

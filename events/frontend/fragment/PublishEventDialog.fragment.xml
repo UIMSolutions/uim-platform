@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>publishEvent}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colService}"/>
+      <Select selectedKey="{view>/form/publish/serviceId}" forceSelection="false" items="{path: '/MessagingServices', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name} ({namespace})"/></Select>
+      <Label text="{i18n>colClient}"/>
+      <Select selectedKey="{view>/form/publish/clientId}" forceSelection="false" items="{path: '/MessageClients', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name}"/></Select>
+      <Label text="{i18n>colTopic}" required="true"/>
+      <Input value="{view>/form/publish/topic}" placeholder="acme/sales/orders/ce/created"/>
+      <Label text="{i18n>colContentType}"/>
+      <Input value="{view>/form/publish/contentType}"/>
+      <Label text="{i18n>colPayload}" required="true"/>
+      <TextArea value="{view>/form/publish/payload}" rows="8" growing="true" width="100%"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>publish}" type="Emphasized" press=".onPublish"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

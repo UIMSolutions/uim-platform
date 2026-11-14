@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createClient}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colService}" required="true"/>
+      <Select selectedKey="{view>/form/client/serviceId}" forceSelection="false" items="{path: '/MessagingServices', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name} ({namespace})"/></Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/client/name}"/>
+      <Label text="{i18n>colProtocol}"/>
+      <Select selectedKey="{view>/form/client/protocol}">
+        <core:Item key="httprest" text="HTTP REST"/>
+        <core:Item key="amqp10" text="AMQP 1.0"/>
+        <core:Item key="mqtt311" text="MQTT 3.1.1"/>
+        <core:Item key="mqtt500" text="MQTT 5.0"/>
+      </Select>
+      <Label text="{i18n>colPermittedNamespace}"/>
+      <Input value="{view>/form/client/permittedNamespace}" placeholder="{i18n>defaultServiceNamespace}"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/client/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

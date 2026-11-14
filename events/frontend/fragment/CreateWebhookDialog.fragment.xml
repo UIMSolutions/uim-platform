@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createWebhook}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>colQueue}" required="true"/>
+      <Select selectedKey="{view>/form/webhook/queueId}" forceSelection="false" items="{path: '/Queues', parameters: {$orderby: 'name'}}"><core:Item key="{id}" text="{name}"/></Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/webhook/name}"/>
+      <Label text="{i18n>colUrl}" required="true"/>
+      <Input value="{view>/form/webhook/url}" type="Url" placeholder="https://"/>
+      <Label text="{i18n>colAuthentication}"/>
+      <Select selectedKey="{view>/form/webhook/authenticationType}">
+        <core:Item key="none" text="{i18n>authNone}"/>
+        <core:Item key="basic" text="Basic"/>
+        <core:Item key="apiKey" text="API Key"/>
+        <core:Item key="oauth2" text="OAuth 2.0"/>
+      </Select>
+      <Label text="{i18n>colCredentials}"/>
+      <Input value="{view>/form/webhook/credentials}" type="Password" enabled="{= ${view>/form/webhook/authenticationType} !== 'none' }"/>
+      <Label text="{i18n>colDeliveryMode}"/>
+      <Select selectedKey="{view>/form/webhook/deliveryMode}">
+        <core:Item key="atLeastOnce" text="{i18n>atLeastOnce}"/>
+        <core:Item key="atMostOnce" text="{i18n>atMostOnce}"/>
+      </Select>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

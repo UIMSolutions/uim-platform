@@ -1,0 +1,38 @@
+[
+  {
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "order-created",
+    "serviceId": "sales-orders",
+    "retentionHours": 24,
+    "asyncapiDefinition": "",
+    "channelType": "topic",
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "Order created",
+    "partitions": 1,
+    "description": "",
+    "topicName": "acme/sales/orders/ce/created",
+    "bindingCount": 1,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  },
+  {
+    "updatedAt": "2026-11-11T07:52:06Z",
+    "id": "order-cancelled",
+    "serviceId": "sales-orders",
+    "retentionHours": 24,
+    "asyncapiDefinition": "",
+    "channelType": "topic",
+    "createdAt": "2026-11-11T07:52:06Z",
+    "createdBy": "cli",
+    "name": "Order cancelled",
+    "partitions": 1,
+    "description": "",
+    "topicName": "acme/sales/orders/ce/cancelled",
+    "bindingCount": 1,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  }
+]
