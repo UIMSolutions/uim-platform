@@ -24,11 +24,11 @@ jobs:
 
     - name: 'Build & Test'
       run: |
-        cd ./translation/
-        # Build the project, with its main file included, without unittests
-        dub upgrade 
-        dub build --compiler=$DC
-        # Build and run tests, as defined by `unittest` configuration
-        # In this mode, `mainSourceFile` is excluded and `version (unittest)` are included
-        # See https://dub.pm/package-format-json.html#configurations
-        dub test --compiler=$DC
+        cd ./translation/backend/
+        dub upgrade
+        # HTTP server (REST + OData v4) and command line interface
+        # (the GtkD GUI, --config=gui, needs GTK 3 development libraries)
+        dub build --compiler=$DC --config=defaultRun
+        dub build --compiler=$DC --config=cli
+        # Unit tests: domain rules, codec, persistence, use cases, adapters, CLI, end-to-end scenario
+        dub test --compiler=$DC --config=defaultTest
