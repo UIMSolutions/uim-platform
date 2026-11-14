@@ -1,7 +1,4 @@
+/// Deprecated location — kept for source compatibility. Use `uim.platform.service.persistence.storages.tenant.mongo`.
 module uim.platform.service.infrastructure.stores.tenant.mongo;
 
-import uim.platform.service;
-
-mixin(ShowModule!());
-
-@safe:
+public import uim.platform.service.persistence.storages.tenant.mongo;

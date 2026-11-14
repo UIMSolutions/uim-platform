@@ -1,7 +1,4 @@
+/// Deprecated location — kept for source compatibility. Use `uim.platform.service.persistence.storages.id.file`.
 module uim.platform.service.infrastructure.stores.id.file;
 
-import uim.platform.service;
-
-mixin(ShowModule!());
-
-@safe:
+public import uim.platform.service.persistence.storages.id.file;

@@ -1,19 +1,4 @@
-/****************************************************************************************************************
-* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
-* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
-* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
-*****************************************************************************************************************/
+/// Deprecated location — kept for source compatibility. Use `uim.platform.service.ports.storages.entity`.
 module uim.platform.service.interfaces.stores.entity;
 
-import uim.platform.service;
-
-mixin(ShowModule!());
-
-@safe:
-interface IEntityStore(TEntity) {
-
-    void save(TEntity entity);
-    void update(TEntity entity);
-    void remove(TEntity entity);
-
-}
+public import uim.platform.service.ports.storages.entity;

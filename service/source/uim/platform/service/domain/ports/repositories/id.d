@@ -1,21 +1,4 @@
+/// Deprecated location — kept for source compatibility. Use `uim.platform.service.ports.repositories.id`.
 module uim.platform.service.domain.ports.repositories.id;
 
-import uim.platform.service;
-
-mixin(ShowModule!());
-
-@safe:
-
-interface IIdRepository(TEntity, TId) : IBaseRepository!(TEntity) {
-
-  // #region byId
-  bool existsById(TId id);
-  TEntity findById(TId id);
-  void removeById(TId id);
-
-  bool existsAllById(TId[] ids);
-  TEntity[] findAllById(TId[] ids, bool onlyExisting = true);
-  void removeAllById(TId[] ids);
-  // #endregion byId
-  
-}
+public import uim.platform.service.ports.repositories.id;

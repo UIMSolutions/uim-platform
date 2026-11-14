@@ -7,5 +7,6 @@ module uim.platform.service.application;
 
 public {
     import uim.platform.service.application.dto;
+    import uim.platform.service.application.services;
     import uim.platform.service.application.usecases;
 }

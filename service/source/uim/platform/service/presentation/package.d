@@ -6,6 +6,7 @@
 module uim.platform.service.presentation;
 
 import uim.platform.service.mixins.imports;
+// cli, gui and odata are opt-in (see uim.platform.service)
 public {
-    mixin(GenerateImports!("uim.platform.service.presentation", ["http", "cli", "gui", "web"]));
+    mixin(GenerateImports!("uim.platform.service.presentation", ["http", "web"]));
 }
