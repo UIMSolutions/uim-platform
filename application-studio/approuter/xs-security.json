@@ -1,0 +1,25 @@
+{
+  "xsappname": "uim-application-studio",
+  "tenant-mode": "dedicated",
+  "description": "UIM Application Studio service",
+  "scopes": [
+    { "name": "$XSAPPNAME.StudioViewer", "description": "Read dev spaces, projects, bindings, configurations and the catalogue" },
+    { "name": "$XSAPPNAME.StudioDeveloper", "description": "Manage own dev spaces, projects, bindings, runs, builds and deployments" },
+    { "name": "$XSAPPNAME.StudioAdmin", "description": "Manage the catalogue (dev space types, extensions, templates)" }
+  ],
+  "role-templates": [
+    { "name": "StudioViewer", "description": "Application Studio viewer", "scope-references": ["$XSAPPNAME.StudioViewer"] },
+    { "name": "StudioDeveloper", "description": "Application Studio developer",
+      "scope-references": ["$XSAPPNAME.StudioDeveloper", "$XSAPPNAME.StudioViewer"] },
+    { "name": "StudioAdmin", "description": "Application Studio administrator",
+      "scope-references": ["$XSAPPNAME.StudioAdmin", "$XSAPPNAME.StudioDeveloper", "$XSAPPNAME.StudioViewer"] }
+  ],
+  "role-collections": [
+    { "name": "UIM Application Studio Viewer", "role-template-references": ["$XSAPPNAME.StudioViewer"] },
+    { "name": "UIM Application Studio Developer", "role-template-references": ["$XSAPPNAME.StudioDeveloper"] },
+    { "name": "UIM Application Studio Administrator", "role-template-references": ["$XSAPPNAME.StudioAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

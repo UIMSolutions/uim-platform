@@ -1,0 +1,23 @@
+{
+  "xsappname": "uim-task-center",
+  "tenant-mode": "dedicated",
+  "description": "UIM Task Center — unified inbox, task providers, definitions, substitutions",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read tasks, providers, definitions, comments, attachments and the audit trail" },
+    { "name": "$XSAPPNAME.Process", "description": "Process tasks (claim, forward, decide), comment, attach, maintain own substitutions and filters" },
+    { "name": "$XSAPPNAME.Manage", "description": "Maintain providers and definitions, create/change/delete tasks, sync providers, maintain other users' personal settings" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "TaskProcessor", "description": "Work on tasks in the inbox",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Process"] },
+    { "name": "Administrator", "description": "Operate the task center",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Process", "$XSAPPNAME.Manage"] }
+  ],
+  "role-collections": [
+    { "name": "TaskCenterViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "TaskCenterUser", "role-template-references": ["$XSAPPNAME.TaskProcessor"] },
+    { "name": "TaskCenterAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+  <Dialog id="createRequestDialog" title="{i18n>newRequest}" contentWidth="34rem">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>fieldName}" required="true"/>
+      <Input value="{ui>/newRequest/name}" placeholder="my-app"/>
+      <Label text="{i18n>fieldSource}"/>
+      <Select selectedKey="{ui>/newRequest/sourceNodeId}" forceSelection="false"
+        items="{path: '/TransportNodes', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>fieldContentType}"/>
+      <Select selectedKey="{ui>/newRequest/contentType}">
+        <core:Item key="mtaArchive" text="MTA Archive"/>
+        <core:Item key="integrationContent" text="Integration Content"/>
+        <core:Item key="htmlApp" text="HTML5 Application"/>
+        <core:Item key="abapCorContent" text="ABAP Content"/>
+        <core:Item key="other" text="Other"/>
+      </Select>
+      <Label text="{i18n>fieldVersion}"/>
+      <Input value="{ui>/newRequest/version}" placeholder="1.0.0"/>
+      <Label text="{i18n>fieldStorageUrl}"/>
+      <Input value="{ui>/newRequest/storageUrl}" placeholder="https://…/my-app.mtar"/>
+      <Label text="{i18n>fieldDescription}"/>
+      <TextArea value="{ui>/newRequest/description}" rows="2"/>
+      <Label text=""/>
+      <CheckBox text="{i18n>fieldExportNow}" selected="{ui>/newRequest/exportNow}"/>
+    </f:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSaveRequest"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog" app:dialog="createRequestDialog"
+      xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

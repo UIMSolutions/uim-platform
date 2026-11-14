@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+  <Dialog id="createRouteDialog" title="{i18n>newRoute}" contentWidth="32rem">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>fieldName}" required="true"/>
+      <Input value="{ui>/newRoute/name}" placeholder="DEV-QA"/>
+      <Label text="{i18n>fieldSource}" required="true"/>
+      <Select selectedKey="{ui>/newRoute/sourceNodeId}" forceSelection="false"
+        items="{path: '/TransportNodes', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>fieldDestination}" required="true"/>
+      <Select selectedKey="{ui>/newRoute/destinationNodeId}" forceSelection="false"
+        items="{path: '/TransportNodes', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>fieldSequence}"/>
+      <StepInput value="{ui>/newRoute/sequence}" min="0"/>
+      <Label text="{i18n>fieldDescription}"/>
+      <Input value="{ui>/newRoute/description}"/>
+    </f:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSaveRoute"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog" app:dialog="createRouteDialog"
+      xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,35 @@
+{
+  "xsappname": "uim-authorization",
+  "tenant-mode": "dedicated",
+  "description": "UIM Authorization Management service",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Display applications, policies, assignments and the decision log" },
+    { "name": "$XSAPPNAME.Admin", "description": "Create, change and delete applications, policies and assignments" },
+    { "name": "$XSAPPNAME.Check", "description": "Evaluate authorization requests (runtime checks of applications)" }
+  ],
+  "role-templates": [
+    {
+      "name": "AuthorizationViewer",
+      "description": "Authorization management viewer",
+      "scope-references": ["$XSAPPNAME.Read"]
+    },
+    {
+      "name": "AuthorizationAdmin",
+      "description": "Authorization management administrator",
+      "scope-references": ["$XSAPPNAME.Admin", "$XSAPPNAME.Read", "$XSAPPNAME.Check"]
+    },
+    {
+      "name": "AuthorizationChecker",
+      "description": "Technical role for applications that request authorization decisions",
+      "scope-references": ["$XSAPPNAME.Check"]
+    }
+  ],
+  "role-collections": [
+    { "name": "UIM Authorization Viewer", "role-template-references": ["$XSAPPNAME.AuthorizationViewer"] },
+    { "name": "UIM Authorization Administrator", "role-template-references": ["$XSAPPNAME.AuthorizationAdmin"] }
+  ],
+  "authorities": ["$XSAPPNAME.Check"],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

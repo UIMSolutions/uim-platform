@@ -1,0 +1,46 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/authorization/(.*)$",
+      "target": "/odata/v4/authorization/$1",
+      "destination": "authorization-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.Read", "$XSAPPNAME.Admin"],
+        "default": ["$XSAPPNAME.Admin", "$XSAPPNAME.Check"]
+      }
+    },
+    {
+      "source": "^/(api|rest)/v1/(.*)$",
+      "target": "/$1/v1/$2",
+      "destination": "authorization-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.Read", "$XSAPPNAME.Admin"],
+        "default": ["$XSAPPNAME.Admin", "$XSAPPNAME.Check"]
+      }
+    },
+    {
+      "source": "^/web(.*)$",
+      "target": "/web$1",
+      "destination": "authorization-srv",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.Read", "$XSAPPNAME.Admin"]
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.Read", "$XSAPPNAME.Admin"]
+    }
+  ]
+}

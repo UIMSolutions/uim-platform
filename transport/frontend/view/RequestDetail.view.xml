@@ -1,0 +1,77 @@
+<mvc:View
+  controllerName="uim.transport.controller.RequestDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.ui.layout.form"
+  xmlns="sap.m">
+  <Page id="requestPage" title="{i18n>detailTitle}" showNavButton="true" navButtonPress=".onNavBack">
+    <headerContent>
+      <Button text="{i18n>exportRequest}" icon="sap-icon://outbox" type="Emphasized" press=".onExport"/>
+      <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+    </headerContent>
+    <content>
+      <ObjectHeader title="{name}" number="{version}" numberUnit="{path: 'contentType', formatter: '.formatter.enumText'}"
+        responsive="true" backgroundDesign="Solid">
+        <statuses>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+            icon="{path: 'status', formatter: '.formatter.statusIcon'}"
+            state="{path: 'status', formatter: '.formatter.statusState'}"/>
+        </statuses>
+        <attributes>
+          <ObjectAttribute title="{i18n>colSource}" text="{sourceNodeName}"/>
+          <ObjectAttribute title="{i18n>colOwner}" text="{namedUser}"/>
+          <ObjectAttribute title="{i18n>colCreated}"
+            text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+          <ObjectAttribute title="{i18n>fieldStorageUrl}" text="{storageUrl}"/>
+          <ObjectAttribute title="{i18n>colError}" text="{errorMessage}" visible="{= !!${errorMessage} }"/>
+        </attributes>
+      </ObjectHeader>
+
+      <Table id="requestQueueTable" headerText="{i18n>queueOfRequest}" class="sapUiSmallMarginTop"
+        items="{path: '/ImportQueueEntries', parameters: {$orderby: 'queuedAt'}, suspended: true}" noDataText="{i18n>noData}">
+        <columns>
+          <Column width="8rem"><Text text="{i18n>colNode}"/></Column>
+          <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+          <Column width="11rem"><Text text="{i18n>colQueued}"/></Column>
+          <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCompleted}"/></Column>
+          <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>importLog}"/></Column>
+        </columns>
+        <items>
+          <ColumnListItem>
+            <cells>
+              <Text text="{nodeName}"/>
+              <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+                state="{path: 'status', formatter: '.formatter.statusState'}"/>
+              <Text text="{path: 'queuedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Text text="{path: 'completedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Text text="{= ${errorMessage} || ${importLog} }" maxLines="4" renderWhitespace="true"/>
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+
+      <Table id="requestActionTable" headerText="{i18n>actionsOfRequest}" class="sapUiSmallMarginTop"
+        items="{path: '/TransportActions', parameters: {$orderby: 'performedAt desc'}, suspended: true}" noDataText="{i18n>noData}">
+        <columns>
+          <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+          <Column width="7rem"><Text text="{i18n>colAction}"/></Column>
+          <Column width="7rem"><Text text="{i18n>colStatus}"/></Column>
+          <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colBy}"/></Column>
+          <Column><Text text="{i18n>colDescription}"/></Column>
+        </columns>
+        <items>
+          <ColumnListItem>
+            <cells>
+              <Text text="{path: 'performedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Text text="{path: 'actionType', formatter: '.formatter.enumText'}"/>
+              <ObjectStatus text="{path: 'actionStatus', formatter: '.formatter.enumText'}"
+                state="{path: 'actionStatus', formatter: '.formatter.statusState'}"/>
+              <Text text="{performedBy}"/>
+              <Text text="{description}"/>
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+  </Page>
+</mvc:View>

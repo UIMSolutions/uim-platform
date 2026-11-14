@@ -1,0 +1,28 @@
+{
+  "xsappname": "uim-auditlog",
+  "tenant-mode": "dedicated",
+  "description": "UIM Audit Log service",
+  "scopes": [
+    { "name": "$XSAPPNAME.AuditViewer", "description": "Read audit logs, statistics and exports" },
+    { "name": "$XSAPPNAME.AuditAdmin", "description": "Manage retention policies, audit configuration and exports" }
+  ],
+  "role-templates": [
+    {
+      "name": "AuditViewer",
+      "description": "Audit log viewer",
+      "scope-references": ["$XSAPPNAME.AuditViewer"]
+    },
+    {
+      "name": "AuditAdmin",
+      "description": "Audit log administrator",
+      "scope-references": ["$XSAPPNAME.AuditAdmin", "$XSAPPNAME.AuditViewer"]
+    }
+  ],
+  "role-collections": [
+    { "name": "UIM Audit Log Viewer", "role-template-references": ["$XSAPPNAME.AuditViewer"] },
+    { "name": "UIM Audit Log Administrator", "role-template-references": ["$XSAPPNAME.AuditAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

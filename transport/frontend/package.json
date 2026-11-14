@@ -1,0 +1,13 @@
+{
+  "name": "uim-transport-ui",
+  "version": "2.0.0",
+  "description": "SAP Fiori 3 / UI5 frontend of the UIM Cloud Transport Management service",
+  "private": true,
+  "scripts": {
+    "build": "ui5 build --clean-dest --dest dist",
+    "start": "ui5 serve --open index.html"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^3.9.0"
+  }
+}

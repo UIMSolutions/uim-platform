@@ -1,0 +1,39 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/auditlog/(.*)$",
+      "target": "/odata/v4/auditlog/$1",
+      "destination": "auditlog-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.AuditViewer", "$XSAPPNAME.AuditAdmin"],
+        "default": "$XSAPPNAME.AuditAdmin"
+      }
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "auditlog-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.AuditViewer", "$XSAPPNAME.AuditAdmin"],
+        "default": "$XSAPPNAME.AuditAdmin"
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.AuditViewer", "$XSAPPNAME.AuditAdmin"]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "xsappname": "uim-identity-authentication",
+  "tenant-mode": "dedicated",
+  "description": "UIM Identity Authentication service",
+  "scopes": [
+    { "name": "$XSAPPNAME.IdentityViewer", "description": "Read users, groups, applications, policies, sessions and tokens" },
+    { "name": "$XSAPPNAME.IdentityAdmin", "description": "Manage users, groups, applications, policies, risk rules, identity providers, sessions and tokens" }
+  ],
+  "role-templates": [
+    {
+      "name": "IdentityViewer",
+      "description": "Identity authentication viewer",
+      "scope-references": ["$XSAPPNAME.IdentityViewer"]
+    },
+    {
+      "name": "IdentityAdmin",
+      "description": "Identity authentication administrator",
+      "scope-references": ["$XSAPPNAME.IdentityAdmin", "$XSAPPNAME.IdentityViewer"]
+    }
+  ],
+  "role-collections": [
+    { "name": "UIM Identity Authentication Viewer", "role-template-references": ["$XSAPPNAME.IdentityViewer"] },
+    { "name": "UIM Identity Authentication Administrator", "role-template-references": ["$XSAPPNAME.IdentityAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "PORT": 5000,
+  "destinations": [
+    { "name": "authorization-srv", "url": "http://localhost:8117", "forwardAuthToken": true }
+  ],
+  "VCAP_SERVICES": {
+    "xsuaa": [
+      {
+        "name": "authorization-xsuaa",
+        "label": "xsuaa",
+        "tags": ["xsuaa"],
+        "credentials": {
+          "clientid": "<client id of your XSUAA instance>",
+          "clientsecret": "<client secret>",
+          "url": "https://<subdomain>.authentication.eu10.hana.ondemand.com",
+          "uaadomain": "authentication.eu10.hana.ondemand.com",
+          "xsappname": "uim-authorization!t0000",
+          "verificationkey": "<verification key>"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "tenantId": "default", "nodes": 3, "enabledNodes": 3, "routes": 2, "enabledRoutes": 2,
+  "requests": 2, "queueEntries": 3, "pendingImports": 1, "runningImports": 0,
+  "successfulImports": 1, "failedImports": 1, "actions": 6, "lastActionAt": "2026-11-10T09:15:00Z",
+  "requestsInitial": 0, "requestsRunning": 1, "requestsSuccess": 0, "requestsWarning": 0,
+  "requestsFailed": 1, "requestsRepeating": 0
+}

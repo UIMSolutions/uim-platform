@@ -1,0 +1,39 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/management/(.*)$",
+      "target": "/odata/v4/management/$1",
+      "destination": "management-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.Viewer", "$XSAPPNAME.Admin"],
+        "default": "$XSAPPNAME.Admin"
+      }
+    },
+    {
+      "source": "^/(api|rest)/v1/(.*)$",
+      "target": "/$1/v1/$2",
+      "destination": "management-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.Viewer", "$XSAPPNAME.Admin"],
+        "default": "$XSAPPNAME.Admin"
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.Viewer", "$XSAPPNAME.Admin"]
+    }
+  ]
+}

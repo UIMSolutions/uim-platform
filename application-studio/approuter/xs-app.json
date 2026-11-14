@@ -1,0 +1,39 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/application-studio/(.*)$",
+      "target": "/odata/v4/application-studio/$1",
+      "destination": "application-studio-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.StudioViewer", "$XSAPPNAME.StudioDeveloper", "$XSAPPNAME.StudioAdmin"],
+        "default": ["$XSAPPNAME.StudioDeveloper", "$XSAPPNAME.StudioAdmin"]
+      }
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "application-studio-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.StudioViewer", "$XSAPPNAME.StudioDeveloper", "$XSAPPNAME.StudioAdmin"],
+        "default": ["$XSAPPNAME.StudioDeveloper", "$XSAPPNAME.StudioAdmin"]
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.StudioViewer", "$XSAPPNAME.StudioDeveloper", "$XSAPPNAME.StudioAdmin"]
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+<mvc:View
+  controllerName="uim.transport.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns="sap.m">
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiNodes}"/>
+            <ObjectNumber number="{nodes}" unit="{= ${enabledNodes} + ' enabled' }" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRoutes}"/>
+            <ObjectNumber number="{routes}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRequests}"/>
+            <ObjectNumber number="{requests}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiPending}"/>
+            <ObjectNumber number="{pendingImports}" class="sapMObjectNumberLarge"
+              state="{= ${pendingImports} > 0 ? 'Information' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSuccessful}"/>
+            <ObjectNumber number="{successfulImports}" class="sapMObjectNumberLarge" state="Success"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiFailed}"/>
+            <ObjectNumber number="{failedImports}" class="sapMObjectNumberLarge"
+              state="{= ${failedImports} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLastAction}"/>
+            <Text text="{path: 'lastActionAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid defaultSpan="XL2 L3 M4 S6" binding="{/Statistics}">
+              <GenericTile header="{i18n>tileInitial}" subheader="{i18n>requestStatus}" press=".onShowRequests">
+                <TileContent><NumericContent value="{requestsInitial}" icon="sap-icon://pending" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tileRunning}" subheader="{i18n>requestStatus}" press=".onShowRequests">
+                <TileContent><NumericContent value="{requestsRunning}" icon="sap-icon://shipping-status" valueColor="Neutral" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tileSuccess}" subheader="{i18n>requestStatus}" press=".onShowRequests">
+                <TileContent><NumericContent value="{requestsSuccess}" valueColor="Good" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tileWarning}" subheader="{i18n>requestStatus}" press=".onShowRequests">
+                <TileContent><NumericContent value="{requestsWarning}" valueColor="Critical" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tileFailed}" subheader="{i18n>requestStatus}" press=".onShowRequests">
+                <TileContent><NumericContent value="{requestsFailed}" valueColor="Error" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tileRepeating}" subheader="{i18n>requestStatus}" press=".onShowRequests">
+                <TileContent><NumericContent value="{requestsRepeating}" icon="sap-icon://repost" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+            <Title text="{i18n>tabRoutes}" level="H3" class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
+            <List id="landscapeList" items="{path: '/TransportRoutes', parameters: {$orderby: 'sequence,name'}}"
+              noDataText="{i18n>noData}">
+              <StandardListItem icon="sap-icon://journey-arrive"
+                title="{parts: ['sourceNodeName', 'destinationNodeName'], formatter: '.formatter.routeText'}"
+                description="{name}" info="{path: 'status', formatter: '.formatter.enumText'}"
+                infoState="{path: 'status', formatter: '.formatter.statusState'}"/>
+            </List>
+          </IconTabFilter>
+
+          <!-- ── Nodes ────────────────────────────────────────────── -->
+          <IconTabFilter key="nodes" icon="sap-icon://it-system" text="{i18n>tabNodes}">
+            <Table id="nodeTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/TransportNodes', parameters: {$orderby: 'name', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabNodes}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>newNode}" icon="sap-icon://add" press=".onCreateNode"/>
+                  <Button text="{i18n>enable}" press=".onEnableNode"/>
+                  <Button text="{i18n>disable}" press=".onDisableNode"/>
+                  <Button text="{i18n>checkConnection}" icon="sap-icon://connected" press=".onCheckConnection"/>
+                  <Button text="{i18n>importAll}" icon="sap-icon://download" type="Emphasized" press=".onImportSelectedNode"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDeleteSelected" app:table="nodeTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colType}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="7rem"><Text text="{i18n>colRegion}"/></Column>
+                <Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" width="6rem"><Text text="{i18n>colForward}"/></Column>
+                <Column hAlign="Center" minScreenWidth="Desktop" demandPopin="true" width="7rem"><Text text="{i18n>colAutoImport}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" width="8rem"><Text text="{i18n>colConnection}"/></Column>
+                <Column hAlign="End" width="6rem"><Text text="{i18n>colPending}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <HBox alignItems="Center">
+                      <core:Icon src="{path: 'nodeType', formatter: '.formatter.nodeTypeIcon'}" class="sapUiTinyMarginEnd"/>
+                      <Text text="{path: 'nodeType', formatter: '.formatter.enumText'}"/>
+                    </HBox>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+                      state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{region}"/>
+                    <core:Icon src="sap-icon://accept" visible="{isForwardEnabled}"/>
+                    <core:Icon src="sap-icon://accept" visible="{autoImport}"/>
+                    <ObjectStatus text="{path: 'connectionStatus', formatter: '.formatter.enumText'}"
+                      state="{path: 'connectionStatus', formatter: '.formatter.statusState'}"/>
+                    <ObjectNumber number="{pendingImports}" state="{= ${pendingImports} > 0 ? 'Information' : 'None' }"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Routes ───────────────────────────────────────────── -->
+          <IconTabFilter key="routes" icon="sap-icon://journey-arrive" text="{i18n>tabRoutes}">
+            <Table id="routeTable" mode="SingleSelectLeft" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/TransportRoutes', parameters: {$orderby: 'sequence,name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRoutes}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>newRoute}" icon="sap-icon://add" press=".onCreateRoute"/>
+                  <Button text="{i18n>enable}" press=".onEnableRoute"/>
+                  <Button text="{i18n>disable}" press=".onDisableRoute"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDeleteSelected" app:table="routeTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colRoute}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End" width="7rem"><Text text="{i18n>colSequence}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{name}"/>
+                    <Text text="{parts: ['sourceNodeName', 'destinationNodeName'], formatter: '.formatter.routeText'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+                      state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <ObjectNumber number="{sequence}"/>
+                    <Text text="{description}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Requests ─────────────────────────────────────────── -->
+          <IconTabFilter key="requests" icon="sap-icon://shipping-status" text="{i18n>tabRequests}">
+            <Table id="requestTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/TransportRequests', parameters: {$orderby: 'createdAt desc', $count: true}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRequests}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField id="requestSearch" width="14rem" search=".onSearchRequests" placeholder="{i18n>search}"/>
+                  <Button text="{i18n>newRequest}" icon="sap-icon://add" press=".onCreateRequest"/>
+                  <Button text="{i18n>exportRequest}" icon="sap-icon://outbox" type="Emphasized" press=".onExportRequest"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDeleteSelected" app:table="requestTable"
+                    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colContent}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="7rem"><Text text="{i18n>colVersion}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="8rem"><Text text="{i18n>colSource}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" width="11rem"><Text text="{i18n>colCreated}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" width="8rem"><Text text="{i18n>colOwner}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onRequestPress">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{path: 'contentType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{version}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}"
+                      state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{sourceNodeName}"/>
+                    <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{namedUser}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Import queues ────────────────────────────────────── -->
+          <IconTabFilter key="queue" icon="sap-icon://inbox" text="{i18n>tabQueue}">
+            <Table id="queueTable" mode="MultiSelect" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ImportQueueEntries', parameters: {$orderby: 'nodeName,queuePosition'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabQueue}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Select id="queueNodeFilter" width="12rem" change=".onQueueNodeChange"
+                    items="{path: '/TransportNodes', parameters: {$orderby: 'name'}, templateShareable: false}"
+                    forceSelection="false">
+                    <core:Item key="{id}" text="{name}"/>
+                  </Select>
+                  <Button icon="sap-icon://clear-filter" tooltip="{i18n>allNodes}" press=".onQueueAllNodes"/>
+                  <Button text="{i18n>importAll}" icon="sap-icon://download" type="Emphasized" press=".onImportQueue"/>
+                  <Button text="{i18n>importSelected}" press=".onImportSelectedEntries"/>
+                  <Button text="{i18n>reset}" icon="sap-icon://repost" press=".onResetEntries"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDeleteEntries"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="4rem"><Text text="{i18n>colPosition}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colNode}"/></Column>
+                <Column><Text text="{i18n>colRequest}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="Center" width="6rem"><Text text="{i18n>colSelected}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="11rem"><Text text="{i18n>colQueued}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" width="11rem"><Text text="{i18n>colCompleted}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colError}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectNumber number="{queuePosition}"/>
+                    <Text text="{nodeName}"/>
+                    <Link text="{requestName}" press=".onQueueRequestPress"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}"
+                      state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Switch state="{isSelected}" change=".onToggleSelected" customTextOn=" " customTextOff=" "
+                      enabled="{path: 'status', formatter: '.formatter.isPending'}"/>
+                    <Text text="{path: 'queuedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{path: 'completedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{errorMessage}" maxLines="2"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Audit trail ──────────────────────────────────────── -->
+          <IconTabFilter key="actions" icon="sap-icon://history" text="{i18n>tabActions}">
+            <Table id="actionTable" growing="true" growingThreshold="50" sticky="ColumnHeaders"
+              items="{path: '/TransportActions', parameters: {$orderby: 'performedAt desc'}}" noDataText="{i18n>noData}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colAction}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="8rem"><Text text="{i18n>colNode}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRequest}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" width="8rem"><Text text="{i18n>colBy}"/></Column>
+                <Column><Text text="{i18n>colDescription}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'performedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{path: 'actionType', formatter: '.formatter.enumText'}"/>
+                    <ObjectStatus text="{path: 'actionStatus', formatter: '.formatter.enumText'}"
+                      state="{path: 'actionStatus', formatter: '.formatter.statusState'}"/>
+                    <Text text="{nodeName}"/>
+                    <Text text="{requestName}"/>
+                    <Text text="{performedBy}"/>
+                    <Text text="{description}" maxLines="2"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

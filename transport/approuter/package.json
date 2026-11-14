@@ -1,0 +1,14 @@
+{
+  "name": "uim-transport-approuter",
+  "version": "2.0.0",
+  "description": "Approuter (XSUAA login, routing) for the UIM Cloud Transport Management service",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node node_modules/@sap/approuter/approuter.js",
+    "start:local": "rm -rf resources && cp -r ../frontend resources && node node_modules/@sap/approuter/approuter.js"
+  },
+  "dependencies": {
+    "@sap/approuter": "^16.8.0"
+  }
+}

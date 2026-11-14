@@ -1,0 +1,52 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/identity-authentication/(.*)$",
+      "target": "/odata/v4/identity-authentication/$1",
+      "destination": "ias-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.IdentityViewer", "$XSAPPNAME.IdentityAdmin"],
+        "default": "$XSAPPNAME.IdentityAdmin"
+      }
+    },
+    {
+      "source": "^/api/v1/auth/(.*)$",
+      "target": "/api/v1/auth/$1",
+      "destination": "ias-srv",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/\\.well-known/openid-configuration$",
+      "target": "/.well-known/openid-configuration",
+      "destination": "ias-srv",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/(api|rest)/v1/(.*)$",
+      "target": "/$1/v1/$2",
+      "destination": "ias-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.IdentityViewer", "$XSAPPNAME.IdentityAdmin"],
+        "default": "$XSAPPNAME.IdentityAdmin"
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.IdentityViewer", "$XSAPPNAME.IdentityAdmin"]
+    }
+  ]
+}

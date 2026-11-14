@@ -1,0 +1,8 @@
+[
+  { "id": "n-dev", "tenantId": "default", "name": "DEV", "description": "Development space", "nodeType": "cloudFoundry",
+    "status": "enabled", "region": "eu10", "isForwardEnabled": true, "autoImport": false, "connectionStatus": "connected", "pendingImports": 0 },
+  { "id": "n-qa", "tenantId": "default", "name": "QA", "description": "Quality assurance space", "nodeType": "cloudFoundry",
+    "status": "enabled", "region": "eu10", "isForwardEnabled": true, "autoImport": false, "connectionStatus": "", "pendingImports": 0 },
+  { "id": "n-prod", "tenantId": "default", "name": "PROD", "description": "Production space", "nodeType": "cloudFoundry",
+    "status": "enabled", "region": "eu10", "isForwardEnabled": false, "autoImport": false, "connectionStatus": "", "pendingImports": 1 }
+]

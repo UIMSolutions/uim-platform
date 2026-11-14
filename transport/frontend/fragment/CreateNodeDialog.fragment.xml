@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+  <Dialog id="createNodeDialog" title="{i18n>newNode}" contentWidth="32rem">
+    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4">
+      <Label text="{i18n>fieldName}" required="true"/>
+      <Input value="{ui>/newNode/name}" placeholder="DEV"/>
+      <Label text="{i18n>fieldType}"/>
+      <Select selectedKey="{ui>/newNode/nodeType}">
+        <core:Item key="cloudFoundry" text="Cloud Foundry"/>
+        <core:Item key="abap" text="ABAP"/>
+        <core:Item key="neo" text="Neo"/>
+        <core:Item key="kyma" text="Kyma"/>
+        <core:Item key="other" text="Other"/>
+      </Select>
+      <Label text="{i18n>fieldDescription}"/>
+      <Input value="{ui>/newNode/description}"/>
+      <Label text="{i18n>fieldRegion}"/>
+      <Input value="{ui>/newNode/region}" placeholder="eu10"/>
+      <Label text="{i18n>fieldSubaccount}"/>
+      <Input value="{ui>/newNode/subaccountId}"/>
+      <Label text="{i18n>fieldSpace}"/>
+      <Input value="{ui>/newNode/spaceId}"/>
+      <Label text=""/>
+      <CheckBox text="{i18n>fieldForward}" selected="{ui>/newNode/isForwardEnabled}"/>
+      <Label text=""/>
+      <CheckBox text="{i18n>fieldAutoImport}" selected="{ui>/newNode/autoImport}"/>
+    </f:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSaveNode"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog" app:dialog="createNodeDialog"
+      xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

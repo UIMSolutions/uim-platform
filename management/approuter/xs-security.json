@@ -1,0 +1,28 @@
+{
+  "xsappname": "uim-management",
+  "tenant-mode": "dedicated",
+  "description": "UIM Cloud Management service",
+  "scopes": [
+    { "name": "$XSAPPNAME.Viewer", "description": "Display global accounts, subaccounts, entitlements, environments and events" },
+    { "name": "$XSAPPNAME.Admin", "description": "Create, change and delete accounts, entitlements, environments and subscriptions" }
+  ],
+  "role-templates": [
+    {
+      "name": "ManagementViewer",
+      "description": "Cloud management viewer",
+      "scope-references": ["$XSAPPNAME.Viewer"]
+    },
+    {
+      "name": "ManagementAdmin",
+      "description": "Cloud management administrator",
+      "scope-references": ["$XSAPPNAME.Admin", "$XSAPPNAME.Viewer"]
+    }
+  ],
+  "role-collections": [
+    { "name": "UIM Cloud Management Viewer", "role-template-references": ["$XSAPPNAME.ManagementViewer"] },
+    { "name": "UIM Cloud Management Administrator", "role-template-references": ["$XSAPPNAME.ManagementAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

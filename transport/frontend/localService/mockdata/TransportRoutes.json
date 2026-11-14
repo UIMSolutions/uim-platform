@@ -1,0 +1,6 @@
+[
+  { "id": "r-1", "tenantId": "default", "name": "DEV-QA", "sourceNodeId": "n-dev", "sourceNodeName": "DEV",
+    "destinationNodeId": "n-qa", "destinationNodeName": "QA", "status": "enabled", "isSequential": true, "sequence": 1 },
+  { "id": "r-2", "tenantId": "default", "name": "QA-PROD", "sourceNodeId": "n-qa", "sourceNodeName": "QA",
+    "destinationNodeId": "n-prod", "destinationNodeName": "PROD", "status": "enabled", "isSequential": true, "sequence": 2 }
+]

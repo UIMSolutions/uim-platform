@@ -1,0 +1,40 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/transport/(.*)$",
+      "target": "/odata/v4/transport/$1",
+      "destination": "transport-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.TransportViewer", "$XSAPPNAME.TransportOperator", "$XSAPPNAME.TransportAdmin"],
+        "POST": ["$XSAPPNAME.TransportOperator", "$XSAPPNAME.TransportAdmin"],
+        "default": "$XSAPPNAME.TransportAdmin"
+      }
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "transport-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.TransportViewer", "$XSAPPNAME.TransportOperator", "$XSAPPNAME.TransportAdmin"],
+        "default": "$XSAPPNAME.TransportAdmin"
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.TransportViewer", "$XSAPPNAME.TransportOperator", "$XSAPPNAME.TransportAdmin"]
+    }
+  ]
+}

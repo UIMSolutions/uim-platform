@@ -1,0 +1,9 @@
+{
+  "name": "uim-task-center-approuter",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Approuter of the UIM Task Center (XSUAA login, routing, CSRF)",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node node_modules/@sap/approuter/approuter.js" },
+  "dependencies": { "@sap/approuter": "^20.0.0" }
+}

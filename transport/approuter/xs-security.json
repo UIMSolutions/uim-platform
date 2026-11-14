@@ -1,0 +1,31 @@
+{
+  "xsappname": "uim-transport",
+  "tenant-mode": "dedicated",
+  "description": "UIM Cloud Transport Management service",
+  "scopes": [
+    { "name": "$XSAPPNAME.TransportViewer", "description": "Display nodes, routes, transport requests, queues and the audit trail" },
+    { "name": "$XSAPPNAME.TransportOperator", "description": "Export, import, forward and reset transport requests" },
+    { "name": "$XSAPPNAME.TransportAdmin", "description": "Maintain the transport landscape (nodes and routes)" }
+  ],
+  "role-templates": [
+    { "name": "TransportViewer", "description": "Transport viewer", "scope-references": ["$XSAPPNAME.TransportViewer"] },
+    {
+      "name": "TransportOperator",
+      "description": "Transport operator (import / export)",
+      "scope-references": ["$XSAPPNAME.TransportOperator", "$XSAPPNAME.TransportViewer"]
+    },
+    {
+      "name": "TransportAdmin",
+      "description": "Transport landscape administrator",
+      "scope-references": ["$XSAPPNAME.TransportAdmin", "$XSAPPNAME.TransportOperator", "$XSAPPNAME.TransportViewer"]
+    }
+  ],
+  "role-collections": [
+    { "name": "UIM Transport Viewer", "role-template-references": ["$XSAPPNAME.TransportViewer"] },
+    { "name": "UIM Transport Operator", "role-template-references": ["$XSAPPNAME.TransportOperator"] },
+    { "name": "UIM Transport Administrator", "role-template-references": ["$XSAPPNAME.TransportAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

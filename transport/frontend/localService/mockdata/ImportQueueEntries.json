@@ -1,0 +1,9 @@
+[
+  { "id": "e-1", "tenantId": "default", "nodeId": "n-qa", "nodeName": "QA", "requestId": "q-1", "requestName": "sample-app",
+    "status": "success", "queuePosition": 1, "isSelected": true, "queuedAt": "2026-11-10T09:00:05Z", "completedAt": "2026-11-10T09:05:00Z" },
+  { "id": "e-2", "tenantId": "default", "nodeId": "n-prod", "nodeName": "PROD", "requestId": "q-1", "requestName": "sample-app",
+    "status": "initial", "queuePosition": 1, "isSelected": true, "queuedAt": "2026-11-10T09:05:00Z" },
+  { "id": "e-3", "tenantId": "default", "nodeId": "n-qa", "nodeName": "QA", "requestId": "q-2", "requestName": "broken",
+    "status": "failed", "queuePosition": 2, "isSelected": true, "queuedAt": "2026-11-10T09:10:05Z", "completedAt": "2026-11-10T09:15:00Z",
+    "errorMessage": "Content archive could not be retrieved from fail://x" }
+]

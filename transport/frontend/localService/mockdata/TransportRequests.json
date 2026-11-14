@@ -1,0 +1,9 @@
+[
+  { "id": "q-1", "tenantId": "default", "name": "sample-app", "description": "Sample MTA", "contentType": "mtaArchive",
+    "status": "running", "version": "1.0.0", "storageUrl": "https://repository.example.com/sample-app-1.0.0.mtar",
+    "sourceNodeId": "n-dev", "sourceNodeName": "DEV", "namedUser": "cli", "createdAt": "2026-11-10T09:00:00Z" },
+  { "id": "q-2", "tenantId": "default", "name": "broken", "description": "", "contentType": "mtaArchive",
+    "status": "failed", "version": "0.1.0", "storageUrl": "fail://x", "sourceNodeId": "n-dev", "sourceNodeName": "DEV",
+    "namedUser": "cli", "createdAt": "2026-11-10T09:10:00Z",
+    "errorMessage": "Content archive could not be retrieved from fail://x" }
+]
