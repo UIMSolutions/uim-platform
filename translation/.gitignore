@@ -1,0 +1,9 @@
+backend/build/
+backend/data/
+backend/.dub/
+frontend/node_modules/
+frontend/dist/
+approuter/node_modules/
+approuter/resources/
+approuter/default-env.json
+mta_archives/

@@ -1,0 +1,16 @@
+{
+  "serviceName": "Application Studio Service",
+  "host": "0.0.0.0",
+  "port": 8111,
+  "logLevel": "info",
+  "storage": "file",
+  "dataDir": "data",
+  "defaultTenant": "default",
+  "odataPath": "/odata/v4/application-studio",
+  "reconcileIntervalSeconds": 10,
+  "reconcileTenants": [
+    "default"
+  ],
+  "seedCatalog": true,
+  "frontendDir": "../frontend"
+}
