@@ -1,0 +1,11 @@
+[
+  {
+    "id": "6f1d1c2e-0000-4000-8000-000000000001", "tenantId": "default", "name": "dev", "description": "Development runtime",
+    "subaccountId": "", "clusterId": "c-6f1d1c2", "plan": "azure", "region": "westeurope", "kubernetesVersion": "1.31",
+    "status": "running", "machineType": "Standard_D2s_v5", "autoScalerMin": 3, "autoScalerMax": 20,
+    "oidcIssuerUrl": "", "oidcClientId": "", "oidcGroupsClaim": "groups", "oidcUsernameClaim": "sub",
+    "shootDomain": "c-6f1d1c2.kyma.ondemand.com", "kubeApiServerUrl": "https://api.c-6f1d1c2.kyma.ondemand.com",
+    "administrators": ["jane@example.com"], "expiresAt": null,
+    "createdBy": "jane", "createdAt": "2026-11-10T08:00:00Z", "updatedBy": "jane", "updatedAt": "2026-11-10T08:05:00Z"
+  }
+]

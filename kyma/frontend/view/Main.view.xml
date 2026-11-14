@@ -1,0 +1,436 @@
+<mvc:View
+  controllerName="uim.kyma.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button id="reconcileButton" text="{i18n>reconcile}" icon="sap-icon://synchronize" type="Emphasized" press=".onReconcile"/>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiEnvironments}"/>
+            <ObjectNumber number="{environments}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRunning}"/>
+            <ObjectNumber number="{environmentsRunning}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiNamespaces}"/>
+            <ObjectNumber number="{namespaces}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiFunctions}"/>
+            <ObjectNumber number="{functions}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiFailed}"/>
+            <ObjectNumber number="{functionsFailed}" class="sapMObjectNumberLarge" state="{= ${functionsFailed} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiApiRules}"/>
+            <ObjectNumber number="{apiRules}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiServices}"/>
+            <ObjectNumber number="{serviceInstances}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiPending}"/>
+            <ObjectNumber number="{pendingReconciliation}" class="sapMObjectNumberLarge" state="{= ${pendingReconciliation} > 0 ? 'Information' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiNextExpiry}"/>
+            <Text text="{path: 'nextExpiryAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"
+              class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid defaultSpan="XL3 L4 M6 S12" binding="{/Statistics}">
+              <GenericTile header="{i18n>tabEnvironments}" subheader="{environmentsRunning}" press=".onTile" app:tab="environments">
+                <TileContent><NumericContent value="{environments}" icon="sap-icon://cloud" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabFunctions}" subheader="{functionsRunning}" press=".onTile" app:tab="functions">
+                <TileContent><NumericContent value="{functions}" icon="sap-icon://syntax" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabApiRules}" press=".onTile" app:tab="apiRules">
+                <TileContent><NumericContent value="{apiRules}" icon="sap-icon://chain-link" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabServiceInstances}" press=".onTile" app:tab="serviceInstances">
+                <TileContent><NumericContent value="{serviceInstances}" icon="sap-icon://database" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabServiceBindings}" press=".onTile" app:tab="serviceBindings">
+                <TileContent><NumericContent value="{serviceBindings}" icon="sap-icon://key" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabSubscriptions}" subheader="{subscriptionsPaused}" press=".onTile" app:tab="subscriptions">
+                <TileContent><NumericContent value="{subscriptions}" icon="sap-icon://message-popup" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabModules}" press=".onTile" app:tab="modules">
+                <TileContent><NumericContent value="{modulesEnabled}" icon="sap-icon://puzzle" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabApplications}" subheader="{applicationsConnected}" press=".onTile" app:tab="applications">
+                <TileContent><NumericContent value="{applications}" icon="sap-icon://connected" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <!-- ── environments ── -->
+          <IconTabFilter key="environments" icon="sap-icon://cloud" text="{i18n>tabEnvironments}">
+            <Table id="environmentTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Environments', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabEnvironments}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('environmentTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('Environments')"/>
+                  <Button text="{i18n>start}" press=".onAction('environmentTable', 'StartEnvironment', false)"/>
+                  <Button text="{i18n>stop}" press=".onAction('environmentTable', 'StopEnvironment', false)"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('environmentTable', 'environments')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('environmentTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colPlan}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colRegion}"/></Column>
+                <Column width="9rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+                <Column width="6rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colNodes}"/></Column>
+                <Column width="7rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colKubernetes}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colApiServer}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onEnvironmentPress">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{path: 'plan', formatter: '.formatter.enumText'}"/>
+                    <Text text="{region}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                    <Text text="{autoScalerMin} – {autoScalerMax}"/>
+                    <Text text="{kubernetesVersion}"/>
+                    <Link text="{kubeApiServerUrl}" href="{kubeApiServerUrl}" target="_blank"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── namespaces ── -->
+          <IconTabFilter key="namespaces" icon="sap-icon://folder-blank" text="{i18n>tabNamespaces}">
+            <Table id="namespaceTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Namespaces', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabNamespaces}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('namespaceTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('Namespaces')"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('namespaceTable', 'namespaces')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('namespaceTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colQuota}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLabels}"/></Column>
+                <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colChanged}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                    <Text text="{cpuLimit} / {memoryLimit}"/>
+                    <Text text="{path: 'labels', targetType: 'any', mode: 'OneTime', formatter: '.formatter.keyValues'}"/>
+                    <Text text="{path: 'updatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── functions ── -->
+          <IconTabFilter key="functions" icon="sap-icon://syntax" text="{i18n>tabFunctions}">
+            <Table id="functionTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Functions', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabFunctions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('functionTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('Functions')"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('functionTable', 'functions')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('functionTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colNamespace}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colRuntime}"/></Column>
+                <Column width="9rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+                <Column width="6rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colReplicas}"/></Column>
+                <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colChanged}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{namespaceName}"/>
+                    <Text text="{runtime}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                    <Text text="{minReplicas} – {maxReplicas}"/>
+                    <Text text="{path: 'updatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── apiRules ── -->
+          <IconTabFilter key="apiRules" icon="sap-icon://chain-link" text="{i18n>tabApiRules}">
+            <Table id="apiRuleTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ApiRules', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabApiRules}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('apiRuleTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('ApiRules')"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('apiRuleTable', 'apiRules')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('apiRuleTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colHost}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colService}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRules}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{namespaceName}"/>
+                    <Link text="{host}" href="{path: 'host', formatter: '.formatter.hostUrl'}" target="_blank"/>
+                    <Text text="{serviceName}:{servicePort}"/>
+                    <Text text="{path: 'rules', targetType: 'any', mode: 'OneTime', formatter: '.formatter.accessRules'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── serviceInstances ── -->
+          <IconTabFilter key="serviceInstances" icon="sap-icon://database" text="{i18n>tabServiceInstances}">
+            <Table id="serviceInstanceTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ServiceInstances', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabServiceInstances}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('serviceInstanceTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('ServiceInstances')"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('serviceInstanceTable', 'serviceInstances')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('serviceInstanceTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colOffering}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colServicePlan}"/></Column>
+                <Column width="6rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colBindings}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{namespaceName}"/>
+                    <Text text="{serviceOfferingName}"/>
+                    <Text text="{servicePlanName}"/>
+                    <ObjectNumber number="{bindingCount}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── serviceBindings ── -->
+          <IconTabFilter key="serviceBindings" icon="sap-icon://key" text="{i18n>tabServiceBindings}">
+            <Table id="serviceBindingTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ServiceBindings', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabServiceBindings}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('serviceBindingTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('ServiceBindings')"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('serviceBindingTable', 'serviceBindings')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('serviceBindingTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="12rem"><Text text="{i18n>colInstance}"/></Column>
+                <Column width="12rem"><Text text="{i18n>colSecret}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{namespaceName}"/>
+                    <Text text="{serviceInstanceName}"/>
+                    <Text text="{secretName}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── subscriptions ── -->
+          <IconTabFilter key="subscriptions" icon="sap-icon://message-popup" text="{i18n>tabSubscriptions}">
+            <Table id="subscriptionTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/EventSubscriptions', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSubscriptions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('subscriptionTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('EventSubscriptions')"/>
+                  <Button text="{i18n>pause}" press=".onAction('subscriptionTable', 'PauseEventSubscription', false)"/>
+                  <Button text="{i18n>resume}" press=".onAction('subscriptionTable', 'ResumeEventSubscription', false)"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('subscriptionTable', 'subscriptions')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('subscriptionTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colSource}"/></Column>
+                <Column><Text text="{i18n>colEventTypes}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSink}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{namespaceName}"/>
+                    <Text text="{source}"/>
+                    <Text text="{path: 'eventTypes', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                    <Text text="{sinkUrl}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── modules ── -->
+          <IconTabFilter key="modules" icon="sap-icon://puzzle" text="{i18n>tabModules}">
+            <Table id="moduleTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Modules', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabModules}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('moduleTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('Modules')"/>
+                  <Button text="{i18n>enable}" press=".onAction('moduleTable', 'EnableModule', false)"/>
+                  <Button text="{i18n>disable}" press=".onAction('moduleTable', 'DisableModule', false)"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('moduleTable', 'modules')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('moduleTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colVersion}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colChannel}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRequires}"/></Column>
+                <Column width="9rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{version}"/>
+                    <Text text="{channel}"/>
+                    <Text text="{path: 'requiredModules', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── applications ── -->
+          <IconTabFilter key="applications" icon="sap-icon://connected" text="{i18n>tabApplications}">
+            <Table id="applicationTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Applications', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabApplications}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('applicationTable', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('Applications')"/>
+                  <Button text="{i18n>connect}" press=".onAction('applicationTable', 'ConnectApplication', false)"/>
+                  <Button text="{i18n>disconnect}" press=".onAction('applicationTable', 'DisconnectApplication', false)"/>
+                  <Button text="{i18n>bindNamespace}" press=".onAction('applicationTable', 'BindApplication', true)"/>
+                  <Button text="{i18n>manifest}" icon="sap-icon://source-code" press=".onManifest('applicationTable', 'applications')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('applicationTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="9rem"><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colBound}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colConnector}"/></Column>
+                <Column width="9rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{path: 'registrationType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'boundNamespaces', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                    <Text text="{connectorUrl}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

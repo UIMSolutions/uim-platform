@@ -1,0 +1,5 @@
+{
+  "tenantId": "default", "environments": 1, "environmentsRunning": 1, "namespaces": 1, "functions": 1, "functionsRunning": 1,
+  "functionsFailed": 0, "apiRules": 0, "serviceInstances": 0, "serviceBindings": 0, "subscriptions": 0, "subscriptionsPaused": 0,
+  "modulesEnabled": 4, "applications": 0, "applicationsConnected": 0, "pendingReconciliation": 0, "nextExpiryAt": null
+}

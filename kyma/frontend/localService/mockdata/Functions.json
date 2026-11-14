@@ -1,0 +1,10 @@
+[
+  {
+    "id": "6f1d1c2e-0000-4000-8000-000000000101", "tenantId": "default", "environmentId": "6f1d1c2e-0000-4000-8000-000000000001",
+    "namespaceId": "6f1d1c2e-0000-4000-8000-000000000011", "namespaceName": "shop", "name": "hello", "description": "",
+    "runtime": "nodejs20", "status": "running", "sourceCode": "module.exports = { main: () => 'hi' };", "handler": "main",
+    "dependencies": "", "scalingType": "auto", "minReplicas": 1, "maxReplicas": 5, "cpuRequest": "", "cpuLimit": "",
+    "memoryRequest": "", "memoryLimit": "", "envVars": [{ "key": "GREETING", "value": "hi" }], "labels": [], "timeoutSeconds": 180,
+    "createdBy": "jane", "createdAt": "2026-11-10T08:10:00Z", "updatedBy": "jane", "updatedAt": "2026-11-10T08:12:00Z"
+  }
+]

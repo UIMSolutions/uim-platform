@@ -1,0 +1,144 @@
+<mvc:View
+  controllerName="uim.kyma.controller.EnvironmentDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:uxap="sap.uxap"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="environmentPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:expandedHeading>
+          <Title text="{name}" wrapping="true"/>
+        </uxap:expandedHeading>
+        <uxap:snappedHeading>
+          <Title text="{name}"/>
+        </uxap:snappedHeading>
+        <uxap:expandedContent>
+          <Text text="{description}"/>
+        </uxap:expandedContent>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onClose"/>
+        </uxap:navigationActions>
+        <uxap:actions>
+          <Button text="{i18n>start}" press=".onEnvironmentAction('StartEnvironment')" enabled="{= ${status} === 'stopped' }"/>
+          <Button text="{i18n>stop}" press=".onEnvironmentAction('StopEnvironment')" enabled="{= ${status} === 'running' }"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <ObjectStatus title="{i18n>colStatus}" text="{path: 'status', formatter: '.formatter.enumText'}"
+        state="{path: 'status', formatter: '.formatter.statusState'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colPlan}" text="{path: 'plan', formatter: '.formatter.enumText'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colRegion}" text="{region}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colKubernetes}" text="{kubernetesVersion}"/>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionGeneral}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" editable="false">
+              <Label text="{i18n>lblSubaccount}"/><Text text="{subaccountId}"/>
+              <Label text="{i18n>lblMachineType}"/><Text text="{machineType}"/>
+              <Label text="{i18n>lblAutoscaler}"/><Text text="{autoScalerMin} – {autoScalerMax}"/>
+              <Label text="{i18n>lblAdmins}"/><Text text="{path: 'administrators', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+              <Label text="{i18n>lblExpires}"/>
+              <Text text="{path: 'expiresAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionCluster}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" editable="false">
+              <Label text="{i18n>lblShootDomain}"/><Text text="{shootDomain}"/>
+              <Label text="{i18n>colApiServer}"/><Link text="{kubeApiServerUrl}" href="{kubeApiServerUrl}" target="_blank"/>
+              <Label text="{i18n>lblOidc}"/><Text text="{oidcIssuerUrl}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionModules}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envModuleTable" items="{path: '/Modules', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colVersion}"/></Column>
+                <Column><Text text="{i18n>colChannel}"/></Column>
+                <Column><Text text="{i18n>colRequires}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{name}"/>
+                    <Text text="{version}"/>
+                    <Text text="{channel}"/>
+                    <Text text="{path: 'requiredModules', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionNamespaces}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envNamespaceTable" items="{path: '/Namespaces', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colQuota}"/></Column>
+                <Column><Text text="{i18n>colLabels}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{cpuLimit} / {memoryLimit}"/>
+                    <Text text="{path: 'labels', targetType: 'any', mode: 'OneTime', formatter: '.formatter.keyValues'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionApplications}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="envApplicationTable" items="{path: '/Applications', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colBound}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{name}"/>
+                    <Text text="{path: 'registrationType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'boundNamespaces', targetType: 'any', mode: 'OneTime', formatter: '.formatter.joinList'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.kyma" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Environment">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="subaccountId" Type="Edm.String"/>
+        <Property Name="clusterId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="plan" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="kubernetesVersion" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="machineType" Type="Edm.String"/>
+        <Property Name="autoScalerMin" Type="Edm.Int32"/>
+        <Property Name="autoScalerMax" Type="Edm.Int32"/>
+        <Property Name="oidcIssuerUrl" Type="Edm.String"/>
+        <Property Name="oidcClientId" Type="Edm.String"/>
+        <Property Name="oidcGroupsClaim" Type="Edm.String"/>
+        <Property Name="oidcUsernameClaim" Type="Edm.String"/>
+        <Property Name="shootDomain" Type="Edm.String"/>
+        <Property Name="kubeApiServerUrl" Type="Edm.String"/>
+        <Property Name="administrators" Type="Collection(Edm.String)"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Namespace">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="environmentId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="cpuRequest" Type="Edm.String"/>
+        <Property Name="cpuLimit" Type="Edm.String"/>
+        <Property Name="memoryRequest" Type="Edm.String"/>
+        <Property Name="memoryLimit" Type="Edm.String"/>
+        <Property Name="podLimit" Type="Edm.Int32"/>
+        <Property Name="quotaEnforcement" Type="Edm.String"/>
+        <Property Name="istioInjection" Type="Edm.Boolean"/>
+        <Property Name="labels" Type="Collection(uim.kyma.KeyValue)"/>
+        <Property Name="annotations" Type="Collection(uim.kyma.KeyValue)"/>
+      </EntityType>
+      <EntityType Name="Function">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="environmentId" Type="Edm.String"/>
+        <Property Name="namespaceId" Type="Edm.String"/>
+        <Property Name="namespaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="runtime" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="sourceCode" Type="Edm.String"/>
+        <Property Name="handler" Type="Edm.String"/>
+        <Property Name="dependencies" Type="Edm.String"/>
+        <Property Name="scalingType" Type="Edm.String"/>
+        <Property Name="minReplicas" Type="Edm.Int32"/>
+        <Property Name="maxReplicas" Type="Edm.Int32"/>
+        <Property Name="cpuRequest" Type="Edm.String"/>
+        <Property Name="cpuLimit" Type="Edm.String"/>
+        <Property Name="memoryRequest" Type="Edm.String"/>
+        <Property Name="memoryLimit" Type="Edm.String"/>
+        <Property Name="envVars" Type="Collection(uim.kyma.KeyValue)"/>
+        <Property Name="labels" Type="Collection(uim.kyma.KeyValue)"/>
+        <Property Name="timeoutSeconds" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ApiRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="environmentId" Type="Edm.String"/>
+        <Property Name="namespaceId" Type="Edm.String"/>
+        <Property Name="namespaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="serviceName" Type="Edm.String"/>
+        <Property Name="servicePort" Type="Edm.Int32"/>
+        <Property Name="gateway" Type="Edm.String"/>
+        <Property Name="host" Type="Edm.String"/>
+        <Property Name="rules" Type="Collection(uim.kyma.ApiRuleEntry)"/>
+        <Property Name="corsEnabled" Type="Edm.Boolean"/>
+        <Property Name="corsAllowOrigins" Type="Collection(Edm.String)"/>
+        <Property Name="corsAllowMethods" Type="Collection(Edm.String)"/>
+        <Property Name="corsAllowHeaders" Type="Collection(Edm.String)"/>
+        <Property Name="labels" Type="Collection(uim.kyma.KeyValue)"/>
+      </EntityType>
+      <EntityType Name="ServiceInstance">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="environmentId" Type="Edm.String"/>
+        <Property Name="namespaceId" Type="Edm.String"/>
+        <Property Name="namespaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="serviceOfferingName" Type="Edm.String"/>
+        <Property Name="servicePlanName" Type="Edm.String"/>
+        <Property Name="externalName" Type="Edm.String"/>
+        <Property Name="parametersJson" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(uim.kyma.KeyValue)"/>
+        <Property Name="bindingCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ServiceBinding">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="environmentId" Type="Edm.String"/>
+        <Property Name="namespaceId" Type="Edm.String"/>
+        <Property Name="namespaceName" Type="Edm.String"/>
+        <Property Name="serviceInstanceId" Type="Edm.String"/>
+        <Property Name="serviceInstanceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="secretName" Type="Edm.String"/>
+        <Property Name="credentialKeys" Type="Collection(Edm.String)"/>
+        <Property Name="parametersJson" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(uim.kyma.KeyValue)"/>
+      </EntityType>
+      <EntityType Name="EventSubscription">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="environmentId" Type="Edm.String"/>
+        <Property Name="namespaceId" Type="Edm.String"/>
+        <Property Name="namespaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="source" Type="Edm.String"/>
+        <Property Name="eventTypes" Type="Collection(Edm.String)"/>
+        <Property Name="typeEncoding" Type="Edm.String"/>
+        <Property Name="sinkUrl" Type="Edm.String"/>
+        <Property Name="sinkServiceName" Type="Edm.String"/>
+        <Property Name="sinkServicePort" Type="Edm.Int32"/>
+        <Property Name="maxInFlightMessages" Type="Edm.Int32"/>
+        <Property Name="filterAttributes" Type="Collection(uim.kyma.KeyValue)"/>
+        <Property Name="labels" Type="Collection(uim.kyma.KeyValue)"/>
+      </EntityType>
+      <EntityType Name="Module">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="environmentId" Type="Edm.String"/>
+        <Property Name="moduleType" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.String"/>
+        <Property Name="channel" Type="Edm.String"/>
+        <Property Name="customResourcePolicy" Type="Edm.String"/>
+        <Property Name="configurationJson" Type="Edm.String"/>
+        <Property Name="requiredModules" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="Application">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="environmentId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="registrationType" Type="Edm.String"/>
+        <Property Name="connectorUrl" Type="Edm.String"/>
+        <Property Name="accessLabel" Type="Edm.String"/>
+        <Property Name="apis" Type="Collection(uim.kyma.AppApiEntry)"/>
+        <Property Name="events" Type="Collection(uim.kyma.AppEventEntry)"/>
+        <Property Name="boundNamespaces" Type="Collection(Edm.String)"/>
+        <Property Name="labels" Type="Collection(uim.kyma.KeyValue)"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="environments" Type="Edm.Int32"/>
+        <Property Name="environmentsRunning" Type="Edm.Int32"/>
+        <Property Name="namespaces" Type="Edm.Int32"/>
+        <Property Name="functions" Type="Edm.Int32"/>
+        <Property Name="functionsRunning" Type="Edm.Int32"/>
+        <Property Name="functionsFailed" Type="Edm.Int32"/>
+        <Property Name="apiRules" Type="Edm.Int32"/>
+        <Property Name="serviceInstances" Type="Edm.Int32"/>
+        <Property Name="serviceBindings" Type="Edm.Int32"/>
+        <Property Name="subscriptions" Type="Edm.Int32"/>
+        <Property Name="subscriptionsPaused" Type="Edm.Int32"/>
+        <Property Name="modulesEnabled" Type="Edm.Int32"/>
+        <Property Name="applications" Type="Edm.Int32"/>
+        <Property Name="applicationsConnected" Type="Edm.Int32"/>
+        <Property Name="pendingReconciliation" Type="Edm.Int32"/>
+        <Property Name="nextExpiryAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <ComplexType Name="KeyValue">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ApiRuleEntry">
+        <Property Name="path" Type="Edm.String"/>
+        <Property Name="methods" Type="Collection(Edm.String)"/>
+        <Property Name="accessStrategy" Type="Edm.String"/>
+        <Property Name="requiredScopes" Type="Collection(Edm.String)"/>
+        <Property Name="audiences" Type="Collection(Edm.String)"/>
+        <Property Name="trustedIssuers" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <ComplexType Name="AppApiEntry">
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="targetUrl" Type="Edm.String"/>
+        <Property Name="specUrl" Type="Edm.String"/>
+        <Property Name="authType" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="AppEventEntry">
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ReconcileResult">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="examined" Type="Edm.Int32"/>
+        <Property Name="advanced" Type="Edm.Int32"/>
+        <Property Name="changes" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <Action Name="StopEnvironment" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.Environment"/>
+      </Action>
+      <Action Name="StartEnvironment" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.Environment"/>
+      </Action>
+      <Action Name="PauseEventSubscription" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.EventSubscription"/>
+      </Action>
+      <Action Name="ResumeEventSubscription" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.EventSubscription"/>
+      </Action>
+      <Action Name="DisableModule" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.Module"/>
+      </Action>
+      <Action Name="EnableModule" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.Module"/>
+      </Action>
+      <Action Name="ConnectApplication" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.Application"/>
+      </Action>
+      <Action Name="DisconnectApplication" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.Application"/>
+      </Action>
+      <Action Name="BindApplication" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="namespace" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.Application"/>
+      </Action>
+      <Action Name="UnbindApplication" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="namespace" Type="Edm.String"/>
+        <ReturnType Type="uim.kyma.Application"/>
+      </Action>
+      <Action Name="Reconcile" IsBound="false">
+        <ReturnType Type="uim.kyma.ReconcileResult"/>
+      </Action>
+      <EntityContainer Name="KymaService">
+        <EntitySet Name="Environments" EntityType="uim.kyma.Environment"/>
+        <EntitySet Name="Namespaces" EntityType="uim.kyma.Namespace"/>
+        <EntitySet Name="Functions" EntityType="uim.kyma.Function"/>
+        <EntitySet Name="ApiRules" EntityType="uim.kyma.ApiRule"/>
+        <EntitySet Name="ServiceInstances" EntityType="uim.kyma.ServiceInstance"/>
+        <EntitySet Name="ServiceBindings" EntityType="uim.kyma.ServiceBinding"/>
+        <EntitySet Name="EventSubscriptions" EntityType="uim.kyma.EventSubscription"/>
+        <EntitySet Name="Modules" EntityType="uim.kyma.Module"/>
+        <EntitySet Name="Applications" EntityType="uim.kyma.Application"/>
+        <Singleton Name="Statistics" Type="uim.kyma.Statistic"/>
+        <ActionImport Name="StopEnvironment" Action="uim.kyma.StopEnvironment"/>
+        <ActionImport Name="StartEnvironment" Action="uim.kyma.StartEnvironment"/>
+        <ActionImport Name="PauseEventSubscription" Action="uim.kyma.PauseEventSubscription"/>
+        <ActionImport Name="ResumeEventSubscription" Action="uim.kyma.ResumeEventSubscription"/>
+        <ActionImport Name="DisableModule" Action="uim.kyma.DisableModule"/>
+        <ActionImport Name="EnableModule" Action="uim.kyma.EnableModule"/>
+        <ActionImport Name="ConnectApplication" Action="uim.kyma.ConnectApplication"/>
+        <ActionImport Name="DisconnectApplication" Action="uim.kyma.DisconnectApplication"/>
+        <ActionImport Name="BindApplication" Action="uim.kyma.BindApplication"/>
+        <ActionImport Name="UnbindApplication" Action="uim.kyma.UnbindApplication"/>
+        <ActionImport Name="Reconcile" Action="uim.kyma.Reconcile"/>
+      </EntityContainer>
+      <Annotations Target="uim.kyma.Environment/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/subaccountId"><Annotation Term="Common.Label" String="Subaccount ID"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/clusterId"><Annotation Term="Common.Label" String="Cluster ID"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/plan"><Annotation Term="Common.Label" String="Plan"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/kubernetesVersion"><Annotation Term="Common.Label" String="Kubernetes Version"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/machineType"><Annotation Term="Common.Label" String="Machine Type"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/autoScalerMin"><Annotation Term="Common.Label" String="Auto Scaler Min"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/autoScalerMax"><Annotation Term="Common.Label" String="Auto Scaler Max"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/oidcIssuerUrl"><Annotation Term="Common.Label" String="OIDC Issuer URL"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/oidcClientId"><Annotation Term="Common.Label" String="OIDC Client ID"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/oidcGroupsClaim"><Annotation Term="Common.Label" String="OIDC Groups Claim"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/oidcUsernameClaim"><Annotation Term="Common.Label" String="OIDC Username Claim"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/shootDomain"><Annotation Term="Common.Label" String="Shoot Domain"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/kubeApiServerUrl"><Annotation Term="Common.Label" String="Kube API Server URL"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/administrators"><Annotation Term="Common.Label" String="Administrators"/></Annotations>
+      <Annotations Target="uim.kyma.Environment/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/Environments">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.Namespace/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/environmentId"><Annotation Term="Common.Label" String="Environment ID"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/cpuRequest"><Annotation Term="Common.Label" String="CPU Request"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/cpuLimit"><Annotation Term="Common.Label" String="CPU Limit"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/memoryRequest"><Annotation Term="Common.Label" String="Memory Request"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/memoryLimit"><Annotation Term="Common.Label" String="Memory Limit"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/podLimit"><Annotation Term="Common.Label" String="Pod Limit"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/quotaEnforcement"><Annotation Term="Common.Label" String="Quota Enforcement"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/istioInjection"><Annotation Term="Common.Label" String="Istio Injection"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.kyma.Namespace/annotations"><Annotation Term="Common.Label" String="Annotations"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/Namespaces">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.Function/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.Function/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.Function/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.Function/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.Function/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.Function/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.Function/environmentId"><Annotation Term="Common.Label" String="Environment ID"/></Annotations>
+      <Annotations Target="uim.kyma.Function/namespaceId"><Annotation Term="Common.Label" String="Namespace ID"/></Annotations>
+      <Annotations Target="uim.kyma.Function/namespaceName"><Annotation Term="Common.Label" String="Namespace Name"/></Annotations>
+      <Annotations Target="uim.kyma.Function/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.Function/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.Function/runtime"><Annotation Term="Common.Label" String="Runtime"/></Annotations>
+      <Annotations Target="uim.kyma.Function/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.Function/sourceCode"><Annotation Term="Common.Label" String="Source Code"/></Annotations>
+      <Annotations Target="uim.kyma.Function/handler"><Annotation Term="Common.Label" String="Handler"/></Annotations>
+      <Annotations Target="uim.kyma.Function/dependencies"><Annotation Term="Common.Label" String="Dependencies"/></Annotations>
+      <Annotations Target="uim.kyma.Function/scalingType"><Annotation Term="Common.Label" String="Scaling Type"/></Annotations>
+      <Annotations Target="uim.kyma.Function/minReplicas"><Annotation Term="Common.Label" String="Min Replicas"/></Annotations>
+      <Annotations Target="uim.kyma.Function/maxReplicas"><Annotation Term="Common.Label" String="Max Replicas"/></Annotations>
+      <Annotations Target="uim.kyma.Function/cpuRequest"><Annotation Term="Common.Label" String="CPU Request"/></Annotations>
+      <Annotations Target="uim.kyma.Function/cpuLimit"><Annotation Term="Common.Label" String="CPU Limit"/></Annotations>
+      <Annotations Target="uim.kyma.Function/memoryRequest"><Annotation Term="Common.Label" String="Memory Request"/></Annotations>
+      <Annotations Target="uim.kyma.Function/memoryLimit"><Annotation Term="Common.Label" String="Memory Limit"/></Annotations>
+      <Annotations Target="uim.kyma.Function/envVars"><Annotation Term="Common.Label" String="Env Vars"/></Annotations>
+      <Annotations Target="uim.kyma.Function/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.kyma.Function/timeoutSeconds"><Annotation Term="Common.Label" String="Timeout Seconds"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/Functions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.ApiRule/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/environmentId"><Annotation Term="Common.Label" String="Environment ID"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/namespaceId"><Annotation Term="Common.Label" String="Namespace ID"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/namespaceName"><Annotation Term="Common.Label" String="Namespace Name"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/serviceName"><Annotation Term="Common.Label" String="Service Name"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/servicePort"><Annotation Term="Common.Label" String="Service Port"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/gateway"><Annotation Term="Common.Label" String="Gateway"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/host"><Annotation Term="Common.Label" String="Host"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/rules"><Annotation Term="Common.Label" String="Rules"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/corsEnabled"><Annotation Term="Common.Label" String="CORS Enabled"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/corsAllowOrigins"><Annotation Term="Common.Label" String="CORS Allow Origins"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/corsAllowMethods"><Annotation Term="Common.Label" String="CORS Allow Methods"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/corsAllowHeaders"><Annotation Term="Common.Label" String="CORS Allow Headers"/></Annotations>
+      <Annotations Target="uim.kyma.ApiRule/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/ApiRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/environmentId"><Annotation Term="Common.Label" String="Environment ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/namespaceId"><Annotation Term="Common.Label" String="Namespace ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/namespaceName"><Annotation Term="Common.Label" String="Namespace Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/serviceOfferingName"><Annotation Term="Common.Label" String="Service Offering Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/servicePlanName"><Annotation Term="Common.Label" String="Service Plan Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/externalName"><Annotation Term="Common.Label" String="External Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/parametersJson"><Annotation Term="Common.Label" String="Parameters JSON"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceInstance/bindingCount"><Annotation Term="Common.Label" String="Binding Count"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/ServiceInstances">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/environmentId"><Annotation Term="Common.Label" String="Environment ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/namespaceId"><Annotation Term="Common.Label" String="Namespace ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/namespaceName"><Annotation Term="Common.Label" String="Namespace Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/serviceInstanceId"><Annotation Term="Common.Label" String="Service Instance ID"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/serviceInstanceName"><Annotation Term="Common.Label" String="Service Instance Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/secretName"><Annotation Term="Common.Label" String="Secret Name"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/credentialKeys"><Annotation Term="Common.Label" String="Credential Keys"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/parametersJson"><Annotation Term="Common.Label" String="Parameters JSON"/></Annotations>
+      <Annotations Target="uim.kyma.ServiceBinding/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/ServiceBindings">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/environmentId"><Annotation Term="Common.Label" String="Environment ID"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/namespaceId"><Annotation Term="Common.Label" String="Namespace ID"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/namespaceName"><Annotation Term="Common.Label" String="Namespace Name"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/source"><Annotation Term="Common.Label" String="Source"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/eventTypes"><Annotation Term="Common.Label" String="Event Types"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/typeEncoding"><Annotation Term="Common.Label" String="Type Encoding"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/sinkUrl"><Annotation Term="Common.Label" String="Sink URL"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/sinkServiceName"><Annotation Term="Common.Label" String="Sink Service Name"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/sinkServicePort"><Annotation Term="Common.Label" String="Sink Service Port"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/maxInFlightMessages"><Annotation Term="Common.Label" String="Max In Flight Messages"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/filterAttributes"><Annotation Term="Common.Label" String="Filter Attributes"/></Annotations>
+      <Annotations Target="uim.kyma.EventSubscription/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/EventSubscriptions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.Module/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.Module/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.Module/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.Module/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.Module/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.Module/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.Module/environmentId"><Annotation Term="Common.Label" String="Environment ID"/></Annotations>
+      <Annotations Target="uim.kyma.Module/moduleType"><Annotation Term="Common.Label" String="Module Type"/></Annotations>
+      <Annotations Target="uim.kyma.Module/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.Module/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.Module/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.Module/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.kyma.Module/channel"><Annotation Term="Common.Label" String="Channel"/></Annotations>
+      <Annotations Target="uim.kyma.Module/customResourcePolicy"><Annotation Term="Common.Label" String="Custom Resource Policy"/></Annotations>
+      <Annotations Target="uim.kyma.Module/configurationJson"><Annotation Term="Common.Label" String="Configuration JSON"/></Annotations>
+      <Annotations Target="uim.kyma.Module/requiredModules"><Annotation Term="Common.Label" String="Required Modules"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/Modules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.Application/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.Application/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.kyma.Application/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.kyma.Application/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.kyma.Application/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.kyma.Application/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.kyma.Application/environmentId"><Annotation Term="Common.Label" String="Environment ID"/></Annotations>
+      <Annotations Target="uim.kyma.Application/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.kyma.Application/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.kyma.Application/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.kyma.Application/registrationType"><Annotation Term="Common.Label" String="Registration Type"/></Annotations>
+      <Annotations Target="uim.kyma.Application/connectorUrl"><Annotation Term="Common.Label" String="Connector URL"/></Annotations>
+      <Annotations Target="uim.kyma.Application/accessLabel"><Annotation Term="Common.Label" String="Access Label"/></Annotations>
+      <Annotations Target="uim.kyma.Application/apis"><Annotation Term="Common.Label" String="Apis"/></Annotations>
+      <Annotations Target="uim.kyma.Application/events"><Annotation Term="Common.Label" String="Events"/></Annotations>
+      <Annotations Target="uim.kyma.Application/boundNamespaces"><Annotation Term="Common.Label" String="Bound Namespaces"/></Annotations>
+      <Annotations Target="uim.kyma.Application/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.kyma.KymaService/Applications">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.kyma.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/environments"><Annotation Term="Common.Label" String="Environments"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/environmentsRunning"><Annotation Term="Common.Label" String="Environments Running"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/namespaces"><Annotation Term="Common.Label" String="Namespaces"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/functions"><Annotation Term="Common.Label" String="Functions"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/functionsRunning"><Annotation Term="Common.Label" String="Functions Running"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/functionsFailed"><Annotation Term="Common.Label" String="Functions Failed"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/apiRules"><Annotation Term="Common.Label" String="API Rules"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/serviceInstances"><Annotation Term="Common.Label" String="Service Instances"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/serviceBindings"><Annotation Term="Common.Label" String="Service Bindings"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/subscriptions"><Annotation Term="Common.Label" String="Subscriptions"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/subscriptionsPaused"><Annotation Term="Common.Label" String="Subscriptions Paused"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/modulesEnabled"><Annotation Term="Common.Label" String="Modules Enabled"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/applications"><Annotation Term="Common.Label" String="Applications"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/applicationsConnected"><Annotation Term="Common.Label" String="Applications Connected"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/pendingReconciliation"><Annotation Term="Common.Label" String="Pending Reconciliation"/></Annotations>
+      <Annotations Target="uim.kyma.Statistic/nextExpiryAt"><Annotation Term="Common.Label" String="Next Expiry At"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
