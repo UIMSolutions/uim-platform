@@ -1,0 +1,24 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.events.domain.enumerations.channel;
+
+import uim.platform.events;
+
+mixin(ShowModule!());
+
+@safe:
+
+enum EventChannelStatus : string {
+  active = "active",
+  inactive = "inactive",
+  deprecated_ = "deprecated"
+}
+
+/// topic: publish/subscribe; queue: point-to-point.
+enum EventChannelType : string {
+  topic = "topic",
+  queue = "queue"
+}
