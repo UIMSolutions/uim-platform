@@ -1,0 +1,25 @@
+{
+  "xsappname": "uim-connectivity",
+  "tenant-mode": "dedicated",
+  "description": "UIM Connectivity service",
+  "scopes": [
+    { "name": "$XSAPPNAME.ConnectivityViewer", "description": "Read destinations, Cloud Connectors, channels, access rules, certificates and the event log" },
+    { "name": "$XSAPPNAME.ConnectivityOperator", "description": "Check destinations, run health and access checks, open/close channels, send heartbeats" },
+    { "name": "$XSAPPNAME.ConnectivityAdmin", "description": "Maintain destinations, register Cloud Connectors, manage access rules and certificates" }
+  ],
+  "role-templates": [
+    { "name": "ConnectivityViewer", "description": "Connectivity viewer", "scope-references": ["$XSAPPNAME.ConnectivityViewer"] },
+    { "name": "ConnectivityOperator", "description": "Connectivity operator",
+      "scope-references": ["$XSAPPNAME.ConnectivityOperator", "$XSAPPNAME.ConnectivityViewer"] },
+    { "name": "ConnectivityAdmin", "description": "Connectivity administrator",
+      "scope-references": ["$XSAPPNAME.ConnectivityAdmin", "$XSAPPNAME.ConnectivityOperator", "$XSAPPNAME.ConnectivityViewer"] }
+  ],
+  "role-collections": [
+    { "name": "UIM Connectivity Viewer", "role-template-references": ["$XSAPPNAME.ConnectivityViewer"] },
+    { "name": "UIM Connectivity Operator", "role-template-references": ["$XSAPPNAME.ConnectivityOperator"] },
+    { "name": "UIM Connectivity Administrator", "role-template-references": ["$XSAPPNAME.ConnectivityAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

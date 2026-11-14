@@ -1,0 +1,39 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/connectivity/(.*)$",
+      "target": "/odata/v4/connectivity/$1",
+      "destination": "connectivity-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.ConnectivityViewer", "$XSAPPNAME.ConnectivityOperator", "$XSAPPNAME.ConnectivityAdmin"],
+        "default": ["$XSAPPNAME.ConnectivityOperator", "$XSAPPNAME.ConnectivityAdmin"]
+      }
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "connectivity-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.ConnectivityViewer", "$XSAPPNAME.ConnectivityOperator", "$XSAPPNAME.ConnectivityAdmin"],
+        "default": ["$XSAPPNAME.ConnectivityOperator", "$XSAPPNAME.ConnectivityAdmin"]
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.ConnectivityViewer", "$XSAPPNAME.ConnectivityOperator", "$XSAPPNAME.ConnectivityAdmin"]
+    }
+  ]
+}
