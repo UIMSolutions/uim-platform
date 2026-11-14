@@ -1,0 +1,219 @@
+[
+  {
+    "iconUrl": "",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "bc79abef-53a4-49bc-a6d9-7a118f58b1b2",
+    "requiredExtensions": [
+      "sap.fiori-tools"
+    ],
+    "parameters": [
+      {
+        "key": "floorplan",
+        "value": "ListReportObjectPage"
+      },
+      {
+        "key": "odataVersion",
+        "value": "4"
+      }
+    ],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "fiori-list-report",
+    "title": "SAP Fiori Elements List Report",
+    "category": "sapFiori",
+    "description": "Generates a SAP Fiori Elements List Report project",
+    "targetProjectType": "sapFioriElements",
+    "version": "1.0.0",
+    "tenantId": "default",
+    "scaffoldFiles": [
+      "webapp/manifest.json",
+      "webapp/Component.js",
+      "webapp/i18n/i18n.properties",
+      "ui5.yaml",
+      "package.json"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "iconUrl": "",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "bc9436ed-02b6-430d-922f-bf3a340e9e9d",
+    "requiredExtensions": [
+      "sap.workflow-tools"
+    ],
+    "parameters": [],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "workflow-module",
+    "title": "Workflow Module",
+    "category": "sapWorkflow",
+    "description": "Generates a Workflow Module project",
+    "targetProjectType": "workflow",
+    "version": "1.0.0",
+    "tenantId": "default",
+    "scaffoldFiles": [
+      "workflows/approval.workflow",
+      "mta.yaml"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "iconUrl": "",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "d3cf4f3e-a156-40e6-8732-1004cb4fe5dd",
+    "requiredExtensions": [
+      "sap.mdk-tools"
+    ],
+    "parameters": [],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "mdk-app",
+    "title": "MDK Application",
+    "category": "sapMdk",
+    "description": "Generates a MDK Application project",
+    "targetProjectType": "mdk",
+    "version": "1.0.0",
+    "tenantId": "default",
+    "scaffoldFiles": [
+      "Application.app",
+      "Pages/Main.page",
+      "mta.yaml"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "iconUrl": "",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "4c644865-321d-4219-9299-a1040832c1d3",
+    "requiredExtensions": [
+      "sap.ui5-language"
+    ],
+    "parameters": [],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "fiori-freestyle",
+    "title": "SAPUI5 Freestyle Application",
+    "category": "sapFiori",
+    "description": "Generates a SAPUI5 Freestyle Application project",
+    "targetProjectType": "sapUi5",
+    "version": "1.0.0",
+    "tenantId": "default",
+    "scaffoldFiles": [
+      "webapp/manifest.json",
+      "webapp/Component.js",
+      "webapp/view/Main.view.xml",
+      "webapp/controller/Main.controller.js",
+      "ui5.yaml",
+      "package.json"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "iconUrl": "",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "b00f274d-72ab-4ab9-8dd3-15a67e57e408",
+    "requiredExtensions": [
+      "sap.hana-tools"
+    ],
+    "parameters": [],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "hana-database",
+    "title": "SAP HANA Database Project",
+    "category": "sapHana",
+    "description": "Generates a SAP HANA Database Project project",
+    "targetProjectType": "hanaNative",
+    "version": "1.0.0",
+    "tenantId": "default",
+    "scaffoldFiles": [
+      "db/src/.hdiconfig",
+      "db/package.json",
+      "mta.yaml"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "iconUrl": "",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "6d089bd7-35e6-4ca4-bb54-8098b15f7e5d",
+    "requiredExtensions": [
+      "sap.cap-tools",
+      "sap.java-tools"
+    ],
+    "parameters": [
+      {
+        "key": "runtime",
+        "value": "java"
+      }
+    ],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "cap-java-project",
+    "title": "CAP Project (Java)",
+    "category": "sapCap",
+    "description": "Generates a CAP Project (Java) project",
+    "targetProjectType": "capJava",
+    "version": "1.0.0",
+    "tenantId": "default",
+    "scaffoldFiles": [
+      "pom.xml",
+      "db/schema.cds",
+      "srv/service.cds",
+      "srv/src/main/java/Application.java"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "iconUrl": "",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "98d1260d-6dea-4c55-b78f-0210738a2934",
+    "requiredExtensions": [
+      "sap.cap-tools"
+    ],
+    "parameters": [
+      {
+        "key": "runtime",
+        "value": "nodejs"
+      }
+    ],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "cap-project",
+    "title": "CAP Project (Node.js)",
+    "category": "sapCap",
+    "description": "Generates a CAP Project (Node.js) project",
+    "targetProjectType": "capNodeJs",
+    "version": "1.0.0",
+    "tenantId": "default",
+    "scaffoldFiles": [
+      "package.json",
+      "db/schema.cds",
+      "srv/service.cds",
+      ".cdsrc.json"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "iconUrl": "",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "9edfd4c8-12fa-4c12-ae70-1b7d3575ed21",
+    "requiredExtensions": [
+      "sap.mta-tools"
+    ],
+    "parameters": [],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "basic-mta",
+    "title": "Basic Multitarget Application",
+    "category": "general",
+    "description": "Generates a Basic Multitarget Application project",
+    "targetProjectType": "multitarget",
+    "version": "1.0.0",
+    "tenantId": "default",
+    "scaffoldFiles": [
+      "mta.yaml",
+      "README.md"
+    ],
+    "updatedBy": "system"
+  }
+]

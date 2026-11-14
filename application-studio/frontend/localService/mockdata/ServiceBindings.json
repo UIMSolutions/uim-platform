@@ -1,0 +1,24 @@
+[
+  {
+    "statusMessage": "Connected to https://services.odata.org/V4/Northwind/Northwind.svc/",
+    "devSpaceName": "FioriDev",
+    "updatedAt": "2026-11-14T07:26:50Z",
+    "id": "17478cdf-7b57-4776-b01e-6219271e7846",
+    "providerType": "externalOData",
+    "status": "connected",
+    "createdBy": "",
+    "createdAt": "2026-11-14T07:26:49Z",
+    "name": "Northwind",
+    "user": "",
+    "authType": "noAuthentication",
+    "servicePath": "/V4/Northwind/Northwind.svc/",
+    "systemAlias": "",
+    "credentials": "",
+    "serviceUrl": "https://services.odata.org",
+    "connectedAt": "2026-11-14T07:26:50Z",
+    "description": "",
+    "tenantId": "default",
+    "devSpaceId": "a17b1244-8d48-44b1-b413-113736aad142",
+    "updatedBy": ""
+  }
+]

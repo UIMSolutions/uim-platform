@@ -1,0 +1,154 @@
+[
+  {
+    "runtimeStack": "Node.js 20",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "dfd4bd88-5458-4b79-addd-9381fb141f5c",
+    "supportedProjectTypes": [
+      "mdk",
+      "multitarget",
+      "basic"
+    ],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "SAP Mobile Application",
+    "category": "predefined",
+    "predefinedExtensions": [
+      "sap.basic-tools",
+      "sap.mdk-tools",
+      "sap.mta-tools",
+      "sap.cf-tools"
+    ],
+    "description": "Develop MDK mobile applications",
+    "tenantId": "default",
+    "iconUrl": "",
+    "updatedBy": "system"
+  },
+  {
+    "runtimeStack": "Node.js 20, Java 21",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "3e0438e4-dc5e-412f-987c-96c15faea3a3",
+    "supportedProjectTypes": [
+      "capNodeJs",
+      "capJava",
+      "sapFiori",
+      "sapFioriElements",
+      "sapUi5",
+      "multitarget",
+      "sideBySideExtension",
+      "basic"
+    ],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "Full-Stack Cloud Application",
+    "category": "predefined",
+    "predefinedExtensions": [
+      "sap.basic-tools",
+      "sap.cap-tools",
+      "sap.cds-language",
+      "sap.fiori-tools",
+      "sap.ui5-language",
+      "sap.service-center",
+      "sap.java-tools",
+      "sap.mta-tools",
+      "sap.cf-tools"
+    ],
+    "description": "Develop CAP services with SAP Fiori UIs",
+    "tenantId": "default",
+    "iconUrl": "",
+    "updatedBy": "system"
+  },
+  {
+    "runtimeStack": "Node.js 20",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "6c4ded38-c06c-4602-be6c-89d9ddc759db",
+    "supportedProjectTypes": [
+      "sapFiori",
+      "sapFioriElements",
+      "sapUi5",
+      "multitarget",
+      "basic"
+    ],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "SAP Fiori",
+    "category": "predefined",
+    "predefinedExtensions": [
+      "sap.basic-tools",
+      "sap.fiori-tools",
+      "sap.ui5-language",
+      "sap.service-center",
+      "sap.mta-tools",
+      "sap.cf-tools"
+    ],
+    "description": "Develop SAP Fiori and SAPUI5 applications",
+    "tenantId": "default",
+    "iconUrl": "",
+    "updatedBy": "system"
+  },
+  {
+    "runtimeStack": "Node.js 20",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "5d5311b4-0926-485c-804c-2680299807bb",
+    "supportedProjectTypes": [
+      "workflow",
+      "multitarget",
+      "basic"
+    ],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "SAP Workflow",
+    "category": "predefined",
+    "predefinedExtensions": [
+      "sap.basic-tools",
+      "sap.workflow-tools",
+      "sap.mta-tools",
+      "sap.cf-tools"
+    ],
+    "description": "Develop workflow modules",
+    "tenantId": "default",
+    "iconUrl": "",
+    "updatedBy": "system"
+  },
+  {
+    "runtimeStack": "Node.js 20, HANA client",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "5584861d-e775-4761-a339-70c6bc6f21e8",
+    "supportedProjectTypes": [
+      "hanaNative",
+      "multitarget",
+      "basic"
+    ],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "SAP HANA Native Application",
+    "category": "predefined",
+    "predefinedExtensions": [
+      "sap.basic-tools",
+      "sap.hana-tools",
+      "sap.cds-language",
+      "sap.mta-tools",
+      "sap.cf-tools"
+    ],
+    "description": "Develop SAP HANA database artifacts",
+    "tenantId": "default",
+    "iconUrl": "",
+    "updatedBy": "system"
+  },
+  {
+    "runtimeStack": "Node.js 20",
+    "updatedAt": "2026-11-14T07:21:36Z",
+    "id": "449931d9-4c66-4a34-8a08-766ae6092c20",
+    "supportedProjectTypes": [],
+    "createdBy": "system",
+    "createdAt": "2026-11-14T07:21:36Z",
+    "name": "Basic",
+    "category": "predefined",
+    "predefinedExtensions": [
+      "sap.basic-tools"
+    ],
+    "description": "Minimal dev space with git and a terminal",
+    "tenantId": "default",
+    "iconUrl": "",
+    "updatedBy": "system"
+  }
+]

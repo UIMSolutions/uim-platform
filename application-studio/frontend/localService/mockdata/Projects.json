@@ -1,0 +1,57 @@
+[
+  {
+    "statusMessage": "",
+    "devSpaceName": "BookshopDev",
+    "gitBranch": "main",
+    "updatedAt": "2026-11-14T07:26:49Z",
+    "id": "263743ae-41f5-4935-8046-b66ba92c07d6",
+    "status": "active",
+    "createdBy": "",
+    "createdAt": "2026-11-14T07:26:49Z",
+    "name": "bookshop",
+    "namespace": "com.acme.bookshop",
+    "templateId": "98d1260d-6dea-4c55-b78f-0210738a2934",
+    "files": [
+      "package.json",
+      "db/schema.cds",
+      "srv/service.cds",
+      ".cdsrc.json"
+    ],
+    "rootPath": "/home/user/projects/bookshop",
+    "gitRepositoryUrl": "",
+    "description": "",
+    "projectType": "capNodeJs",
+    "templateName": "cap-project",
+    "tenantId": "default",
+    "devSpaceId": "5f518028-63a7-4f9b-9323-c2d92df87371",
+    "updatedBy": ""
+  },
+  {
+    "statusMessage": "",
+    "devSpaceName": "FioriDev",
+    "gitBranch": "main",
+    "updatedAt": "2026-11-14T07:26:55Z",
+    "id": "ab87ba11-324b-45e9-b690-e0d3a4dbe194",
+    "status": "active",
+    "createdBy": "",
+    "createdAt": "2026-11-14T07:21:41Z",
+    "name": "travel-ui",
+    "namespace": "",
+    "templateId": "bc79abef-53a4-49bc-a6d9-7a118f58b1b2",
+    "files": [
+      "webapp/manifest.json",
+      "webapp/Component.js",
+      "webapp/i18n/i18n.properties",
+      "ui5.yaml",
+      "package.json"
+    ],
+    "rootPath": "/home/user/projects/travel-ui",
+    "gitRepositoryUrl": "",
+    "description": "",
+    "projectType": "sapFioriElements",
+    "templateName": "fiori-list-report",
+    "tenantId": "default",
+    "devSpaceId": "a17b1244-8d48-44b1-b413-113736aad142",
+    "updatedBy": ""
+  }
+]

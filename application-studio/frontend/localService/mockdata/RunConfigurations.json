@@ -1,0 +1,59 @@
+[
+  {
+    "statusMessage": "",
+    "status": "idle",
+    "runCount": 0,
+    "environment": [],
+    "updatedAt": "2026-11-14T07:26:52Z",
+    "id": "78fee6b5-4832-4625-b72b-72acb307a59e",
+    "mode": "run",
+    "debugPort": 0,
+    "arguments": [],
+    "serviceBindings": [],
+    "createdBy": "",
+    "createdAt": "2026-11-14T07:26:52Z",
+    "name": "cds watch",
+    "url": "",
+    "projectId": "263743ae-41f5-4935-8046-b66ba92c07d6",
+    "port": 4004,
+    "lastRunAt": null,
+    "description": "",
+    "projectName": "bookshop",
+    "entryPoint": "cds watch",
+    "tenantId": "default",
+    "devSpaceId": "5f518028-63a7-4f9b-9323-c2d92df87371",
+    "updatedBy": ""
+  },
+  {
+    "statusMessage": "",
+    "status": "running",
+    "runCount": 1,
+    "environment": [
+      {
+        "key": "NODE_ENV",
+        "value": "development"
+      }
+    ],
+    "updatedAt": "2026-11-14T07:26:52Z",
+    "id": "8d83f341-40c2-45e8-bdac-a58a3511ea5d",
+    "mode": "run",
+    "debugPort": 0,
+    "arguments": [],
+    "serviceBindings": [
+      "Northwind"
+    ],
+    "createdBy": "",
+    "createdAt": "2026-11-14T07:26:52Z",
+    "name": "preview",
+    "url": "https://port8080-workspaces-ws-a17b1244.eu10.applicationstudio.cloud.sap",
+    "projectId": "ab87ba11-324b-45e9-b690-e0d3a4dbe194",
+    "port": 8080,
+    "lastRunAt": "2026-11-14T07:26:52Z",
+    "description": "",
+    "projectName": "travel-ui",
+    "entryPoint": "npm start",
+    "tenantId": "default",
+    "devSpaceId": "a17b1244-8d48-44b1-b413-113736aad142",
+    "updatedBy": ""
+  }
+]

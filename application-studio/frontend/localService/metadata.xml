@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.studio" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="DevSpaceType">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="predefinedExtensions" Type="Collection(Edm.String)"/>
+        <Property Name="supportedProjectTypes" Type="Collection(Edm.String)"/>
+        <Property Name="runtimeStack" Type="Edm.String"/>
+        <Property Name="iconUrl" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Extension">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="scope" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.String"/>
+        <Property Name="publisher" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="dependencies" Type="Collection(Edm.String)"/>
+        <Property Name="capabilities" Type="Collection(Edm.String)"/>
+        <Property Name="iconUrl" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ProjectTemplate">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="targetProjectType" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.String"/>
+        <Property Name="requiredExtensions" Type="Collection(Edm.String)"/>
+        <Property Name="scaffoldFiles" Type="Collection(Edm.String)"/>
+        <Property Name="parameters" Type="Collection(uim.studio.KeyValue)"/>
+        <Property Name="iconUrl" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DevSpace">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="devSpaceTypeId" Type="Edm.String"/>
+        <Property Name="devSpaceTypeName" Type="Edm.String"/>
+        <Property Name="plan" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="extensions" Type="Collection(Edm.String)"/>
+        <Property Name="hibernateAfterDays" Type="Edm.Int32"/>
+        <Property Name="memoryLimitMb" Type="Edm.Int32"/>
+        <Property Name="diskLimitGb" Type="Edm.Int32"/>
+        <Property Name="url" Type="Edm.String"/>
+        <Property Name="lastAccessedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Project">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="devSpaceId" Type="Edm.String"/>
+        <Property Name="devSpaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="projectType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="templateId" Type="Edm.String"/>
+        <Property Name="templateName" Type="Edm.String"/>
+        <Property Name="rootPath" Type="Edm.String"/>
+        <Property Name="namespace" Type="Edm.String"/>
+        <Property Name="gitRepositoryUrl" Type="Edm.String"/>
+        <Property Name="gitBranch" Type="Edm.String"/>
+        <Property Name="files" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="ServiceBinding">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="devSpaceId" Type="Edm.String"/>
+        <Property Name="devSpaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="providerType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="systemAlias" Type="Edm.String"/>
+        <Property Name="serviceUrl" Type="Edm.String"/>
+        <Property Name="servicePath" Type="Edm.String"/>
+        <Property Name="authType" Type="Edm.String"/>
+        <Property Name="user" Type="Edm.String"/>
+        <Property Name="credentials" Type="Edm.String"/>
+        <Property Name="connectedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="RunConfiguration">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="projectId" Type="Edm.String"/>
+        <Property Name="projectName" Type="Edm.String"/>
+        <Property Name="devSpaceId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="mode" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="entryPoint" Type="Edm.String"/>
+        <Property Name="arguments" Type="Collection(Edm.String)"/>
+        <Property Name="environment" Type="Collection(uim.studio.KeyValue)"/>
+        <Property Name="port" Type="Edm.Int32"/>
+        <Property Name="debugPort" Type="Edm.Int32"/>
+        <Property Name="serviceBindings" Type="Collection(Edm.String)"/>
+        <Property Name="url" Type="Edm.String"/>
+        <Property Name="lastRunAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="runCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="BuildConfiguration">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="projectId" Type="Edm.String"/>
+        <Property Name="projectName" Type="Edm.String"/>
+        <Property Name="devSpaceId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="deployTarget" Type="Edm.String"/>
+        <Property Name="buildCommand" Type="Edm.String"/>
+        <Property Name="deployCommand" Type="Edm.String"/>
+        <Property Name="mtaDescriptor" Type="Edm.String"/>
+        <Property Name="artifactPath" Type="Edm.String"/>
+        <Property Name="lastArtifact" Type="Edm.String"/>
+        <Property Name="history" Type="Collection(uim.studio.BuildRun)"/>
+        <Property Name="lastBuildAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="lastDeployAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="devSpaceTypes" Type="Edm.Int32"/>
+        <Property Name="extensions" Type="Edm.Int32"/>
+        <Property Name="extensionsDeprecated" Type="Edm.Int32"/>
+        <Property Name="projectTemplates" Type="Edm.Int32"/>
+        <Property Name="devSpaces" Type="Edm.Int32"/>
+        <Property Name="devSpacesRunning" Type="Edm.Int32"/>
+        <Property Name="devSpacesStopped" Type="Edm.Int32"/>
+        <Property Name="devSpacesHibernated" Type="Edm.Int32"/>
+        <Property Name="projects" Type="Edm.Int32"/>
+        <Property Name="projectsArchived" Type="Edm.Int32"/>
+        <Property Name="serviceBindings" Type="Edm.Int32"/>
+        <Property Name="bindingsConnected" Type="Edm.Int32"/>
+        <Property Name="runConfigurations" Type="Edm.Int32"/>
+        <Property Name="runsActive" Type="Edm.Int32"/>
+        <Property Name="buildConfigurations" Type="Edm.Int32"/>
+        <Property Name="buildsSucceeded" Type="Edm.Int32"/>
+        <Property Name="buildsFailed" Type="Edm.Int32"/>
+        <Property Name="deployments" Type="Edm.Int32"/>
+        <Property Name="pendingReconciliation" Type="Edm.Int32"/>
+        <Property Name="lastDeployAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <ComplexType Name="KeyValue">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="BuildRun">
+        <Property Name="runId" Type="Edm.String"/>
+        <Property Name="phase" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="finishedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="artifact" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ReconcileResult">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="examined" Type="Edm.Int32"/>
+        <Property Name="advanced" Type="Edm.Int32"/>
+        <Property Name="changes" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="created" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="items" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <Action Name="ActivateExtension" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.Extension"/>
+      </Action>
+      <Action Name="DeactivateExtension" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.Extension"/>
+      </Action>
+      <Action Name="DeprecateExtension" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.Extension"/>
+      </Action>
+      <Action Name="StartDevSpace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.DevSpace"/>
+      </Action>
+      <Action Name="StopDevSpace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.DevSpace"/>
+      </Action>
+      <Action Name="TouchDevSpace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.DevSpace"/>
+      </Action>
+      <Action Name="AddExtensionDevSpace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="extension" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.DevSpace"/>
+      </Action>
+      <Action Name="RemoveExtensionDevSpace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="extension" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.DevSpace"/>
+      </Action>
+      <Action Name="ArchiveProject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.Project"/>
+      </Action>
+      <Action Name="RestoreProject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.Project"/>
+      </Action>
+      <Action Name="ConnectServiceBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.ServiceBinding"/>
+      </Action>
+      <Action Name="DisconnectServiceBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.ServiceBinding"/>
+      </Action>
+      <Action Name="StartRunConfiguration" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.RunConfiguration"/>
+      </Action>
+      <Action Name="StopRunConfiguration" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.RunConfiguration"/>
+      </Action>
+      <Action Name="BuildBuildConfiguration" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.BuildConfiguration"/>
+      </Action>
+      <Action Name="DeployBuildConfiguration" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.BuildConfiguration"/>
+      </Action>
+      <Action Name="CancelBuildConfiguration" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.studio.BuildConfiguration"/>
+      </Action>
+      <Action Name="Reconcile" IsBound="false">
+        <ReturnType Type="uim.studio.ReconcileResult"/>
+      </Action>
+      <Action Name="SeedCatalog" IsBound="false">
+        <ReturnType Type="uim.studio.SeedResult"/>
+      </Action>
+      <EntityContainer Name="ApplicationStudioService">
+        <EntitySet Name="DevSpaceTypes" EntityType="uim.studio.DevSpaceType"/>
+        <EntitySet Name="Extensions" EntityType="uim.studio.Extension"/>
+        <EntitySet Name="ProjectTemplates" EntityType="uim.studio.ProjectTemplate"/>
+        <EntitySet Name="DevSpaces" EntityType="uim.studio.DevSpace"/>
+        <EntitySet Name="Projects" EntityType="uim.studio.Project"/>
+        <EntitySet Name="ServiceBindings" EntityType="uim.studio.ServiceBinding"/>
+        <EntitySet Name="RunConfigurations" EntityType="uim.studio.RunConfiguration"/>
+        <EntitySet Name="BuildConfigurations" EntityType="uim.studio.BuildConfiguration"/>
+        <Singleton Name="Statistics" Type="uim.studio.Statistic"/>
+        <ActionImport Name="ActivateExtension" Action="uim.studio.ActivateExtension"/>
+        <ActionImport Name="DeactivateExtension" Action="uim.studio.DeactivateExtension"/>
+        <ActionImport Name="DeprecateExtension" Action="uim.studio.DeprecateExtension"/>
+        <ActionImport Name="StartDevSpace" Action="uim.studio.StartDevSpace"/>
+        <ActionImport Name="StopDevSpace" Action="uim.studio.StopDevSpace"/>
+        <ActionImport Name="TouchDevSpace" Action="uim.studio.TouchDevSpace"/>
+        <ActionImport Name="AddExtensionDevSpace" Action="uim.studio.AddExtensionDevSpace"/>
+        <ActionImport Name="RemoveExtensionDevSpace" Action="uim.studio.RemoveExtensionDevSpace"/>
+        <ActionImport Name="ArchiveProject" Action="uim.studio.ArchiveProject"/>
+        <ActionImport Name="RestoreProject" Action="uim.studio.RestoreProject"/>
+        <ActionImport Name="ConnectServiceBinding" Action="uim.studio.ConnectServiceBinding"/>
+        <ActionImport Name="DisconnectServiceBinding" Action="uim.studio.DisconnectServiceBinding"/>
+        <ActionImport Name="StartRunConfiguration" Action="uim.studio.StartRunConfiguration"/>
+        <ActionImport Name="StopRunConfiguration" Action="uim.studio.StopRunConfiguration"/>
+        <ActionImport Name="BuildBuildConfiguration" Action="uim.studio.BuildBuildConfiguration"/>
+        <ActionImport Name="DeployBuildConfiguration" Action="uim.studio.DeployBuildConfiguration"/>
+        <ActionImport Name="CancelBuildConfiguration" Action="uim.studio.CancelBuildConfiguration"/>
+        <ActionImport Name="Reconcile" Action="uim.studio.Reconcile"/>
+        <ActionImport Name="SeedCatalog" Action="uim.studio.SeedCatalog"/>
+      </EntityContainer>
+      <Annotations Target="uim.studio.DevSpaceType/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/predefinedExtensions"><Annotation Term="Common.Label" String="Predefined Extensions"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/supportedProjectTypes"><Annotation Term="Common.Label" String="Supported Project Types"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/runtimeStack"><Annotation Term="Common.Label" String="Runtime Stack"/></Annotations>
+      <Annotations Target="uim.studio.DevSpaceType/iconUrl"><Annotation Term="Common.Label" String="Icon URL"/></Annotations>
+      <Annotations Target="uim.studio.ApplicationStudioService/DevSpaceTypes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.studio.Extension/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.Extension/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.studio.Extension/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.studio.Extension/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.studio.Extension/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.studio.Extension/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.studio.Extension/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.studio.Extension/displayName"><Annotation Term="Common.Label" String="Display Name"/></Annotations>
+      <Annotations Target="uim.studio.Extension/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.studio.Extension/scope"><Annotation Term="Common.Label" String="Scope"/></Annotations>
+      <Annotations Target="uim.studio.Extension/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.studio.Extension/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.studio.Extension/publisher"><Annotation Term="Common.Label" String="Publisher"/></Annotations>
+      <Annotations Target="uim.studio.Extension/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.studio.Extension/dependencies"><Annotation Term="Common.Label" String="Dependencies"/></Annotations>
+      <Annotations Target="uim.studio.Extension/capabilities"><Annotation Term="Common.Label" String="Capabilities"/></Annotations>
+      <Annotations Target="uim.studio.Extension/iconUrl"><Annotation Term="Common.Label" String="Icon URL"/></Annotations>
+      <Annotations Target="uim.studio.ApplicationStudioService/Extensions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/targetProjectType"><Annotation Term="Common.Label" String="Target Project Type"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/requiredExtensions"><Annotation Term="Common.Label" String="Required Extensions"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/scaffoldFiles"><Annotation Term="Common.Label" String="Scaffold Files"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/parameters"><Annotation Term="Common.Label" String="Parameters"/></Annotations>
+      <Annotations Target="uim.studio.ProjectTemplate/iconUrl"><Annotation Term="Common.Label" String="Icon URL"/></Annotations>
+      <Annotations Target="uim.studio.ApplicationStudioService/ProjectTemplates">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.studio.DevSpace/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/devSpaceTypeId"><Annotation Term="Common.Label" String="Dev Space Type ID"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/devSpaceTypeName"><Annotation Term="Common.Label" String="Dev Space Type Name"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/plan"><Annotation Term="Common.Label" String="Plan"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/owner"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/extensions"><Annotation Term="Common.Label" String="Extensions"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/hibernateAfterDays"><Annotation Term="Common.Label" String="Hibernate After Days"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/memoryLimitMb"><Annotation Term="Common.Label" String="Memory Limit Mb"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/diskLimitGb"><Annotation Term="Common.Label" String="Disk Limit Gb"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/url"><Annotation Term="Common.Label" String="URL"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/lastAccessedAt"><Annotation Term="Common.Label" String="Last Accessed At"/></Annotations>
+      <Annotations Target="uim.studio.DevSpace/startedAt"><Annotation Term="Common.Label" String="Started At"/></Annotations>
+      <Annotations Target="uim.studio.ApplicationStudioService/DevSpaces">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.studio.Project/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.Project/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.studio.Project/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.studio.Project/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.studio.Project/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.studio.Project/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.studio.Project/devSpaceId"><Annotation Term="Common.Label" String="Dev Space ID"/></Annotations>
+      <Annotations Target="uim.studio.Project/devSpaceName"><Annotation Term="Common.Label" String="Dev Space Name"/></Annotations>
+      <Annotations Target="uim.studio.Project/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.studio.Project/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.studio.Project/projectType"><Annotation Term="Common.Label" String="Project Type"/></Annotations>
+      <Annotations Target="uim.studio.Project/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.studio.Project/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.studio.Project/templateId"><Annotation Term="Common.Label" String="Template ID"/></Annotations>
+      <Annotations Target="uim.studio.Project/templateName"><Annotation Term="Common.Label" String="Template Name"/></Annotations>
+      <Annotations Target="uim.studio.Project/rootPath"><Annotation Term="Common.Label" String="Root Path"/></Annotations>
+      <Annotations Target="uim.studio.Project/namespace"><Annotation Term="Common.Label" String="Namespace"/></Annotations>
+      <Annotations Target="uim.studio.Project/gitRepositoryUrl"><Annotation Term="Common.Label" String="Git Repository URL"/></Annotations>
+      <Annotations Target="uim.studio.Project/gitBranch"><Annotation Term="Common.Label" String="Git Branch"/></Annotations>
+      <Annotations Target="uim.studio.Project/files"><Annotation Term="Common.Label" String="Files"/></Annotations>
+      <Annotations Target="uim.studio.ApplicationStudioService/Projects">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/devSpaceId"><Annotation Term="Common.Label" String="Dev Space ID"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/devSpaceName"><Annotation Term="Common.Label" String="Dev Space Name"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/providerType"><Annotation Term="Common.Label" String="Provider Type"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/systemAlias"><Annotation Term="Common.Label" String="System Alias"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/serviceUrl"><Annotation Term="Common.Label" String="Service URL"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/servicePath"><Annotation Term="Common.Label" String="Service Path"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/authType"><Annotation Term="Common.Label" String="Auth Type"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/user"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/credentials"><Annotation Term="Common.Label" String="Credentials"/></Annotations>
+      <Annotations Target="uim.studio.ServiceBinding/connectedAt"><Annotation Term="Common.Label" String="Connected At"/></Annotations>
+      <Annotations Target="uim.studio.ApplicationStudioService/ServiceBindings">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/projectId"><Annotation Term="Common.Label" String="Project ID"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/projectName"><Annotation Term="Common.Label" String="Project Name"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/devSpaceId"><Annotation Term="Common.Label" String="Dev Space ID"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/mode"><Annotation Term="Common.Label" String="Mode"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/entryPoint"><Annotation Term="Common.Label" String="Entry Point"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/arguments"><Annotation Term="Common.Label" String="Arguments"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/environment"><Annotation Term="Common.Label" String="Environment"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/port"><Annotation Term="Common.Label" String="Port"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/debugPort"><Annotation Term="Common.Label" String="Debug Port"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/serviceBindings"><Annotation Term="Common.Label" String="Service Bindings"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/url"><Annotation Term="Common.Label" String="URL"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/lastRunAt"><Annotation Term="Common.Label" String="Last Run At"/></Annotations>
+      <Annotations Target="uim.studio.RunConfiguration/runCount"><Annotation Term="Common.Label" String="Run Count"/></Annotations>
+      <Annotations Target="uim.studio.ApplicationStudioService/RunConfigurations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/projectId"><Annotation Term="Common.Label" String="Project ID"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/projectName"><Annotation Term="Common.Label" String="Project Name"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/devSpaceId"><Annotation Term="Common.Label" String="Dev Space ID"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/deployTarget"><Annotation Term="Common.Label" String="Deploy Target"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/buildCommand"><Annotation Term="Common.Label" String="Build Command"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/deployCommand"><Annotation Term="Common.Label" String="Deploy Command"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/mtaDescriptor"><Annotation Term="Common.Label" String="Mta Descriptor"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/artifactPath"><Annotation Term="Common.Label" String="Artifact Path"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/lastArtifact"><Annotation Term="Common.Label" String="Last Artifact"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/history"><Annotation Term="Common.Label" String="History"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/lastBuildAt"><Annotation Term="Common.Label" String="Last Build At"/></Annotations>
+      <Annotations Target="uim.studio.BuildConfiguration/lastDeployAt"><Annotation Term="Common.Label" String="Last Deploy At"/></Annotations>
+      <Annotations Target="uim.studio.ApplicationStudioService/BuildConfigurations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.studio.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/devSpaceTypes"><Annotation Term="Common.Label" String="Dev Space Types"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/extensions"><Annotation Term="Common.Label" String="Extensions"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/extensionsDeprecated"><Annotation Term="Common.Label" String="Extensions Deprecated"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/projectTemplates"><Annotation Term="Common.Label" String="Project Templates"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/devSpaces"><Annotation Term="Common.Label" String="Dev Spaces"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/devSpacesRunning"><Annotation Term="Common.Label" String="Dev Spaces Running"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/devSpacesStopped"><Annotation Term="Common.Label" String="Dev Spaces Stopped"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/devSpacesHibernated"><Annotation Term="Common.Label" String="Dev Spaces Hibernated"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/projects"><Annotation Term="Common.Label" String="Projects"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/projectsArchived"><Annotation Term="Common.Label" String="Projects Archived"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/serviceBindings"><Annotation Term="Common.Label" String="Service Bindings"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/bindingsConnected"><Annotation Term="Common.Label" String="Bindings Connected"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/runConfigurations"><Annotation Term="Common.Label" String="Run Configurations"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/runsActive"><Annotation Term="Common.Label" String="Runs Active"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/buildConfigurations"><Annotation Term="Common.Label" String="Build Configurations"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/buildsSucceeded"><Annotation Term="Common.Label" String="Builds Succeeded"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/buildsFailed"><Annotation Term="Common.Label" String="Builds Failed"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/deployments"><Annotation Term="Common.Label" String="Deployments"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/pendingReconciliation"><Annotation Term="Common.Label" String="Pending Reconciliation"/></Annotations>
+      <Annotations Target="uim.studio.Statistic/lastDeployAt"><Annotation Term="Common.Label" String="Last Deploy At"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

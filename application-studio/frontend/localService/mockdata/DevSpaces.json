@@ -1,0 +1,52 @@
+[
+  {
+    "statusMessage": "",
+    "status": "running",
+    "updatedAt": "2026-11-14T07:26:48Z",
+    "id": "5f518028-63a7-4f9b-9323-c2d92df87371",
+    "devSpaceTypeId": "3e0438e4-dc5e-412f-987c-96c15faea3a3",
+    "plan": "professional",
+    "owner": "john@example.com",
+    "lastAccessedAt": "2026-11-14T07:26:48Z",
+    "createdBy": "",
+    "createdAt": "2026-11-14T07:26:47Z",
+    "name": "BookshopDev",
+    "url": "https://5f518028-bookshopdev.eu10.applicationstudio.cloud.sap",
+    "region": "eu10",
+    "startedAt": "2026-11-14T07:26:48Z",
+    "diskLimitGb": 10,
+    "extensions": [
+      "sap.kyma-tools"
+    ],
+    "description": "",
+    "hibernateAfterDays": 7,
+    "memoryLimitMb": 8192,
+    "tenantId": "default",
+    "devSpaceTypeName": "Full-Stack Cloud Application",
+    "updatedBy": ""
+  },
+  {
+    "statusMessage": "",
+    "status": "running",
+    "updatedAt": "2026-11-14T07:26:48Z",
+    "id": "a17b1244-8d48-44b1-b413-113736aad142",
+    "devSpaceTypeId": "6c4ded38-c06c-4602-be6c-89d9ddc759db",
+    "plan": "standard",
+    "owner": "jane@example.com",
+    "lastAccessedAt": "2026-11-14T07:26:48Z",
+    "createdBy": "",
+    "createdAt": "2026-11-14T07:21:39Z",
+    "name": "FioriDev",
+    "url": "https://a17b1244-fioridev.eu10.applicationstudio.cloud.sap",
+    "region": "eu10",
+    "startedAt": "2026-11-14T07:26:48Z",
+    "diskLimitGb": 10,
+    "extensions": [],
+    "description": "",
+    "hibernateAfterDays": 7,
+    "memoryLimitMb": 4096,
+    "tenantId": "default",
+    "devSpaceTypeName": "SAP Fiori",
+    "updatedBy": ""
+  }
+]

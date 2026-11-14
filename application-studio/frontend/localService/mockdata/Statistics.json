@@ -1,0 +1,23 @@
+{
+  "buildsSucceeded": 1,
+  "serviceBindings": 1,
+  "projectsArchived": 0,
+  "projectTemplates": 8,
+  "extensionsDeprecated": 0,
+  "runsActive": 1,
+  "deployments": 1,
+  "buildsFailed": 0,
+  "runConfigurations": 2,
+  "devSpaces": 2,
+  "devSpacesHibernated": 0,
+  "devSpaceTypes": 6,
+  "bindingsConnected": 1,
+  "extensions": 15,
+  "lastDeployAt": "2026-11-14T07:26:55Z",
+  "devSpacesRunning": 2,
+  "projects": 2,
+  "pendingReconciliation": 0,
+  "buildConfigurations": 2,
+  "tenantId": "default",
+  "devSpacesStopped": 0
+}

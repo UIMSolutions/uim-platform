@@ -1,0 +1,173 @@
+<mvc:View
+  controllerName="uim.studio.controller.DevSpaceDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:uxap="sap.uxap"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="devSpacePage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:expandedHeading>
+          <Title text="{name}" wrapping="true"/>
+        </uxap:expandedHeading>
+        <uxap:snappedHeading>
+          <Title text="{name}"/>
+        </uxap:snappedHeading>
+        <uxap:expandedContent>
+          <Text text="{description}"/>
+        </uxap:expandedContent>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onClose"/>
+        </uxap:navigationActions>
+        <uxap:actions>
+          <Button text="{i18n>start}" press=".onDevSpaceAction('StartDevSpace', '')"
+            enabled="{= ${status} === 'stopped' || ${status} === 'hibernated' || ${status} === 'error' }"/>
+          <Button text="{i18n>stop}" press=".onDevSpaceAction('StopDevSpace', '')" enabled="{= ${status} === 'running' }"/>
+          <Button text="{i18n>open}" type="Emphasized" press=".onOpen"
+            enabled="{= ${status} === 'running' || ${status} === 'hibernated' }"/>
+          <Button text="{i18n>addExtension}" press=".onDevSpaceAction('AddExtensionDevSpace', 'extension')"
+            enabled="{= ${status} === 'stopped' || ${status} === 'hibernated' || ${status} === 'error' }"/>
+          <Button text="{i18n>removeExtension}" press=".onDevSpaceAction('RemoveExtensionDevSpace', 'extension')"
+            enabled="{= ${status} === 'stopped' || ${status} === 'hibernated' || ${status} === 'error' }"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <ObjectStatus title="{i18n>colStatus}" text="{path: 'status', formatter: '.formatter.enumText'}"
+        state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"
+        class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colType}" text="{devSpaceTypeName}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colPlan}" text="{path: 'plan', formatter: '.formatter.enumText'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colRegion}" text="{region}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>lblStatusMessage}" text="{statusMessage}" visible="{= !!${statusMessage} }"/>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionGeneral}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" editable="false">
+              <Label text="{i18n>colOwner}"/><Text text="{owner}"/>
+              <Label text="{i18n>colUrl}"/><Link text="{url}" href="{url}" target="_blank"/>
+              <Label text="{i18n>lblMemory}"/><Text text="{memoryLimitMb} MB"/>
+              <Label text="{i18n>lblDisk}"/><Text text="{diskLimitGb} GB"/>
+              <Label text="{i18n>lblHibernate}"/><Text text="{path: 'hibernateAfterDays', formatter: '.formatter.days'}"/>
+              <Label text="{i18n>lblStarted}"/>
+              <Text text="{path: 'startedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Label text="{i18n>lblLastAccess}"/>
+              <Text text="{path: 'lastAccessedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Label text="{i18n>colExtensions}"/>
+              <Text text="{path: 'extensions', targetType: 'any', formatter: '.formatter.joinList'}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabProjects}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="dsProjectTable" items="{path: '/Projects', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colTemplate}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{rootPath}"/>
+                    <Text text="{path: 'projectType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{templateName}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabBindings}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="dsBindingTable" items="{path: '/ServiceBindings', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colProvider}"/></Column>
+                <Column><Text text="{i18n>colTarget}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{path: 'providerType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{serviceUrl}{servicePath}{systemAlias}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabRuns}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="dsRunTable" items="{path: '/RunConfigurations', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colProject}"/></Column>
+                <Column><Text text="{i18n>colMode}"/></Column>
+                <Column><Text text="{i18n>colUrl}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{entryPoint}"/>
+                    <Text text="{projectName}"/>
+                    <Text text="{path: 'mode', formatter: '.formatter.enumText'}"/>
+                    <Link text="{url}" href="{url}" target="_blank"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabBuilds}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="dsBuildTable" items="{path: '/BuildConfigurations', parameters: {$orderby: 'name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colProject}"/></Column>
+                <Column><Text text="{i18n>colTarget}"/></Column>
+                <Column><Text text="{i18n>colHistory}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{buildCommand}"/>
+                    <Text text="{projectName}"/>
+                    <Text text="{path: 'deployTarget', formatter: '.formatter.enumText'}"/>
+                    <Text text="{path: 'history', targetType: 'any', mode: 'OneTime', formatter: '.formatter.history'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}" tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>
