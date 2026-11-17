@@ -1,0 +1,18 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.workzone.ports.services.seed;
+
+import uim.platform.workzone;
+
+mixin(ShowModule!());
+
+@safe:
+
+/// Installs the predefined content (roles, themes, page templates, tags) into a
+/// tenant. Idempotent: existing names are kept.
+interface IWorkzoneSeedService {
+  SeedReport seed(TenantId tenantId, UserId actor);
+}

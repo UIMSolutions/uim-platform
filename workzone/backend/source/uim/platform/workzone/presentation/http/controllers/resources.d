@@ -1,0 +1,201 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+/// REST driving adapter (JSON over HTTP) for every resource of the registry.
+///
+///   GET    /api/v1/<resource>[?<field>=<value>…]     → { "items": [...], "count": n }
+///   POST   /api/v1/<resource>                        → 201 created resource
+///   GET    /api/v1/<resource>/<id>            (<id> may also be a unique name)
+///   PATCH  /api/v1/<resource>/<id>   (PUT accepted)  partial update
+///   DELETE /api/v1/<resource>/<id>                   → 204
+///   POST   /api/v1/<resource>/<id>/<action>          e.g. /workspaces/<id>/add-member {"userId": "bob"}
+///   GET    /api/v1/statistics · POST /api/v1/housekeeping · POST /api/v1/seed · GET /api/v1/resources
+///
+/// Errors: { "error": { "code": "...", "message": "..." } } with 400/404/409/422/500.
+/// Tenant / user come from the XSUAA token or the X-Tenant-Id / X-User-Id headers.
+/// References (workspaceId, workpageId, siteId, cardId, appId, ...) accept an id or a unique name / title.
+module uim.platform.workzone.presentation.http.controllers.resources;
+
+import vibe.http.router : URLRouter;
+import vibe.http.server : HTTPServerRequest, HTTPServerResponse;
+import uim.platform.workzone;
+import uim.platform.workzone.presentation.resources;
+
+mixin(ShowModule!());
+
+@safe:
+
+class WorkzoneRestController {
+  protected ResourceRegistry registry;
+  protected string defaultTenant;
+  protected string prefix;
+
+  this(ResourceRegistry registry, string defaultTenant, string prefix = "/api/v1") {
+    this.registry = registry;
+    this.defaultTenant = defaultTenant;
+    this.prefix = prefix;
+  }
+
+  void registerRoutes(URLRouter router) {
+    router.get(prefix ~ "/resources", &handleCatalog);
+    router.get(prefix ~ "/statistics", (req, res) => guard(res, () {
+      writeJson(res, 200, registry.statistics(identityOf(req).tenantId));
+    }));
+    router.post(prefix ~ "/housekeeping", (req, res) => guard(res, () {
+      writeJson(res, 200, registry.housekeeping(identityOf(req).tenantId));
+    }));
+    router.post(prefix ~ "/seed", (req, res) => guard(res, () {
+      writeJson(res, 200, registry.seed(identityOf(req)));
+    }));
+    foreach (adapter; registry.adapters)
+      registerResource(router, adapter);
+  }
+
+  /// One function call per adapter, so each closure captures its own adapter.
+  protected void registerResource(URLRouter router, IResourceAdapter adapter) {
+    auto base = prefix ~ "/" ~ adapter.path;
+
+    router.get(base, (req, res) => guard(res, () {
+      string[string] filters;
+      foreach (key, value; req.query.byKeyValue)
+        if (!key.startsWith("$"))
+          filters[key] = value;
+      auto items = adapter.list(identityOf(req).tenantId, filters);
+      auto arr = Json.emptyArray;
+      foreach (i; items)
+        arr ~= i;
+      writeJson(res, 200, Json.emptyObject.set("items", arr).set("count", items.length));
+    }));
+
+    router.post(base, (req, res) => guard(res, () {
+      auto who = identityOf(req);
+      auto created = adapter.create(who, registry.withReferences(who.tenantId, body(req)));
+      res.headers["Location"] = base ~ "/" ~ created["id"].get!string;
+      writeJson(res, 201, created);
+    }));
+
+    router.get(base ~ "/:id", (req, res) => guard(res, () {
+      auto tenantId = identityOf(req).tenantId;
+      writeJson(res, 200, adapter.get(tenantId, idOf(req, adapter, tenantId)));
+    }));
+
+    auto updateHandler = (HTTPServerRequest req, HTTPServerResponse res) => guard(res, () {
+      auto who = identityOf(req);
+      writeJson(res, 200, adapter.update(who, idOf(req, adapter, who.tenantId), registry.withReferences(who.tenantId, body(req))));
+    });
+    router.patch(base ~ "/:id", updateHandler);
+    router.put(base ~ "/:id", updateHandler);
+
+    router.delete_(base ~ "/:id", (req, res) => guard(res, () {
+      auto who = identityOf(req);
+      adapter.remove(who, idOf(req, adapter, who.tenantId));
+      res.statusCode = 204;
+      res.writeVoidBody();
+    }));
+
+    router.post(base ~ "/:id/:action", (req, res) => guard(res, () {
+      auto params = req.contentType == "application/json" ? body(req) : Json.emptyObject;
+      auto who = identityOf(req);
+      writeJson(res, 200, adapter.invoke(who, idOf(req, adapter, who.tenantId), req.params["action"], params));
+    }));
+  }
+
+  /// GET /api/v1/resources — the catalogue (paths, fields, actions).
+  void handleCatalog(HTTPServerRequest req, HTTPServerResponse res) {
+    auto list = Json.emptyArray;
+    foreach (a; registry.adapters) {
+      auto fields = Json.emptyArray;
+      foreach (f; a.inputFields) {
+        auto j = Json.emptyObject;
+        j["name"] = f.name;
+        j["kind"] = enumText(f.kind);
+        j["label"] = f.label;
+        if (f.recordType.length)
+          j["recordType"] = f.recordType;
+        if (f.options.length) {
+          auto opts = Json.emptyArray;
+          foreach (o; f.options)
+            opts ~= Json(o);
+          j["options"] = opts;
+        }
+        fields ~= j;
+      }
+      auto actions = Json.emptyArray;
+      foreach (act; a.actions) {
+        auto parameters = Json.emptyArray;
+        foreach (param; act.parameters)
+          parameters ~= Json(param);
+        auto action = Json.emptyObject.set("name", act.name).set("label", act.label).set("odataAction", act.odataName);
+        action["parameters"] = parameters;
+        actions ~= action;
+      }
+      auto columns = Json.emptyArray;
+      foreach (c; a.columns)
+        columns ~= Json.emptyObject.set("header", c.header).set("field", c.field);
+      auto references = Json.emptyObject;
+      foreach (f; a.inputFields)
+        if (auto target = f.name in referenceFields)
+          if (auto ref_ = registry.byPath(*target))
+            references[f.name] = ref_.setName;
+      list ~= Json.emptyObject
+        .set("path", prefix ~ "/" ~ a.path)
+        .set("resource", a.path)
+        .set("title", a.title)
+        .set("odataEntitySet", a.setName)
+        .set("odataEntityType", a.typeName)
+        .set("parentField", a.parentField)
+        .set("inputFields", fields)
+        .set("columns", columns)
+        .set("references", references)
+        .set("actions", actions);
+    }
+    writeJson(res, 200, Json.emptyObject.set("items", list));
+  }
+
+  // ── helpers ────────────────────────────────────────────────────────────
+
+  /// The ":id" path parameter as an id — a unique name is accepted as well (404 if neither).
+  protected string idOf(HTTPServerRequest req, IResourceAdapter adapter, TenantId tenantId) {
+    return registry.resolve(adapter, tenantId, req.params["id"]);
+  }
+
+  protected RequestIdentity identityOf(HTTPServerRequest req) {
+    return resolveIdentity(req.headers.get("Authorization", ""), req.headers.get("X-Tenant-Id", ""),
+      req.headers.get("X-User-Id", ""), defaultTenant);
+  }
+
+  protected static Json body(HTTPServerRequest req) {
+    Json b;
+    try
+      b = req.json;
+    catch (Exception e)
+      throw new ResourceError(400, "InvalidPayload", "Request body is not valid JSON: " ~ e.msg);
+    if (b.type == Json.Type.undefined || b.type == Json.Type.null_)
+      return Json.emptyObject;
+    if (b.type != Json.Type.object)
+      throw new ResourceError(400, "InvalidPayload", "Request body must be a JSON object");
+    return b;
+  }
+
+  protected static void guard(HTTPServerResponse res, scope void delegate() @safe action) {
+    try
+      action();
+    catch (ResourceError e)
+      writeError(res, e.status, e.code, e.msg);
+    catch (Exception e) {
+      logError("workzone rest: %s", e.msg);
+      writeError(res, 500, "InternalError", e.msg);
+    }
+  }
+
+  protected static void writeJson(HTTPServerResponse res, int status, Json payload) {
+    res.writeBody(payload.toString, status, "application/json; charset=utf-8");
+  }
+
+  protected static void writeError(HTTPServerResponse res, int status, string code, string message) {
+    auto err = Json.emptyObject.set("code", code).set("message", message);
+    writeJson(res, status, Json.emptyObject.set("error", err));
+  }
+}
