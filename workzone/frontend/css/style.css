@@ -1,0 +1,13 @@
+/* Work Zone — small layout helpers on top of the SAP Horizon theme */
+.wzTile {
+  margin: 0 1rem 1rem 0;
+}
+
+.wzKpi {
+  margin-right: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.wzMono textarea {
+  font-family: "72Mono", monospace;
+}

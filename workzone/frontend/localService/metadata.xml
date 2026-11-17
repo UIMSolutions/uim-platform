@@ -1,0 +1,1544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.workzone" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Workspace">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="alias" Type="Edm.String"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="imageUrl" Type="Edm.String"/>
+        <Property Name="defaultLanguage" Type="Edm.String"/>
+        <Property Name="allowExternalMembers" Type="Edm.Boolean"/>
+        <Property Name="enableNotifications" Type="Edm.Boolean"/>
+        <Property Name="enableFeeds" Type="Edm.Boolean"/>
+        <Property Name="enableWiki" Type="Edm.Boolean"/>
+        <Property Name="enableKnowledgeBase" Type="Edm.Boolean"/>
+        <Property Name="enableForum" Type="Edm.Boolean"/>
+        <Property Name="members" Type="Collection(uim.workzone.WorkspaceMember)"/>
+      </EntityType>
+      <EntityType Name="Workpage">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="templateId" Type="Edm.String"/>
+        <Property Name="templateName" Type="Edm.String"/>
+        <Property Name="sortOrder" Type="Edm.Int32"/>
+        <Property Name="visible" Type="Edm.Boolean"/>
+        <Property Name="isDefault" Type="Edm.Boolean"/>
+        <Property Name="allowedRoles" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="Widget">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workpageId" Type="Edm.String"/>
+        <Property Name="workpageTitle" Type="Edm.String"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="cardId" Type="Edm.String"/>
+        <Property Name="appId" Type="Edm.String"/>
+        <Property Name="size" Type="Edm.String"/>
+        <Property Name="row" Type="Edm.Int32"/>
+        <Property Name="col" Type="Edm.Int32"/>
+        <Property Name="sortOrder" Type="Edm.Int32"/>
+        <Property Name="visible" Type="Edm.Boolean"/>
+        <Property Name="customTitle" Type="Edm.String"/>
+        <Property Name="maxItems" Type="Edm.Int32"/>
+        <Property Name="refreshIntervalSec" Type="Edm.Int32"/>
+        <Property Name="filterExpression" Type="Edm.String"/>
+        <Property Name="parameters" Type="Collection(uim.workzone.KeyValue)"/>
+      </EntityType>
+      <EntityType Name="Channel">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="channelType" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="sourceUrl" Type="Edm.String"/>
+        <Property Name="pollIntervalSec" Type="Edm.Int32"/>
+        <Property Name="authType" Type="Edm.String"/>
+        <Property Name="authToken" Type="Edm.String"/>
+        <Property Name="maxItems" Type="Edm.Int32"/>
+        <Property Name="allowedRoles" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="ContentItem">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="body" Type="Edm.String"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="contentType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="authorId" Type="Edm.String"/>
+        <Property Name="authorName" Type="Edm.String"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="attachmentUrls" Type="Collection(Edm.String)"/>
+        <Property Name="language" Type="Edm.String"/>
+        <Property Name="viewCount" Type="Edm.Int32"/>
+        <Property Name="likeCount" Type="Edm.Int32"/>
+        <Property Name="pinned" Type="Edm.Boolean"/>
+        <Property Name="commentsEnabled" Type="Edm.Boolean"/>
+        <Property Name="publishedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="FeedEntry">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="actorId" Type="Edm.String"/>
+        <Property Name="actorName" Type="Edm.String"/>
+        <Property Name="action" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String"/>
+        <Property Name="objectId" Type="Edm.String"/>
+        <Property Name="objectTitle" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="mentionedUserIds" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="Event">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="location" Type="Edm.String"/>
+        <Property Name="meetingUrl" Type="Edm.String"/>
+        <Property Name="organizerId" Type="Edm.String"/>
+        <Property Name="organizerName" Type="Edm.String"/>
+        <Property Name="attendeeIds" Type="Collection(Edm.String)"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="allDay" Type="Edm.Boolean"/>
+        <Property Name="startsAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="endsAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="timezone" Type="Edm.String"/>
+        <Property Name="recurrenceRule" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Survey">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="creatorId" Type="Edm.String"/>
+        <Property Name="creatorName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="questions" Type="Collection(uim.workzone.SurveyQuestion)"/>
+        <Property Name="anonymous" Type="Edm.Boolean"/>
+        <Property Name="allowMultipleResponses" Type="Edm.Boolean"/>
+        <Property Name="responseCount" Type="Edm.Int32"/>
+        <Property Name="respondents" Type="Collection(Edm.String)"/>
+        <Property Name="startsAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="endsAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="ForumTopic">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="body" Type="Edm.String"/>
+        <Property Name="authorId" Type="Edm.String"/>
+        <Property Name="authorName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="replyCount" Type="Edm.Int32"/>
+        <Property Name="viewCount" Type="Edm.Int32"/>
+        <Property Name="likeCount" Type="Edm.Int32"/>
+        <Property Name="pinned" Type="Edm.Boolean"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="lastReplyAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="KnowledgeBaseArticle">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="workspaceId" Type="Edm.String"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="body" Type="Edm.String"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="authorId" Type="Edm.String"/>
+        <Property Name="authorName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="relatedArticleIds" Type="Collection(Edm.String)"/>
+        <Property Name="language" Type="Edm.String"/>
+        <Property Name="viewCount" Type="Edm.Int32"/>
+        <Property Name="helpfulCount" Type="Edm.Int32"/>
+        <Property Name="version" Type="Edm.Int32"/>
+        <Property Name="publishedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Task">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="assigneeId" Type="Edm.String"/>
+        <Property Name="assigneeName" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="priority" Type="Edm.String"/>
+        <Property Name="sourceApp" Type="Edm.String"/>
+        <Property Name="sourceTaskId" Type="Edm.String"/>
+        <Property Name="actionUrl" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="dueAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Notification">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="recipientId" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="body" Type="Edm.String"/>
+        <Property Name="sourceApp" Type="Edm.String"/>
+        <Property Name="sourceObjectType" Type="Edm.String"/>
+        <Property Name="sourceObjectId" Type="Edm.String"/>
+        <Property Name="actionUrl" Type="Edm.String"/>
+        <Property Name="priority" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="readAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Card">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="subtitle" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="icon" Type="Edm.String"/>
+        <Property Name="cardType" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="dataSourceUrl" Type="Edm.String"/>
+        <Property Name="dataSourceMethod" Type="Edm.String"/>
+        <Property Name="dataSourcePath" Type="Edm.String"/>
+        <Property Name="refreshIntervalSec" Type="Edm.Int32"/>
+        <Property Name="authType" Type="Edm.String"/>
+        <Property Name="authToken" Type="Edm.String"/>
+        <Property Name="manifestType" Type="Edm.String"/>
+        <Property Name="manifestVersion" Type="Edm.String"/>
+        <Property Name="headerTitle" Type="Edm.String"/>
+        <Property Name="headerSubtitle" Type="Edm.String"/>
+        <Property Name="headerIcon" Type="Edm.String"/>
+        <Property Name="headerStatus" Type="Edm.String"/>
+        <Property Name="maxItems" Type="Edm.Int32"/>
+        <Property Name="allowedRoles" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="App">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="launchUrl" Type="Edm.String"/>
+        <Property Name="icon" Type="Edm.String"/>
+        <Property Name="vendor" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="supportedPlatforms" Type="Collection(Edm.String)"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="allowedRoles" Type="Collection(Edm.String)"/>
+        <Property Name="authType" Type="Edm.String"/>
+        <Property Name="authEndpoint" Type="Edm.String"/>
+        <Property Name="enableSso" Type="Edm.Boolean"/>
+        <Property Name="sapSystemAlias" Type="Edm.String"/>
+        <Property Name="odataServiceUrl" Type="Edm.String"/>
+        <Property Name="componentId" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ContentProvider">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="providerType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="endpointUrl" Type="Edm.String"/>
+        <Property Name="authType" Type="Edm.String"/>
+        <Property Name="authConfig" Type="Edm.String"/>
+        <Property Name="contentTypes" Type="Collection(Edm.String)"/>
+        <Property Name="refreshIntervalSec" Type="Edm.Int32"/>
+        <Property Name="lastSyncAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="itemCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ShellPlugin">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.String"/>
+        <Property Name="vendor" Type="Edm.String"/>
+        <Property Name="scriptUrl" Type="Edm.String"/>
+        <Property Name="configSchemaUrl" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="assignedSites" Type="Collection(Edm.String)"/>
+        <Property Name="hookPoints" Type="Collection(Edm.String)"/>
+        <Property Name="installedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Site">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="alias" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="themeId" Type="Edm.String"/>
+        <Property Name="themeName" Type="Edm.String"/>
+        <Property Name="allowedRoles" Type="Collection(Edm.String)"/>
+        <Property Name="logoUrl" Type="Edm.String"/>
+        <Property Name="faviconUrl" Type="Edm.String"/>
+        <Property Name="footerText" Type="Edm.String"/>
+        <Property Name="defaultLanguage" Type="Edm.String"/>
+        <Property Name="enableSearch" Type="Edm.Boolean"/>
+        <Property Name="enableNotifications" Type="Edm.Boolean"/>
+        <Property Name="enableUserMenu" Type="Edm.Boolean"/>
+        <Property Name="enableFeedback" Type="Edm.Boolean"/>
+        <Property Name="publishedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="NavigationItem">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="siteId" Type="Edm.String"/>
+        <Property Name="siteName" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="icon" Type="Edm.String"/>
+        <Property Name="itemType" Type="Edm.String"/>
+        <Property Name="targetUrl" Type="Edm.String"/>
+        <Property Name="targetAppId" Type="Edm.String"/>
+        <Property Name="targetAppName" Type="Edm.String"/>
+        <Property Name="targetWorkpageId" Type="Edm.String"/>
+        <Property Name="parentId" Type="Edm.String"/>
+        <Property Name="sortOrder" Type="Edm.Int32"/>
+        <Property Name="visible" Type="Edm.Boolean"/>
+        <Property Name="openInNewWindow" Type="Edm.Boolean"/>
+        <Property Name="allowedRoles" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="Theme">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="baseTheme" Type="Edm.String"/>
+        <Property Name="primaryColor" Type="Edm.String"/>
+        <Property Name="secondaryColor" Type="Edm.String"/>
+        <Property Name="backgroundColor" Type="Edm.String"/>
+        <Property Name="headerColor" Type="Edm.String"/>
+        <Property Name="textColor" Type="Edm.String"/>
+        <Property Name="linkColor" Type="Edm.String"/>
+        <Property Name="accentColor" Type="Edm.String"/>
+        <Property Name="logoUrl" Type="Edm.String"/>
+        <Property Name="faviconUrl" Type="Edm.String"/>
+        <Property Name="customCss" Type="Edm.String"/>
+        <Property Name="isDefault" Type="Edm.Boolean"/>
+        <Property Name="predefined" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="PageTemplate">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="thumbnailUrl" Type="Edm.String"/>
+        <Property Name="sections" Type="Collection(uim.workzone.TemplateSection)"/>
+        <Property Name="isDefault" Type="Edm.Boolean"/>
+        <Property Name="isPublic" Type="Edm.Boolean"/>
+        <Property Name="predefined" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Role">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="permissions" Type="Collection(Edm.String)"/>
+        <Property Name="isDefault" Type="Edm.Boolean"/>
+        <Property Name="predefined" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="UserGroup">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="groupType" Type="Edm.String"/>
+        <Property Name="memberIds" Type="Collection(Edm.String)"/>
+        <Property Name="roles" Type="Collection(Edm.String)"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Tag">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="color" Type="Edm.String"/>
+        <Property Name="parentTag" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="UserProfile">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="email" Type="Edm.String"/>
+        <Property Name="firstName" Type="Edm.String"/>
+        <Property Name="lastName" Type="Edm.String"/>
+        <Property Name="avatarUrl" Type="Edm.String"/>
+        <Property Name="jobTitle" Type="Edm.String"/>
+        <Property Name="department" Type="Edm.String"/>
+        <Property Name="phone" Type="Edm.String"/>
+        <Property Name="timezone" Type="Edm.String"/>
+        <Property Name="language" Type="Edm.String"/>
+        <Property Name="roles" Type="Collection(Edm.String)"/>
+        <Property Name="groups" Type="Collection(Edm.String)"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="workspaces" Type="Edm.Int32"/>
+        <Property Name="workspacesActive" Type="Edm.Int32"/>
+        <Property Name="members" Type="Edm.Int32"/>
+        <Property Name="workpages" Type="Edm.Int32"/>
+        <Property Name="widgets" Type="Edm.Int32"/>
+        <Property Name="channels" Type="Edm.Int32"/>
+        <Property Name="contentItems" Type="Edm.Int32"/>
+        <Property Name="contentPublished" Type="Edm.Int32"/>
+        <Property Name="feedEntries" Type="Edm.Int32"/>
+        <Property Name="eventsUpcoming" Type="Edm.Int32"/>
+        <Property Name="surveysActive" Type="Edm.Int32"/>
+        <Property Name="forumTopicsOpen" Type="Edm.Int32"/>
+        <Property Name="articlesPublished" Type="Edm.Int32"/>
+        <Property Name="tasksOpen" Type="Edm.Int32"/>
+        <Property Name="tasksOverdue" Type="Edm.Int32"/>
+        <Property Name="notificationsUnread" Type="Edm.Int32"/>
+        <Property Name="cards" Type="Edm.Int32"/>
+        <Property Name="apps" Type="Edm.Int32"/>
+        <Property Name="appsActive" Type="Edm.Int32"/>
+        <Property Name="providersConnected" Type="Edm.Int32"/>
+        <Property Name="shellPluginsActive" Type="Edm.Int32"/>
+        <Property Name="sites" Type="Edm.Int32"/>
+        <Property Name="sitesPublished" Type="Edm.Int32"/>
+        <Property Name="users" Type="Edm.Int32"/>
+        <Property Name="roles" Type="Edm.Int32"/>
+        <Property Name="groups" Type="Edm.Int32"/>
+        <Property Name="pendingHousekeeping" Type="Edm.Int32"/>
+        <Property Name="lastPublishedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <ComplexType Name="WorkspaceMember">
+        <Property Name="userId" Type="Edm.String"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="role" Type="Edm.String"/>
+        <Property Name="joinedAt" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <ComplexType Name="KeyValue">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="SurveyQuestion">
+        <Property Name="questionId" Type="Edm.String"/>
+        <Property Name="text" Type="Edm.String"/>
+        <Property Name="questionType" Type="Edm.String"/>
+        <Property Name="options" Type="Collection(Edm.String)"/>
+        <Property Name="required" Type="Edm.Boolean"/>
+        <Property Name="sortOrder" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="TemplateSection">
+        <Property Name="sectionId" Type="Edm.String"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="columns" Type="Edm.Int32"/>
+        <Property Name="layoutType" Type="Edm.String"/>
+        <Property Name="sortOrder" Type="Edm.Int32"/>
+        <Property Name="allowedWidgetSizes" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <ComplexType Name="HousekeepingResult">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="examined" Type="Edm.Int32"/>
+        <Property Name="changed" Type="Edm.Int32"/>
+        <Property Name="changes" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="created" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="items" Type="Collection(Edm.String)"/>
+      </ComplexType>
+      <Action Name="AddMemberWorkspace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="userId" Type="Edm.String"/>
+        <Parameter Name="displayName" Type="Edm.String"/>
+        <Parameter Name="role" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Workspace"/>
+      </Action>
+      <Action Name="RemoveMemberWorkspace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="userId" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Workspace"/>
+      </Action>
+      <Action Name="ChangeRoleWorkspace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="userId" Type="Edm.String"/>
+        <Parameter Name="role" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Workspace"/>
+      </Action>
+      <Action Name="ArchiveWorkspace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Workspace"/>
+      </Action>
+      <Action Name="SuspendWorkspace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Workspace"/>
+      </Action>
+      <Action Name="RestoreWorkspace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Workspace"/>
+      </Action>
+      <Action Name="MakeDefaultWorkpage" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Workpage"/>
+      </Action>
+      <Action Name="MoveWidget" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="row" Type="Edm.String"/>
+        <Parameter Name="col" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Widget"/>
+      </Action>
+      <Action Name="ActivateChannel" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Channel"/>
+      </Action>
+      <Action Name="DeactivateChannel" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Channel"/>
+      </Action>
+      <Action Name="PublishContentItem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ContentItem"/>
+      </Action>
+      <Action Name="ArchiveContentItem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ContentItem"/>
+      </Action>
+      <Action Name="PinContentItem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ContentItem"/>
+      </Action>
+      <Action Name="UnpinContentItem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ContentItem"/>
+      </Action>
+      <Action Name="LikeContentItem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ContentItem"/>
+      </Action>
+      <Action Name="CancelEvent" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Event"/>
+      </Action>
+      <Action Name="AddAttendeeEvent" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="userId" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Event"/>
+      </Action>
+      <Action Name="RemoveAttendeeEvent" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="userId" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Event"/>
+      </Action>
+      <Action Name="ActivateSurvey" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Survey"/>
+      </Action>
+      <Action Name="CloseSurvey" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Survey"/>
+      </Action>
+      <Action Name="ArchiveSurvey" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Survey"/>
+      </Action>
+      <Action Name="RespondSurvey" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Survey"/>
+      </Action>
+      <Action Name="ReplyForumTopic" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ForumTopic"/>
+      </Action>
+      <Action Name="CloseForumTopic" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ForumTopic"/>
+      </Action>
+      <Action Name="ReopenForumTopic" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ForumTopic"/>
+      </Action>
+      <Action Name="PinForumTopic" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ForumTopic"/>
+      </Action>
+      <Action Name="UnpinForumTopic" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ForumTopic"/>
+      </Action>
+      <Action Name="LockForumTopic" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ForumTopic"/>
+      </Action>
+      <Action Name="UnlockForumTopic" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ForumTopic"/>
+      </Action>
+      <Action Name="SubmitKnowledgeBaseArticle" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.KnowledgeBaseArticle"/>
+      </Action>
+      <Action Name="PublishKnowledgeBaseArticle" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.KnowledgeBaseArticle"/>
+      </Action>
+      <Action Name="ArchiveKnowledgeBaseArticle" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.KnowledgeBaseArticle"/>
+      </Action>
+      <Action Name="MarkHelpfulKnowledgeBaseArticle" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.KnowledgeBaseArticle"/>
+      </Action>
+      <Action Name="StartTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Task"/>
+      </Action>
+      <Action Name="CompleteTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Task"/>
+      </Action>
+      <Action Name="CancelTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Task"/>
+      </Action>
+      <Action Name="ReopenTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Task"/>
+      </Action>
+      <Action Name="MarkReadNotification" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Notification"/>
+      </Action>
+      <Action Name="MarkUnreadNotification" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Notification"/>
+      </Action>
+      <Action Name="DismissNotification" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Notification"/>
+      </Action>
+      <Action Name="ActivateCard" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Card"/>
+      </Action>
+      <Action Name="DeactivateCard" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Card"/>
+      </Action>
+      <Action Name="ActivateApp" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.App"/>
+      </Action>
+      <Action Name="DeactivateApp" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.App"/>
+      </Action>
+      <Action Name="DeprecateApp" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.App"/>
+      </Action>
+      <Action Name="ConnectContentProvider" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ContentProvider"/>
+      </Action>
+      <Action Name="DisconnectContentProvider" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ContentProvider"/>
+      </Action>
+      <Action Name="SyncContentProvider" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ContentProvider"/>
+      </Action>
+      <Action Name="ActivateShellPlugin" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ShellPlugin"/>
+      </Action>
+      <Action Name="DeactivateShellPlugin" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.ShellPlugin"/>
+      </Action>
+      <Action Name="PublishSite" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Site"/>
+      </Action>
+      <Action Name="UnpublishSite" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Site"/>
+      </Action>
+      <Action Name="StartMaintenanceSite" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Site"/>
+      </Action>
+      <Action Name="ArchiveSite" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Site"/>
+      </Action>
+      <Action Name="MakeDefaultTheme" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.Theme"/>
+      </Action>
+      <Action Name="MakeDefaultPageTemplate" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.PageTemplate"/>
+      </Action>
+      <Action Name="AddMemberUserGroup" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="userId" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.UserGroup"/>
+      </Action>
+      <Action Name="RemoveMemberUserGroup" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="userId" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.UserGroup"/>
+      </Action>
+      <Action Name="ActivateUserProfile" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.UserProfile"/>
+      </Action>
+      <Action Name="DeactivateUserProfile" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.UserProfile"/>
+      </Action>
+      <Action Name="RecordLoginUserProfile" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.workzone.UserProfile"/>
+      </Action>
+      <Action Name="RunHousekeeping" IsBound="false">
+        <ReturnType Type="uim.workzone.HousekeepingResult"/>
+      </Action>
+      <Action Name="SeedContent" IsBound="false">
+        <ReturnType Type="uim.workzone.SeedResult"/>
+      </Action>
+      <EntityContainer Name="WorkzoneService">
+        <EntitySet Name="Workspaces" EntityType="uim.workzone.Workspace"/>
+        <EntitySet Name="Workpages" EntityType="uim.workzone.Workpage"/>
+        <EntitySet Name="Widgets" EntityType="uim.workzone.Widget"/>
+        <EntitySet Name="Channels" EntityType="uim.workzone.Channel"/>
+        <EntitySet Name="ContentItems" EntityType="uim.workzone.ContentItem"/>
+        <EntitySet Name="FeedEntries" EntityType="uim.workzone.FeedEntry"/>
+        <EntitySet Name="Events" EntityType="uim.workzone.Event"/>
+        <EntitySet Name="Surveys" EntityType="uim.workzone.Survey"/>
+        <EntitySet Name="ForumTopics" EntityType="uim.workzone.ForumTopic"/>
+        <EntitySet Name="KnowledgeBaseArticles" EntityType="uim.workzone.KnowledgeBaseArticle"/>
+        <EntitySet Name="Tasks" EntityType="uim.workzone.Task"/>
+        <EntitySet Name="Notifications" EntityType="uim.workzone.Notification"/>
+        <EntitySet Name="Cards" EntityType="uim.workzone.Card"/>
+        <EntitySet Name="Apps" EntityType="uim.workzone.App"/>
+        <EntitySet Name="ContentProviders" EntityType="uim.workzone.ContentProvider"/>
+        <EntitySet Name="ShellPlugins" EntityType="uim.workzone.ShellPlugin"/>
+        <EntitySet Name="Sites" EntityType="uim.workzone.Site"/>
+        <EntitySet Name="NavigationItems" EntityType="uim.workzone.NavigationItem"/>
+        <EntitySet Name="Themes" EntityType="uim.workzone.Theme"/>
+        <EntitySet Name="PageTemplates" EntityType="uim.workzone.PageTemplate"/>
+        <EntitySet Name="Roles" EntityType="uim.workzone.Role"/>
+        <EntitySet Name="UserGroups" EntityType="uim.workzone.UserGroup"/>
+        <EntitySet Name="Tags" EntityType="uim.workzone.Tag"/>
+        <EntitySet Name="UserProfiles" EntityType="uim.workzone.UserProfile"/>
+        <Singleton Name="Statistics" Type="uim.workzone.Statistic"/>
+        <ActionImport Name="AddMemberWorkspace" Action="uim.workzone.AddMemberWorkspace"/>
+        <ActionImport Name="RemoveMemberWorkspace" Action="uim.workzone.RemoveMemberWorkspace"/>
+        <ActionImport Name="ChangeRoleWorkspace" Action="uim.workzone.ChangeRoleWorkspace"/>
+        <ActionImport Name="ArchiveWorkspace" Action="uim.workzone.ArchiveWorkspace"/>
+        <ActionImport Name="SuspendWorkspace" Action="uim.workzone.SuspendWorkspace"/>
+        <ActionImport Name="RestoreWorkspace" Action="uim.workzone.RestoreWorkspace"/>
+        <ActionImport Name="MakeDefaultWorkpage" Action="uim.workzone.MakeDefaultWorkpage"/>
+        <ActionImport Name="MoveWidget" Action="uim.workzone.MoveWidget"/>
+        <ActionImport Name="ActivateChannel" Action="uim.workzone.ActivateChannel"/>
+        <ActionImport Name="DeactivateChannel" Action="uim.workzone.DeactivateChannel"/>
+        <ActionImport Name="PublishContentItem" Action="uim.workzone.PublishContentItem"/>
+        <ActionImport Name="ArchiveContentItem" Action="uim.workzone.ArchiveContentItem"/>
+        <ActionImport Name="PinContentItem" Action="uim.workzone.PinContentItem"/>
+        <ActionImport Name="UnpinContentItem" Action="uim.workzone.UnpinContentItem"/>
+        <ActionImport Name="LikeContentItem" Action="uim.workzone.LikeContentItem"/>
+        <ActionImport Name="CancelEvent" Action="uim.workzone.CancelEvent"/>
+        <ActionImport Name="AddAttendeeEvent" Action="uim.workzone.AddAttendeeEvent"/>
+        <ActionImport Name="RemoveAttendeeEvent" Action="uim.workzone.RemoveAttendeeEvent"/>
+        <ActionImport Name="ActivateSurvey" Action="uim.workzone.ActivateSurvey"/>
+        <ActionImport Name="CloseSurvey" Action="uim.workzone.CloseSurvey"/>
+        <ActionImport Name="ArchiveSurvey" Action="uim.workzone.ArchiveSurvey"/>
+        <ActionImport Name="RespondSurvey" Action="uim.workzone.RespondSurvey"/>
+        <ActionImport Name="ReplyForumTopic" Action="uim.workzone.ReplyForumTopic"/>
+        <ActionImport Name="CloseForumTopic" Action="uim.workzone.CloseForumTopic"/>
+        <ActionImport Name="ReopenForumTopic" Action="uim.workzone.ReopenForumTopic"/>
+        <ActionImport Name="PinForumTopic" Action="uim.workzone.PinForumTopic"/>
+        <ActionImport Name="UnpinForumTopic" Action="uim.workzone.UnpinForumTopic"/>
+        <ActionImport Name="LockForumTopic" Action="uim.workzone.LockForumTopic"/>
+        <ActionImport Name="UnlockForumTopic" Action="uim.workzone.UnlockForumTopic"/>
+        <ActionImport Name="SubmitKnowledgeBaseArticle" Action="uim.workzone.SubmitKnowledgeBaseArticle"/>
+        <ActionImport Name="PublishKnowledgeBaseArticle" Action="uim.workzone.PublishKnowledgeBaseArticle"/>
+        <ActionImport Name="ArchiveKnowledgeBaseArticle" Action="uim.workzone.ArchiveKnowledgeBaseArticle"/>
+        <ActionImport Name="MarkHelpfulKnowledgeBaseArticle" Action="uim.workzone.MarkHelpfulKnowledgeBaseArticle"/>
+        <ActionImport Name="StartTask" Action="uim.workzone.StartTask"/>
+        <ActionImport Name="CompleteTask" Action="uim.workzone.CompleteTask"/>
+        <ActionImport Name="CancelTask" Action="uim.workzone.CancelTask"/>
+        <ActionImport Name="ReopenTask" Action="uim.workzone.ReopenTask"/>
+        <ActionImport Name="MarkReadNotification" Action="uim.workzone.MarkReadNotification"/>
+        <ActionImport Name="MarkUnreadNotification" Action="uim.workzone.MarkUnreadNotification"/>
+        <ActionImport Name="DismissNotification" Action="uim.workzone.DismissNotification"/>
+        <ActionImport Name="ActivateCard" Action="uim.workzone.ActivateCard"/>
+        <ActionImport Name="DeactivateCard" Action="uim.workzone.DeactivateCard"/>
+        <ActionImport Name="ActivateApp" Action="uim.workzone.ActivateApp"/>
+        <ActionImport Name="DeactivateApp" Action="uim.workzone.DeactivateApp"/>
+        <ActionImport Name="DeprecateApp" Action="uim.workzone.DeprecateApp"/>
+        <ActionImport Name="ConnectContentProvider" Action="uim.workzone.ConnectContentProvider"/>
+        <ActionImport Name="DisconnectContentProvider" Action="uim.workzone.DisconnectContentProvider"/>
+        <ActionImport Name="SyncContentProvider" Action="uim.workzone.SyncContentProvider"/>
+        <ActionImport Name="ActivateShellPlugin" Action="uim.workzone.ActivateShellPlugin"/>
+        <ActionImport Name="DeactivateShellPlugin" Action="uim.workzone.DeactivateShellPlugin"/>
+        <ActionImport Name="PublishSite" Action="uim.workzone.PublishSite"/>
+        <ActionImport Name="UnpublishSite" Action="uim.workzone.UnpublishSite"/>
+        <ActionImport Name="StartMaintenanceSite" Action="uim.workzone.StartMaintenanceSite"/>
+        <ActionImport Name="ArchiveSite" Action="uim.workzone.ArchiveSite"/>
+        <ActionImport Name="MakeDefaultTheme" Action="uim.workzone.MakeDefaultTheme"/>
+        <ActionImport Name="MakeDefaultPageTemplate" Action="uim.workzone.MakeDefaultPageTemplate"/>
+        <ActionImport Name="AddMemberUserGroup" Action="uim.workzone.AddMemberUserGroup"/>
+        <ActionImport Name="RemoveMemberUserGroup" Action="uim.workzone.RemoveMemberUserGroup"/>
+        <ActionImport Name="ActivateUserProfile" Action="uim.workzone.ActivateUserProfile"/>
+        <ActionImport Name="DeactivateUserProfile" Action="uim.workzone.DeactivateUserProfile"/>
+        <ActionImport Name="RecordLoginUserProfile" Action="uim.workzone.RecordLoginUserProfile"/>
+        <ActionImport Name="RunHousekeeping" Action="uim.workzone.RunHousekeeping"/>
+        <ActionImport Name="SeedContent" Action="uim.workzone.SeedContent"/>
+      </EntityContainer>
+      <Annotations Target="uim.workzone.Workspace/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/alias"><Annotation Term="Common.Label" String="Alias"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/type"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/imageUrl"><Annotation Term="Common.Label" String="Image URL"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/defaultLanguage"><Annotation Term="Common.Label" String="Default Language"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/allowExternalMembers"><Annotation Term="Common.Label" String="Allow External Members"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/enableNotifications"><Annotation Term="Common.Label" String="Enable Notifications"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/enableFeeds"><Annotation Term="Common.Label" String="Enable Feeds"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/enableWiki"><Annotation Term="Common.Label" String="Enable Wiki"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/enableKnowledgeBase"><Annotation Term="Common.Label" String="Enable Knowledge Base"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/enableForum"><Annotation Term="Common.Label" String="Enable Forum"/></Annotations>
+      <Annotations Target="uim.workzone.Workspace/members"><Annotation Term="Common.Label" String="Members"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Workspaces">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Workpage/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/templateId"><Annotation Term="Common.Label" String="Template ID"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/templateName"><Annotation Term="Common.Label" String="Template Name"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/sortOrder"><Annotation Term="Common.Label" String="Sort Order"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/visible"><Annotation Term="Common.Label" String="Visible"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/isDefault"><Annotation Term="Common.Label" String="Is Default"/></Annotations>
+      <Annotations Target="uim.workzone.Workpage/allowedRoles"><Annotation Term="Common.Label" String="Allowed Roles"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Workpages">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Widget/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/workpageId"><Annotation Term="Common.Label" String="Workpage ID"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/workpageTitle"><Annotation Term="Common.Label" String="Workpage Title"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/cardId"><Annotation Term="Common.Label" String="Card ID"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/appId"><Annotation Term="Common.Label" String="App ID"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/size"><Annotation Term="Common.Label" String="Size"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/row"><Annotation Term="Common.Label" String="Row"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/col"><Annotation Term="Common.Label" String="Col"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/sortOrder"><Annotation Term="Common.Label" String="Sort Order"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/visible"><Annotation Term="Common.Label" String="Visible"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/customTitle"><Annotation Term="Common.Label" String="Custom Title"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/maxItems"><Annotation Term="Common.Label" String="Max Items"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/refreshIntervalSec"><Annotation Term="Common.Label" String="Refresh Interval Sec"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/filterExpression"><Annotation Term="Common.Label" String="Filter Expression"/></Annotations>
+      <Annotations Target="uim.workzone.Widget/parameters"><Annotation Term="Common.Label" String="Parameters"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Widgets">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Channel/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/channelType"><Annotation Term="Common.Label" String="Channel Type"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/sourceUrl"><Annotation Term="Common.Label" String="Source URL"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/pollIntervalSec"><Annotation Term="Common.Label" String="Poll Interval Sec"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/authType"><Annotation Term="Common.Label" String="Auth Type"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/authToken"><Annotation Term="Common.Label" String="Auth Token"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/maxItems"><Annotation Term="Common.Label" String="Max Items"/></Annotations>
+      <Annotations Target="uim.workzone.Channel/allowedRoles"><Annotation Term="Common.Label" String="Allowed Roles"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Channels">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.ContentItem/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/body"><Annotation Term="Common.Label" String="Body"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/summary"><Annotation Term="Common.Label" String="Summary"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/contentType"><Annotation Term="Common.Label" String="Content Type"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/authorId"><Annotation Term="Common.Label" String="Author ID"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/authorName"><Annotation Term="Common.Label" String="Author Name"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/attachmentUrls"><Annotation Term="Common.Label" String="Attachment Urls"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/language"><Annotation Term="Common.Label" String="Language"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/viewCount"><Annotation Term="Common.Label" String="View Count"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/likeCount"><Annotation Term="Common.Label" String="Like Count"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/pinned"><Annotation Term="Common.Label" String="Pinned"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/commentsEnabled"><Annotation Term="Common.Label" String="Comments Enabled"/></Annotations>
+      <Annotations Target="uim.workzone.ContentItem/publishedAt"><Annotation Term="Common.Label" String="Published At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/ContentItems">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/actorId"><Annotation Term="Common.Label" String="Actor ID"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/actorName"><Annotation Term="Common.Label" String="Actor Name"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/action"><Annotation Term="Common.Label" String="Action"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/objectType"><Annotation Term="Common.Label" String="Object Type"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/objectId"><Annotation Term="Common.Label" String="Object ID"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/objectTitle"><Annotation Term="Common.Label" String="Object Title"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.workzone.FeedEntry/mentionedUserIds"><Annotation Term="Common.Label" String="Mentioned User Ids"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/FeedEntries">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Event/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Event/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Event/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Event/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Event/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Event/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Event/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.Event/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/></Annotations>
+      <Annotations Target="uim.workzone.Event/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.Event/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Event/location"><Annotation Term="Common.Label" String="Location"/></Annotations>
+      <Annotations Target="uim.workzone.Event/meetingUrl"><Annotation Term="Common.Label" String="Meeting URL"/></Annotations>
+      <Annotations Target="uim.workzone.Event/organizerId"><Annotation Term="Common.Label" String="Organizer ID"/></Annotations>
+      <Annotations Target="uim.workzone.Event/organizerName"><Annotation Term="Common.Label" String="Organizer Name"/></Annotations>
+      <Annotations Target="uim.workzone.Event/attendeeIds"><Annotation Term="Common.Label" String="Attendee Ids"/></Annotations>
+      <Annotations Target="uim.workzone.Event/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.Event/allDay"><Annotation Term="Common.Label" String="All Day"/></Annotations>
+      <Annotations Target="uim.workzone.Event/startsAt"><Annotation Term="Common.Label" String="Starts At"/></Annotations>
+      <Annotations Target="uim.workzone.Event/endsAt"><Annotation Term="Common.Label" String="Ends At"/></Annotations>
+      <Annotations Target="uim.workzone.Event/timezone"><Annotation Term="Common.Label" String="Timezone"/></Annotations>
+      <Annotations Target="uim.workzone.Event/recurrenceRule"><Annotation Term="Common.Label" String="Recurrence Rule"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Events">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Survey/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/creatorId"><Annotation Term="Common.Label" String="Creator ID"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/creatorName"><Annotation Term="Common.Label" String="Creator Name"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/questions"><Annotation Term="Common.Label" String="Questions"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/anonymous"><Annotation Term="Common.Label" String="Anonymous"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/allowMultipleResponses"><Annotation Term="Common.Label" String="Allow Multiple Responses"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/responseCount"><Annotation Term="Common.Label" String="Response Count"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/respondents"><Annotation Term="Common.Label" String="Respondents"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/startsAt"><Annotation Term="Common.Label" String="Starts At"/></Annotations>
+      <Annotations Target="uim.workzone.Survey/endsAt"><Annotation Term="Common.Label" String="Ends At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Surveys">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/body"><Annotation Term="Common.Label" String="Body"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/authorId"><Annotation Term="Common.Label" String="Author ID"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/authorName"><Annotation Term="Common.Label" String="Author Name"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/replyCount"><Annotation Term="Common.Label" String="Reply Count"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/viewCount"><Annotation Term="Common.Label" String="View Count"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/likeCount"><Annotation Term="Common.Label" String="Like Count"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/pinned"><Annotation Term="Common.Label" String="Pinned"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.workzone.ForumTopic/lastReplyAt"><Annotation Term="Common.Label" String="Last Reply At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/ForumTopics">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/workspaceId"><Annotation Term="Common.Label" String="Workspace ID"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/body"><Annotation Term="Common.Label" String="Body"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/summary"><Annotation Term="Common.Label" String="Summary"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/authorId"><Annotation Term="Common.Label" String="Author ID"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/authorName"><Annotation Term="Common.Label" String="Author Name"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/relatedArticleIds"><Annotation Term="Common.Label" String="Related Article Ids"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/language"><Annotation Term="Common.Label" String="Language"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/viewCount"><Annotation Term="Common.Label" String="View Count"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/helpfulCount"><Annotation Term="Common.Label" String="Helpful Count"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.workzone.KnowledgeBaseArticle/publishedAt"><Annotation Term="Common.Label" String="Published At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/KnowledgeBaseArticles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Task/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Task/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Task/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Task/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Task/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Task/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Task/assigneeId"><Annotation Term="Common.Label" String="Assignee ID"/></Annotations>
+      <Annotations Target="uim.workzone.Task/assigneeName"><Annotation Term="Common.Label" String="Assignee Name"/></Annotations>
+      <Annotations Target="uim.workzone.Task/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.Task/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Task/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.Task/priority"><Annotation Term="Common.Label" String="Priority"/></Annotations>
+      <Annotations Target="uim.workzone.Task/sourceApp"><Annotation Term="Common.Label" String="Source App"/></Annotations>
+      <Annotations Target="uim.workzone.Task/sourceTaskId"><Annotation Term="Common.Label" String="Source Task ID"/></Annotations>
+      <Annotations Target="uim.workzone.Task/actionUrl"><Annotation Term="Common.Label" String="Action URL"/></Annotations>
+      <Annotations Target="uim.workzone.Task/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.workzone.Task/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.workzone.Task/dueAt"><Annotation Term="Common.Label" String="Due At"/></Annotations>
+      <Annotations Target="uim.workzone.Task/completedAt"><Annotation Term="Common.Label" String="Completed At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Tasks">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Notification/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/recipientId"><Annotation Term="Common.Label" String="Recipient ID"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/body"><Annotation Term="Common.Label" String="Body"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/sourceApp"><Annotation Term="Common.Label" String="Source App"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/sourceObjectType"><Annotation Term="Common.Label" String="Source Object Type"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/sourceObjectId"><Annotation Term="Common.Label" String="Source Object ID"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/actionUrl"><Annotation Term="Common.Label" String="Action URL"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/priority"><Annotation Term="Common.Label" String="Priority"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/readAt"><Annotation Term="Common.Label" String="Read At"/></Annotations>
+      <Annotations Target="uim.workzone.Notification/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Notifications">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Card/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Card/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Card/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Card/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Card/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Card/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Card/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.Card/subtitle"><Annotation Term="Common.Label" String="Subtitle"/></Annotations>
+      <Annotations Target="uim.workzone.Card/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Card/icon"><Annotation Term="Common.Label" String="Icon"/></Annotations>
+      <Annotations Target="uim.workzone.Card/cardType"><Annotation Term="Common.Label" String="Card Type"/></Annotations>
+      <Annotations Target="uim.workzone.Card/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.workzone.Card/dataSourceUrl"><Annotation Term="Common.Label" String="Data Source URL"/></Annotations>
+      <Annotations Target="uim.workzone.Card/dataSourceMethod"><Annotation Term="Common.Label" String="Data Source Method"/></Annotations>
+      <Annotations Target="uim.workzone.Card/dataSourcePath"><Annotation Term="Common.Label" String="Data Source Path"/></Annotations>
+      <Annotations Target="uim.workzone.Card/refreshIntervalSec"><Annotation Term="Common.Label" String="Refresh Interval Sec"/></Annotations>
+      <Annotations Target="uim.workzone.Card/authType"><Annotation Term="Common.Label" String="Auth Type"/></Annotations>
+      <Annotations Target="uim.workzone.Card/authToken"><Annotation Term="Common.Label" String="Auth Token"/></Annotations>
+      <Annotations Target="uim.workzone.Card/manifestType"><Annotation Term="Common.Label" String="Manifest Type"/></Annotations>
+      <Annotations Target="uim.workzone.Card/manifestVersion"><Annotation Term="Common.Label" String="Manifest Version"/></Annotations>
+      <Annotations Target="uim.workzone.Card/headerTitle"><Annotation Term="Common.Label" String="Header Title"/></Annotations>
+      <Annotations Target="uim.workzone.Card/headerSubtitle"><Annotation Term="Common.Label" String="Header Subtitle"/></Annotations>
+      <Annotations Target="uim.workzone.Card/headerIcon"><Annotation Term="Common.Label" String="Header Icon"/></Annotations>
+      <Annotations Target="uim.workzone.Card/headerStatus"><Annotation Term="Common.Label" String="Header Status"/></Annotations>
+      <Annotations Target="uim.workzone.Card/maxItems"><Annotation Term="Common.Label" String="Max Items"/></Annotations>
+      <Annotations Target="uim.workzone.Card/allowedRoles"><Annotation Term="Common.Label" String="Allowed Roles"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Cards">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.App/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.App/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.App/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.App/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.App/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.App/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.App/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.App/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.App/launchUrl"><Annotation Term="Common.Label" String="Launch URL"/></Annotations>
+      <Annotations Target="uim.workzone.App/icon"><Annotation Term="Common.Label" String="Icon"/></Annotations>
+      <Annotations Target="uim.workzone.App/vendor"><Annotation Term="Common.Label" String="Vendor"/></Annotations>
+      <Annotations Target="uim.workzone.App/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.workzone.App/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.App/supportedPlatforms"><Annotation Term="Common.Label" String="Supported Platforms"/></Annotations>
+      <Annotations Target="uim.workzone.App/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.workzone.App/allowedRoles"><Annotation Term="Common.Label" String="Allowed Roles"/></Annotations>
+      <Annotations Target="uim.workzone.App/authType"><Annotation Term="Common.Label" String="Auth Type"/></Annotations>
+      <Annotations Target="uim.workzone.App/authEndpoint"><Annotation Term="Common.Label" String="Auth Endpoint"/></Annotations>
+      <Annotations Target="uim.workzone.App/enableSso"><Annotation Term="Common.Label" String="Enable SSO"/></Annotations>
+      <Annotations Target="uim.workzone.App/sapSystemAlias"><Annotation Term="Common.Label" String="SAP System Alias"/></Annotations>
+      <Annotations Target="uim.workzone.App/odataServiceUrl"><Annotation Term="Common.Label" String="Odata Service URL"/></Annotations>
+      <Annotations Target="uim.workzone.App/componentId"><Annotation Term="Common.Label" String="Component ID"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Apps">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/providerType"><Annotation Term="Common.Label" String="Provider Type"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/endpointUrl"><Annotation Term="Common.Label" String="Endpoint URL"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/authType"><Annotation Term="Common.Label" String="Auth Type"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/authConfig"><Annotation Term="Common.Label" String="Auth Config"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/contentTypes"><Annotation Term="Common.Label" String="Content Types"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/refreshIntervalSec"><Annotation Term="Common.Label" String="Refresh Interval Sec"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/lastSyncAt"><Annotation Term="Common.Label" String="Last Sync At"/></Annotations>
+      <Annotations Target="uim.workzone.ContentProvider/itemCount"><Annotation Term="Common.Label" String="Item Count"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/ContentProviders">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/vendor"><Annotation Term="Common.Label" String="Vendor"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/scriptUrl"><Annotation Term="Common.Label" String="Script URL"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/configSchemaUrl"><Annotation Term="Common.Label" String="Config Schema URL"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/assignedSites"><Annotation Term="Common.Label" String="Assigned Sites"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/hookPoints"><Annotation Term="Common.Label" String="Hook Points"/></Annotations>
+      <Annotations Target="uim.workzone.ShellPlugin/installedAt"><Annotation Term="Common.Label" String="Installed At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/ShellPlugins">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Site/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Site/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Site/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Site/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Site/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Site/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Site/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.Site/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Site/alias"><Annotation Term="Common.Label" String="Alias"/></Annotations>
+      <Annotations Target="uim.workzone.Site/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.workzone.Site/themeId"><Annotation Term="Common.Label" String="Theme ID"/></Annotations>
+      <Annotations Target="uim.workzone.Site/themeName"><Annotation Term="Common.Label" String="Theme Name"/></Annotations>
+      <Annotations Target="uim.workzone.Site/allowedRoles"><Annotation Term="Common.Label" String="Allowed Roles"/></Annotations>
+      <Annotations Target="uim.workzone.Site/logoUrl"><Annotation Term="Common.Label" String="Logo URL"/></Annotations>
+      <Annotations Target="uim.workzone.Site/faviconUrl"><Annotation Term="Common.Label" String="Favicon URL"/></Annotations>
+      <Annotations Target="uim.workzone.Site/footerText"><Annotation Term="Common.Label" String="Footer Text"/></Annotations>
+      <Annotations Target="uim.workzone.Site/defaultLanguage"><Annotation Term="Common.Label" String="Default Language"/></Annotations>
+      <Annotations Target="uim.workzone.Site/enableSearch"><Annotation Term="Common.Label" String="Enable Search"/></Annotations>
+      <Annotations Target="uim.workzone.Site/enableNotifications"><Annotation Term="Common.Label" String="Enable Notifications"/></Annotations>
+      <Annotations Target="uim.workzone.Site/enableUserMenu"><Annotation Term="Common.Label" String="Enable User Menu"/></Annotations>
+      <Annotations Target="uim.workzone.Site/enableFeedback"><Annotation Term="Common.Label" String="Enable Feedback"/></Annotations>
+      <Annotations Target="uim.workzone.Site/publishedAt"><Annotation Term="Common.Label" String="Published At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Sites">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/siteId"><Annotation Term="Common.Label" String="Site ID"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/siteName"><Annotation Term="Common.Label" String="Site Name"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/icon"><Annotation Term="Common.Label" String="Icon"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/itemType"><Annotation Term="Common.Label" String="Item Type"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/targetUrl"><Annotation Term="Common.Label" String="Target URL"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/targetAppId"><Annotation Term="Common.Label" String="Target App ID"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/targetAppName"><Annotation Term="Common.Label" String="Target App Name"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/targetWorkpageId"><Annotation Term="Common.Label" String="Target Workpage ID"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/parentId"><Annotation Term="Common.Label" String="Parent ID"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/sortOrder"><Annotation Term="Common.Label" String="Sort Order"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/visible"><Annotation Term="Common.Label" String="Visible"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/openInNewWindow"><Annotation Term="Common.Label" String="Open In New Window"/></Annotations>
+      <Annotations Target="uim.workzone.NavigationItem/allowedRoles"><Annotation Term="Common.Label" String="Allowed Roles"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/NavigationItems">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Theme/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/baseTheme"><Annotation Term="Common.Label" String="Base Theme"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/primaryColor"><Annotation Term="Common.Label" String="Primary Color"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/secondaryColor"><Annotation Term="Common.Label" String="Secondary Color"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/backgroundColor"><Annotation Term="Common.Label" String="Background Color"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/headerColor"><Annotation Term="Common.Label" String="Header Color"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/textColor"><Annotation Term="Common.Label" String="Text Color"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/linkColor"><Annotation Term="Common.Label" String="Link Color"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/accentColor"><Annotation Term="Common.Label" String="Accent Color"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/logoUrl"><Annotation Term="Common.Label" String="Logo URL"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/faviconUrl"><Annotation Term="Common.Label" String="Favicon URL"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/customCss"><Annotation Term="Common.Label" String="Custom CSS"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/isDefault"><Annotation Term="Common.Label" String="Is Default"/></Annotations>
+      <Annotations Target="uim.workzone.Theme/predefined"><Annotation Term="Common.Label" String="Predefined"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Themes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/thumbnailUrl"><Annotation Term="Common.Label" String="Thumbnail URL"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/sections"><Annotation Term="Common.Label" String="Sections"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/isDefault"><Annotation Term="Common.Label" String="Is Default"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/isPublic"><Annotation Term="Common.Label" String="Is Public"/></Annotations>
+      <Annotations Target="uim.workzone.PageTemplate/predefined"><Annotation Term="Common.Label" String="Predefined"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/PageTemplates">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Role/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Role/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Role/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Role/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Role/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Role/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Role/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.Role/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Role/permissions"><Annotation Term="Common.Label" String="Permissions"/></Annotations>
+      <Annotations Target="uim.workzone.Role/isDefault"><Annotation Term="Common.Label" String="Is Default"/></Annotations>
+      <Annotations Target="uim.workzone.Role/predefined"><Annotation Term="Common.Label" String="Predefined"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Roles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.UserGroup/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/groupType"><Annotation Term="Common.Label" String="Group Type"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/memberIds"><Annotation Term="Common.Label" String="Member Ids"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/roles"><Annotation Term="Common.Label" String="Roles"/></Annotations>
+      <Annotations Target="uim.workzone.UserGroup/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/UserGroups">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Tag/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/color"><Annotation Term="Common.Label" String="Color"/></Annotations>
+      <Annotations Target="uim.workzone.Tag/parentTag"><Annotation Term="Common.Label" String="Parent Tag"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/Tags">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.UserProfile/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/userId"><Annotation Term="Common.Label" String="User ID"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/displayName"><Annotation Term="Common.Label" String="Display Name"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/email"><Annotation Term="Common.Label" String="Email"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/firstName"><Annotation Term="Common.Label" String="First Name"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/lastName"><Annotation Term="Common.Label" String="Last Name"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/avatarUrl"><Annotation Term="Common.Label" String="Avatar URL"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/jobTitle"><Annotation Term="Common.Label" String="Job Title"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/department"><Annotation Term="Common.Label" String="Department"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/phone"><Annotation Term="Common.Label" String="Phone"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/timezone"><Annotation Term="Common.Label" String="Timezone"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/language"><Annotation Term="Common.Label" String="Language"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/roles"><Annotation Term="Common.Label" String="Roles"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/groups"><Annotation Term="Common.Label" String="Groups"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.workzone.UserProfile/lastLoginAt"><Annotation Term="Common.Label" String="Last Login At"/></Annotations>
+      <Annotations Target="uim.workzone.WorkzoneService/UserProfiles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.workzone.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/workspaces"><Annotation Term="Common.Label" String="Workspaces"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/workspacesActive"><Annotation Term="Common.Label" String="Workspaces Active"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/members"><Annotation Term="Common.Label" String="Members"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/workpages"><Annotation Term="Common.Label" String="Workpages"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/widgets"><Annotation Term="Common.Label" String="Widgets"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/channels"><Annotation Term="Common.Label" String="Channels"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/contentItems"><Annotation Term="Common.Label" String="Content Items"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/contentPublished"><Annotation Term="Common.Label" String="Content Published"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/feedEntries"><Annotation Term="Common.Label" String="Feed Entries"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/eventsUpcoming"><Annotation Term="Common.Label" String="Events Upcoming"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/surveysActive"><Annotation Term="Common.Label" String="Surveys Active"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/forumTopicsOpen"><Annotation Term="Common.Label" String="Forum Topics Open"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/articlesPublished"><Annotation Term="Common.Label" String="Articles Published"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/tasksOpen"><Annotation Term="Common.Label" String="Tasks Open"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/tasksOverdue"><Annotation Term="Common.Label" String="Tasks Overdue"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/notificationsUnread"><Annotation Term="Common.Label" String="Notifications Unread"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/cards"><Annotation Term="Common.Label" String="Cards"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/apps"><Annotation Term="Common.Label" String="Apps"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/appsActive"><Annotation Term="Common.Label" String="Apps Active"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/providersConnected"><Annotation Term="Common.Label" String="Providers Connected"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/shellPluginsActive"><Annotation Term="Common.Label" String="Shell Plugins Active"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/sites"><Annotation Term="Common.Label" String="Sites"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/sitesPublished"><Annotation Term="Common.Label" String="Sites Published"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/users"><Annotation Term="Common.Label" String="Users"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/roles"><Annotation Term="Common.Label" String="Roles"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/groups"><Annotation Term="Common.Label" String="Groups"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/pendingHousekeeping"><Annotation Term="Common.Label" String="Pending Housekeeping"/></Annotations>
+      <Annotations Target="uim.workzone.Statistic/lastPublishedAt"><Annotation Term="Common.Label" String="Last Published At"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

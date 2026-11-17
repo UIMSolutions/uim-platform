@@ -1,0 +1,30 @@
+<mvc:View
+  controllerName="uim.workzone.controller.Resource"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:f="sap.f"
+  xmlns="sap.m">
+  <!-- Generic list page of one entity set. The table is built from the resource
+       catalogue (columns, actions) when the route matches. -->
+  <f:DynamicPage id="resourcePage" headerExpanded="false" showFooter="false">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title id="resourceTitle" text="{ui>/title}" level="H2"/></f:heading>
+        <f:actions>
+          <Button id="createButton" text="{i18n>create}" icon="sap-icon://add" type="Emphasized" press=".onCreate"/>
+          <Button id="editButton" text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit"/>
+          <Button id="deleteButton" text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"/>
+          <MenuButton id="actionsButton" text="{i18n>actions}" icon="sap-icon://action" visible="{= ${ui>/actions}.length > 0 }">
+            <menu>
+              <Menu id="actionsMenu" items="{path: 'ui>/actions', templateShareable: false}" itemSelected=".onAction">
+                <MenuItem text="{ui>label}" key="{ui>odataAction}"/>
+              </Menu>
+            </menu>
+          </MenuButton>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:content>
+      <VBox id="tableContainer" renderType="Bare"/>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

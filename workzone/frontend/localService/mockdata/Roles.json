@@ -1,0 +1,109 @@
+[
+  {
+    "updatedAt": "2026-11-17T18:06:05Z",
+    "id": "1df5def9-efee-4636-8b8c-5ee843180208",
+    "createdBy": "system",
+    "createdAt": "2026-11-17T18:06:05Z",
+    "name": "Site Administrator",
+    "predefined": true,
+    "description": "Manage sites, navigation, themes and shell plugins",
+    "isDefault": false,
+    "tenantId": "default",
+    "permissions": [
+      "admin:site",
+      "admin:theme",
+      "admin:plugin",
+      "read:workspace"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-17T18:06:05Z",
+    "id": "24f3f4ed-7159-4c46-bdd1-9ddf9d2d59ae",
+    "createdBy": "system",
+    "createdAt": "2026-11-17T18:06:05Z",
+    "name": "Viewer",
+    "predefined": true,
+    "description": "Read workspaces, pages and content",
+    "isDefault": true,
+    "tenantId": "default",
+    "permissions": [
+      "read:workspace",
+      "read:content",
+      "read:site"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-17T18:06:05Z",
+    "id": "ec0eb798-6ed1-49ef-a3bb-734fc44112ec",
+    "createdBy": "system",
+    "createdAt": "2026-11-17T18:06:05Z",
+    "name": "Workspace Administrator",
+    "predefined": true,
+    "description": "Manage workspaces, members, pages and widgets",
+    "isDefault": false,
+    "tenantId": "default",
+    "permissions": [
+      "read:workspace",
+      "admin:workspace",
+      "write:content",
+      "admin:content",
+      "read:site"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-17T18:06:05Z",
+    "id": "d416934c-333c-48b9-b401-ceedadc7278f",
+    "createdBy": "system",
+    "createdAt": "2026-11-17T18:06:05Z",
+    "name": "Contributor",
+    "predefined": true,
+    "description": "Create and edit content in workspaces",
+    "isDefault": false,
+    "tenantId": "default",
+    "permissions": [
+      "read:workspace",
+      "read:content",
+      "write:content",
+      "write:forum",
+      "read:site"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-17T18:06:05Z",
+    "id": "edd7735b-81e2-4c32-ae10-5f3cbb84123a",
+    "createdBy": "system",
+    "createdAt": "2026-11-17T18:06:05Z",
+    "name": "Content Manager",
+    "predefined": true,
+    "description": "Manage cards, apps, channels and content providers",
+    "isDefault": false,
+    "tenantId": "default",
+    "permissions": [
+      "read:workspace",
+      "admin:card",
+      "admin:app",
+      "admin:channel",
+      "admin:provider"
+    ],
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-17T18:06:05Z",
+    "id": "f50ff420-c7a4-4887-b36b-50c073b1d4e8",
+    "createdBy": "system",
+    "createdAt": "2026-11-17T18:06:05Z",
+    "name": "Tenant Administrator",
+    "predefined": true,
+    "description": "Full access",
+    "isDefault": false,
+    "tenantId": "default",
+    "permissions": [
+      "*:*"
+    ],
+    "updatedBy": "system"
+  }
+]

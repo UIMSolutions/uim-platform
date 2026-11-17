@@ -1,0 +1,28 @@
+{
+  "PORT": 5000,
+  "destinations": [
+    {
+      "name": "workzone-srv",
+      "url": "http://localhost:8084",
+      "forwardAuthToken": true
+    }
+  ],
+  "VCAP_SERVICES": {
+    "xsuaa": [
+      {
+        "name": "workzone-xsuaa",
+        "label": "xsuaa",
+        "tags": ["xsuaa"],
+        "credentials": {
+          "clientid": "<from: cf service-key workzone-xsuaa local>",
+          "clientsecret": "<secret>",
+          "url": "https://<subdomain>.authentication.<region>.hana.ondemand.com",
+          "uaadomain": "authentication.<region>.hana.ondemand.com",
+          "xsappname": "uim-workzone",
+          "identityzone": "<subdomain>",
+          "verificationkey": "<key>"
+        }
+      }
+    ]
+  }
+}

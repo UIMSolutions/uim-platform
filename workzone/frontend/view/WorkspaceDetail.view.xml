@@ -1,0 +1,120 @@
+<mvc:View
+  controllerName="uim.workzone.controller.WorkspaceDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:uxap="sap.uxap"
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="workspacePage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:heading><Title text="{name}" wrapping="true"/></uxap:heading>
+        <uxap:breadcrumbs>
+          <Breadcrumbs>
+            <Link text="{i18n>navOverview}" press=".onNavHome"/>
+            <Link text="{i18n>tileWorkspaces}" press=".onNavList"/>
+          </Breadcrumbs>
+        </uxap:breadcrumbs>
+        <uxap:expandedContent><Text text="{description}"/></uxap:expandedContent>
+        <uxap:actions>
+          <Button text="{i18n>addMember}" icon="sap-icon://add-employee" press=".onAddMember"/>
+          <Button text="{i18n>archive}" visible="{= ${status} === 'active' }" press=".onLifecycle('ArchiveWorkspace')"/>
+          <Button text="{i18n>restore}" visible="{= ${status} !== 'active' }" type="Emphasized" press=".onLifecycle('RestoreWorkspace')"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+    <uxap:headerContent>
+      <HBox wrap="Wrap">
+        <VBox class="wzKpi"><Label text="{i18n>colAlias}"/><Text text="{alias}"/></VBox>
+        <VBox class="wzKpi"><Label text="{i18n>colType}"/><Text text="{path: 'type', formatter: '.formatter.enumText'}"/></VBox>
+        <VBox class="wzKpi"><Label text="{i18n>colStatus}"/>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/></VBox>
+        <VBox class="wzKpi"><Label text="{i18n>colMembers}"/><Text text="{ui>/memberCount}"/></VBox>
+        <VBox class="wzKpi"><Label text="{i18n>colFeatures}"/>
+          <Text text="{= (${enableFeeds} ? 'Feed ' : '') + (${enableWiki} ? 'Wiki ' : '') + (${enableForum} ? 'Forum ' : '') + (${enableKnowledgeBase} ? 'KB' : '') }"/></VBox>
+      </HBox>
+    </uxap:headerContent>
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>colMembers}">
+        <uxap:subSections><uxap:ObjectPageSubSection>
+          <Table id="memberTable" items="{path: 'members', templateShareable: false}" noDataText="{i18n>noData}">
+            <columns>
+              <Column><Text text="{i18n>colUser}"/></Column>
+              <Column><Text text="{i18n>colDisplayName}"/></Column>
+              <Column><Text text="{i18n>colRole}"/></Column>
+              <Column hAlign="End"><Text text=""/></Column>
+            </columns>
+            <items>
+              <ColumnListItem>
+                <cells>
+                  <Text text="{userId}"/>
+                  <Text text="{displayName}"/>
+                  <ObjectStatus text="{path: 'role', formatter: '.formatter.enumText'}" state="{= ${role} === 'owner' ? 'Success' : 'None' }"/>
+                  <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>removeMember}" press=".onRemoveMember"/>
+                </cells>
+              </ColumnListItem>
+            </items>
+          </Table>
+        </uxap:ObjectPageSubSection></uxap:subSections>
+      </uxap:ObjectPageSection>
+      <uxap:ObjectPageSection title="{i18n>tileWorkpages}">
+        <uxap:subSections><uxap:ObjectPageSubSection>
+          <Table id="pageTable" noDataText="{i18n>noData}"
+            items="{path: '/Workpages', parameters: {$orderby: 'sortOrder'}, suspended: true, templateShareable: false}">
+            <columns>
+              <Column><Text text="{i18n>colTitle}"/></Column>
+              <Column><Text text="{i18n>colTemplate}"/></Column>
+              <Column><Text text="{i18n>colDefault}"/></Column>
+            </columns>
+            <items><ColumnListItem><cells>
+              <Text text="{title}"/><Text text="{templateName}"/><Text text="{path: 'isDefault', formatter: '.formatter.cellText'}"/>
+            </cells></ColumnListItem></items>
+          </Table>
+        </uxap:ObjectPageSubSection></uxap:subSections>
+      </uxap:ObjectPageSection>
+      <uxap:ObjectPageSection title="{i18n>tileContent}">
+        <uxap:subSections><uxap:ObjectPageSubSection>
+          <Table id="contentTable" noDataText="{i18n>noData}"
+            items="{path: '/ContentItems', parameters: {$orderby: 'title'}, suspended: true, templateShareable: false}">
+            <columns>
+              <Column><Text text="{i18n>colTitle}"/></Column>
+              <Column><Text text="{i18n>colType}"/></Column>
+              <Column><Text text="{i18n>colStatus}"/></Column>
+              <Column><Text text="{i18n>colAuthor}"/></Column>
+            </columns>
+            <items><ColumnListItem><cells>
+              <Text text="{title}"/><Text text="{path: 'contentType', formatter: '.formatter.enumText'}"/>
+              <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+              <Text text="{authorName}"/>
+            </cells></ColumnListItem></items>
+          </Table>
+        </uxap:ObjectPageSubSection></uxap:subSections>
+      </uxap:ObjectPageSection>
+      <uxap:ObjectPageSection title="{i18n>tileEvents}">
+        <uxap:subSections><uxap:ObjectPageSubSection>
+          <Table id="eventTable" noDataText="{i18n>noData}"
+            items="{path: '/Events', parameters: {$orderby: 'startsAt desc'}, suspended: true, templateShareable: false}">
+            <columns>
+              <Column><Text text="{i18n>colTitle}"/></Column>
+              <Column><Text text="{i18n>colStarts}"/></Column>
+              <Column><Text text="{i18n>colStatus}"/></Column>
+            </columns>
+            <items><ColumnListItem><cells>
+              <Text text="{title}"/>
+              <Text text="{path: 'startsAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+            </cells></ColumnListItem></items>
+          </Table>
+        </uxap:ObjectPageSubSection></uxap:subSections>
+      </uxap:ObjectPageSection>
+      <uxap:ObjectPageSection title="{i18n>tileFeed}">
+        <uxap:subSections><uxap:ObjectPageSubSection>
+          <List id="feedList" noDataText="{i18n>noData}"
+            items="{path: '/FeedEntries', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+            <items><FeedListItem sender="{actorName}" text="{message}" showIcon="false"
+                timestamp="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/></items>
+          </List>
+        </uxap:ObjectPageSubSection></uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

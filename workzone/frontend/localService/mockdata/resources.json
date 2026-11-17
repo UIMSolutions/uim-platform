@@ -1,0 +1,2708 @@
+{
+    "items": [
+        {
+            "odataEntityType": "Workspace",
+            "actions": [
+                {
+                    "odataAction": "AddMemberWorkspace",
+                    "parameters": [
+                        "userId",
+                        "displayName",
+                        "role"
+                    ],
+                    "label": "Add Member",
+                    "name": "add-member"
+                },
+                {
+                    "odataAction": "RemoveMemberWorkspace",
+                    "parameters": [
+                        "userId"
+                    ],
+                    "label": "Remove Member",
+                    "name": "remove-member"
+                },
+                {
+                    "odataAction": "ChangeRoleWorkspace",
+                    "parameters": [
+                        "userId",
+                        "role"
+                    ],
+                    "label": "Change Role",
+                    "name": "change-role"
+                },
+                {
+                    "odataAction": "ArchiveWorkspace",
+                    "parameters": [],
+                    "label": "Archive",
+                    "name": "archive"
+                },
+                {
+                    "odataAction": "SuspendWorkspace",
+                    "parameters": [],
+                    "label": "Suspend",
+                    "name": "suspend"
+                },
+                {
+                    "odataAction": "RestoreWorkspace",
+                    "parameters": [],
+                    "label": "Restore",
+                    "name": "restore"
+                }
+            ],
+            "title": "Workspaces",
+            "odataEntitySet": "Workspaces",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "alias",
+                    "header": "Alias"
+                },
+                {
+                    "field": "type",
+                    "header": "Type"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "members",
+                    "header": "Members"
+                },
+                {
+                    "field": "defaultLanguage",
+                    "header": "Language"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Alias",
+                    "name": "alias"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "team",
+                        "project",
+                        "department",
+                        "public",
+                        "external"
+                    ],
+                    "label": "Type",
+                    "name": "type"
+                },
+                {
+                    "kind": "text",
+                    "label": "Image URL",
+                    "name": "imageUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Default Language",
+                    "name": "defaultLanguage"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Allow External Members",
+                    "name": "allowExternalMembers"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable Notifications",
+                    "name": "enableNotifications"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable Feeds",
+                    "name": "enableFeeds"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable Wiki",
+                    "name": "enableWiki"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable Knowledge Base",
+                    "name": "enableKnowledgeBase"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable Forum",
+                    "name": "enableForum"
+                },
+                {
+                    "kind": "records",
+                    "recordType": "WorkspaceMember",
+                    "label": "Members",
+                    "name": "members"
+                }
+            ],
+            "path": "/api/v1/workspaces",
+            "parentField": "",
+            "resource": "workspaces"
+        },
+        {
+            "odataEntityType": "Workpage",
+            "actions": [
+                {
+                    "odataAction": "MakeDefaultWorkpage",
+                    "parameters": [],
+                    "label": "Make Default",
+                    "name": "make-default"
+                }
+            ],
+            "title": "Workpages",
+            "odataEntitySet": "Workpages",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "workspaceName",
+                    "header": "Workspace"
+                },
+                {
+                    "field": "templateName",
+                    "header": "Template"
+                },
+                {
+                    "field": "isDefault",
+                    "header": "Default"
+                },
+                {
+                    "field": "visible",
+                    "header": "Visible"
+                },
+                {
+                    "field": "sortOrder",
+                    "header": "Sort"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "workspaceId": "Workspaces",
+                "templateId": "PageTemplates"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workspace ID",
+                    "name": "workspaceId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Template ID",
+                    "name": "templateId"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Sort Order",
+                    "name": "sortOrder"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Visible",
+                    "name": "visible"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Is Default",
+                    "name": "isDefault"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Allowed Roles",
+                    "name": "allowedRoles"
+                }
+            ],
+            "path": "/api/v1/workpages",
+            "parentField": "workspaceId",
+            "resource": "workpages"
+        },
+        {
+            "odataEntityType": "Widget",
+            "actions": [
+                {
+                    "odataAction": "MoveWidget",
+                    "parameters": [
+                        "row",
+                        "col"
+                    ],
+                    "label": "Move",
+                    "name": "move"
+                }
+            ],
+            "title": "Widgets",
+            "odataEntitySet": "Widgets",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "workpageTitle",
+                    "header": "Workpage"
+                },
+                {
+                    "field": "size",
+                    "header": "Size"
+                },
+                {
+                    "field": "row",
+                    "header": "Row"
+                },
+                {
+                    "field": "col",
+                    "header": "Col"
+                },
+                {
+                    "field": "cardId",
+                    "header": "Card"
+                },
+                {
+                    "field": "appId",
+                    "header": "App"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "cardId": "Cards",
+                "appId": "Apps",
+                "workpageId": "Workpages"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workpage ID",
+                    "name": "workpageId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Card ID",
+                    "name": "cardId"
+                },
+                {
+                    "kind": "text",
+                    "label": "App ID",
+                    "name": "appId"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "small",
+                        "medium",
+                        "large",
+                        "fullWidth"
+                    ],
+                    "label": "Size",
+                    "name": "size"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Row",
+                    "name": "row"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Col",
+                    "name": "col"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Sort Order",
+                    "name": "sortOrder"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Visible",
+                    "name": "visible"
+                },
+                {
+                    "kind": "text",
+                    "label": "Custom Title",
+                    "name": "customTitle"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Max Items",
+                    "name": "maxItems"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Refresh Interval Sec",
+                    "name": "refreshIntervalSec"
+                },
+                {
+                    "kind": "text",
+                    "label": "Filter Expression",
+                    "name": "filterExpression"
+                },
+                {
+                    "kind": "records",
+                    "recordType": "KeyValue",
+                    "label": "Parameters",
+                    "name": "parameters"
+                }
+            ],
+            "path": "/api/v1/widgets",
+            "parentField": "workpageId",
+            "resource": "widgets"
+        },
+        {
+            "odataEntityType": "Channel",
+            "actions": [
+                {
+                    "odataAction": "ActivateChannel",
+                    "parameters": [],
+                    "label": "Activate",
+                    "name": "activate"
+                },
+                {
+                    "odataAction": "DeactivateChannel",
+                    "parameters": [],
+                    "label": "Deactivate",
+                    "name": "deactivate"
+                }
+            ],
+            "title": "Channels",
+            "odataEntitySet": "Channels",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "workspaceName",
+                    "header": "Workspace"
+                },
+                {
+                    "field": "channelType",
+                    "header": "Type"
+                },
+                {
+                    "field": "active",
+                    "header": "Active"
+                },
+                {
+                    "field": "sourceUrl",
+                    "header": "Source"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "workspaceId": "Workspaces"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workspace ID",
+                    "name": "workspaceId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "activity",
+                        "notification",
+                        "custom",
+                        "external"
+                    ],
+                    "label": "Channel Type",
+                    "name": "channelType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Source URL",
+                    "name": "sourceUrl"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Poll Interval Sec",
+                    "name": "pollIntervalSec"
+                },
+                {
+                    "kind": "text",
+                    "label": "Auth Type",
+                    "name": "authType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Auth Token",
+                    "name": "authToken"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Max Items",
+                    "name": "maxItems"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Allowed Roles",
+                    "name": "allowedRoles"
+                }
+            ],
+            "path": "/api/v1/channels",
+            "parentField": "workspaceId",
+            "resource": "channels"
+        },
+        {
+            "odataEntityType": "ContentItem",
+            "actions": [
+                {
+                    "odataAction": "PublishContentItem",
+                    "parameters": [],
+                    "label": "Publish",
+                    "name": "publish"
+                },
+                {
+                    "odataAction": "ArchiveContentItem",
+                    "parameters": [],
+                    "label": "Archive",
+                    "name": "archive"
+                },
+                {
+                    "odataAction": "PinContentItem",
+                    "parameters": [],
+                    "label": "Pin",
+                    "name": "pin"
+                },
+                {
+                    "odataAction": "UnpinContentItem",
+                    "parameters": [],
+                    "label": "Unpin",
+                    "name": "unpin"
+                },
+                {
+                    "odataAction": "LikeContentItem",
+                    "parameters": [],
+                    "label": "Like",
+                    "name": "like"
+                }
+            ],
+            "title": "Content",
+            "odataEntitySet": "ContentItems",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "workspaceName",
+                    "header": "Workspace"
+                },
+                {
+                    "field": "contentType",
+                    "header": "Type"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "authorName",
+                    "header": "Author"
+                },
+                {
+                    "field": "tags",
+                    "header": "Tags"
+                },
+                {
+                    "field": "likeCount",
+                    "header": "Likes"
+                },
+                {
+                    "field": "publishedAt",
+                    "header": "Published"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "workspaceId": "Workspaces"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workspace ID",
+                    "name": "workspaceId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Body",
+                    "name": "body"
+                },
+                {
+                    "kind": "text",
+                    "label": "Summary",
+                    "name": "summary"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "blogPost",
+                        "wikiPage",
+                        "announcement",
+                        "document"
+                    ],
+                    "label": "Content Type",
+                    "name": "contentType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Author Name",
+                    "name": "authorName"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Tags",
+                    "name": "tags"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Attachment Urls",
+                    "name": "attachmentUrls"
+                },
+                {
+                    "kind": "text",
+                    "label": "Language",
+                    "name": "language"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Comments Enabled",
+                    "name": "commentsEnabled"
+                }
+            ],
+            "path": "/api/v1/content",
+            "parentField": "workspaceId",
+            "resource": "content"
+        },
+        {
+            "odataEntityType": "FeedEntry",
+            "actions": [],
+            "title": "Feed",
+            "odataEntitySet": "FeedEntries",
+            "columns": [
+                {
+                    "field": "workspaceName",
+                    "header": "Workspace"
+                },
+                {
+                    "field": "actorName",
+                    "header": "Actor"
+                },
+                {
+                    "field": "action",
+                    "header": "Action"
+                },
+                {
+                    "field": "objectTitle",
+                    "header": "Object"
+                },
+                {
+                    "field": "message",
+                    "header": "Message"
+                },
+                {
+                    "field": "createdAt",
+                    "header": "Created"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "workspaceId": "Workspaces"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workspace ID",
+                    "name": "workspaceId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Actor Name",
+                    "name": "actorName"
+                },
+                {
+                    "kind": "text",
+                    "label": "Action",
+                    "name": "action"
+                },
+                {
+                    "kind": "text",
+                    "label": "Object Type",
+                    "name": "objectType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Object ID",
+                    "name": "objectId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Object Title",
+                    "name": "objectTitle"
+                },
+                {
+                    "kind": "text",
+                    "label": "Message",
+                    "name": "message"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Mentioned User Ids",
+                    "name": "mentionedUserIds"
+                }
+            ],
+            "path": "/api/v1/feeds",
+            "parentField": "workspaceId",
+            "resource": "feeds"
+        },
+        {
+            "odataEntityType": "Event",
+            "actions": [
+                {
+                    "odataAction": "CancelEvent",
+                    "parameters": [],
+                    "label": "Cancel",
+                    "name": "cancel"
+                },
+                {
+                    "odataAction": "AddAttendeeEvent",
+                    "parameters": [
+                        "userId"
+                    ],
+                    "label": "Add Attendee",
+                    "name": "add-attendee"
+                },
+                {
+                    "odataAction": "RemoveAttendeeEvent",
+                    "parameters": [
+                        "userId"
+                    ],
+                    "label": "Remove Attendee",
+                    "name": "remove-attendee"
+                }
+            ],
+            "title": "Events",
+            "odataEntitySet": "Events",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "workspaceName",
+                    "header": "Workspace"
+                },
+                {
+                    "field": "startsAt",
+                    "header": "Starts"
+                },
+                {
+                    "field": "endsAt",
+                    "header": "Ends"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "attendeeIds",
+                    "header": "Attendees"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "workspaceId": "Workspaces"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workspace ID",
+                    "name": "workspaceId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Location",
+                    "name": "location"
+                },
+                {
+                    "kind": "text",
+                    "label": "Meeting URL",
+                    "name": "meetingUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Organizer Name",
+                    "name": "organizerName"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Attendee Ids",
+                    "name": "attendeeIds"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "All Day",
+                    "name": "allDay"
+                },
+                {
+                    "kind": "dateTime",
+                    "label": "Starts At",
+                    "name": "startsAt"
+                },
+                {
+                    "kind": "dateTime",
+                    "label": "Ends At",
+                    "name": "endsAt"
+                },
+                {
+                    "kind": "text",
+                    "label": "Timezone",
+                    "name": "timezone"
+                },
+                {
+                    "kind": "text",
+                    "label": "Recurrence Rule",
+                    "name": "recurrenceRule"
+                }
+            ],
+            "path": "/api/v1/events",
+            "parentField": "workspaceId",
+            "resource": "events"
+        },
+        {
+            "odataEntityType": "Survey",
+            "actions": [
+                {
+                    "odataAction": "ActivateSurvey",
+                    "parameters": [],
+                    "label": "Activate",
+                    "name": "activate"
+                },
+                {
+                    "odataAction": "CloseSurvey",
+                    "parameters": [],
+                    "label": "Close",
+                    "name": "close"
+                },
+                {
+                    "odataAction": "ArchiveSurvey",
+                    "parameters": [],
+                    "label": "Archive",
+                    "name": "archive"
+                },
+                {
+                    "odataAction": "RespondSurvey",
+                    "parameters": [],
+                    "label": "Respond",
+                    "name": "respond"
+                }
+            ],
+            "title": "Surveys",
+            "odataEntitySet": "Surveys",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "workspaceName",
+                    "header": "Workspace"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "questions",
+                    "header": "Questions"
+                },
+                {
+                    "field": "responseCount",
+                    "header": "Responses"
+                },
+                {
+                    "field": "endsAt",
+                    "header": "Ends"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "workspaceId": "Workspaces"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workspace ID",
+                    "name": "workspaceId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Creator Name",
+                    "name": "creatorName"
+                },
+                {
+                    "kind": "records",
+                    "recordType": "SurveyQuestion",
+                    "label": "Questions",
+                    "name": "questions"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Anonymous",
+                    "name": "anonymous"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Allow Multiple Responses",
+                    "name": "allowMultipleResponses"
+                },
+                {
+                    "kind": "dateTime",
+                    "label": "Starts At",
+                    "name": "startsAt"
+                },
+                {
+                    "kind": "dateTime",
+                    "label": "Ends At",
+                    "name": "endsAt"
+                }
+            ],
+            "path": "/api/v1/surveys",
+            "parentField": "workspaceId",
+            "resource": "surveys"
+        },
+        {
+            "odataEntityType": "ForumTopic",
+            "actions": [
+                {
+                    "odataAction": "ReplyForumTopic",
+                    "parameters": [],
+                    "label": "Reply",
+                    "name": "reply"
+                },
+                {
+                    "odataAction": "CloseForumTopic",
+                    "parameters": [],
+                    "label": "Close",
+                    "name": "close"
+                },
+                {
+                    "odataAction": "ReopenForumTopic",
+                    "parameters": [],
+                    "label": "Reopen",
+                    "name": "reopen"
+                },
+                {
+                    "odataAction": "PinForumTopic",
+                    "parameters": [],
+                    "label": "Pin",
+                    "name": "pin"
+                },
+                {
+                    "odataAction": "UnpinForumTopic",
+                    "parameters": [],
+                    "label": "Unpin",
+                    "name": "unpin"
+                },
+                {
+                    "odataAction": "LockForumTopic",
+                    "parameters": [],
+                    "label": "Lock",
+                    "name": "lock"
+                },
+                {
+                    "odataAction": "UnlockForumTopic",
+                    "parameters": [],
+                    "label": "Unlock",
+                    "name": "unlock"
+                }
+            ],
+            "title": "Forum",
+            "odataEntitySet": "ForumTopics",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "workspaceName",
+                    "header": "Workspace"
+                },
+                {
+                    "field": "authorName",
+                    "header": "Author"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "replyCount",
+                    "header": "Replies"
+                },
+                {
+                    "field": "pinned",
+                    "header": "Pinned"
+                },
+                {
+                    "field": "locked",
+                    "header": "Locked"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "workspaceId": "Workspaces"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workspace ID",
+                    "name": "workspaceId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Body",
+                    "name": "body"
+                },
+                {
+                    "kind": "text",
+                    "label": "Author Name",
+                    "name": "authorName"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Tags",
+                    "name": "tags"
+                }
+            ],
+            "path": "/api/v1/forum-topics",
+            "parentField": "workspaceId",
+            "resource": "forum-topics"
+        },
+        {
+            "odataEntityType": "KnowledgeBaseArticle",
+            "actions": [
+                {
+                    "odataAction": "SubmitKnowledgeBaseArticle",
+                    "parameters": [],
+                    "label": "Submit for Review",
+                    "name": "submit"
+                },
+                {
+                    "odataAction": "PublishKnowledgeBaseArticle",
+                    "parameters": [],
+                    "label": "Publish",
+                    "name": "publish"
+                },
+                {
+                    "odataAction": "ArchiveKnowledgeBaseArticle",
+                    "parameters": [],
+                    "label": "Archive",
+                    "name": "archive"
+                },
+                {
+                    "odataAction": "MarkHelpfulKnowledgeBaseArticle",
+                    "parameters": [],
+                    "label": "Helpful",
+                    "name": "mark-helpful"
+                }
+            ],
+            "title": "Knowledge Base",
+            "odataEntitySet": "KnowledgeBaseArticles",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "workspaceName",
+                    "header": "Workspace"
+                },
+                {
+                    "field": "category",
+                    "header": "Category"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "version",
+                    "header": "Version"
+                },
+                {
+                    "field": "helpfulCount",
+                    "header": "Helpful"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "workspaceId": "Workspaces"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Workspace ID",
+                    "name": "workspaceId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Body",
+                    "name": "body"
+                },
+                {
+                    "kind": "text",
+                    "label": "Summary",
+                    "name": "summary"
+                },
+                {
+                    "kind": "text",
+                    "label": "Author Name",
+                    "name": "authorName"
+                },
+                {
+                    "kind": "text",
+                    "label": "Category",
+                    "name": "category"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Tags",
+                    "name": "tags"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Related Article Ids",
+                    "name": "relatedArticleIds"
+                },
+                {
+                    "kind": "text",
+                    "label": "Language",
+                    "name": "language"
+                }
+            ],
+            "path": "/api/v1/knowledge-base",
+            "parentField": "workspaceId",
+            "resource": "knowledge-base"
+        },
+        {
+            "odataEntityType": "Task",
+            "actions": [
+                {
+                    "odataAction": "StartTask",
+                    "parameters": [],
+                    "label": "Start",
+                    "name": "start"
+                },
+                {
+                    "odataAction": "CompleteTask",
+                    "parameters": [],
+                    "label": "Complete",
+                    "name": "complete"
+                },
+                {
+                    "odataAction": "CancelTask",
+                    "parameters": [],
+                    "label": "Cancel",
+                    "name": "cancel"
+                },
+                {
+                    "odataAction": "ReopenTask",
+                    "parameters": [],
+                    "label": "Reopen",
+                    "name": "reopen"
+                }
+            ],
+            "title": "Tasks",
+            "odataEntitySet": "Tasks",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "assigneeName",
+                    "header": "Assignee"
+                },
+                {
+                    "field": "priority",
+                    "header": "Priority"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "dueAt",
+                    "header": "Due"
+                },
+                {
+                    "field": "sourceApp",
+                    "header": "Source"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Assignee ID",
+                    "name": "assigneeId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Assignee Name",
+                    "name": "assigneeName"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "low",
+                        "medium",
+                        "high",
+                        "veryHigh"
+                    ],
+                    "label": "Priority",
+                    "name": "priority"
+                },
+                {
+                    "kind": "text",
+                    "label": "Source App",
+                    "name": "sourceApp"
+                },
+                {
+                    "kind": "text",
+                    "label": "Source Task ID",
+                    "name": "sourceTaskId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Action URL",
+                    "name": "actionUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Category",
+                    "name": "category"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Tags",
+                    "name": "tags"
+                },
+                {
+                    "kind": "dateTime",
+                    "label": "Due At",
+                    "name": "dueAt"
+                }
+            ],
+            "path": "/api/v1/tasks",
+            "parentField": "",
+            "resource": "tasks"
+        },
+        {
+            "odataEntityType": "Notification",
+            "actions": [
+                {
+                    "odataAction": "MarkReadNotification",
+                    "parameters": [],
+                    "label": "Mark Read",
+                    "name": "mark-read"
+                },
+                {
+                    "odataAction": "MarkUnreadNotification",
+                    "parameters": [],
+                    "label": "Mark Unread",
+                    "name": "mark-unread"
+                },
+                {
+                    "odataAction": "DismissNotification",
+                    "parameters": [],
+                    "label": "Dismiss",
+                    "name": "dismiss"
+                }
+            ],
+            "title": "Notifications",
+            "odataEntitySet": "Notifications",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "recipientId",
+                    "header": "Recipient"
+                },
+                {
+                    "field": "priority",
+                    "header": "Priority"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "sourceApp",
+                    "header": "Source"
+                },
+                {
+                    "field": "expiresAt",
+                    "header": "Expires"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Recipient ID",
+                    "name": "recipientId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Body",
+                    "name": "body"
+                },
+                {
+                    "kind": "text",
+                    "label": "Source App",
+                    "name": "sourceApp"
+                },
+                {
+                    "kind": "text",
+                    "label": "Source Object Type",
+                    "name": "sourceObjectType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Source Object ID",
+                    "name": "sourceObjectId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Action URL",
+                    "name": "actionUrl"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                    ],
+                    "label": "Priority",
+                    "name": "priority"
+                },
+                {
+                    "kind": "dateTime",
+                    "label": "Expires At",
+                    "name": "expiresAt"
+                }
+            ],
+            "path": "/api/v1/notifications",
+            "parentField": "",
+            "resource": "notifications"
+        },
+        {
+            "odataEntityType": "Card",
+            "actions": [
+                {
+                    "odataAction": "ActivateCard",
+                    "parameters": [],
+                    "label": "Activate",
+                    "name": "activate"
+                },
+                {
+                    "odataAction": "DeactivateCard",
+                    "parameters": [],
+                    "label": "Deactivate",
+                    "name": "deactivate"
+                }
+            ],
+            "title": "Cards",
+            "odataEntitySet": "Cards",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "cardType",
+                    "header": "Type"
+                },
+                {
+                    "field": "dataSourceUrl",
+                    "header": "Data Source"
+                },
+                {
+                    "field": "refreshIntervalSec",
+                    "header": "Refresh (s)"
+                },
+                {
+                    "field": "active",
+                    "header": "Active"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Subtitle",
+                    "name": "subtitle"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Icon",
+                    "name": "icon"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "list",
+                        "table",
+                        "object",
+                        "analytical",
+                        "timeline",
+                        "calendar",
+                        "adaptive",
+                        "component"
+                    ],
+                    "label": "Card Type",
+                    "name": "cardType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Data Source URL",
+                    "name": "dataSourceUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Data Source Method",
+                    "name": "dataSourceMethod"
+                },
+                {
+                    "kind": "text",
+                    "label": "Data Source Path",
+                    "name": "dataSourcePath"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Refresh Interval Sec",
+                    "name": "refreshIntervalSec"
+                },
+                {
+                    "kind": "text",
+                    "label": "Auth Type",
+                    "name": "authType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Auth Token",
+                    "name": "authToken"
+                },
+                {
+                    "kind": "text",
+                    "label": "Manifest Type",
+                    "name": "manifestType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Manifest Version",
+                    "name": "manifestVersion"
+                },
+                {
+                    "kind": "text",
+                    "label": "Header Title",
+                    "name": "headerTitle"
+                },
+                {
+                    "kind": "text",
+                    "label": "Header Subtitle",
+                    "name": "headerSubtitle"
+                },
+                {
+                    "kind": "text",
+                    "label": "Header Icon",
+                    "name": "headerIcon"
+                },
+                {
+                    "kind": "text",
+                    "label": "Header Status",
+                    "name": "headerStatus"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Max Items",
+                    "name": "maxItems"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Allowed Roles",
+                    "name": "allowedRoles"
+                }
+            ],
+            "path": "/api/v1/cards",
+            "parentField": "",
+            "resource": "cards"
+        },
+        {
+            "odataEntityType": "App",
+            "actions": [
+                {
+                    "odataAction": "ActivateApp",
+                    "parameters": [],
+                    "label": "Activate",
+                    "name": "activate"
+                },
+                {
+                    "odataAction": "DeactivateApp",
+                    "parameters": [],
+                    "label": "Deactivate",
+                    "name": "deactivate"
+                },
+                {
+                    "odataAction": "DeprecateApp",
+                    "parameters": [],
+                    "label": "Deprecate",
+                    "name": "deprecate"
+                }
+            ],
+            "title": "Apps",
+            "odataEntitySet": "Apps",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "launchUrl",
+                    "header": "Launch URL"
+                },
+                {
+                    "field": "vendor",
+                    "header": "Vendor"
+                },
+                {
+                    "field": "version",
+                    "header": "Version"
+                },
+                {
+                    "field": "supportedPlatforms",
+                    "header": "Platforms"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Launch URL",
+                    "name": "launchUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Icon",
+                    "name": "icon"
+                },
+                {
+                    "kind": "text",
+                    "label": "Vendor",
+                    "name": "vendor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Version",
+                    "name": "version"
+                },
+                {
+                    "kind": "enumList",
+                    "options": [
+                        "web",
+                        "mobile",
+                        "desktop"
+                    ],
+                    "label": "Supported Platforms",
+                    "name": "supportedPlatforms"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Tags",
+                    "name": "tags"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Allowed Roles",
+                    "name": "allowedRoles"
+                },
+                {
+                    "kind": "text",
+                    "label": "Auth Type",
+                    "name": "authType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Auth Endpoint",
+                    "name": "authEndpoint"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable SSO",
+                    "name": "enableSso"
+                },
+                {
+                    "kind": "text",
+                    "label": "SAP System Alias",
+                    "name": "sapSystemAlias"
+                },
+                {
+                    "kind": "text",
+                    "label": "Odata Service URL",
+                    "name": "odataServiceUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Component ID",
+                    "name": "componentId"
+                }
+            ],
+            "path": "/api/v1/apps",
+            "parentField": "",
+            "resource": "apps"
+        },
+        {
+            "odataEntityType": "ContentProvider",
+            "actions": [
+                {
+                    "odataAction": "ConnectContentProvider",
+                    "parameters": [],
+                    "label": "Connect",
+                    "name": "connect"
+                },
+                {
+                    "odataAction": "DisconnectContentProvider",
+                    "parameters": [],
+                    "label": "Disconnect",
+                    "name": "disconnect"
+                },
+                {
+                    "odataAction": "SyncContentProvider",
+                    "parameters": [],
+                    "label": "Sync",
+                    "name": "sync"
+                }
+            ],
+            "title": "Content Providers",
+            "odataEntitySet": "ContentProviders",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "providerType",
+                    "header": "Type"
+                },
+                {
+                    "field": "endpointUrl",
+                    "header": "Endpoint"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "itemCount",
+                    "header": "Items"
+                },
+                {
+                    "field": "lastSyncAt",
+                    "header": "Last Sync"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "rest",
+                        "odata",
+                        "graphql",
+                        "sapBtp",
+                        "custom"
+                    ],
+                    "label": "Provider Type",
+                    "name": "providerType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Endpoint URL",
+                    "name": "endpointUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Auth Type",
+                    "name": "authType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Auth Config",
+                    "name": "authConfig"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Content Types",
+                    "name": "contentTypes"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Refresh Interval Sec",
+                    "name": "refreshIntervalSec"
+                }
+            ],
+            "path": "/api/v1/content-providers",
+            "parentField": "",
+            "resource": "content-providers"
+        },
+        {
+            "odataEntityType": "ShellPlugin",
+            "actions": [
+                {
+                    "odataAction": "ActivateShellPlugin",
+                    "parameters": [],
+                    "label": "Activate",
+                    "name": "activate"
+                },
+                {
+                    "odataAction": "DeactivateShellPlugin",
+                    "parameters": [],
+                    "label": "Deactivate",
+                    "name": "deactivate"
+                }
+            ],
+            "title": "Shell Plugins",
+            "odataEntitySet": "ShellPlugins",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "version",
+                    "header": "Version"
+                },
+                {
+                    "field": "assignedSites",
+                    "header": "Sites"
+                },
+                {
+                    "field": "hookPoints",
+                    "header": "Hook Points"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Version",
+                    "name": "version"
+                },
+                {
+                    "kind": "text",
+                    "label": "Vendor",
+                    "name": "vendor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Script URL",
+                    "name": "scriptUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Config Schema URL",
+                    "name": "configSchemaUrl"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Assigned Sites",
+                    "name": "assignedSites"
+                },
+                {
+                    "kind": "enumList",
+                    "options": [
+                        "header",
+                        "footer",
+                        "sidebar",
+                        "shellBar"
+                    ],
+                    "label": "Hook Points",
+                    "name": "hookPoints"
+                }
+            ],
+            "path": "/api/v1/shell-plugins",
+            "parentField": "",
+            "resource": "shell-plugins"
+        },
+        {
+            "odataEntityType": "Site",
+            "actions": [
+                {
+                    "odataAction": "PublishSite",
+                    "parameters": [],
+                    "label": "Publish",
+                    "name": "publish"
+                },
+                {
+                    "odataAction": "UnpublishSite",
+                    "parameters": [],
+                    "label": "Unpublish",
+                    "name": "unpublish"
+                },
+                {
+                    "odataAction": "StartMaintenanceSite",
+                    "parameters": [],
+                    "label": "Maintenance",
+                    "name": "start-maintenance"
+                },
+                {
+                    "odataAction": "ArchiveSite",
+                    "parameters": [],
+                    "label": "Archive",
+                    "name": "archive"
+                }
+            ],
+            "title": "Sites",
+            "odataEntitySet": "Sites",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "alias",
+                    "header": "Alias"
+                },
+                {
+                    "field": "themeName",
+                    "header": "Theme"
+                },
+                {
+                    "field": "status",
+                    "header": "Status"
+                },
+                {
+                    "field": "publishedAt",
+                    "header": "Published"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "themeId": "Themes"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Alias",
+                    "name": "alias"
+                },
+                {
+                    "kind": "text",
+                    "label": "Theme ID",
+                    "name": "themeId"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Allowed Roles",
+                    "name": "allowedRoles"
+                },
+                {
+                    "kind": "text",
+                    "label": "Logo URL",
+                    "name": "logoUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Favicon URL",
+                    "name": "faviconUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Footer Text",
+                    "name": "footerText"
+                },
+                {
+                    "kind": "text",
+                    "label": "Default Language",
+                    "name": "defaultLanguage"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable Search",
+                    "name": "enableSearch"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable Notifications",
+                    "name": "enableNotifications"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable User Menu",
+                    "name": "enableUserMenu"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Enable Feedback",
+                    "name": "enableFeedback"
+                }
+            ],
+            "path": "/api/v1/sites",
+            "parentField": "",
+            "resource": "sites"
+        },
+        {
+            "odataEntityType": "NavigationItem",
+            "actions": [],
+            "title": "Navigation",
+            "odataEntitySet": "NavigationItems",
+            "columns": [
+                {
+                    "field": "title",
+                    "header": "Title"
+                },
+                {
+                    "field": "siteName",
+                    "header": "Site"
+                },
+                {
+                    "field": "itemType",
+                    "header": "Type"
+                },
+                {
+                    "field": "targetUrl",
+                    "header": "Target URL"
+                },
+                {
+                    "field": "targetAppName",
+                    "header": "App"
+                },
+                {
+                    "field": "sortOrder",
+                    "header": "Sort"
+                },
+                {
+                    "field": "visible",
+                    "header": "Visible"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {
+                "targetAppId": "Apps",
+                "targetWorkpageId": "Workpages",
+                "parentId": "NavigationItems",
+                "siteId": "Sites"
+            },
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Site ID",
+                    "name": "siteId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Title",
+                    "name": "title"
+                },
+                {
+                    "kind": "text",
+                    "label": "Icon",
+                    "name": "icon"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "link",
+                        "externalLink",
+                        "app",
+                        "workpage",
+                        "group",
+                        "separator"
+                    ],
+                    "label": "Item Type",
+                    "name": "itemType"
+                },
+                {
+                    "kind": "text",
+                    "label": "Target URL",
+                    "name": "targetUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Target App ID",
+                    "name": "targetAppId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Target Workpage ID",
+                    "name": "targetWorkpageId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Parent ID",
+                    "name": "parentId"
+                },
+                {
+                    "kind": "integer",
+                    "label": "Sort Order",
+                    "name": "sortOrder"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Visible",
+                    "name": "visible"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Open In New Window",
+                    "name": "openInNewWindow"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Allowed Roles",
+                    "name": "allowedRoles"
+                }
+            ],
+            "path": "/api/v1/navigation-items",
+            "parentField": "siteId",
+            "resource": "navigation-items"
+        },
+        {
+            "odataEntityType": "Theme",
+            "actions": [
+                {
+                    "odataAction": "MakeDefaultTheme",
+                    "parameters": [],
+                    "label": "Make Default",
+                    "name": "make-default"
+                }
+            ],
+            "title": "Themes",
+            "odataEntitySet": "Themes",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "baseTheme",
+                    "header": "Base Theme"
+                },
+                {
+                    "field": "primaryColor",
+                    "header": "Primary"
+                },
+                {
+                    "field": "isDefault",
+                    "header": "Default"
+                },
+                {
+                    "field": "predefined",
+                    "header": "Predefined"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "sap_horizon",
+                        "sap_horizon_dark",
+                        "sap_horizon_hcb",
+                        "sap_horizon_hcw",
+                        "sap_fiori_3",
+                        "sap_fiori_3_dark"
+                    ],
+                    "label": "Base Theme",
+                    "name": "baseTheme"
+                },
+                {
+                    "kind": "text",
+                    "label": "Primary Color",
+                    "name": "primaryColor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Secondary Color",
+                    "name": "secondaryColor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Background Color",
+                    "name": "backgroundColor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Header Color",
+                    "name": "headerColor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Text Color",
+                    "name": "textColor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Link Color",
+                    "name": "linkColor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Accent Color",
+                    "name": "accentColor"
+                },
+                {
+                    "kind": "text",
+                    "label": "Logo URL",
+                    "name": "logoUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Favicon URL",
+                    "name": "faviconUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Custom CSS",
+                    "name": "customCss"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Is Default",
+                    "name": "isDefault"
+                }
+            ],
+            "path": "/api/v1/themes",
+            "parentField": "",
+            "resource": "themes"
+        },
+        {
+            "odataEntityType": "PageTemplate",
+            "actions": [
+                {
+                    "odataAction": "MakeDefaultPageTemplate",
+                    "parameters": [],
+                    "label": "Make Default",
+                    "name": "make-default"
+                }
+            ],
+            "title": "Page Templates",
+            "odataEntitySet": "PageTemplates",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "sections",
+                    "header": "Sections"
+                },
+                {
+                    "field": "isDefault",
+                    "header": "Default"
+                },
+                {
+                    "field": "isPublic",
+                    "header": "Public"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Thumbnail URL",
+                    "name": "thumbnailUrl"
+                },
+                {
+                    "kind": "records",
+                    "recordType": "TemplateSection",
+                    "label": "Sections",
+                    "name": "sections"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Is Default",
+                    "name": "isDefault"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Is Public",
+                    "name": "isPublic"
+                }
+            ],
+            "path": "/api/v1/page-templates",
+            "parentField": "",
+            "resource": "page-templates"
+        },
+        {
+            "odataEntityType": "Role",
+            "actions": [],
+            "title": "Roles",
+            "odataEntitySet": "Roles",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "permissions",
+                    "header": "Permissions"
+                },
+                {
+                    "field": "isDefault",
+                    "header": "Default"
+                },
+                {
+                    "field": "predefined",
+                    "header": "Predefined"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Permissions",
+                    "name": "permissions"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Is Default",
+                    "name": "isDefault"
+                }
+            ],
+            "path": "/api/v1/roles",
+            "parentField": "",
+            "resource": "roles"
+        },
+        {
+            "odataEntityType": "UserGroup",
+            "actions": [
+                {
+                    "odataAction": "AddMemberUserGroup",
+                    "parameters": [
+                        "userId"
+                    ],
+                    "label": "Add Member",
+                    "name": "add-member"
+                },
+                {
+                    "odataAction": "RemoveMemberUserGroup",
+                    "parameters": [
+                        "userId"
+                    ],
+                    "label": "Remove Member",
+                    "name": "remove-member"
+                }
+            ],
+            "title": "Groups",
+            "odataEntitySet": "UserGroups",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "groupType",
+                    "header": "Type"
+                },
+                {
+                    "field": "memberIds",
+                    "header": "Members"
+                },
+                {
+                    "field": "roles",
+                    "header": "Roles"
+                },
+                {
+                    "field": "active",
+                    "header": "Active"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "enumeration",
+                    "options": [
+                        "security",
+                        "distribution",
+                        "dynamic"
+                    ],
+                    "label": "Group Type",
+                    "name": "groupType"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Member Ids",
+                    "name": "memberIds"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Roles",
+                    "name": "roles"
+                },
+                {
+                    "kind": "boolean",
+                    "label": "Active",
+                    "name": "active"
+                }
+            ],
+            "path": "/api/v1/groups",
+            "parentField": "",
+            "resource": "groups"
+        },
+        {
+            "odataEntityType": "Tag",
+            "actions": [],
+            "title": "Tags",
+            "odataEntitySet": "Tags",
+            "columns": [
+                {
+                    "field": "name",
+                    "header": "Name"
+                },
+                {
+                    "field": "color",
+                    "header": "Colour"
+                },
+                {
+                    "field": "parentTag",
+                    "header": "Parent"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "Name",
+                    "name": "name"
+                },
+                {
+                    "kind": "text",
+                    "label": "Description",
+                    "name": "description"
+                },
+                {
+                    "kind": "text",
+                    "label": "Color",
+                    "name": "color"
+                },
+                {
+                    "kind": "text",
+                    "label": "Parent Tag",
+                    "name": "parentTag"
+                }
+            ],
+            "path": "/api/v1/tags",
+            "parentField": "",
+            "resource": "tags"
+        },
+        {
+            "odataEntityType": "UserProfile",
+            "actions": [
+                {
+                    "odataAction": "ActivateUserProfile",
+                    "parameters": [],
+                    "label": "Activate",
+                    "name": "activate"
+                },
+                {
+                    "odataAction": "DeactivateUserProfile",
+                    "parameters": [],
+                    "label": "Deactivate",
+                    "name": "deactivate"
+                },
+                {
+                    "odataAction": "RecordLoginUserProfile",
+                    "parameters": [],
+                    "label": "Record Login",
+                    "name": "record-login"
+                }
+            ],
+            "title": "Users",
+            "odataEntitySet": "UserProfiles",
+            "columns": [
+                {
+                    "field": "displayName",
+                    "header": "Display Name"
+                },
+                {
+                    "field": "userId",
+                    "header": "User"
+                },
+                {
+                    "field": "email",
+                    "header": "E-Mail"
+                },
+                {
+                    "field": "department",
+                    "header": "Department"
+                },
+                {
+                    "field": "roles",
+                    "header": "Roles"
+                },
+                {
+                    "field": "active",
+                    "header": "Active"
+                },
+                {
+                    "field": "lastLoginAt",
+                    "header": "Last Login"
+                },
+                {
+                    "field": "id",
+                    "header": "ID"
+                }
+            ],
+            "references": {},
+            "inputFields": [
+                {
+                    "kind": "text",
+                    "label": "User ID",
+                    "name": "userId"
+                },
+                {
+                    "kind": "text",
+                    "label": "Display Name",
+                    "name": "displayName"
+                },
+                {
+                    "kind": "text",
+                    "label": "Email",
+                    "name": "email"
+                },
+                {
+                    "kind": "text",
+                    "label": "First Name",
+                    "name": "firstName"
+                },
+                {
+                    "kind": "text",
+                    "label": "Last Name",
+                    "name": "lastName"
+                },
+                {
+                    "kind": "text",
+                    "label": "Avatar URL",
+                    "name": "avatarUrl"
+                },
+                {
+                    "kind": "text",
+                    "label": "Job Title",
+                    "name": "jobTitle"
+                },
+                {
+                    "kind": "text",
+                    "label": "Department",
+                    "name": "department"
+                },
+                {
+                    "kind": "text",
+                    "label": "Phone",
+                    "name": "phone"
+                },
+                {
+                    "kind": "text",
+                    "label": "Timezone",
+                    "name": "timezone"
+                },
+                {
+                    "kind": "text",
+                    "label": "Language",
+                    "name": "language"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Roles",
+                    "name": "roles"
+                },
+                {
+                    "kind": "textList",
+                    "label": "Groups",
+                    "name": "groups"
+                }
+            ],
+            "path": "/api/v1/user-profiles",
+            "parentField": "",
+            "resource": "user-profiles"
+        }
+    ]
+}

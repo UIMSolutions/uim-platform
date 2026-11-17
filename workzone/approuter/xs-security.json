@@ -1,0 +1,25 @@
+{
+  "xsappname": "uim-workzone",
+  "tenant-mode": "dedicated",
+  "description": "UIM Work Zone service",
+  "scopes": [
+    { "name": "$XSAPPNAME.WorkzoneViewer", "description": "Read workspaces, content, tasks, sites and the catalogue" },
+    { "name": "$XSAPPNAME.WorkzoneContributor", "description": "Create and change workspaces, pages, content, tasks and events" },
+    { "name": "$XSAPPNAME.WorkzoneAdmin", "description": "Manage sites, navigation, themes, roles, groups, apps, cards and providers" }
+  ],
+  "role-templates": [
+    { "name": "WorkzoneViewer", "description": "Work Zone viewer", "scope-references": ["$XSAPPNAME.WorkzoneViewer"] },
+    { "name": "WorkzoneContributor", "description": "Work Zone contributor",
+      "scope-references": ["$XSAPPNAME.WorkzoneContributor", "$XSAPPNAME.WorkzoneViewer"] },
+    { "name": "WorkzoneAdmin", "description": "Work Zone administrator",
+      "scope-references": ["$XSAPPNAME.WorkzoneAdmin", "$XSAPPNAME.WorkzoneContributor", "$XSAPPNAME.WorkzoneViewer"] }
+  ],
+  "role-collections": [
+    { "name": "UIM Work Zone Viewer", "role-template-references": ["$XSAPPNAME.WorkzoneViewer"] },
+    { "name": "UIM Work Zone Contributor", "role-template-references": ["$XSAPPNAME.WorkzoneContributor"] },
+    { "name": "UIM Work Zone Administrator", "role-template-references": ["$XSAPPNAME.WorkzoneAdmin"] }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"]
+  }
+}

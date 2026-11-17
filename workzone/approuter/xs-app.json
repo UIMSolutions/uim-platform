@@ -1,0 +1,39 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/workzone/(.*)$",
+      "target": "/odata/v4/workzone/$1",
+      "destination": "workzone-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.WorkzoneViewer", "$XSAPPNAME.WorkzoneContributor", "$XSAPPNAME.WorkzoneAdmin"],
+        "default": ["$XSAPPNAME.WorkzoneContributor", "$XSAPPNAME.WorkzoneAdmin"]
+      }
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "workzone-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.WorkzoneViewer", "$XSAPPNAME.WorkzoneContributor", "$XSAPPNAME.WorkzoneAdmin"],
+        "default": ["$XSAPPNAME.WorkzoneContributor", "$XSAPPNAME.WorkzoneAdmin"]
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.WorkzoneViewer", "$XSAPPNAME.WorkzoneContributor", "$XSAPPNAME.WorkzoneAdmin"]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+[
+  {
+    "updatedAt": "2026-11-17T18:06:05Z",
+    "id": "00f32882-535f-4e95-8b8a-7c983b471906",
+    "enableFeeds": true,
+    "enableForum": true,
+    "imageUrl": "",
+    "createdBy": "jane",
+    "createdAt": "2026-11-17T18:06:05Z",
+    "name": "Sales EMEA",
+    "defaultLanguage": "en",
+    "alias": "sales-emea",
+    "allowExternalMembers": false,
+    "enableNotifications": true,
+    "enableKnowledgeBase": true,
+    "description": "Pipeline, accounts and enablement for EMEA sales",
+    "type": "team",
+    "members": [
+      {
+        "joinedAt": "2026-11-17T18:06:05Z",
+        "userId": "jane",
+        "displayName": "jane",
+        "role": "owner"
+      }
+    ],
+    "enableWiki": true,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "jane"
+  },
+  {
+    "updatedAt": "2026-11-17T18:06:05Z",
+    "id": "a2917779-b762-48cf-8087-825328e2cce6",
+    "enableFeeds": true,
+    "enableForum": true,
+    "imageUrl": "",
+    "createdBy": "jane",
+    "createdAt": "2026-11-17T18:06:05Z",
+    "name": "HR Onboarding",
+    "defaultLanguage": "en",
+    "alias": "hr-onboarding",
+    "allowExternalMembers": false,
+    "enableNotifications": true,
+    "enableKnowledgeBase": true,
+    "description": "",
+    "type": "department",
+    "members": [
+      {
+        "joinedAt": "2026-11-17T18:06:05Z",
+        "userId": "jane",
+        "displayName": "jane",
+        "role": "owner"
+      }
+    ],
+    "enableWiki": true,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "jane"
+  }
+]

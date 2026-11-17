@@ -1,0 +1,77 @@
+<mvc:View
+  controllerName="uim.workzone.controller.Overview"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <f:DynamicPage id="overviewPage" headerExpanded="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>overviewTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{/Statistics}">
+          <VBox class="wzKpi"><Label text="{i18n>kpiWorkspaces}"/><ObjectNumber number="{workspacesActive}" unit="/ {workspaces}" class="sapMObjectNumberLarge"/></VBox>
+          <VBox class="wzKpi"><Label text="{i18n>kpiMembers}"/><ObjectNumber number="{members}" class="sapMObjectNumberLarge"/></VBox>
+          <VBox class="wzKpi"><Label text="{i18n>kpiPublished}"/><ObjectNumber number="{contentPublished}" class="sapMObjectNumberLarge"/></VBox>
+          <VBox class="wzKpi"><Label text="{i18n>kpiTasksOpen}"/><ObjectNumber number="{tasksOpen}" class="sapMObjectNumberLarge"/></VBox>
+          <VBox class="wzKpi"><Label text="{i18n>kpiTasksOverdue}"/>
+            <ObjectNumber number="{tasksOverdue}" class="sapMObjectNumberLarge" state="{= ${tasksOverdue} > 0 ? 'Error' : 'Success' }"/></VBox>
+          <VBox class="wzKpi"><Label text="{i18n>kpiUnread}"/><ObjectNumber number="{notificationsUnread}" class="sapMObjectNumberLarge"/></VBox>
+          <VBox class="wzKpi"><Label text="{i18n>kpiSites}"/><ObjectNumber number="{sitesPublished}" unit="/ {sites}" class="sapMObjectNumberLarge"/></VBox>
+          <VBox class="wzKpi"><Label text="{i18n>kpiPending}"/>
+            <ObjectNumber number="{pendingHousekeeping}" class="sapMObjectNumberLarge" state="{= ${pendingHousekeeping} > 0 ? 'Information' : 'Success' }"/></VBox>
+          <VBox class="wzKpi"><Label text="{i18n>kpiLastPublished}"/>
+            <Text text="{path: 'lastPublishedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}" class="sapUiTinyMarginTop"/></VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <l:Grid defaultSpan="XL3 L4 M6 S12" binding="{/Statistics}" class="sapUiSmallMarginTop">
+        <GenericTile header="{i18n>tileWorkspaces}" subheader="{i18n>tileActive}: {workspacesActive}" press=".onTile" app:set="Workspaces" class="wzTile">
+          <TileContent><NumericContent value="{workspaces}" icon="sap-icon://group" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileWorkpages}" subheader="{i18n>tileWidgets}: {widgets}" press=".onTile" app:set="Workpages" class="wzTile">
+          <TileContent><NumericContent value="{workpages}" icon="sap-icon://web-cam" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileContent}" subheader="{i18n>tilePublished}: {contentPublished}" press=".onTile" app:set="ContentItems" class="wzTile">
+          <TileContent><NumericContent value="{contentItems}" icon="sap-icon://document-text" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileTasks}" subheader="{i18n>tileOverdue}: {tasksOverdue}" press=".onTile" app:set="Tasks" class="wzTile">
+          <TileContent><NumericContent value="{tasksOpen}" icon="sap-icon://task" valueColor="{= ${tasksOverdue} > 0 ? 'Error' : 'Neutral' }" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileNotifications}" subheader="{i18n>tileUnread}" press=".onTile" app:set="Notifications" class="wzTile">
+          <TileContent><NumericContent value="{notificationsUnread}" icon="sap-icon://bell" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileEvents}" subheader="{i18n>tileUpcoming}" press=".onTile" app:set="Events" class="wzTile">
+          <TileContent><NumericContent value="{eventsUpcoming}" icon="sap-icon://appointment" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileKnowledgeBase}" subheader="{i18n>tilePublished}" press=".onTile" app:set="KnowledgeBaseArticles" class="wzTile">
+          <TileContent><NumericContent value="{articlesPublished}" icon="sap-icon://course-book" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileForum}" subheader="{i18n>tileOpen}" press=".onTile" app:set="ForumTopics" class="wzTile">
+          <TileContent><NumericContent value="{forumTopicsOpen}" icon="sap-icon://discussion" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileSites}" subheader="{i18n>tilePublished}: {sitesPublished}" press=".onTile" app:set="Sites" class="wzTile">
+          <TileContent><NumericContent value="{sites}" icon="sap-icon://world" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileApps}" subheader="{i18n>tileActive}: {appsActive}" press=".onTile" app:set="Apps" class="wzTile">
+          <TileContent><NumericContent value="{apps}" icon="sap-icon://add-product" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileProviders}" subheader="{i18n>tileConnected}" press=".onTile" app:set="ContentProviders" class="wzTile">
+          <TileContent><NumericContent value="{providersConnected}" icon="sap-icon://connected" withMargin="false"/></TileContent>
+        </GenericTile>
+        <GenericTile header="{i18n>tileUsers}" subheader="{i18n>tileRoles}: {roles} · {i18n>tileGroups}: {groups}" press=".onTile" app:set="UserProfiles" class="wzTile">
+          <TileContent><NumericContent value="{users}" icon="sap-icon://employee" withMargin="false"/></TileContent>
+        </GenericTile>
+      </l:Grid>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

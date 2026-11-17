@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <!-- Generic create / edit dialog; the fields come from the resource catalogue -->
+  <Dialog id="editDialog" title="{ui>/draft/title}" contentWidth="34rem" resizable="true" draggable="true"
+    content="{path: 'ui>/draft/fields', factory: '.createField'}">
+    <beginButton>
+      <Button text="{i18n>save}" type="Emphasized" press=".onSaveDraft"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCancelDraft"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

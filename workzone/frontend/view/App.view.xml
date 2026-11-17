@@ -1,0 +1,32 @@
+<mvc:View
+  controllerName="uim.workzone.controller.App"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:tnt="sap.tnt"
+  xmlns="sap.m"
+  displayBlock="true">
+  <tnt:ToolPage id="toolPage" sideExpanded="{ui>/sideExpanded}">
+    <tnt:header>
+      <tnt:ToolHeader>
+        <Button icon="sap-icon://menu2" type="Transparent" tooltip="{i18n>toggleNavigation}" press=".onToggleSide"/>
+        <Title text="{i18n>appTitle}" level="H1"/>
+        <ToolbarSpacer/>
+        <Button id="seedButton" text="{i18n>seed}" icon="sap-icon://add-product" type="Transparent" press=".onSeed"/>
+        <Button id="housekeepingButton" text="{i18n>housekeeping}" icon="sap-icon://history" type="Transparent" press=".onHousekeeping"/>
+        <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+      </tnt:ToolHeader>
+    </tnt:header>
+    <tnt:sideContent>
+      <tnt:SideNavigation id="sideNavigation" selectedKey="{ui>/selectedNav}" itemSelect=".onNavSelect">
+        <tnt:NavigationList items="{path: 'nav>/items', templateShareable: false}">
+          <tnt:NavigationListItem key="{nav>key}" icon="{nav>icon}" text="{path: 'nav>text', formatter: '.navText'}"
+            expanded="false" items="{path: 'nav>items', templateShareable: false}">
+            <tnt:NavigationListItem key="{nav>key}" icon="{nav>icon}" text="{path: 'nav>key', formatter: '.setTitle'}"/>
+          </tnt:NavigationListItem>
+        </tnt:NavigationList>
+      </tnt:SideNavigation>
+    </tnt:sideContent>
+    <tnt:mainContents>
+      <App id="app" busy="{ui>/busy}"/>
+    </tnt:mainContents>
+  </tnt:ToolPage>
+</mvc:View>
