@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ias",
+    "sourceSupported": true,
+    "urlPattern": "https://<tenant>.accounts.ondemand.com",
+    "proxySupported": true,
+    "name": "Identity Authentication",
+    "targetSupported": true,
+    "defaultAuthentication": "oauth2ClientCredentials",
+    "description": "SAP Cloud Identity Services — Identity Authentication (SCIM 2.0)"
+  },
+  {
+    "id": "ldap",
+    "sourceSupported": true,
+    "urlPattern": "ldaps://<host>:636",
+    "proxySupported": false,
+    "name": "LDAP Server",
+    "targetSupported": true,
+    "defaultAuthentication": "basic",
+    "description": "Generic LDAP v3 directory (Active Directory, OpenLDAP)"
+  },
+  {
+    "id": "sapHr",
+    "sourceSupported": true,
+    "urlPattern": "https://<host>/sap/bc/hcm",
+    "proxySupported": false,
+    "name": "SAP HCM",
+    "targetSupported": false,
+    "defaultAuthentication": "basic",
+    "description": "SAP HCM / ERP HR (on premise, via Cloud Connector)"
+  },
+  {
+    "id": "successFactors",
+    "sourceSupported": true,
+    "urlPattern": "https://<api-server>.successfactors.com",
+    "proxySupported": false,
+    "name": "SAP SuccessFactors",
+    "targetSupported": true,
+    "defaultAuthentication": "oauth2ClientCredentials",
+    "description": "SAP SuccessFactors Employee Central (OData API)"
+  },
+  {
+    "id": "scim",
+    "sourceSupported": true,
+    "urlPattern": "https://<host>/scim/v2",
+    "proxySupported": true,
+    "name": "SCIM System",
+    "targetSupported": true,
+    "defaultAuthentication": "oauth2ClientCredentials",
+    "description": "Any SCIM 2.0 compatible application"
+  },
+  {
+    "id": "csv",
+    "sourceSupported": true,
+    "urlPattern": "file:///<path>/identities.csv",
+    "proxySupported": false,
+    "name": "Local CSV File",
+    "targetSupported": false,
+    "defaultAuthentication": "none",
+    "description": "Comma separated file (users and groups)"
+  },
+  {
+    "id": "azureAd",
+    "sourceSupported": true,
+    "urlPattern": "https://graph.microsoft.com/v1.0",
+    "proxySupported": false,
+    "name": "Microsoft Entra ID",
+    "targetSupported": true,
+    "defaultAuthentication": "oauth2ClientCredentials",
+    "description": "Microsoft Entra ID / Azure Active Directory (Graph API)"
+  },
+  {
+    "id": "custom",
+    "sourceSupported": true,
+    "urlPattern": "https://<host>",
+    "proxySupported": true,
+    "name": "Custom Connector",
+    "targetSupported": true,
+    "defaultAuthentication": "basic",
+    "description": "Custom connector implementation"
+  }
+]

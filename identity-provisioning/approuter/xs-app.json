@@ -1,0 +1,39 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/odata/v4/identity-provisioning/(.*)$",
+      "target": "/odata/v4/identity-provisioning/$1",
+      "destination": "identity-provisioning-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.ProvisioningViewer", "$XSAPPNAME.ProvisioningOperator", "$XSAPPNAME.ProvisioningAdmin"],
+        "default": ["$XSAPPNAME.ProvisioningOperator", "$XSAPPNAME.ProvisioningAdmin"]
+      }
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "identity-provisioning-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": {
+        "GET": ["$XSAPPNAME.ProvisioningViewer", "$XSAPPNAME.ProvisioningOperator", "$XSAPPNAME.ProvisioningAdmin"],
+        "default": ["$XSAPPNAME.ProvisioningAdmin"]
+      }
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa",
+      "scope": ["$XSAPPNAME.ProvisioningViewer", "$XSAPPNAME.ProvisioningOperator", "$XSAPPNAME.ProvisioningAdmin"]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "authenticationType": "basic",
+    "status": "active",
+    "properties": [
+      {
+        "key": "sim.users",
+        "value": "8"
+      },
+      {
+        "key": "sim.domain",
+        "value": "acme.com"
+      },
+      {
+        "key": "ldap.user.filter",
+        "value": "(objectClass=inetOrgPerson)"
+      }
+    ],
+    "updatedAt": "2026-11-18T09:26:26Z",
+    "id": "acf59d37-bc31-4498-8c7f-834c4da02a1e",
+    "statusMessage": "ldap connection OK (45 ms)",
+    "entityCount": 10,
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T09:26:26Z",
+    "name": "Corporate LDAP",
+    "url": "ldaps://ldap.acme.com:636",
+    "user": "cn=reader,dc=acme,dc=com",
+    "lastTestedAt": "2026-11-18T09:26:26Z",
+    "description": "On-premise directory via Cloud Connector",
+    "password": "********",
+    "lastSyncAt": "2026-11-18T09:26:26Z",
+    "tenantId": "default",
+    "systemType": "ldap",
+    "updatedBy": "cli"
+  },
+  {
+    "authenticationType": "basic",
+    "status": "active",
+    "properties": [
+      {
+        "key": "sim.users",
+        "value": "6"
+      },
+      {
+        "key": "sim.groups",
+        "value": "3"
+      },
+      {
+        "key": "sim.domain",
+        "value": "acme.com"
+      },
+      {
+        "key": "sf.user.filter",
+        "value": "status in 't','f'"
+      }
+    ],
+    "updatedAt": "2026-11-18T09:26:26Z",
+    "id": "9ba589b4-ef79-401d-86d9-4892e60d815a",
+    "statusMessage": "successFactors connection OK (60 ms)",
+    "entityCount": 9,
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T09:26:26Z",
+    "name": "SuccessFactors HR",
+    "url": "https://api4.successfactors.com/odata/v2",
+    "user": "sfadmin@ACME",
+    "lastTestedAt": "2026-11-18T09:26:26Z",
+    "description": "Employee Central — employees and departments",
+    "password": "********",
+    "lastSyncAt": "2026-11-18T09:26:41Z",
+    "tenantId": "default",
+    "systemType": "successFactors",
+    "updatedBy": "cli"
+  }
+]

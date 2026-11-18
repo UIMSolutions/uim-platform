@@ -1,0 +1,155 @@
+<mvc:View
+  controllerName="uim.identityprovisioning.controller.JobDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:uxap="sap.uxap"
+  xmlns:form="sap.ui.layout.form"
+  xmlns="sap.m">
+  <uxap:ObjectPageLayout id="jobPage" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:expandedHeading>
+          <Title text="{name}" wrapping="true"/>
+        </uxap:expandedHeading>
+        <uxap:snappedHeading>
+          <Title text="{name}"/>
+        </uxap:snappedHeading>
+        <uxap:expandedContent>
+          <Text text="{description}"/>
+        </uxap:expandedContent>
+        <uxap:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onClose"/>
+        </uxap:navigationActions>
+        <uxap:actions>
+          <Button id="runButton" text="{i18n>runNow}" icon="sap-icon://media-play" type="Emphasized"
+            enabled="{path: 'status', targetType: 'any', formatter: '.formatter.isRunnable'}" press=".onRun"/>
+          <Button text="{i18n>cancelJob}" visible="{path: 'status', targetType: 'any', formatter: '.formatter.isNotCancelled'}" press=".onCancel"/>
+          <Button text="{i18n>resume}" visible="{path: 'status', targetType: 'any', formatter: '.formatter.isCancelled'}" press=".onResume"/>
+          <Button text="{i18n>resetDelta}" icon="sap-icon://reset" press=".onReset"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <ObjectStatus title="{i18n>colStatus}" text="{path: 'status', formatter: '.formatter.enumText'}"
+        state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"
+        class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colType}" text="{path: 'jobType', formatter: '.formatter.enumText'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colSchedule}" text="{path: 'intervalMinutes', formatter: '.formatter.interval'}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colRuns}" text="{runCount}" class="sapUiMediumMarginEnd"/>
+      <ObjectAttribute title="{i18n>colLastRun}" class="sapUiMediumMarginEnd"
+        text="{path: 'completedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+      <ObjectAttribute title="{i18n>colNextRun}"
+        text="{path: 'nextRunAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionLastRun}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <VBox>
+              <MessageStrip text="{statusMessage}" showIcon="true" visible="{= !!${statusMessage} }"
+                type="{= ${status} === 'failed' ? 'Error' : ${status} === 'completed' ? 'Success' : 'Information' }" class="sapUiSmallMarginBottom"/>
+              <HBox wrap="Wrap">
+                <VBox class="sapUiLargeMarginEnd"><Label text="{i18n>figRead}"/><ObjectNumber number="{readCount}" class="sapMObjectNumberLarge"/></VBox>
+                <VBox class="sapUiLargeMarginEnd"><Label text="{i18n>figCreated}"/><ObjectNumber number="{createdCount}" state="Information" class="sapMObjectNumberLarge"/></VBox>
+                <VBox class="sapUiLargeMarginEnd"><Label text="{i18n>figUpdated}"/><ObjectNumber number="{updatedCount}" state="Information" class="sapMObjectNumberLarge"/></VBox>
+                <VBox class="sapUiLargeMarginEnd"><Label text="{i18n>figDeleted}"/><ObjectNumber number="{deletedCount}" class="sapMObjectNumberLarge"/></VBox>
+                <VBox class="sapUiLargeMarginEnd"><Label text="{i18n>figSkipped}"/><ObjectNumber number="{skippedCount}" class="sapMObjectNumberLarge"/></VBox>
+                <VBox><Label text="{i18n>figFailed}"/><ObjectNumber number="{failedCount}" class="sapMObjectNumberLarge"
+                  state="{= %{failedCount} > 0 ? 'Error' : 'Success' }"/></VBox>
+              </HBox>
+            </VBox>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionLog}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <!-- filtered by jobId (and the last run) in the controller; suspended until the id is known -->
+            <Table id="jobLogTable" growing="true" growingThreshold="50"
+              items="{path: '/ProvisioningLogs', parameters: {$orderby: 'createdAt desc'}, suspended: true}" noDataText="{i18n>noLog}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>sectionLog}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton selectedKey="{ui>/jobLogScope}" selectionChange=".onLogScope">
+                    <items>
+                      <SegmentedButtonItem key="last" text="{i18n>lastRun}"/>
+                      <SegmentedButtonItem key="failed" text="{i18n>failedOnly}"/>
+                      <SegmentedButtonItem key="all" text="{i18n>allRuns}"/>
+                    </items>
+                  </SegmentedButton>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column width="4rem" hAlign="End"><Text text="{i18n>colRun}"/></Column>
+                <Column><Text text="{i18n>colOperation}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMessage}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{runNumber}"/>
+                    <ObjectStatus text="{name}" icon="{path: 'operation', formatter: '.formatter.operationIcon'}"/>
+                    <Text text="{message}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionEntities}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="jobEntityTable" growing="true" growingThreshold="50"
+              items="{path: '/ProvisionedEntities', parameters: {$orderby: 'entityType,name'}, suspended: true}" noDataText="{i18n>noData}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="6rem"><Text text="{i18n>colType}"/></Column>
+                <Column width="9rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTargetId}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colAttributes}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{externalId}"/>
+                    <Text text="{path: 'entityType', formatter: '.formatter.enumText'}"/>
+                    <Text text="{targetId}"/>
+                    <Text text="{path: 'attributes', targetType: 'any', formatter: '.formatter.keyValues'}" maxLines="2"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      tooltip="{statusMessage}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionSettings}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" editable="false">
+              <Label text="{i18n>roleSource}"/><Text text="{sourceSystemName}"/>
+              <Label text="{i18n>roleTarget}"/><Text text="{targetSystemName}"/>
+              <Label text="{i18n>lblCreated}"/>
+              <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Label text="{i18n>lblCreatedBy}"/><Text text="{createdBy}"/>
+              <Label text="{i18n>lblUpdatedBy}"/><Text text="{updatedBy}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

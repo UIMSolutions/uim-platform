@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <Dialog id="editDialog" title="{ui>/edit/title}" contentWidth="36rem" resizable="true" draggable="true">
+    <content>
+      <!-- the fields are created by Main.controller#createField (factory) -->
+      <VBox id="editFields" class="sapUiSmallMargin" items="{path: 'ui>/edit/fields', factory: '.createField'}"/>
+    </content>
+    <beginButton>
+      <Button id="saveEditButton" text="{= ${ui>/edit/mode} === 'create' ? ${i18n>create} : ${i18n>save} }" type="Emphasized" press=".onSaveEdit"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onCancelEdit"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>
