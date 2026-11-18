@@ -1,0 +1,98 @@
+[
+  {
+    "location": "Frankfurt, DE",
+    "provider": "aws",
+    "id": "eu-central-1",
+    "name": "Europe (Frankfurt)"
+  },
+  {
+    "location": "Dublin, IE",
+    "provider": "aws",
+    "id": "eu-west-1",
+    "name": "Europe (Ireland)"
+  },
+  {
+    "location": "Virginia, US",
+    "provider": "aws",
+    "id": "us-east-1",
+    "name": "US East (N. Virginia)"
+  },
+  {
+    "location": "Oregon, US",
+    "provider": "aws",
+    "id": "us-west-2",
+    "name": "US West (Oregon)"
+  },
+  {
+    "location": "Singapore, SG",
+    "provider": "aws",
+    "id": "ap-southeast-1",
+    "name": "Asia Pacific (Singapore)"
+  },
+  {
+    "location": "Tokyo, JP",
+    "provider": "aws",
+    "id": "ap-northeast-1",
+    "name": "Asia Pacific (Tokyo)"
+  },
+  {
+    "location": "São Paulo, BR",
+    "provider": "aws",
+    "id": "sa-east-1",
+    "name": "South America (São Paulo)"
+  },
+  {
+    "location": "Amsterdam, NL",
+    "provider": "azure",
+    "id": "westeurope",
+    "name": "Europe (Netherlands)"
+  },
+  {
+    "location": "Dublin, IE",
+    "provider": "azure",
+    "id": "northeurope",
+    "name": "Europe (Ireland)"
+  },
+  {
+    "location": "Virginia, US",
+    "provider": "azure",
+    "id": "eastus",
+    "name": "US East (Virginia)"
+  },
+  {
+    "location": "Washington, US",
+    "provider": "azure",
+    "id": "westus2",
+    "name": "US West (Washington)"
+  },
+  {
+    "location": "Tokyo, JP",
+    "provider": "azure",
+    "id": "japaneast",
+    "name": "Japan East (Tokyo)"
+  },
+  {
+    "location": "Frankfurt, DE",
+    "provider": "gcp",
+    "id": "europe-west3",
+    "name": "Europe (Frankfurt)"
+  },
+  {
+    "location": "Iowa, US",
+    "provider": "gcp",
+    "id": "us-central1",
+    "name": "US Central (Iowa)"
+  },
+  {
+    "location": "Mumbai, IN",
+    "provider": "gcp",
+    "id": "asia-south1",
+    "name": "India (Mumbai)"
+  },
+  {
+    "location": "Shanghai, CN",
+    "provider": "alibaba",
+    "id": "cn-shanghai",
+    "name": "China (Shanghai)"
+  }
+]

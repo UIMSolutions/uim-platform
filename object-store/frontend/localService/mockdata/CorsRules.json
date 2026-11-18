@@ -1,0 +1,27 @@
+[
+  {
+    "allowedMethods": [
+      "get",
+      "put"
+    ],
+    "maxAgeSeconds": 3600,
+    "updatedAt": "2026-11-18T17:31:31Z",
+    "id": "09e42598-de6d-451d-b812-9829930cabc2",
+    "bucketId": "2b45f64d-a60d-4a8f-bd4a-d84dca94db98",
+    "allowedHeaders": [
+      "*"
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T17:31:31Z",
+    "name": "web",
+    "bucketName": "media",
+    "allowedOrigins": [
+      "https://*.example.com"
+    ],
+    "exposedHeaders": [
+      "ETag"
+    ],
+    "tenantId": "default",
+    "updatedBy": "cli"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "description": "Frequently accessed data, millisecond access",
+    "relativeCost": 100,
+    "minStorageDays": 0,
+    "id": "standard",
+    "requiresRestore": false,
+    "name": "Standard"
+  },
+  {
+    "description": "Data accessed less than once a month",
+    "relativeCost": 55,
+    "minStorageDays": 30,
+    "id": "infrequentAccess",
+    "requiresRestore": false,
+    "name": "Infrequent Access"
+  },
+  {
+    "description": "Data accessed about once a quarter",
+    "relativeCost": 45,
+    "minStorageDays": 30,
+    "id": "nearline",
+    "requiresRestore": false,
+    "name": "Nearline"
+  },
+  {
+    "description": "Data accessed about once a year",
+    "relativeCost": 20,
+    "minStorageDays": 90,
+    "id": "coldline",
+    "requiresRestore": false,
+    "name": "Coldline"
+  },
+  {
+    "description": "Long-term retention; restore before reading",
+    "relativeCost": 5,
+    "minStorageDays": 180,
+    "id": "archive",
+    "requiresRestore": true,
+    "name": "Archive"
+  }
+]

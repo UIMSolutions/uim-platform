@@ -1,0 +1,256 @@
+<mvc:View
+  controllerName="uim.objectstore.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns="sap.m">
+  <f:DynamicPage id="mainPage" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>appTitle}" level="H2"/>
+        </f:heading>
+        <f:snappedContent>
+          <Text text="{i18n>appDescription}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button id="createBucketButton" text="{i18n>createBucket}" icon="sap-icon://add" type="Emphasized" press=".onCreate('Buckets')"/>
+          <Button id="applyLifecycleButton" text="{i18n>applyLifecycle}" icon="sap-icon://history" press=".onApplyLifecycle"/>
+          <Button icon="sap-icon://refresh" type="Transparent" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpiHeader" wrap="Wrap" binding="{path: '/Statistics', parameters: {$select: 'usage'}}">
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiBuckets}"/>
+            <ObjectNumber number="{buckets}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiObjects}"/>
+            <ObjectNumber number="{objects}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiStored}"/>
+            <ObjectNumber number="{path: 'storedBytes', targetType: 'any', formatter: '.formatter.bytes'}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiVersions}"/>
+            <ObjectNumber number="{versions}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiArchived}"/>
+            <ObjectNumber number="{objectsArchived}" class="sapMObjectNumberLarge" state="{= %{objectsArchived} > 0 ? 'Information' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLegalHold}"/>
+            <ObjectNumber number="{objectsOnLegalHold}" class="sapMObjectNumberLarge" state="{= %{objectsOnLegalHold} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiBindings}"/>
+            <ObjectNumber number="{bindingsActive} / {bindings}" class="sapMObjectNumberLarge"/>
+          </VBox>
+          <VBox class="sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiUsage}"/>
+            <Text text="{path: 'usage', targetType: 'any', mode: 'OneTime', formatter: '.usageText'}" class="sapUiTinyMarginTop"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{ui>/selectedTab}" select=".onTabSelect"
+        expandable="false" headerMode="Inline" stretchContentHeight="false" class="sapUiResponsiveContentPadding">
+        <items>
+
+          <!-- ── Overview ─────────────────────────────────────────── -->
+          <IconTabFilter key="overview" icon="sap-icon://business-objects-experience" text="{i18n>tabOverview}">
+            <l:Grid defaultSpan="XL3 L4 M6 S12" binding="{path: '/Statistics', parameters: {$select: 'usage'}}">
+              <GenericTile header="{i18n>tabBuckets}" subheader="{i18n>kpiVersioned}: {bucketsVersioned} · {i18n>kpiEncrypted}: {bucketsEncrypted}" press=".onTile" app:tab="buckets">
+                <TileContent><NumericContent value="{buckets}" icon="sap-icon://folder-full" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiStored}" subheader="{i18n>kpiObjects}: {objects} · {i18n>kpiVersions}: {versions}" press=".onTile" app:tab="buckets">
+                <TileContent><NumericContent value="{path: 'storedBytes', targetType: 'any', formatter: '.formatter.bytes'}" icon="sap-icon://database" withMargin="false" truncateValueTo="10"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabBindings}" subheader="{i18n>kpiRevoked}: {bindingsRevoked} · {i18n>kpiExpired}: {bindingsExpired}" press=".onTile" app:tab="bindings">
+                <TileContent><NumericContent value="{bindingsActive}" icon="sap-icon://key" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>tabTools}" subheader="{i18n>kpiPolicies}: {accessPolicies} · {i18n>kpiCors}: {corsRules}" press=".onTile" app:tab="tools">
+                <TileContent><ImageContent src="sap-icon://shield"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiLifecycle}" subheader="{i18n>lastRun}: {path: 'lastLifecycleRunAt', formatter: '.formatter.dateTime'}" press=".onApplyLifecycle">
+                <TileContent><NumericContent value="{lifecycleRulesEnabled}" icon="sap-icon://history" withMargin="false"/></TileContent>
+              </GenericTile>
+              <GenericTile header="{i18n>kpiLegalHold}" subheader="{i18n>kpiArchived}: {objectsArchived} · {i18n>kpiDeleted}: {objectsDeleted}" press=".onTile" app:tab="buckets">
+                <TileContent><NumericContent value="{objectsOnLegalHold}" icon="sap-icon://locked" withMargin="false"/></TileContent>
+              </GenericTile>
+            </l:Grid>
+          </IconTabFilter>
+
+          <!-- ── Buckets ─────────────────────────────────────────────── -->
+          <IconTabFilter key="buckets" icon="sap-icon://folder-full" text="{i18n>tabBuckets}">
+            <Table id="bucketTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/Buckets', parameters: {$count: true, $orderby: 'name'}}" noDataText="{i18n>noBuckets}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabBuckets}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch('bucketTable', 'name', $event)"/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onCreate('Buckets')"/>
+                  <Button text="{i18n>suspend}" press=".onAction('bucketTable', 'SuspendBucket', '')"/>
+                  <Button text="{i18n>resume}" press=".onAction('bucketTable', 'ResumeBucket', '')"/>
+                  <Button text="{i18n>empty}" icon="sap-icon://clear-all" press=".onEmptyBucket"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('bucketTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="11rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRegion}"/></Column>
+                <Column width="9rem" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colStorageClass}"/></Column>
+                <Column width="7rem" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colEncryption}"/></Column>
+                <Column width="5rem" hAlign="End"><Text text="{i18n>colObjects}"/></Column>
+                <Column width="12rem"><Text text="{i18n>colUsage}"/></Column>
+                <Column width="8rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onBucketPress">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Text text="{path: 'provider', formatter: '.formatter.enumText'} · {region}"/>
+                    <Text text="{path: 'storageClass', formatter: '.formatter.enumText'}{= %{versioningEnabled} ? ' · ' + ${i18n>versioned} : '' }"/>
+                    <Text text="{path: 'encryptionType', formatter: '.formatter.enumText'}"/>
+                    <ObjectNumber number="{objectCount}"/>
+                    <ProgressIndicator
+                      percentValue="{parts: [{path: 'usedBytes', targetType: 'any'}, {path: 'quotaBytes', targetType: 'any'}], formatter: '.formatter.usagePercent'}"
+                      displayValue="{path: 'usedBytes', targetType: 'any', formatter: '.formatter.bytes'} / {path: 'quotaBytes', targetType: 'any', formatter: '.formatter.quota'}"
+                      state="{parts: [{path: 'usedBytes', targetType: 'any'}, {path: 'quotaBytes', targetType: 'any'}], formatter: '.formatter.usageState'}" showValue="true"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Service bindings (all buckets) ─────────────────────── -->
+          <IconTabFilter key="bindings" icon="sap-icon://key" text="{i18n>tabBindings}">
+            <Table id="bindingTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+              items="{path: '/ServiceBindings', parameters: {$count: true, $orderby: 'bucketName,name', $select: 'secretAccessKey,bucketId'}}" noDataText="{i18n>noData}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabBindings}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>rotate}" icon="sap-icon://synchronize" press=".onAction('bindingTable', 'RotateServiceBinding', '')"/>
+                  <Button text="{i18n>revoke}" icon="sap-icon://cancel" press=".onAction('bindingTable', 'RevokeServiceBinding', '')"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete('bindingTable')"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colBucket}"/></Column>
+                <Column width="8rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPermission}"/></Column>
+                <Column width="14rem" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colAccessKey}"/></Column>
+                <Column width="11rem" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastUsed}"/></Column>
+                <Column width="11rem" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colExpires}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{description}"/>
+                    <Link text="{bucketName}" press=".onBucketLink"/>
+                    <Text text="{path: 'permission', formatter: '.formatter.enumText'}"/>
+                    <Text text="{accessKeyId}"/>
+                    <Text text="{path: 'lastUsedAt', formatter: '.formatter.dateTime'}"/>
+                    <Text text="{path: 'expiresAt', formatter: '.formatter.dateTime'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Tools: access evaluation, CORS check, credential verification ── -->
+          <IconTabFilter key="tools" icon="sap-icon://shield" text="{i18n>tabTools}">
+            <l:Grid defaultSpan="XL4 L4 M6 S12" vSpacing="1">
+              <form:SimpleForm id="accessForm" title="{i18n>toolAccess}" editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4">
+                <Label text="{i18n>colBucket}" required="true"/>
+                <Select id="accessBucket" selectedKey="{ui>/tools/access/bucketId}" forceSelection="false"
+                  items="{path: '/Buckets', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+                  <core:Item key="{id}" text="{name}"/>
+                </Select>
+                <Label text="{i18n>fldPrincipal}"/>
+                <Input value="{ui>/tools/access/principal}" placeholder="{i18n>hintPrincipal}"/>
+                <Label text="{i18n>fldAction}"/>
+                <SegmentedButton selectedKey="{ui>/tools/access/action}">
+                  <items>
+                    <SegmentedButtonItem key="read" text="read"/>
+                    <SegmentedButtonItem key="write" text="write"/>
+                    <SegmentedButtonItem key="delete" text="delete"/>
+                    <SegmentedButtonItem key="list" text="list"/>
+                  </items>
+                </SegmentedButton>
+                <Label text="{i18n>fldKey}"/>
+                <Input value="{ui>/tools/access/key}" placeholder="docs/readme.md"/>
+                <Label/>
+                <Button id="evaluateButton" text="{i18n>evaluate}" type="Emphasized" press=".onEvaluateAccess"/>
+                <Label text="{i18n>result}"/>
+                <ObjectStatus id="accessResult" text="{ui>/tools/access/result/reason}" inverted="true"
+                  state="{= ${ui>/tools/access/result} ? (${ui>/tools/access/result/allowed} ? 'Success' : 'Error') : 'None' }"
+                  visible="{= !!${ui>/tools/access/result} }"/>
+              </form:SimpleForm>
+
+              <form:SimpleForm title="{i18n>toolCors}" editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4">
+                <Label text="{i18n>colBucket}" required="true"/>
+                <Select selectedKey="{ui>/tools/cors/bucketId}" forceSelection="false"
+                  items="{path: '/Buckets', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+                  <core:Item key="{id}" text="{name}"/>
+                </Select>
+                <Label text="{i18n>fldOrigin}" required="true"/>
+                <Input value="{ui>/tools/cors/origin}"/>
+                <Label text="{i18n>fldMethod}"/>
+                <Select selectedKey="{ui>/tools/cors/method}">
+                  <core:Item key="GET" text="GET"/>
+                  <core:Item key="PUT" text="PUT"/>
+                  <core:Item key="POST" text="POST"/>
+                  <core:Item key="DELETE" text="DELETE"/>
+                  <core:Item key="HEAD" text="HEAD"/>
+                </Select>
+                <Label text="{i18n>fldRequestHeaders}"/>
+                <Input value="{ui>/tools/cors/requestHeaders}" placeholder="content-type, x-meta-owner"/>
+                <Label/>
+                <Button text="{i18n>check}" type="Emphasized" press=".onCheckCors"/>
+                <Label text="{i18n>result}"/>
+                <VBox visible="{= !!${ui>/tools/cors/result} }">
+                  <ObjectStatus text="{ui>/tools/cors/result/reason}" inverted="true"
+                    state="{= ${ui>/tools/cors/result/allowed} ? 'Success' : 'Error' }"/>
+                  <Text text="Access-Control-Allow-Origin: {ui>/tools/cors/result/allowOrigin}" visible="{= !!${ui>/tools/cors/result/allowed} }"
+                    class="sapUiTinyMarginTop"/>
+                </VBox>
+              </form:SimpleForm>
+
+              <form:SimpleForm title="{i18n>toolCredentials}" editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4">
+                <Label text="{i18n>colAccessKey}" required="true"/>
+                <Input value="{ui>/tools/credentials/accessKeyId}" placeholder="OSAK…"/>
+                <Label text="{i18n>secretAccessKey}" required="true"/>
+                <Input value="{ui>/tools/credentials/secretAccessKey}" type="Password"/>
+                <Label/>
+                <Button text="{i18n>verify}" type="Emphasized" press=".onVerifyCredentials"/>
+                <Label text="{i18n>result}"/>
+                <ObjectStatus text="{ui>/tools/credentials/result/reason}" inverted="true"
+                  state="{= ${ui>/tools/credentials/result/valid} ? 'Success' : 'Error' }"
+                  visible="{= !!${ui>/tools/credentials/result} }"/>
+              </form:SimpleForm>
+            </l:Grid>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

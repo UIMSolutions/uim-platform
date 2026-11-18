@@ -1,0 +1,22 @@
+[
+  {
+    "expiresAt": null,
+    "accessKeyId": "OSAK6PKXG4DPGO7VHJKF",
+    "updatedAt": "2026-11-18T17:31:31Z",
+    "id": "da3aa076-c6dc-41f0-b2e5-74e0cf346d66",
+    "secretHash": "********",
+    "bucketId": "2b45f64d-a60d-4a8f-bd4a-d84dca94db98",
+    "lastUsedAt": null,
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T17:31:31Z",
+    "name": "ci-uploader",
+    "permission": "readWrite",
+    "secretSalt": "********",
+    "lastRotatedAt": "2026-11-18T17:31:31Z",
+    "bucketName": "media",
+    "description": "",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "cli"
+  }
+]

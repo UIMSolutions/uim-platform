@@ -1,0 +1,49 @@
+[
+  {
+    "effect": "allow",
+    "enabled": true,
+    "updatedAt": "2026-11-18T17:31:30Z",
+    "id": "63171e0b-a138-4910-aef5-b906cda265db",
+    "bucketId": "2b45f64d-a60d-4a8f-bd4a-d84dca94db98",
+    "actions": [
+      "read",
+      "list"
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T17:31:30Z",
+    "name": "readers",
+    "bucketName": "media",
+    "description": "",
+    "principals": [
+      "*"
+    ],
+    "resources": [
+      "*"
+    ],
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "effect": "deny",
+    "enabled": true,
+    "updatedAt": "2026-11-18T17:31:31Z",
+    "id": "4276190b-53ff-4475-b3d8-64337c671c51",
+    "bucketId": "2b45f64d-a60d-4a8f-bd4a-d84dca94db98",
+    "actions": [
+      "all"
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T17:31:31Z",
+    "name": "no-drafts",
+    "bucketName": "media",
+    "description": "",
+    "principals": [
+      "*"
+    ],
+    "resources": [
+      "drafts/*"
+    ],
+    "tenantId": "default",
+    "updatedBy": "cli"
+  }
+]

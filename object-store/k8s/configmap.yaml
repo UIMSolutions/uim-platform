@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-object-store-config
+  labels:
+    app: cloud-object-store
+    part-of: uim-platform
+data:
+  OBJSTORE_HOST: "0.0.0.0"
+  OBJSTORE_PORT: "8092"
+  OBJSTORE_LOG_LEVEL: "info"
+  OBJSTORE_STORAGE: "file"
+  OBJSTORE_DATA_DIR: "/app/data"
+  OBJSTORE_DEFAULT_TENANT: "default"
+  OBJSTORE_LIFECYCLE_INTERVAL: "3600"
+  OBJSTORE_LIFECYCLE_TENANTS: "default"
+  OBJSTORE_PROVIDERS: "aws,azure,gcp,alibaba"
+  OBJSTORE_DEFAULT_REGION: "eu-central-1"
+  OBJSTORE_MAX_OBJECT_SIZE: "67108864"
+  OBJSTORE_FRONTEND_DIR: "/app/frontend"

@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.objectstore" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Bucket">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="provider" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="storageClass" Type="Edm.String"/>
+        <Property Name="versioningEnabled" Type="Edm.Boolean"/>
+        <Property Name="encryptionType" Type="Edm.String"/>
+        <Property Name="encryptionKeyId" Type="Edm.String"/>
+        <Property Name="publicAccessBlocked" Type="Edm.Boolean"/>
+        <Property Name="quotaBytes" Type="Edm.Int64"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(uim.objectstore.MetadataEntry)"/>
+        <Property Name="usedBytes" Type="Edm.Int64"/>
+        <Property Name="objectCount" Type="Edm.Int32"/>
+        <Property Name="versionCount" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="StorageObject">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="bucketId" Type="Edm.String"/>
+        <Property Name="bucketName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="contentType" Type="Edm.String"/>
+        <Property Name="size" Type="Edm.Int64"/>
+        <Property Name="etag" Type="Edm.String"/>
+        <Property Name="metadata" Type="Collection(uim.objectstore.MetadataEntry)"/>
+        <Property Name="storageClass" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="legalHold" Type="Edm.Boolean"/>
+        <Property Name="currentVersion" Type="Edm.Int32"/>
+        <Property Name="versionCount" Type="Edm.Int32"/>
+        <Property Name="currentVersionId" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ObjectVersion">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="objectId" Type="Edm.String"/>
+        <Property Name="bucketId" Type="Edm.String"/>
+        <Property Name="objectKey" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="versionNumber" Type="Edm.Int32"/>
+        <Property Name="size" Type="Edm.Int64"/>
+        <Property Name="etag" Type="Edm.String"/>
+        <Property Name="contentType" Type="Edm.String"/>
+        <Property Name="blobId" Type="Edm.String"/>
+        <Property Name="isLatest" Type="Edm.Boolean"/>
+        <Property Name="isDeleteMarker" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="AccessPolicy">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="bucketId" Type="Edm.String"/>
+        <Property Name="bucketName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="effect" Type="Edm.String"/>
+        <Property Name="principals" Type="Collection(Edm.String)"/>
+        <Property Name="actions" Type="Collection(Edm.String)"/>
+        <Property Name="resources" Type="Collection(Edm.String)"/>
+        <Property Name="enabled" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="LifecycleRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="bucketId" Type="Edm.String"/>
+        <Property Name="bucketName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="prefix" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="expirationDays" Type="Edm.Int32"/>
+        <Property Name="transitionDays" Type="Edm.Int32"/>
+        <Property Name="transitionStorageClass" Type="Edm.String"/>
+        <Property Name="noncurrentVersionExpirationDays" Type="Edm.Int32"/>
+        <Property Name="lastAppliedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="lastExpired" Type="Edm.Int32"/>
+        <Property Name="lastTransitioned" Type="Edm.Int32"/>
+        <Property Name="lastVersionsPurged" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="CorsRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="bucketId" Type="Edm.String"/>
+        <Property Name="bucketName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="allowedOrigins" Type="Collection(Edm.String)"/>
+        <Property Name="allowedMethods" Type="Collection(Edm.String)"/>
+        <Property Name="allowedHeaders" Type="Collection(Edm.String)"/>
+        <Property Name="exposedHeaders" Type="Collection(Edm.String)"/>
+        <Property Name="maxAgeSeconds" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="ServiceBinding">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="bucketId" Type="Edm.String"/>
+        <Property Name="bucketName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="permission" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="accessKeyId" Type="Edm.String"/>
+        <Property Name="secretHash" Type="Edm.String"/>
+        <Property Name="secretSalt" Type="Edm.String"/>
+        <Property Name="lastRotatedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="lastUsedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="secretAccessKey" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Region">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="provider" Type="Edm.String"/>
+        <Property Name="location" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="StorageClassInfo">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="minStorageDays" Type="Edm.Int32"/>
+        <Property Name="relativeCost" Type="Edm.Int32"/>
+        <Property Name="requiresRestore" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="buckets" Type="Edm.Int32"/>
+        <Property Name="bucketsSuspended" Type="Edm.Int32"/>
+        <Property Name="bucketsVersioned" Type="Edm.Int32"/>
+        <Property Name="bucketsEncrypted" Type="Edm.Int32"/>
+        <Property Name="objects" Type="Edm.Int32"/>
+        <Property Name="objectsArchived" Type="Edm.Int32"/>
+        <Property Name="objectsDeleted" Type="Edm.Int32"/>
+        <Property Name="objectsOnLegalHold" Type="Edm.Int32"/>
+        <Property Name="versions" Type="Edm.Int32"/>
+        <Property Name="storedBytes" Type="Edm.Int64"/>
+        <Property Name="quotaBytes" Type="Edm.Int64"/>
+        <Property Name="accessPolicies" Type="Edm.Int32"/>
+        <Property Name="lifecycleRules" Type="Edm.Int32"/>
+        <Property Name="lifecycleRulesEnabled" Type="Edm.Int32"/>
+        <Property Name="corsRules" Type="Edm.Int32"/>
+        <Property Name="bindings" Type="Edm.Int32"/>
+        <Property Name="bindingsActive" Type="Edm.Int32"/>
+        <Property Name="bindingsRevoked" Type="Edm.Int32"/>
+        <Property Name="bindingsExpired" Type="Edm.Int32"/>
+        <Property Name="usage" Type="Collection(uim.objectstore.StorageClassUsage)"/>
+        <Property Name="lastLifecycleRunAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <ComplexType Name="MetadataEntry">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="StorageClassUsage">
+        <Property Name="storageClass" Type="Edm.String"/>
+        <Property Name="objects" Type="Edm.Int32"/>
+        <Property Name="bytes" Type="Edm.Int64"/>
+      </ComplexType>
+      <ComplexType Name="AccessDecision">
+        <Property Name="allowed" Type="Edm.Boolean"/>
+        <Property Name="effect" Type="Edm.String"/>
+        <Property Name="principal" Type="Edm.String"/>
+        <Property Name="action" Type="Edm.String"/>
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="matchedPolicy" Type="Edm.String"/>
+        <Property Name="reason" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="CorsDecision">
+        <Property Name="allowed" Type="Edm.Boolean"/>
+        <Property Name="origin" Type="Edm.String"/>
+        <Property Name="matchedRule" Type="Edm.String"/>
+        <Property Name="allowOrigin" Type="Edm.String"/>
+        <Property Name="allowMethods" Type="Collection(Edm.String)"/>
+        <Property Name="allowHeaders" Type="Collection(Edm.String)"/>
+        <Property Name="exposeHeaders" Type="Collection(Edm.String)"/>
+        <Property Name="maxAgeSeconds" Type="Edm.Int32"/>
+        <Property Name="reason" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="CredentialCheck">
+        <Property Name="valid" Type="Edm.Boolean"/>
+        <Property Name="accessKeyId" Type="Edm.String"/>
+        <Property Name="bindingId" Type="Edm.String"/>
+        <Property Name="bindingName" Type="Edm.String"/>
+        <Property Name="bucketId" Type="Edm.String"/>
+        <Property Name="bucketName" Type="Edm.String"/>
+        <Property Name="permission" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="reason" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="LifecycleRunReport">
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="bucketsEvaluated" Type="Edm.Int32"/>
+        <Property Name="rulesEvaluated" Type="Edm.Int32"/>
+        <Property Name="expired" Type="Edm.Int32"/>
+        <Property Name="transitioned" Type="Edm.Int32"/>
+        <Property Name="versionsPurged" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="messages" Type="Collection(Edm.String)"/>
+        <Property Name="ranAt" Type="Edm.DateTimeOffset"/>
+      </ComplexType>
+      <Action Name="SuspendBucket" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.Bucket"/>
+      </Action>
+      <Action Name="ResumeBucket" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.Bucket"/>
+      </Action>
+      <Action Name="EmptyBucket" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.Bucket"/>
+      </Action>
+      <Action Name="ArchiveStorageObject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.StorageObject"/>
+      </Action>
+      <Action Name="RestoreStorageObject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.StorageObject"/>
+      </Action>
+      <Action Name="HoldStorageObject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.StorageObject"/>
+      </Action>
+      <Action Name="ReleaseStorageObject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.StorageObject"/>
+      </Action>
+      <Action Name="CopyStorageObject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="targetBucketId" Type="Edm.String"/>
+        <Parameter Name="targetKey" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.StorageObject"/>
+      </Action>
+      <Action Name="PromoteObjectVersion" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.ObjectVersion"/>
+      </Action>
+      <Action Name="ApplyLifecycleRule" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.LifecycleRule"/>
+      </Action>
+      <Action Name="RotateServiceBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.ServiceBinding"/>
+      </Action>
+      <Action Name="RevokeServiceBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.ServiceBinding"/>
+      </Action>
+      <Action Name="EvaluateAccess" IsBound="false">
+        <Parameter Name="bucketId" Type="Edm.String"/>
+        <Parameter Name="principal" Type="Edm.String"/>
+        <Parameter Name="action" Type="Edm.String"/>
+        <Parameter Name="key" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.AccessDecision"/>
+      </Action>
+      <Action Name="CheckCors" IsBound="false">
+        <Parameter Name="bucketId" Type="Edm.String"/>
+        <Parameter Name="origin" Type="Edm.String"/>
+        <Parameter Name="method" Type="Edm.String"/>
+        <Parameter Name="requestHeaders" Type="Collection(Edm.String)"/>
+        <ReturnType Type="uim.objectstore.CorsDecision"/>
+      </Action>
+      <Action Name="VerifyCredentials" IsBound="false">
+        <Parameter Name="accessKeyId" Type="Edm.String"/>
+        <Parameter Name="secretAccessKey" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.CredentialCheck"/>
+      </Action>
+      <Action Name="ApplyLifecycle" IsBound="false">
+        <Parameter Name="bucketId" Type="Edm.String"/>
+        <ReturnType Type="uim.objectstore.LifecycleRunReport"/>
+      </Action>
+      <Action Name="PutObjectContent" IsBound="false">
+        <Parameter Name="bucketId" Type="Edm.String"/>
+        <Parameter Name="key" Type="Edm.String"/>
+        <Parameter Name="content" Type="Edm.String"/>
+        <Parameter Name="contentEncoding" Type="Edm.String"/>
+        <Parameter Name="contentType" Type="Edm.String"/>
+        <Parameter Name="metadata" Type="Collection(uim.objectstore.MetadataEntry)"/>
+        <ReturnType Type="uim.objectstore.StorageObject"/>
+      </Action>
+      <EntityContainer Name="ObjectStoreService">
+        <EntitySet Name="Buckets" EntityType="uim.objectstore.Bucket"/>
+        <EntitySet Name="StorageObjects" EntityType="uim.objectstore.StorageObject"/>
+        <EntitySet Name="ObjectVersions" EntityType="uim.objectstore.ObjectVersion"/>
+        <EntitySet Name="AccessPolicies" EntityType="uim.objectstore.AccessPolicy"/>
+        <EntitySet Name="LifecycleRules" EntityType="uim.objectstore.LifecycleRule"/>
+        <EntitySet Name="CorsRules" EntityType="uim.objectstore.CorsRule"/>
+        <EntitySet Name="ServiceBindings" EntityType="uim.objectstore.ServiceBinding"/>
+        <EntitySet Name="Regions" EntityType="uim.objectstore.Region"/>
+        <EntitySet Name="StorageClasses" EntityType="uim.objectstore.StorageClassInfo"/>
+        <Singleton Name="Statistics" Type="uim.objectstore.Statistic"/>
+        <ActionImport Name="SuspendBucket" Action="uim.objectstore.SuspendBucket"/>
+        <ActionImport Name="ResumeBucket" Action="uim.objectstore.ResumeBucket"/>
+        <ActionImport Name="EmptyBucket" Action="uim.objectstore.EmptyBucket"/>
+        <ActionImport Name="ArchiveStorageObject" Action="uim.objectstore.ArchiveStorageObject"/>
+        <ActionImport Name="RestoreStorageObject" Action="uim.objectstore.RestoreStorageObject"/>
+        <ActionImport Name="HoldStorageObject" Action="uim.objectstore.HoldStorageObject"/>
+        <ActionImport Name="ReleaseStorageObject" Action="uim.objectstore.ReleaseStorageObject"/>
+        <ActionImport Name="CopyStorageObject" Action="uim.objectstore.CopyStorageObject"/>
+        <ActionImport Name="PromoteObjectVersion" Action="uim.objectstore.PromoteObjectVersion"/>
+        <ActionImport Name="ApplyLifecycleRule" Action="uim.objectstore.ApplyLifecycleRule"/>
+        <ActionImport Name="RotateServiceBinding" Action="uim.objectstore.RotateServiceBinding"/>
+        <ActionImport Name="RevokeServiceBinding" Action="uim.objectstore.RevokeServiceBinding"/>
+        <ActionImport Name="EvaluateAccess" Action="uim.objectstore.EvaluateAccess"/>
+        <ActionImport Name="CheckCors" Action="uim.objectstore.CheckCors"/>
+        <ActionImport Name="VerifyCredentials" Action="uim.objectstore.VerifyCredentials"/>
+        <ActionImport Name="ApplyLifecycle" Action="uim.objectstore.ApplyLifecycle"/>
+        <ActionImport Name="PutObjectContent" Action="uim.objectstore.PutObjectContent"/>
+      </EntityContainer>
+      <Annotations Target="uim.objectstore.Bucket/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/provider"><Annotation Term="Common.Label" String="Provider"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/storageClass"><Annotation Term="Common.Label" String="Storage Class"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/versioningEnabled"><Annotation Term="Common.Label" String="Versioning Enabled"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/encryptionType"><Annotation Term="Common.Label" String="Encryption Type"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/encryptionKeyId"><Annotation Term="Common.Label" String="Encryption Key ID"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/publicAccessBlocked"><Annotation Term="Common.Label" String="Public Access Blocked"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/quotaBytes"><Annotation Term="Common.Label" String="Quota Bytes"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/usedBytes"><Annotation Term="Common.Label" String="Used Bytes"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/objectCount"><Annotation Term="Common.Label" String="Object Count"/></Annotations>
+      <Annotations Target="uim.objectstore.Bucket/versionCount"><Annotation Term="Common.Label" String="Version Count"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/Buckets">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/bucketId"><Annotation Term="Common.Label" String="Bucket ID"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/bucketName"><Annotation Term="Common.Label" String="Bucket Name"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/contentType"><Annotation Term="Common.Label" String="Content Type"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/size"><Annotation Term="Common.Label" String="Size"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/etag"><Annotation Term="Common.Label" String="ETag"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/metadata"><Annotation Term="Common.Label" String="Metadata"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/storageClass"><Annotation Term="Common.Label" String="Storage Class"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/legalHold"><Annotation Term="Common.Label" String="Legal Hold"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/currentVersion"><Annotation Term="Common.Label" String="Current Version"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/versionCount"><Annotation Term="Common.Label" String="Version Count"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageObject/currentVersionId"><Annotation Term="Common.Label" String="Current Version ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/StorageObjects">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/objectId"><Annotation Term="Common.Label" String="Object ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/bucketId"><Annotation Term="Common.Label" String="Bucket ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/objectKey"><Annotation Term="Common.Label" String="Object Key"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/versionNumber"><Annotation Term="Common.Label" String="Version Number"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/size"><Annotation Term="Common.Label" String="Size"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/etag"><Annotation Term="Common.Label" String="ETag"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/contentType"><Annotation Term="Common.Label" String="Content Type"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/blobId"><Annotation Term="Common.Label" String="Blob ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/isLatest"><Annotation Term="Common.Label" String="Is Latest"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectVersion/isDeleteMarker"><Annotation Term="Common.Label" String="Is Delete Marker"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/ObjectVersions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/bucketId"><Annotation Term="Common.Label" String="Bucket ID"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/bucketName"><Annotation Term="Common.Label" String="Bucket Name"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/effect"><Annotation Term="Common.Label" String="Effect"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/principals"><Annotation Term="Common.Label" String="Principals"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/actions"><Annotation Term="Common.Label" String="Actions"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/resources"><Annotation Term="Common.Label" String="Resources"/></Annotations>
+      <Annotations Target="uim.objectstore.AccessPolicy/enabled"><Annotation Term="Common.Label" String="Enabled"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/AccessPolicies">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/bucketId"><Annotation Term="Common.Label" String="Bucket ID"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/bucketName"><Annotation Term="Common.Label" String="Bucket Name"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/prefix"><Annotation Term="Common.Label" String="Prefix"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/expirationDays"><Annotation Term="Common.Label" String="Expiration Days"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/transitionDays"><Annotation Term="Common.Label" String="Transition Days"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/transitionStorageClass"><Annotation Term="Common.Label" String="Transition Storage Class"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/noncurrentVersionExpirationDays"><Annotation Term="Common.Label" String="Noncurrent Version Expiration Days"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/lastAppliedAt"><Annotation Term="Common.Label" String="Last Applied At"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/lastExpired"><Annotation Term="Common.Label" String="Last Expired"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/lastTransitioned"><Annotation Term="Common.Label" String="Last Transitioned"/></Annotations>
+      <Annotations Target="uim.objectstore.LifecycleRule/lastVersionsPurged"><Annotation Term="Common.Label" String="Last Versions Purged"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/LifecycleRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/bucketId"><Annotation Term="Common.Label" String="Bucket ID"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/bucketName"><Annotation Term="Common.Label" String="Bucket Name"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/allowedOrigins"><Annotation Term="Common.Label" String="Allowed Origins"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/allowedMethods"><Annotation Term="Common.Label" String="Allowed Methods"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/allowedHeaders"><Annotation Term="Common.Label" String="Allowed Headers"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/exposedHeaders"><Annotation Term="Common.Label" String="Exposed Headers"/></Annotations>
+      <Annotations Target="uim.objectstore.CorsRule/maxAgeSeconds"><Annotation Term="Common.Label" String="Max Age Seconds"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/CorsRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/createdBy"><Annotation Term="Common.Label" String="Created By"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/createdAt"><Annotation Term="Common.Label" String="Created At"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/updatedBy"><Annotation Term="Common.Label" String="Updated By"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/updatedAt"><Annotation Term="Common.Label" String="Updated At"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/bucketId"><Annotation Term="Common.Label" String="Bucket ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/bucketName"><Annotation Term="Common.Label" String="Bucket Name"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/permission"><Annotation Term="Common.Label" String="Permission"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/expiresAt"><Annotation Term="Common.Label" String="Expires At"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/accessKeyId"><Annotation Term="Common.Label" String="Access Key ID"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/secretHash"><Annotation Term="Common.Label" String="Secret Hash"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/secretSalt"><Annotation Term="Common.Label" String="Secret Salt"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/lastRotatedAt"><Annotation Term="Common.Label" String="Last Rotated At"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/lastUsedAt"><Annotation Term="Common.Label" String="Last Used At"/></Annotations>
+      <Annotations Target="uim.objectstore.ServiceBinding/secretAccessKey"><Annotation Term="Common.Label" String="Secret Access Key"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/ServiceBindings">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.Region/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.Region/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.Region/provider"><Annotation Term="Common.Label" String="Provider"/></Annotations>
+      <Annotations Target="uim.objectstore.Region/location"><Annotation Term="Common.Label" String="Location"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/Regions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.StorageClassInfo/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageClassInfo/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageClassInfo/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageClassInfo/minStorageDays"><Annotation Term="Common.Label" String="Min Storage Days"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageClassInfo/relativeCost"><Annotation Term="Common.Label" String="Relative Cost"/></Annotations>
+      <Annotations Target="uim.objectstore.StorageClassInfo/requiresRestore"><Annotation Term="Common.Label" String="Requires Restore"/></Annotations>
+      <Annotations Target="uim.objectstore.ObjectStoreService/StorageClasses">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.objectstore.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant ID"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/buckets"><Annotation Term="Common.Label" String="Buckets"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/bucketsSuspended"><Annotation Term="Common.Label" String="Buckets Suspended"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/bucketsVersioned"><Annotation Term="Common.Label" String="Buckets Versioned"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/bucketsEncrypted"><Annotation Term="Common.Label" String="Buckets Encrypted"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/objects"><Annotation Term="Common.Label" String="Objects"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/objectsArchived"><Annotation Term="Common.Label" String="Objects Archived"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/objectsDeleted"><Annotation Term="Common.Label" String="Objects Deleted"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/objectsOnLegalHold"><Annotation Term="Common.Label" String="Objects On Legal Hold"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/versions"><Annotation Term="Common.Label" String="Versions"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/storedBytes"><Annotation Term="Common.Label" String="Stored Bytes"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/quotaBytes"><Annotation Term="Common.Label" String="Quota Bytes"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/accessPolicies"><Annotation Term="Common.Label" String="Access Policies"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/lifecycleRules"><Annotation Term="Common.Label" String="Lifecycle Rules"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/lifecycleRulesEnabled"><Annotation Term="Common.Label" String="Lifecycle Rules Enabled"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/corsRules"><Annotation Term="Common.Label" String="CORS Rules"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/bindings"><Annotation Term="Common.Label" String="Bindings"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/bindingsActive"><Annotation Term="Common.Label" String="Bindings Active"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/bindingsRevoked"><Annotation Term="Common.Label" String="Bindings Revoked"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/bindingsExpired"><Annotation Term="Common.Label" String="Bindings Expired"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/usage"><Annotation Term="Common.Label" String="Usage"/></Annotations>
+      <Annotations Target="uim.objectstore.Statistic/lastLifecycleRunAt"><Annotation Term="Common.Label" String="Last Lifecycle Run At"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

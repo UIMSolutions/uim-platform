@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <Dialog id="versionsDialog" title="{i18n>versionsTitle} — {ui>/browser/selected/name}" contentWidth="52rem" resizable="true" draggable="true">
+    <content>
+      <Table id="versionTable" mode="SingleSelectLeft" noDataText="{i18n>noData}"
+        items="{path: '/ObjectVersions', parameters: {$orderby: 'versionNumber desc'}, suspended: true}">
+        <headerToolbar>
+          <OverflowToolbar>
+            <Text text="{i18n>versionsInfo}"/>
+            <ToolbarSpacer/>
+            <Button text="{i18n>download}" icon="sap-icon://download" press=".onDownloadVersion"/>
+            <Button text="{i18n>promote}" icon="sap-icon://undo" press=".onPromoteVersion"/>
+            <Button text="{i18n>deletePermanently}" icon="sap-icon://delete" press=".onDeleteVersion"/>
+          </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+          <Column width="9rem"><Text text="{i18n>colVersion}"/></Column>
+          <Column width="7rem" hAlign="End"><Text text="{i18n>colSize}"/></Column>
+          <Column minScreenWidth="Tablet" demandPopin="true"><Text text="ETag"/></Column>
+          <Column width="11rem"><Text text="{i18n>colCreated}"/></Column>
+          <Column width="7rem"><Text text="{i18n>colStatus}"/></Column>
+        </columns>
+        <items>
+          <ColumnListItem>
+            <cells>
+              <ObjectIdentifier title="{name}" text="{createdBy}"/>
+              <Text text="{= ${isDeleteMarker} ? '' : ${path: 'size', targetType: 'any', formatter: '.formatter.bytes'} }"/>
+              <Text text="{etag}"/>
+              <Text text="{path: 'createdAt', formatter: '.formatter.dateTime'}"/>
+              <ObjectStatus text="{= ${isDeleteMarker} ? ${i18n>deleteMarker} : (${isLatest} ? ${i18n>latest} : '') }"
+                state="{= ${isDeleteMarker} ? 'Error' : (${isLatest} ? 'Success' : 'None') }"/>
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+    <endButton>
+      <Button text="{i18n>close}" press=".onCloseVersions"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

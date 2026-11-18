@@ -1,0 +1,18 @@
+{
+  "serviceName": "Object Store Service",
+  "host": "0.0.0.0",
+  "port": 8092,
+  "logLevel": "info",
+  "storage": "file",
+  "dataDir": "data",
+  "defaultTenant": "default",
+  "odataPath": "/odata/v4/object-store",
+  "restPath": "/api/v1/object-store",
+  "lifecycleIntervalSeconds": 3600,
+  "lifecycleTenants": ["default"],
+  "providers": ["aws", "azure", "gcp", "alibaba"],
+  "defaultRegion": "eu-central-1",
+  "maxObjectSize": 67108864,
+  "maxBucketsPerTenant": 100,
+  "frontendDir": "../frontend"
+}

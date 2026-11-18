@@ -1,0 +1,70 @@
+[
+  {
+    "status": "active",
+    "storageClass": "standard",
+    "updatedAt": "2026-11-18T17:31:30Z",
+    "id": "272dde01-9f2a-4705-8318-f3b98477d6f7",
+    "currentVersionId": "03cb68b4-5f53-4904-856e-44a625dee355",
+    "bucketId": "2b45f64d-a60d-4a8f-bd4a-d84dca94db98",
+    "metadata": [
+      {
+        "key": "owner",
+        "value": "jane"
+      }
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T17:31:30Z",
+    "name": "docs/readme.txt",
+    "size": 11,
+    "currentVersion": 2,
+    "versionCount": 2,
+    "contentType": "text/plain",
+    "bucketName": "media",
+    "legalHold": false,
+    "tenantId": "default",
+    "etag": "3d67b96cde18c245b65a83ecaff2c906",
+    "updatedBy": "cli"
+  },
+  {
+    "status": "active",
+    "storageClass": "standard",
+    "updatedAt": "2026-11-18T17:31:30Z",
+    "id": "fa3fb14e-882b-4fd3-9f70-e403c5124dfc",
+    "currentVersionId": "2e7e799d-874c-4f01-a36d-8f65d12d8249",
+    "bucketId": "2b45f64d-a60d-4a8f-bd4a-d84dca94db98",
+    "metadata": [],
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T17:31:30Z",
+    "name": "catalog/chair.json",
+    "size": 31,
+    "currentVersion": 1,
+    "versionCount": 1,
+    "contentType": "application/json",
+    "bucketName": "media",
+    "legalHold": false,
+    "tenantId": "default",
+    "etag": "685b1778933f859ec90c4e5c56989fa3",
+    "updatedBy": "cli"
+  },
+  {
+    "status": "active",
+    "storageClass": "infrequentAccess",
+    "updatedAt": "2026-11-18T17:31:30Z",
+    "id": "e44ef972-b516-4a31-a6df-ff90f816e0e7",
+    "currentVersionId": "7911a24e-53d9-492f-87c0-eccaebd3f59f",
+    "bucketId": "0383602d-c668-46ee-bf01-548db56542ed",
+    "metadata": [],
+    "createdBy": "cli",
+    "createdAt": "2026-11-18T17:31:30Z",
+    "name": "2026/11/app.log",
+    "size": 7,
+    "currentVersion": 1,
+    "versionCount": 1,
+    "contentType": "text/plain",
+    "bucketName": "app-logs",
+    "legalHold": false,
+    "tenantId": "default",
+    "etag": "3bebb2f89180b03fa5ae736665f648d9",
+    "updatedBy": "cli"
+  }
+]
