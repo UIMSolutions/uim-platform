@@ -1,0 +1,20 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+/// Identity Provisioning service — hexagonal architecture:
+///   domain ← ports ← application ← persistence / infrastructure ← presentation
+module uim.platform.identity_provisioning;
+
+public {
+  import uim.platform.service;
+
+  import uim.platform.identity_provisioning.helpers;
+  import uim.platform.identity_provisioning.domain;
+  import uim.platform.identity_provisioning.ports;
+  import uim.platform.identity_provisioning.application;
+  import uim.platform.identity_provisioning.persistence;
+  import uim.platform.identity_provisioning.infrastructure;
+  import uim.platform.identity_provisioning.presentation;
+}
