@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createArtifact}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colGroup}" required="true"/>
+      <ComboBox selectedKey="{view>/form/artifact/resourceGroupId}"
+        items="{path: '/ResourceGroups', templateShareable: false}"><core:Item key="{id}" text="{id}"/></ComboBox>
+      <Label text="{i18n>colScenario}" required="true"/>
+      <ComboBox selectedKey="{view>/form/artifact/scenarioId}"
+        items="{path: '/Scenarios', templateShareable: false}"><core:Item key="{id}" text="{name} ({id})"/></ComboBox>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/artifact/name}"/>
+      <Label text="{i18n>colKind}"/>
+      <Select selectedKey="{view>/form/artifact/kind}">
+        <core:Item key="dataset" text="Dataset"/>
+        <core:Item key="model" text="Model"/>
+        <core:Item key="resultset" text="Result Set"/>
+        <core:Item key="other" text="Other"/>
+      </Select>
+      <Label text="{i18n>colUrl}" required="true"/>
+      <Input value="{view>/form/artifact/url}" placeholder="ai://default/datasets/train.csv"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/artifact/description}"/>
+      <Label text="{i18n>colLabels}"/>
+      <TextArea value="{view>/form/artifact/labels}" rows="2" placeholder="{i18n>hintBindings}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

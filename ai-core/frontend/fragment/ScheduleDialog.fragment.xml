@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createSchedule}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colGroup}" required="true"/>
+      <ComboBox selectedKey="{view>/form/schedule/resourceGroupId}"
+        items="{path: '/ResourceGroups', templateShareable: false}"><core:Item key="{id}" text="{id}"/></ComboBox>
+      <Label text="{i18n>colName}"/>
+      <Input value="{view>/form/schedule/name}"/>
+      <Label text="{i18n>colConfiguration}" required="true"/>
+      <ComboBox selectedKey="{view>/form/schedule/configurationId}"
+        items="{path: '/Configurations', filters: [{path: 'executableType', operator: 'EQ', value1: 'workflow'}], templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colCron}" required="true"/>
+      <Input value="{view>/form/schedule/cron}" description="UTC"/>
+      <Label text=""/>
+      <Text text="{i18n>hintCron}"/>
+      <Label text="{i18n>colStatus}"/>
+      <Select selectedKey="{view>/form/schedule/status}">
+        <core:Item key="ACTIVE" text="{i18n>activate}"/>
+        <core:Item key="INACTIVE" text="{i18n>deactivate}"/>
+      </Select>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

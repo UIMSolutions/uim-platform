@@ -1,0 +1,66 @@
+name "ai-core"
+description "AI Core service (SAP AI Core style) — AI API v2 machine learning lifecycle: resource groups, scenarios, executables, configurations, executions, deployments, artifacts, metrics, execution schedules, docker registry and object store secrets. D/vibe.d backend with AI API v2 REST, OData v4 (SAP Fiori), CLI and GtkD GUI"
+homepage "https://github.com/UIMSolutions/uim-platform"
+authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
+copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
+license "Apache-2.0"
+
+targetPath "build"
+sourcePaths "source"
+importPaths "source"
+
+// Shared platform library: uim-framework 26.11, vibe-d 0.10.x, generic OData v4 engine,
+// CLI and GtkD entity browser.
+dependency "service" path="../../service"
+
+buildRequirements "allowWarnings" "silenceDeprecations"
+
+// ── HTTP server: AI API v2 (/api/v2) + OData v4 (/odata/v4/ai-core) + Fiori (/app) ──
+// dub build            (or --config=defaultRun)
+// ./build/uim-ai-core-platform-service
+configuration "defaultRun" {
+	targetType "executable"
+	targetName "uim-ai-core-platform-service"
+	mainSourceFile "source/app.d"
+	excludedSourceFiles "source/cli.d" "source/gui.d"
+}
+
+// ── Command line interface ──────────────────────────────────────────────────
+// dub build --config=cli
+// ./build/uim-ai-core-cli help
+configuration "cli" {
+	targetType "executable"
+	targetName "uim-ai-core-cli"
+	mainSourceFile "source/cli.d"
+	excludedSourceFiles "source/app.d" "source/gui.d"
+}
+
+// ── Desktop GUI (GtkD 3 / GTK 3.24) ─────────────────────────────────────────
+// dub build --config=gui
+// ./build/uim-ai-core-gui [--tenant=<id>] [--data-file=<path>]
+configuration "gui" {
+	targetType "executable"
+	targetName "uim-ai-core-gui"
+	mainSourceFile "source/gui.d"
+	excludedSourceFiles "source/app.d" "source/cli.d"
+	dependency "gtk-d" version="~>3.11.0"
+}
+
+// ── Libraries / unit tests (dub test) ───────────────────────────────────────
+configuration "defaultTest" {
+	targetType "library"
+	sourcePaths "tests"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "modules" {
+	targetType "library"
+	versions "show_module"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "tests" {
+	targetType "library"
+	versions "show_module" "show_test"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}

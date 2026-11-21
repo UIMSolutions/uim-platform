@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createConfiguration}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colGroup}" required="true"/>
+      <ComboBox selectedKey="{view>/form/configuration/resourceGroupId}"
+        items="{path: '/ResourceGroups', templateShareable: false}"><core:Item key="{id}" text="{id}"/></ComboBox>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/configuration/name}"/>
+      <Label text="{i18n>colScenario}" required="true"/>
+      <ComboBox selectedKey="{view>/form/configuration/scenarioId}"
+        items="{path: '/Scenarios', templateShareable: false}"><core:Item key="{id}" text="{name} ({id})"/></ComboBox>
+      <Label text="{i18n>colExecutable}" required="true"/>
+      <ComboBox selectedKey="{view>/form/configuration/executableId}"
+        items="{path: '/Executables', templateShareable: false}"><core:Item key="{id}" text="{name} ({id}, {type})"/></ComboBox>
+      <Label text="{i18n>colParameters}"/>
+      <TextArea value="{view>/form/configuration/parameterBindings}" rows="3" placeholder="{i18n>hintBindings}"/>
+      <Label text="{i18n>colInputs}"/>
+      <TextArea value="{view>/form/configuration/inputArtifactBindings}" rows="2" placeholder="{i18n>hintArtifactBindings}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

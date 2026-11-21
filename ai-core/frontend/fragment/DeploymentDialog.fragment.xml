@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createDeployment}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colGroup}" required="true"/>
+      <ComboBox selectedKey="{view>/form/deployment/resourceGroupId}"
+        items="{path: '/ResourceGroups', templateShareable: false}"><core:Item key="{id}" text="{id}"/></ComboBox>
+      <Label text="{i18n>colConfiguration}" required="true"/>
+      <ComboBox selectedKey="{view>/form/deployment/configurationId}"
+        items="{path: '/Configurations', filters: [{path: 'executableType', operator: 'EQ', value1: 'serving'}], templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colTtl}"/>
+      <StepInput value="{view>/form/deployment/ttlSeconds}" min="0" step="600" description="s"/>
+      <Label text=""/>
+      <Text text="{i18n>hintTtl}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>deploy}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

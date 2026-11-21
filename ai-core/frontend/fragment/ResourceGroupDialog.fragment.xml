@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createGroup}" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colGroup}" required="true"/>
+      <Input value="{view>/form/group/id}" placeholder="team-a"/>
+      <Label text="{i18n>colLabels}"/>
+      <TextArea value="{view>/form/group/labels}" rows="3" placeholder="ext.ai.sap.com/owner=team-a"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>create}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

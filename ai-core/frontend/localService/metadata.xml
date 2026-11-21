@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.aicore" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="ResourceGroup">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="scenarioCount" Type="Edm.Int32"/>
+        <Property Name="executionCount" Type="Edm.Int32"/>
+        <Property Name="deploymentCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Scenario">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="executableCount" Type="Edm.Int32"/>
+        <Property Name="configurationCount" Type="Edm.Int32"/>
+        <Property Name="artifactCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Executable">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="versionId" Type="Edm.String"/>
+        <Property Name="deployable" Type="Edm.Boolean"/>
+        <Property Name="parameters" Type="Collection(Edm.String)"/>
+        <Property Name="inputArtifacts" Type="Collection(Edm.String)"/>
+        <Property Name="outputArtifacts" Type="Collection(Edm.String)"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Configuration">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioId" Type="Edm.String" Nullable="false"/>
+        <Property Name="executableId" Type="Edm.String" Nullable="false"/>
+        <Property Name="executableType" Type="Edm.String"/>
+        <Property Name="parameterBindings" Type="Collection(Edm.String)"/>
+        <Property Name="inputArtifactBindings" Type="Collection(Edm.String)"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Execution">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="configurationId" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioId" Type="Edm.String"/>
+        <Property Name="executableId" Type="Edm.String"/>
+        <Property Name="scheduleId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="targetStatus" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="submissionTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="startTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completionTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="durationSeconds" Type="Edm.Int32"/>
+        <Property Name="outputArtifacts" Type="Collection(Edm.String)"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="metricCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Deployment">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="configurationId" Type="Edm.String" Nullable="false"/>
+        <Property Name="latestRunningConfigurationId" Type="Edm.String"/>
+        <Property Name="scenarioId" Type="Edm.String"/>
+        <Property Name="executableId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="targetStatus" Type="Edm.String"/>
+        <Property Name="lastOperation" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="deploymentUrl" Type="Edm.String"/>
+        <Property Name="ttlSeconds" Type="Edm.Int32"/>
+        <Property Name="submissionTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="startTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completionTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Artifact">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="kind" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="scenarioId" Type="Edm.String" Nullable="false"/>
+        <Property Name="executionId" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ExecutionSchedule">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="configurationId" Type="Edm.String" Nullable="false"/>
+        <Property Name="cron" Type="Edm.String" Nullable="false"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="startTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="endTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastRunAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="nextRunAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastExecutionId" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Metric">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="executionId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="value" Type="Edm.Double" Nullable="false"/>
+        <Property Name="step" Type="Edm.Int32"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DockerRegistrySecret">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="server" Type="Edm.String" Nullable="false"/>
+        <Property Name="username" Type="Edm.String" Nullable="false"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="hasCredentials" Type="Edm.Boolean"/>
+        <Property Name="credentialFingerprint" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ObjectStoreSecret">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="bucket" Type="Edm.String" Nullable="false"/>
+        <Property Name="endpoint" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="pathPrefix" Type="Edm.String"/>
+        <Property Name="accessKeyId" Type="Edm.String"/>
+        <Property Name="secretAccessKey" Type="Edm.String"/>
+        <Property Name="hasCredentials" Type="Edm.Boolean"/>
+        <Property Name="credentialFingerprint" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="resourceGroups" Type="Edm.Int32"/>
+        <Property Name="scenarios" Type="Edm.Int32"/>
+        <Property Name="executables" Type="Edm.Int32"/>
+        <Property Name="configurations" Type="Edm.Int32"/>
+        <Property Name="executions" Type="Edm.Int32"/>
+        <Property Name="pendingExecutions" Type="Edm.Int32"/>
+        <Property Name="runningExecutions" Type="Edm.Int32"/>
+        <Property Name="completedExecutions" Type="Edm.Int32"/>
+        <Property Name="failedExecutions" Type="Edm.Int32"/>
+        <Property Name="deployments" Type="Edm.Int32"/>
+        <Property Name="runningDeployments" Type="Edm.Int32"/>
+        <Property Name="stoppedDeployments" Type="Edm.Int32"/>
+        <Property Name="artifacts" Type="Edm.Int32"/>
+        <Property Name="models" Type="Edm.Int32"/>
+        <Property Name="datasets" Type="Edm.Int32"/>
+        <Property Name="schedules" Type="Edm.Int32"/>
+        <Property Name="activeSchedules" Type="Edm.Int32"/>
+        <Property Name="metrics" Type="Edm.Int32"/>
+        <Property Name="secrets" Type="Edm.Int32"/>
+        <Property Name="computedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </EntityType>
+      <ComplexType Name="RunResult">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="targetStatus" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ReconcileResult">
+        <Property Name="resourceGroupsProvisioned" Type="Edm.Int32"/>
+        <Property Name="executionsStarted" Type="Edm.Int32"/>
+        <Property Name="executionsCompleted" Type="Edm.Int32"/>
+        <Property Name="executionsStopped" Type="Edm.Int32"/>
+        <Property Name="deploymentsStarted" Type="Edm.Int32"/>
+        <Property Name="deploymentsStopped" Type="Edm.Int32"/>
+        <Property Name="deploymentsExpired" Type="Edm.Int32"/>
+        <Property Name="schedulesFired" Type="Edm.Int32"/>
+        <Property Name="artifactsCreated" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="resourceGroups" Type="Edm.Int32"/>
+        <Property Name="scenarios" Type="Edm.Int32"/>
+        <Property Name="executables" Type="Edm.Int32"/>
+        <Property Name="configurations" Type="Edm.Int32"/>
+        <Property Name="artifacts" Type="Edm.Int32"/>
+        <Property Name="executions" Type="Edm.Int32"/>
+        <Property Name="deployments" Type="Edm.Int32"/>
+        <Property Name="schedules" Type="Edm.Int32"/>
+        <Property Name="metrics" Type="Edm.Int32"/>
+        <Property Name="secrets" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="CountResult">
+        <Property Name="count" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="StopExecution" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.aicore.RunResult"/>
+      </Action>
+      <Action Name="StopDeployment" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.aicore.RunResult"/>
+      </Action>
+      <Action Name="ResumeDeployment" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.aicore.RunResult"/>
+      </Action>
+      <Action Name="TriggerSchedule" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.aicore.RunResult"/>
+      </Action>
+      <Action Name="ClearMetrics" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.aicore.CountResult"/>
+      </Action>
+      <Action Name="Reconcile" IsBound="false">
+        <ReturnType Type="uim.aicore.ReconcileResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.aicore.SeedResult"/>
+      </Action>
+      <EntityContainer Name="AiCoreService">
+        <EntitySet Name="ResourceGroups" EntityType="uim.aicore.ResourceGroup"/>
+        <EntitySet Name="Scenarios" EntityType="uim.aicore.Scenario"/>
+        <EntitySet Name="Executables" EntityType="uim.aicore.Executable"/>
+        <EntitySet Name="Configurations" EntityType="uim.aicore.Configuration"/>
+        <EntitySet Name="Executions" EntityType="uim.aicore.Execution"/>
+        <EntitySet Name="Deployments" EntityType="uim.aicore.Deployment"/>
+        <EntitySet Name="Artifacts" EntityType="uim.aicore.Artifact"/>
+        <EntitySet Name="ExecutionSchedules" EntityType="uim.aicore.ExecutionSchedule"/>
+        <EntitySet Name="Metrics" EntityType="uim.aicore.Metric"/>
+        <EntitySet Name="DockerRegistrySecrets" EntityType="uim.aicore.DockerRegistrySecret"/>
+        <EntitySet Name="ObjectStoreSecrets" EntityType="uim.aicore.ObjectStoreSecret"/>
+        <Singleton Name="Statistics" Type="uim.aicore.Statistic"/>
+        <ActionImport Name="StopExecution" Action="uim.aicore.StopExecution"/>
+        <ActionImport Name="StopDeployment" Action="uim.aicore.StopDeployment"/>
+        <ActionImport Name="ResumeDeployment" Action="uim.aicore.ResumeDeployment"/>
+        <ActionImport Name="TriggerSchedule" Action="uim.aicore.TriggerSchedule"/>
+        <ActionImport Name="ClearMetrics" Action="uim.aicore.ClearMetrics"/>
+        <ActionImport Name="Reconcile" Action="uim.aicore.Reconcile"/>
+        <ActionImport Name="SeedDemoData" Action="uim.aicore.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.aicore.RunResult/key"><Annotation Term="Common.Label" String="Key"/></Annotations>
+      <Annotations Target="uim.aicore.RunResult/id"><Annotation Term="Common.Label" String="ID"/></Annotations>
+      <Annotations Target="uim.aicore.RunResult/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.aicore.RunResult/targetStatus"><Annotation Term="Common.Label" String="Target Status"/></Annotations>
+      <Annotations Target="uim.aicore.RunResult/statusMessage"><Annotation Term="Common.Label" String="Status Message"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/resourceGroupsProvisioned"><Annotation Term="Common.Label" String="Resource Groups Provisioned"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/executionsStarted"><Annotation Term="Common.Label" String="Executions Started"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/executionsCompleted"><Annotation Term="Common.Label" String="Executions Completed"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/executionsStopped"><Annotation Term="Common.Label" String="Executions Stopped"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/deploymentsStarted"><Annotation Term="Common.Label" String="Deployments Started"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/deploymentsStopped"><Annotation Term="Common.Label" String="Deployments Stopped"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/deploymentsExpired"><Annotation Term="Common.Label" String="Deployments Expired"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/schedulesFired"><Annotation Term="Common.Label" String="Schedules Fired"/></Annotations>
+      <Annotations Target="uim.aicore.ReconcileResult/artifactsCreated"><Annotation Term="Common.Label" String="Artifacts Created"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/resourceGroups"><Annotation Term="Common.Label" String="Resource Groups"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/scenarios"><Annotation Term="Common.Label" String="Scenarios"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/executables"><Annotation Term="Common.Label" String="Executables"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/configurations"><Annotation Term="Common.Label" String="Configurations"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/artifacts"><Annotation Term="Common.Label" String="Artifacts"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/executions"><Annotation Term="Common.Label" String="Executions"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/deployments"><Annotation Term="Common.Label" String="Deployments"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/schedules"><Annotation Term="Common.Label" String="Schedules"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/metrics"><Annotation Term="Common.Label" String="Metric Values"/></Annotations>
+      <Annotations Target="uim.aicore.SeedResult/secrets"><Annotation Term="Common.Label" String="Secrets"/></Annotations>
+      <Annotations Target="uim.aicore.CountResult/count"><Annotation Term="Common.Label" String="Count"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/id"><Annotation Term="Common.Label" String="Resource Group"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/statusMessage"><Annotation Term="Common.Label" String="Status Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/scenarioCount"><Annotation Term="Common.Label" String="Scenarios"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/executionCount"><Annotation Term="Common.Label" String="Executions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/deploymentCount"><Annotation Term="Common.Label" String="Deployments"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ResourceGroup">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Resource Group"/><PropertyValue Property="TypeNamePlural" String="Resource Groups"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executionCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deploymentCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/ResourceGroups">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.Scenario/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/id"><Annotation Term="Common.Label" String="Scenario ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/executableCount"><Annotation Term="Common.Label" String="Executables"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/configurationCount"><Annotation Term="Common.Label" String="Configurations"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/artifactCount"><Annotation Term="Common.Label" String="Artifacts"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Scenario">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Scenario"/><PropertyValue Property="TypeNamePlural" String="Scenarios"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executableCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurationCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="artifactCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/Scenarios">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.Executable/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/id"><Annotation Term="Common.Label" String="Executable ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/type"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/versionId"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/deployable"><Annotation Term="Common.Label" String="Deployable"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/parameters"><Annotation Term="Common.Label" String="Parameters (key=default)"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/inputArtifacts"><Annotation Term="Common.Label" String="Input Artifacts (key:kind)"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/outputArtifacts"><Annotation Term="Common.Label" String="Output Artifacts (key:kind)"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Executable">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Executable"/><PropertyValue Property="TypeNamePlural" String="Executables"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="type"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="versionId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>scenarioId</PropertyPath><PropertyPath>type</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/Executables">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.Configuration/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/id"><Annotation Term="Common.Label" String="Configuration ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/scenarioId"><Annotation Term="Common.Label" String="Scenario"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/executableId"><Annotation Term="Common.Label" String="Executable"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/executableType"><Annotation Term="Common.Label" String="Executable Type"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/parameterBindings"><Annotation Term="Common.Label" String="Parameters (key=value)"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/inputArtifactBindings"><Annotation Term="Common.Label" String="Input Artifacts (key=artifactId)"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Configuration">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Configuration"/><PropertyValue Property="TypeNamePlural" String="Configurations"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executableId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executableId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executableType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>scenarioId</PropertyPath><PropertyPath>executableId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/Configurations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.Execution/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/id"><Annotation Term="Common.Label" String="Execution ID"/><Annotation Term="Core.Computed" Bool="true"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/configurationId"><Annotation Term="Common.Label" String="Configuration"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/executableId"><Annotation Term="Common.Label" String="Executable"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/scheduleId"><Annotation Term="Common.Label" String="Schedule"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/targetStatus"><Annotation Term="Common.Label" String="Target Status"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/statusMessage"><Annotation Term="Common.Label" String="Status Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/submissionTime"><Annotation Term="Common.Label" String="Submitted At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/startTime"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/completionTime"><Annotation Term="Common.Label" String="Completed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/durationSeconds"><Annotation Term="Common.Label" String="Duration (s)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/outputArtifacts"><Annotation Term="Common.Label" String="Output Artifacts (key=artifactId)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/metricCount"><Annotation Term="Common.Label" String="Metrics"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Execution">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Execution"/><PropertyValue Property="TypeNamePlural" String="Executions"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurationId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="submissionTime"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="durationSeconds"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>scenarioId</PropertyPath><PropertyPath>configurationId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/Executions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.Deployment/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/id"><Annotation Term="Common.Label" String="Deployment ID"/><Annotation Term="Core.Computed" Bool="true"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/configurationId"><Annotation Term="Common.Label" String="Configuration"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/latestRunningConfigurationId"><Annotation Term="Common.Label" String="Running Configuration"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/executableId"><Annotation Term="Common.Label" String="Executable"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/targetStatus"><Annotation Term="Common.Label" String="Target Status"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/lastOperation"><Annotation Term="Common.Label" String="Last Operation"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/statusMessage"><Annotation Term="Common.Label" String="Status Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/deploymentUrl"><Annotation Term="Common.Label" String="Deployment URL"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/ttlSeconds"><Annotation Term="Common.Label" String="Time to Live (s)"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/submissionTime"><Annotation Term="Common.Label" String="Submitted At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/startTime"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/completionTime"><Annotation Term="Common.Label" String="Stopped At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/expiresAt"><Annotation Term="Common.Label" String="Expires At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Deployment">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Deployment"/><PropertyValue Property="TypeNamePlural" String="Deployments"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurationId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deploymentUrl"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="startTime"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>scenarioId</PropertyPath><PropertyPath>configurationId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/Deployments">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.Artifact/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/id"><Annotation Term="Common.Label" String="Artifact ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/name"><Annotation Term="Common.Label" String="Name"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/kind"><Annotation Term="Common.Label" String="Kind"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/url"><Annotation Term="Common.Label" String="URL"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/executionId"><Annotation Term="Common.Label" String="Execution"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Artifact">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Artifact"/><PropertyValue Property="TypeNamePlural" String="Artifacts"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kind"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executionId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>kind</PropertyPath><PropertyPath>scenarioId</PropertyPath><PropertyPath>executionId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/Artifacts">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/id"><Annotation Term="Common.Label" String="Schedule ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/configurationId"><Annotation Term="Common.Label" String="Configuration"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/cron"><Annotation Term="Common.Label" String="Cron (UTC)"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/startTime"><Annotation Term="Common.Label" String="Valid From"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/endTime"><Annotation Term="Common.Label" String="Valid To"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/lastRunAt"><Annotation Term="Common.Label" String="Last Run"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/nextRunAt"><Annotation Term="Common.Label" String="Next Run"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/lastExecutionId"><Annotation Term="Common.Label" String="Last Execution"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ExecutionSchedule">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Execution Schedule"/><PropertyValue Property="TypeNamePlural" String="Execution Schedules"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="cron"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="cron"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurationId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="nextRunAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastRunAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>configurationId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/ExecutionSchedules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.Metric/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/id"><Annotation Term="Common.Label" String="Metric ID"/><Annotation Term="Core.Computed" Bool="true"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/executionId"><Annotation Term="Common.Label" String="Execution"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/name"><Annotation Term="Common.Label" String="Metric"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/value"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/step"><Annotation Term="Common.Label" String="Step"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/timestamp"><Annotation Term="Common.Label" String="Timestamp"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Metric/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.Metric">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Metric"/><PropertyValue Property="TypeNamePlural" String="Metrics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executionId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executionId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="step"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="value"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="timestamp"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>executionId</PropertyPath><PropertyPath>name</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/Metrics">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/id"><Annotation Term="Common.Label" String="Secret Name"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/server"><Annotation Term="Common.Label" String="Registry Server"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/username"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/password"><Annotation Term="Common.Label" String="Password (write only)"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/hasCredentials"><Annotation Term="Common.Label" String="Credentials Set"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/credentialFingerprint"><Annotation Term="Common.Label" String="Fingerprint"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.DockerRegistrySecret">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Docker Registry Secret"/><PropertyValue Property="TypeNamePlural" String="Docker Registry Secrets"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="server"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="server"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="username"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="hasCredentials"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="updatedAt"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/DockerRegistrySecrets">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/id"><Annotation Term="Common.Label" String="Secret Name"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/type"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/bucket"><Annotation Term="Common.Label" String="Bucket"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/endpoint"><Annotation Term="Common.Label" String="Endpoint"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/pathPrefix"><Annotation Term="Common.Label" String="Path Prefix"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/accessKeyId"><Annotation Term="Common.Label" String="Access Key ID (write only)"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/secretAccessKey"><Annotation Term="Common.Label" String="Secret Access Key (write only)"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/hasCredentials"><Annotation Term="Common.Label" String="Credentials Set"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/credentialFingerprint"><Annotation Term="Common.Label" String="Fingerprint"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.aicore.ObjectStoreSecret">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Object Store Secret"/><PropertyValue Property="TypeNamePlural" String="Object Store Secrets"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bucket"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="type"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bucket"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="region"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="hasCredentials"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>type</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService/ObjectStoreSecrets">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/resourceGroups"><Annotation Term="Common.Label" String="Resource Groups"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/scenarios"><Annotation Term="Common.Label" String="Scenarios"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/executables"><Annotation Term="Common.Label" String="Executables"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/configurations"><Annotation Term="Common.Label" String="Configurations"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/executions"><Annotation Term="Common.Label" String="Executions"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/pendingExecutions"><Annotation Term="Common.Label" String="Pending Executions"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/runningExecutions"><Annotation Term="Common.Label" String="Running Executions"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/completedExecutions"><Annotation Term="Common.Label" String="Completed Executions"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/failedExecutions"><Annotation Term="Common.Label" String="Stopped / Dead Executions"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/deployments"><Annotation Term="Common.Label" String="Deployments"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/runningDeployments"><Annotation Term="Common.Label" String="Running Deployments"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/stoppedDeployments"><Annotation Term="Common.Label" String="Stopped Deployments"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/artifacts"><Annotation Term="Common.Label" String="Artifacts"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/models"><Annotation Term="Common.Label" String="Models"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/datasets"><Annotation Term="Common.Label" String="Datasets"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/schedules"><Annotation Term="Common.Label" String="Schedules"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/activeSchedules"><Annotation Term="Common.Label" String="Active Schedules"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/metrics"><Annotation Term="Common.Label" String="Metric Values"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/secrets"><Annotation Term="Common.Label" String="Secrets"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic/computedAt"><Annotation Term="Common.Label" String="Computed At"/></Annotations>
+      <Annotations Target="uim.aicore.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroups"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarios"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executables"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurations"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executions"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="pendingExecutions"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="runningExecutions"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="completedExecutions"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.aicore.AiCoreService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="AI Core"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
