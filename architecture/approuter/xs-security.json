@@ -1,0 +1,21 @@
+{
+  "xsappname": "uim-architecture",
+  "tenant-mode": "dedicated",
+  "description": "UIM architecture repository — TOGAF building blocks, ArchiMate relationships, lifecycle governance",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read building blocks, relationships, analyses and exports" },
+    { "name": "$XSAPPNAME.Manage", "description": "Create, change and delete building blocks and relationships" },
+    { "name": "$XSAPPNAME.Govern", "description": "Lifecycle decisions: approve, activate, deprecate, retire" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read the architecture repository", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "Architect", "description": "Maintain building blocks and relationships", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Manage"] },
+    { "name": "ArchitectureBoard", "description": "Govern the lifecycle of building blocks", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Manage", "$XSAPPNAME.Govern"] }
+  ],
+  "role-collections": [
+    { "name": "ArchitectureViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "Architect", "role-template-references": ["$XSAPPNAME.Architect"] },
+    { "name": "ArchitectureBoard", "role-template-references": ["$XSAPPNAME.ArchitectureBoard"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

@@ -1,0 +1,70 @@
+name "architecture"
+description "Architecture repository service — TOGAF building blocks (ABB, SBB, data, business, technology), ArchiMate 3.2 relationships, lifecycle governance, gap / impact / phase-out analysis and ArchiMate exchange export. D/vibe.d backend with REST, OData v4 (SAP Fiori), CLI and GtkD GUI"
+homepage "https://github.com/UIMSolutions/uim-platform"
+authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
+copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
+license "Apache-2.0"
+
+targetPath "build"
+sourcePaths "source"
+importPaths "source"
+
+// Shared platform library: uim-framework 26.11, vibe-d 0.10.x, generic OData v4 engine,
+// CLI and GtkD entity browser.
+dependency "service" path="../../service"
+// uim-framework is pinned to 26.11.1: 26.11.2 renamed uim.services → uim.service and the
+// shared service library is not ported yet (lift to ~>26.11.2 together with ../../service).
+dependency "uim-framework" version="==26.11.1"
+dependency "vibe-d" version="~>0.10.5"
+
+buildRequirements "allowWarnings" "silenceDeprecations"
+
+// ── HTTP server: REST (/api/v1) + OData v4 (/odata/v4/architecture) + Fiori (/app) ──
+// dub build            (or --config=defaultRun)
+// ./build/uim-architecture-platform-service
+configuration "defaultRun" {
+	targetType "executable"
+	targetName "uim-architecture-platform-service"
+	mainSourceFile "source/app.d"
+	excludedSourceFiles "source/cli.d" "source/gui.d"
+}
+
+// ── Command line interface ──────────────────────────────────────────────────
+// dub build --config=cli
+// ./build/uim-architecture-cli help
+configuration "cli" {
+	targetType "executable"
+	targetName "uim-architecture-cli"
+	mainSourceFile "source/cli.d"
+	excludedSourceFiles "source/app.d" "source/gui.d"
+}
+
+// ── Desktop GUI (GtkD 3 / GTK 3.24) ─────────────────────────────────────────
+// dub build --config=gui
+// ./build/uim-architecture-gui [--tenant=<id>] [--data-file=<path>]
+configuration "gui" {
+	targetType "executable"
+	targetName "uim-architecture-gui"
+	mainSourceFile "source/gui.d"
+	excludedSourceFiles "source/app.d" "source/cli.d"
+	dependency "gtk-d" version="~>3.11.0"
+}
+
+// ── Libraries / unit tests (dub test) ───────────────────────────────────────
+configuration "defaultTest" {
+	targetType "library"
+	sourcePaths "tests"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "modules" {
+	targetType "library"
+	versions "show_module"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "tests" {
+	targetType "library"
+	versions "show_module" "show_test"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
