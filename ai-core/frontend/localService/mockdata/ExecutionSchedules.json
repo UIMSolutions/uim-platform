@@ -1,0 +1,21 @@
+[
+  {
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "nightly-retraining",
+    "nextRunAt": "2026-11-22T02:00:00Z",
+    "key": "default~nightly-retraining",
+    "cron": "0 2 * * *",
+    "endTime": null,
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Nightly retraining",
+    "status": "ACTIVE",
+    "lastRunAt": null,
+    "lastExecutionId": null,
+    "startTime": null,
+    "tenantId": "default",
+    "configurationId": "train-default",
+    "updatedBy": "cli"
+  }
+]

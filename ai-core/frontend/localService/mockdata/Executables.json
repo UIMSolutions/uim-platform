@@ -1,0 +1,81 @@
+[
+  {
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "text-clf-train",
+    "versionId": "1.2.0",
+    "key": "default~text-clf-train",
+    "outputArtifacts": [
+      "model:model",
+      "evaluation:resultset"
+    ],
+    "parameters": [
+      "base-model=distilbert-base-multilingual",
+      "epochs=5",
+      "learning-rate=0.00002"
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Fine-tune text classifier",
+    "deployable": false,
+    "scenarioId": "text-classification",
+    "labels": [],
+    "inputArtifacts": [
+      "training-data:dataset"
+    ],
+    "description": "Fine-tunes a transformer on labelled tickets",
+    "type": "workflow",
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "text-clf-serve",
+    "versionId": "1.2.0",
+    "key": "default~text-clf-serve",
+    "outputArtifacts": [],
+    "parameters": [
+      "replicas=1",
+      "resource-plan=starter"
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Serve text classifier",
+    "deployable": true,
+    "scenarioId": "text-classification",
+    "labels": [],
+    "inputArtifacts": [
+      "model:model"
+    ],
+    "description": "REST inference server (KServe)",
+    "type": "serving",
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "resourceGroupId": "team-forecast",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "forecast-batch",
+    "versionId": "1.0.0",
+    "key": "team-forecast~forecast-batch",
+    "outputArtifacts": [
+      "forecast:resultset"
+    ],
+    "parameters": [
+      "horizon-days=28",
+      "plant"
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Batch forecast",
+    "deployable": false,
+    "scenarioId": "demand-forecast",
+    "labels": [],
+    "inputArtifacts": [],
+    "description": "",
+    "type": "workflow",
+    "tenantId": "default",
+    "updatedBy": "cli"
+  }
+]

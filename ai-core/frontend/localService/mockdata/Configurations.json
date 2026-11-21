@@ -1,0 +1,60 @@
+[
+  {
+    "executableId": "text-clf-train",
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "train-default",
+    "key": "default~train-default",
+    "inputArtifactBindings": [
+      "training-data=support-tickets-2026"
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Train on 2026 tickets",
+    "scenarioId": "text-classification",
+    "parameterBindings": [
+      "epochs=8"
+    ],
+    "executableType": "workflow",
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "executableId": "text-clf-serve",
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "serve-v1",
+    "key": "default~serve-v1",
+    "inputArtifactBindings": [
+      "model=text-clf-v1"
+    ],
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Serve model v1",
+    "scenarioId": "text-classification",
+    "parameterBindings": [
+      "replicas=2"
+    ],
+    "executableType": "serving",
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "executableId": "forecast-batch",
+    "resourceGroupId": "team-forecast",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "forecast-plant-1000",
+    "key": "team-forecast~forecast-plant-1000",
+    "inputArtifactBindings": [],
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Plant 1000, 4 weeks",
+    "scenarioId": "demand-forecast",
+    "parameterBindings": [
+      "plant=1000"
+    ],
+    "executableType": "workflow",
+    "tenantId": "default",
+    "updatedBy": "cli"
+  }
+]

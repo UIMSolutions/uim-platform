@@ -1,0 +1,23 @@
+{
+  "activeSchedules": 1,
+  "artifacts": 5,
+  "completedExecutions": 2,
+  "computedAt": "2026-11-21T08:44:06Z",
+  "configurations": 3,
+  "datasets": 1,
+  "deployments": 1,
+  "executables": 3,
+  "executions": 2,
+  "failedExecutions": 0,
+  "metrics": 10,
+  "models": 2,
+  "pendingExecutions": 0,
+  "resourceGroups": 2,
+  "runningDeployments": 1,
+  "runningExecutions": 0,
+  "scenarios": 2,
+  "schedules": 1,
+  "secrets": 2,
+  "stoppedDeployments": 0,
+  "tenantId": "default"
+}

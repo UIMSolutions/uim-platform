@@ -1,0 +1,36 @@
+[
+  {
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "text-classification",
+    "key": "default~text-classification",
+    "configurationCount": 2,
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Support Ticket Classification",
+    "executableCount": 2,
+    "labels": [
+      "ext.ai.sap.com/domain=customer-service"
+    ],
+    "description": "Routes incoming support tickets to the responsible team",
+    "artifactCount": 4,
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "resourceGroupId": "team-forecast",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "demand-forecast",
+    "key": "team-forecast~demand-forecast",
+    "configurationCount": 1,
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "Demand Forecast",
+    "executableCount": 1,
+    "labels": [],
+    "description": "Weekly demand forecast per material and plant",
+    "artifactCount": 1,
+    "tenantId": "default",
+    "updatedBy": "cli"
+  }
+]

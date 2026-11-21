@@ -1,0 +1,35 @@
+[
+  {
+    "statusMessage": "Resource group provisioned",
+    "executionCount": 1,
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "default",
+    "scenarioCount": 1,
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "labels": [
+      "ext.ai.sap.com/owner=platform-team"
+    ],
+    "deploymentCount": 1,
+    "tenantId": "default",
+    "status": "PROVISIONED",
+    "updatedBy": "cli"
+  },
+  {
+    "statusMessage": "Resource group provisioned",
+    "executionCount": 1,
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "team-forecast",
+    "scenarioCount": 1,
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "labels": [
+      "ext.ai.sap.com/owner=supply-chain",
+      "cost-center=4711"
+    ],
+    "deploymentCount": 0,
+    "tenantId": "default",
+    "status": "PROVISIONED",
+    "updatedBy": "cli"
+  }
+]

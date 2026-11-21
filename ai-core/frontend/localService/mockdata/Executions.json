@@ -1,0 +1,58 @@
+[
+  {
+    "executableId": "text-clf-train",
+    "resourceGroupId": "default",
+    "durationSeconds": 3,
+    "statusMessage": "Execution completed successfully",
+    "updatedAt": "2026-11-21T08:37:47Z",
+    "id": "c13d874fb3984c37",
+    "metricCount": 10,
+    "key": "default~c13d874fb3984c37",
+    "outputArtifacts": [
+      "model=988b1e634b504196",
+      "evaluation=25699511dda94580"
+    ],
+    "completionTime": "2026-11-21T08:37:47Z",
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "targetStatus": "COMPLETED",
+    "tags": [
+      "triggered-by=demo",
+      "dataset-version=2026-06"
+    ],
+    "scenarioId": "text-classification",
+    "status": "COMPLETED",
+    "scheduleId": null,
+    "submissionTime": "2026-11-21T08:37:27Z",
+    "startTime": "2026-11-21T08:37:44Z",
+    "tenantId": "default",
+    "configurationId": "train-default",
+    "updatedBy": "cli"
+  },
+  {
+    "executableId": "forecast-batch",
+    "resourceGroupId": "team-forecast",
+    "durationSeconds": 3,
+    "statusMessage": "Execution completed successfully",
+    "updatedAt": "2026-11-21T08:37:47Z",
+    "id": "1b9e0ad7268a4e49",
+    "metricCount": 0,
+    "key": "team-forecast~1b9e0ad7268a4e49",
+    "outputArtifacts": [
+      "forecast=92961dcb69844abd"
+    ],
+    "completionTime": "2026-11-21T08:37:47Z",
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "targetStatus": "COMPLETED",
+    "tags": [],
+    "scenarioId": "demand-forecast",
+    "status": "COMPLETED",
+    "scheduleId": null,
+    "submissionTime": "2026-11-21T08:37:27Z",
+    "startTime": "2026-11-21T08:37:44Z",
+    "tenantId": "default",
+    "configurationId": "forecast-plant-1000",
+    "updatedBy": "cli"
+  }
+]

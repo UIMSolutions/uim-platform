@@ -1,0 +1,84 @@
+<mvc:View controllerName="uim.aicore.controller.ScenarioDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" height="100%">
+  <f:DynamicPage id="scenarioPage">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{name}" level="H2"/></f:heading>
+        <f:expandedContent><Text text="{description}"/></f:expandedContent>
+        <f:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>cancel}" press=".onNavBack"/>
+        </f:navigationActions>
+        <f:actions>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:content>
+      <VBox>
+        <form:SimpleForm id="scenarioForm" title="{i18n>sectionGeneral}" editable="false" layout="ColumnLayout" columnsM="2" columnsL="3">
+          <Label text="{i18n>colId}"/><Text text="{id}"/>
+          <Label text="{i18n>colGroup}"/><Text text="{resourceGroupId}"/>
+          <Label text="{i18n>colLabels}"/><Text text="{path: 'labels', formatter: '.formatter.list'}"/>
+        </form:SimpleForm>
+
+        <Table id="scenarioExecutables" headerText="{i18n>sectionExecutables}" noDataText="{i18n>noData}" class="sapUiSmallMarginTop"
+          items="{path: '/Executables', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+          <columns>
+            <Column><Text text="{i18n>colName}"/></Column>
+            <Column><Text text="{i18n>colType}"/></Column>
+            <Column><Text text="{i18n>colVersion}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colParameters}"/></Column>
+            <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colInputs}"/></Column>
+            <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colOutputs}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <ObjectIdentifier title="{name}" text="{id}"/>
+              <ObjectStatus text="{path: 'type', formatter: '.formatter.enumText'}" icon="{path: 'type', formatter: '.formatter.typeIcon'}"/>
+              <Text text="{versionId}"/>
+              <Text text="{path: 'parameters', formatter: '.formatter.list'}"/>
+              <Text text="{path: 'inputArtifacts', formatter: '.formatter.list'}"/>
+              <Text text="{path: 'outputArtifacts', formatter: '.formatter.list'}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <Table id="scenarioConfigurations" headerText="{i18n>sectionConfigurations}" noDataText="{i18n>noData}" class="sapUiSmallMarginTop"
+          items="{path: '/Configurations', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+          <columns>
+            <Column><Text text="{i18n>colName}"/></Column>
+            <Column><Text text="{i18n>colExecutable}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colParameters}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colInputs}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <ObjectIdentifier title="{name}" text="{id}"/>
+              <ObjectStatus text="{executableId}" icon="{path: 'executableType', formatter: '.formatter.typeIcon'}"/>
+              <Text text="{path: 'parameterBindings', formatter: '.formatter.list'}"/>
+              <Text text="{path: 'inputArtifactBindings', formatter: '.formatter.list'}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <Table id="scenarioArtifacts" headerText="{i18n>sectionArtifacts}" noDataText="{i18n>noData}" class="sapUiSmallMarginTop"
+          items="{path: '/Artifacts', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+          <columns>
+            <Column><Text text="{i18n>colName}"/></Column>
+            <Column><Text text="{i18n>colKind}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colExecution}"/></Column>
+            <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colUrl}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <ObjectIdentifier title="{name}" text="{description}"/>
+              <ObjectStatus text="{path: 'kind', formatter: '.formatter.enumText'}" icon="{path: 'kind', formatter: '.formatter.kindIcon'}"/>
+              <Text text="{executionId}"/>
+              <Text text="{url}" wrapping="true"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </VBox>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

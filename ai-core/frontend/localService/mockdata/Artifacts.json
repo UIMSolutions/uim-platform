@@ -1,0 +1,95 @@
+[
+  {
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "support-tickets-2026",
+    "key": "default~support-tickets-2026",
+    "kind": "dataset",
+    "executionId": null,
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "support-tickets-2026",
+    "url": "ai://default/datasets/support-tickets-2026.csv",
+    "scenarioId": "text-classification",
+    "labels": [],
+    "description": "48 211 labelled support tickets (Jan–Jun 2026)",
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:27Z",
+    "id": "text-clf-v1",
+    "key": "default~text-clf-v1",
+    "kind": "model",
+    "executionId": null,
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "name": "text-clf-v1",
+    "url": "ai://default/models/text-clf/v1",
+    "scenarioId": "text-classification",
+    "labels": [
+      "ext.ai.sap.com/version=1"
+    ],
+    "description": "Baseline model, F1 0.87",
+    "tenantId": "default",
+    "updatedBy": "cli"
+  },
+  {
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:47Z",
+    "id": "25699511dda94580",
+    "key": "default~25699511dda94580",
+    "kind": "resultset",
+    "executionId": "c13d874fb3984c37",
+    "createdBy": "runtime",
+    "createdAt": "2026-11-21T08:37:47Z",
+    "name": "text-clf-train-evaluation",
+    "url": "ai://default/default/executions/c13d874fb3984c37/evaluation",
+    "scenarioId": "text-classification",
+    "labels": [
+      "ext.ai.sap.com/source=execution"
+    ],
+    "description": "Evaluation report",
+    "tenantId": "default",
+    "updatedBy": "runtime"
+  },
+  {
+    "resourceGroupId": "team-forecast",
+    "updatedAt": "2026-11-21T08:37:47Z",
+    "id": "92961dcb69844abd",
+    "key": "team-forecast~92961dcb69844abd",
+    "kind": "resultset",
+    "executionId": "1b9e0ad7268a4e49",
+    "createdBy": "runtime",
+    "createdAt": "2026-11-21T08:37:47Z",
+    "name": "forecast-batch-forecast",
+    "url": "ai://default/team-forecast/executions/1b9e0ad7268a4e49/forecast",
+    "scenarioId": "demand-forecast",
+    "labels": [
+      "ext.ai.sap.com/source=execution"
+    ],
+    "description": "Forecast per material",
+    "tenantId": "default",
+    "updatedBy": "runtime"
+  },
+  {
+    "resourceGroupId": "default",
+    "updatedAt": "2026-11-21T08:37:47Z",
+    "id": "988b1e634b504196",
+    "key": "default~988b1e634b504196",
+    "kind": "model",
+    "executionId": "c13d874fb3984c37",
+    "createdBy": "runtime",
+    "createdAt": "2026-11-21T08:37:47Z",
+    "name": "text-clf-train-model",
+    "url": "ai://default/default/executions/c13d874fb3984c37/model",
+    "scenarioId": "text-classification",
+    "labels": [
+      "ext.ai.sap.com/source=execution"
+    ],
+    "description": "Fine-tuned model",
+    "tenantId": "default",
+    "updatedBy": "runtime"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "executableId": "text-clf-serve",
+    "resourceGroupId": "default",
+    "statusMessage": "Deployment running",
+    "updatedAt": "2026-11-21T08:37:44Z",
+    "id": "f2815649dfa84c75",
+    "latestRunningConfigurationId": "serve-v1",
+    "lastOperation": "CREATE",
+    "key": "default~f2815649dfa84c75",
+    "ttlSeconds": 0,
+    "expiresAt": null,
+    "completionTime": null,
+    "createdBy": "cli",
+    "createdAt": "2026-11-21T08:37:27Z",
+    "targetStatus": "RUNNING",
+    "deploymentUrl": "http://localhost:8190/api/v2/inference/deployments/f2815649dfa84c75",
+    "scenarioId": "text-classification",
+    "status": "RUNNING",
+    "submissionTime": "2026-11-21T08:37:27Z",
+    "startTime": "2026-11-21T08:37:44Z",
+    "tenantId": "default",
+    "configurationId": "serve-v1",
+    "updatedBy": "cli"
+  }
+]

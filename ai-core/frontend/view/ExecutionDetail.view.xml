@@ -1,0 +1,76 @@
+<mvc:View controllerName="uim.aicore.controller.ExecutionDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" height="100%">
+  <f:DynamicPage id="executionPage" showFooter="false">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>colExecution} {id}" level="H2"/></f:heading>
+        <f:expandedContent>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+            icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+        </f:expandedContent>
+        <f:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>cancel}" press=".onNavBack"/>
+        </f:navigationActions>
+        <f:actions>
+          <Button text="{i18n>stop}" icon="sap-icon://stop" press=".onStop" enabled="{path: 'status', targetType: 'any', formatter: '.formatter.canStop'}"/>
+          <Button text="{i18n>clearMetrics}" icon="sap-icon://eraser" press=".onClearMetrics"/>
+          <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" enabled="{path: 'status', targetType: 'any', formatter: '.formatter.canDelete'}"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:content>
+      <VBox>
+        <form:SimpleForm id="executionForm" title="{i18n>sectionGeneral}" editable="false" layout="ColumnLayout" columnsM="2" columnsL="3">
+          <Label text="{i18n>colGroup}"/><Text text="{resourceGroupId}"/>
+          <Label text="{i18n>colScenario}"/><Text text="{scenarioId}"/>
+          <Label text="{i18n>colExecutable}"/><Text text="{executableId}"/>
+          <Label text="{i18n>colConfiguration}"/><Text text="{configurationId}"/>
+          <Label text="{i18n>colSchedule}"/><Text text="{= %{scheduleId} || '–' }"/>
+          <Label text="{i18n>colTarget}"/><Text text="{path: 'targetStatus', formatter: '.formatter.enumText'}"/>
+          <Label text="{i18n>colStatusMessage}"/><Text text="{statusMessage}"/>
+          <Label text="{i18n>colSubmitted}"/><Text text="{path: 'submissionTime', type: 'sap.ui.model.odata.type.DateTimeOffset'}"/>
+          <Label text="{i18n>colStarted}"/><Text text="{path: 'startTime', type: 'sap.ui.model.odata.type.DateTimeOffset'}"/>
+          <Label text="{i18n>colCompleted}"/><Text text="{path: 'completionTime', type: 'sap.ui.model.odata.type.DateTimeOffset'}"/>
+          <Label text="{i18n>colDuration}"/><Text text="{path: 'durationSeconds', formatter: '.formatter.duration'}"/>
+          <Label text="{i18n>colTags}"/><Text text="{path: 'tags', formatter: '.formatter.list'}"/>
+        </form:SimpleForm>
+
+        <Table id="outputsTable" headerText="{i18n>sectionOutputs}" noDataText="{i18n>noData}" class="sapUiSmallMarginTop"
+          items="{path: '/Artifacts', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+          <columns>
+            <Column><Text text="{i18n>colName}"/></Column>
+            <Column><Text text="{i18n>colKind}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colUrl}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <ObjectIdentifier title="{name}" text="{description}"/>
+              <ObjectStatus text="{path: 'kind', formatter: '.formatter.enumText'}" icon="{path: 'kind', formatter: '.formatter.kindIcon'}"/>
+              <Text text="{url}" wrapping="true"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <Table id="metricsTable" headerText="{i18n>sectionMetrics}" noDataText="{i18n>noData}" growing="true" growingThreshold="50"
+          class="sapUiSmallMarginTop"
+          items="{path: '/Metrics', parameters: {$orderby: 'name,step'}, suspended: true, templateShareable: false}">
+          <columns>
+            <Column><Text text="{i18n>colMetric}"/></Column>
+            <Column hAlign="End"><Text text="{i18n>colStep}"/></Column>
+            <Column hAlign="End"><Text text="{i18n>colValue}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colTimestamp}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <Text text="{name}"/>
+              <Text text="{step}"/>
+              <ObjectNumber number="{path: 'value', formatter: '.formatter.metric'}"/>
+              <Text text="{path: 'timestamp', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </VBox>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>
