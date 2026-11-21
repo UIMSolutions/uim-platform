@@ -1,5 +1,0 @@
-extends layout
-
-block content
-  h1 Welcome to the Home Page
-  p This content gets injected directly into the main layout's content block.
