@@ -5,8 +5,12 @@ metadata:
   namespace: uim-platform
   labels:
     app: architecture
+    part-of: uim-platform
 spec:
+  # file storage is a single-node snapshot — keep one replica
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: architecture
@@ -15,30 +19,60 @@ spec:
       labels:
         app: architecture
     spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 999
       containers:
       - name: architecture
         image: uim-platform/architecture:latest
         ports:
         - containerPort: 8122
+          protocol: TCP
         envFrom:
         - configMapRef:
             name: architecture-config
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
-            path: /api/v1/health
+            path: /health
             port: 8122
           initialDelaySeconds: 5
-          periodSeconds: 15
+          periodSeconds: 30
+          timeoutSeconds: 3
         readinessProbe:
           httpGet:
-            path: /api/v1/health
+            path: /health
             port: 8122
           initialDelaySeconds: 3
           periodSeconds: 10
+          timeoutSeconds: 3
         resources:
           requests:
             memory: "64Mi"
-            cpu: "50m"
+            cpu: "100m"
           limits:
             memory: "256Mi"
             cpu: "500m"
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: architecture-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: architecture-data
+  namespace: uim-platform
+  labels:
+    app: architecture
+    part-of: uim-platform
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi

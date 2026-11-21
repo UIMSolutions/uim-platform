@@ -1,0 +1,54 @@
+[
+ {
+  "threshold": 85,
+  "updatedAt": "2026-11-21T18:57:44Z",
+  "id": "4cdacd667c354fa6",
+  "key": "customers~4cdacd667c354fa6",
+  "candidates": [
+   "c-1001=100",
+   "c-1002=96.16"
+  ],
+  "bestScore": 96.16,
+  "createdBy": "anonymous",
+  "createdAt": "2026-11-21T18:57:44Z",
+  "datasetId": "customers",
+  "size": 2,
+  "resolvedAt": null,
+  "matchFields": [
+   "name",
+   "city"
+  ],
+  "survivorRecordId": "c-1001",
+  "resolved": false,
+  "strategy": "composite",
+  "detectedAt": "2026-11-21T18:57:44Z",
+  "tenantId": "default",
+  "updatedBy": "anonymous"
+ },
+ {
+  "threshold": 85,
+  "updatedAt": "2026-11-21T18:57:44Z",
+  "id": "9f216903e8394adc",
+  "key": "customers~9f216903e8394adc",
+  "candidates": [
+   "c-1008=100",
+   "c-1009=99.2"
+  ],
+  "bestScore": 99.2,
+  "createdBy": "anonymous",
+  "createdAt": "2026-11-21T18:57:44Z",
+  "datasetId": "customers",
+  "size": 2,
+  "resolvedAt": null,
+  "matchFields": [
+   "name",
+   "city"
+  ],
+  "survivorRecordId": "c-1008",
+  "resolved": false,
+  "strategy": "composite",
+  "detectedAt": "2026-11-21T18:57:44Z",
+  "tenantId": "default",
+  "updatedBy": "anonymous"
+ }
+]

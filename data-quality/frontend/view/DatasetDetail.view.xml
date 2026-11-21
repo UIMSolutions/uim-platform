@@ -1,0 +1,223 @@
+<mvc:View controllerName="uim.dataquality.controller.DatasetDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+  height="100%">
+  <f:DynamicPage id="detailPage" headerExpanded="true" showFooter="false">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:breadcrumbs>
+          <Breadcrumbs><Link text="{i18n>appTitle}" press=".onNavBack"/></Breadcrumbs>
+        </f:breadcrumbs>
+        <f:heading><Title text="{name}" level="H2"/></f:heading>
+        <f:expandedContent><Text text="{description}"/></f:expandedContent>
+        <f:snappedContent>
+          <ObjectStatus text="{path: 'overallScore', formatter: '.formatter.percentText'} · {path: 'rating', formatter: '.formatter.enumText'}"
+            state="{path: 'rating', formatter: '.formatter.ratingState'}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button text="{i18n>validate}" type="Emphasized" icon="sap-icon://validate" press=".onAction"><customData><core:CustomData key="action" value="ValidateDataset"/></customData></Button>
+          <Button text="{i18n>profile}" icon="sap-icon://business-objects-experience" press=".onAction"><customData><core:CustomData key="action" value="ProfileDataset"/></customData></Button>
+          <Button text="{i18n>detect}" icon="sap-icon://overlay" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="detect"/></customData></Button>
+          <Button text="{i18n>cleanse}" icon="sap-icon://wrench" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="cleansingJob"/></customData></Button>
+          <Button text="{i18n>snapshot}" icon="sap-icon://photo-voltaic" press=".onAction"><customData><core:CustomData key="action" value="TakeSnapshot"/></customData></Button>
+          <Button text="{i18n>importCsv}" icon="sap-icon://upload" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="importCsv"/></customData></Button>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- Scorecard -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <l:HorizontalLayout id="scorecard" allowWrapping="true">
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="13rem">
+            <Label text="{i18n>overallScore}" design="Bold"/>
+            <ProgressIndicator percentValue="{path: 'overallScore', formatter: '.formatter.percentValue'}"
+              displayValue="{path: 'overallScore', formatter: '.formatter.percentText'}"
+              state="{path: 'overallScore', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+            <ObjectStatus text="{path: 'rating', formatter: '.formatter.enumText'}" state="{path: 'rating', formatter: '.formatter.ratingState'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="11rem">
+            <Label text="{i18n>dimCompleteness} (25 %)"/>
+            <ProgressIndicator percentValue="{path: 'completeness', formatter: '.formatter.percentValue'}"
+              displayValue="{path: 'completeness', formatter: '.formatter.percentText'}"
+              state="{path: 'completeness', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="11rem">
+            <Label text="{i18n>dimValidity} (30 %)"/>
+            <ProgressIndicator percentValue="{path: 'validity', formatter: '.formatter.percentValue'}"
+              displayValue="{path: 'validity', formatter: '.formatter.percentText'}"
+              state="{path: 'validity', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="11rem">
+            <Label text="{i18n>dimUniqueness} (20 %)"/>
+            <ProgressIndicator percentValue="{path: 'uniqueness', formatter: '.formatter.percentValue'}"
+              displayValue="{path: 'uniqueness', formatter: '.formatter.percentText'}"
+              state="{path: 'uniqueness', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="11rem">
+            <Label text="{i18n>dimConsistency} (15 %)"/>
+            <ProgressIndicator percentValue="{path: 'consistency', formatter: '.formatter.percentValue'}"
+              displayValue="{path: 'consistency', formatter: '.formatter.percentText'}"
+              state="{path: 'consistency', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="11rem">
+            <Label text="{i18n>dimAccuracy} (10 %)"/>
+            <ProgressIndicator percentValue="{path: 'accuracy', formatter: '.formatter.percentValue'}"
+              displayValue="{path: 'accuracy', formatter: '.formatter.percentText'}"
+              state="{path: 'accuracy', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colRecords}"/>
+            <ObjectNumber number="{recordCount}" unit="· {invalidRecords} {i18n>kpiInvalid} · {violationCount} {i18n>colViolations}"/>
+            <Text text="{i18n>colValidatedAt}: {path: 'validatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+          </VBox>
+        </l:HorizontalLayout>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="detailTabs" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Records ─────────────────────────────────────────────── -->
+          <IconTabFilter key="records" icon="sap-icon://table-view" text="{i18n>tabRecords}" count="{recordCount}">
+            <Table id="recordsTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noRecords}"
+              items="{path: '/Records', parameters: {$orderby: 'id', $count: true}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRecords}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="recordsTable"/></customData></SearchField>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="record"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditRecord"/>
+                  <Button text="{i18n>validate}" icon="sap-icon://validate" press=".onValidateRecord"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="recordsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="9rem"><Text text="{i18n>colRecord}"/></Column>
+                <Column><Text text="{i18n>colFields}"/></Column>
+                <Column width="10rem"><Text text="{i18n>colScore}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colViolations}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSeverity}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{id}"/>
+                  <Text text="{path: 'fields', formatter: '.formatter.list'}" wrapping="true" maxLines="3"/>
+                  <ProgressIndicator percentValue="{path: 'qualityScore', formatter: '.formatter.percentValue'}"
+                    displayValue="{path: 'qualityScore', formatter: '.formatter.percentText'}"
+                    state="{path: 'qualityScore', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+                  <ObjectNumber number="{violationCount}" state="{= %{violationCount} > 0 ? 'Warning' : 'Success' }"/>
+                  <ObjectStatus text="{path: 'worstSeverity', formatter: '.formatter.enumText'}" state="{path: 'worstSeverity', formatter: '.formatter.severityState'}"
+                    icon="{path: 'worstSeverity', formatter: '.formatter.severityIcon'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Profile ─────────────────────────────────────────────── -->
+          <IconTabFilter key="profile" icon="sap-icon://business-objects-experience" text="{i18n>tabProfile}">
+            <Table id="columnsTable" growing="true" growingThreshold="100" noDataText="{i18n>noProfile}"
+              items="{path: '/ColumnProfiles', parameters: {$orderby: 'position'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colField}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column width="10rem"><Text text="{i18n>dimCompleteness}"/></Column>
+                <Column width="10rem" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>dimUniqueness}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRange}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colTopValues}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colPatterns}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{id}" text="{distinctCount} {i18n>distinct} · {missingCount} {i18n>missing}"/>
+                  <Text text="{path: 'detectedType', formatter: '.formatter.enumText'}"/>
+                  <ProgressIndicator percentValue="{path: 'completeness', formatter: '.formatter.percentValue'}"
+                    displayValue="{path: 'completeness', formatter: '.formatter.percentText'}"
+                    state="{path: 'completeness', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+                  <ProgressIndicator percentValue="{path: 'uniqueness', formatter: '.formatter.percentValue'}"
+                    displayValue="{path: 'uniqueness', formatter: '.formatter.percentText'}" displayOnly="true"/>
+                  <Text text="{= (%{minValue} || '') + ' … ' + (%{maxValue} || '') }" wrapping="true"/>
+                  <Text text="{path: 'topValues', formatter: '.formatter.list'}" wrapping="true" maxLines="2"/>
+                  <Text text="{path: 'patterns', formatter: '.formatter.list'}" wrapping="true" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Violations ──────────────────────────────────────────── -->
+          <IconTabFilter key="violations" icon="sap-icon://quality-issue" text="{i18n>tabViolations}" count="{violationCount}">
+            <Table id="detailViolationsTable" growing="true" growingThreshold="50" noDataText="{i18n>noViolations}"
+              items="{path: '/Violations', parameters: {$orderby: 'recordId'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colRecord}"/></Column>
+                <Column><Text text="{i18n>colSeverity}"/></Column>
+                <Column><Text text="{i18n>colMessage}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colValue}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colSuggestion}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{recordId}" text="{fieldName}"/>
+                  <ObjectStatus text="{path: 'severity', formatter: '.formatter.enumText'}" state="{path: 'severity', formatter: '.formatter.severityState'}"
+                    icon="{path: 'severity', formatter: '.formatter.severityIcon'}"/>
+                  <ObjectIdentifier title="{ruleName}" text="{message}"/>
+                  <Text text="{fieldValue}" wrapping="true"/>
+                  <Text text="{suggestedValue}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Duplicates ──────────────────────────────────────────── -->
+          <IconTabFilter key="duplicates" icon="sap-icon://overlay" text="{i18n>tabDuplicates}" count="{openDuplicates}">
+            <Table id="detailGroupsTable" growing="true" noDataText="{i18n>noGroups}"
+              items="{path: '/MatchGroups', parameters: {$orderby: 'resolved,bestScore desc'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colGoldenRecord}"/></Column>
+                <Column><Text text="{i18n>colCandidates}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colBestScore}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{survivorRecordId}" text="{path: 'strategy', formatter: '.formatter.enumText'}"/>
+                  <Text text="{path: 'candidates', formatter: '.formatter.candidates'}" wrapping="true"/>
+                  <ObjectNumber number="{path: 'bestScore', formatter: '.formatter.score'}" unit="%"/>
+                  <ObjectStatus text="{= %{resolved} ? ${i18n>resolved} : ${i18n>open} }" state="{= %{resolved} ? 'Success' : 'Warning' }"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Trend ───────────────────────────────────────────────── -->
+          <IconTabFilter key="trend" icon="sap-icon://line-chart" text="{i18n>tabTrend}">
+            <Table id="snapshotsTable" growing="true" noDataText="{i18n>noSnapshots}"
+              items="{path: '/QualitySnapshots', parameters: {$orderby: 'takenAt desc'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colTakenAt}"/></Column>
+                <Column width="12rem"><Text text="{i18n>overallScore}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRating}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRecords}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colViolations}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDimensions}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{path: 'takenAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <ProgressIndicator percentValue="{path: 'overallScore', formatter: '.formatter.percentValue'}"
+                    displayValue="{path: 'overallScore', formatter: '.formatter.percentText'}"
+                    state="{path: 'overallScore', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+                  <ObjectStatus text="{path: 'rating', formatter: '.formatter.enumText'}" state="{path: 'rating', formatter: '.formatter.ratingState'}"/>
+                  <ObjectNumber number="{recordCount}"/>
+                  <ObjectNumber number="{violationCount}"/>
+                  <Text text="C {path: 'completeness', formatter: '.formatter.score'} · V {path: 'validity', formatter: '.formatter.score'} · U {path: 'uniqueness', formatter: '.formatter.score'} · K {path: 'consistency', formatter: '.formatter.score'} · A {path: 'accuracy', formatter: '.formatter.score'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

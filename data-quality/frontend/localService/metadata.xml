@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.dataquality" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Dataset">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="recordCount" Type="Edm.Int32"/>
+        <Property Name="invalidRecords" Type="Edm.Int32"/>
+        <Property Name="violationCount" Type="Edm.Int32"/>
+        <Property Name="openDuplicates" Type="Edm.Int32"/>
+        <Property Name="scoredAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="validatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="profiledAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="duplicatesCheckedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="overallScore" Type="Edm.Double"/>
+        <Property Name="rating" Type="Edm.String"/>
+        <Property Name="completeness" Type="Edm.Double"/>
+        <Property Name="validity" Type="Edm.Double"/>
+        <Property Name="uniqueness" Type="Edm.Double"/>
+        <Property Name="consistency" Type="Edm.Double"/>
+        <Property Name="accuracy" Type="Edm.Double"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Record">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <Property Name="fields" Type="Collection(Edm.String)"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="fieldCount" Type="Edm.Int32"/>
+        <Property Name="qualityScore" Type="Edm.Double"/>
+        <Property Name="rulesChecked" Type="Edm.Int32"/>
+        <Property Name="violationCount" Type="Edm.Int32"/>
+        <Property Name="worstSeverity" Type="Edm.String"/>
+        <Property Name="validatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ValidationRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="datasetPattern" Type="Edm.String"/>
+        <Property Name="fieldName" Type="Edm.String"/>
+        <Property Name="ruleType" Type="Edm.String"/>
+        <Property Name="dimension" Type="Edm.String"/>
+        <Property Name="severity" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="pattern" Type="Edm.String"/>
+        <Property Name="minValue" Type="Edm.String"/>
+        <Property Name="maxValue" Type="Edm.String"/>
+        <Property Name="allowedValues" Type="Collection(Edm.String)"/>
+        <Property Name="caseSensitive" Type="Edm.Boolean"/>
+        <Property Name="crossFieldName" Type="Edm.String"/>
+        <Property Name="operator" Type="Edm.String"/>
+        <Property Name="expression" Type="Edm.String"/>
+        <Property Name="referenceDataset" Type="Edm.String"/>
+        <Property Name="referenceField" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="priority" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Violation">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <Property Name="recordId" Type="Edm.String"/>
+        <Property Name="recordKey" Type="Edm.String"/>
+        <Property Name="ruleId" Type="Edm.String"/>
+        <Property Name="ruleName" Type="Edm.String"/>
+        <Property Name="ruleType" Type="Edm.String"/>
+        <Property Name="dimension" Type="Edm.String"/>
+        <Property Name="fieldName" Type="Edm.String"/>
+        <Property Name="fieldValue" Type="Edm.String"/>
+        <Property Name="severity" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="suggestedValue" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="CleansingRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="datasetPattern" Type="Edm.String"/>
+        <Property Name="fieldName" Type="Edm.String" Nullable="false"/>
+        <Property Name="action" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="findPattern" Type="Edm.String"/>
+        <Property Name="replaceWith" Type="Edm.String"/>
+        <Property Name="defaultValue" Type="Edm.String"/>
+        <Property Name="lookupDataset" Type="Edm.String"/>
+        <Property Name="lookupKeyField" Type="Edm.String"/>
+        <Property Name="lookupValueField" Type="Edm.String"/>
+        <Property Name="sourceField" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="priority" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="CleansingJob">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <Property Name="ruleIds" Type="Collection(Edm.String)"/>
+        <Property Name="dryRun" Type="Edm.Boolean"/>
+        <Property Name="revalidate" Type="Edm.Boolean"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="totalRecords" Type="Edm.Int32"/>
+        <Property Name="processedRecords" Type="Edm.Int32"/>
+        <Property Name="changedRecords" Type="Edm.Int32"/>
+        <Property Name="changedFields" Type="Edm.Int32"/>
+        <Property Name="rulesApplied" Type="Edm.Int32"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+        <Property Name="changeLog" Type="Collection(Edm.String)"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="durationMillis" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="MatchGroup">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <Property Name="strategy" Type="Edm.String"/>
+        <Property Name="threshold" Type="Edm.Double"/>
+        <Property Name="matchFields" Type="Collection(Edm.String)"/>
+        <Property Name="candidates" Type="Collection(Edm.String)"/>
+        <Property Name="size" Type="Edm.Int32"/>
+        <Property Name="bestScore" Type="Edm.Double"/>
+        <Property Name="survivorRecordId" Type="Edm.String"/>
+        <Property Name="resolved" Type="Edm.Boolean"/>
+        <Property Name="detectedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="resolvedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ColumnProfile">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <Property Name="position" Type="Edm.Int32"/>
+        <Property Name="detectedType" Type="Edm.String"/>
+        <Property Name="totalValues" Type="Edm.Int32"/>
+        <Property Name="missingCount" Type="Edm.Int32"/>
+        <Property Name="distinctCount" Type="Edm.Int32"/>
+        <Property Name="duplicateCount" Type="Edm.Int32"/>
+        <Property Name="completeness" Type="Edm.Double"/>
+        <Property Name="uniqueness" Type="Edm.Double"/>
+        <Property Name="minValue" Type="Edm.String"/>
+        <Property Name="maxValue" Type="Edm.String"/>
+        <Property Name="mean" Type="Edm.Double"/>
+        <Property Name="numeric" Type="Edm.Boolean"/>
+        <Property Name="minLength" Type="Edm.Int32"/>
+        <Property Name="maxLength" Type="Edm.Int32"/>
+        <Property Name="avgLength" Type="Edm.Double"/>
+        <Property Name="topValues" Type="Collection(Edm.String)"/>
+        <Property Name="patterns" Type="Collection(Edm.String)"/>
+        <Property Name="profiledAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Address">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="sourceRecordId" Type="Edm.String"/>
+        <Property Name="inputLine1" Type="Edm.String"/>
+        <Property Name="inputLine2" Type="Edm.String"/>
+        <Property Name="inputCity" Type="Edm.String"/>
+        <Property Name="inputRegion" Type="Edm.String"/>
+        <Property Name="inputPostalCode" Type="Edm.String"/>
+        <Property Name="inputCountry" Type="Edm.String"/>
+        <Property Name="line1" Type="Edm.String"/>
+        <Property Name="line2" Type="Edm.String"/>
+        <Property Name="city" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="postalCode" Type="Edm.String"/>
+        <Property Name="country" Type="Edm.String"/>
+        <Property Name="countryRecognized" Type="Edm.Boolean"/>
+        <Property Name="postalCodePlausible" Type="Edm.Boolean"/>
+        <Property Name="quality" Type="Edm.String"/>
+        <Property Name="changes" Type="Collection(Edm.String)"/>
+        <Property Name="cleansedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="QualitySnapshot">
+        <Key><PropertyRef Name="key"/></Key>
+        <Property Name="key" Type="Edm.String" Nullable="false"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <Property Name="recordCount" Type="Edm.Int32"/>
+        <Property Name="violationCount" Type="Edm.Int32"/>
+        <Property Name="takenAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="overallScore" Type="Edm.Double"/>
+        <Property Name="rating" Type="Edm.String"/>
+        <Property Name="completeness" Type="Edm.Double"/>
+        <Property Name="validity" Type="Edm.Double"/>
+        <Property Name="uniqueness" Type="Edm.Double"/>
+        <Property Name="consistency" Type="Edm.Double"/>
+        <Property Name="accuracy" Type="Edm.Double"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="datasets" Type="Edm.Int32"/>
+        <Property Name="scoredDatasets" Type="Edm.Int32"/>
+        <Property Name="records" Type="Edm.Int32"/>
+        <Property Name="validatedRecords" Type="Edm.Int32"/>
+        <Property Name="invalidRecords" Type="Edm.Int32"/>
+        <Property Name="validationRules" Type="Edm.Int32"/>
+        <Property Name="activeValidationRules" Type="Edm.Int32"/>
+        <Property Name="violations" Type="Edm.Int32"/>
+        <Property Name="criticalViolations" Type="Edm.Int32"/>
+        <Property Name="errorViolations" Type="Edm.Int32"/>
+        <Property Name="warningViolations" Type="Edm.Int32"/>
+        <Property Name="cleansingRules" Type="Edm.Int32"/>
+        <Property Name="activeCleansingRules" Type="Edm.Int32"/>
+        <Property Name="cleansingJobs" Type="Edm.Int32"/>
+        <Property Name="pendingJobs" Type="Edm.Int32"/>
+        <Property Name="failedJobs" Type="Edm.Int32"/>
+        <Property Name="matchGroups" Type="Edm.Int32"/>
+        <Property Name="openMatchGroups" Type="Edm.Int32"/>
+        <Property Name="duplicateRecords" Type="Edm.Int32"/>
+        <Property Name="addresses" Type="Edm.Int32"/>
+        <Property Name="verifiedAddresses" Type="Edm.Int32"/>
+        <Property Name="invalidAddresses" Type="Edm.Int32"/>
+        <Property Name="averageScore" Type="Edm.Double"/>
+        <Property Name="rating" Type="Edm.String"/>
+        <Property Name="computedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </EntityType>
+      <ComplexType Name="ValidationRunResult">
+        <Property Name="datasetId" Type="Edm.String"/>
+        <Property Name="records" Type="Edm.Int32"/>
+        <Property Name="validRecords" Type="Edm.Int32"/>
+        <Property Name="invalidRecords" Type="Edm.Int32"/>
+        <Property Name="violations" Type="Edm.Int32"/>
+        <Property Name="rulesApplied" Type="Edm.Int32"/>
+        <Property Name="averageScore" Type="Edm.Double"/>
+        <Property Name="durationMillis" Type="Edm.Int32"/>
+        <Property Name="overallScore" Type="Edm.Double"/>
+        <Property Name="rating" Type="Edm.String"/>
+        <Property Name="completeness" Type="Edm.Double"/>
+        <Property Name="validity" Type="Edm.Double"/>
+        <Property Name="uniqueness" Type="Edm.Double"/>
+        <Property Name="consistency" Type="Edm.Double"/>
+        <Property Name="accuracy" Type="Edm.Double"/>
+      </ComplexType>
+      <ComplexType Name="RecordValidation">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="qualityScore" Type="Edm.Double"/>
+        <Property Name="rulesChecked" Type="Edm.Int32"/>
+        <Property Name="violationCount" Type="Edm.Int32"/>
+        <Property Name="worstSeverity" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ProfileRunResult">
+        <Property Name="datasetId" Type="Edm.String"/>
+        <Property Name="records" Type="Edm.Int32"/>
+        <Property Name="columns" Type="Edm.Int32"/>
+        <Property Name="completeness" Type="Edm.Double"/>
+        <Property Name="uniqueness" Type="Edm.Double"/>
+        <Property Name="durationMillis" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="DetectResult">
+        <Property Name="datasetId" Type="Edm.String"/>
+        <Property Name="records" Type="Edm.Int32"/>
+        <Property Name="groups" Type="Edm.Int32"/>
+        <Property Name="duplicateRecords" Type="Edm.Int32"/>
+        <Property Name="strategy" Type="Edm.String"/>
+        <Property Name="threshold" Type="Edm.Double"/>
+        <Property Name="durationMillis" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="ResolveResult">
+        <Property Name="datasetId" Type="Edm.String"/>
+        <Property Name="matchGroupId" Type="Edm.String"/>
+        <Property Name="survivorRecordId" Type="Edm.String"/>
+        <Property Name="removedRecords" Type="Edm.Int32"/>
+        <Property Name="mergedFields" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="Scorecard">
+        <Property Name="datasetId" Type="Edm.String"/>
+        <Property Name="records" Type="Edm.Int32"/>
+        <Property Name="violations" Type="Edm.Int32"/>
+        <Property Name="openDuplicates" Type="Edm.Int32"/>
+        <Property Name="computedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="overallScore" Type="Edm.Double"/>
+        <Property Name="rating" Type="Edm.String"/>
+        <Property Name="completeness" Type="Edm.Double"/>
+        <Property Name="validity" Type="Edm.Double"/>
+        <Property Name="uniqueness" Type="Edm.Double"/>
+        <Property Name="consistency" Type="Edm.Double"/>
+        <Property Name="accuracy" Type="Edm.Double"/>
+      </ComplexType>
+      <ComplexType Name="JobResult">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="changedRecords" Type="Edm.Int32"/>
+        <Property Name="changedFields" Type="Edm.Int32"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ImportResult">
+        <Property Name="datasetId" Type="Edm.String"/>
+        <Property Name="datasetCreated" Type="Edm.Boolean"/>
+        <Property Name="created" Type="Edm.Int32"/>
+        <Property Name="updated" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="validated" Type="Edm.Boolean"/>
+        <Property Name="violations" Type="Edm.Int32"/>
+        <Property Name="overallScore" Type="Edm.Double"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="datasets" Type="Edm.Int32"/>
+        <Property Name="records" Type="Edm.Int32"/>
+        <Property Name="validationRules" Type="Edm.Int32"/>
+        <Property Name="cleansingRules" Type="Edm.Int32"/>
+        <Property Name="addresses" Type="Edm.Int32"/>
+        <Property Name="violations" Type="Edm.Int32"/>
+        <Property Name="matchGroups" Type="Edm.Int32"/>
+        <Property Name="cleansingJobs" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="ValidateDataset" IsBound="false">
+        <Parameter Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataquality.ValidationRunResult"/>
+      </Action>
+      <Action Name="ValidateRecord" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataquality.RecordValidation"/>
+      </Action>
+      <Action Name="ProfileDataset" IsBound="false">
+        <Parameter Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataquality.ProfileRunResult"/>
+      </Action>
+      <Action Name="DetectDuplicates" IsBound="false">
+        <Parameter Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="matchFields" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="strategy" Type="Edm.String"/>
+        <Parameter Name="threshold" Type="Edm.Double"/>
+        <ReturnType Type="uim.dataquality.DetectResult"/>
+      </Action>
+      <Action Name="ResolveMatchGroup" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="survivorRecordId" Type="Edm.String"/>
+        <Parameter Name="merge" Type="Edm.Boolean"/>
+        <ReturnType Type="uim.dataquality.ResolveResult"/>
+      </Action>
+      <Action Name="ComputeScorecard" IsBound="false">
+        <Parameter Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataquality.Scorecard"/>
+      </Action>
+      <Action Name="TakeSnapshot" IsBound="false">
+        <Parameter Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataquality.Scorecard"/>
+      </Action>
+      <Action Name="RunCleansingJob" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataquality.JobResult"/>
+      </Action>
+      <Action Name="CancelCleansingJob" IsBound="false">
+        <Parameter Name="key" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataquality.JobResult"/>
+      </Action>
+      <Action Name="ImportCsv" IsBound="false">
+        <Parameter Name="datasetId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="csv" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="createDataset" Type="Edm.Boolean"/>
+        <Parameter Name="replaceExisting" Type="Edm.Boolean"/>
+        <ReturnType Type="uim.dataquality.ImportResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.dataquality.SeedResult"/>
+      </Action>
+      <EntityContainer Name="DataQualityService">
+        <EntitySet Name="Datasets" EntityType="uim.dataquality.Dataset"/>
+        <EntitySet Name="Records" EntityType="uim.dataquality.Record"/>
+        <EntitySet Name="ValidationRules" EntityType="uim.dataquality.ValidationRule"/>
+        <EntitySet Name="Violations" EntityType="uim.dataquality.Violation"/>
+        <EntitySet Name="CleansingRules" EntityType="uim.dataquality.CleansingRule"/>
+        <EntitySet Name="CleansingJobs" EntityType="uim.dataquality.CleansingJob"/>
+        <EntitySet Name="MatchGroups" EntityType="uim.dataquality.MatchGroup"/>
+        <EntitySet Name="ColumnProfiles" EntityType="uim.dataquality.ColumnProfile"/>
+        <EntitySet Name="Addresses" EntityType="uim.dataquality.Address"/>
+        <EntitySet Name="QualitySnapshots" EntityType="uim.dataquality.QualitySnapshot"/>
+        <Singleton Name="Statistics" Type="uim.dataquality.Statistic"/>
+        <ActionImport Name="ValidateDataset" Action="uim.dataquality.ValidateDataset"/>
+        <ActionImport Name="ValidateRecord" Action="uim.dataquality.ValidateRecord"/>
+        <ActionImport Name="ProfileDataset" Action="uim.dataquality.ProfileDataset"/>
+        <ActionImport Name="DetectDuplicates" Action="uim.dataquality.DetectDuplicates"/>
+        <ActionImport Name="ResolveMatchGroup" Action="uim.dataquality.ResolveMatchGroup"/>
+        <ActionImport Name="ComputeScorecard" Action="uim.dataquality.ComputeScorecard"/>
+        <ActionImport Name="TakeSnapshot" Action="uim.dataquality.TakeSnapshot"/>
+        <ActionImport Name="RunCleansingJob" Action="uim.dataquality.RunCleansingJob"/>
+        <ActionImport Name="CancelCleansingJob" Action="uim.dataquality.CancelCleansingJob"/>
+        <ActionImport Name="ImportCsv" Action="uim.dataquality.ImportCsv"/>
+        <ActionImport Name="SeedDemoData" Action="uim.dataquality.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.dataquality.ValidationRunResult/datasetId"><Annotation Term="Common.Label" String="Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/records"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/validRecords"><Annotation Term="Common.Label" String="Valid Records"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/invalidRecords"><Annotation Term="Common.Label" String="Invalid Records"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/violations"><Annotation Term="Common.Label" String="Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/rulesApplied"><Annotation Term="Common.Label" String="Rules Applied"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/averageScore"><Annotation Term="Common.Label" String="Average Record Score"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/durationMillis"><Annotation Term="Common.Label" String="Duration (ms)"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/overallScore"><Annotation Term="Common.Label" String="Quality Score"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/rating"><Annotation Term="Common.Label" String="Rating"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/completeness"><Annotation Term="Common.Label" String="Completeness"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/validity"><Annotation Term="Common.Label" String="Validity"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/uniqueness"><Annotation Term="Common.Label" String="Uniqueness"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/consistency"><Annotation Term="Common.Label" String="Consistency"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRunResult/accuracy"><Annotation Term="Common.Label" String="Accuracy"/></Annotations>
+      <Annotations Target="uim.dataquality.RecordValidation/key"><Annotation Term="Common.Label" String="Key"/></Annotations>
+      <Annotations Target="uim.dataquality.RecordValidation/qualityScore"><Annotation Term="Common.Label" String="Quality Score"/></Annotations>
+      <Annotations Target="uim.dataquality.RecordValidation/rulesChecked"><Annotation Term="Common.Label" String="Rules Checked"/></Annotations>
+      <Annotations Target="uim.dataquality.RecordValidation/violationCount"><Annotation Term="Common.Label" String="Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.RecordValidation/worstSeverity"><Annotation Term="Common.Label" String="Worst Severity"/></Annotations>
+      <Annotations Target="uim.dataquality.ProfileRunResult/datasetId"><Annotation Term="Common.Label" String="Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.ProfileRunResult/records"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.ProfileRunResult/columns"><Annotation Term="Common.Label" String="Columns"/></Annotations>
+      <Annotations Target="uim.dataquality.ProfileRunResult/completeness"><Annotation Term="Common.Label" String="Completeness"/></Annotations>
+      <Annotations Target="uim.dataquality.ProfileRunResult/uniqueness"><Annotation Term="Common.Label" String="Uniqueness"/></Annotations>
+      <Annotations Target="uim.dataquality.ProfileRunResult/durationMillis"><Annotation Term="Common.Label" String="Duration (ms)"/></Annotations>
+      <Annotations Target="uim.dataquality.DetectResult/datasetId"><Annotation Term="Common.Label" String="Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.DetectResult/records"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.DetectResult/groups"><Annotation Term="Common.Label" String="Match Groups"/></Annotations>
+      <Annotations Target="uim.dataquality.DetectResult/duplicateRecords"><Annotation Term="Common.Label" String="Duplicates"/></Annotations>
+      <Annotations Target="uim.dataquality.DetectResult/strategy"><Annotation Term="Common.Label" String="Strategy"/></Annotations>
+      <Annotations Target="uim.dataquality.DetectResult/threshold"><Annotation Term="Common.Label" String="Threshold"/></Annotations>
+      <Annotations Target="uim.dataquality.DetectResult/durationMillis"><Annotation Term="Common.Label" String="Duration (ms)"/></Annotations>
+      <Annotations Target="uim.dataquality.ResolveResult/datasetId"><Annotation Term="Common.Label" String="Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.ResolveResult/matchGroupId"><Annotation Term="Common.Label" String="Match Group"/></Annotations>
+      <Annotations Target="uim.dataquality.ResolveResult/survivorRecordId"><Annotation Term="Common.Label" String="Golden Record"/></Annotations>
+      <Annotations Target="uim.dataquality.ResolveResult/removedRecords"><Annotation Term="Common.Label" String="Removed Records"/></Annotations>
+      <Annotations Target="uim.dataquality.ResolveResult/mergedFields"><Annotation Term="Common.Label" String="Merged Fields"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/datasetId"><Annotation Term="Common.Label" String="Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/records"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/violations"><Annotation Term="Common.Label" String="Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/openDuplicates"><Annotation Term="Common.Label" String="Open Duplicates"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/computedAt"><Annotation Term="Common.Label" String="Computed At"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/overallScore"><Annotation Term="Common.Label" String="Quality Score"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/rating"><Annotation Term="Common.Label" String="Rating"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/completeness"><Annotation Term="Common.Label" String="Completeness"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/validity"><Annotation Term="Common.Label" String="Validity"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/uniqueness"><Annotation Term="Common.Label" String="Uniqueness"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/consistency"><Annotation Term="Common.Label" String="Consistency"/></Annotations>
+      <Annotations Target="uim.dataquality.Scorecard/accuracy"><Annotation Term="Common.Label" String="Accuracy"/></Annotations>
+      <Annotations Target="uim.dataquality.JobResult/key"><Annotation Term="Common.Label" String="Key"/></Annotations>
+      <Annotations Target="uim.dataquality.JobResult/id"><Annotation Term="Common.Label" String="Job"/></Annotations>
+      <Annotations Target="uim.dataquality.JobResult/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.dataquality.JobResult/changedRecords"><Annotation Term="Common.Label" String="Changed Records"/></Annotations>
+      <Annotations Target="uim.dataquality.JobResult/changedFields"><Annotation Term="Common.Label" String="Changed Fields"/></Annotations>
+      <Annotations Target="uim.dataquality.JobResult/errorMessage"><Annotation Term="Common.Label" String="Error"/></Annotations>
+      <Annotations Target="uim.dataquality.ImportResult/datasetId"><Annotation Term="Common.Label" String="Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.ImportResult/datasetCreated"><Annotation Term="Common.Label" String="Dataset Created"/></Annotations>
+      <Annotations Target="uim.dataquality.ImportResult/created"><Annotation Term="Common.Label" String="Created"/></Annotations>
+      <Annotations Target="uim.dataquality.ImportResult/updated"><Annotation Term="Common.Label" String="Updated"/></Annotations>
+      <Annotations Target="uim.dataquality.ImportResult/skipped"><Annotation Term="Common.Label" String="Skipped"/></Annotations>
+      <Annotations Target="uim.dataquality.ImportResult/validated"><Annotation Term="Common.Label" String="Validated"/></Annotations>
+      <Annotations Target="uim.dataquality.ImportResult/violations"><Annotation Term="Common.Label" String="Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.ImportResult/overallScore"><Annotation Term="Common.Label" String="Quality Score"/></Annotations>
+      <Annotations Target="uim.dataquality.SeedResult/datasets"><Annotation Term="Common.Label" String="Datasets"/></Annotations>
+      <Annotations Target="uim.dataquality.SeedResult/records"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.SeedResult/validationRules"><Annotation Term="Common.Label" String="Validation Rules"/></Annotations>
+      <Annotations Target="uim.dataquality.SeedResult/cleansingRules"><Annotation Term="Common.Label" String="Cleansing Rules"/></Annotations>
+      <Annotations Target="uim.dataquality.SeedResult/addresses"><Annotation Term="Common.Label" String="Addresses"/></Annotations>
+      <Annotations Target="uim.dataquality.SeedResult/violations"><Annotation Term="Common.Label" String="Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.SeedResult/matchGroups"><Annotation Term="Common.Label" String="Match Groups"/></Annotations>
+      <Annotations Target="uim.dataquality.SeedResult/cleansingJobs"><Annotation Term="Common.Label" String="Cleansing Jobs"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/id"><Annotation Term="Common.Label" String="Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/recordCount"><Annotation Term="Common.Label" String="Records"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/invalidRecords"><Annotation Term="Common.Label" String="Invalid Records"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/violationCount"><Annotation Term="Common.Label" String="Violations"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/openDuplicates"><Annotation Term="Common.Label" String="Open Duplicates"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/scoredAt"><Annotation Term="Common.Label" String="Scored At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/validatedAt"><Annotation Term="Common.Label" String="Validated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/profiledAt"><Annotation Term="Common.Label" String="Profiled At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/duplicatesCheckedAt"><Annotation Term="Common.Label" String="Duplicates Checked At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/overallScore"><Annotation Term="Common.Label" String="Quality Score"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/rating"><Annotation Term="Common.Label" String="Rating"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/completeness"><Annotation Term="Common.Label" String="Completeness"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/validity"><Annotation Term="Common.Label" String="Validity"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/uniqueness"><Annotation Term="Common.Label" String="Uniqueness"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/consistency"><Annotation Term="Common.Label" String="Consistency"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/accuracy"><Annotation Term="Common.Label" String="Accuracy"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Dataset">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Dataset"/><PropertyValue Property="TypeNamePlural" String="Datasets"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="recordCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="overallScore"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rating"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="violationCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="validatedAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>category</PropertyPath><PropertyPath>rating</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/Datasets">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.Record/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/id"><Annotation Term="Common.Label" String="Record ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/datasetId"><Annotation Term="Common.Label" String="Dataset"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/fields"><Annotation Term="Common.Label" String="Fields (name=value)"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/summary"><Annotation Term="Common.Label" String="Summary"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/fieldCount"><Annotation Term="Common.Label" String="Fields"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/qualityScore"><Annotation Term="Common.Label" String="Quality Score"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/rulesChecked"><Annotation Term="Common.Label" String="Rules Checked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/violationCount"><Annotation Term="Common.Label" String="Violations"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/worstSeverity"><Annotation Term="Common.Label" String="Worst Severity"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/validatedAt"><Annotation Term="Common.Label" String="Validated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Record">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Record"/><PropertyValue Property="TypeNamePlural" String="Records"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="summary"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="summary"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="qualityScore"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="violationCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="worstSeverity"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasetId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>datasetId</PropertyPath><PropertyPath>worstSeverity</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/Records">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/id"><Annotation Term="Common.Label" String="Rule ID"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/datasetPattern"><Annotation Term="Common.Label" String="Datasets (pattern)"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/fieldName"><Annotation Term="Common.Label" String="Field"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/ruleType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/dimension"><Annotation Term="Common.Label" String="Dimension"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/severity"><Annotation Term="Common.Label" String="Severity"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/pattern"><Annotation Term="Common.Label" String="Pattern (regex)"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/minValue"><Annotation Term="Common.Label" String="Minimum"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/maxValue"><Annotation Term="Common.Label" String="Maximum"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/allowedValues"><Annotation Term="Common.Label" String="Allowed Values"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/caseSensitive"><Annotation Term="Common.Label" String="Case Sensitive"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/crossFieldName"><Annotation Term="Common.Label" String="Other Field"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/operator"><Annotation Term="Common.Label" String="Operator"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/expression"><Annotation Term="Common.Label" String="Expression"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/referenceDataset"><Annotation Term="Common.Label" String="Reference Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/referenceField"><Annotation Term="Common.Label" String="Reference Field"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/priority"><Annotation Term="Common.Label" String="Priority"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ValidationRule">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Validation Rule"/><PropertyValue Property="TypeNamePlural" String="Validation Rules"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fieldName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fieldName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="ruleType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="severity"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasetPattern"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="priority"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>ruleType</PropertyPath><PropertyPath>severity</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>category</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/ValidationRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.Violation/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/id"><Annotation Term="Common.Label" String="Violation ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/datasetId"><Annotation Term="Common.Label" String="Dataset"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/recordId"><Annotation Term="Common.Label" String="Record"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/recordKey"><Annotation Term="Common.Label" String="Record Key"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/ruleId"><Annotation Term="Common.Label" String="Rule"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/ruleName"><Annotation Term="Common.Label" String="Rule Name"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/ruleType"><Annotation Term="Common.Label" String="Rule Type"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/dimension"><Annotation Term="Common.Label" String="Dimension"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/fieldName"><Annotation Term="Common.Label" String="Field"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/fieldValue"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/severity"><Annotation Term="Common.Label" String="Severity"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/suggestedValue"><Annotation Term="Common.Label" String="Suggestion"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Violation">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Violation"/><PropertyValue Property="TypeNamePlural" String="Violations"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="message"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="ruleName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="recordId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fieldName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fieldValue"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="severity"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="message"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="suggestedValue"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasetId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>datasetId</PropertyPath><PropertyPath>severity</PropertyPath><PropertyPath>ruleId</PropertyPath><PropertyPath>dimension</PropertyPath><PropertyPath>recordId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/Violations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/id"><Annotation Term="Common.Label" String="Rule ID"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/datasetPattern"><Annotation Term="Common.Label" String="Datasets (pattern)"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/fieldName"><Annotation Term="Common.Label" String="Field"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/action"><Annotation Term="Common.Label" String="Action"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/findPattern"><Annotation Term="Common.Label" String="Find (regex)"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/replaceWith"><Annotation Term="Common.Label" String="Replace With"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/defaultValue"><Annotation Term="Common.Label" String="Default Value"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/lookupDataset"><Annotation Term="Common.Label" String="Lookup Dataset"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/lookupKeyField"><Annotation Term="Common.Label" String="Lookup Key Field"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/lookupValueField"><Annotation Term="Common.Label" String="Lookup Value Field"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/sourceField"><Annotation Term="Common.Label" String="Source Field"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/priority"><Annotation Term="Common.Label" String="Priority"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingRule">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Cleansing Rule"/><PropertyValue Property="TypeNamePlural" String="Cleansing Rules"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fieldName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fieldName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="action"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasetPattern"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="priority"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>action</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>category</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/CleansingRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/id"><Annotation Term="Common.Label" String="Job ID"/><Annotation Term="Core.Computed" Bool="true"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/datasetId"><Annotation Term="Common.Label" String="Dataset"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/ruleIds"><Annotation Term="Common.Label" String="Rules (empty = all active)"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/dryRun"><Annotation Term="Common.Label" String="Dry Run"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/revalidate"><Annotation Term="Common.Label" String="Revalidate"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/totalRecords"><Annotation Term="Common.Label" String="Records"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/processedRecords"><Annotation Term="Common.Label" String="Processed"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/changedRecords"><Annotation Term="Common.Label" String="Changed Records"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/changedFields"><Annotation Term="Common.Label" String="Changed Fields"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/rulesApplied"><Annotation Term="Common.Label" String="Rules Applied"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/errorMessage"><Annotation Term="Common.Label" String="Error"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/changeLog"><Annotation Term="Common.Label" String="Changes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/startedAt"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/completedAt"><Annotation Term="Common.Label" String="Completed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/durationMillis"><Annotation Term="Common.Label" String="Duration (ms)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Cleansing Job"/><PropertyValue Property="TypeNamePlural" String="Cleansing Jobs"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasetId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dryRun"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="changedRecords"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="changedFields"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="completedAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>datasetId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/CleansingJobs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/id"><Annotation Term="Common.Label" String="Group ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/datasetId"><Annotation Term="Common.Label" String="Dataset"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/strategy"><Annotation Term="Common.Label" String="Strategy"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/threshold"><Annotation Term="Common.Label" String="Threshold"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/matchFields"><Annotation Term="Common.Label" String="Match Fields"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/candidates"><Annotation Term="Common.Label" String="Candidates (recordId=score)"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/size"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/bestScore"><Annotation Term="Common.Label" String="Best Score"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/survivorRecordId"><Annotation Term="Common.Label" String="Golden Record"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/resolved"><Annotation Term="Common.Label" String="Resolved"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/detectedAt"><Annotation Term="Common.Label" String="Detected At"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/resolvedAt"><Annotation Term="Common.Label" String="Resolved At"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Match Group"/><PropertyValue Property="TypeNamePlural" String="Match Groups"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="survivorRecordId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="strategy"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="survivorRecordId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="size"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bestScore"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="strategy"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resolved"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasetId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>datasetId</PropertyPath><PropertyPath>resolved</PropertyPath><PropertyPath>strategy</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/MatchGroups">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/id"><Annotation Term="Common.Label" String="Field"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/datasetId"><Annotation Term="Common.Label" String="Dataset"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/position"><Annotation Term="Common.Label" String="Position"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/detectedType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/totalValues"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/missingCount"><Annotation Term="Common.Label" String="Missing"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/distinctCount"><Annotation Term="Common.Label" String="Distinct"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/duplicateCount"><Annotation Term="Common.Label" String="Repeated"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/completeness"><Annotation Term="Common.Label" String="Completeness"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/uniqueness"><Annotation Term="Common.Label" String="Uniqueness"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/minValue"><Annotation Term="Common.Label" String="Minimum"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/maxValue"><Annotation Term="Common.Label" String="Maximum"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/mean"><Annotation Term="Common.Label" String="Mean"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/numeric"><Annotation Term="Common.Label" String="Numeric"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/minLength"><Annotation Term="Common.Label" String="Min Length"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/maxLength"><Annotation Term="Common.Label" String="Max Length"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/avgLength"><Annotation Term="Common.Label" String="Avg Length"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/topValues"><Annotation Term="Common.Label" String="Top Values"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/patterns"><Annotation Term="Common.Label" String="Patterns"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/profiledAt"><Annotation Term="Common.Label" String="Profiled At"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Column Profile"/><PropertyValue Property="TypeNamePlural" String="Column Profiles"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="detectedType"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="detectedType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="completeness"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="uniqueness"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="distinctCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="minValue"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="maxValue"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasetId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>datasetId</PropertyPath><PropertyPath>detectedType</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/ColumnProfiles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.Address/id"><Annotation Term="Common.Label" String="Address ID"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/sourceRecordId"><Annotation Term="Common.Label" String="Source Record"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/inputLine1"><Annotation Term="Common.Label" String="Street (input)"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/inputLine2"><Annotation Term="Common.Label" String="Address Line 2 (input)"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/inputCity"><Annotation Term="Common.Label" String="City (input)"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/inputRegion"><Annotation Term="Common.Label" String="Region (input)"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/inputPostalCode"><Annotation Term="Common.Label" String="Postal Code (input)"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/inputCountry"><Annotation Term="Common.Label" String="Country (input)"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/line1"><Annotation Term="Common.Label" String="Street"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/line2"><Annotation Term="Common.Label" String="Address Line 2"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/city"><Annotation Term="Common.Label" String="City"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/region"><Annotation Term="Common.Label" String="Region"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/postalCode"><Annotation Term="Common.Label" String="Postal Code"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/country"><Annotation Term="Common.Label" String="Country"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/countryRecognized"><Annotation Term="Common.Label" String="Country Recognized"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/postalCodePlausible"><Annotation Term="Common.Label" String="Postal Code Plausible"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/quality"><Annotation Term="Common.Label" String="Quality"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/changes"><Annotation Term="Common.Label" String="Changes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/cleansedAt"><Annotation Term="Common.Label" String="Cleansed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Address"/><PropertyValue Property="TypeNamePlural" String="Addresses"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="line1"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="city"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="line1"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="postalCode"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="city"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="country"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="quality"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="inputCountry"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>quality</PropertyPath><PropertyPath>country</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/Addresses">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/key"><Annotation Term="Common.Label" String="Key"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/id"><Annotation Term="Common.Label" String="Snapshot ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/datasetId"><Annotation Term="Common.Label" String="Dataset"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/recordCount"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/violationCount"><Annotation Term="Common.Label" String="Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/takenAt"><Annotation Term="Common.Label" String="Taken At"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/overallScore"><Annotation Term="Common.Label" String="Quality Score"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/rating"><Annotation Term="Common.Label" String="Rating"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/completeness"><Annotation Term="Common.Label" String="Completeness"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/validity"><Annotation Term="Common.Label" String="Validity"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/uniqueness"><Annotation Term="Common.Label" String="Uniqueness"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/consistency"><Annotation Term="Common.Label" String="Consistency"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/accuracy"><Annotation Term="Common.Label" String="Accuracy"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.QualitySnapshot">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Quality Snapshot"/><PropertyValue Property="TypeNamePlural" String="Quality Snapshots"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="takenAt"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rating"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="takenAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="overallScore"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rating"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="recordCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="violationCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasetId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>datasetId</PropertyPath><PropertyPath>rating</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/QualitySnapshots">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/datasets"><Annotation Term="Common.Label" String="Datasets"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/scoredDatasets"><Annotation Term="Common.Label" String="Scored Datasets"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/records"><Annotation Term="Common.Label" String="Records"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/validatedRecords"><Annotation Term="Common.Label" String="Validated Records"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/invalidRecords"><Annotation Term="Common.Label" String="Invalid Records"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/validationRules"><Annotation Term="Common.Label" String="Validation Rules"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/activeValidationRules"><Annotation Term="Common.Label" String="Active Validation Rules"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/violations"><Annotation Term="Common.Label" String="Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/criticalViolations"><Annotation Term="Common.Label" String="Critical Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/errorViolations"><Annotation Term="Common.Label" String="Error Violations"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/warningViolations"><Annotation Term="Common.Label" String="Warnings"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/cleansingRules"><Annotation Term="Common.Label" String="Cleansing Rules"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/activeCleansingRules"><Annotation Term="Common.Label" String="Active Cleansing Rules"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/cleansingJobs"><Annotation Term="Common.Label" String="Cleansing Jobs"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/pendingJobs"><Annotation Term="Common.Label" String="Pending Jobs"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/failedJobs"><Annotation Term="Common.Label" String="Failed Jobs"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/matchGroups"><Annotation Term="Common.Label" String="Match Groups"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/openMatchGroups"><Annotation Term="Common.Label" String="Open Match Groups"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/duplicateRecords"><Annotation Term="Common.Label" String="Duplicate Records"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/addresses"><Annotation Term="Common.Label" String="Addresses"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/verifiedAddresses"><Annotation Term="Common.Label" String="Verified Addresses"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/invalidAddresses"><Annotation Term="Common.Label" String="Invalid Addresses"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/averageScore"><Annotation Term="Common.Label" String="Average Quality Score"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/rating"><Annotation Term="Common.Label" String="Rating"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic/computedAt"><Annotation Term="Common.Label" String="Computed At"/></Annotations>
+      <Annotations Target="uim.dataquality.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="datasets"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scoredDatasets"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="records"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="validatedRecords"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="invalidRecords"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="validationRules"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeValidationRules"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="violations"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Data Quality"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

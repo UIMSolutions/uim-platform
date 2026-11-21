@@ -1,0 +1,201 @@
+<mvc:View controllerName="uim.architecture.controller.BlockDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="blockPage" showFooter="false" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:breadcrumbs>
+          <Breadcrumbs>
+            <Link text="{i18n>appTitle}" press=".onNavBack"/>
+          </Breadcrumbs>
+        </f:breadcrumbs>
+        <f:heading>
+          <HBox alignItems="Center">
+            <core:Icon src="{path: 'kind', formatter: '.formatter.kindIcon'}" size="1.5rem" class="sapUiSmallMarginEnd"/>
+            <Title id="blockTitle" text="{name}" level="H2" wrapping="true"/>
+          </HBox>
+        </f:heading>
+        <f:expandedContent><Text text="{path: 'kind', formatter: '.kindText'} · {id}"/></f:expandedContent>
+        <f:snappedContent><Text text="{kindAbbreviation} · {id}"/></f:snappedContent>
+        <f:content>
+          <ObjectStatus id="blockStatus" text="{path: 'status', formatter: '.statusText'}" inverted="true"
+            state="{path: 'status', formatter: '.formatter.statusState'}" icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+        </f:content>
+        <f:actions>
+          <Button text="{i18n>edit}" type="Emphasized" icon="sap-icon://edit" press=".onEdit"/>
+          <Button id="lifecycleButton" text="{i18n>changeStatus}" icon="sap-icon://process" press=".onLifecycle"/>
+          <Button text="{i18n>newRelationship}" icon="sap-icon://chain-link" press=".onNewRelationship"/>
+          <Button text="{i18n>analyzeImpact}" icon="sap-icon://tree" press=".onAnalyzeImpact"/>
+          <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"
+            enabled="{path: 'status', formatter: '.formatter.deletable'}"/>
+        </f:actions>
+        <f:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" press=".onNavBack"/>
+        </f:navigationActions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox wrap="Wrap">
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colElement}"/>
+            <Text text="{elementType}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colLayer}"/>
+            <Text text="{path: 'domain', formatter: '.formatter.camelText'} · {path: 'aspect', formatter: '.formatter.camelText'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colOwner}"/>
+            <Text text="{owner}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colVersion}"/>
+            <Text text="{versionLabel}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" visible="{= !!${realizesId} }">
+            <Label text="{i18n>fldRealizes}"/>
+            <Link text="{realizesName}" press=".onOpenRealized"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colRelationships}"/>
+            <ObjectNumber number="{relationshipCount}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="detailTabs" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <IconTabFilter key="general" text="{i18n>secGeneral}" icon="sap-icon://hint">
+            <form:SimpleForm id="blockForm" editable="false" layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="3">
+              <core:Title text="{i18n>secGeneral}"/>
+              <Label text="{i18n>colDescription}"/><Text text="{description}"/>
+              <Label text="{i18n>colCapability}"/><Text text="{capability}"/>
+              <Label text="{i18n>fldTags}"/><Text text="{path: 'tags', formatter: '.formatter.joinList'}"/>
+              <Label text="{i18n>colValidUntil}"/><Text text="{validUntil}"/>
+
+              <core:Title text="{i18n>secTogaf}"/>
+              <Label text="{i18n>fldInterfaces}"/><Text text="{path: 'interfaces', formatter: '.formatter.joinList'}"/>
+              <Label text="{i18n>fldVendor}"/><Text text="{vendor}"/>
+              <Label text="{i18n>fldEndpoint}"/><Text text="{endpoint}"/>
+              <Label text="{i18n>fldViewpoint}"/><Text text="{viewpoint}"/>
+
+              <core:Title text="{i18n>secData}"/>
+              <Label text="{i18n>fldClassification}"/><Text text="{dataClassification}"/>
+              <Label text="{i18n>fldDataOwner}"/><Text text="{dataOwner}"/>
+              <Label text="{i18n>fldSourceSystem}"/><Text text="{sourceSystem}"/>
+
+              <core:Title text="{i18n>secLeanIX}"/>
+              <Label text="{i18n>fldFactSheetType}"/><Text text="{factSheetType}"/>
+              <Label text="{i18n>fldFactSheetId}"/><Text text="{factSheetId}"/>
+
+              <core:Title text="{i18n>secAdmin}"/>
+              <Label text="{i18n>fldCreated}"/><Text text="{path: 'createdAt', formatter: '.formatter.dateTime'} · {createdBy}"/>
+              <Label text="{i18n>fldChanged}"/><Text text="{path: 'updatedAt', formatter: '.formatter.dateTime'} · {updatedBy}"/>
+            </form:SimpleForm>
+          </IconTabFilter>
+
+          <IconTabFilter key="relationships" text="{i18n>tabRelationships}" icon="sap-icon://chain-link" count="{relationshipCount}">
+            <Table id="outgoingTable" noDataText="{i18n>noData}" class="sapUiMediumMarginBottom"
+              items="{path: '/Relationships', suspended: true, templateShareable: false}">
+              <headerToolbar><OverflowToolbar><Title text="{i18n>secOutgoing}" level="H3"/></OverflowToolbar></headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colRelType}"/></Column>
+                <Column><Text text="{i18n>colTarget}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+                <Column width="3rem"/>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <ObjectStatus text="{type}" state="Information"/>
+                    <Link text="{targetName}" press=".onOpenBlock"><customData><core:CustomData key="idProperty" value="targetId"/></customData></Link>
+                    <Text text="{description}"/>
+                    <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>delete}" press=".onDeleteRelationship"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+            <Table id="incomingTable" noDataText="{i18n>noData}"
+              items="{path: '/Relationships', suspended: true, templateShareable: false}">
+              <headerToolbar><OverflowToolbar><Title text="{i18n>secIncoming}" level="H3"/></OverflowToolbar></headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colSource}"/></Column>
+                <Column><Text text="{i18n>colRelType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+                <Column width="3rem"/>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Link text="{sourceName}" press=".onOpenBlock"><customData><core:CustomData key="idProperty" value="sourceId"/></customData></Link>
+                    <ObjectStatus text="{type}" state="Information"/>
+                    <Text text="{description}"/>
+                    <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>delete}" press=".onDeleteRelationship"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <IconTabFilter key="realizedBy" text="{i18n>secRealizedBy}" icon="sap-icon://puzzle" count="{realizedByCount}"
+            visible="{view>/isArchitecture}">
+            <Table id="realizedByTable" noDataText="{i18n>noData}" itemPress=".onOpenBlock"
+              items="{path: '/BuildingBlocks', suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>fldVendor}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colVersion}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{id}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.statusText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{vendor}"/>
+                    <Text text="{versionLabel}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <IconTabFilter key="impact" text="{i18n>secImpact}" icon="sap-icon://tree" count="{= ${view>/impactLoaded} ? ${view>/impact}.length : '' }">
+            <MessageStrip id="impactSummary" showIcon="true" class="sapUiSmallMarginBottom" visible="{view>/impactLoaded}"
+              type="{= ${view>/impact}.length > 0 ? 'Warning' : 'Success' }" text="{view>/impactText}"/>
+            <Table id="impactTable" noDataText="{i18n>impactNone}" items="{view>/impact}" itemPress=".onOpenImpacted">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>analyzeImpact}" icon="sap-icon://tree" press=".onAnalyzeImpact"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="5rem" hAlign="Center"><Text text="{i18n>colDepth}"/></Column>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colVia}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDependsOn}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation">
+                  <cells>
+                    <ObjectNumber number="{view>depth}"/>
+                    <ObjectIdentifier title="{view>name}" text="{view>kindAbbreviation} · {view>id}"/>
+                    <ObjectStatus text="{path: 'view>status', formatter: '.statusText'}" state="{path: 'view>status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{view>via}"/>
+                    <Text text="{view>viaBlockId}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

@@ -5,7 +5,11 @@ metadata:
   namespace: uim-platform
   labels:
     app: architecture
-    component: building-blocks
+    part-of: uim-platform
 data:
   ARCHITECTURE_HOST: "0.0.0.0"
   ARCHITECTURE_PORT: "8122"
+  ARCHITECTURE_STORAGE: "file"
+  ARCHITECTURE_DATA_FILE: "/data/architecture.json"
+  ARCHITECTURE_FRONTEND_DIR: "/app/frontend"
+  ARCHITECTURE_SEED_DEMO_DATA: "false"

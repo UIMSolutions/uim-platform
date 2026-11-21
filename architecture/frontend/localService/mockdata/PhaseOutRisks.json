@@ -1,0 +1,18 @@
+[
+  {
+    "validUntil": "2027-06-30",
+    "id": "sbb-legacy-crm",
+    "capability": "",
+    "kind": "solution",
+    "owner": "crm-team",
+    "dependentCount": 2,
+    "name": "Legacy CRM",
+    "elementType": "ApplicationComponent",
+    "kindAbbreviation": "SBB",
+    "dependents": [
+      "bbb-customer-service",
+      "abb-crm"
+    ],
+    "status": "deprecated"
+  }
+]

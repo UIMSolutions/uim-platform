@@ -1,0 +1,22 @@
+{
+  "active": 12,
+  "approved": 3,
+  "architectureBlocks": 5,
+  "blocks": 18,
+  "businessBlocks": 3,
+  "computedAt": "2026-11-21T10:43:51Z",
+  "coveragePercent": 80,
+  "dataBlocks": 2,
+  "deprecated": 1,
+  "expired": 0,
+  "gaps": 1,
+  "inDevelopment": 1,
+  "orphans": 2,
+  "phaseOutRisks": 1,
+  "proposed": 1,
+  "relationships": 15,
+  "retired": 0,
+  "solutionBlocks": 5,
+  "technologyBlocks": 3,
+  "tenantId": "default"
+}

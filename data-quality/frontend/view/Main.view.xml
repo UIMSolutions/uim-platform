@@ -1,0 +1,329 @@
+<mvc:View controllerName="uim.dataquality.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>appTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+        <f:content>
+          <ComboBox id="datasetFilter" selectedKey="{view>/dataset}" selectionChange=".onDatasetFilter" showClearIcon="true"
+            placeholder="{i18n>allDatasets}" width="16rem"
+            items="{path: '/Datasets', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+            <core:Item key="{id}" text="{name}"/>
+          </ComboBox>
+        </f:content>
+        <f:actions>
+          <Button id="seedButton" text="{i18n>seed}" icon="sap-icon://add-product" press=".onSeed"
+            visible="{= %{/Statistics/datasets} === 0 }"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpis" binding="{/Statistics}" wrap="Wrap" alignItems="Center" class="sapUiSmallMarginBottom">
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="14rem">
+            <Label text="{i18n>kpiScore}"/>
+            <ProgressIndicator percentValue="{path: 'averageScore', formatter: '.formatter.percentValue'}"
+              displayValue="{path: 'averageScore', formatter: '.formatter.percentText'}"
+              state="{path: 'averageScore', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+            <ObjectStatus text="{path: 'rating', formatter: '.formatter.enumText'}" state="{path: 'rating', formatter: '.formatter.ratingState'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRecords}"/>
+            <ObjectNumber number="{records}" unit="· {invalidRecords} {i18n>kpiInvalid}"
+              state="{= %{invalidRecords} > 0 ? 'Warning' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiViolations}"/>
+            <ObjectNumber number="{violations}" unit="· {criticalViolations} {i18n>kpiCritical} · {errorViolations} {i18n>kpiErrors}"
+              state="{= %{criticalViolations} > 0 ? 'Error' : %{violations} > 0 ? 'Warning' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiDuplicates}"/>
+            <ObjectNumber number="{duplicateRecords}" unit="· {openMatchGroups} {i18n>kpiOpenGroups}"
+              state="{= %{duplicateRecords} > 0 ? 'Warning' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRules}"/>
+            <ObjectNumber number="{activeValidationRules}" unit="{i18n>kpiValidation} · {activeCleansingRules} {i18n>kpiCleansing}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiJobs}"/>
+            <ObjectNumber number="{pendingJobs}" unit="{i18n>kpiPending} · {failedJobs} {i18n>kpiFailed}"
+              state="{= %{failedJobs} > 0 ? 'Error' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiAddresses}"/>
+            <ObjectNumber number="{verifiedAddresses}" unit="/ {addresses} {i18n>kpiVerified}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Datasets ────────────────────────────────────────────── -->
+          <IconTabFilter key="datasets" icon="sap-icon://database" text="{i18n>tabDatasets}">
+            <Table id="datasetsTable" mode="SingleSelectLeft" growing="true" growingThreshold="25" noDataText="{i18n>noDatasets}"
+              items="{path: '/Datasets', parameters: {$orderby: 'name', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDatasets}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="dataset"/></customData></Button>
+                  <Button text="{i18n>importCsv}" icon="sap-icon://upload" press=".onImport"/>
+                  <Button text="{i18n>validate}" icon="sap-icon://validate" press=".onDatasetAction"><customData><core:CustomData key="action" value="ValidateDataset"/></customData></Button>
+                  <Button text="{i18n>profile}" icon="sap-icon://business-objects-experience" press=".onDatasetAction"><customData><core:CustomData key="action" value="ProfileDataset"/></customData></Button>
+                  <Button text="{i18n>detect}" icon="sap-icon://overlay" press=".onDetect"/>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditDataset"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="datasetsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colDataset}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCategory}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colRecords}"/></Column>
+                <Column width="12rem"><Text text="{i18n>colScore}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRating}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colViolations}"/></Column>
+                <Column hAlign="End" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDuplicates}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colValidatedAt}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onDatasetPress">
+                  <ObjectIdentifier title="{name}" text="{id}"/>
+                  <Text text="{category}"/>
+                  <ObjectNumber number="{recordCount}" unit="· {invalidRecords} {i18n>kpiInvalid}"/>
+                  <ProgressIndicator percentValue="{path: 'overallScore', formatter: '.formatter.percentValue'}"
+                    displayValue="{path: 'overallScore', formatter: '.formatter.percentText'}"
+                    state="{path: 'overallScore', formatter: '.formatter.scoreState'}" displayOnly="true"/>
+                  <ObjectStatus text="{path: 'rating', formatter: '.formatter.enumText'}" state="{path: 'rating', formatter: '.formatter.ratingState'}"/>
+                  <ObjectNumber number="{violationCount}" state="{= %{violationCount} > 0 ? 'Warning' : 'Success' }"/>
+                  <ObjectNumber number="{openDuplicates}"/>
+                  <Text text="{path: 'validatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Violations ──────────────────────────────────────────── -->
+          <IconTabFilter key="violations" icon="sap-icon://quality-issue" text="{i18n>tabViolations}" count="{/Statistics/violations}">
+            <Table id="violationsTable" growing="true" growingThreshold="50" noDataText="{i18n>noViolations}"
+              items="{path: '/Violations', parameters: {$orderby: 'datasetId,recordId', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabViolations}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton selectedKey="{view>/severity}" selectionChange=".onSeverityFilter">
+                    <items>
+                      <SegmentedButtonItem key="" text="{i18n>all}"/>
+                      <SegmentedButtonItem key="critical" icon="sap-icon://alert" tooltip="{i18n>sevCritical}"/>
+                      <SegmentedButtonItem key="error" icon="sap-icon://message-error" tooltip="{i18n>sevError}"/>
+                      <SegmentedButtonItem key="warning" icon="sap-icon://message-warning" tooltip="{i18n>sevWarning}"/>
+                      <SegmentedButtonItem key="info" icon="sap-icon://message-information" tooltip="{i18n>sevInfo}"/>
+                    </items>
+                  </SegmentedButton>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="violationsTable"/></customData></SearchField>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colRecord}"/></Column>
+                <Column><Text text="{i18n>colSeverity}"/></Column>
+                <Column><Text text="{i18n>colMessage}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colField}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colValue}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colSuggestion}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDimension}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onViolationPress">
+                  <ObjectIdentifier title="{recordId}" text="{datasetId}"/>
+                  <ObjectStatus text="{path: 'severity', formatter: '.formatter.enumText'}" state="{path: 'severity', formatter: '.formatter.severityState'}"
+                    icon="{path: 'severity', formatter: '.formatter.severityIcon'}"/>
+                  <ObjectIdentifier title="{ruleName}" text="{message}"/>
+                  <Text text="{fieldName}"/>
+                  <Text text="{fieldValue}" wrapping="true"/>
+                  <Text text="{suggestedValue}"/>
+                  <ObjectStatus text="{path: 'dimension', formatter: '.formatter.enumText'}" icon="{path: 'dimension', formatter: '.formatter.dimensionIcon'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Validation rules ────────────────────────────────────── -->
+          <IconTabFilter key="rules" icon="sap-icon://validate" text="{i18n>tabRules}">
+            <Table id="rulesTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noData}"
+              items="{path: '/ValidationRules', parameters: {$orderby: 'priority,name', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRules}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch"><customData><core:CustomData key="table" value="rulesTable"/></customData></SearchField>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="validationRule"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditRule"><customData><core:CustomData key="table" value="rulesTable"/><core:CustomData key="dialog" value="validationRule"/></customData></Button>
+                  <Button text="{i18n>activate}" icon="sap-icon://play" press=".onSetStatus"><customData><core:CustomData key="table" value="rulesTable"/><core:CustomData key="status" value="active"/></customData></Button>
+                  <Button text="{i18n>deactivate}" icon="sap-icon://pause" press=".onSetStatus"><customData><core:CustomData key="table" value="rulesTable"/><core:CustomData key="status" value="inactive"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="rulesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colRule}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSeverity}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDatasets}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDimension}"/></Column>
+                <Column hAlign="End" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colPriority}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{fieldName}"/>
+                  <Text text="{path: 'ruleType', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'severity', formatter: '.formatter.enumText'}" state="{path: 'severity', formatter: '.formatter.severityState'}"
+                    icon="{path: 'severity', formatter: '.formatter.severityIcon'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{= %{datasetPattern} || '*' }"/>
+                  <ObjectStatus text="{path: 'dimension', formatter: '.formatter.enumText'}" icon="{path: 'dimension', formatter: '.formatter.dimensionIcon'}"/>
+                  <ObjectNumber number="{priority}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Cleansing ───────────────────────────────────────────── -->
+          <IconTabFilter key="cleansing" icon="sap-icon://wrench" text="{i18n>tabCleansing}">
+            <Table id="cleansingRulesTable" mode="SingleSelectLeft" growing="true" growingThreshold="25" noDataText="{i18n>noData}"
+              items="{path: '/CleansingRules', parameters: {$orderby: 'priority,name'}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>cleansingRules}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="cleansingRule"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditRule"><customData><core:CustomData key="table" value="cleansingRulesTable"/><core:CustomData key="dialog" value="cleansingRule"/></customData></Button>
+                  <Button text="{i18n>activate}" icon="sap-icon://play" press=".onSetStatus"><customData><core:CustomData key="table" value="cleansingRulesTable"/><core:CustomData key="status" value="active"/></customData></Button>
+                  <Button text="{i18n>deactivate}" icon="sap-icon://pause" press=".onSetStatus"><customData><core:CustomData key="table" value="cleansingRulesTable"/><core:CustomData key="status" value="inactive"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="cleansingRulesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colRule}"/></Column>
+                <Column><Text text="{i18n>colAction}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDatasets}"/></Column>
+                <Column hAlign="End" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colPriority}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{fieldName}"/>
+                  <Text text="{path: 'action', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{= %{datasetPattern} || '*' }"/>
+                  <ObjectNumber number="{priority}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="jobsTable" mode="SingleSelectLeft" growing="true" growingThreshold="25" noDataText="{i18n>noJobs}" class="sapUiMediumMarginTop"
+              items="{path: '/CleansingJobs', parameters: {$orderby: 'createdAt desc', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>cleansingJobs}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>newJob}" type="Emphasized" icon="sap-icon://media-play" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="cleansingJob"/></customData></Button>
+                  <Button text="{i18n>runNow}" icon="sap-icon://process" press=".onRunJob"><customData><core:CustomData key="action" value="RunCleansingJob"/></customData></Button>
+                  <Button text="{i18n>cancelJob}" icon="sap-icon://cancel" press=".onRunJob"><customData><core:CustomData key="action" value="CancelCleansingJob"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="jobsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colJob}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colChanged}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDryRun}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colChanges}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colCompletedAt}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{id}" text="{datasetId}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                    icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{errorMessage}"/>
+                  <ObjectNumber number="{changedRecords}" unit="/ {totalRecords} · {changedFields} {i18n>fields}"/>
+                  <Text text="{path: 'dryRun', formatter: '.formatter.yesNo'}"/>
+                  <Text text="{path: 'changeLog', formatter: '.formatter.list'}" maxLines="2" wrapping="true"/>
+                  <Text text="{path: 'completedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Duplicates ──────────────────────────────────────────── -->
+          <IconTabFilter key="duplicates" icon="sap-icon://overlay" text="{i18n>tabDuplicates}" count="{/Statistics/openMatchGroups}">
+            <Table id="groupsTable" mode="SingleSelectLeft" growing="true" growingThreshold="25" noDataText="{i18n>noGroups}"
+              items="{path: '/MatchGroups', parameters: {$orderby: 'resolved,bestScore desc', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDuplicates}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>resolve}" type="Emphasized" icon="sap-icon://journey-arrive" press=".onResolve"/>
+                  <Button text="{i18n>dismiss}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="groupsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colGoldenRecord}"/></Column>
+                <Column><Text text="{i18n>colCandidates}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colBestScore}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStrategy}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{survivorRecordId}" text="{datasetId}"/>
+                  <Text text="{path: 'candidates', formatter: '.formatter.candidates'}" wrapping="true"/>
+                  <ObjectNumber number="{path: 'bestScore', formatter: '.formatter.score'}" unit="%"/>
+                  <Text text="{= ${path: 'strategy', formatter: '.formatter.enumText'} + ' · ' + ${path: 'matchFields', formatter: '.formatter.list'} }"/>
+                  <ObjectStatus text="{= %{resolved} ? ${i18n>resolved} : ${i18n>open} }" state="{= %{resolved} ? 'Success' : 'Warning' }"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Addresses ───────────────────────────────────────────── -->
+          <IconTabFilter key="addresses" icon="sap-icon://addresses" text="{i18n>tabAddresses}">
+            <Table id="addressesTable" mode="SingleSelectLeft" growing="true" growingThreshold="25" noDataText="{i18n>noData}"
+              items="{path: '/Addresses', parameters: {$orderby: 'createdAt desc', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabAddresses}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>cleanseAddress}" type="Emphasized" icon="sap-icon://wrench" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="address"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="addressesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colInput}"/></Column>
+                <Column><Text text="{i18n>colCleansed}"/></Column>
+                <Column><Text text="{i18n>colQuality}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colChanges}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{inputLine1}, {inputPostalCode} {inputCity}, {inputCountry}" wrapping="true"/>
+                  <ObjectIdentifier title="{line1}" text="{postalCode} {city} · {country}"/>
+                  <ObjectStatus text="{path: 'quality', formatter: '.formatter.enumText'}" state="{path: 'quality', formatter: '.formatter.statusState'}"
+                    icon="{path: 'quality', formatter: '.formatter.statusIcon'}"/>
+                  <Text text="{path: 'changes', formatter: '.formatter.list'}" wrapping="true"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

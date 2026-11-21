@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog id="relationshipDialog" title="{i18n>relationshipDialog}" contentWidth="36rem" draggable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <Label text="{i18n>colSource}" required="true"/>
+      <ComboBox id="relationshipSource" selectedKey="{view>/relationshipForm/sourceId}" showSecondaryValues="true" width="100%"
+        items="{path: '/BuildingBlocks', parameters: {$select: 'id,name,kindAbbreviation', $orderby: 'name'}, templateShareable: false}">
+        <core:ListItem key="{id}" text="{name}" additionalText="{kindAbbreviation}"/>
+      </ComboBox>
+      <Label text="{i18n>colRelType}" required="true"/>
+      <Select id="relationshipType" selectedKey="{view>/relationshipForm/type}" items="{path: 'view>/relationshipTypes', templateShareable: false}">
+        <core:Item key="{view>key}" text="{view>key}"/>
+      </Select>
+      <Label text="{i18n>colTarget}" required="true"/>
+      <ComboBox id="relationshipTarget" selectedKey="{view>/relationshipForm/targetId}" showSecondaryValues="true" width="100%"
+        items="{path: '/BuildingBlocks', parameters: {$select: 'id,name,kindAbbreviation', $orderby: 'name'}, templateShareable: false}">
+        <core:ListItem key="{id}" text="{name}" additionalText="{kindAbbreviation}"/>
+      </ComboBox>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/relationshipForm/description}" rows="2" maxLength="1000"/>
+    </form:SimpleForm>
+    <beginButton>
+      <Button id="relationshipDialogSave" type="Emphasized" text="{i18n>create}" press=".onRelationshipDialogSave"
+        enabled="{= !!${view>/relationshipForm/sourceId} &amp;&amp; !!${view>/relationshipForm/targetId} }"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onRelationshipDialogCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

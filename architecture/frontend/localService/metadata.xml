@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.architecture" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="BuildingBlock">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="kind" Type="Edm.String" Nullable="false"/>
+        <Property Name="kindAbbreviation" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="versionLabel" Type="Edm.String"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="elementType" Type="Edm.String"/>
+        <Property Name="domain" Type="Edm.String"/>
+        <Property Name="aspect" Type="Edm.String"/>
+        <Property Name="viewpoint" Type="Edm.String"/>
+        <Property Name="capability" Type="Edm.String"/>
+        <Property Name="interfaces" Type="Collection(Edm.String)"/>
+        <Property Name="realizesId" Type="Edm.String"/>
+        <Property Name="realizesName" Type="Edm.String"/>
+        <Property Name="vendor" Type="Edm.String"/>
+        <Property Name="endpoint" Type="Edm.String"/>
+        <Property Name="dataClassification" Type="Edm.String"/>
+        <Property Name="dataOwner" Type="Edm.String"/>
+        <Property Name="sourceSystem" Type="Edm.String"/>
+        <Property Name="factSheetType" Type="Edm.String"/>
+        <Property Name="factSheetId" Type="Edm.String"/>
+        <Property Name="validUntil" Type="Edm.Date"/>
+        <Property Name="relationshipCount" Type="Edm.Int32"/>
+        <Property Name="realizedByCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Relationship">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="type" Type="Edm.String" Nullable="false"/>
+        <Property Name="sourceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="sourceName" Type="Edm.String"/>
+        <Property Name="sourceKind" Type="Edm.String"/>
+        <Property Name="targetId" Type="Edm.String" Nullable="false"/>
+        <Property Name="targetName" Type="Edm.String"/>
+        <Property Name="targetKind" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Gap">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="kind" Type="Edm.String"/>
+        <Property Name="kindAbbreviation" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="elementType" Type="Edm.String"/>
+        <Property Name="capability" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Orphan">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="kind" Type="Edm.String"/>
+        <Property Name="kindAbbreviation" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="elementType" Type="Edm.String"/>
+        <Property Name="capability" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="PhaseOutRisk">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="kind" Type="Edm.String"/>
+        <Property Name="kindAbbreviation" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="elementType" Type="Edm.String"/>
+        <Property Name="capability" Type="Edm.String"/>
+        <Property Name="validUntil" Type="Edm.Date"/>
+        <Property Name="dependentCount" Type="Edm.Int32"/>
+        <Property Name="dependents" Type="Collection(Edm.String)"/>
+      </EntityType>
+      <EntityType Name="ElementType">
+        <Key><PropertyRef Name="name"/></Key>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="domain" Type="Edm.String"/>
+        <Property Name="aspect" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="blocks" Type="Edm.Int32"/>
+        <Property Name="architectureBlocks" Type="Edm.Int32"/>
+        <Property Name="solutionBlocks" Type="Edm.Int32"/>
+        <Property Name="dataBlocks" Type="Edm.Int32"/>
+        <Property Name="businessBlocks" Type="Edm.Int32"/>
+        <Property Name="technologyBlocks" Type="Edm.Int32"/>
+        <Property Name="proposed" Type="Edm.Int32"/>
+        <Property Name="approved" Type="Edm.Int32"/>
+        <Property Name="inDevelopment" Type="Edm.Int32"/>
+        <Property Name="active" Type="Edm.Int32"/>
+        <Property Name="deprecated" Type="Edm.Int32"/>
+        <Property Name="retired" Type="Edm.Int32"/>
+        <Property Name="relationships" Type="Edm.Int32"/>
+        <Property Name="gaps" Type="Edm.Int32"/>
+        <Property Name="coveragePercent" Type="Edm.Int32"/>
+        <Property Name="orphans" Type="Edm.Int32"/>
+        <Property Name="phaseOutRisks" Type="Edm.Int32"/>
+        <Property Name="expired" Type="Edm.Int32"/>
+        <Property Name="computedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </EntityType>
+      <ComplexType Name="StatusResult">
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="previousStatus" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ImpactedBlock">
+        <Property Name="id" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="kind" Type="Edm.String"/>
+        <Property Name="kindAbbreviation" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="depth" Type="Edm.Int32"/>
+        <Property Name="via" Type="Edm.String"/>
+        <Property Name="viaBlockId" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ExportResult">
+        <Property Name="fileName" Type="Edm.String"/>
+        <Property Name="contentType" Type="Edm.String"/>
+        <Property Name="elements" Type="Edm.Int32"/>
+        <Property Name="content" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="blocks" Type="Edm.Int32"/>
+        <Property Name="relationships" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="ChangeStatus" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="status" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.architecture.StatusResult"/>
+      </Action>
+      <Action Name="AnalyzeImpact" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="Collection(uim.architecture.ImpactedBlock)"/>
+      </Action>
+      <Action Name="ExportArchiMate" IsBound="false">
+        <Parameter Name="modelName" Type="Edm.String"/>
+        <ReturnType Type="uim.architecture.ExportResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.architecture.SeedResult"/>
+      </Action>
+      <EntityContainer Name="ArchitectureService">
+        <EntitySet Name="BuildingBlocks" EntityType="uim.architecture.BuildingBlock"/>
+        <EntitySet Name="Relationships" EntityType="uim.architecture.Relationship"/>
+        <EntitySet Name="Gaps" EntityType="uim.architecture.Gap"/>
+        <EntitySet Name="Orphans" EntityType="uim.architecture.Orphan"/>
+        <EntitySet Name="PhaseOutRisks" EntityType="uim.architecture.PhaseOutRisk"/>
+        <EntitySet Name="ElementTypes" EntityType="uim.architecture.ElementType"/>
+        <Singleton Name="Statistics" Type="uim.architecture.Statistic"/>
+        <ActionImport Name="ChangeStatus" Action="uim.architecture.ChangeStatus"/>
+        <ActionImport Name="AnalyzeImpact" Action="uim.architecture.AnalyzeImpact"/>
+        <ActionImport Name="ExportArchiMate" Action="uim.architecture.ExportArchiMate"/>
+        <ActionImport Name="SeedDemoData" Action="uim.architecture.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.architecture.StatusResult/id"><Annotation Term="Common.Label" String="Building Block"/></Annotations>
+      <Annotations Target="uim.architecture.StatusResult/previousStatus"><Annotation Term="Common.Label" String="Previous Status"/></Annotations>
+      <Annotations Target="uim.architecture.StatusResult/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.architecture.ImpactedBlock/id"><Annotation Term="Common.Label" String="Building Block"/></Annotations>
+      <Annotations Target="uim.architecture.ImpactedBlock/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.architecture.ImpactedBlock/kind"><Annotation Term="Common.Label" String="Kind"/></Annotations>
+      <Annotations Target="uim.architecture.ImpactedBlock/kindAbbreviation"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.architecture.ImpactedBlock/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.architecture.ImpactedBlock/depth"><Annotation Term="Common.Label" String="Depth"/></Annotations>
+      <Annotations Target="uim.architecture.ImpactedBlock/via"><Annotation Term="Common.Label" String="Via Relationship"/></Annotations>
+      <Annotations Target="uim.architecture.ImpactedBlock/viaBlockId"><Annotation Term="Common.Label" String="Depends On"/></Annotations>
+      <Annotations Target="uim.architecture.ExportResult/fileName"><Annotation Term="Common.Label" String="File Name"/></Annotations>
+      <Annotations Target="uim.architecture.ExportResult/contentType"><Annotation Term="Common.Label" String="Content Type"/></Annotations>
+      <Annotations Target="uim.architecture.ExportResult/elements"><Annotation Term="Common.Label" String="Elements"/></Annotations>
+      <Annotations Target="uim.architecture.ExportResult/content"><Annotation Term="Common.Label" String="Content"/></Annotations>
+      <Annotations Target="uim.architecture.SeedResult/blocks"><Annotation Term="Common.Label" String="Building Blocks"/></Annotations>
+      <Annotations Target="uim.architecture.SeedResult/relationships"><Annotation Term="Common.Label" String="Relationships"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/id"><Annotation Term="Common.Label" String="Building Block ID"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/kind"><Annotation Term="Common.Label" String="Kind"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/kindAbbreviation"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/owner"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/versionLabel"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/elementType"><Annotation Term="Common.Label" String="ArchiMate Element"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/domain"><Annotation Term="Common.Label" String="ArchiMate Layer"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/aspect"><Annotation Term="Common.Label" String="ArchiMate Aspect"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/viewpoint"><Annotation Term="Common.Label" String="Viewpoint"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/capability"><Annotation Term="Common.Label" String="Capability"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/interfaces"><Annotation Term="Common.Label" String="Interfaces"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/realizesId"><Annotation Term="Common.Label" String="Realizes (ABB)"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/realizesName"><Annotation Term="Common.Label" String="Realizes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/vendor"><Annotation Term="Common.Label" String="Vendor / Component"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/endpoint"><Annotation Term="Common.Label" String="Endpoint"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/dataClassification"><Annotation Term="Common.Label" String="Data Classification"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/dataOwner"><Annotation Term="Common.Label" String="Data Owner"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/sourceSystem"><Annotation Term="Common.Label" String="System of Record"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/factSheetType"><Annotation Term="Common.Label" String="LeanIX Fact Sheet Type"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/factSheetId"><Annotation Term="Common.Label" String="LeanIX Fact Sheet ID"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/validUntil"><Annotation Term="Common.Label" String="Valid Until"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/relationshipCount"><Annotation Term="Common.Label" String="Relationships"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/realizedByCount"><Annotation Term="Common.Label" String="Realized By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.BuildingBlock">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Building Block"/><PropertyValue Property="TypeNamePlural" String="Building Blocks"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kindAbbreviation"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="elementType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="owner"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="versionLabel"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="relationshipCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>kind</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>owner</PropertyPath><PropertyPath>domain</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.ArchitectureService/BuildingBlocks">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.Relationship/id"><Annotation Term="Common.Label" String="Relationship ID"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/type"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/sourceId"><Annotation Term="Common.Label" String="Source"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/sourceName"><Annotation Term="Common.Label" String="Source Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/sourceKind"><Annotation Term="Common.Label" String="Source Kind"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/targetId"><Annotation Term="Common.Label" String="Target"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/targetName"><Annotation Term="Common.Label" String="Target Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/targetKind"><Annotation Term="Common.Label" String="Target Kind"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.architecture.Relationship">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Relationship"/><PropertyValue Property="TypeNamePlural" String="Relationships"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="type"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sourceName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="type"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="targetName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>type</PropertyPath><PropertyPath>sourceId</PropertyPath><PropertyPath>targetId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.ArchitectureService/Relationships">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.Gap/id"><Annotation Term="Common.Label" String="Building Block"/></Annotations>
+      <Annotations Target="uim.architecture.Gap/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.architecture.Gap/kind"><Annotation Term="Common.Label" String="Kind"/></Annotations>
+      <Annotations Target="uim.architecture.Gap/kindAbbreviation"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.architecture.Gap/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.architecture.Gap/owner"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.architecture.Gap/elementType"><Annotation Term="Common.Label" String="ArchiMate Element"/></Annotations>
+      <Annotations Target="uim.architecture.Gap/capability"><Annotation Term="Common.Label" String="Capability"/></Annotations>
+      <Annotations Target="uim.architecture.Gap">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Gap"/><PropertyValue Property="TypeNamePlural" String="Gaps (ABBs without SBB)"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="capability"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="capability"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="owner"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>owner</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.ArchitectureService/Gaps">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.Orphan/id"><Annotation Term="Common.Label" String="Building Block"/></Annotations>
+      <Annotations Target="uim.architecture.Orphan/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.architecture.Orphan/kind"><Annotation Term="Common.Label" String="Kind"/></Annotations>
+      <Annotations Target="uim.architecture.Orphan/kindAbbreviation"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.architecture.Orphan/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.architecture.Orphan/owner"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.architecture.Orphan/elementType"><Annotation Term="Common.Label" String="ArchiMate Element"/></Annotations>
+      <Annotations Target="uim.architecture.Orphan/capability"><Annotation Term="Common.Label" String="Capability"/></Annotations>
+      <Annotations Target="uim.architecture.Orphan">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Orphan"/><PropertyValue Property="TypeNamePlural" String="Orphans (no relationships)"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kind"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kindAbbreviation"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="owner"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>kind</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.ArchitectureService/Orphans">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/id"><Annotation Term="Common.Label" String="Building Block"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/kind"><Annotation Term="Common.Label" String="Kind"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/kindAbbreviation"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/owner"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/elementType"><Annotation Term="Common.Label" String="ArchiMate Element"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/capability"><Annotation Term="Common.Label" String="Capability"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/validUntil"><Annotation Term="Common.Label" String="Valid Until"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/dependentCount"><Annotation Term="Common.Label" String="Dependents in Use"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk/dependents"><Annotation Term="Common.Label" String="Dependents"/></Annotations>
+      <Annotations Target="uim.architecture.PhaseOutRisk">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Phase-out Risk"/><PropertyValue Property="TypeNamePlural" String="Phase-out Risks"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kindAbbreviation"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="validUntil"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dependentCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>kind</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.ArchitectureService/PhaseOutRisks">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.ElementType/name"><Annotation Term="Common.Label" String="ArchiMate Element"/></Annotations>
+      <Annotations Target="uim.architecture.ElementType/domain"><Annotation Term="Common.Label" String="Layer"/></Annotations>
+      <Annotations Target="uim.architecture.ElementType/aspect"><Annotation Term="Common.Label" String="Aspect"/></Annotations>
+      <Annotations Target="uim.architecture.ElementType">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="ArchiMate Element Type"/><PropertyValue Property="TypeNamePlural" String="ArchiMate Element Types"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="domain"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="domain"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="aspect"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>domain</PropertyPath><PropertyPath>aspect</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.ArchitectureService/ElementTypes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/blocks"><Annotation Term="Common.Label" String="Building Blocks"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/architectureBlocks"><Annotation Term="Common.Label" String="Architecture Building Blocks"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/solutionBlocks"><Annotation Term="Common.Label" String="Solution Building Blocks"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/dataBlocks"><Annotation Term="Common.Label" String="Data Building Blocks"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/businessBlocks"><Annotation Term="Common.Label" String="Business Building Blocks"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/technologyBlocks"><Annotation Term="Common.Label" String="Technology Building Blocks"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/proposed"><Annotation Term="Common.Label" String="Proposed"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/approved"><Annotation Term="Common.Label" String="Approved"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/inDevelopment"><Annotation Term="Common.Label" String="In Development"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/deprecated"><Annotation Term="Common.Label" String="Deprecated"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/retired"><Annotation Term="Common.Label" String="Retired"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/relationships"><Annotation Term="Common.Label" String="Relationships"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/gaps"><Annotation Term="Common.Label" String="Gaps"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/coveragePercent"><Annotation Term="Common.Label" String="ABB Coverage (%)"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/orphans"><Annotation Term="Common.Label" String="Orphans"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/phaseOutRisks"><Annotation Term="Common.Label" String="Phase-out Risks"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/expired"><Annotation Term="Common.Label" String="Past Valid Until"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic/computedAt"><Annotation Term="Common.Label" String="Computed At"/></Annotations>
+      <Annotations Target="uim.architecture.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="blocks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="architectureBlocks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="solutionBlocks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dataBlocks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessBlocks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="technologyBlocks"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="proposed"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="approved"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.architecture.ArchitectureService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Architecture Repository"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

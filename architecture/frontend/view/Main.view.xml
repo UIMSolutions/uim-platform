@@ -1,0 +1,212 @@
+<mvc:View controllerName="uim.architecture.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>appTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+        <f:actions>
+          <Button id="newBlockButton" text="{i18n>newBlock}" type="Emphasized" icon="sap-icon://add" press=".onNewBlock"/>
+          <Button text="{i18n>newRelationship}" icon="sap-icon://chain-link" press=".onNewRelationship"/>
+          <Button text="{i18n>exportArchiMate}" icon="sap-icon://download" press=".onExport"/>
+          <Button id="seedButton" text="{i18n>seed}" icon="sap-icon://add-product" press=".onSeed"
+            visible="{= %{/Statistics/blocks} === 0 }"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpis" binding="{/Statistics}" wrap="Wrap" class="sapUiSmallMarginBottom">
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiBlocks}"/>
+            <ObjectNumber number="{blocks}"
+              unit="{parts: ['i18n>kpiBlocksUnit', 'architectureBlocks', 'solutionBlocks', 'dataBlocks', 'businessBlocks', 'technologyBlocks'], formatter: '.formatMessage'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiCoverage}"/>
+            <ObjectNumber id="coverageKpi" number="{coveragePercent}" state="{path: 'coveragePercent', formatter: '.formatter.coverageState'}"
+              unit="{parts: ['i18n>kpiCoverageUnit', 'gaps'], formatter: '.formatMessage'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiLifecycle}"/>
+            <ObjectNumber number="{active}" state="Success"
+              unit="{parts: ['i18n>kpiLifecycleUnit', 'approved', 'proposed', 'deprecated'], formatter: '.formatMessage'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRisks}"/>
+            <ObjectNumber number="{phaseOutRisks}" state="{path: 'phaseOutRisks', formatter: '.formatter.riskState'}"
+              unit="{parts: ['i18n>kpiRisksUnit', 'orphans', 'expired'], formatter: '.formatMessage'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRelationships}"/>
+            <ObjectNumber number="{relationships}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Building blocks ─────────────────────────────────────── -->
+          <IconTabFilter key="blocks" icon="sap-icon://overview-chart" text="{i18n>tabBlocks}" count="{/Statistics/blocks}">
+            <Table id="blocksTable" growing="true" growingThreshold="50" noDataText="{i18n>noData}" itemPress=".onOpenBlock"
+              items="{path: '/BuildingBlocks', parameters: {$orderby: 'kind,name', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <SegmentedButton id="kindFilter" selectedKey="{view>/kindFilter}" selectionChange=".onFilterBlocks">
+                    <items>
+                      <SegmentedButtonItem key="all" text="{i18n>kindAll}"/>
+                      <SegmentedButtonItem key="architecture" text="ABB" tooltip="{i18n>kind_architecture}" icon="sap-icon://overview-chart"/>
+                      <SegmentedButtonItem key="solution" text="SBB" tooltip="{i18n>kind_solution}" icon="sap-icon://puzzle"/>
+                      <SegmentedButtonItem key="data" text="DBB" tooltip="{i18n>kind_data}" icon="sap-icon://database"/>
+                      <SegmentedButtonItem key="business" text="BBB" tooltip="{i18n>kind_business}" icon="sap-icon://org-chart"/>
+                      <SegmentedButtonItem key="technology" text="TBB" tooltip="{i18n>kind_technology}" icon="sap-icon://it-host"/>
+                    </items>
+                  </SegmentedButton>
+                  <Select id="statusFilter" selectedKey="{view>/statusFilter}" change=".onFilterBlocks" forceSelection="false"
+                    items="{path: 'view>/statuses', templateShareable: false}" width="11rem">
+                    <core:Item key="{view>key}" text="{path: 'view>key', formatter: '.statusText'}"/>
+                  </Select>
+                  <Button icon="sap-icon://clear-filter" tooltip="{i18n>statusAll}" press=".onClearStatus"/>
+                  <ToolbarSpacer/>
+                  <SearchField id="blockSearch" width="16rem" search=".onSearch" placeholder="{i18n>search}"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="40%"><Text text="{i18n>colName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colKind}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colElement}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colOwner}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="{i18n>colVersion}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colRelationships}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{id}"/>
+                    <ObjectStatus text="{kindAbbreviation}" icon="{path: 'kind', formatter: '.formatter.kindIcon'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.statusText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+                    <Text text="{elementType}"/>
+                    <Text text="{owner}"/>
+                    <Text text="{versionLabel}"/>
+                    <ObjectNumber number="{relationshipCount}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Relationships ───────────────────────────────────────── -->
+          <IconTabFilter key="relationships" icon="sap-icon://chain-link" text="{i18n>tabRelationships}" count="{/Statistics/relationships}">
+            <Table id="relationshipsTable" growing="true" growingThreshold="50" noDataText="{i18n>noData}"
+              items="{path: '/Relationships', parameters: {$orderby: 'sourceName', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRelationships}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Select id="relationshipTypeFilter" change=".onFilterRelationships" forceSelection="false" width="12rem"
+                    items="{path: 'view>/relationshipTypes', templateShareable: false}">
+                    <core:Item key="{view>key}" text="{view>key}"/>
+                  </Select>
+                  <Button icon="sap-icon://clear-filter" press=".onClearRelationshipType"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colSource}"/></Column>
+                <Column><Text text="{i18n>colRelType}"/></Column>
+                <Column><Text text="{i18n>colTarget}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+                <Column width="3rem"/>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <cells>
+                    <Link text="{sourceName}" press=".onOpenBlock"><customData><core:CustomData key="idProperty" value="sourceId"/></customData></Link>
+                    <ObjectStatus text="{type}" state="Information"/>
+                    <Link text="{targetName}" press=".onOpenBlock"><customData><core:CustomData key="idProperty" value="targetId"/></customData></Link>
+                    <Text text="{description}"/>
+                    <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>delete}" press=".onDeleteRelationship"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Analysis ────────────────────────────────────────────── -->
+          <IconTabFilter key="analysis" icon="sap-icon://business-objects-experience" text="{i18n>tabAnalysis}"
+            count="{= %{/Statistics/gaps} + %{/Statistics/phaseOutRisks} }">
+            <Table id="gapsTable" noDataText="{i18n>noData}" itemPress=".onOpenBlock" class="sapUiMediumMarginBottom"
+              items="{path: '/Gaps', templateShareable: false}">
+              <headerToolbar><OverflowToolbar><Title text="{i18n>secGaps}" level="H3"/></OverflowToolbar></headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCapability}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colOwner}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{id}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.statusText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{capability}"/>
+                    <Text text="{owner}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="phaseOutTable" noDataText="{i18n>noData}" itemPress=".onOpenBlock" class="sapUiMediumMarginBottom"
+              items="{path: '/PhaseOutRisks', templateShareable: false}">
+              <headerToolbar><OverflowToolbar><Title text="{i18n>secPhaseOut}" level="H3"/></OverflowToolbar></headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colValidUntil}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDependents}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{kindAbbreviation} · {id}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.statusText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{validUntil}"/>
+                    <Text text="{path: 'dependents', formatter: '.formatter.joinList'}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="orphansTable" noDataText="{i18n>noData}" itemPress=".onOpenBlock"
+              items="{path: '/Orphans', templateShareable: false}">
+              <headerToolbar><OverflowToolbar><Title text="{i18n>secOrphans}" level="H3"/></OverflowToolbar></headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colKind}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colOwner}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation">
+                  <cells>
+                    <ObjectIdentifier title="{name}" text="{id}"/>
+                    <ObjectStatus text="{kindAbbreviation}" icon="{path: 'kind', formatter: '.formatter.kindIcon'}"/>
+                    <ObjectStatus text="{path: 'status', formatter: '.statusText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                    <Text text="{owner}"/>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

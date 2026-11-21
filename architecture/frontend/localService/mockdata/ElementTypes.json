@@ -1,0 +1,302 @@
+[
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Stakeholder"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Driver"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Assessment"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Goal"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Outcome"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Principle"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Requirement"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Constraint"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Meaning"
+  },
+  {
+    "aspect": "motivation",
+    "domain": "motivation",
+    "name": "Value"
+  },
+  {
+    "aspect": "passiveStructure",
+    "domain": "strategy",
+    "name": "Resource"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "strategy",
+    "name": "Capability"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "strategy",
+    "name": "ValueStream"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "strategy",
+    "name": "CourseOfAction"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "business",
+    "name": "BusinessActor"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "business",
+    "name": "BusinessRole"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "business",
+    "name": "BusinessCollaboration"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "business",
+    "name": "BusinessInterface"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "business",
+    "name": "BusinessProcess"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "business",
+    "name": "BusinessFunction"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "business",
+    "name": "BusinessInteraction"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "business",
+    "name": "BusinessEvent"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "business",
+    "name": "BusinessService"
+  },
+  {
+    "aspect": "passiveStructure",
+    "domain": "business",
+    "name": "BusinessObject"
+  },
+  {
+    "aspect": "passiveStructure",
+    "domain": "business",
+    "name": "Contract"
+  },
+  {
+    "aspect": "passiveStructure",
+    "domain": "business",
+    "name": "Representation"
+  },
+  {
+    "aspect": "composite",
+    "domain": "business",
+    "name": "Product"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "application",
+    "name": "ApplicationComponent"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "application",
+    "name": "ApplicationCollaboration"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "application",
+    "name": "ApplicationInterface"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "application",
+    "name": "ApplicationFunction"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "application",
+    "name": "ApplicationInteraction"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "application",
+    "name": "ApplicationProcess"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "application",
+    "name": "ApplicationEvent"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "application",
+    "name": "ApplicationService"
+  },
+  {
+    "aspect": "passiveStructure",
+    "domain": "application",
+    "name": "DataObject"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "Node"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "Device"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "SystemSoftware"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "TechnologyCollaboration"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "TechnologyInterface"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "Path"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "CommunicationNetwork"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "technology",
+    "name": "TechnologyFunction"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "technology",
+    "name": "TechnologyProcess"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "technology",
+    "name": "TechnologyInteraction"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "technology",
+    "name": "TechnologyEvent"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "technology",
+    "name": "TechnologyService"
+  },
+  {
+    "aspect": "passiveStructure",
+    "domain": "technology",
+    "name": "Artifact"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "Equipment"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "Facility"
+  },
+  {
+    "aspect": "activeStructure",
+    "domain": "technology",
+    "name": "DistributionNetwork"
+  },
+  {
+    "aspect": "passiveStructure",
+    "domain": "technology",
+    "name": "Material"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "implementationAndMigration",
+    "name": "WorkPackage"
+  },
+  {
+    "aspect": "passiveStructure",
+    "domain": "implementationAndMigration",
+    "name": "Deliverable"
+  },
+  {
+    "aspect": "behavior",
+    "domain": "implementationAndMigration",
+    "name": "ImplementationEvent"
+  },
+  {
+    "aspect": "composite",
+    "domain": "implementationAndMigration",
+    "name": "Plateau"
+  },
+  {
+    "aspect": "composite",
+    "domain": "implementationAndMigration",
+    "name": "Gap"
+  },
+  {
+    "aspect": "composite",
+    "domain": "common",
+    "name": "Grouping"
+  },
+  {
+    "aspect": "composite",
+    "domain": "common",
+    "name": "Location"
+  }
+]

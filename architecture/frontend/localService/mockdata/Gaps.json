@@ -1,0 +1,12 @@
+[
+  {
+    "id": "abb-analytics",
+    "capability": "Analyze business data",
+    "kind": "architecture",
+    "owner": "enterprise-architecture",
+    "name": "Analytics Platform",
+    "elementType": "ApplicationComponent",
+    "kindAbbreviation": "ABB",
+    "status": "proposed"
+  }
+]

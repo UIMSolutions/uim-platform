@@ -1,0 +1,79 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog id="blockDialog" contentWidth="44rem" resizable="true" draggable="true"
+    title="{= ${view>/blockForm/mode} === 'create' ? ${i18n>blockDialogCreate} : ${i18n>blockDialogEdit} }">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" columnsM="1" columnsL="1">
+      <core:Title text="{i18n>secGeneral}"/>
+      <Label text="{i18n>fldKind}" required="true"/>
+      <Select id="blockKind" selectedKey="{view>/blockForm/kind}" enabled="{= ${view>/blockForm/mode} === 'create' }"
+        items="{path: 'view>/kinds', templateShareable: false}">
+        <core:Item key="{view>key}" text="{path: 'view>key', formatter: '.kindText'}"/>
+      </Select>
+      <Label text="{i18n>fldId}" visible="{= ${view>/blockForm/mode} === 'create' }"/>
+      <Input id="blockId" value="{view>/blockForm/id}" visible="{= ${view>/blockForm/mode} === 'create' }" maxLength="64"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input id="blockName" value="{view>/blockForm/name}" maxLength="256"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/blockForm/description}" rows="3" growing="true" maxLength="5000"/>
+      <Label text="{i18n>colOwner}"/>
+      <Input value="{view>/blockForm/owner}" maxLength="128"/>
+      <Label text="{i18n>colVersion}"/>
+      <Input value="{view>/blockForm/versionLabel}" maxLength="32"/>
+      <Label text="{i18n>fldTags}"/>
+      <TextArea value="{view>/blockForm/tags}" rows="2" growing="true"/>
+      <Label text="{i18n>colValidUntil}"/>
+      <DatePicker value="{view>/blockForm/validUntil}" valueFormat="yyyy-MM-dd"/>
+
+      <core:Title text="{i18n>secArchiMate}"/>
+      <Label text="{i18n>colElement}"/>
+      <ComboBox id="blockElement" selectedKey="{view>/blockForm/elementType}" showSecondaryValues="true" width="100%"
+        items="{path: '/ElementTypes', parameters: {$orderby: 'domain,name'}, templateShareable: false}">
+        <core:ListItem key="{name}" text="{name}" additionalText="{domain}"/>
+      </ComboBox>
+      <Label text="{i18n>fldViewpoint}"/>
+      <Input value="{view>/blockForm/viewpoint}" maxLength="128"/>
+
+      <core:Title text="{i18n>secTogaf}"/>
+      <Label text="{i18n>colCapability}"/>
+      <Input value="{view>/blockForm/capability}" maxLength="256"/>
+      <Label text="{i18n>fldInterfaces}"/>
+      <TextArea value="{view>/blockForm/interfaces}" rows="2" growing="true"/>
+      <Label text="{i18n>fldRealizes}" visible="{= ${view>/blockForm/kind} === 'solution' }"/>
+      <ComboBox id="blockRealizes" selectedKey="{view>/blockForm/realizesId}" showSecondaryValues="true" width="100%"
+        visible="{= ${view>/blockForm/kind} === 'solution' }" showClearIcon="true"
+        items="{path: '/BuildingBlocks', parameters: {$select: 'id,name,kind'}, filters: [{path: 'kind', operator: 'EQ', value1: 'architecture'}], templateShareable: false}">
+        <core:ListItem key="{id}" text="{name}" additionalText="{id}"/>
+      </ComboBox>
+      <Label text="{i18n>fldVendor}"/>
+      <Input value="{view>/blockForm/vendor}" maxLength="256"/>
+      <Label text="{i18n>fldEndpoint}"/>
+      <Input value="{view>/blockForm/endpoint}" maxLength="1024"/>
+
+      <core:Title text="{i18n>secData}" visible="{= ${view>/blockForm/kind} === 'data' }"/>
+      <Label text="{i18n>fldClassification}" visible="{= ${view>/blockForm/kind} === 'data' }"/>
+      <Select selectedKey="{view>/blockForm/dataClassification}" visible="{= ${view>/blockForm/kind} === 'data' }"
+        items="{path: 'view>/classifications', templateShareable: false}">
+        <core:Item key="{view>key}" text="{view>key}"/>
+      </Select>
+      <Label text="{i18n>fldDataOwner}" visible="{= ${view>/blockForm/kind} === 'data' }"/>
+      <Input value="{view>/blockForm/dataOwner}" visible="{= ${view>/blockForm/kind} === 'data' }" maxLength="128"/>
+      <Label text="{i18n>fldSourceSystem}" visible="{= ${view>/blockForm/kind} === 'data' }"/>
+      <Input value="{view>/blockForm/sourceSystem}" visible="{= ${view>/blockForm/kind} === 'data' }" maxLength="256"/>
+
+      <core:Title text="{i18n>secLeanIX}"/>
+      <Label text="{i18n>fldFactSheetType}"/>
+      <Select selectedKey="{view>/blockForm/factSheetType}" items="{path: 'view>/factSheetTypes', templateShareable: false}">
+        <core:Item key="{view>key}" text="{view>key}"/>
+      </Select>
+      <Label text="{i18n>fldFactSheetId}"/>
+      <Input value="{view>/blockForm/factSheetId}" maxLength="128"/>
+    </form:SimpleForm>
+    <beginButton>
+      <Button id="blockDialogSave" type="Emphasized" press=".onBlockDialogSave"
+        text="{= ${view>/blockForm/mode} === 'create' ? ${i18n>create} : ${i18n>save} }"
+        enabled="{= !!${view>/blockForm/name} }"/>
+    </beginButton>
+    <endButton>
+      <Button text="{i18n>cancel}" press=".onBlockDialogCancel"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

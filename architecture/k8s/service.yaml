@@ -5,6 +5,7 @@ metadata:
   namespace: uim-platform
   labels:
     app: architecture
+    part-of: uim-platform
 spec:
   type: ClusterIP
   selector:
