@@ -1,0 +1,22 @@
+{
+  "serviceName": "uim-data-quality",
+  "serviceVersion": "2.0.0",
+  "host": "0.0.0.0",
+  "port": 8086,
+  "storage": "file",
+  "dataFile": "data/data-quality.json",
+  "defaultTenant": "default",
+  "apiPath": "/api/v1",
+  "odataPath": "/odata/v4/data-quality",
+  "maxPageSize": 200,
+  "maxRequestBytes": 16777216,
+  "requireAuthentication": false,
+  "jwtSecret": "",
+  "frontendDir": "../frontend",
+  "jobIntervalSeconds": 5,
+  "jobTenants": ["default"],
+  "autoValidate": true,
+  "maxSnapshots": 100,
+  "maxImportRecords": 50000,
+  "maxPairwiseRecords": 20000
+}
