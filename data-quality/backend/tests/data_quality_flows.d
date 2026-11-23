@@ -33,9 +33,11 @@ version (unittest) {
 
   /// One HTTP call through the router; text bodies are sent as is.
   Json call(URLRouter router, string method, string path, Json body, out int status, string contentType = "application/json",
-    string text = "") @trusted {
+    string text = "", string bearer = "") @trusted {
     InetHeaderMap headers;
     headers["Content-Type"] = contentType;
+    if (bearer.length)
+      headers["Authorization"] = "Bearer " ~ bearer;
     auto payload = text.length ? text : body.type == Json.Type.undefined ? "" : body.toString;
     auto req = createTestHTTPServerRequest(URL("http://localhost" ~ path), httpMethodFromString(method), headers,
       createMemoryStream(cast(ubyte[]) payload.dup, false));
@@ -309,4 +311,89 @@ unittest {
   auto second = newContainer(null, createStorage("file", path));
   assert(second.ports.records.listRecords(t, DatasetId("bulk")).length == 500);
   assert(second.ports.statistics.compute(t).records == 500);
+}
+
+/// Built-in login (authMode jwt): credentials, lockout, tokens and scopes.
+unittest {
+  Json[string] o;
+  o["storage"] = "memory";
+  o["authMode"] = "jwt";
+  o["jwtSecret"] = "0123456789abcdef0123456789abcdef";
+  o["passwordIterations"] = 1000;
+  o["maxFailedLogins"] = 3;
+  auto c = new DqContainer(loadDqConfig(o, "/nonexistent"));
+  c.events.log = false;
+  c.engine.enforceScopes = true;
+  assert(c.security.mode == "jwt" && c.security.loginEnabled && !c.security.generatedSecret);
+  assert(c.ports.users.ensureAdministrator(t, "admin", "admin password 1"));
+  assert(!c.ports.users.ensureAdministrator(t, "admin", "other password 1"));
+
+  auto router = new URLRouter;
+  new AuthController(c.ports, c.security).registerRoutes(router);
+  new DqApiController(c.ports, c.security).registerRoutes(router);
+  auto odata = new ODataController(c.engine, "/odata/v4/data-quality");
+  odata.verifier = c.security.verifier;
+  odata.requireAuthentication = true;
+  odata.registerRoutes(router);
+  int status;
+
+  auto cfg = call(router, "GET", "/auth/config", Json.undefined, status);
+  assert(status == 200 && cfg["loginRequired"].get!bool && cfg["mode"].get!string == "jwt");
+  call(router, "GET", "/api/v1/datasets", Json.undefined, status);
+  assert(status == 401);
+  call(router, "POST", "/auth/login", Json(["username": Json("admin"), "password": Json("wrong")]), status);
+  assert(status == 401);
+  call(router, "POST", "/auth/login", Json(["username": Json("ghost"), "password": Json("wrong")]), status);
+  assert(status == 401);
+
+  auto login = call(router, "POST", "/auth/login", Json(["username": Json("admin"), "password": Json("admin password 1")]), status);
+  assert(status == 200 && login["token_type"].get!string == "Bearer" && login["scope"].get!string == "Read Manage Admin", login.toString);
+  auto token = login["access_token"].get!string;
+  auto me = call(router, "GET", "/auth/me", Json.undefined, status, "application/json", "", token);
+  assert(status == 200 && me["user"].get!string == "admin" && me["scopes"].length == 3);
+  call(router, "GET", "/api/v1/datasets", Json.undefined, status, "application/json", "", token);
+  assert(status == 200);
+
+  // an administrator creates a read-only user through OData
+  auto created = call(router, "POST", "/odata/v4/data-quality/Users", Json(["id": Json("viewer"),
+      "password": Json("viewer password"), "scopes": Json([Json("Read")])]), status, "application/json", "", token);
+  assert(status == 201 && created["password"].type == Json.Type.null_ && "passwordHash" !in created, created.toString);
+  auto form = call(router, "POST", "/auth/login", Json.undefined, status, "application/x-www-form-urlencoded",
+    "username=viewer&password=viewer%20password", "");
+  assert(status == 200, form.toString);
+  auto viewer = form["access_token"].get!string;
+  call(router, "GET", "/odata/v4/data-quality/Datasets", Json.undefined, status, "application/json", "", viewer);
+  assert(status == 200);
+  call(router, "POST", "/odata/v4/data-quality/Datasets", Json(["id": Json("x")]), status, "application/json", "", viewer);
+  assert(status == 403);
+  call(router, "POST", "/api/v1/datasets/x/validate", Json.emptyObject, status, "application/json", "", viewer);
+  assert(status == 403);
+  call(router, "GET", "/odata/v4/data-quality/Users", Json.undefined, status, "application/json", "", viewer);
+  assert(status == 403);
+
+  // own password change, then the old one fails
+  call(router, "POST", "/auth/password", Json(["currentPassword": Json("viewer password"),
+      "newPassword": Json("a better password")]), status, "application/json", "", viewer);
+  assert(status == 204);
+  call(router, "POST", "/auth/login", Json(["username": Json("viewer"), "password": Json("viewer password")]), status);
+  assert(status == 401);
+
+  // lockout after 3 failures, even with the right password
+  foreach (_; 0 .. 2)
+    call(router, "POST", "/auth/login", Json(["username": Json("viewer"), "password": Json("nope")]), status);
+  auto locked = call(router, "POST", "/auth/login", Json(["username": Json("viewer"), "password": Json("a better password")]), status);
+  assert(status == 401 && locked["error"]["message"].get!string.canFind("locked"), locked.toString);
+
+  // the last administrator is protected
+  assert(failsWith(DqErrorKind.ruleViolation, () { c.ports.users.deleteUser(t, UserAccountId("admin"), UserId("viewer")); }));
+  UpdateUserRequest demote;
+  demote.tenantId = t;
+  demote.actor = UserId("other");
+  demote.id = "admin";
+  demote.scopes = ["Read"];
+  assert(failsWith(DqErrorKind.ruleViolation, () { c.ports.users.updateUser(demote); }));
+
+  // tampered token
+  call(router, "GET", "/api/v1/datasets", Json.undefined, status, "application/json", "", token[0 .. $ - 2] ~ "xx");
+  assert(status == 401);
 }
