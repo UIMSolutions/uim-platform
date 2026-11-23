@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>detect}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colDataset}" required="true"/>
+      <Input value="{view>/form/detect/datasetId}" enabled="false"/>
+      <Label text="{i18n>matchFields}" required="true"/>
+      <Input value="{view>/form/detect/matchFields}" placeholder="name, city"/>
+      <Label text="{i18n>colStrategy}"/>
+      <SegmentedButton selectedKey="{view>/form/detect/strategy}">
+        <items>
+          <SegmentedButtonItem key="exact" text="{i18n>strategyExact}"/>
+          <SegmentedButtonItem key="fuzzy" text="{i18n>strategyFuzzy}"/>
+          <SegmentedButtonItem key="phonetic" text="{i18n>strategyPhonetic}"/>
+          <SegmentedButtonItem key="composite" text="{i18n>strategyComposite}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>threshold}"/>
+      <Slider value="{view>/form/detect/threshold}" min="50" max="100" step="1" enableTickmarks="false" showAdvancedTooltip="true"
+        enabled="{= ['fuzzy', 'composite'].indexOf(%{view>/form/detect/strategy}) >= 0 }"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>detect}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

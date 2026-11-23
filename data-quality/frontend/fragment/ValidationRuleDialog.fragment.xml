@@ -1,0 +1,72 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/validationRule/id} ? ${i18n>editRule} : ${i18n>createRule} }" contentWidth="40rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <core:Title text="{i18n>general}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/validationRule/name}"/>
+      <Label text="{i18n>colField}"/>
+      <Input value="{view>/form/validationRule/fieldName}" placeholder="email"/>
+      <Label text="{i18n>colDatasets}"/>
+      <Input value="{view>/form/validationRule/datasetPattern}" placeholder="{i18n>patternHint}"/>
+      <Label text="{i18n>colType}"/>
+      <Select selectedKey="{view>/form/validationRule/ruleType}">
+        <core:Item key="required" text="{i18n>typeRequired}"/>
+        <core:Item key="format" text="{i18n>typeFormat}"/>
+        <core:Item key="range" text="{i18n>typeRange}"/>
+        <core:Item key="length" text="{i18n>typeLength}"/>
+        <core:Item key="enumeration" text="{i18n>typeEnumeration}"/>
+        <core:Item key="crossField" text="{i18n>typeCrossField}"/>
+        <core:Item key="custom" text="{i18n>typeCustom}"/>
+        <core:Item key="referenceData" text="{i18n>typeReferenceData}"/>
+        <core:Item key="unique" text="{i18n>typeUnique}"/>
+      </Select>
+      <Label text="{i18n>colSeverity}"/>
+      <SegmentedButton selectedKey="{view>/form/validationRule/severity}">
+        <items>
+          <SegmentedButtonItem key="info" text="{i18n>sevInfo}"/>
+          <SegmentedButtonItem key="warning" text="{i18n>sevWarning}"/>
+          <SegmentedButtonItem key="error" text="{i18n>sevError}"/>
+          <SegmentedButtonItem key="critical" text="{i18n>sevCritical}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colStatus}"/>
+      <Select selectedKey="{view>/form/validationRule/status}">
+        <core:Item key="draft" text="{i18n>statusDraft}"/>
+        <core:Item key="active" text="{i18n>statusActive}"/>
+        <core:Item key="inactive" text="{i18n>statusInactive}"/>
+      </Select>
+      <Label text="{i18n>colPriority}"/>
+      <StepInput value="{view>/form/validationRule/priority}" min="0" max="100000" step="10"/>
+
+      <core:Title text="{i18n>parameters}"/>
+      <Label text="{i18n>pattern}" visible="{= %{view>/form/validationRule/ruleType} === 'format' }"/>
+      <Input value="{view>/form/validationRule/pattern}" placeholder="^[^@]+@[^@]+\.[a-z]{2,}$" visible="{= %{view>/form/validationRule/ruleType} === 'format' }"/>
+      <Label text="{i18n>minMax}" visible="{= %{view>/form/validationRule/ruleType} === 'range' || %{view>/form/validationRule/ruleType} === 'length' }"/>
+      <Input value="{view>/form/validationRule/minValue}" placeholder="min" visible="{= %{view>/form/validationRule/ruleType} === 'range' || %{view>/form/validationRule/ruleType} === 'length' }"/>
+      <Input value="{view>/form/validationRule/maxValue}" placeholder="max" visible="{= %{view>/form/validationRule/ruleType} === 'range' || %{view>/form/validationRule/ruleType} === 'length' }"/>
+      <Label text="{i18n>allowedValues}" visible="{= %{view>/form/validationRule/ruleType} === 'enumeration' }"/>
+      <TextArea value="{view>/form/validationRule/allowedValues}" rows="3" placeholder="{i18n>onePerLine}" visible="{= %{view>/form/validationRule/ruleType} === 'enumeration' }"/>
+      <Label text="{i18n>otherField}" visible="{= %{view>/form/validationRule/ruleType} === 'crossField' }"/>
+      <Input value="{view>/form/validationRule/crossFieldName}" visible="{= %{view>/form/validationRule/ruleType} === 'crossField' }"/>
+      <Select selectedKey="{view>/form/validationRule/operator}" visible="{= %{view>/form/validationRule/ruleType} === 'crossField' }">
+        <core:Item key="eq" text="="/><core:Item key="ne" text="≠"/><core:Item key="lt" text="&lt;"/>
+        <core:Item key="le" text="≤"/><core:Item key="gt" text="&gt;"/><core:Item key="ge" text="≥"/>
+      </Select>
+      <Label text="{i18n>expression}" visible="{= %{view>/form/validationRule/ruleType} === 'custom' }"/>
+      <TextArea value="{view>/form/validationRule/expression}" rows="2" placeholder="country == DE => postalCode matches ^[0-9]{5}$"
+        visible="{= %{view>/form/validationRule/ruleType} === 'custom' }"/>
+      <Label text="{i18n>referenceData}" visible="{= %{view>/form/validationRule/ruleType} === 'referenceData' }"/>
+      <Input value="{view>/form/validationRule/referenceDataset}" placeholder="countries" visible="{= %{view>/form/validationRule/ruleType} === 'referenceData' }"/>
+      <Input value="{view>/form/validationRule/referenceField}" placeholder="code" visible="{= %{view>/form/validationRule/ruleType} === 'referenceData' }"/>
+      <Label text=""/>
+      <CheckBox text="{i18n>caseSensitive}" selected="{view>/form/validationRule/caseSensitive}"
+        visible="{= ['enumeration', 'crossField', 'unique'].indexOf(%{view>/form/validationRule/ruleType}) >= 0 }"/>
+      <Label text="{i18n>colCategory}"/>
+      <Input value="{view>/form/validationRule/category}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/validationRule/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

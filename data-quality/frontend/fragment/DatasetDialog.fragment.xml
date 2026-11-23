@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/dataset/edit} ? ${i18n>editDataset} : ${i18n>createDataset} }" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="true"/>
+      <Input value="{view>/form/dataset/id}" placeholder="customers" enabled="{= !%{view>/form/dataset/edit} }"/>
+      <Label text="{i18n>colName}"/>
+      <Input value="{view>/form/dataset/name}"/>
+      <Label text="{i18n>colCategory}"/>
+      <ComboBox value="{view>/form/dataset/category}">
+        <core:Item key="master data" text="{i18n>catMaster}"/>
+        <core:Item key="reference data" text="{i18n>catReference}"/>
+        <core:Item key="transactional data" text="{i18n>catTransactional}"/>
+      </ComboBox>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/dataset/description}" rows="3"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

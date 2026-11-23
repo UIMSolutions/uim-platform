@@ -70,9 +70,18 @@ sap.ui.define([
         return { datasetId: f.datasetId, matchFields: f.matchFields, strategy: f.strategy, threshold: Number(f.threshold) || 85 };
       },
       toastArgs: function (r) { return [r.groups, r.duplicateRecords]; } },
-    resolve: { fragment: "ResolveDialog", action: "ResolveMatchGroup", required: ["key"], toast: "resolved",
+    resolve: { fragment: "ResolveDialog", action: "ResolveMatchGroup", required: ["key"], toast: "groupResolved",
       payload: function (f) { return { key: f.key, survivorRecordId: f.survivorRecordId, merge: !!f.merge }; },
       toastArgs: function (r) { return [r.survivorRecordId, r.removedRecords, r.mergedFields]; } },
+    user: { fragment: "UserDialog", set: "Users", required: ["id"],
+      patch: function (f) { return f.edit ? f.id : ""; },
+      payload: function (f) {
+        var result = { displayName: f.displayName, scopes: models.lines(f.scopes) };
+        if (f.password) {
+          result.password = f.password;
+        }
+        return f.edit ? result : Object.assign(result, { id: f.id });
+      } },
     address: { fragment: "AddressDialog", set: "Addresses", required: ["inputLine1"], toast: "cleansed",
       payload: compact,
       toastArgs: function (r) { return [r.quality || ""]; } }

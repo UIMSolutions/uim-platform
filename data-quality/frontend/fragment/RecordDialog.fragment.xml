@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/record/key} ? ${i18n>editRecord} : ${i18n>createRecord} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colRecord}"/>
+      <Input value="{view>/form/record/id}" placeholder="{i18n>generated}" enabled="{= !%{view>/form/record/key} }"/>
+      <Label text="{i18n>colFields}" required="true"/>
+      <TextArea value="{view>/form/record/fields}" rows="10" width="100%" placeholder="name=Ada Lovelace&#10;email=ada@example.org&#10;country=GB"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

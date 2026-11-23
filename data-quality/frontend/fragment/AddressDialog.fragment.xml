@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>cleanseAddress}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>street}" required="true"/>
+      <Input value="{view>/form/address/inputLine1}" placeholder="Hauptstr. 12"/>
+      <Label text="{i18n>line2}"/>
+      <Input value="{view>/form/address/inputLine2}"/>
+      <Label text="{i18n>postalCity}"/>
+      <Input value="{view>/form/address/inputPostalCode}" width="7rem" placeholder="80331"/>
+      <Input value="{view>/form/address/inputCity}" placeholder="München"/>
+      <Label text="{i18n>region}"/>
+      <Input value="{view>/form/address/inputRegion}"/>
+      <Label text="{i18n>country}"/>
+      <Input value="{view>/form/address/inputCountry}" placeholder="Deutschland"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>cleanse}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

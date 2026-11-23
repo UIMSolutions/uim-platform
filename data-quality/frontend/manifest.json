@@ -5,12 +5,17 @@
     "type": "application",
     "i18n": {
       "bundleName": "uim.dataquality.i18n.i18n",
-      "supportedLocales": ["", "de"],
+      "supportedLocales": [
+        "",
+        "de"
+      ],
       "fallbackLocale": ""
     },
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
-    "applicationVersion": { "version": "2.0.0" },
+    "applicationVersion": {
+      "version": "2.0.0"
+    },
     "dataSources": {
       "mainService": {
         "uri": "/odata/v4/data-quality/",
@@ -24,25 +29,45 @@
   },
   "sap.ui": {
     "technology": "UI5",
-    "icons": { "icon": "sap-icon://quality-issue" },
-    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+    "icons": {
+      "icon": "sap-icon://quality-issue"
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
   },
   "sap.ui5": {
-    "rootView": { "viewName": "uim.dataquality.view.App", "type": "XML", "id": "app" },
+    "rootView": {
+      "viewName": "uim.dataquality.view.App",
+      "type": "XML",
+      "id": "app"
+    },
     "dependencies": {
       "minUI5Version": "1.120.0",
-      "libs": { "sap.m": {}, "sap.ui.core": {}, "sap.f": {}, "sap.ui.layout": {} }
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.ui.layout": {}
+      }
     },
-    "contentDensities": { "compact": true, "cozy": true },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
     "models": {
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
-        "settings": { "bundleName": "uim.dataquality.i18n.i18n", "supportedLocales": ["", "de"], "fallbackLocale": "" }
-      },
-      "": {
-        "dataSource": "mainService",
-        "preload": true,
-        "settings": { "operationMode": "Server", "autoExpandSelect": true, "earlyRequests": true }
+        "settings": {
+          "bundleName": "uim.dataquality.i18n.i18n",
+          "supportedLocales": [
+            "",
+            "de"
+          ],
+          "fallbackLocale": ""
+        }
       }
     },
     "routing": {
@@ -56,12 +81,26 @@
         "async": true
       },
       "routes": [
-        { "name": "main", "pattern": ":tab:", "target": "main" },
-        { "name": "dataset", "pattern": "datasets/{id}", "target": "dataset" }
+        {
+          "name": "main",
+          "pattern": ":tab:",
+          "target": "main"
+        },
+        {
+          "name": "dataset",
+          "pattern": "datasets/{id}",
+          "target": "dataset"
+        }
       ],
       "targets": {
-        "main": { "id": "main", "name": "Main" },
-        "dataset": { "id": "dataset", "name": "DatasetDetail" }
+        "main": {
+          "id": "main",
+          "name": "Main"
+        },
+        "dataset": {
+          "id": "dataset",
+          "name": "DatasetDetail"
+        }
       }
     }
   }

@@ -17,6 +17,8 @@
           <Button id="seedButton" text="{i18n>seed}" icon="sap-icon://add-product" press=".onSeed"
             visible="{= %{/Statistics/datasets} === 0 }"/>
           <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+          <Button id="userButton" icon="sap-icon://person-placeholder" text="{session>/displayName}" type="Transparent"
+            press=".onUserMenu" visible="{session>/authenticated}"/>
         </f:actions>
       </f:DynamicPageTitle>
     </f:title>
@@ -318,6 +320,41 @@
                   <ObjectStatus text="{path: 'quality', formatter: '.formatter.enumText'}" state="{path: 'quality', formatter: '.formatter.statusState'}"
                     icon="{path: 'quality', formatter: '.formatter.statusIcon'}"/>
                   <Text text="{path: 'changes', formatter: '.formatter.list'}" wrapping="true"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Users (built-in login, Admin scope) ─────────────────── -->
+          <IconTabFilter key="users" icon="sap-icon://group" text="{i18n>tabUsers}"
+            visible="{= %{session>/loginRequired} &amp;&amp; %{session>/isAdmin} }">
+            <Table id="usersTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noData}"
+              items="{path: '/Users', parameters: {$orderby: 'id'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabUsers}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add-employee" press=".onOpenDialog"><customData><core:CustomData key="dialog" value="user"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditUser"/>
+                  <Button text="{i18n>lock}" icon="sap-icon://locked" press=".onLockUser"><customData><core:CustomData key="locked" value="true"/></customData></Button>
+                  <Button text="{i18n>unlock}" icon="sap-icon://unlocked" press=".onLockUser"><customData><core:CustomData key="locked" value="false"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete"><customData><core:CustomData key="table" value="usersTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colScopes}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastLogin}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{id}" text="{displayName}"/>
+                  <Text text="{path: 'scopes', formatter: '.formatter.list'}"/>
+                  <ObjectStatus text="{= %{locked} ? ${i18n>locked} : %{temporarilyLocked} ? ${i18n>temporarilyLocked} : ${i18n>active} }"
+                    state="{= %{locked} || %{temporarilyLocked} ? 'Error' : 'Success' }"
+                    icon="{= %{locked} || %{temporarilyLocked} ? 'sap-icon://locked' : 'sap-icon://employee' }"/>
+                  <Text text="{path: 'lastLoginAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
                 </ColumnListItem>
               </items>
             </Table>

@@ -8,8 +8,9 @@ sap.ui.define([
   "sap/m/MessageToast",
   "sap/ui/core/Fragment",
   "uim/dataquality/model/formatter",
-  "uim/dataquality/model/models"
-], function (Controller, UIComponent, History, Filter, FilterOperator, MessageBox, MessageToast, Fragment, formatter, models) {
+  "uim/dataquality/model/models",
+  "uim/dataquality/model/session"
+], function (Controller, UIComponent, History, Filter, FilterOperator, MessageBox, MessageToast, Fragment, formatter, models, session) {
   "use strict";
 
   return Controller.extend("uim.dataquality.controller.BaseController", {
@@ -31,9 +32,64 @@ sap.ui.define([
       MessageToast.show(this.text(key, args));
     },
 
-    /** Show the backend error (OData error message or HTTP status). */
+    /** Show the backend error; an expired session (401) leads back to the login. */
     showError: function (error) {
+      if (error && error.status === 401 && this.getModel("session").getProperty("/loginRequired")) {
+        MessageBox.warning(this.text("sessionExpired"), {
+          onClose: function () { this.getOwnerComponent().logout(); }.bind(this)
+        });
+        return;
+      }
       MessageBox.error((error && error.message) || this.text("unknownError"));
+    },
+
+    // ── session (built-in JWT login) ───────────────────────────────────────
+    onUserMenu: function (event) {
+      var button = event.getSource();
+      if (!this._userMenu) {
+        this._userMenu = Fragment.load({ id: this.getView().getId(), name: "uim.dataquality.fragment.UserMenu", controller: this })
+          .then(function (menu) {
+            this.getView().addDependent(menu);
+            return menu;
+          }.bind(this));
+      }
+      this._userMenu.then(function (menu) { menu.openBy(button); });
+    },
+
+    onLogout: function () {
+      this.getOwnerComponent().logout();
+    },
+
+    onChangePassword: function () {
+      if (!this._passwordDialog) {
+        this._passwordDialog = Fragment.load({ id: this.getView().getId(), name: "uim.dataquality.fragment.PasswordDialog", controller: this })
+          .then(function (dialog) {
+            this.getView().addDependent(dialog);
+            return dialog;
+          }.bind(this));
+      }
+      this.getModel("view").setProperty("/password", { current: "", next: "", repeat: "" });
+      this._passwordDialog.then(function (dialog) { dialog.open(); });
+    },
+
+    onSavePassword: function () {
+      var p = this.getModel("view").getProperty("/password");
+      if (!p.current || !p.next) {
+        this.toast("requiredMissing");
+        return;
+      }
+      if (p.next !== p.repeat) {
+        this.toast("passwordMismatch");
+        return;
+      }
+      session.changePassword(this.getModel("session").getProperty("/token"), p.current, p.next).then(function () {
+        this._passwordDialog.then(function (dialog) { dialog.close(); });
+        this.toast("passwordChanged");
+      }.bind(this), this.showError.bind(this));
+    },
+
+    onClosePassword: function () {
+      this._passwordDialog.then(function (dialog) { dialog.close(); });
     },
 
     /** Re-read everything (lists, the Statistics header, the detail page). */
@@ -202,6 +258,18 @@ sap.ui.define([
         this.setBusy(false);
         binding.destroy();
       }.bind(this));
+    },
+
+    /** Cleansing job dialog: MultiComboBox selection → rule ids. */
+    onJobRules: function (event) {
+      this.getModel("view").setProperty("/form/cleansingJob/ruleIds",
+        event.getSource().getSelectedKeys().join("\n"));
+    },
+
+    /** Resolve dialog: radio button → survivor. */
+    onSurvivor: function (event) {
+      var candidates = this.getModel("view").getProperty("/form/resolve/candidates");
+      this.getModel("view").setProperty("/form/resolve/survivorRecordId", candidates[event.getParameter("selectedIndex")].recordId);
     },
 
     /** Dialogs of the subclass: key → { fragment, set | action, required, payload, toast }. */

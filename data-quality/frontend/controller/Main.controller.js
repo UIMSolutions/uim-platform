@@ -22,6 +22,16 @@ sap.ui.define([
       }, this);
     },
 
+    onAfterRendering: function () {
+      // the Users table is only resumed for administrators (others get 403)
+      if (this.getModel("session").getProperty("/isAdmin") && this.getModel("session").getProperty("/loginRequired")) {
+        var binding = this.byId("usersTable").getBinding("items");
+        if (binding && binding.isSuspended()) {
+          binding.resume();
+        }
+      }
+    },
+
     onTabSelect: function (event) {
       this.getRouter().navTo("main", { tab: event.getParameter("key") }, true);
     },
@@ -146,6 +156,26 @@ sap.ui.define([
         survivorRecordId: group.survivorRecordId,
         candidates: (group.candidates || []).map(models.candidate)
       });
+    },
+
+    // ── users ─────────────────────────────────────────────────────────────
+    onEditUser: function () {
+      var context = this.selected("usersTable");
+      if (context) {
+        var u = context.getObject();
+        this.openDialog("user", { id: u.id, displayName: u.displayName, scopes: (u.scopes || []).join("\n"), password: "", edit: true });
+      }
+    },
+
+    onLockUser: function (event) {
+      var context = this.selected("usersTable");
+      if (!context) {
+        return;
+      }
+      var locked = event.getSource().data("locked") === "true";
+      context.setProperty("locked", locked).then(function () {
+        this.toast(locked ? "userLocked" : "userUnlocked", [context.getProperty("id")]);
+      }.bind(this), this.showError.bind(this));
     },
 
     // ── demo ──────────────────────────────────────────────────────────────

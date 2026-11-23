@@ -14,7 +14,7 @@ sap.ui.define([
     /** Empty forms of the dialogs. Lists are edited as one entry per line. */
     emptyForms: function () {
       return {
-        dataset: { id: "", name: "", category: "", description: "" },
+        dataset: { id: "", name: "", category: "", description: "", edit: false },
         record: { datasetId: "", id: "", fields: "", key: "" },
         importCsv: { datasetId: "", csv: "", createDataset: true, replaceExisting: true },
         validationRule: { name: "", fieldName: "", datasetPattern: "", ruleType: "required", severity: "error",
@@ -27,6 +27,7 @@ sap.ui.define([
         cleansingJob: { datasetId: "", ruleIds: "", dryRun: false, revalidate: true },
         detect: { datasetId: "", matchFields: "name", strategy: "fuzzy", threshold: 85 },
         resolve: { key: "", survivorRecordId: "", merge: true, candidates: [] },
+        user: { id: "", displayName: "", password: "", scopes: "Read", edit: false },
         address: { inputLine1: "", inputLine2: "", inputCity: "", inputRegion: "", inputPostalCode: "",
           inputCountry: "", sourceRecordId: "" }
       };
@@ -39,6 +40,7 @@ sap.ui.define([
         tab: "datasets",
         dataset: "",
         severity: "",
+        password: { current: "", next: "", repeat: "" },
         form: this.emptyForms()
       });
     },

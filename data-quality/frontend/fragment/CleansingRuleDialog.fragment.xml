@@ -1,0 +1,47 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/cleansingRule/id} ? ${i18n>editRule} : ${i18n>createCleansingRule} }" contentWidth="38rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/cleansingRule/name}"/>
+      <Label text="{i18n>colField}" required="true"/>
+      <Input value="{view>/form/cleansingRule/fieldName}"/>
+      <Label text="{i18n>colDatasets}"/>
+      <Input value="{view>/form/cleansingRule/datasetPattern}" placeholder="{i18n>patternHint}"/>
+      <Label text="{i18n>colAction}"/>
+      <Select selectedKey="{view>/form/cleansingRule/action}">
+        <core:Item key="trim" text="{i18n>actTrim}"/>
+        <core:Item key="collapseWhitespace" text="{i18n>actCollapse}"/>
+        <core:Item key="upperCase" text="{i18n>actUpper}"/>
+        <core:Item key="lowerCase" text="{i18n>actLower}"/>
+        <core:Item key="titleCase" text="{i18n>actTitle}"/>
+        <core:Item key="removeDiacritics" text="{i18n>actDiacritics}"/>
+        <core:Item key="replace" text="{i18n>actReplace}"/>
+        <core:Item key="defaultValue" text="{i18n>actDefault}"/>
+        <core:Item key="clear" text="{i18n>actClear}"/>
+        <core:Item key="standardizeCountry" text="{i18n>actCountry}"/>
+        <core:Item key="enrich" text="{i18n>actEnrich}"/>
+      </Select>
+      <Label text="{i18n>findReplace}" visible="{= %{view>/form/cleansingRule/action} === 'replace' }"/>
+      <Input value="{view>/form/cleansingRule/findPattern}" placeholder="[^0-9+]" visible="{= %{view>/form/cleansingRule/action} === 'replace' }"/>
+      <Input value="{view>/form/cleansingRule/replaceWith}" placeholder="$1" visible="{= %{view>/form/cleansingRule/action} === 'replace' }"/>
+      <Label text="{i18n>defaultValue}" visible="{= %{view>/form/cleansingRule/action} === 'defaultValue' }"/>
+      <Input value="{view>/form/cleansingRule/defaultValue}" visible="{= %{view>/form/cleansingRule/action} === 'defaultValue' }"/>
+      <Label text="{i18n>lookup}" visible="{= %{view>/form/cleansingRule/action} === 'enrich' }"/>
+      <Input value="{view>/form/cleansingRule/lookupDataset}" placeholder="countries" visible="{= %{view>/form/cleansingRule/action} === 'enrich' }"/>
+      <Input value="{view>/form/cleansingRule/lookupKeyField}" placeholder="code" visible="{= %{view>/form/cleansingRule/action} === 'enrich' }"/>
+      <Input value="{view>/form/cleansingRule/lookupValueField}" placeholder="name" visible="{= %{view>/form/cleansingRule/action} === 'enrich' }"/>
+      <Label text="{i18n>sourceField}" visible="{= %{view>/form/cleansingRule/action} === 'enrich' }"/>
+      <Input value="{view>/form/cleansingRule/sourceField}" placeholder="country" visible="{= %{view>/form/cleansingRule/action} === 'enrich' }"/>
+      <Label text="{i18n>colStatus}"/>
+      <Select selectedKey="{view>/form/cleansingRule/status}">
+        <core:Item key="draft" text="{i18n>statusDraft}"/>
+        <core:Item key="active" text="{i18n>statusActive}"/>
+        <core:Item key="inactive" text="{i18n>statusInactive}"/>
+      </Select>
+      <Label text="{i18n>colPriority}"/>
+      <StepInput value="{view>/form/cleansingRule/priority}" min="0" max="100000" step="10"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

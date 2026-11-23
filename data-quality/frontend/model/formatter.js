@@ -102,7 +102,12 @@ sap.ui.define([], function () {
       return n < 1000 ? n + " ms" : (Math.round(n / 100) / 10) + " s";
     },
 
-    /** Truthy → "Yes" / "No" text key */
+    /** "a\nb" → ["a", "b"] (MultiComboBox selectedKeys) */
+    keys: function (text) {
+      return String(text || "").split(/[\n,]/).map(function (k) { return k.trim(); }).filter(Boolean);
+    },
+
+    /** Truthy → check mark */
     yesNo: function (value) {
       return value ? "✓" : "";
     }
