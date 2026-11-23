@@ -226,22 +226,13 @@ sap.ui.define([
         return;
       }
       if (def.patch && def.patch(form)) {
-        // PATCH only the changed properties of the loaded entity
-        var model = this.getModel();
-        var contextBinding = model.bindContext(models.entityPath(def.set, def.patch(form)));
-        var context = contextBinding.getBoundContext();
-        var payload = def.payload(form);
+        var serviceUrl = this.getOwnerComponent().getManifestEntry("/sap.app/dataSources/mainService").uri;
         this.setBusy(true);
-        context.requestObject().then(function (current) {
-          return Promise.all(Object.keys(payload).filter(function (name) {
-            return JSON.stringify(current[name]) !== JSON.stringify(payload[name]);
-          }).map(function (name) {
-            return context.setProperty(name, payload[name]);
-          }));
-        }).then(done, this.showError.bind(this)).finally(function () {
-          this.setBusy(false);
-          contextBinding.destroy();
-        }.bind(this));
+        session.patch(serviceUrl, models.entityPath(def.set, def.patch(form)), def.payload(form),
+          this.getModel("session").getProperty("/token"))
+          .then(done, this.showError.bind(this)).finally(function () {
+            this.setBusy(false);
+          }.bind(this));
         return;
       }
       var binding = this.getModel().bindList("/" + def.set);

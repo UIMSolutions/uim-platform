@@ -11,8 +11,9 @@
    "FR (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "AA (9)",
   "maxValue": "US",
   "completeness": 100,
   "maxLength": 2,
@@ -21,11 +22,12 @@
   "datasetId": "countries",
   "mean": null,
   "missingCount": 0,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 100,
   "duplicateCount": 0,
   "avgLength": 2,
+  "topValuesText": "AT (1), CH (1), DE (1), ES (1), FR (1)",
   "patterns": [
    "AA (9)"
   ],
@@ -33,7 +35,7 @@
   "distinctCount": 9,
   "minLength": 2,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "name",
@@ -47,8 +49,9 @@
    "France (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "Aaaaaaa (2), Aaaaaaaaaaa (2), Aaaaa (2), Aaaaaa (1), Aaaaaa Aaaaaaa (1)",
   "maxValue": "United States",
   "completeness": 100,
   "maxLength": 14,
@@ -57,11 +60,12 @@
   "datasetId": "countries",
   "mean": null,
   "missingCount": 0,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 100,
   "duplicateCount": 0,
   "avgLength": 8.78,
+  "topValuesText": "Austria (1), Switzerland (1), Germany (1), Spain (1), France (1)",
   "patterns": [
    "Aaaaaaa (2)",
    "Aaaaaaaaaaa (2)",
@@ -73,7 +77,7 @@
   "distinctCount": 9,
   "minLength": 5,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "name",
@@ -87,8 +91,9 @@
    "Peter  Gruber (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "Aaaaaa Aaaaaa (2), Aaaa Aaaaa (2), Aaaaaaa Aaaaaaa (1), Aaaa Aaaaaaa (1), Aaaaa Aaaaaa (1)",
   "maxValue": "Sofia Rossi",
   "completeness": 91.67,
   "maxLength": 15,
@@ -97,11 +102,12 @@
   "datasetId": "customers",
   "mean": null,
   "missingCount": 1,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 100,
   "duplicateCount": 0,
   "avgLength": 11.82,
+  "topValuesText": "Jürgen Müller (1), Juergen Mueller (1), Anna Schmidt (1), Marie Dubois (1), Peter  Gruber (1)",
   "patterns": [
    "Aaaaaa Aaaaaa (2)",
    "Aaaa Aaaaa (2)",
@@ -113,7 +119,7 @@
   "distinctCount": 11,
   "minLength": 9,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "email",
@@ -127,8 +133,9 @@
    "info@acme.example.com (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "aaaa.aaaaa@aaaaaaa.aa.aa (2), a.aaaaaaa@aaaaaaa.aa (1), A.Aaaaaaa@Aaaaaaa.aa (1), aaaa.aaaaaaa@aaaaaaa (1), aaaa@aaaa.aaaaaaa.aaa (1)",
   "maxValue": "sofia.rossi@example.it",
   "completeness": 91.67,
   "maxLength": 24,
@@ -137,11 +144,12 @@
   "datasetId": "customers",
   "mean": null,
   "missingCount": 1,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 90.91,
   "duplicateCount": 1,
   "avgLength": 21.73,
+  "topValuesText": "john.smith@example.co.uk (2), j.mueller@example.de (1), J.Mueller@Example.de (1), anna.schmidt@example (1), info@acme.example.com (1)",
   "patterns": [
    "aaaa.aaaaa@aaaaaaa.aa.aa (2)",
    "a.aaaaaaa@aaaaaaa.aa (1)",
@@ -153,7 +161,7 @@
   "distinctCount": 10,
   "minLength": 19,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "phone",
@@ -167,8 +175,9 @@
    "+1 212 555 0100 (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "+99 99 9999 9999 (2), +99 99 9999999 (1), 999/9999999 (1), +99 99 999999 (1), +9 999 999 9999 (1)",
   "maxValue": "030/1234567",
   "completeness": 91.67,
   "maxLength": 17,
@@ -177,11 +186,12 @@
   "datasetId": "customers",
   "mean": null,
   "missingCount": 1,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 90.91,
   "duplicateCount": 1,
   "avgLength": 14.27,
+  "topValuesText": "+44 20 7946 0958 (2), +49 30 1234567 (1), 030/1234567 (1), +49 89 765432 (1), +1 212 555 0100 (1)",
   "patterns": [
    "+99 99 9999 9999 (2)",
    "+99 99 9999999 (1)",
@@ -193,7 +203,7 @@
   "distinctCount": 10,
   "minLength": 11,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "city",
@@ -207,8 +217,9 @@
    "New York (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "Aaaaaa (4), Aaaaaaa (2), Aaaa (2), aaaaaa (1), Aaa Aaaa (1)",
   "maxValue": "paris",
   "completeness": 100,
   "maxLength": 9,
@@ -217,11 +228,12 @@
   "datasetId": "customers",
   "mean": null,
   "missingCount": 0,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 91.67,
   "duplicateCount": 1,
   "avgLength": 6.17,
+  "topValuesText": "London (2), Berlin (1), berlin (1), München (1), New York (1)",
   "patterns": [
    "Aaaaaa (4)",
    "Aaaaaaa (2)",
@@ -233,7 +245,7 @@
   "distinctCount": 11,
   "minLength": 4,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "postalCode",
@@ -247,8 +259,9 @@
    "75001 (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "99999 (7), 9999 (2), AA9A 9AA (2), 9999 AA (1)",
   "maxValue": "SW1A 1AA",
   "completeness": 100,
   "maxLength": 8,
@@ -257,11 +270,12 @@
   "datasetId": "customers",
   "mean": null,
   "missingCount": 0,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 83.33,
   "duplicateCount": 2,
   "avgLength": 5.5,
+  "topValuesText": "10115 (2), SW1A 1AA (2), 80331 (1), 10001 (1), 75001 (1)",
   "patterns": [
    "99999 (7)",
    "9999 (2)",
@@ -272,7 +286,7 @@
   "distinctCount": 10,
   "minLength": 4,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "country",
@@ -286,8 +300,9 @@
    "AT (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "AA (9), Aaaaaaa (1), Aaaaaa (1), Aaaaaaaaaaa (1)",
   "maxValue": "US",
   "completeness": 100,
   "maxLength": 11,
@@ -296,11 +311,12 @@
   "datasetId": "customers",
   "mean": null,
   "missingCount": 0,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 83.33,
   "duplicateCount": 2,
   "avgLength": 3.5,
+  "topValuesText": "DE (3), Germany (1), US (1), France (1), AT (1)",
   "patterns": [
    "AA (9)",
    "Aaaaaaa (1)",
@@ -311,7 +327,7 @@
   "distinctCount": 10,
   "minLength": 2,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "age",
@@ -325,8 +341,9 @@
    "17 (1)"
   ],
   "numeric": true,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "99 (10), 999 (1)",
   "maxValue": "131",
   "completeness": 91.67,
   "maxLength": 3,
@@ -335,11 +352,12 @@
   "datasetId": "customers",
   "mean": 51.36,
   "missingCount": 1,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 81.82,
   "duplicateCount": 2,
   "avgLength": 2.09,
+  "topValuesText": "52 (2), 63 (2), 34 (1), 29 (1), 17 (1)",
   "patterns": [
    "99 (10)",
    "999 (1)"
@@ -348,7 +366,7 @@
   "distinctCount": 9,
   "minLength": 2,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "status",
@@ -361,8 +379,9 @@
    "blocked (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "aaaaaa (7), aaaaaaaa (2), Aaaaaa (1), aaaaaaa (1)",
   "maxValue": "prospect",
   "completeness": 91.67,
   "maxLength": 8,
@@ -371,11 +390,12 @@
   "datasetId": "customers",
   "mean": null,
   "missingCount": 1,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 36.36,
   "duplicateCount": 7,
   "avgLength": 6.45,
+  "topValuesText": "active (7), prospect (2), Active (1), blocked (1)",
   "patterns": [
    "aaaaaa (7)",
    "aaaaaaaa (2)",
@@ -386,7 +406,7 @@
   "distinctCount": 4,
   "minLength": 6,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "name",
@@ -399,8 +419,9 @@
    "Thames Components Ltd (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "Aaaaaaaaa AaaA (1), Aaaaaaaaa AA (1), Aaaaaaaaaa Aaaaaaa (1), Aaaaaa Aaaaaaaaaa Aaa (1)",
   "maxValue": "Thames Components Ltd",
   "completeness": 80,
   "maxLength": 21,
@@ -409,11 +430,12 @@
   "datasetId": "suppliers",
   "mean": null,
   "missingCount": 1,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 100,
   "duplicateCount": 0,
   "avgLength": 16.25,
+  "topValuesText": "Nordstahl GmbH (1), Alpenholz AG (1), Logistique Lumière (1), Thames Components Ltd (1)",
   "patterns": [
    "Aaaaaaaaa AaaA (1)",
    "Aaaaaaaaa AA (1)",
@@ -424,7 +446,7 @@
   "distinctCount": 4,
   "minLength": 12,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "vatId",
@@ -438,8 +460,9 @@
    "GB123456789 (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "AA999999999 (2), AAA99999999 (1), AA-9999 (1), AA999999999A99 (1)",
   "maxValue": "NL123456789B01",
   "completeness": 100,
   "maxLength": 14,
@@ -448,11 +471,12 @@
   "datasetId": "suppliers",
   "mean": null,
   "missingCount": 0,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 100,
   "duplicateCount": 0,
   "avgLength": 10.8,
+  "topValuesText": "DE123456789 (1), ATU12345678 (1), FR-1234 (1), NL123456789B01 (1), GB123456789 (1)",
   "patterns": [
    "AA999999999 (2)",
    "AAA99999999 (1)",
@@ -463,7 +487,7 @@
   "distinctCount": 5,
   "minLength": 7,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "country",
@@ -477,8 +501,9 @@
    "GB (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "AA (5)",
   "maxValue": "NL",
   "completeness": 100,
   "maxLength": 2,
@@ -487,11 +512,12 @@
   "datasetId": "suppliers",
   "mean": null,
   "missingCount": 0,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 100,
   "duplicateCount": 0,
   "avgLength": 2,
+  "topValuesText": "DE (1), AT (1), FR (1), NL (1), GB (1)",
   "patterns": [
    "AA (5)"
   ],
@@ -499,7 +525,7 @@
   "distinctCount": 5,
   "minLength": 2,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  },
  {
   "id": "email",
@@ -513,8 +539,9 @@
    "orders@thames.example (1)"
   ],
   "numeric": false,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "patternsText": "aaaaaaa@aaaaaaaaa.aaaaaa… (1), aaaaaa@aaaaaaaaa.aaaaaaa (1), aaaaaaa@aaaaaaa.aaaaaaa (1), aaaaa@aaaaaa.aaaaaaa (1), aaaaaa@aaaaaa.aaaaaaa (1)",
   "maxValue": "sales@polder.example",
   "completeness": 100,
   "maxLength": 25,
@@ -523,11 +550,12 @@
   "datasetId": "suppliers",
   "mean": null,
   "missingCount": 0,
-  "updatedBy": "anonymous",
-  "updatedAt": "2026-11-21T18:57:44Z",
+  "updatedBy": "admin",
+  "updatedAt": "2026-11-23T20:52:14Z",
   "uniqueness": 100,
   "duplicateCount": 0,
   "avgLength": 22.6,
+  "topValuesText": "einkauf@nordstahl.example (1), office@alpenholz.example (1), contact@lumiere.example (1), sales@polder.example (1), orders@thames.example (1)",
   "patterns": [
    "aaaaaaa@aaaaaaaaa.aaaaaa… (1)",
    "aaaaaa@aaaaaaaaa.aaaaaaa (1)",
@@ -539,6 +567,6 @@
   "distinctCount": 5,
   "minLength": 20,
   "tenantId": "default",
-  "profiledAt": "2026-11-21T18:57:44Z"
+  "profiledAt": "2026-11-23T20:52:14Z"
  }
 ]

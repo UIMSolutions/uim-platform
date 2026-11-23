@@ -45,7 +45,7 @@ sap.ui.define([
       if (context) {
         this.openDialog("record", {
           datasetId: this._id, id: context.getProperty("id"), key: context.getProperty("key"),
-          fields: (context.getProperty("fields") || []).join("\n")
+          fields: (context.getObject().fields || []).join("\n")
         });
       }
     },

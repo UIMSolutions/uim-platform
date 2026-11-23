@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-quality
+  labels:
+    app: data-quality
+    part-of: uim-platform
+spec:
+  # file storage is a single-node snapshot — keep one replica
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: data-quality
+  template:
+    metadata:
+      labels:
+        app: data-quality
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 999
+      containers:
+      - name: data-quality
+        image: uim-platform/data-quality:latest
+        ports:
+        - containerPort: 8086
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: data-quality-config
+        - secretRef:
+            name: data-quality-secret
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8086
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8086
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "384Mi"
+            cpu: "1000m"
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data-quality-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-quality-data
+  labels:
+    app: data-quality
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi

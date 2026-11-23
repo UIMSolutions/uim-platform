@@ -101,6 +101,33 @@ sap.ui.define([
       return request("POST", this.authRoot + "/logout", null, token).catch(function () { return {}; });
     },
 
+    /**
+     * PATCH an entity directly (the OData V4 model cannot set collection
+     * valued properties). Fetches a CSRF token first (required behind the
+     * approuter, harmless otherwise).
+     */
+    patch: function (serviceUrl, path, payload, token) {
+      var headers = { "Accept": "application/json", "Content-Type": "application/json", "X-CSRF-Token": "Fetch" };
+      if (token) {
+        headers.Authorization = "Bearer " + token;
+      }
+      return fetch(serviceUrl, { method: "HEAD", headers: headers, credentials: "same-origin" }).then(function (head) {
+        headers["X-CSRF-Token"] = head.headers.get("X-CSRF-Token") || "unsafe";
+        return fetch(serviceUrl.replace(/\/$/, "") + path, {
+          method: "PATCH", headers: headers, body: JSON.stringify(payload), credentials: "same-origin"
+        });
+      }).then(function (response) {
+        if (response.ok) {
+          return response.status === 204 ? {} : response.json();
+        }
+        return response.json().catch(function () { return {}; }).then(function (json) {
+          var error = new Error((json.error && json.error.message) || response.statusText);
+          error.status = response.status;
+          throw error;
+        });
+      });
+    },
+
     /** Fill the session model from the auth config and a session. */
     apply: function (model, config, session) {
       var user = (session && session.user) || {};

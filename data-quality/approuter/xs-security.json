@@ -1,0 +1,21 @@
+{
+  "xsappname": "uim-data-quality",
+  "tenant-mode": "dedicated",
+  "description": "UIM Data Quality — validation, profiling, matching and cleansing of master data",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read datasets, records, rules, violations, profiles, duplicates and scorecards" },
+    { "name": "$XSAPPNAME.Manage", "description": "Change data and rules, run validations, profiling, duplicate detection and cleansing jobs" },
+    { "name": "$XSAPPNAME.Admin", "description": "Manage the user accounts of the built-in login (not used with XSUAA)" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "DataSteward", "description": "Maintain data quality", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Manage"] },
+    { "name": "Administrator", "description": "Everything", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Manage", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "DataQualityViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "DataQualitySteward", "role-template-references": ["$XSAPPNAME.DataSteward"] },
+    { "name": "DataQualityAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

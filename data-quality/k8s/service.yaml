@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-quality
+  labels:
+    app: data-quality
+    part-of: uim-platform
+spec:
+  selector:
+    app: data-quality
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8086
+    protocol: TCP

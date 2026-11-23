@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-quality-config
+  labels:
+    app: data-quality
+    part-of: uim-platform
+data:
+  DQ_HOST: "0.0.0.0"
+  DQ_PORT: "8086"
+  DQ_STORAGE: "file"
+  DQ_DATA_FILE: "/data/data-quality.json"
+  DQ_FRONTEND_DIR: "/app/frontend"
+  DQ_AUTH_MODE: "jwt"
+  DQ_TOKEN_TTL_SECONDS: "3600"
+  DQ_JOB_INTERVAL_SECONDS: "5"
+  DQ_MAX_SNAPSHOTS: "100"

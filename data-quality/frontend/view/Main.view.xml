@@ -72,7 +72,7 @@
           <!-- ── Datasets ────────────────────────────────────────────── -->
           <IconTabFilter key="datasets" icon="sap-icon://database" text="{i18n>tabDatasets}">
             <Table id="datasetsTable" mode="SingleSelectLeft" growing="true" growingThreshold="25" noDataText="{i18n>noDatasets}"
-              items="{path: '/Datasets', parameters: {$orderby: 'name', $count: true}, templateShareable: false}">
+              items="{path: '/Datasets', parameters: {$orderby: 'name', $count: true, $select: 'description'}, templateShareable: false}">
               <headerToolbar>
                 <OverflowToolbar>
                   <Title text="{i18n>tabDatasets}" level="H3"/>
@@ -160,7 +160,7 @@
           <!-- ── Validation rules ────────────────────────────────────── -->
           <IconTabFilter key="rules" icon="sap-icon://validate" text="{i18n>tabRules}">
             <Table id="rulesTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noData}"
-              items="{path: '/ValidationRules', parameters: {$orderby: 'priority,name', $count: true}, templateShareable: false}">
+              items="{path: '/ValidationRules', parameters: {$orderby: 'priority,name', $count: true, $select: 'name,fieldName,datasetPattern,ruleType,severity,status,pattern,minValue,maxValue,allowedValues,caseSensitive,crossFieldName,operator,expression,referenceDataset,referenceField,category,priority,description'}, templateShareable: false}">
               <headerToolbar>
                 <OverflowToolbar>
                   <Title text="{i18n>tabRules}" level="H3"/>
@@ -200,7 +200,7 @@
           <!-- ── Cleansing ───────────────────────────────────────────── -->
           <IconTabFilter key="cleansing" icon="sap-icon://wrench" text="{i18n>tabCleansing}">
             <Table id="cleansingRulesTable" mode="SingleSelectLeft" growing="true" growingThreshold="25" noDataText="{i18n>noData}"
-              items="{path: '/CleansingRules', parameters: {$orderby: 'priority,name'}, templateShareable: false}">
+              items="{path: '/CleansingRules', parameters: {$orderby: 'priority,name', $select: 'name,fieldName,datasetPattern,action,status,findPattern,replaceWith,defaultValue,lookupDataset,lookupKeyField,lookupValueField,sourceField,category,priority,description'}, templateShareable: false}">
               <headerToolbar>
                 <OverflowToolbar>
                   <Title text="{i18n>cleansingRules}" level="H3"/>
@@ -257,7 +257,7 @@
                     icon="{path: 'status', formatter: '.formatter.statusIcon'}" tooltip="{errorMessage}"/>
                   <ObjectNumber number="{changedRecords}" unit="/ {totalRecords} · {changedFields} {i18n>fields}"/>
                   <Text text="{path: 'dryRun', formatter: '.formatter.yesNo'}"/>
-                  <Text text="{path: 'changeLog', formatter: '.formatter.list'}" maxLines="2" wrapping="true"/>
+                  <Text text="{changeLogText}" maxLines="2" wrapping="true"/>
                   <Text text="{path: 'completedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
                 </ColumnListItem>
               </items>
@@ -267,7 +267,7 @@
           <!-- ── Duplicates ──────────────────────────────────────────── -->
           <IconTabFilter key="duplicates" icon="sap-icon://overlay" text="{i18n>tabDuplicates}" count="{/Statistics/openMatchGroups}">
             <Table id="groupsTable" mode="SingleSelectLeft" growing="true" growingThreshold="25" noDataText="{i18n>noGroups}"
-              items="{path: '/MatchGroups', parameters: {$orderby: 'resolved,bestScore desc', $count: true}, templateShareable: false}">
+              items="{path: '/MatchGroups', parameters: {$orderby: 'resolved,bestScore desc', $count: true, $select: 'candidates'}, templateShareable: false}">
               <headerToolbar>
                 <OverflowToolbar>
                   <Title text="{i18n>tabDuplicates}" level="H3"/>
@@ -286,9 +286,9 @@
               <items>
                 <ColumnListItem>
                   <ObjectIdentifier title="{survivorRecordId}" text="{datasetId}"/>
-                  <Text text="{path: 'candidates', formatter: '.formatter.candidates'}" wrapping="true"/>
+                  <Text text="{candidatesText}" wrapping="true"/>
                   <ObjectNumber number="{path: 'bestScore', formatter: '.formatter.score'}" unit="%"/>
-                  <Text text="{= ${path: 'strategy', formatter: '.formatter.enumText'} + ' · ' + ${path: 'matchFields', formatter: '.formatter.list'} }"/>
+                  <Text text="{= ${path: 'strategy', formatter: '.formatter.enumText'} + ' · ' + ${matchFieldsText} }"/>
                   <ObjectStatus text="{= %{resolved} ? ${i18n>resolved} : ${i18n>open} }" state="{= %{resolved} ? 'Success' : 'Warning' }"/>
                 </ColumnListItem>
               </items>
@@ -319,7 +319,7 @@
                   <ObjectIdentifier title="{line1}" text="{postalCode} {city} · {country}"/>
                   <ObjectStatus text="{path: 'quality', formatter: '.formatter.enumText'}" state="{path: 'quality', formatter: '.formatter.statusState'}"
                     icon="{path: 'quality', formatter: '.formatter.statusIcon'}"/>
-                  <Text text="{path: 'changes', formatter: '.formatter.list'}" wrapping="true"/>
+                  <Text text="{changesText}" wrapping="true"/>
                 </ColumnListItem>
               </items>
             </Table>
@@ -329,7 +329,7 @@
           <IconTabFilter key="users" icon="sap-icon://group" text="{i18n>tabUsers}"
             visible="{= %{session>/loginRequired} &amp;&amp; %{session>/isAdmin} }">
             <Table id="usersTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noData}"
-              items="{path: '/Users', parameters: {$orderby: 'id'}, suspended: true, templateShareable: false}">
+              items="{path: '/Users', parameters: {$orderby: 'id', $select: 'scopes,displayName'}, suspended: true, templateShareable: false}">
               <headerToolbar>
                 <OverflowToolbar>
                   <Title text="{i18n>tabUsers}" level="H3"/>
@@ -350,7 +350,7 @@
               <items>
                 <ColumnListItem>
                   <ObjectIdentifier title="{id}" text="{displayName}"/>
-                  <Text text="{path: 'scopes', formatter: '.formatter.list'}"/>
+                  <Text text="{scopesText}"/>
                   <ObjectStatus text="{= %{locked} ? ${i18n>locked} : %{temporarilyLocked} ? ${i18n>temporarilyLocked} : ${i18n>active} }"
                     state="{= %{locked} || %{temporarilyLocked} ? 'Error' : 'Success' }"
                     icon="{= %{locked} || %{temporarilyLocked} ? 'sap-icon://locked' : 'sap-icon://employee' }"/>

@@ -39,6 +39,7 @@
         <Property Name="id" Type="Edm.String"/>
         <Property Name="datasetId" Type="Edm.String" Nullable="false"/>
         <Property Name="fields" Type="Collection(Edm.String)"/>
+        <Property Name="fieldsText" Type="Edm.String"/>
         <Property Name="summary" Type="Edm.String"/>
         <Property Name="fieldCount" Type="Edm.Int32"/>
         <Property Name="qualityScore" Type="Edm.Double"/>
@@ -143,6 +144,7 @@
         <Property Name="rulesApplied" Type="Edm.Int32"/>
         <Property Name="errorMessage" Type="Edm.String"/>
         <Property Name="changeLog" Type="Collection(Edm.String)"/>
+        <Property Name="changeLogText" Type="Edm.String"/>
         <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
         <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
         <Property Name="durationMillis" Type="Edm.Int32"/>
@@ -161,6 +163,8 @@
         <Property Name="threshold" Type="Edm.Double"/>
         <Property Name="matchFields" Type="Collection(Edm.String)"/>
         <Property Name="candidates" Type="Collection(Edm.String)"/>
+        <Property Name="candidatesText" Type="Edm.String"/>
+        <Property Name="matchFieldsText" Type="Edm.String"/>
         <Property Name="size" Type="Edm.Int32"/>
         <Property Name="bestScore" Type="Edm.Double"/>
         <Property Name="survivorRecordId" Type="Edm.String"/>
@@ -195,6 +199,8 @@
         <Property Name="avgLength" Type="Edm.Double"/>
         <Property Name="topValues" Type="Collection(Edm.String)"/>
         <Property Name="patterns" Type="Collection(Edm.String)"/>
+        <Property Name="topValuesText" Type="Edm.String"/>
+        <Property Name="patternsText" Type="Edm.String"/>
         <Property Name="profiledAt" Type="Edm.DateTimeOffset" Precision="3"/>
         <Property Name="tenantId" Type="Edm.String"/>
         <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
@@ -222,6 +228,7 @@
         <Property Name="postalCodePlausible" Type="Edm.Boolean"/>
         <Property Name="quality" Type="Edm.String"/>
         <Property Name="changes" Type="Collection(Edm.String)"/>
+        <Property Name="changesText" Type="Edm.String"/>
         <Property Name="cleansedAt" Type="Edm.DateTimeOffset" Precision="3"/>
         <Property Name="tenantId" Type="Edm.String"/>
         <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
@@ -244,6 +251,23 @@
         <Property Name="uniqueness" Type="Edm.Double"/>
         <Property Name="consistency" Type="Edm.Double"/>
         <Property Name="accuracy" Type="Edm.Double"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="temporarilyLocked" Type="Edm.Boolean"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset" Precision="3"/>
         <Property Name="tenantId" Type="Edm.String"/>
         <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
         <Property Name="createdBy" Type="Edm.String"/>
@@ -431,6 +455,7 @@
         <EntitySet Name="ColumnProfiles" EntityType="uim.dataquality.ColumnProfile"/>
         <EntitySet Name="Addresses" EntityType="uim.dataquality.Address"/>
         <EntitySet Name="QualitySnapshots" EntityType="uim.dataquality.QualitySnapshot"/>
+        <EntitySet Name="Users" EntityType="uim.dataquality.User"/>
         <Singleton Name="Statistics" Type="uim.dataquality.Statistic"/>
         <ActionImport Name="ValidateDataset" Action="uim.dataquality.ValidateDataset"/>
         <ActionImport Name="ValidateRecord" Action="uim.dataquality.ValidateRecord"/>
@@ -557,6 +582,7 @@
       <Annotations Target="uim.dataquality.Record/id"><Annotation Term="Common.Label" String="Record ID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Record/datasetId"><Annotation Term="Common.Label" String="Dataset"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Record/fields"><Annotation Term="Common.Label" String="Fields (name=value)"/></Annotations>
+      <Annotations Target="uim.dataquality.Record/fieldsText"><Annotation Term="Common.Label" String="Fields"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Record/summary"><Annotation Term="Common.Label" String="Summary"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Record/fieldCount"><Annotation Term="Common.Label" String="Fields"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Record/qualityScore"><Annotation Term="Common.Label" String="Quality Score"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
@@ -701,6 +727,7 @@
       <Annotations Target="uim.dataquality.CleansingJob/rulesApplied"><Annotation Term="Common.Label" String="Rules Applied"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.CleansingJob/errorMessage"><Annotation Term="Common.Label" String="Error"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.CleansingJob/changeLog"><Annotation Term="Common.Label" String="Changes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.CleansingJob/changeLogText"><Annotation Term="Common.Label" String="Changes (summary)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.CleansingJob/startedAt"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.CleansingJob/completedAt"><Annotation Term="Common.Label" String="Completed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.CleansingJob/durationMillis"><Annotation Term="Common.Label" String="Duration (ms)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
@@ -729,6 +756,8 @@
       <Annotations Target="uim.dataquality.MatchGroup/threshold"><Annotation Term="Common.Label" String="Threshold"/></Annotations>
       <Annotations Target="uim.dataquality.MatchGroup/matchFields"><Annotation Term="Common.Label" String="Match Fields"/></Annotations>
       <Annotations Target="uim.dataquality.MatchGroup/candidates"><Annotation Term="Common.Label" String="Candidates (recordId=score)"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/candidatesText"><Annotation Term="Common.Label" String="Candidates (summary)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.MatchGroup/matchFieldsText"><Annotation Term="Common.Label" String="Match Fields (summary)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.MatchGroup/size"><Annotation Term="Common.Label" String="Records"/></Annotations>
       <Annotations Target="uim.dataquality.MatchGroup/bestScore"><Annotation Term="Common.Label" String="Best Score"/></Annotations>
       <Annotations Target="uim.dataquality.MatchGroup/survivorRecordId"><Annotation Term="Common.Label" String="Golden Record"/></Annotations>
@@ -773,6 +802,8 @@
       <Annotations Target="uim.dataquality.ColumnProfile/avgLength"><Annotation Term="Common.Label" String="Avg Length"/></Annotations>
       <Annotations Target="uim.dataquality.ColumnProfile/topValues"><Annotation Term="Common.Label" String="Top Values"/></Annotations>
       <Annotations Target="uim.dataquality.ColumnProfile/patterns"><Annotation Term="Common.Label" String="Patterns"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/topValuesText"><Annotation Term="Common.Label" String="Top Values (summary)"/></Annotations>
+      <Annotations Target="uim.dataquality.ColumnProfile/patternsText"><Annotation Term="Common.Label" String="Patterns (summary)"/></Annotations>
       <Annotations Target="uim.dataquality.ColumnProfile/profiledAt"><Annotation Term="Common.Label" String="Profiled At"/></Annotations>
       <Annotations Target="uim.dataquality.ColumnProfile/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.ColumnProfile/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
@@ -810,6 +841,7 @@
       <Annotations Target="uim.dataquality.Address/postalCodePlausible"><Annotation Term="Common.Label" String="Postal Code Plausible"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Address/quality"><Annotation Term="Common.Label" String="Quality"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Address/changes"><Annotation Term="Common.Label" String="Changes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.Address/changesText"><Annotation Term="Common.Label" String="Changes (summary)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Address/cleansedAt"><Annotation Term="Common.Label" String="Cleansed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Address/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
       <Annotations Target="uim.dataquality.Address/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
@@ -855,6 +887,33 @@
       <Annotations Target="uim.dataquality.DataQualityService/QualitySnapshots">
         <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
         <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.User/id"><Annotation Term="Common.Label" String="User Name"/></Annotations>
+      <Annotations Target="uim.dataquality.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataquality.User/password"><Annotation Term="Common.Label" String="Password (write only)"/></Annotations>
+      <Annotations Target="uim.dataquality.User/scopes"><Annotation Term="Common.Label" String="Scopes (Read, Manage, Admin)"/></Annotations>
+      <Annotations Target="uim.dataquality.User/scopesText"><Annotation Term="Common.Label" String="Scopes (summary)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.dataquality.User/temporarilyLocked"><Annotation Term="Common.Label" String="Temporarily Locked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User/failedLogins"><Annotation Term="Common.Label" String="Failed Logins"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataquality.User">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="User"/><PropertyValue Property="TypeNamePlural" String="Users"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopes"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="locked"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastLoginAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>locked</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataquality.DataQualityService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
         <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
         <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
         <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>

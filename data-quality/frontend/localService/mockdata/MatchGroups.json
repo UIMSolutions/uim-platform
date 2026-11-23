@@ -1,42 +1,45 @@
 [
  {
   "threshold": 85,
-  "updatedAt": "2026-11-21T18:57:44Z",
-  "id": "4cdacd667c354fa6",
-  "key": "customers~4cdacd667c354fa6",
-  "candidates": [
-   "c-1001=100",
-   "c-1002=96.16"
-  ],
-  "bestScore": 96.16,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
-  "datasetId": "customers",
-  "size": 2,
-  "resolvedAt": null,
-  "matchFields": [
-   "name",
-   "city"
-  ],
-  "survivorRecordId": "c-1001",
-  "resolved": false,
-  "strategy": "composite",
-  "detectedAt": "2026-11-21T18:57:44Z",
-  "tenantId": "default",
-  "updatedBy": "anonymous"
- },
- {
-  "threshold": 85,
-  "updatedAt": "2026-11-21T18:57:44Z",
-  "id": "9f216903e8394adc",
-  "key": "customers~9f216903e8394adc",
+  "updatedAt": "2026-11-23T20:53:42Z",
+  "id": "2c416ec16ef54821",
+  "key": "customers~2c416ec16ef54821",
   "candidates": [
    "c-1008=100",
    "c-1009=99.2"
   ],
+  "matchFieldsText": "name, city",
   "bestScore": 99.2,
-  "createdBy": "anonymous",
-  "createdAt": "2026-11-21T18:57:44Z",
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
+  "datasetId": "customers",
+  "size": 2,
+  "resolvedAt": "2026-11-23T20:53:42Z",
+  "matchFields": [
+   "name",
+   "city"
+  ],
+  "candidatesText": "c-1008, c-1009 (99.2)",
+  "survivorRecordId": "c-1008",
+  "resolved": true,
+  "strategy": "composite",
+  "detectedAt": "2026-11-23T20:52:14Z",
+  "tenantId": "default",
+  "updatedBy": "admin"
+ },
+ {
+  "threshold": 85,
+  "updatedAt": "2026-11-23T20:52:14Z",
+  "id": "9a06886b2fcb4c6e",
+  "key": "customers~9a06886b2fcb4c6e",
+  "candidates": [
+   "c-1001=100",
+   "c-1002=96.16"
+  ],
+  "matchFieldsText": "name, city",
+  "bestScore": 96.16,
+  "createdBy": "admin",
+  "createdAt": "2026-11-23T20:52:14Z",
   "datasetId": "customers",
   "size": 2,
   "resolvedAt": null,
@@ -44,11 +47,12 @@
    "name",
    "city"
   ],
-  "survivorRecordId": "c-1008",
+  "candidatesText": "c-1001, c-1002 (96.16)",
+  "survivorRecordId": "c-1001",
   "resolved": false,
   "strategy": "composite",
-  "detectedAt": "2026-11-21T18:57:44Z",
+  "detectedAt": "2026-11-23T20:52:14Z",
   "tenantId": "default",
-  "updatedBy": "anonymous"
+  "updatedBy": "admin"
  }
 ]

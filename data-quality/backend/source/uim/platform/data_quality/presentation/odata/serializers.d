@@ -100,6 +100,7 @@ string recordSummary(const FieldValue[] fields, size_t count = 3) {
 Json recordRow(const DataRecord r) {
   auto j = scopedRow(r);
   j["fields"] = texts(fieldTexts(r.fields));
+  j["fieldsText"] = fieldTexts(r.fields).join("; ");
   j["summary"] = recordSummary(r.fields);
   j["fieldCount"] = r.fields.length;
   j["qualityScore"] = r.isValidated ? Json(r.qualityScore) : Json(null);
@@ -186,6 +187,8 @@ Json cleansingJobRow(const CleansingJob job) {
   j["rulesApplied"] = job.rulesApplied;
   j["errorMessage"] = textOrNull(job.errorMessage);
   j["changeLog"] = texts(job.changeLog);
+  j["changeLogText"] = job.changeLog.length <= 3 ? job.changeLog.join("; ")
+    : job.changeLog[0 .. 3].join("; ") ~ format(" … (+%d)", job.changeLog.length - 3);
   j["startedAt"] = isoTime(job.startedAt);
   j["completedAt"] = isoTime(job.completedAt);
   j["durationMillis"] = job.durationMillis;
@@ -202,6 +205,11 @@ Json matchGroupRow(const MatchGroup g) {
   j["threshold"] = g.threshold;
   j["matchFields"] = texts(g.matchFields);
   j["candidates"] = texts(g.candidates.map!(c => candidateText(c)).array);
+  string[] summary;
+  foreach (i, c; g.candidates)
+    summary ~= i == 0 ? c.recordId.value : c.recordId.value ~ " (" ~ format("%g", c.score) ~ ")";
+  j["candidatesText"] = summary.join(", ");
+  j["matchFieldsText"] = g.matchFields.join(", ");
   j["size"] = g.size;
   j["bestScore"] = g.bestScore;
   j["survivorRecordId"] = g.survivorRecordId.value;
@@ -231,6 +239,8 @@ Json columnProfileRow(const ColumnProfile p) {
   j["avgLength"] = s.avgLength;
   j["topValues"] = texts(s.topValues);
   j["patterns"] = texts(s.patterns);
+  j["topValuesText"] = s.topValues.join(", ");
+  j["patternsText"] = s.patterns.join(", ");
   j["profiledAt"] = isoTime(p.profiledAt);
   return j;
 }
@@ -240,7 +250,8 @@ Json columnStatsJson(const ColumnStats s) {
   ColumnProfile p;
   p.stats = (() @trusted => cast(ColumnStats) s)();
   auto j = columnProfileRow(p);
-  foreach (n; ["key", "id", "datasetId", "tenantId", "createdAt", "createdBy", "updatedAt", "updatedBy", "profiledAt", "position"])
+  foreach (n; ["key", "id", "datasetId", "tenantId", "createdAt", "createdBy", "updatedAt", "updatedBy", "profiledAt", "position",
+      "topValuesText", "patternsText"])
     j.remove(n);
   j["fieldName"] = s.fieldName;
   return j;
@@ -266,6 +277,7 @@ Json addressRow(const PostalAddress a) {
   j["postalCodePlausible"] = a.output.postalCodePlausible;
   j["quality"] = cast(string) a.output.quality;
   j["changes"] = texts(a.output.changes);
+  j["changesText"] = a.output.changes.join("; ");
   j["cleansedAt"] = isoTime(a.cleansedAt);
   return j;
 }
@@ -286,6 +298,7 @@ Json userRow(const UserAccount u, long now) {
   j["displayName"] = u.displayName;
   j["password"] = Json(null);
   j["scopes"] = texts(u.scopes);
+  j["scopesText"] = u.scopes.join(", ");
   j["locked"] = u.locked;
   j["temporarilyLocked"] = !u.locked && u.isLockedAt(now);
   j["failedLogins"] = u.failedLogins;

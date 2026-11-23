@@ -1,5 +1,5 @@
 <mvc:View controllerName="uim.dataquality.controller.DatasetDetail"
-  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
   height="100%">
   <f:DynamicPage id="detailPage" headerExpanded="true" showFooter="false">
     <f:title>
@@ -28,7 +28,7 @@
     <!-- Scorecard -->
     <f:header>
       <f:DynamicPageHeader pinnable="true">
-        <l:HorizontalLayout id="scorecard" allowWrapping="true">
+        <HBox id="scorecard" wrap="Wrap" alignItems="Start">
           <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="13rem">
             <Label text="{i18n>overallScore}" design="Bold"/>
             <ProgressIndicator percentValue="{path: 'overallScore', formatter: '.formatter.percentValue'}"
@@ -71,7 +71,7 @@
             <ObjectNumber number="{recordCount}" unit="· {invalidRecords} {i18n>kpiInvalid} · {violationCount} {i18n>colViolations}"/>
             <Text text="{i18n>colValidatedAt}: {path: 'validatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'short'}}"/>
           </VBox>
-        </l:HorizontalLayout>
+        </HBox>
       </f:DynamicPageHeader>
     </f:header>
 
@@ -81,7 +81,7 @@
           <!-- ── Records ─────────────────────────────────────────────── -->
           <IconTabFilter key="records" icon="sap-icon://table-view" text="{i18n>tabRecords}" count="{recordCount}">
             <Table id="recordsTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noRecords}"
-              items="{path: '/Records', parameters: {$orderby: 'id', $count: true}, suspended: true, templateShareable: false}">
+              items="{path: '/Records', parameters: {$orderby: 'id', $count: true, $select: 'fields'}, suspended: true, templateShareable: false}">
               <headerToolbar>
                 <OverflowToolbar>
                   <Title text="{i18n>tabRecords}" level="H3"/>
@@ -103,7 +103,7 @@
               <items>
                 <ColumnListItem>
                   <ObjectIdentifier title="{id}"/>
-                  <Text text="{path: 'fields', formatter: '.formatter.list'}" wrapping="true" maxLines="3"/>
+                  <Text text="{fieldsText}" wrapping="true" maxLines="3"/>
                   <ProgressIndicator percentValue="{path: 'qualityScore', formatter: '.formatter.percentValue'}"
                     displayValue="{path: 'qualityScore', formatter: '.formatter.percentText'}"
                     state="{path: 'qualityScore', formatter: '.formatter.scoreState'}" displayOnly="true"/>
@@ -138,8 +138,8 @@
                   <ProgressIndicator percentValue="{path: 'uniqueness', formatter: '.formatter.percentValue'}"
                     displayValue="{path: 'uniqueness', formatter: '.formatter.percentText'}" displayOnly="true"/>
                   <Text text="{= (%{minValue} || '') + ' … ' + (%{maxValue} || '') }" wrapping="true"/>
-                  <Text text="{path: 'topValues', formatter: '.formatter.list'}" wrapping="true" maxLines="2"/>
-                  <Text text="{path: 'patterns', formatter: '.formatter.list'}" wrapping="true" maxLines="2"/>
+                  <Text text="{topValuesText}" wrapping="true" maxLines="2"/>
+                  <Text text="{patternsText}" wrapping="true" maxLines="2"/>
                 </ColumnListItem>
               </items>
             </Table>
@@ -182,7 +182,7 @@
               <items>
                 <ColumnListItem>
                   <ObjectIdentifier title="{survivorRecordId}" text="{path: 'strategy', formatter: '.formatter.enumText'}"/>
-                  <Text text="{path: 'candidates', formatter: '.formatter.candidates'}" wrapping="true"/>
+                  <Text text="{candidatesText}" wrapping="true"/>
                   <ObjectNumber number="{path: 'bestScore', formatter: '.formatter.score'}" unit="%"/>
                   <ObjectStatus text="{= %{resolved} ? ${i18n>resolved} : ${i18n>open} }" state="{= %{resolved} ? 'Success' : 'Warning' }"/>
                 </ColumnListItem>
