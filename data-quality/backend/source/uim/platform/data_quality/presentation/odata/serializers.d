@@ -279,6 +279,20 @@ Json snapshotRow(const QualitySnapshot s) {
   return j;
 }
 
+/// The password hash is never exposed; "password" is write only.
+Json userRow(const UserAccount u, long now) {
+  auto j = auditRow(u);
+  j["id"] = u.id.value;
+  j["displayName"] = u.displayName;
+  j["password"] = Json(null);
+  j["scopes"] = texts(u.scopes);
+  j["locked"] = u.locked;
+  j["temporarilyLocked"] = !u.locked && u.isLockedAt(now);
+  j["failedLogins"] = u.failedLogins;
+  j["lastLoginAt"] = isoTime(u.lastLoginAt);
+  return j;
+}
+
 Json statisticsRow(const DqStatistics s) {
   auto j = Json.emptyObject;
   j["tenantId"] = s.tenantId;

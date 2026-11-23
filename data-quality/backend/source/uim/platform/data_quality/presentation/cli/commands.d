@@ -100,6 +100,24 @@ CliApplication buildDqCli(DqContainer container, CliOutput output = null) {
       r["created"].get!long, r["updated"].get!long, r["skipped"].get!long));
   }, ["create"]);
 
+  app.command("token", "<user>", "Issue an access token for a user (authMode jwt, configured jwtSecret)", (CliContext c) {
+    auto t = container.ports.users.issueToken(TenantId(c.request.tenantId), UserAccountId(c.operand(0, "user")));
+    if (container.security.generatedSecret)
+      c.print("warning: no jwtSecret configured — this token is only valid for this process\n");
+    auto row = Json(["access_token": Json(t.accessToken), "token_type": Json(t.tokenType), "expires_in": Json(t.expiresIn)]);
+    return c.done(row, t.accessToken);
+  }, []);
+
+  app.command("passwd", "<user> <new password>", "Set the password of a user (unlocks the account)", (CliContext c) {
+    UpdateUserRequest r;
+    r.tenantId = TenantId(c.request.tenantId);
+    r.actor = UserId("cli");
+    r.id = c.operand(0, "user");
+    r.password = c.operand(1, "new password");
+    auto u = container.ports.users.updateUser(r);
+    return c.done(Json(["id": Json(u.id.value)]), "Password of '" ~ u.id.value ~ "' changed");
+  }, []);
+
   app.command("config", "", "Show the effective configuration (secrets masked)", (CliContext c) {
     c.print(config.toMaskedJson().toPrettyString ~ "\n");
     return 0;
@@ -141,4 +159,7 @@ unittest {
   assert(cli.run(["scorecard", "customers"]) == 0);
   assert(cli.run(["validate", "nope"]) == 1);
   assert(cli.run(["sets"]) == 0 && cli.run(["metadata"]) == 0 && cli.run(["config"]) == 0);
+  assert(cli.run(["create", "Users", `--data={"id":"ops","password":"long enough pw","scopes":["Manage"]}`]) == 0, out_);
+  assert(cli.run(["passwd", "ops", "another long pw"]) == 0);
+  assert(cli.run(["token", "ops"]) == 1); // authMode open: no issuer
 }

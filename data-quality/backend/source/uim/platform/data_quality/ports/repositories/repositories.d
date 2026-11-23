@@ -46,6 +46,9 @@ interface IAddressRepository : IDqTenantRepository!(PostalAddress, AddressId) {
 interface ISnapshotRepository : IDqScopedRepository!(QualitySnapshot, SnapshotId) {
 }
 
+interface IUserAccountRepository : IDqTenantRepository!(UserAccount, UserAccountId) {
+}
+
 /// All repositories (passed to the interactors as one bundle).
 struct DqRepositories {
   IDatasetRepository datasets;
@@ -58,4 +61,5 @@ struct DqRepositories {
   IColumnProfileRepository columnProfiles;
   IAddressRepository addresses;
   ISnapshotRepository snapshots;
+  IUserAccountRepository users;
 }

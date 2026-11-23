@@ -395,6 +395,32 @@ QualitySnapshot recordToSnapshot(Json d) {
   return e;
 }
 
+// ── UserAccount ─────────────────────────────────────────────────────────────
+Json userToRecord(const UserAccount e) {
+  auto d = auditRecord(e);
+  d["displayName"] = e.displayName;
+  d["passwordHash"] = e.passwordHash;
+  d["scopes"] = textsRecord(e.scopes);
+  d["locked"] = e.locked;
+  d["failedLogins"] = e.failedLogins;
+  d["lockedUntil"] = e.lockedUntil;
+  d["lastLoginAt"] = e.lastLoginAt;
+  return d;
+}
+
+UserAccount recordToUser(Json d) {
+  UserAccount e;
+  readAudit!(UserAccount, UserAccountId)(e, d);
+  e.displayName = textField(d, "displayName");
+  e.passwordHash = textField(d, "passwordHash");
+  e.scopes = textsField(d, "scopes");
+  e.locked = boolField(d, "locked");
+  e.failedLogins = cast(int) longField(d, "failedLogins");
+  e.lockedUntil = longField(d, "lockedUntil");
+  e.lastLoginAt = longField(d, "lastLoginAt");
+  return e;
+}
+
 ///
 unittest {
   DataRecord r;

@@ -279,6 +279,9 @@ class DqApiController {
       case DqErrorKind.ruleViolation:
         status = 422;
         break;
+      case DqErrorKind.unauthorized:
+        status = 401;
+        break;
       }
       body = errorBody(status.to!string, e.msg, requestId, req.requestPath.toString);
     } catch (Exception e) {

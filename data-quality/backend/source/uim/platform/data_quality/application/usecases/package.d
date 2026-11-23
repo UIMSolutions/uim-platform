@@ -16,4 +16,5 @@ public {
   import uim.platform.data_quality.application.usecases.duplicates;
   import uim.platform.data_quality.application.usecases.cleansing_jobs;
   import uim.platform.data_quality.application.usecases.addresses;
+  import uim.platform.data_quality.application.usecases.access;
 }

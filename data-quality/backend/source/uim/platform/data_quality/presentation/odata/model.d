@@ -278,6 +278,22 @@ ODataServiceModel dataQualityModel() {
     .filters("datasetId", "rating")
     .scopes(readScope, manageScope);
 
+  audited(m.entitySet("Users", "User")
+      .property("id", Edm.string_, "User Name", false)
+      .property("displayName", Edm.string_, "Name")
+      .property("password", Edm.string_, "Password (write only)")
+      .collection("scopes", Edm.string_, "Scopes (Read, Manage, Admin)")
+      .property("locked", Edm.boolean, "Locked")
+      .property("temporarilyLocked", Edm.boolean, "Temporarily Locked")
+      .property("failedLogins", Edm.int32, "Failed Logins")
+      .property("lastLoginAt", Edm.dateTimeOffset, "Last Login")
+      .computed("temporarilyLocked", "failedLogins", "lastLoginAt"))
+    .writable()
+    .titled("User", "Users", "id", "displayName")
+    .columns("id", "displayName", "scopes", "locked", "lastLoginAt")
+    .filters("locked")
+    .scopes(adminScope, adminScope);
+
   m.singletonSet("Statistics", "Statistic")
     .keyed("tenantId")
     .property("tenantId", Edm.string_, "Tenant", false)

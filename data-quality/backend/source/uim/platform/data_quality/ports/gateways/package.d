@@ -7,4 +7,5 @@ module uim.platform.data_quality.ports.gateways;
 
 public {
   import uim.platform.data_quality.ports.gateways.clock;
+  import uim.platform.data_quality.ports.gateways.credentials;
 }

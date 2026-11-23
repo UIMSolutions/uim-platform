@@ -3,12 +3,15 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-/// Token verification for the HTTP adapters (REST, OData).
-///   XSUAA binding (VCAP_SERVICES, RS256)  → tokens required, scopes enforced
-///   requireAuthentication + jwtSecret     → HS256 tokens (tests, non-BTP setups)
-///   otherwise                             → open (local development); tenant
-///                                           from X-Tenant-Id, user from X-User-Id
-/// Scopes: "Read" for reads, "Manage" for writes and actions.
+/// Authentication of the HTTP adapters (REST, OData, /auth).
+///
+///   xsuaa  an XSUAA binding in VCAP_SERVICES: RS256 tokens of the approuter
+///          are required, scopes enforced; login happens in the approuter
+///   jwt    built-in login: POST /auth/login checks user name and password
+///          and issues HS256 tokens (jwtSecret); tokens are required, scopes
+///          enforced (also selected by requireAuthentication = true)
+///   open   no authentication (local development); tenant from X-Tenant-Id,
+///          user from X-User-Id
 module uim.platform.data_quality.infrastructure.security.authentication;
 
 import vibe.http.server : HTTPServerRequest;
@@ -19,14 +22,17 @@ mixin(ShowModule!());
 
 @safe:
 
-enum string readScope = "Read";
-enum string manageScope = "Manage";
-
 class SecuritySetup {
   ITokenVerifier verifier;
+  ITokenIssuer issuer; /// jwt mode only
   bool requireAuthentication;
-  string mode = "open"; /// open | hs256 | xsuaa
+  string mode = "open"; /// open | jwt | xsuaa
   string defaultTenant = "default";
+  bool generatedSecret; /// jwt mode without configured jwtSecret (tokens die with the process)
+
+  bool loginEnabled() const {
+    return mode == "jwt" && issuer !is null;
+  }
 
   /// Resolve the caller of an HTTP request.
   RequestContext resolve(HTTPServerRequest req, string channel) {
@@ -50,11 +56,18 @@ SecuritySetup configureSecurity(DqConfig config) @trusted {
     s.verifier = new Rs256TokenVerifier(uaa["verificationkey"].get!string);
     s.requireAuthentication = true;
     s.mode = "xsuaa";
-  } else if (config.requireAuthentication) {
-    enforce(config.jwtSecret.length > 0, "requireAuthentication needs an XSUAA binding or jwtSecret (HS256)");
-    s.verifier = new Hs256TokenVerifier(config.jwtSecret);
+  } else if (config.authMode == "jwt") {
+    auto secret = config.jwtSecret;
+    if (secret.length == 0) {
+      secret = randomToken(32);
+      s.generatedSecret = true;
+    }
+    enforce(secret.length >= 32, "jwtSecret must have at least 32 characters");
+    auto hs256 = new Hs256TokenVerifier(secret, 30);
+    s.verifier = hs256;
+    s.issuer = new Hs256TokenIssuer(hs256, config.tokenTtlSeconds, config.serviceName);
     s.requireAuthentication = true;
-    s.mode = "hs256";
+    s.mode = "jwt";
   }
   return s;
 }

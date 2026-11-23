@@ -22,6 +22,7 @@ struct MatchGroupId { mixin(IdTemplate); }
 struct ColumnProfileId { mixin(IdTemplate); }
 struct AddressId { mixin(IdTemplate); }
 struct SnapshotId { mixin(IdTemplate); }
+struct UserAccountId { mixin(IdTemplate); }
 
 /// A new identifier for server generated resources: 16 lowercase hex
 /// characters (short enough for URLs, logs and composite keys).

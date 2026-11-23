@@ -25,4 +25,6 @@ struct DqPorts {
   IManageCleansingJobs cleansingJobs;
   ICleanseAddresses addresses;
   IDqStatisticsService statistics;
+  IAuthenticate authentication;
+  IManageUsers users;
 }

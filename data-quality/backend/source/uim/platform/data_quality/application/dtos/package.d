@@ -12,4 +12,5 @@ public {
   import uim.platform.data_quality.application.dtos.rules;
   import uim.platform.data_quality.application.dtos.quality;
   import uim.platform.data_quality.application.dtos.cleansing;
+  import uim.platform.data_quality.application.dtos.access;
 }

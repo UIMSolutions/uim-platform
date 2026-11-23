@@ -225,6 +225,20 @@ ODataEngine dataQualityEngine(DqPorts ports, size_t maxPageSize = 0) {
     ports.scorecards.deleteSnapshot(tenantOf(ctx), ds, SnapshotId(id));
   };
 
+  // ── Users (Admin scope) ─────────────────────────────────────────────────
+  auto users = new DelegateEntitySetProvider;
+  users.onList = (const RequestContext ctx) {
+    auto now = nowStdTime();
+    return ports.users.listUsers(tenantOf(ctx)).map!(u => userRow(u, now)).array;
+  };
+  users.onGet = (const RequestContext ctx, string key) => userRow(ports.users.getUser(tenantOf(ctx), UserAccountId(key)), nowStdTime());
+  users.onCreate = (const RequestContext ctx, Json p) => userRow(ports.users.createUser(createUserRequest(ctx, p)), nowStdTime());
+  users.onUpdate = (const RequestContext ctx, string key, Json p) => userRow(
+    ports.users.updateUser(updateUserRequest(ctx, key, p)), nowStdTime());
+  users.onRemove = (const RequestContext ctx, string key) {
+    ports.users.deleteUser(tenantOf(ctx), UserAccountId(key), actorOf(ctx));
+  };
+
   // ── Statistics (singleton) ──────────────────────────────────────────────
   auto statistics = new DelegateEntitySetProvider;
   statistics.keyProperty = "tenantId";
@@ -240,6 +254,7 @@ ODataEngine dataQualityEngine(DqPorts ports, size_t maxPageSize = 0) {
     .provide("ColumnProfiles", new PortProvider(columns))
     .provide("Addresses", new PortProvider(addresses))
     .provide("QualitySnapshots", new PortProvider(snapshots))
+    .provide("Users", new PortProvider(users))
     .provide("Statistics", new PortProvider(statistics));
 
   // ── Actions ─────────────────────────────────────────────────────────────

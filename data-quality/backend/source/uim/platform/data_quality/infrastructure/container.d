@@ -23,6 +23,7 @@ class DqContainer {
   DqRepositories repositories;
   DqPorts ports;
   ODataEngine engine; /// drives OData, CLI and GUI
+  SecuritySetup security; /// authentication mode, verifier and token issuer
 
   /// storage / clock may be injected (tests); defaults follow the configuration.
   this(DqConfig config, StorageSetup storage = StorageSetup.init, IClock clock = null) {
@@ -36,6 +37,10 @@ class DqContainer {
 
     // driven adapters
     repositories = createRepositories(store);
+
+    // security (token verification and issuing, password hashing)
+    security = configureSecurity(config);
+    auto hasher = new Pbkdf2PasswordHasher(config.passwordIterations);
 
     // application
     auto p = config.policy;
@@ -59,6 +64,9 @@ class DqContainer {
     ports.cleansingJobs = wire!ManageCleansingJobsUseCase(cast(IManageCleansingRules) cleansingRules, validation);
     ports.addresses = wire!CleanseAddressesUseCase();
     ports.statistics = new DqStatisticsService(repositories, this.clock);
+    auto access = wire!AccessUseCase(cast(IPasswordHasher) hasher, security.issuer);
+    ports.authentication = access;
+    ports.users = access;
 
     // one engine for all management adapters
     engine = dataQualityEngine(ports, config.maxPageSize);

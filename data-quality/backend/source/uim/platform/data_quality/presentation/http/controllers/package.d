@@ -8,4 +8,5 @@ module uim.platform.data_quality.presentation.http.controllers;
 public {
   import uim.platform.data_quality.presentation.http.controllers.health;
   import uim.platform.data_quality.presentation.http.controllers.dq_api;
+  import uim.platform.data_quality.presentation.http.controllers.auth;
 }

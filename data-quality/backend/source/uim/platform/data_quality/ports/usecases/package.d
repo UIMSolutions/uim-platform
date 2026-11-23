@@ -10,4 +10,5 @@ public {
   import uim.platform.data_quality.ports.usecases.rules;
   import uim.platform.data_quality.ports.usecases.quality;
   import uim.platform.data_quality.ports.usecases.cleansing;
+  import uim.platform.data_quality.ports.usecases.access;
 }

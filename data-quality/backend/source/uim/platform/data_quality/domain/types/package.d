@@ -13,4 +13,5 @@ public {
   import uim.platform.data_quality.domain.types.fields;
   import uim.platform.data_quality.domain.types.scores;
   import uim.platform.data_quality.domain.types.values;
+  import uim.platform.data_quality.domain.types.scopes;
 }

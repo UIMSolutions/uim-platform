@@ -6,5 +6,8 @@
 module uim.platform.data_quality.infrastructure.security;
 
 public {
+  import uim.platform.data_quality.infrastructure.security.random;
+  import uim.platform.data_quality.infrastructure.security.passwords;
+  import uim.platform.data_quality.infrastructure.security.tokens;
   import uim.platform.data_quality.infrastructure.security.authentication;
 }

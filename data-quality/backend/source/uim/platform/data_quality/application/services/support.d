@@ -19,6 +19,9 @@ struct DqPolicy {
   size_t maxImportRecords = 50_000; /// records per import request
   size_t maxPairwiseRecords = 20_000; /// fuzzy/composite duplicate detection limit
   bool runJobsImmediately; /// run cleansing jobs on creation (no background worker)
+  int maxFailedLogins = 5; /// failed logins before a temporary lock
+  long lockSeconds = 900; /// duration of the temporary lock
+  size_t minPasswordLength = 10;
 }
 
 /// Return the entity or throw notFound.

@@ -18,7 +18,8 @@ enum DqErrorKind {
   invalid, /// malformed or incomplete input (400)
   notFound, /// a referenced resource does not exist (404)
   conflict, /// uniqueness conflict (409)
-  ruleViolation /// a business rule forbids the operation (422)
+  ruleViolation, /// a business rule forbids the operation (422)
+  unauthorized /// missing or wrong credentials (401)
 }
 
 class DataQualityException : Exception {
@@ -39,6 +40,10 @@ class DataQualityException : Exception {
 
   static DataQualityException conflict(string msg, string file = __FILE__, size_t line = __LINE__) pure nothrow {
     return new DataQualityException(DqErrorKind.conflict, msg, file, line);
+  }
+
+  static DataQualityException unauthorized(string msg, string file = __FILE__, size_t line = __LINE__) pure nothrow {
+    return new DataQualityException(DqErrorKind.unauthorized, msg, file, line);
   }
 
   static DataQualityException ruleViolation(string msg, string file = __FILE__, size_t line = __LINE__) pure nothrow {

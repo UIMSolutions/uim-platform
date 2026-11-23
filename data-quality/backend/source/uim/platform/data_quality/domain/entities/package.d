@@ -16,4 +16,5 @@ public {
   import uim.platform.data_quality.domain.entities.column_profile;
   import uim.platform.data_quality.domain.entities.address;
   import uim.platform.data_quality.domain.entities.quality_snapshot;
+  import uim.platform.data_quality.domain.entities.user_account;
 }

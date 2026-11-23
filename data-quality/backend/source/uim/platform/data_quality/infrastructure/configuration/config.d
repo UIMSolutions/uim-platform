@@ -36,8 +36,12 @@ struct DqConfig {
   string odataPath = "/odata/v4/data-quality";
   size_t maxPageSize = 200;
   size_t maxRequestBytes = 16 * 1024 * 1024;
-  bool requireAuthentication;
-  string jwtSecret; /// HS256 secret (non-BTP setups)
+  string authMode = "open"; /// open | jwt (built-in login); an XSUAA binding always wins
+  string jwtSecret; /// HS256 secret of the built-in login (>= 32 characters; "" = random per start)
+  long tokenTtlSeconds = 3600;
+  string adminUser = "admin"; /// created on first start in jwt mode
+  string adminPassword; /// "" = generated and logged once
+  uint passwordIterations = 120_000; /// PBKDF2 rounds
   string frontendDir = "../frontend";
   uint jobIntervalSeconds = 5; /// cleansing job worker; 0 = run jobs on creation
   string[] jobTenants = ["default"];
@@ -49,8 +53,9 @@ struct DqConfig {
   /// Effective configuration with secrets masked.
   Json toMaskedJson() @trusted {
     auto j = raw.clone;
-    if ("jwtSecret" in j && j["jwtSecret"].type == Json.Type.string && j["jwtSecret"].get!string.length)
-      j["jwtSecret"] = "***";
+    foreach (secret; ["jwtSecret", "adminPassword"])
+      if (secret in j && j[secret].type == Json.Type.string && j[secret].get!string.length)
+        j[secret] = "***";
     if ("services" in j)
       j["services"] = "*** (" ~ j["services"].length.to!string ~ " bound services)";
     return j;
@@ -72,8 +77,16 @@ Json defaultConfigJson() {
   j["odataPath"] = d.odataPath;
   j["maxPageSize"] = d.maxPageSize;
   j["maxRequestBytes"] = d.maxRequestBytes;
-  j["requireAuthentication"] = d.requireAuthentication;
+  j["authMode"] = d.authMode;
+  j["requireAuthentication"] = false;
   j["jwtSecret"] = "";
+  j["tokenTtlSeconds"] = d.tokenTtlSeconds;
+  j["adminUser"] = d.adminUser;
+  j["adminPassword"] = "";
+  j["passwordIterations"] = d.passwordIterations;
+  j["maxFailedLogins"] = d.policy.maxFailedLogins;
+  j["lockSeconds"] = d.policy.lockSeconds;
+  j["minPasswordLength"] = d.policy.minPasswordLength;
   j["frontendDir"] = d.frontendDir;
   j["jobIntervalSeconds"] = d.jobIntervalSeconds;
   auto tenants = Json.emptyArray;
@@ -122,8 +135,17 @@ DqConfig loadDqConfig(Json[string] overrides = null, string configDir = "config"
   c.odataPath = "/" ~ text(j, "odataPath", c.odataPath).strip("/");
   c.maxPageSize = cast(size_t) number(j, "maxPageSize", c.maxPageSize);
   c.maxRequestBytes = cast(size_t) number(j, "maxRequestBytes", c.maxRequestBytes);
-  c.requireAuthentication = flag(j, "requireAuthentication", c.requireAuthentication);
+  c.authMode = text(j, "authMode", c.authMode).strip.toLower;
+  if (flag(j, "requireAuthentication", false)) // compatibility: requireAuthentication = built-in JWT
+    c.authMode = "jwt";
   c.jwtSecret = text(j, "jwtSecret", "");
+  c.tokenTtlSeconds = number(j, "tokenTtlSeconds", c.tokenTtlSeconds);
+  c.adminUser = text(j, "adminUser", c.adminUser);
+  c.adminPassword = text(j, "adminPassword", "");
+  c.passwordIterations = cast(uint) number(j, "passwordIterations", c.passwordIterations);
+  c.policy.maxFailedLogins = cast(int) number(j, "maxFailedLogins", c.policy.maxFailedLogins);
+  c.policy.lockSeconds = number(j, "lockSeconds", c.policy.lockSeconds);
+  c.policy.minPasswordLength = cast(size_t) number(j, "minPasswordLength", c.policy.minPasswordLength);
   c.frontendDir = text(j, "frontendDir", c.frontendDir);
   c.jobIntervalSeconds = cast(uint) number(j, "jobIntervalSeconds", c.jobIntervalSeconds);
   if ("jobTenants" in j && j["jobTenants"].type == Json.Type.array) {
@@ -151,6 +173,12 @@ void validateConfig(const DqConfig c) {
   enforce(c.maxRequestBytes >= 1024, "maxRequestBytes must be at least 1024");
   enforce(c.policy.maxImportRecords > 0, "maxImportRecords must be > 0");
   enforce(c.jobIntervalSeconds <= 86_400, "jobIntervalSeconds must be between 0 and 86400");
+  enforce(["open", "jwt"].canFind(c.authMode), "authMode must be 'open' or 'jwt', not '" ~ c.authMode ~ "'");
+  enforce(c.jwtSecret.length == 0 || c.jwtSecret.length >= 32, "jwtSecret must have at least 32 characters");
+  enforce(c.tokenTtlSeconds >= 60 && c.tokenTtlSeconds <= 7 * 86_400, "tokenTtlSeconds must be between 60 and 604800");
+  enforce(c.passwordIterations >= 1000, "passwordIterations must be at least 1000");
+  enforce(isValidId(c.adminUser), "adminUser '" ~ c.adminUser ~ "' is not a valid user name");
+  enforce(c.policy.minPasswordLength >= 8, "minPasswordLength must be at least 8");
 }
 
 private string text(Json j, string key, string fallback) {
@@ -180,7 +208,10 @@ unittest {
   o["jobIntervalSeconds"] = 0;
   auto c = loadDqConfig(o, "/nonexistent");
   assert(c.port == 9001 && c.storage == "memory" && c.odataPath == "/odata/v4/dq");
-  assert(c.policy.runJobsImmediately && c.policy.autoValidate);
+  assert(c.policy.runJobsImmediately && c.policy.autoValidate && c.authMode == "open");
+  o["requireAuthentication"] = true;
+  assert(loadDqConfig(o, "/nonexistent").authMode == "jwt");
+  o.remove("requireAuthentication");
 
   o["storage"] = "tape";
   bool failed;

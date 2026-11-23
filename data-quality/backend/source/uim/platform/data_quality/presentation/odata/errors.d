@@ -22,6 +22,8 @@ EntitySetException toEntitySetException(DataQualityException e) pure nothrow {
     return new EntitySetException(409, "Conflict", e.msg);
   case DqErrorKind.ruleViolation:
     return new EntitySetException(422, "BusinessRuleViolation", e.msg);
+  case DqErrorKind.unauthorized:
+    return new EntitySetException(401, "Unauthorized", e.msg);
   }
 }
 

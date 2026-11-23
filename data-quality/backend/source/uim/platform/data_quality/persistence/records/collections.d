@@ -25,5 +25,6 @@ enum Collections : string {
   matchGroups = "dq.matchGroups",
   columnProfiles = "dq.columnProfiles",
   addresses = "dq.addresses",
-  snapshots = "dq.snapshots"
+  snapshots = "dq.snapshots",
+  users = "dq.users"
 }

@@ -95,6 +95,13 @@ ISnapshotRepository {
   }
 }
 
+class UserAccountRepository : TenantDocumentRepository!(UserAccount, UserAccountId, userToRecord, recordToUser),
+IUserAccountRepository {
+  this(IDocumentStore store) {
+    super(store, Collections.users);
+  }
+}
+
 /// All repositories over one document store.
 DqRepositories createRepositories(IDocumentStore store) {
   DqRepositories r;
@@ -108,5 +115,6 @@ DqRepositories createRepositories(IDocumentStore store) {
   r.columnProfiles = new ColumnProfileRepository(store);
   r.addresses = new AddressRepository(store);
   r.snapshots = new SnapshotRepository(store);
+  r.users = new UserAccountRepository(store);
   return r;
 }

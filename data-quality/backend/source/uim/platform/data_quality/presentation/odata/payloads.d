@@ -255,6 +255,34 @@ CleanseAddressRequest cleanseAddressRequest(const RequestContext ctx, Json p, st
   return r;
 }
 
+CreateUserRequest createUserRequest(const RequestContext ctx, Json p) {
+  CreateUserRequest r;
+  r.tenantId = tenantOf(ctx);
+  r.actor = actorOf(ctx);
+  r.id = textOf(p, "id");
+  r.displayName = textOf(p, "displayName");
+  r.password = textOf(p, "password");
+  r.scopes = textsOf(p, "scopes");
+  r.locked = boolOf(p, "locked");
+  return r;
+}
+
+UpdateUserRequest updateUserRequest(const RequestContext ctx, string key, Json p) {
+  UpdateUserRequest r;
+  r.tenantId = tenantOf(ctx);
+  r.actor = actorOf(ctx);
+  r.id = key;
+  if (has(p, "displayName"))
+    r.displayName = textOf(p, "displayName");
+  if (has(p, "password") && textOf(p, "password").length)
+    r.password = textOf(p, "password");
+  if (has(p, "scopes"))
+    r.scopes = textsOf(p, "scopes");
+  if (has(p, "locked"))
+    r.locked = boolOf(p, "locked");
+  return r;
+}
+
 DetectDuplicatesRequest detectRequest(const RequestContext ctx, Json p) {
   DetectDuplicatesRequest r;
   r.tenantId = tenantOf(ctx);
