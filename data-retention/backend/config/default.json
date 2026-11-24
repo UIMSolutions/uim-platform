@@ -1,0 +1,28 @@
+{
+  "serviceName": "uim-data-retention",
+  "serviceVersion": "2.0.0",
+  "host": "0.0.0.0",
+  "port": 8112,
+  "storage": "file",
+  "dataFile": "data/data-retention.json",
+  "defaultTenant": "default",
+  "apiPath": "/api/v1",
+  "odataPath": "/odata/v4/data-retention",
+  "maxPageSize": 200,
+  "maxRequestBytes": 4194304,
+  "authMode": "jwt",
+  "jwtSecret": "",
+  "tokenTtlSeconds": 3600,
+  "adminUser": "admin",
+  "adminPassword": "",
+  "passwordIterations": 120000,
+  "maxFailedLogins": 5,
+  "lockSeconds": 900,
+  "minPasswordLength": 10,
+  "frontendDir": "../frontend",
+  "workerIntervalSeconds": 5,
+  "endOfPurposeCheckSeconds": 0,
+  "workerTenants": [
+    "default"
+  ]
+}

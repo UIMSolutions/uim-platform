@@ -1,0 +1,89 @@
+_schema-version: "3.3"
+ID: uim-data-quality
+version: 2.0.0
+description: UIM Data Quality — D/vibe.d backend (REST, OData v4), SAP Fiori 3 / OpenUI5 UI and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: data-quality-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun --compiler=ldc2
+        - dub build --build=release --config=cli --compiler=ldc2
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-data-quality-platform-service build/uim-data-quality-cli dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-data-quality-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /health
+    properties:
+      DQ_HOST: 0.0.0.0
+      # The snapshot lives on the (ephemeral) container disk — single instance only.
+      DQ_STORAGE: file
+      DQ_DATA_FILE: data/data-quality.json
+      DQ_FRONTEND_DIR: ""
+      # authentication: the XSUAA binding below switches the service to xsuaa mode
+      DQ_AUTH_MODE: open
+    provides:
+      - name: data-quality-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: data-quality-xsuaa
+      - name: data-quality-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: data-quality-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: data-quality-xsuaa
+      - name: data-quality-srv-api
+        group: destinations
+        properties:
+          name: data-quality-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 120000
+
+resources:
+  - name: data-quality-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-data-quality-${space}
+
+  # Runtime overrides read from VCAP_SERVICES (credentials of the service named
+  # "data-quality-config"), e.g.:
+  #   cf update-user-provided-service data-quality-config -p '{"jobIntervalSeconds":10,"maxSnapshots":50}'
+  - name: data-quality-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: data-quality-config
+      config:
+        jobTenants: ["default"]
