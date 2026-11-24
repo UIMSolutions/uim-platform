@@ -1,0 +1,30 @@
+{
+	"value": [
+		{
+			"country": "DE",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "de01",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "UIM Manufaktur GmbH",
+			"active": true,
+			"region": "EMEA",
+			"description": "",
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"country": "US",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "us01",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "UIM Manufaktur Inc.",
+			"active": true,
+			"region": "Americas",
+			"description": "",
+			"tenantId": "default",
+			"updatedBy": "cli"
+		}
+	]
+}

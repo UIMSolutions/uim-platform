@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>createRequest}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colSubject}" required="true"/>
+      <ComboBox selectedKey="{view>/form/deletionRequest/dataSubjectId}"
+        items="{path: '/DataSubjects', parameters: {$orderby: 'externalId', $select: 'id,externalId,displayName'}, filters: {path: 'lifecycleStatus', operator: 'NE', value1: 'deleted'}, templateShareable: false}">
+        <core:Item key="{id}" text="{externalId} {displayName}"/>
+      </ComboBox>
+      <Label text="{i18n>colAction}"/>
+      <Select selectedKey="{view>/form/deletionRequest/action}" forceSelection="false">
+        <core:Item key="delete" text="{i18n>actDelete}"/>
+        <core:Item key="anonymize" text="{i18n>actAnonymize}"/>
+        <core:Item key="block" text="{i18n>actBlock}"/>
+      </Select>
+      <Label text="{i18n>colReason}"/>
+      <TextArea value="{view>/form/deletionRequest/reason}" rows="3" placeholder="GDPR Art. 17"/>
+    </form:SimpleForm>
+    <MessageStrip text="{i18n>requestHint}" type="Information" showIcon="true" class="sapUiSmallMargin"/>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

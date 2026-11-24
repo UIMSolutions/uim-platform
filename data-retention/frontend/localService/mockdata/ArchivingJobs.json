@@ -1,0 +1,52 @@
+{
+	"value": [
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "job-erp-destruct",
+			"logText": "",
+			"skipped": 0,
+			"log": [],
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"dryRun": false,
+			"referenceBefore": null,
+			"failed": 0,
+			"operation": "archiveAndDestruct",
+			"completedAt": null,
+			"selected": 0,
+			"startedAt": null,
+			"applicationGroupId": "erp",
+			"archived": 0,
+			"destroyed": 0,
+			"errorMessage": null,
+			"scheduledAt": "2026-11-25T00:00:00Z",
+			"tenantId": "default",
+			"status": "scheduled",
+			"updatedBy": "cli"
+		},
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "job-crm-dryrun",
+			"logText": "",
+			"skipped": 0,
+			"log": [],
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"dryRun": true,
+			"referenceBefore": null,
+			"failed": 0,
+			"operation": "destruct",
+			"completedAt": null,
+			"selected": 0,
+			"startedAt": null,
+			"applicationGroupId": "crm",
+			"archived": 0,
+			"destroyed": 0,
+			"errorMessage": null,
+			"scheduledAt": "2026-12-01T00:00:00Z",
+			"tenantId": "default",
+			"status": "scheduled",
+			"updatedBy": "cli"
+		}
+	]
+}

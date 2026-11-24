@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/legalEntity/edit} ? ${i18n>editLegalEntity} : ${i18n>createLegalEntity} }" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/legalEntity/id}" placeholder="de01" enabled="{= !%{view>/form/legalEntity/edit} }"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/legalEntity/name}"/>
+      <Label text="{i18n>colCountry}"/>
+      <Input value="{view>/form/legalEntity/country}" maxLength="2" placeholder="DE"/>
+      <Label text="{i18n>colRegion}"/>
+      <Input value="{view>/form/legalEntity/region}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/legalEntity/description}" rows="3"/>
+      <Label text="{i18n>colActive}"/>
+      <CheckBox selected="{view>/form/legalEntity/active}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

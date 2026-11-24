@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/applicationGroup/edit} ? ${i18n>editApplicationGroup} : ${i18n>createApplicationGroup} }" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/applicationGroup/id}" placeholder="erp" enabled="{= !%{view>/form/applicationGroup/edit} }"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/applicationGroup/name}"/>
+      <Label text="{i18n>colScope}"/>
+      <Select selectedKey="{view>/form/applicationGroup/scope}" forceSelection="false">
+        <core:Item key="global" text="{i18n>scopeGlobal}"/>
+        <core:Item key="regional" text="{i18n>scopeRegional}"/>
+        <core:Item key="local" text="{i18n>scopeLocal}"/>
+      </Select>
+      <Label text="{i18n>colApplications}"/>
+      <TextArea value="{view>/form/applicationGroup/applicationIds}" rows="3" placeholder="S4-SD&#10;S4-FI"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/applicationGroup/description}" rows="3"/>
+      <Label text="{i18n>colActive}"/>
+      <CheckBox selected="{view>/form/applicationGroup/active}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

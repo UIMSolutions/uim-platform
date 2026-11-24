@@ -2,12 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: data-retention
-  namespace: uim-platform
   labels:
     app: data-retention
     part-of: uim-platform
 spec:
+  # file storage is a single-node snapshot — keep one replica
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: data-retention
@@ -16,6 +18,9 @@ spec:
       labels:
         app: data-retention
     spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 999
       containers:
       - name: data-retention
         image: uim-platform/data-retention:latest
@@ -25,22 +30,48 @@ spec:
         envFrom:
         - configMapRef:
             name: data-retention-config
+        - secretRef:
+            name: data-retention-secret
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
-            path: /api/v1/health
-            port: 8112
-          initialDelaySeconds: 10
-          periodSeconds: 30
-        readinessProbe:
-          httpGet:
-            path: /api/v1/health
+            path: /health
             port: 8112
           initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8112
+          initialDelaySeconds: 3
           periodSeconds: 10
+          timeoutSeconds: 3
         resources:
           requests:
             memory: "64Mi"
             cpu: "100m"
           limits:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "384Mi"
+            cpu: "1000m"
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data-retention-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-retention-data
+  labels:
+    app: data-retention
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi

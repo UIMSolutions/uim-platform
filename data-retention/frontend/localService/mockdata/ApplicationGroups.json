@@ -1,0 +1,62 @@
+{
+	"value": [
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "erp",
+			"businessPurposeCount": 2,
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "ERP Sales & Finance",
+			"scope": "global",
+			"active": true,
+			"applicationsText": "S4-SD, S4-FI, S4-CO",
+			"dataSubjectCount": 6,
+			"description": "Sales orders, billing and accounting",
+			"applicationIds": [
+				"S4-SD",
+				"S4-FI",
+				"S4-CO"
+			],
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "hr",
+			"businessPurposeCount": 1,
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "Human Resources",
+			"scope": "regional",
+			"active": true,
+			"applicationsText": "SF-EC, PAYROLL-DE",
+			"dataSubjectCount": 3,
+			"description": "Employee central and payroll",
+			"applicationIds": [
+				"SF-EC",
+				"PAYROLL-DE"
+			],
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "crm",
+			"businessPurposeCount": 1,
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "Marketing & CRM",
+			"scope": "local",
+			"active": true,
+			"applicationsText": "C4C, MKT-CLOUD",
+			"dataSubjectCount": 3,
+			"description": "Campaigns, newsletters and leads",
+			"applicationIds": [
+				"C4C",
+				"MKT-CLOUD"
+			],
+			"tenantId": "default",
+			"updatedBy": "cli"
+		}
+	]
+}

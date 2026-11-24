@@ -1,0 +1,175 @@
+<mvc:View controllerName="uim.dataretention.controller.BusinessPurposeDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+  height="100%">
+  <f:DynamicPage id="detailPage" headerExpanded="true" showFooter="false">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:breadcrumbs>
+          <Breadcrumbs><Link text="{i18n>appTitle}" press=".onNavBack"/></Breadcrumbs>
+        </f:breadcrumbs>
+        <f:heading><Title text="{name}" level="H2"/></f:heading>
+        <f:expandedContent><Text text="{description}"/></f:expandedContent>
+        <f:snappedContent>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button text="{i18n>activate}" type="Emphasized" icon="sap-icon://play" press=".onPurposeAction"
+            visible="{= %{session>/canManage} &amp;&amp; %{status} !== 'active' }"><customData><core:CustomData key="action" value="ActivateBusinessPurpose"/></customData></Button>
+          <Button text="{i18n>deprecate}" icon="sap-icon://warning" press=".onPurposeAction"
+            visible="{= %{session>/canManage} &amp;&amp; %{status} === 'active' }"><customData><core:CustomData key="action" value="DeprecateBusinessPurpose"/></customData></Button>
+          <Button text="{i18n>deactivate}" icon="sap-icon://pause" press=".onPurposeAction"
+            visible="{= %{session>/canManage} &amp;&amp; %{status} !== 'inactive' }"><customData><core:CustomData key="action" value="DeactivateBusinessPurpose"/></customData></Button>
+          <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditPurpose" visible="{session>/canManage}"/>
+          <Button text="{i18n>simulate}" icon="sap-icon://simulate" press=".onSimulate"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox wrap="Wrap" alignItems="Start">
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colStatus}"/>
+            <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+              icon="{path: 'status', formatter: '.formatter.statusIcon'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colGroup}"/>
+            <Text text="{applicationGroupId}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colRole}"/>
+            <Text text="{dataSubjectRoleId}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colLegalEntity}"/>
+            <Text text="{= %{legalEntityId} || '–' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colGrounds}"/>
+            <ObjectNumber number="{completeLegalGrounds}" unit="/ {legalGroundCount} {i18n>withRules}"
+              state="{= %{completeLegalGrounds} > 0 ? 'Success' : 'Error' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colSubjects}"/>
+            <ObjectNumber number="{dataSubjectCount}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <VBox class="sapUiResponsiveContentPadding">
+        <MessageStrip text="{i18n>activationHint}" type="Warning" showIcon="true" class="sapUiSmallMarginBottom"
+          visible="{= %{completeLegalGrounds} === 0 }"/>
+
+        <Table id="groundsTable" mode="SingleSelectLeft" noDataText="{i18n>noGrounds}"
+          items="{path: '/LegalGrounds', parameters: {$orderby: 'name', $select: 'description,businessPurposeId'}, suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>legalGrounds}" level="H3"/>
+              <ToolbarSpacer/>
+              <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}"><customData><core:CustomData key="dialog" value="legalGround"/></customData></Button>
+              <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}"><customData><core:CustomData key="table" value="groundsTable"/><core:CustomData key="dialog" value="legalGround"/></customData></Button>
+              <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}"><customData><core:CustomData key="table" value="groundsTable"/></customData></Button>
+            </OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column><Text text="{i18n>colGround}"/></Column>
+            <Column><Text text="{i18n>colType}"/></Column>
+            <Column><Text text="{i18n>colResidence}"/></Column>
+            <Column><Text text="{i18n>colRetention}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colActionOnExpiry}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colActive}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <ObjectIdentifier title="{name}" text="{legalReference}"/>
+              <Text text="{path: 'type', formatter: '.formatter.enumText'}"/>
+              <ObjectStatus text="{= %{residence} || ${i18n>missing} }" state="{= %{residence} ? 'None' : 'Error' }"/>
+              <Text text="{= %{retention} || '–' }"/>
+              <Text text="{path: 'actionOnExpiry', formatter: '.formatter.enumText'}"/>
+              <Text text="{path: 'active', formatter: '.formatter.yesNo'}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <Table id="residenceTable" mode="SingleSelectLeft" noDataText="{i18n>noData}" class="sapUiMediumMarginTop"
+          items="{path: '/ResidenceRules', parameters: {$orderby: 'legalGroundId', $select: 'businessPurposeId,duration,periodUnit'}, suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>residenceRules}" level="H3"/>
+              <ToolbarSpacer/>
+              <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}"><customData><core:CustomData key="dialog" value="residenceRule"/></customData></Button>
+              <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}"><customData><core:CustomData key="table" value="residenceTable"/><core:CustomData key="dialog" value="residenceRule"/></customData></Button>
+              <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}"><customData><core:CustomData key="table" value="residenceTable"/></customData></Button>
+            </OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column><Text text="{i18n>colGround}"/></Column>
+            <Column><Text text="{i18n>colPeriod}"/></Column>
+            <Column><Text text="{i18n>colActive}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <Text text="{legalGroundId}"/>
+              <Text text="{periodText}"/>
+              <Text text="{path: 'active', formatter: '.formatter.yesNo'}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <Table id="retentionTable" mode="SingleSelectLeft" noDataText="{i18n>noData}" class="sapUiMediumMarginTop"
+          items="{path: '/RetentionRules', parameters: {$orderby: 'legalGroundId', $select: 'businessPurposeId,duration,periodUnit'}, suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>retentionRules}" level="H3"/>
+              <ToolbarSpacer/>
+              <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}"><customData><core:CustomData key="dialog" value="retentionRule"/></customData></Button>
+              <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}"><customData><core:CustomData key="table" value="retentionTable"/><core:CustomData key="dialog" value="retentionRule"/></customData></Button>
+              <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}"><customData><core:CustomData key="table" value="retentionTable"/></customData></Button>
+            </OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column><Text text="{i18n>colGround}"/></Column>
+            <Column><Text text="{i18n>colPeriod}"/></Column>
+            <Column><Text text="{i18n>colActionOnExpiry}"/></Column>
+            <Column><Text text="{i18n>colActive}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <Text text="{legalGroundId}"/>
+              <Text text="{periodText}"/>
+              <Text text="{path: 'actionOnExpiry', formatter: '.formatter.enumText'}"/>
+              <Text text="{path: 'active', formatter: '.formatter.yesNo'}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <Table id="detailSubjectsTable" growing="true" growingThreshold="25" noDataText="{i18n>noSubjects}" class="sapUiMediumMarginTop"
+          items="{path: '/DataSubjects', parameters: {$orderby: 'externalId', $select: 'businessPurposeId,retentionReason'}, suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar><Title text="{i18n>tabSubjects}" level="H3"/></OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column><Text text="{i18n>colSubject}"/></Column>
+            <Column><Text text="{i18n>colLifecycle}"/></Column>
+            <Column><Text text="{i18n>colPhase}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colEndOfPurpose}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colEndOfRetention}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <ObjectIdentifier title="{externalId}" text="{displayName}"/>
+              <ObjectStatus text="{path: 'lifecycleStatus', formatter: '.formatter.enumText'}" state="{path: 'lifecycleStatus', formatter: '.formatter.lifecycleState'}"/>
+              <ObjectStatus text="{path: 'phase', formatter: '.formatter.enumText'}" state="{path: 'phase', formatter: '.formatter.phaseState'}" tooltip="{retentionReason}"/>
+              <Text text="{path: 'endOfPurpose', type: 'sap.ui.model.odata.type.Date', formatOptions: {style: 'medium'}}"/>
+              <Text text="{path: 'endOfRetention', type: 'sap.ui.model.odata.type.Date', formatOptions: {style: 'medium'}}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </VBox>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

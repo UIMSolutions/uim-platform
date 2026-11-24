@@ -1,0 +1,64 @@
+{
+	"value": [
+		{
+			"periodUnit": "years",
+			"periodText": "3 years",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "sales-contract-retention",
+			"legalGroundId": "sales-contract",
+			"businessPurposeId": "sales",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 3,
+			"tenantId": "default",
+			"actionOnExpiry": "delete",
+			"updatedBy": "cli"
+		},
+		{
+			"periodUnit": "years",
+			"periodText": "10 years",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "sales-tax-retention",
+			"legalGroundId": "sales-tax",
+			"businessPurposeId": "sales",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 10,
+			"tenantId": "default",
+			"actionOnExpiry": "anonymize",
+			"updatedBy": "cli"
+		},
+		{
+			"periodUnit": "years",
+			"periodText": "3 years",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "emp-contract-retention",
+			"legalGroundId": "emp-contract",
+			"businessPurposeId": "employment",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 3,
+			"tenantId": "default",
+			"actionOnExpiry": "delete",
+			"updatedBy": "cli"
+		},
+		{
+			"periodUnit": "years",
+			"periodText": "6 years",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "emp-payroll-retention",
+			"legalGroundId": "emp-payroll",
+			"businessPurposeId": "employment",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 6,
+			"tenantId": "default",
+			"actionOnExpiry": "delete",
+			"updatedBy": "cli"
+		}
+	]
+}

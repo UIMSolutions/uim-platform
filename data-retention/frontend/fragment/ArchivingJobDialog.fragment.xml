@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>newJob}" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colGroup}" required="true"/>
+      <ComboBox selectedKey="{view>/form/archivingJob/applicationGroupId}" showClearIcon="true"
+        items="{path: '/ApplicationGroups', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colOperation}"/>
+      <Select selectedKey="{view>/form/archivingJob/operation}" forceSelection="false">
+        <core:Item key="archive" text="{i18n>opArchive}"/>
+        <core:Item key="destruct" text="{i18n>opDestruct}"/>
+        <core:Item key="archiveAndDestruct" text="{i18n>opArchiveAndDestruct}"/>
+      </Select>
+      <Label text="{i18n>dryRun}"/>
+      <CheckBox selected="{view>/form/archivingJob/dryRun}"/>
+      <Label text="{i18n>colReferenceBefore}"/>
+      <DatePicker value="{view>/form/archivingJob/referenceBefore}" valueFormat="yyyy-MM-dd" displayFormat="medium"/>
+      <Label text="{i18n>colScheduledAt}"/>
+      <DatePicker value="{view>/form/archivingJob/scheduledAt}" valueFormat="yyyy-MM-dd" displayFormat="medium"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

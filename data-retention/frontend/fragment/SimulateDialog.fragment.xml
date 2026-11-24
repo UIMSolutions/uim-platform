@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>simulate}" contentWidth="36rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colPurpose}" required="true"/>
+      <ComboBox selectedKey="{view>/form/simulate/businessPurposeId}" showClearIcon="true"
+        items="{path: '/BusinessPurposes', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colGround}"/>
+      <ComboBox selectedKey="{view>/form/simulate/legalGroundId}" showClearIcon="true" placeholder="{i18n>allGrounds}"
+        items="{path: '/LegalGrounds', parameters: {$orderby: 'name', $select: 'id,name,businessPurposeId'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({businessPurposeId})"/>
+      </ComboBox>
+      <Label text="{i18n>colReferenceDate}" required="true"/>
+      <DatePicker value="{view>/form/simulate/referenceDate}" valueFormat="yyyy-MM-dd" displayFormat="medium"/>
+      <core:Title text="{i18n>result}"/>
+      <Label text="{i18n>colPhase}"/>
+      <ObjectStatus text="{path: 'view>/form/simulate/result/phase', formatter: '.formatter.enumText'}" state="{path: 'view>/form/simulate/result/phase', formatter: '.formatter.phaseState'}"/>
+      <Label text="{i18n>colEndOfPurpose}"/>
+      <Text text="{view>/form/simulate/result/endOfPurpose}"/>
+      <Label text="{i18n>colEndOfRetention}"/>
+      <Text text="{view>/form/simulate/result/endOfRetention}"/>
+      <Label text="{i18n>colActionOnExpiry}"/>
+      <Text text="{path: 'view>/form/simulate/result/actionOnExpiry', formatter: '.formatter.enumText'}"/>
+      <Label text="{i18n>colEvaluation}"/>
+      <Text text="{view>/form/simulate/result/retentionReason}" wrapping="true"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>simulate}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>close}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

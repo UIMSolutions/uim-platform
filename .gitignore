@@ -217,3 +217,7 @@ agentry/backend/build/libuim-agentry-platform-service.a
 agentry/backend/build/uim-agentry-cli
 agentry/backend/build/uim-agentry-gui
 agentry/backend/build/uim-agentry-platform-service
+service/build/libuim-platform-service.a
+data-quality/backend/build/data-quality-test-defaultTest
+data-quality/backend/build/uim-data-quality-platform-service
+service/build/libuim-platform-service.a

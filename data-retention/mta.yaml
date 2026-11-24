@@ -1,0 +1,89 @@
+_schema-version: "3.3"
+ID: uim-data-retention
+version: 2.0.0
+description: UIM Data Retention — D/vibe.d backend (REST, OData v4), SAP Fiori 3 / OpenUI5 UI and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: data-retention-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun --compiler=ldc2
+        - dub build --build=release --config=cli --compiler=ldc2
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-data-retention-platform-service build/uim-data-retention-cli dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-data-retention-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /health
+    properties:
+      DR_HOST: 0.0.0.0
+      # The snapshot lives on the (ephemeral) container disk — single instance only.
+      DR_STORAGE: file
+      DR_DATA_FILE: data/data-retention.json
+      DR_FRONTEND_DIR: ""
+      # authentication: the XSUAA binding below switches the service to xsuaa mode
+      DR_AUTH_MODE: open
+    provides:
+      - name: data-retention-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: data-retention-xsuaa
+      - name: data-retention-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: data-retention-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: data-retention-xsuaa
+      - name: data-retention-srv-api
+        group: destinations
+        properties:
+          name: data-retention-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 120000
+
+resources:
+  - name: data-retention-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-data-retention-${space}
+
+  # Runtime overrides read from VCAP_SERVICES (credentials of the service named
+  # "data-retention-config"), e.g.:
+  #   cf update-user-provided-service data-retention-config -p '{"workerIntervalSeconds":10,"endOfPurposeCheckSeconds":86400}'
+  - name: data-retention-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: data-retention-config
+      config:
+        workerTenants: ["default"]

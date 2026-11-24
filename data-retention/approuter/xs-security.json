@@ -1,0 +1,21 @@
+{
+  "xsappname": "uim-data-retention",
+  "tenant-mode": "dedicated",
+  "description": "UIM Data Retention — residence and retention rules, blocking, archiving and destruction of personal data",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read master data, business purposes, rules, data subjects, deletion requests and archiving jobs; simulate retention" },
+    { "name": "$XSAPPNAME.Manage", "description": "Maintain all of it, check the end of purpose, process deletion requests, run archiving and destruction jobs" },
+    { "name": "$XSAPPNAME.Admin", "description": "Manage the user accounts of the built-in login (not used with XSUAA)" }
+  ],
+  "role-templates": [
+    { "name": "Auditor", "description": "Read only (data protection audit)", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "DataProtectionOfficer", "description": "Maintain retention and process erasure", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Manage"] },
+    { "name": "Administrator", "description": "Everything", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Manage", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "DataRetentionAuditor", "role-template-references": ["$XSAPPNAME.Auditor"] },
+    { "name": "DataRetentionOfficer", "role-template-references": ["$XSAPPNAME.DataProtectionOfficer"] },
+    { "name": "DataRetentionAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

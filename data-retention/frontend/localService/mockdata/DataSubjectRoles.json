@@ -1,0 +1,48 @@
+{
+	"value": [
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "customer",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "Customer",
+			"active": true,
+			"description": "Buyers of goods and services",
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "employee",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "Employee",
+			"active": true,
+			"description": "Current and former employees",
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "contact",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "Marketing Contact",
+			"active": true,
+			"description": "Newsletter subscribers and leads",
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "vendor",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"name": "Vendor Contact",
+			"active": true,
+			"description": "Contact persons of suppliers",
+			"tenantId": "default",
+			"updatedBy": "cli"
+		}
+	]
+}

@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/dataSubject/edit} ? ${i18n>editSubject} : ${i18n>createSubject} }" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/dataSubject/id}" placeholder="ds-1001" enabled="{= !%{view>/form/dataSubject/edit} }"/>
+      <Label text="{i18n>colExternalId}" required="true"/>
+      <Input value="{view>/form/dataSubject/externalId}"/>
+      <Label text="{i18n>colName}"/>
+      <Input value="{view>/form/dataSubject/displayName}"/>
+      <Label text="{i18n>colPurpose}" required="true"/>
+      <ComboBox selectedKey="{view>/form/dataSubject/businessPurposeId}" showClearIcon="true"
+        items="{path: '/BusinessPurposes', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colGround}"/>
+      <ComboBox selectedKey="{view>/form/dataSubject/legalGroundId}" showClearIcon="true" placeholder="{i18n>allGrounds}"
+        items="{path: '/LegalGrounds', parameters: {$orderby: 'name', $select: 'id,name,businessPurposeId'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({businessPurposeId})"/>
+      </ComboBox>
+      <Label text="{i18n>colReferenceDate}"/>
+      <DatePicker value="{view>/form/dataSubject/referenceDate}" valueFormat="yyyy-MM-dd" displayFormat="medium"/>
+      <Label text="{i18n>colGroup}"/>
+      <ComboBox selectedKey="{view>/form/dataSubject/applicationGroupId}" showClearIcon="true" placeholder="{i18n>fromPurpose}"
+        items="{path: '/ApplicationGroups', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colLegalEntity}"/>
+      <ComboBox selectedKey="{view>/form/dataSubject/legalEntityId}" showClearIcon="true" placeholder="{i18n>fromPurpose}"
+        items="{path: '/LegalEntities', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+    </form:SimpleForm>
+    <MessageStrip text="{i18n>referenceDateHint}" type="Information" showIcon="true" class="sapUiSmallMargin"/>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

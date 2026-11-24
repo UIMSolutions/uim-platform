@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.dataretention" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="ApplicationGroup">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="scope" Type="Edm.String"/>
+        <Property Name="applicationIds" Type="Collection(Edm.String)"/>
+        <Property Name="applicationsText" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="businessPurposeCount" Type="Edm.Int32"/>
+        <Property Name="dataSubjectCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="LegalEntity">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="country" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DataSubjectRole">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="BusinessPurpose">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="applicationGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="dataSubjectRoleId" Type="Edm.String" Nullable="false"/>
+        <Property Name="legalEntityId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="activatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="legalGroundCount" Type="Edm.Int32"/>
+        <Property Name="completeLegalGrounds" Type="Edm.Int32"/>
+        <Property Name="dataSubjectCount" Type="Edm.Int32"/>
+        <Property Name="rulesText" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="LegalGround">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="businessPurposeId" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="legalReference" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="residenceRuleId" Type="Edm.String"/>
+        <Property Name="residence" Type="Edm.String"/>
+        <Property Name="retentionRuleId" Type="Edm.String"/>
+        <Property Name="retention" Type="Edm.String"/>
+        <Property Name="actionOnExpiry" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ResidenceRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="businessPurposeId" Type="Edm.String"/>
+        <Property Name="legalGroundId" Type="Edm.String" Nullable="false"/>
+        <Property Name="duration" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="periodUnit" Type="Edm.String"/>
+        <Property Name="periodText" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="RetentionRule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="businessPurposeId" Type="Edm.String"/>
+        <Property Name="legalGroundId" Type="Edm.String" Nullable="false"/>
+        <Property Name="duration" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="periodUnit" Type="Edm.String"/>
+        <Property Name="periodText" Type="Edm.String"/>
+        <Property Name="actionOnExpiry" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DataSubject">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="externalId" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="applicationGroupId" Type="Edm.String"/>
+        <Property Name="dataSubjectRoleId" Type="Edm.String"/>
+        <Property Name="businessPurposeId" Type="Edm.String" Nullable="false"/>
+        <Property Name="legalGroundId" Type="Edm.String"/>
+        <Property Name="legalEntityId" Type="Edm.String"/>
+        <Property Name="referenceDate" Type="Edm.Date"/>
+        <Property Name="lifecycleStatus" Type="Edm.String"/>
+        <Property Name="legalHold" Type="Edm.Boolean"/>
+        <Property Name="legalHoldReason" Type="Edm.String"/>
+        <Property Name="blockedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="archivedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="markedForDeletionAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="deletedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="deletionMethod" Type="Edm.String"/>
+        <Property Name="phase" Type="Edm.String"/>
+        <Property Name="governingLegalGroundId" Type="Edm.String"/>
+        <Property Name="governingLegalGroundName" Type="Edm.String"/>
+        <Property Name="residence" Type="Edm.String"/>
+        <Property Name="retention" Type="Edm.String"/>
+        <Property Name="endOfPurpose" Type="Edm.Date"/>
+        <Property Name="endOfRetention" Type="Edm.Date"/>
+        <Property Name="actionOnExpiry" Type="Edm.String"/>
+        <Property Name="daysToEndOfRetention" Type="Edm.Int32"/>
+        <Property Name="dueForBlocking" Type="Edm.Boolean"/>
+        <Property Name="dueForDestruction" Type="Edm.Boolean"/>
+        <Property Name="retentionReason" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DeletionRequest">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="dataSubjectId" Type="Edm.String" Nullable="false"/>
+        <Property Name="applicationGroupId" Type="Edm.String"/>
+        <Property Name="action" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="reason" Type="Edm.String"/>
+        <Property Name="processedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="resultMessage" Type="Edm.String"/>
+        <Property Name="earliestDeletion" Type="Edm.Date"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ArchivingJob">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="applicationGroupId" Type="Edm.String" Nullable="false"/>
+        <Property Name="operation" Type="Edm.String"/>
+        <Property Name="dryRun" Type="Edm.Boolean"/>
+        <Property Name="referenceBefore" Type="Edm.Date"/>
+        <Property Name="scheduledAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="selected" Type="Edm.Int32"/>
+        <Property Name="archived" Type="Edm.Int32"/>
+        <Property Name="destroyed" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="failed" Type="Edm.Int32"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+        <Property Name="log" Type="Collection(Edm.String)"/>
+        <Property Name="logText" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="temporarilyLocked" Type="Edm.Boolean"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="applicationGroups" Type="Edm.Int32"/>
+        <Property Name="legalEntities" Type="Edm.Int32"/>
+        <Property Name="dataSubjectRoles" Type="Edm.Int32"/>
+        <Property Name="businessPurposes" Type="Edm.Int32"/>
+        <Property Name="activeBusinessPurposes" Type="Edm.Int32"/>
+        <Property Name="legalGrounds" Type="Edm.Int32"/>
+        <Property Name="residenceRules" Type="Edm.Int32"/>
+        <Property Name="retentionRules" Type="Edm.Int32"/>
+        <Property Name="dataSubjects" Type="Edm.Int32"/>
+        <Property Name="activeSubjects" Type="Edm.Int32"/>
+        <Property Name="blockedSubjects" Type="Edm.Int32"/>
+        <Property Name="archivedSubjects" Type="Edm.Int32"/>
+        <Property Name="markedForDeletion" Type="Edm.Int32"/>
+        <Property Name="deletedSubjects" Type="Edm.Int32"/>
+        <Property Name="legalHolds" Type="Edm.Int32"/>
+        <Property Name="dueForBlocking" Type="Edm.Int32"/>
+        <Property Name="dueForDestruction" Type="Edm.Int32"/>
+        <Property Name="noRuleSubjects" Type="Edm.Int32"/>
+        <Property Name="pendingRequests" Type="Edm.Int32"/>
+        <Property Name="rejectedRequests" Type="Edm.Int32"/>
+        <Property Name="scheduledJobs" Type="Edm.Int32"/>
+        <Property Name="failedJobs" Type="Edm.Int32"/>
+        <Property Name="nextEndOfRetention" Type="Edm.Date"/>
+        <Property Name="computedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </EntityType>
+      <ComplexType Name="EndOfPurposeCheckResult">
+        <Property Name="applicationGroupId" Type="Edm.String"/>
+        <Property Name="simulated" Type="Edm.Boolean"/>
+        <Property Name="checked" Type="Edm.Int32"/>
+        <Property Name="noRule" Type="Edm.Int32"/>
+        <Property Name="withinResidence" Type="Edm.Int32"/>
+        <Property Name="withinRetention" Type="Edm.Int32"/>
+        <Property Name="endOfRetention" Type="Edm.Int32"/>
+        <Property Name="alreadyDeleted" Type="Edm.Int32"/>
+        <Property Name="blocked" Type="Edm.Int32"/>
+        <Property Name="markedForDeletion" Type="Edm.Int32"/>
+        <Property Name="legalHolds" Type="Edm.Int32"/>
+        <Property Name="blockedSubjects" Type="Edm.String"/>
+        <Property Name="markedSubjects" Type="Edm.String"/>
+        <Property Name="checkedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+      </ComplexType>
+      <ComplexType Name="RetentionSimulation">
+        <Property Name="businessPurposeId" Type="Edm.String"/>
+        <Property Name="referenceDate" Type="Edm.Date"/>
+        <Property Name="phase" Type="Edm.String"/>
+        <Property Name="governingLegalGroundId" Type="Edm.String"/>
+        <Property Name="governingLegalGroundName" Type="Edm.String"/>
+        <Property Name="residence" Type="Edm.String"/>
+        <Property Name="retention" Type="Edm.String"/>
+        <Property Name="endOfPurpose" Type="Edm.Date"/>
+        <Property Name="endOfRetention" Type="Edm.Date"/>
+        <Property Name="actionOnExpiry" Type="Edm.String"/>
+        <Property Name="retentionReason" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="applicationGroups" Type="Edm.Int32"/>
+        <Property Name="legalEntities" Type="Edm.Int32"/>
+        <Property Name="dataSubjectRoles" Type="Edm.Int32"/>
+        <Property Name="businessPurposes" Type="Edm.Int32"/>
+        <Property Name="legalGrounds" Type="Edm.Int32"/>
+        <Property Name="residenceRules" Type="Edm.Int32"/>
+        <Property Name="retentionRules" Type="Edm.Int32"/>
+        <Property Name="dataSubjects" Type="Edm.Int32"/>
+        <Property Name="deletionRequests" Type="Edm.Int32"/>
+        <Property Name="archivingJobs" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="RunSummary">
+        <Property Name="started" Type="Edm.Int32"/>
+        <Property Name="completed" Type="Edm.Int32"/>
+        <Property Name="rejected" Type="Edm.Int32"/>
+        <Property Name="failed" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="ActivateBusinessPurpose" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataretention.BusinessPurpose"/>
+      </Action>
+      <Action Name="DeactivateBusinessPurpose" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataretention.BusinessPurpose"/>
+      </Action>
+      <Action Name="DeprecateBusinessPurpose" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataretention.BusinessPurpose"/>
+      </Action>
+      <Action Name="BlockDataSubject" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataretention.DataSubject"/>
+      </Action>
+      <Action Name="SetLegalHold" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="legalHold" Type="Edm.Boolean" Nullable="false"/>
+        <Parameter Name="reason" Type="Edm.String"/>
+        <ReturnType Type="uim.dataretention.DataSubject"/>
+      </Action>
+      <Action Name="CheckEndOfPurpose" IsBound="false">
+        <Parameter Name="applicationGroupId" Type="Edm.String"/>
+        <Parameter Name="simulate" Type="Edm.Boolean"/>
+        <ReturnType Type="uim.dataretention.EndOfPurposeCheckResult"/>
+      </Action>
+      <Action Name="SimulateRetention" IsBound="false">
+        <Parameter Name="businessPurposeId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="referenceDate" Type="Edm.Date" Nullable="false"/>
+        <Parameter Name="legalGroundId" Type="Edm.String"/>
+        <ReturnType Type="uim.dataretention.RetentionSimulation"/>
+      </Action>
+      <Action Name="ProcessDeletionRequest" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataretention.DeletionRequest"/>
+      </Action>
+      <Action Name="CancelDeletionRequest" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataretention.DeletionRequest"/>
+      </Action>
+      <Action Name="ProcessPendingRequests" IsBound="false">
+        <ReturnType Type="uim.dataretention.RunSummary"/>
+      </Action>
+      <Action Name="RunArchivingJob" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataretention.ArchivingJob"/>
+      </Action>
+      <Action Name="CancelArchivingJob" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.dataretention.ArchivingJob"/>
+      </Action>
+      <Action Name="RunDueJobs" IsBound="false">
+        <ReturnType Type="uim.dataretention.RunSummary"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.dataretention.SeedResult"/>
+      </Action>
+      <EntityContainer Name="DataRetentionService">
+        <EntitySet Name="ApplicationGroups" EntityType="uim.dataretention.ApplicationGroup"/>
+        <EntitySet Name="LegalEntities" EntityType="uim.dataretention.LegalEntity"/>
+        <EntitySet Name="DataSubjectRoles" EntityType="uim.dataretention.DataSubjectRole"/>
+        <EntitySet Name="BusinessPurposes" EntityType="uim.dataretention.BusinessPurpose"/>
+        <EntitySet Name="LegalGrounds" EntityType="uim.dataretention.LegalGround"/>
+        <EntitySet Name="ResidenceRules" EntityType="uim.dataretention.ResidenceRule"/>
+        <EntitySet Name="RetentionRules" EntityType="uim.dataretention.RetentionRule"/>
+        <EntitySet Name="DataSubjects" EntityType="uim.dataretention.DataSubject"/>
+        <EntitySet Name="DeletionRequests" EntityType="uim.dataretention.DeletionRequest"/>
+        <EntitySet Name="ArchivingJobs" EntityType="uim.dataretention.ArchivingJob"/>
+        <EntitySet Name="Users" EntityType="uim.dataretention.User"/>
+        <Singleton Name="Statistics" Type="uim.dataretention.Statistic"/>
+        <ActionImport Name="ActivateBusinessPurpose" Action="uim.dataretention.ActivateBusinessPurpose"/>
+        <ActionImport Name="DeactivateBusinessPurpose" Action="uim.dataretention.DeactivateBusinessPurpose"/>
+        <ActionImport Name="DeprecateBusinessPurpose" Action="uim.dataretention.DeprecateBusinessPurpose"/>
+        <ActionImport Name="BlockDataSubject" Action="uim.dataretention.BlockDataSubject"/>
+        <ActionImport Name="SetLegalHold" Action="uim.dataretention.SetLegalHold"/>
+        <ActionImport Name="CheckEndOfPurpose" Action="uim.dataretention.CheckEndOfPurpose"/>
+        <ActionImport Name="SimulateRetention" Action="uim.dataretention.SimulateRetention"/>
+        <ActionImport Name="ProcessDeletionRequest" Action="uim.dataretention.ProcessDeletionRequest"/>
+        <ActionImport Name="CancelDeletionRequest" Action="uim.dataretention.CancelDeletionRequest"/>
+        <ActionImport Name="ProcessPendingRequests" Action="uim.dataretention.ProcessPendingRequests"/>
+        <ActionImport Name="RunArchivingJob" Action="uim.dataretention.RunArchivingJob"/>
+        <ActionImport Name="CancelArchivingJob" Action="uim.dataretention.CancelArchivingJob"/>
+        <ActionImport Name="RunDueJobs" Action="uim.dataretention.RunDueJobs"/>
+        <ActionImport Name="SeedDemoData" Action="uim.dataretention.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/applicationGroupId"><Annotation Term="Common.Label" String="Application Group"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/simulated"><Annotation Term="Common.Label" String="Simulated"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/checked"><Annotation Term="Common.Label" String="Checked"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/noRule"><Annotation Term="Common.Label" String="Without Rule"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/withinResidence"><Annotation Term="Common.Label" String="Within Residence"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/withinRetention"><Annotation Term="Common.Label" String="Within Retention"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/endOfRetention"><Annotation Term="Common.Label" String="End of Retention"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/alreadyDeleted"><Annotation Term="Common.Label" String="Already Destroyed"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/blocked"><Annotation Term="Common.Label" String="Blocked"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/markedForDeletion"><Annotation Term="Common.Label" String="Marked for Deletion"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/legalHolds"><Annotation Term="Common.Label" String="Legal Holds"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/blockedSubjects"><Annotation Term="Common.Label" String="Blocked Data Subjects"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/markedSubjects"><Annotation Term="Common.Label" String="Marked Data Subjects"/></Annotations>
+      <Annotations Target="uim.dataretention.EndOfPurposeCheckResult/checkedAt"><Annotation Term="Common.Label" String="Checked At"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/businessPurposeId"><Annotation Term="Common.Label" String="Business Purpose"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/referenceDate"><Annotation Term="Common.Label" String="Reference Date"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/phase"><Annotation Term="Common.Label" String="Retention Phase"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/governingLegalGroundId"><Annotation Term="Common.Label" String="Governing Legal Ground"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/governingLegalGroundName"><Annotation Term="Common.Label" String="Governing Legal Ground Name"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/residence"><Annotation Term="Common.Label" String="Residence"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/retention"><Annotation Term="Common.Label" String="Retention"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/endOfPurpose"><Annotation Term="Common.Label" String="End of Purpose"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/endOfRetention"><Annotation Term="Common.Label" String="End of Retention"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/actionOnExpiry"><Annotation Term="Common.Label" String="Action on Expiry"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionSimulation/retentionReason"><Annotation Term="Common.Label" String="Evaluation"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/applicationGroups"><Annotation Term="Common.Label" String="Application Groups"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/legalEntities"><Annotation Term="Common.Label" String="Legal Entities"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/dataSubjectRoles"><Annotation Term="Common.Label" String="Data Subject Roles"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/businessPurposes"><Annotation Term="Common.Label" String="Business Purposes"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/legalGrounds"><Annotation Term="Common.Label" String="Legal Grounds"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/residenceRules"><Annotation Term="Common.Label" String="Residence Rules"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/retentionRules"><Annotation Term="Common.Label" String="Retention Rules"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/dataSubjects"><Annotation Term="Common.Label" String="Data Subjects"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/deletionRequests"><Annotation Term="Common.Label" String="Deletion Requests"/></Annotations>
+      <Annotations Target="uim.dataretention.SeedResult/archivingJobs"><Annotation Term="Common.Label" String="Archiving Jobs"/></Annotations>
+      <Annotations Target="uim.dataretention.RunSummary/started"><Annotation Term="Common.Label" String="Started"/></Annotations>
+      <Annotations Target="uim.dataretention.RunSummary/completed"><Annotation Term="Common.Label" String="Completed"/></Annotations>
+      <Annotations Target="uim.dataretention.RunSummary/rejected"><Annotation Term="Common.Label" String="Rejected"/></Annotations>
+      <Annotations Target="uim.dataretention.RunSummary/failed"><Annotation Term="Common.Label" String="Failed"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/id"><Annotation Term="Common.Label" String="Application Group"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/scope"><Annotation Term="Common.Label" String="Scope"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/applicationIds"><Annotation Term="Common.Label" String="Applications"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/applicationsText"><Annotation Term="Common.Label" String="Applications"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/businessPurposeCount"><Annotation Term="Common.Label" String="Business Purposes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/dataSubjectCount"><Annotation Term="Common.Label" String="Data Subjects"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ApplicationGroup">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Application Group"/><PropertyValue Property="TypeNamePlural" String="Application Groups"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scope"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationsText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="active"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dataSubjectCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>scope</PropertyPath><PropertyPath>active</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/ApplicationGroups">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/id"><Annotation Term="Common.Label" String="Legal Entity"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/country"><Annotation Term="Common.Label" String="Country"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalEntity">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Legal Entity"/><PropertyValue Property="TypeNamePlural" String="Legal Entities"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="country"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="country"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="region"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="active"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>country</PropertyPath><PropertyPath>region</PropertyPath><PropertyPath>active</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/LegalEntities">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/id"><Annotation Term="Common.Label" String="Role"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubjectRole">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Data Subject Role"/><PropertyValue Property="TypeNamePlural" String="Data Subject Roles"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="active"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>active</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/DataSubjectRoles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/id"><Annotation Term="Common.Label" String="Business Purpose"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/applicationGroupId"><Annotation Term="Common.Label" String="Application Group"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/dataSubjectRoleId"><Annotation Term="Common.Label" String="Data Subject Role"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/legalEntityId"><Annotation Term="Common.Label" String="Legal Entity"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/activatedAt"><Annotation Term="Common.Label" String="Activated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/legalGroundCount"><Annotation Term="Common.Label" String="Legal Grounds"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/completeLegalGrounds"><Annotation Term="Common.Label" String="Legal Grounds with Rules"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/dataSubjectCount"><Annotation Term="Common.Label" String="Data Subjects"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/rulesText"><Annotation Term="Common.Label" String="Rules"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.BusinessPurpose">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Business Purpose"/><PropertyValue Property="TypeNamePlural" String="Business Purposes"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationGroupId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dataSubjectRoleId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rulesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dataSubjectCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>applicationGroupId</PropertyPath><PropertyPath>dataSubjectRoleId</PropertyPath><PropertyPath>legalEntityId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/BusinessPurposes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/id"><Annotation Term="Common.Label" String="Legal Ground"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/businessPurposeId"><Annotation Term="Common.Label" String="Business Purpose"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/type"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/legalReference"><Annotation Term="Common.Label" String="Legal Reference"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/residenceRuleId"><Annotation Term="Common.Label" String="Residence Rule"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/residence"><Annotation Term="Common.Label" String="Residence"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/retentionRuleId"><Annotation Term="Common.Label" String="Retention Rule"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/retention"><Annotation Term="Common.Label" String="Retention"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/actionOnExpiry"><Annotation Term="Common.Label" String="Action on Expiry"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.LegalGround">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Legal Ground"/><PropertyValue Property="TypeNamePlural" String="Legal Grounds"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="legalReference"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessPurposeId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="type"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="legalReference"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="residence"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="retention"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="actionOnExpiry"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="active"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>businessPurposeId</PropertyPath><PropertyPath>type</PropertyPath><PropertyPath>active</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/LegalGrounds">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/id"><Annotation Term="Common.Label" String="Residence Rule"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/businessPurposeId"><Annotation Term="Common.Label" String="Business Purpose"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/legalGroundId"><Annotation Term="Common.Label" String="Legal Ground"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/duration"><Annotation Term="Common.Label" String="Duration"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/periodUnit"><Annotation Term="Common.Label" String="Unit"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/periodText"><Annotation Term="Common.Label" String="Residence Period"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ResidenceRule">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Residence Rule"/><PropertyValue Property="TypeNamePlural" String="Residence Rules"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="periodText"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="legalGroundId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="legalGroundId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessPurposeId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="periodText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="active"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>businessPurposeId</PropertyPath><PropertyPath>legalGroundId</PropertyPath><PropertyPath>active</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/ResidenceRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/id"><Annotation Term="Common.Label" String="Retention Rule"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/businessPurposeId"><Annotation Term="Common.Label" String="Business Purpose"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/legalGroundId"><Annotation Term="Common.Label" String="Legal Ground"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/duration"><Annotation Term="Common.Label" String="Duration"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/periodUnit"><Annotation Term="Common.Label" String="Unit"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/periodText"><Annotation Term="Common.Label" String="Retention Period"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/actionOnExpiry"><Annotation Term="Common.Label" String="Action on Expiry"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.RetentionRule">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Retention Rule"/><PropertyValue Property="TypeNamePlural" String="Retention Rules"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="periodText"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="legalGroundId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="legalGroundId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessPurposeId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="periodText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="actionOnExpiry"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="active"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>businessPurposeId</PropertyPath><PropertyPath>legalGroundId</PropertyPath><PropertyPath>actionOnExpiry</PropertyPath><PropertyPath>active</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/RetentionRules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/id"><Annotation Term="Common.Label" String="Data Subject"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/externalId"><Annotation Term="Common.Label" String="External ID"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/applicationGroupId"><Annotation Term="Common.Label" String="Application Group"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/dataSubjectRoleId"><Annotation Term="Common.Label" String="Role"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/businessPurposeId"><Annotation Term="Common.Label" String="Business Purpose"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/legalGroundId"><Annotation Term="Common.Label" String="Legal Ground"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/legalEntityId"><Annotation Term="Common.Label" String="Legal Entity"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/referenceDate"><Annotation Term="Common.Label" String="Reference Date (End of Business)"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/lifecycleStatus"><Annotation Term="Common.Label" String="Lifecycle Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/legalHold"><Annotation Term="Common.Label" String="Legal Hold"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/legalHoldReason"><Annotation Term="Common.Label" String="Legal Hold Reason"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/blockedAt"><Annotation Term="Common.Label" String="Blocked At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/archivedAt"><Annotation Term="Common.Label" String="Archived At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/markedForDeletionAt"><Annotation Term="Common.Label" String="Marked for Deletion At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/deletedAt"><Annotation Term="Common.Label" String="Destroyed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/deletionMethod"><Annotation Term="Common.Label" String="Destruction Method"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/phase"><Annotation Term="Common.Label" String="Retention Phase"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/governingLegalGroundId"><Annotation Term="Common.Label" String="Governing Legal Ground"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/governingLegalGroundName"><Annotation Term="Common.Label" String="Governing Legal Ground Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/residence"><Annotation Term="Common.Label" String="Residence"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/retention"><Annotation Term="Common.Label" String="Retention"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/endOfPurpose"><Annotation Term="Common.Label" String="End of Purpose"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/endOfRetention"><Annotation Term="Common.Label" String="End of Retention"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/actionOnExpiry"><Annotation Term="Common.Label" String="Action on Expiry"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/daysToEndOfRetention"><Annotation Term="Common.Label" String="Days to End of Retention"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/dueForBlocking"><Annotation Term="Common.Label" String="Due for Blocking"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/dueForDestruction"><Annotation Term="Common.Label" String="Due for Destruction"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/retentionReason"><Annotation Term="Common.Label" String="Evaluation"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DataSubject">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Data Subject"/><PropertyValue Property="TypeNamePlural" String="Data Subjects"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="externalId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="externalId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessPurposeId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="referenceDate"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lifecycleStatus"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="phase"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="endOfPurpose"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="endOfRetention"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>applicationGroupId</PropertyPath><PropertyPath>businessPurposeId</PropertyPath><PropertyPath>lifecycleStatus</PropertyPath><PropertyPath>phase</PropertyPath><PropertyPath>legalHold</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/DataSubjects">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/id"><Annotation Term="Common.Label" String="Deletion Request"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/dataSubjectId"><Annotation Term="Common.Label" String="Data Subject"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/applicationGroupId"><Annotation Term="Common.Label" String="Application Group"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/action"><Annotation Term="Common.Label" String="Action"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/reason"><Annotation Term="Common.Label" String="Reason"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/processedAt"><Annotation Term="Common.Label" String="Processed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/resultMessage"><Annotation Term="Common.Label" String="Result"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/earliestDeletion"><Annotation Term="Common.Label" String="Earliest Deletion"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.DeletionRequest">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Deletion Request"/><PropertyValue Property="TypeNamePlural" String="Deletion Requests"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dataSubjectId"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reason"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dataSubjectId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="action"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reason"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resultMessage"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="processedAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>action</PropertyPath><PropertyPath>applicationGroupId</PropertyPath><PropertyPath>dataSubjectId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/DeletionRequests">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/id"><Annotation Term="Common.Label" String="Archiving Job"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/applicationGroupId"><Annotation Term="Common.Label" String="Application Group"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/operation"><Annotation Term="Common.Label" String="Operation"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/dryRun"><Annotation Term="Common.Label" String="Dry Run"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/referenceBefore"><Annotation Term="Common.Label" String="Reference Date Before"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/scheduledAt"><Annotation Term="Common.Label" String="Scheduled At"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/startedAt"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/completedAt"><Annotation Term="Common.Label" String="Completed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/selected"><Annotation Term="Common.Label" String="Selected"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/archived"><Annotation Term="Common.Label" String="Archived"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/destroyed"><Annotation Term="Common.Label" String="Destroyed"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/skipped"><Annotation Term="Common.Label" String="Skipped"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/failed"><Annotation Term="Common.Label" String="Failed"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/errorMessage"><Annotation Term="Common.Label" String="Error"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/log"><Annotation Term="Common.Label" String="Log"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/logText"><Annotation Term="Common.Label" String="Log"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.ArchivingJob">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Archiving Job"/><PropertyValue Property="TypeNamePlural" String="Archiving Jobs"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="operation"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationGroupId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="operation"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dryRun"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scheduledAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="archived"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="destroyed"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>applicationGroupId</PropertyPath><PropertyPath>operation</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/ArchivingJobs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.User/id"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.dataretention.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.dataretention.User/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.dataretention.User/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.dataretention.User/scopesText"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.dataretention.User/temporarilyLocked"><Annotation Term="Common.Label" String="Temporarily Locked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User/failedLogins"><Annotation Term="Common.Label" String="Failed Logins"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.dataretention.User">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="User"/><PropertyValue Property="TypeNamePlural" String="Users"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopes"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="locked"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastLoginAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>locked</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/applicationGroups"><Annotation Term="Common.Label" String="Application Groups"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/legalEntities"><Annotation Term="Common.Label" String="Legal Entities"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/dataSubjectRoles"><Annotation Term="Common.Label" String="Data Subject Roles"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/businessPurposes"><Annotation Term="Common.Label" String="Business Purposes"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/activeBusinessPurposes"><Annotation Term="Common.Label" String="Active Business Purposes"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/legalGrounds"><Annotation Term="Common.Label" String="Legal Grounds"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/residenceRules"><Annotation Term="Common.Label" String="Residence Rules"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/retentionRules"><Annotation Term="Common.Label" String="Retention Rules"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/dataSubjects"><Annotation Term="Common.Label" String="Data Subjects"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/activeSubjects"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/blockedSubjects"><Annotation Term="Common.Label" String="Blocked"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/archivedSubjects"><Annotation Term="Common.Label" String="Archived"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/markedForDeletion"><Annotation Term="Common.Label" String="Marked for Deletion"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/deletedSubjects"><Annotation Term="Common.Label" String="Destroyed"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/legalHolds"><Annotation Term="Common.Label" String="Legal Holds"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/dueForBlocking"><Annotation Term="Common.Label" String="Due for Blocking"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/dueForDestruction"><Annotation Term="Common.Label" String="Due for Destruction"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/noRuleSubjects"><Annotation Term="Common.Label" String="Without Rule"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/pendingRequests"><Annotation Term="Common.Label" String="Pending Deletion Requests"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/rejectedRequests"><Annotation Term="Common.Label" String="Rejected Deletion Requests"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/scheduledJobs"><Annotation Term="Common.Label" String="Scheduled Jobs"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/failedJobs"><Annotation Term="Common.Label" String="Failed Jobs"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/nextEndOfRetention"><Annotation Term="Common.Label" String="Next End of Retention"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic/computedAt"><Annotation Term="Common.Label" String="Computed At"/></Annotations>
+      <Annotations Target="uim.dataretention.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="applicationGroups"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="legalEntities"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dataSubjectRoles"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessPurposes"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeBusinessPurposes"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="legalGrounds"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="residenceRules"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="retentionRules"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.dataretention.DataRetentionService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Data Retention"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

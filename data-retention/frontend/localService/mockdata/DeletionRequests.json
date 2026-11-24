@@ -1,0 +1,36 @@
+{
+	"value": [
+		{
+			"earliestDeletion": null,
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "dr-1",
+			"dataSubjectId": "ds-3001",
+			"reason": "Newsletter unsubscribe and erasure request (GDPR Art. 17)",
+			"resultMessage": null,
+			"processedAt": null,
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"action": "delete",
+			"applicationGroupId": "crm",
+			"tenantId": "default",
+			"status": "pending",
+			"updatedBy": "cli"
+		},
+		{
+			"earliestDeletion": null,
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "dr-2",
+			"dataSubjectId": "ds-1004",
+			"reason": "Customer asks for erasure (GDPR Art. 17)",
+			"resultMessage": null,
+			"processedAt": null,
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"action": "delete",
+			"applicationGroupId": "erp",
+			"tenantId": "default",
+			"status": "pending",
+			"updatedBy": "cli"
+		}
+	]
+}

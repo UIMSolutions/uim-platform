@@ -1,0 +1,74 @@
+{
+	"value": [
+		{
+			"periodUnit": "years",
+			"periodText": "1 year",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "sales-contract-residence",
+			"legalGroundId": "sales-contract",
+			"businessPurposeId": "sales",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 1,
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"periodUnit": "years",
+			"periodText": "1 year",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "sales-tax-residence",
+			"legalGroundId": "sales-tax",
+			"businessPurposeId": "sales",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 1,
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"periodUnit": "months",
+			"periodText": "6 months",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "emp-contract-residence",
+			"legalGroundId": "emp-contract",
+			"businessPurposeId": "employment",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 6,
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"periodUnit": "years",
+			"periodText": "1 year",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "emp-payroll-residence",
+			"legalGroundId": "emp-payroll",
+			"businessPurposeId": "employment",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 1,
+			"tenantId": "default",
+			"updatedBy": "cli"
+		},
+		{
+			"periodUnit": "years",
+			"periodText": "2 years",
+			"updatedAt": "2026-11-24T06:29:36Z",
+			"id": "mkt-consent-residence",
+			"legalGroundId": "mkt-consent",
+			"businessPurposeId": "marketing",
+			"createdAt": "2026-11-24T06:29:36Z",
+			"createdBy": "cli",
+			"active": true,
+			"duration": 2,
+			"tenantId": "default",
+			"updatedBy": "cli"
+		}
+	]
+}

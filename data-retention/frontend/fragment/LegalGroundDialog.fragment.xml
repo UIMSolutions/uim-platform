@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/legalGround/edit} ? ${i18n>editGround} : ${i18n>createGround} }" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/legalGround/id}" placeholder="sales-contract" enabled="{= !%{view>/form/legalGround/edit} }"/>
+      <Label text="{i18n>colPurpose}" required="true"/>
+      <Input value="{view>/form/legalGround/businessPurposeId}" enabled="false"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/legalGround/name}"/>
+      <Label text="{i18n>colType}"/>
+      <Select selectedKey="{view>/form/legalGround/type}" forceSelection="false">
+        <core:Item key="consent" text="{i18n>lgConsent}"/>
+        <core:Item key="contract" text="{i18n>lgContract}"/>
+        <core:Item key="legalObligation" text="{i18n>lgLegalObligation}"/>
+        <core:Item key="vitalInterest" text="{i18n>lgVitalInterest}"/>
+        <core:Item key="publicInterest" text="{i18n>lgPublicInterest}"/>
+        <core:Item key="legitimateInterest" text="{i18n>lgLegitimateInterest}"/>
+      </Select>
+      <Label text="{i18n>colLegalReference}"/>
+      <Input value="{view>/form/legalGround/legalReference}" placeholder="HGB §257, AO §147"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/legalGround/description}" rows="3"/>
+      <Label text="{i18n>colActive}"/>
+      <CheckBox selected="{view>/form/legalGround/active}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

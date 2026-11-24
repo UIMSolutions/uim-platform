@@ -1,0 +1,17 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/user/edit} ? ${i18n>editUser} : ${i18n>createUser} }" contentWidth="30rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colUser}" required="true"/>
+      <Input value="{view>/form/user/id}" enabled="{= !%{view>/form/user/edit} }" autocomplete="off"/>
+      <Label text="{i18n>colName}"/>
+      <Input value="{view>/form/user/displayName}"/>
+      <Label text="{i18n>loginPassword}" required="{= !%{view>/form/user/edit} }"/>
+      <Input value="{view>/form/user/password}" type="Password" autocomplete="new-password"
+        placeholder="{= %{view>/form/user/edit} ? ${i18n>passwordKeep} : ${i18n>passwordRule} }"/>
+      <Label text="{i18n>colScopes}"/>
+      <TextArea value="{view>/form/user/scopes}" rows="3" placeholder="Read&#10;Manage&#10;Admin"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

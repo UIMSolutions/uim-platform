@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/businessPurpose/edit} ? ${i18n>editPurpose} : ${i18n>createPurpose} }" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/businessPurpose/id}" placeholder="sales" enabled="{= !%{view>/form/businessPurpose/edit} }"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/businessPurpose/name}"/>
+      <Label text="{i18n>colGroup}" required="true"/>
+      <ComboBox selectedKey="{view>/form/businessPurpose/applicationGroupId}" showClearIcon="true"
+        items="{path: '/ApplicationGroups', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colRole}" required="true"/>
+      <ComboBox selectedKey="{view>/form/businessPurpose/dataSubjectRoleId}" showClearIcon="true"
+        items="{path: '/DataSubjectRoles', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colLegalEntity}"/>
+      <ComboBox selectedKey="{view>/form/businessPurpose/legalEntityId}" showClearIcon="true"
+        items="{path: '/LegalEntities', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </ComboBox>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/businessPurpose/description}" rows="3"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

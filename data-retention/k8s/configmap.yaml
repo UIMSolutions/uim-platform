@@ -2,10 +2,17 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: data-retention-config
-  namespace: uim-platform
   labels:
     app: data-retention
     part-of: uim-platform
 data:
-  DATA_RETENTION_HOST: "0.0.0.0"
-  DATA_RETENTION_PORT: "8112"
+  DR_HOST: "0.0.0.0"
+  DR_PORT: "8112"
+  DR_STORAGE: "file"
+  DR_DATA_FILE: "/data/data-retention.json"
+  DR_FRONTEND_DIR: "/app/frontend"
+  DR_AUTH_MODE: "jwt"
+  DR_TOKEN_TTL_SECONDS: "3600"
+  DR_WORKER_INTERVAL_SECONDS: "10"
+  # daily end-of-purpose check (0 = only on demand)
+  DR_END_OF_PURPOSE_CHECK_SECONDS: "86400"
