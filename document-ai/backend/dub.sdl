@@ -1,0 +1,68 @@
+name "document-ai"
+description "Document AI service (SAP Document Information Extraction style) — document upload, extraction of header fields and line items with confidence scores, review and correction, confirmation, schemas and fields, templates, document types, enrichment data matching, training jobs and client quotas. D/vibe.d backend with REST, OData v4 (SAP Fiori), built-in JWT login, CLI and GtkD GUI"
+homepage "https://github.com/UIMSolutions/uim-platform"
+authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
+copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
+license "Apache-2.0"
+
+targetPath "build"
+sourcePaths "source"
+importPaths "source"
+
+// Shared platform library: generic OData v4 engine, document stores,
+// security (HS256/RS256), CLI and GtkD entity browser.
+dependency "service" path="../../service"
+dependency "uim-framework" version="~>26.11.1"  // 26.11.2 dropped uim.services, which ../../service needs
+dependency "vibe-d" version="~>0.10.5"
+
+buildRequirements "allowWarnings" "silenceDeprecations"
+
+// ── HTTP server: REST (/api/v1/document-ai) + OData v4 (/odata/v4/document-ai) + Fiori (/app) + /auth ──
+// dub build            (or --config=defaultRun)
+// ./build/uim-document-ai-platform-service
+configuration "defaultRun" {
+	targetType "executable"
+	targetName "uim-document-ai-platform-service"
+	mainSourceFile "source/app.d"
+	excludedSourceFiles "source/cli.d" "source/gui.d"
+}
+
+// ── Command line interface ──────────────────────────────────────────────────
+// dub build --config=cli
+// ./build/uim-document-ai-cli help
+configuration "cli" {
+	targetType "executable"
+	targetName "uim-document-ai-cli"
+	mainSourceFile "source/cli.d"
+	excludedSourceFiles "source/app.d" "source/gui.d"
+}
+
+// ── Desktop GUI (GtkD 3 / GTK 3.24) ─────────────────────────────────────────
+// dub build --config=gui
+// ./build/uim-document-ai-gui [--tenant=<id>] [--data-file=<path>]
+configuration "gui" {
+	targetType "executable"
+	targetName "uim-document-ai-gui"
+	mainSourceFile "source/gui.d"
+	excludedSourceFiles "source/app.d" "source/cli.d"
+	dependency "gtk-d" version="~>3.11.0"
+}
+
+// ── Libraries / unit tests (dub test) ───────────────────────────────────────
+configuration "defaultTest" {
+	targetType "library"
+	sourcePaths "tests"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "modules" {
+	targetType "library"
+	versions "show_module"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "tests" {
+	targetType "library"
+	versions "show_module" "show_test"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}

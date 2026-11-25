@@ -1,0 +1,89 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "uim.documentai",
+    "type": "application",
+    "i18n": {
+      "bundleName": "uim.documentai.i18n.i18n",
+      "supportedLocales": ["", "de"],
+      "fallbackLocale": ""
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "2.0.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/document-ai/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0",
+          "localUri": "localService/metadata.xml"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "sap-icon://document-text"
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "uim.documentai.view.App",
+      "type": "XML",
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "uim.documentai.i18n.i18n",
+          "supportedLocales": ["", "de"],
+          "fallbackLocale": ""
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "uim.documentai.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        { "name": "main", "pattern": ":tab:", "target": "main" },
+        { "name": "document", "pattern": "documents/{id}", "target": "document" },
+        { "name": "schema", "pattern": "schemas/{id}", "target": "schema" }
+      ],
+      "targets": {
+        "main": { "id": "main", "name": "Main" },
+        "document": { "id": "document", "name": "DocumentDetail" },
+        "schema": { "id": "schema", "name": "SchemaDetail" }
+      }
+    }
+  }
+}
