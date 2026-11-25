@@ -1,0 +1,38 @@
+# Podman/Buildah: identical to the Dockerfile.
+# Build context: the uim-platform repository root (the backend depends on
+# the shared "service" package via a path dependency):
+#   docker build -f document-ai/backend/Dockerfile -t uim-platform/document-ai .
+FROM dlang2/ldc-ubuntu:1.40.1 AS build
+WORKDIR /build
+COPY . .
+WORKDIR /build/document-ai/backend
+RUN dub build --build=release --config=defaultRun --compiler=ldc2 \
+ && dub build --build=release --config=cli --compiler=ldc2
+
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl libgcc-s1 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -r -s /bin/false appuser && mkdir -p /data && chown appuser:appuser /data
+WORKDIR /app
+COPY --from=build /build/document-ai/backend/build/uim-document-ai-platform-service /build/document-ai/backend/build/uim-document-ai-cli ./
+COPY --from=build /build/document-ai/backend/config ./config
+COPY --from=build /build/document-ai/frontend ./frontend
+USER appuser
+
+EXPOSE 8096
+# Built-in login: set DOCAI_JWT_SECRET (>= 32 characters) and DOCAI_ADMIN_PASSWORD,
+# e.g. from a Kubernetes secret (see k8s/secret.example.yaml).
+ENV DOCAI_HOST=0.0.0.0 \
+    DOCAI_PORT=8096 \
+    DOCAI_STORAGE=file \
+    DOCAI_DATA_FILE=/data/document-ai.json \
+    DOCAI_FRONTEND_DIR=/app/frontend \
+    DOCAI_AUTH_MODE=jwt
+VOLUME ["/data"]
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:8096/health || exit 1
+
+CMD ["./uim-document-ai-platform-service"]

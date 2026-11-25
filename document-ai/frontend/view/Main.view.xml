@@ -126,7 +126,7 @@
                   </HBox>
                   <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.documentIcon'}"
                     state="{path: 'status', formatter: '.formatter.documentState'}"/>
-                  <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+                  <ProgressIndicator percentValue="{= %{confidencePercent} }" displayValue="{confidencePercent} %" showValue="true"
                     state="{path: 'confidencePercent', formatter: '.formatter.percentState'}" visible="{= %{extractedFieldCount} > 0 }"/>
                   <ObjectNumber number="{lowConfidenceCount}" unit="/ {extractedFieldCount}"
                     state="{= %{lowConfidenceCount} > 0 &amp;&amp; %{status} === 'done' ? 'Warning' : 'None' }"/>
@@ -182,7 +182,7 @@
           </IconTabFilter>
 
           <!-- ── Templates ─────────────────────────────────────────────── -->
-          <IconTabFilter key="templates" icon="sap-icon://layout" text="{i18n>tabTemplates}" count="{/Statistics/templates}">
+          <IconTabFilter key="templates" icon="sap-icon://attachment-text-file" text="{i18n>tabTemplates}" count="{/Statistics/templates}">
             <Table id="templatesTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noTemplates}"
               items="{path: '/Templates', parameters: {$orderby: 'name'}, templateShareable: false}">
               <headerToolbar>
@@ -325,7 +325,7 @@
                 <ColumnListItem>
                   <ObjectIdentifier title="{name}" text="{schemaName}"/>
                   <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.trainingState'}"/>
-                  <ProgressIndicator percentValue="{progressPercent}" displayValue="{progressPercent} %" showValue="true"
+                  <ProgressIndicator percentValue="{= %{progressPercent} }" displayValue="{progressPercent} %" showValue="true"
                     state="{= %{status} === 'failed' ? 'Error' : %{status} === 'completed' ? 'Success' : 'Information' }"/>
                   <ObjectNumber number="{= %{status} === 'completed' ? %{accuracyPercent} : '' }" unit="{= %{status} === 'completed' ? '%' : '' }"/>
                   <Text text="{modelVersion}"/>

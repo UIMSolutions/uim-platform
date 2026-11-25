@@ -1,778 +1,238 @@
-# NAF v4 Architecture AiDocument
+# NAF v4 Architecture Description — UIM Document AI
 
-
-## Documentation update
-
-This AiDocument is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
-
-## AiDocument AI Service — UIM Platform
-
-**Version:** 1.0
-**Date:** 2026-04-05
-**Classification:** UNCLASSIFIED
-**Status:** Baseline
+> NATO Architecture Framework v4 description of the UIM Document AI service 2.0: extraction of header fields and
+> line items from business documents with review, confirmation, enrichment matching and model training (SAP Document
+> Information Extraction style), with a D/vibe.d backend, an SAP Fiori 3 / OpenUI5 frontend, built-in JWT login or
+> SAP XSUAA.
 
 ---
 
-## 1. Architecture Context (NAF v4 Grid Reference)
+## 1. Grid mapping
 
-| NAF v4 View | Covered | Section |
+| NAF v4 viewpoint | Subject | Section |
 |---|---|---|
-| C1 — Capability Taxonomy | Yes | Section 2 |
-| C2 — Enterprise Vision | Yes | Section 3 |
-| S1 — Service Taxonomy | Yes | Section 4 |
-| S3 — Service Interfaces | Yes | Section 5 |
-| S4 — Service Functions | Yes | Section 6 |
-| L2 — Logical Scenario | Yes | Section 7 |
-| L4 — Logical Activities | Yes | Section 8 |
-| L7 — Logical Data Model | Yes | Section 9 |
-| P1 — Resource Types | Yes | Section 10 |
-| P2 — Resource Structure | Yes | Section 11 |
-| P4 — Resource Functions | Yes | Section 12 |
-| Ar — Architecture Metadata | Yes | Section 13 |
+| C1 Capability Taxonomy · C2 Enterprise Vision | what the service is able to do and why | §2 |
+| C4 Standard Processes / L4 Logical Activities | upload, extraction, review, confirmation, training, login | §3 |
+| S1 Service Taxonomy · S4 Service Functions | OData, REST, CLI, GUI, auth | §4 |
+| L2 Logical Scenario · L3 Node Interactions | operational nodes and information flows | §5 |
+| L7 Logical Data Model | entities and relations | §6 |
+| P1 Resource Types · P2 Resource Structure | software components and layers | §7 |
+| P4 Resource Functions / P5 Resource Connectivity | deployment | §8 |
+| A8 Standards Profile | standards and technologies | §9 |
+| Cr Security / constraints | authentication, authorization, data protection | §10 |
+| Ar Architecture decisions | decisions and rationale | §11 |
 
 ---
 
-## 2. C1 — Capability Taxonomy
+## 2. Capability viewpoint
 
-### 2.1 Capability Overview
+### C1 — Capability taxonomy
 
-The AiDocument AI Service provides intelligent AiDocument processing, data extraction, enrichment matching, and model training capabilities for the UIM Cloud Platform — analogous to the SAP AiDocument Information Extraction Service on SAP BTP.
-
-### 2.2 Capability Hierarchy
-
+```text
+Document AI
+├── C1.1 Document intake
+│   ├── upload registration (file type detection, language, labels)
+│   ├── classification by document type (category, accepted file types, default schema)
+│   └── client separation and document quotas
+├── C1.2 Information extraction
+│   ├── header fields and line items per schema
+│   ├── extraction methods: ML model, generative AI, template based, hybrid
+│   ├── confidence per value, review threshold, missing required values
+│   └── pluggable engine (simulation / external HTTP service), background processing
+├── C1.3 Human review
+│   ├── review queue (documents that need review)
+│   ├── correction of values (type checked, original kept)
+│   └── confirmation / rejection (final states)
+├── C1.4 Enrichment
+│   ├── master data records (supplier, customer, employee, business entity, material)
+│   └── matching of extracted header values (matched / ambiguous / unmatched, score)
+├── C1.5 Extraction design
+│   ├── schemas with versioned, frozen-on-activation fields
+│   └── templates per sender layout
+├── C1.6 Model training
+│   ├── training jobs on confirmed documents (data feedback per client)
+│   └── accuracy from the correction rate, model versions
+├── C1.7 Monitoring
+│   └── KPIs (pending, to review, confirmed, failed, confidence, correction rate, accuracy), health, events
+└── C1.8 Access control
+    ├── built-in login (JWT HS256, PBKDF2, lockout) or XSUAA (RS256)
+    └── scopes Read / Process / Manage / Admin
 ```
-C-ROOT: Intelligent AiDocument Processing
-├── C-DA-01: AiDocument Processing
-│   ├── C-DA-01.1: AiDocument Upload (PDF, PNG, JPEG, TIFF, XLSX, DOCX)
-│   ├── C-DA-01.2: Automated Field Extraction (ML, Generative AI, AiTemplate, Hybrid)
-│   ├── C-DA-01.3: Extraction Result Retrieval
-│   ├── C-DA-01.4: Result Confirmation (Data Feedback Loop)
-│   └── C-DA-01.5: AiDocument Job Lifecycle Management
-├── C-DA-02: Schema Management
-│   ├── C-DA-02.1: Header Field Definition (typed, required, format)
-│   ├── C-DA-02.2: Line Item Field Definition
-│   ├── C-DA-02.3: Multi-Language Support
-│   └── C-DA-02.4: Schema Lifecycle (draft → active → inactive)
-├── C-DA-03: AiTemplate Management
-│   ├── C-DA-03.1: Region-Based Field Mapping (page, coordinates)
-│   ├── C-DA-03.2: AiTemplate-Schema Binding
-│   └── C-DA-03.3: Sample AiDocument Association
-├── C-DA-04: AiDocument Type Classification
-│   ├── C-DA-04.1: Standard Categories (invoice, PO, receipt, contract, etc.)
-│   ├── C-DA-04.2: Custom AiDocument Types
-│   ├── C-DA-04.3: Default Schema Assignment
-│   └── C-DA-04.4: File Type Restriction per AiDocument Type
-├── C-DA-05: Enrichment Data
-│   ├── C-DA-05.1: Master Data Upload
-│   ├── C-DA-05.2: Enrichment Matching (scored, threshold-based)
-│   └── C-DA-05.3: Match Status Classification (matched / ambiguous / unmatched)
-├── C-DA-06: Model Training
-│   ├── C-DA-06.1: Training Job Creation
-│   ├── C-DA-06.2: Training Lifecycle (pending → running → completed/failed)
-│   ├── C-DA-06.3: Accuracy and Metrics Tracking
-│   └── C-DA-06.4: Model Versioning
-├── C-DA-07: Client Administration
-│   ├── C-DA-07.1: Client Provisioning
-│   ├── C-DA-07.2: AiDocument Quota Management
-│   ├── C-DA-07.3: Data Feedback Configuration
-│   └── C-DA-07.4: Usage Tracking (documentsProcessed)
-├── C-DA-08: Capabilities Discovery
-│   └── C-DA-08.1: Service Feature Enumeration
-└── C-DA-09: Operational Monitoring
-    └── C-DA-09.1: Health Check
-```
+
+### C2 — Enterprise vision
+
+| Goal | Measure in the service |
+|---|---|
+| Less manual data entry | documents are extracted automatically; people only review values below the confidence threshold |
+| Trustworthy data | required values must be present to confirm; corrections are recorded with the original value and the person |
+| Continuous improvement | confirmed documents train the model; the correction rate and the model accuracy are visible KPIs |
+| Clean master data links | header values are matched with supplier / customer records |
+| Separation of organizational units | clients with quotas and a data feedback switch, tenants via JWT `zid` |
+| Runs anywhere | same binary on a workstation, in a container, on Kubernetes and on SAP BTP |
 
 ---
 
-## 3. C2 — Enterprise Vision
+## 3. Processes (C4 / L4)
 
-### 3.1 Purpose Statement
-
-Provide an intelligent AiDocument processing service that automates the extraction of structured data from unstructured business documents, supports multiple extraction methods (ML, generative AI, template-based, hybrid), and enables continuous model improvement through data feedback and training — all accessible via a uniform REST API within the UIM Cloud Platform.
-
-### 3.2 Strategic Goals
-
-| ID | Goal | Priority |
-|----|------|----------|
-| SG-01 | Automate structured data extraction from business documents | High |
-| SG-02 | Support multiple extraction methods (ML, generative AI, template, hybrid) | High |
-| SG-03 | Enable data feedback loop for continuous extraction improvement | High |
-| SG-04 | Provide enrichment matching against master data | Medium |
-| SG-05 | Support custom model training per AiDocument type | Medium |
-| SG-06 | Cover 13+ standard business AiDocument categories | Medium |
-| SG-07 | Multi-tenant, multi-client data isolation | High |
-| SG-08 | Cloud-native deployment (Docker, Podman, Kubernetes) | High |
-
-### 3.3 Key Constraints
-
-| ID | Constraint |
-|----|-----------|
-| CON-01 | All timestamps in UTC epoch milliseconds |
-| CON-02 | Tenant identification via X-Tenant-Id header |
-| CON-03 | Client identification via X-Client-Id header or request body |
-| CON-04 | Supported file types: PDF, PNG, JPEG, TIFF, XLSX, DOCX |
-| CON-05 | In-memory persistence for MVP (pluggable repository interfaces) |
-| CON-06 | Port 8096 default, configurable via DOCAI_HOST / DOCAI_PORT |
-| CON-07 | Enrichment matching thresholds: ≥0.8 matched, ≥0.4 ambiguous, <0.4 unmatched |
+| # | Process | Actor | Steps | Rules |
+|---|---|---|---|---|
+| P1 | Design extraction | Extraction expert (Manage) | create schema → add header and line item fields → activate → assign as default schema of a document type → optional template | fields frozen when active; changes by copy (version + 1) |
+| P2 | Upload | Clerk (Process), API client | register file metadata, type, client, labels | file type accepted, active schema, language supported, client quota |
+| P3 | Extract | worker / clerk | engine returns values → values stored → summary and enrichment match | replaces previous values; failures keep the reason |
+| P4 | Review and correct | Clerk | open "needs review" documents → correct values | only while `done`; values type checked; match recomputed |
+| P5 | Confirm / reject | Clerk | confirm or reject with reason | confirm needs required values; final |
+| P6 | Train | Extraction expert | create job → start → worker completes after training time | ≥ minTrainingDocuments confirmed, data feedback allowed, one running job per schema |
+| P7 | Administer access | Administrator (Admin) | create users with scopes, lock/unlock, reset passwords | last administrator protected |
 
 ---
 
-## 4. S1 — Service Taxonomy
+## 4. Service viewpoint (S1 / S4)
 
-### 4.1 Service Inventory
+| Service | Interface | Functions |
+|---|---|---|
+| S1 Document AI OData service | OData v4 `/odata/v4/document-ai` (`$metadata` with UI.LineItem / HeaderInfo / SelectionFields annotations, `$batch`) | CRUD of 10 entity sets, Statistics singleton, 13 unbound actions |
+| S2 Document AI REST API | JSON `/api/v1/document-ai` | same resources and operations, review queue, capabilities, meta |
+| S3 Authentication service | `/auth/config`, `/auth/login`, `/auth/me`, `/auth/password`, `/auth/logout` | built-in login, token issuing, own password |
+| S4 Health | `/health`, `/api/v1/health` | liveness/readiness, worker metrics |
+| S5 Fiori app | `/app` (local / container) or approuter (BTP) | KPI header, documents, review with corrections, schemas and fields, templates, master data, training, users |
+| S6 CLI | `uim-document-ai-cli` | generic entity commands + upload, extract, values, correct, confirm, review, schemas, training, token, passwd |
+| S7 Desktop GUI | `uim-document-ai-gui` (GtkD) | model driven entity browser with actions |
+| S8 Extraction engine (consumed) | HTTP POST to `extractionUrl` | values with confidence per document |
 
-```
-SVC-ROOT: AiDocument AI Platform Service
-├── SVC-DA-01: AiDocument Processing Service
-│   ├── Upload AiDocument (with schema/template/docType binding)
-│   ├── List AiDocument Jobs
-│   ├── Get AiDocument Job
-│   ├── Delete AiDocument Job
-│   ├── Confirm Extraction Results (data feedback)
-│   └── Get Extraction Results
-├── SVC-DA-02: Schema Management Service
-│   ├── Create Schema (header fields, line items, languages)
-│   ├── List Schemas
-│   ├── Get Schema
-│   ├── Update Schema
-│   └── Delete Schema
-├── SVC-DA-03: AiTemplate Management Service
-│   ├── Create AiTemplate (regions with coordinates)
-│   ├── List Templates
-│   ├── Get AiTemplate
-│   ├── Update AiTemplate
-│   └── Delete AiTemplate
-├── SVC-DA-04: AiDocument Type Service
-│   ├── Create AiDocument Type
-│   ├── List AiDocument Types
-│   ├── Get AiDocument Type
-│   ├── Update AiDocument Type
-│   └── Delete AiDocument Type
-├── SVC-DA-05: Enrichment Data Service
-│   ├── Create Enrichment Data
-│   ├── List Enrichment Data
-│   ├── Get Enrichment Data
-│   ├── Update Enrichment Data
-│   └── Delete Enrichment Data
-├── SVC-DA-06: Training Job Service
-│   ├── Create Training Job
-│   ├── List Training Jobs
-│   ├── Get Training Job
-│   ├── Patch Training Job Status
-│   └── Delete Training Job
-├── SVC-DA-07: Client Administration Service
-│   ├── Create Client
-│   ├── List Clients
-│   ├── Get Client
-│   ├── Patch Client
-│   └── Delete Client
-├── SVC-DA-08: Capabilities Service
-│   └── Get Capabilities
-└── SVC-DA-09: Health Service
-    └── Health Check
-```
+All driving adapters call one `ODataEngine` bound to the driving ports, so validation, authorization (scopes per
+entity set and action) and error mapping are identical everywhere.
 
 ---
 
-## 5. S3 — Service Interfaces
+## 5. Logical / operational viewpoint (L2 / L3)
 
-### 5.1 REST API Interface Specification
-
-**Base URL:** `/api/v1`
-**Protocol:** HTTP/1.1
-**Content-Type:** application/json
-**Authentication:** X-Tenant-Id header (tenant identification)
-
-#### 5.1.1 AiDocument Processing Endpoints
-
-| Operation | Method | URI | Description |
-|-----------|--------|-----|-------------|
-| Upload AiDocument | POST | `/AiDocument/jobs` | Upload AiDocument for extraction |
-| List Jobs | GET | `/AiDocument/jobs` | List AiDocument processing jobs |
-| Get Job | GET | `/AiDocument/jobs/{id}` | Get AiDocument job detail |
-| Delete Job | DELETE | `/AiDocument/jobs/{id}` | Delete a AiDocument job |
-| Confirm Results | POST | `/AiDocument/jobs/{id}/confirm` | Confirm with corrections |
-| Get Results | GET | `/AiDocument/jobs/{id}/results` | Get extraction results |
-
-#### 5.1.2 Schema Endpoints
-
-| Operation | Method | URI | Description |
-|-----------|--------|-----|-------------|
-| Create | POST | `/schemas` | Create extraction schema |
-| List | GET | `/schemas` | List schemas |
-| Get | GET | `/schemas/{id}` | Get schema detail |
-| Update | PUT | `/schemas/{id}` | Update schema |
-| Delete | DELETE | `/schemas/{id}` | Delete schema |
-
-#### 5.1.3 AiTemplate Endpoints
-
-| Operation | Method | URI | Description |
-|-----------|--------|-----|-------------|
-| Create | POST | `/templates` | Create template |
-| List | GET | `/templates` | List templates |
-| Get | GET | `/templates/{id}` | Get template detail |
-| Update | PUT | `/templates/{id}` | Update template |
-| Delete | DELETE | `/templates/{id}` | Delete template |
-
-#### 5.1.4 AiDocument Type Endpoints
-
-| Operation | Method | URI | Description |
-|-----------|--------|-----|-------------|
-| Create | POST | `/AiDocument-types` | Create AiDocument type |
-| List | GET | `/AiDocument-types` | List AiDocument types |
-| Get | GET | `/AiDocument-types/{id}` | Get AiDocument type |
-| Update | PUT | `/AiDocument-types/{id}` | Update AiDocument type |
-| Delete | DELETE | `/AiDocument-types/{id}` | Delete AiDocument type |
-
-#### 5.1.5 Enrichment Data Endpoints
-
-| Operation | Method | URI | Description |
-|-----------|--------|-----|-------------|
-| Create | POST | `/enrichment-data` | Create enrichment data |
-| List | GET | `/enrichment-data` | List enrichment data |
-| Get | GET | `/enrichment-data/{id}` | Get enrichment data |
-| Update | PUT | `/enrichment-data/{id}` | Update enrichment data |
-| Delete | DELETE | `/enrichment-data/{id}` | Delete enrichment data |
-
-#### 5.1.6 Training Job Endpoints
-
-| Operation | Method | URI | Description |
-|-----------|--------|-----|-------------|
-| Create | POST | `/training/jobs` | Create training job |
-| List | GET | `/training/jobs` | List training jobs |
-| Get | GET | `/training/jobs/{id}` | Get training job |
-| Patch Status | PATCH | `/training/jobs/{id}` | Update job status |
-| Delete | DELETE | `/training/jobs/{id}` | Delete training job |
-
-#### 5.1.7 Client Administration Endpoints
-
-| Operation | Method | URI | Description |
-|-----------|--------|-----|-------------|
-| Create | POST | `/admin/clients` | Create client |
-| List | GET | `/admin/clients` | List clients |
-| Get | GET | `/admin/clients/{id}` | Get client |
-| Patch | PATCH | `/admin/clients/{id}` | Update client |
-| Delete | DELETE | `/admin/clients/{id}` | Delete client |
-
-#### 5.1.8 Capabilities & Health Endpoints
-
-| Operation | Method | URI | Description |
-|-----------|--------|-----|-------------|
-| Capabilities | GET | `/capabilities` | Service capabilities |
-| Health | GET | `/health` | Health check |
-
-### 5.2 Error Response Format
-
-```json
-{
-  "error": {
-    "message": "Human-readable error description",
-    "code": 400
-  }
-}
+```text
+ ┌────────────┐  OData/REST + JWT   ┌──────────────────────────────────────────────┐  HTTP (http mode)  ┌───────────────────┐
+ │ Clerk /    │ ──────────────────▶ │ Document AI node                             │ ─────────────────▶ │ Extraction engine │
+ │ Expert /   │ ◀────────────────── │  presentation → application → domain         │ ◀───────────────── │ (OCR / ML / LLM)  │
+ │ Admin      │   rows, KPIs         │  persistence (JSON snapshot) · worker · auth │   values+confidence └───────────────────┘
+ └────────────┘                      └──────────────────────────────────────────────┘
+       ▲  login (xsuaa mode)                    │ events (structured log lines)
+ ┌────────────┐                                 ▼
+ │ Approuter  │ ── forwards token ──▶   log / audit collector
+ │ + XSUAA    │
+ └────────────┘
 ```
 
-### 5.3 Capabilities Response Format
-
-```json
-{
-  "extraction": true,
-  "classification": true,
-  "enrichment": true,
-  "templateMatching": true,
-  "training": true,
-  "dataFeedback": true,
-  "multitenant": true,
-  "supportedFileTypes": ["pdf", "png", "jpeg", "tiff", "xlsx", "docx"],
-  "supportedLanguages": ["en", "de", "fr", "es", "it", "pt", "ja", "zh", "ko"],
-  "supportedDocumentTypes": ["invoice", "purchase_order", "payment_advice", ...],
-  "apiVersion": "v1"
-}
-```
+| Information flow | From → to | Content | Protection |
+|---|---|---|---|
+| IF1 document registration | user / client system → service | file metadata, labels | bearer token, scope Process |
+| IF2 extraction request | service → extraction engine | document metadata, schema fields, template | HTTPS, Authorization from `DOCAI_EXTRACTION_AUTHORIZATION` |
+| IF3 extraction result | engine → service | values, confidence, positions | validated, type checked |
+| IF4 review data | service → Fiori | values, confidence levels, match | token, scope Read |
+| IF5 corrections / confirmation | Fiori → service | corrected values, decisions | token, scope Process, audited (`correctedBy`, `confirmedBy`) |
+| IF6 events | service → log | event type, ids, states (no values, no secrets) | structured JSON log |
 
 ---
 
-## 6. S4 — Service Functions
+## 6. Logical data model (L7)
 
-### 6.1 Functional Decomposition
+| Entity | Key attributes | Relations |
+|---|---|---|
+| Client | name (unique), documentQuota, dataFeedbackEnabled | documents, schemas, types, templates, enrichment, training (optional owner) |
+| DocumentType | name (unique per client), category, defaultSchemaId, supportedFileTypes | → Schema (default) |
+| Schema | name, category, status, version, supportedLanguages, basedOnId | 1 : n SchemaField |
+| SchemaField | schemaId, fieldScope, sequence, name (unique per schema + scope), valueType, required, default | → Schema |
+| DocumentTemplate | schemaId (immutable), senderName, status, sampleDocumentIds | → Schema |
+| AiDocument | fileName, fileType, size, pages, language, status, method, labels, confidence summary, match | → Schema, DocumentType, Template, Client, EnrichmentData; 1 : n ExtractedField |
+| ExtractedField | documentId, fieldScope, rowIndex, name, valueType, value, originalValue, confidence, page, corrected | → AiDocument, SchemaField |
+| EnrichmentData | subtype, externalId, name, attributes (key=value) | optional → Client, DocumentType |
+| TrainingJob | schemaId, status, documentCount, fieldCount, accuracy, modelVersion | → Schema; uses confirmed AiDocuments |
+| UserAccount | id (user name), passwordHash, scopes, locked, failedLogins | — |
 
-```
-F-DA-01: AiDocument Processing
-  F-DA-01.1: Validate file type (DocumentValidator.validateFileType)
-  F-DA-01.2: Detect file type from extension (DocumentValidator.detectFileType)
-  F-DA-01.3: Generate unique AiDocument ID (UUID v4)
-  F-DA-01.4: Create AiDocument entity with status = pending
-  F-DA-01.5: Execute extraction (status → processing → completed)
-  F-DA-01.6: Build ExtractionResult (headerFields, lineItems, confidence scores)
-  F-DA-01.7: Persist AiDocument and ExtractionResult
-  F-DA-01.8: Confirm results with corrected fields (data feedback)
-
-F-DA-02: Schema Management
-  F-DA-02.1: Define header fields (name, label, type, required, format)
-  F-DA-02.2: Define line item fields
-  F-DA-02.3: Manage schema lifecycle (draft → active → inactive)
-  F-DA-02.4: Support multiple languages per schema
-
-F-DA-03: AiTemplate Management
-  F-DA-03.1: Define extraction regions (fieldName, page, x, y, width, height)
-  F-DA-03.2: Bind templates to schemas and AiDocument types
-  F-DA-03.3: Associate sample documents for validation
-
-F-DA-04: AiDocument Type Management
-  F-DA-04.1: Map to standard categories (13 built-in + custom)
-  F-DA-04.2: Assign default schema
-  F-DA-04.3: Configure supported file types per doc type
-
-F-DA-05: Enrichment Data Management
-  F-DA-05.1: Store key-value enrichment fields
-  F-DA-05.2: Match extraction results against enrichment candidates
-  F-DA-05.3: Score matches (EnrichmentMatcher): >=0.8 matched, >=0.4 ambiguous, <0.4 unmatched
-  F-DA-05.4: Return match result with score and matched field names
-
-F-DA-06: Training Job Management
-  F-DA-06.1: Create job linked to AiDocument type and schema
-  F-DA-06.2: Count available training documents by type
-  F-DA-06.3: Track accuracy and training metrics over time
-  F-DA-06.4: Manage status transitions (pending → running → completed/failed/cancelled)
-
-F-DA-07: Client Administration
-  F-DA-07.1: Provision clients with AiDocument quota
-  F-DA-07.2: Track documents processed against quota
-  F-DA-07.3: Enable/disable data feedback per client
-  F-DA-07.4: Label-based client organization
-```
+All entities are tenant scoped and audited (`createdAt/By`, `updatedAt/By`). Records are flat JSON documents in the
+collections `dai.<entity>`; the mapping is derived from the entity declarations at compile time.
 
 ---
 
-## 7. L2 — Logical Scenario
+## 7. Resource viewpoint (P1 / P2)
 
-### 7.1 Scenario 1: AiDocument Upload and Extraction
-
-```
-1. Client sends POST /api/v1/AiDocument/jobs with upload metadata
-2. DocumentController parses JSON, extracts tenant/client IDs
-3. ProcessDocumentsUseCase validates file type via DocumentValidator
-4. AiDocument entity created with status = pending
-5. AiDocument persisted via DocumentRepository
-6. Extraction pipeline invoked (status → processing)
-7. ExtractionResult built with headerFields, lineItems, confidence scores
-8. ExtractionResult persisted via ExtractionResultRepository
-9. AiDocument status → completed, processedAt set
-10. 201 Created returned with AiDocument ID
-```
-
-### 7.2 Scenario 2: Result Confirmation (Data Feedback)
-
-```
-1. Client sends POST /api/v1/AiDocument/jobs/{id}/confirm with corrections
-2. AiDocument retrieved, status verified = completed
-3. Corrected fields applied to extraction result
-4. AiDocument status → confirmed
-5. Feedback data available for future model training
-6. 200 OK returned
-```
-
-### 7.3 Scenario 3: Enrichment Matching
-
-```
-1. After extraction, system retrieves EnrichmentData candidates for the AiDocument type
-2. EnrichmentMatcher compares each candidate's fields against extracted header fields
-3. Match score calculated: matchedFields / totalFields per candidate
-4. Highest-scoring candidate selected
-5. Threshold applied: ≥0.8 → matched, ≥0.4 → ambiguous, <0.4 → unmatched
-6. EnrichmentMatchResult returned with matched ID, score, and field names
-```
-
-### 7.4 Scenario 4: Model Training Lifecycle
-
-```
-1. Client creates training job via POST /api/v1/training/jobs
-2. Job created with status = pending
-3. Client starts training via PATCH {targetStatus: "running"}
-4. System counts available documents by type/schema
-5. Training progresses with metrics recorded
-6. On completion: accuracy set, status → completed
-7. On failure: statusMessage set, status → failed
-```
-
-### 7.5 Scenario 5: Capabilities Discovery
-
-```
-1. Client sends GET /api/v1/capabilities
-2. GetCapabilitiesUseCase returns CapabilitiesResponse
-3. Response includes supported features, file types, languages, AiDocument types
-4. Client configures its behavior based on available capabilities
-```
+| Resource | Type | Layer |
+|---|---|---|
+| `uim.platform.document_ai.domain` | D package | entities, value types, enumerations, exceptions, pure domain services |
+| `…ports` | D interfaces | driving (use cases, statistics) and driven (repositories, unit of work, gateways, events) |
+| `…application` | D classes | use cases (master data, schemas, documents, review, training, access), statistics, capabilities, demo data, DTOs |
+| `…persistence` | D classes | generic document repository, record mapper, batching memory / file document stores |
+| `…infrastructure` | D classes | configuration loader, security (HS256 issuer, PBKDF2, XSUAA RS256), logging, metrics, extraction engines, worker, container |
+| `…presentation` | D classes | EDM model + engine bindings, REST / auth / health controllers, static Fiori, CLI, GtkD GUI |
+| `uim-platform:service` | shared D library | OData v4 engine and controller, document stores, token verifiers, CLI and GUI frameworks |
+| Fiori app `uim.documentai` | OpenUI5 1.120 | Component (login flow), Main / DocumentDetail / SchemaDetail views, dialogs, i18n en/de |
+| Approuter | Node.js `@sap/approuter` | XSUAA login, routing, CSRF |
 
 ---
 
-## 8. L4 — Logical Activities
+## 8. Physical deployment (P4 / P5)
 
-### 8.1 AiDocument Upload Activity Flow
+### SAP BTP (Cloud Foundry) — `mta.yaml`
 
-```
-[Start]
-  → Receive HTTP POST /AiDocument/jobs
-  → Parse JSON Body
-  → Extract X-Tenant-Id, X-Client-Id
-  → Validate File Type (DocumentValidator)
-    ── invalid → Return 400 Error → [End]
-    ── valid →
-  → Detect FileType enum from extension
-  → Generate UUID
-  → Build AiDocument entity (status = pending)
-  → Set uploadedAt = currentTimestamp()
-  → Persist AiDocument
-  → Set status = processing
-  → Run Extraction (ML / AI / AiTemplate / Hybrid)
-  → Build ExtractionResult entity
-  → Compute overallConfidence
-  → Persist ExtractionResult
-  → Set AiDocument status = completed, processedAt = currentTimestamp()
-  → Update AiDocument
-  → Return 201 Created
-  → [End]
-```
+| Module / resource | Type | Notes |
+|---|---|---|
+| `document-ai-srv` | binary_buildpack | D server built with ldc2, health check `/health`, file snapshot (single instance) |
+| `document-ai-approuter` | approuter.nodejs | serves the Fiori app, forwards the XSUAA token to `document-ai-srv` |
+| `document-ai-xsuaa` | xsuaa / application | scopes and role collections from `approuter/xs-security.json` |
+| `document-ai-config` | user-provided service | runtime overrides (e.g. `extractionMode`, `extractionUrl`, `minConfidence`) |
 
-### 8.2 AiDocument Processing State Machine
+### Kubernetes — `k8s/`
 
-```
-[*] → pending (upload received)
-pending → processing (extraction starts)
-processing → completed (extraction successful)
-processing → failed (extraction error)
-completed → confirmed (user confirms results)
-confirmed → [*]
-failed → [*]
-```
+| Object | Notes |
+|---|---|
+| ConfigMap `document-ai-config` | `DOCAI_*` settings (jwt mode, worker, thresholds, extraction mode) |
+| Secret `document-ai-secret` | `DOCAI_JWT_SECRET`, `DOCAI_ADMIN_PASSWORD`, optional `DOCAI_EXTRACTION_AUTHORIZATION` (from `secret.example.yaml`) |
+| Deployment `document-ai` | 1 replica (file snapshot), non-root, read-only root file system, probes on `/health` |
+| PVC `document-ai-data` | `/data/document-ai.json` |
+| Service `document-ai` | port 80 → 8096 |
 
-### 8.3 Training Job State Machine
-
-```
-[*] → pending (job created)
-pending → running (training started)
-pending → cancelled (user cancels)
-running → completed (training successful, accuracy recorded)
-running → failed (training error, statusMessage set)
-running → cancelled (user cancels)
-completed → [*]
-failed → [*]
-cancelled → [*]
-```
-
-### 8.4 Schema Lifecycle
-
-```
-[*] → draft (schema created)
-draft → active (schema activated)
-active → inactive (schema deactivated)
-inactive → active (schema reactivated)
-```
-
-### 8.5 Enrichment Matching Activity
-
-```
-[Start]
-  → Retrieve ExtractionResult for AiDocument
-  → Retrieve EnrichmentData candidates for AiDocument type
-  → For each candidate:
-      → Compare fields by key (case-insensitive value match)
-      → Count matched fields
-      → Calculate score = matchedFields / totalFields
-  → Select candidate with highest score
-  → Apply threshold:
-      score ≥ 0.8 → status = matched
-      score ≥ 0.4 → status = ambiguous
-      score < 0.4 → status = unmatched
-  → Return EnrichmentMatchResult
-  → [End]
-```
+Containers: `backend/Dockerfile` / `Containerfile` (multi-stage ldc build from the repository root, Ubuntu 24.04
+runtime, Fiori app under `/app`).
 
 ---
 
-## 9. L7 — Logical Data Model
+## 9. Standards profile (A8)
 
-### 9.1 Entity Relationship Model
-
-```
-┌───────────────────┐        ┌───────────────────┐
-│      Client       │1    *  │     AiDocument      │
-├───────────────────┤────────├───────────────────┤
-│ id: ClientId      │        │ id: DocumentId    │
-│ tenantId          │        │ tenantId          │
-│ name              │        │ clientId          │
-│ documentQuota     │        │ fileName          │
-│ documentsProcessed│        │ fileType          │
-│ dataFeedbackEnabled       │ status            │
-│ labels: ClientLabel[]     │ language          │
-└───────────────────┘        │ schemaId          │
-                             │ templateId        │
-                             │ documentTypeId    │
-                             │ extractionMethod  │
-                             │ labels: DocLabel[]│
-                             └────────┬──────────┘
-                                 1    │
-                                      │ 0..1
-                             ┌────────┴──────────┐
-                             │ ExtractionResult   │
-                             ├───────────────────┤
-                             │ id                │
-                             │ documentId        │
-                             │ schemaId          │
-                             │ method            │
-                             │ headerFields:     │
-                             │   ExtractedField[]│
-                             │ lineItems:        │
-                             │   LineItem[]      │
-                             │ overallConfidence │
-                             └───────────────────┘
-
-┌───────────────────┐    ┌───────────────────┐    ┌───────────────────┐
-│   DocumentType    │    │      Schema       │    │     AiTemplate      │
-├───────────────────┤    ├───────────────────┤    ├───────────────────┤
-│ id                │    │ id                │    │ id                │
-│ name              │    │ documentTypeId    │    │ schemaId          │
-│ category          │    │ name              │    │ documentTypeId    │
-│ defaultSchemaId   │    │ status            │    │ name              │
-│ supportedFileTypes│    │ headerFields:     │    │ status            │
-└───┬──────┬────────┘    │   SchemaField[]   │    │ regions:          │
-    │      │             │ lineItemFields:   │    │   TemplateRegion[]│
-    │      │             │   LineItemField[] │    └───────────────────┘
-    │      │             │ supportedLangs[]  │
-    │      │             └───────────────────┘
-    │      │
-    │      │    ┌───────────────────┐    ┌───────────────────┐
-    │      └───→│  EnrichmentData   │    │   TrainingJob     │
-    │           ├───────────────────┤    ├───────────────────┤
-    └──────────→│ id                │    │ id                │
-                │ documentTypeId    │    │ documentTypeId    │
-                │ name              │    │ schemaId          │
-                │ subtype           │    │ name              │
-                │ fields:           │    │ status            │
-                │   EnrichmentField[]   │ accuracy          │
-                └───────────────────┘    │ metrics:          │
-                                         │   TrainingMetric[]│
-                                         └───────────────────┘
-```
-
-### 9.2 Data Dictionary — Key Entities
-
-| Entity | Attribute | Type | Description |
-|--------|-----------|------|-------------|
-| AiDocument | fileType | FileType enum | pdf, png, jpeg, tiff, xlsx, docx |
-| AiDocument | status | DocumentStatus enum | pending, processing, completed, failed, confirmed |
-| AiDocument | extractionMethod | ExtractionMethod enum | ml_model, generative_ai, template_based, hybrid |
-| AiDocument | category | DocumentCategory enum | 13 standard categories + custom |
-| ExtractionResult | overallConfidence | double | 0.0–1.0, aggregate extraction confidence |
-| ExtractionResult | headerFields | ExtractedField[] | Name, value, type, confidence, page, coordinates |
-| ExtractionResult | lineItems | LineItem[] | Row-indexed arrays of extracted fields |
-| Schema | headerFields | SchemaField[] | Name, label, type, required, description, default, format |
-| Schema | lineItemFields | LineItemField[] | Name, label, type, required, description |
-| Schema | status | SchemaStatus enum | active, inactive, draft |
-| AiTemplate | regions | TemplateRegion[] | fieldName, page, x, y, width, height |
-| EnrichmentData | fields | EnrichmentField[] | Key-value pairs for matching |
-| TrainingJob | status | TrainingJobStatus enum | pending, running, completed, failed, cancelled |
-| TrainingJob | accuracy | double | 0.0–1.0, model accuracy after training |
-| TrainingJob | metrics | TrainingMetric[] | Name, value, timestamp tuples |
-| Client | documentQuota | int | Maximum documents allowed |
-| Client | documentsProcessed | int | Current usage count |
+| Area | Standard / technology |
+|---|---|
+| Data access | OData v4.0 (JSON format, `$metadata` CSDL XML, `$batch`), OASIS vocabularies Core, Common, UI |
+| API | REST / JSON, HTTP status semantics (400, 401, 403, 404, 405, 409, 422) |
+| Identity | JWT (RFC 7519) HS256 / RS256, OAuth 2.0 bearer tokens (RFC 6750), XSUAA claim layout (`zid`, `scope`, `user_name`) |
+| Passwords | PBKDF2-HMAC-SHA256 (RFC 8018), 128-bit salt |
+| Values | ISO 8601 dates, ISO 4217 currency codes, ISO 639-1 languages, IANA MIME types |
+| UI | SAP Fiori 3 design (sap_fiori_3), OpenUI5 1.120, i18n properties (en, de) |
+| Deployment | MTA 3.3 (SAP BTP), OCI images, Kubernetes |
+| Languages | D (dmd 2.112 / ldc 1.40), vibe.d 0.10.5, JavaScript ES5 (UI5 modules) |
 
 ---
 
-## 10. P1 — Resource Types
+## 10. Security and constraints
 
-### 10.1 Software Resources
-
-| Resource | Type | Version | Purpose |
-|----------|------|---------|---------|
-| D Language (LDC) | Compiler/Runtime | 1.40.1 | Primary language |
-| vibe-d | HTTP Framework | 0.10.x | HTTP server, routing, JSON |
-| uim-framework | Library | 26.5.1 | Platform base classes |
-| uim-platform:service | Library | internal | PlatformController, UIMUseCase base |
-
-### 10.2 Infrastructure Resources
-
-| Resource | Type | Purpose |
-|----------|------|---------|
-| Ubuntu 24.04 | OS | Runtime container base |
-| Docker / Podman | Container | Build and run |
-| Kubernetes | Orchestrator | Production deployment |
+| Topic | Measure |
+|---|---|
+| Authentication | `jwt` (built-in login), `xsuaa` (approuter, RS256) or `open` (development only); `/health` and `/auth/config` public |
+| Authorization | scopes per entity set (read / write) and per action enforced in the `ODataEngine` for OData, REST, CLI and GUI alike |
+| Credentials | PBKDF2 hashes only, rehash on login when rounds increase, uniform answers for unknown users and wrong passwords, lockout after `maxFailedLogins` |
+| Tokens | HS256 secret ≥ 32 characters (random per process if not configured, with a warning), TTL 60 s … 7 days, tampered tokens rejected |
+| Secrets | from environment / Kubernetes secret / XSUAA binding; masked in `config` output; never stored in records or events |
+| Data protection | file content is not stored; events carry ids and states, not extracted values; clients can exclude their documents from training |
+| Input validation | ids, file names (no paths), labels, value types, enumerations, sizes and limits checked in the domain |
+| Constraints | file storage is a single-node snapshot (one replica / instance); the simulated engine is no OCR — production needs `extractionMode: http` |
 
 ---
 
-## 11. P2 — Resource Structure
+## 11. Architecture decisions
 
-### 11.1 Source Code Structure
-
-```
-AiDocument-ai/
-├── dub.sdl                                  # Build configuration
-├── Dockerfile                               # Docker multi-stage build
-├── Containerfile                            # Podman multi-stage build
-├── README.md                                # Usage documentation
-├── k8s/                                     # Kubernetes manifests
-│   ├── deployment.yaml
-│   ├── service.yaml
-│   └── configmap.yaml
-├── docs/                                    # Architecture documentation
-│   ├── uml.md                               # UML diagrams (Mermaid)
-│   └── nafv4.md                             # This AiDocument
-└── source/
-    ├── app.d                                # Entry point
-    └── uim/platform/document_ai/
-        ├── package.d                        # Root re-exports
-        ├── domain/                          # CORE (no external deps)
-        │   ├── types.d                      # 9 ID aliases, 10 enums
-        │   ├── entities/                    # 8 entities with sub-structs
-        │   │   ├── AiDocument.d               # AiDocument + DocumentLabel
-        │   │   ├── schema.d                 # Schema + SchemaField + LineItemField
-        │   │   ├── template_.d              # AiTemplate + TemplateRegion
-        │   │   ├── document_type.d          # DocumentType
-        │   │   ├── extraction_result.d      # ExtractionResult + ExtractedField + LineItem
-        │   │   ├── enrichment_data.d        # EnrichmentData + EnrichmentField
-        │   │   ├── training_job.d           # TrainingJob + TrainingMetric
-        │   │   └── client.d                 # Client + ClientLabel
-        │   ├── ports/                       # 8 repository interfaces
-        │   └── services/                    # 2 domain services
-        │       ├── document_validator.d     # File type validation + detection
-        │       └── enrichment_matcher.d     # Scored enrichment matching
-        ├── application/                     # USE CASES
-        │   ├── dto.d                        # Request/Result DTOs + CapabilitiesResponse
-        │   └── usecases/                   # 8 use case classes
-        │       ├── process_documents.d      # Upload, list, get, delete, confirm, results
-        │       ├── manage.schemas.d
-        │       ├── manage.templates.d
-        │       ├── manage.document_types.d
-        │       ├── manage.enrichment_data.d
-        │       ├── manage.training_jobs.d
-        │       ├── manage.clients.d
-        │       └── get_capabilities.d       # Static capabilities response
-        ├── presentation/                    # DRIVING ADAPTERS
-        │   └── http/
-        │       ├── json_utils.d             # JSON extraction helpers
-        │       └── controllers/             # 9 controllers
-        │           ├── AiDocument.d
-        │           ├── schema.d
-        │           ├── template_.d
-        │           ├── document_type.d
-        │           ├── enrichment_data.d
-        │           ├── training_job.d
-        │           ├── client.d
-        │           ├── capabilities.d
-        │           └── health.d
-        └── infrastructure/                  # DRIVEN ADAPTERS
-            ├── config.d                     # AppConfig + env loading
-            ├── container.d                  # DI wiring (8 repos → 8 use cases → 9 controllers)
-            └── persistence/memory/          # 8 in-memory repository impls
-```
-
-### 11.2 Package Dependency Graph
-
-```
-app.d
- └── infrastructure/container.d (buildContainer)
-      ├── infrastructure/persistence/memory/*   (8 MemoryXxxRepository)
-      │    └── domain/ports/*                   (8 interfaces)
-      │         └── domain/entities/*           (8 entity structs)
-      │              └── domain/types           (aliases + 10 enums)
-      ├── application/usecases/*               (8 use case classes)
-      │    ├── domain/ports/*
-      │    ├── domain/services/*                (DocumentValidator, EnrichmentMatcher)
-      │    └── application/dto                  (request/result DTOs)
-      └── presentation/http/controllers/*       (9 controllers)
-           ├── application/usecases/*
-           ├── application/dto
-           └── presentation/http/json_utils
-```
-
-### 11.3 Key DI Wiring
-
-| Use Case | Injected Repositories |
-|----------|-----------------------|
-| ProcessDocumentsUseCase | DocumentRepository, ExtractionResultRepository |
-| ManageTrainingJobsUseCase | TrainingJobRepository, DocumentRepository |
-| ManageSchemasUseCase | SchemaRepository |
-| ManageTemplatesUseCase | TemplateRepository |
-| ManageDocumentTypesUseCase | DocumentTypeRepository |
-| ManageEnrichmentDataUseCase | EnrichmentDataRepository |
-| ManageClientsUseCase | ClientRepository |
-| GetCapabilitiesUseCase | (none — static response) |
-
----
-
-## 12. P4 — Resource Functions
-
-### 12.1 Container Build Process
-
-```
-Stage 1: Builder (dlang2/ldc-ubuntu:1.40.1)
-  1. Copy dub.sdl, dub.selections.json
-  2. Copy source/
-  3. dub build --build=release --config=defaultRun
-  Output: build/uim-AiDocument-ai-platform-service
-
-Stage 2: Runtime (ubuntu:24.04)
-  1. Install ca-certificates, curl
-  2. Create non-root appuser
-  3. Copy binary from builder
-  4. Expose port 8096
-  5. Configure health check (GET /api/v1/health)
-  6. Run as appuser
-```
-
-### 12.2 Startup Sequence
-
-```
-1. loadConfig()          — Read DOCAI_HOST, DOCAI_PORT from environment
-2. buildContainer()      — Wire: 8 repos → 8 use cases → 9 controllers
-3. new URLRouter()       — Initialize HTTP router
-4. registerRoutes()      — Register all 9 controller route sets
-5. listenHTTP()          — Bind to host:port (default 0.0.0.0:8096)
-6. runApplication()      — Start vibe-d event loop
-```
-
-### 12.3 Kubernetes Deployment Parameters
-
-| Parameter | Value |
-|-----------|-------|
-| Replicas | 1 |
-| Container Port | 8096/TCP |
-| Service Type | ClusterIP |
-| Memory Request | 64Mi |
-| Memory Limit | 256Mi |
-| CPU Request | 100m |
-| CPU Limit | 500m |
-| Liveness Probe | GET /api/v1/health (initialDelay 5s, period 30s) |
-| Readiness Probe | GET /api/v1/health (initialDelay 3s, period 10s) |
-| Security | runAsNonRoot, readOnlyRootFilesystem, no privilege escalation |
-| Config Source | ConfigMap: cloud-AiDocument-ai-config |
-
----
-
-## 13. Ar — Architecture Metadata
-
-| Field | Value |
-|-------|-------|
-| Architecture Name | AiDocument AI Service |
-| Version | 1.0 |
-| Framework | NAF v4 |
-| Status | Baseline |
-| Author | UIM Platform Team |
-| Date Created | 2026-04-05 |
-| Classification | UNCLASSIFIED |
-| Platform | UIM Cloud Platform |
-| Repository | UIMSolutions/uim-platform |
-| Subpackage | AiDocument-ai |
-| Language | D (dlang) |
-| HTTP Framework | vibe-d 0.10.x |
-| Base Framework | uim-framework 26.5.1 |
-| Architecture Style | Hexagonal (Ports and Adapters) + Clean Architecture |
-| Deployment | Docker / Podman / Kubernetes |
-| Default Port | 8096 |
-| Total Entities | 8 (with 8 sub-structs) |
-| Total Enums | 10 |
-| Total Controllers | 9 (7 domain + capabilities + health) |
-| Total Use Cases | 8 |
-| Total Repository Ports | 8 |
-| Domain Services | 2 (DocumentValidator, EnrichmentMatcher) |
+| # | Decision | Rationale |
+|---|---|---|
+| AD1 | Hexagonal layering under `backend/source/uim/platform/document_ai` (domain, ports, application, persistence, infrastructure, presentation) | business rules testable without HTTP or storage; adapters replaceable |
+| AD2 | One EDM model and `ODataEngine` drive OData, REST, CLI and GUI | one place for validation, scopes and error mapping; Fiori metadata for free |
+| AD3 | Extracted values as their own entity set instead of nested JSON | OData filtering, per-value correction and audit, Fiori tables without client-side parsing |
+| AD4 | Extraction behind the `IExtractionEngine` port with simulated and HTTP adapters | runs and tests without an AI backend; production engines plug in without code changes |
+| AD5 | Background worker for pending documents and training, inline mode with `workerIntervalSeconds = 0` | uploads answer fast; CLI / GUI / tests process synchronously |
+| AD6 | Built-in JWT login with XSUAA compatible claims, XSUAA binding wins | same authorization code on BTP and off BTP; Fiori login dialog when no approuter |
+| AD7 | Batching unit of work over the JSON snapshot store | an extraction with dozens of values costs one file write; server, CLI and GUI share the file |
+| AD8 | Schema fields frozen on activation, copies as new versions | extracted values and trained models stay consistent with their schema |
+| AD9 | Accuracy derived from corrections of confirmed documents | a measurable, explainable model quality without a separate evaluation set |
+| AD10 | Replaced the first-generation API (`/api/v1/AiDocument/jobs`, `X-Client-Id`) | consistent resources, OData parity, client as a regular reference |

@@ -27,7 +27,7 @@
 
     <f:header>
       <f:DynamicPageHeader pinnable="true">
-        <layout:HorizontalLayout allowWrapping="true">
+        <HBox wrap="Wrap" alignItems="Start">
           <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
             <Label text="{i18n>colStatus}"/>
             <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.schemaState'}"
@@ -53,7 +53,7 @@
             <Label text="{i18n>colActivatedAt}"/>
             <Text text="{path: 'activatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
           </VBox>
-        </layout:HorizontalLayout>
+        </HBox>
       </f:DynamicPageHeader>
     </f:header>
 
@@ -62,8 +62,7 @@
         <MessageStrip text="{i18n>schemaFrozen}" type="Information" showIcon="true" visible="{= %{status} !== 'draft' }"
           class="sapUiSmallMarginBottom"/>
         <Table id="fieldsTable" mode="SingleSelectLeft" growing="true" growingThreshold="100" noDataText="{i18n>noFields}"
-          items="{path: '/SchemaFields', parameters: {$orderby: 'fieldScope,sequenceNumber'}, sorter: {path: 'fieldScope', group: true},
-            suspended: true, templateShareable: false}">
+          items="{path: '/SchemaFields', parameters: {$orderby: 'fieldScope,sequenceNumber'}, suspended: true, templateShareable: false}">
           <headerToolbar>
             <OverflowToolbar>
               <Title text="{i18n>schemaFields}" level="H3"/>
@@ -78,6 +77,7 @@
             </OverflowToolbar>
           </headerToolbar>
           <columns>
+            <Column width="7rem"><Text text="{i18n>colScope}"/></Column>
             <Column width="5rem" hAlign="End"><Text text="{i18n>colSequence}"/></Column>
             <Column width="25%"><Text text="{i18n>colField}"/></Column>
             <Column><Text text="{i18n>colType}"/></Column>
@@ -87,6 +87,7 @@
           </columns>
           <items>
             <ColumnListItem>
+              <Text text="{path: 'fieldScope', formatter: '.formatter.enumText'}"/>
               <Text text="{sequenceNumber}"/>
               <ObjectIdentifier title="{label}" text="{name}"/>
               <Text text="{path: 'valueType', formatter: '.formatter.enumText'}"/>
@@ -111,7 +112,7 @@
             <ColumnListItem type="Navigation" press=".onDocumentPress">
               <ObjectIdentifier title="{fileName}" text="{documentTypeName}"/>
               <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.documentState'}"/>
-              <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+              <ProgressIndicator percentValue="{= %{confidencePercent} }" displayValue="{confidencePercent} %" showValue="true"
                 state="{path: 'confidencePercent', formatter: '.formatter.percentState'}" visible="{= %{extractedFieldCount} > 0 }"/>
             </ColumnListItem>
           </items>

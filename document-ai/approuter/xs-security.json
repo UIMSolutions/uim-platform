@@ -1,0 +1,26 @@
+{
+  "xsappname": "uim-document-ai",
+  "tenant-mode": "dedicated",
+  "description": "UIM Document AI — extraction of business documents, review, confirmation, schemas, templates and training",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read documents, extracted values, schemas, templates, master data and training jobs" },
+    { "name": "$XSAPPNAME.Process", "description": "Upload and extract documents, correct values, confirm and reject documents" },
+    { "name": "$XSAPPNAME.Manage", "description": "Maintain schemas and fields, templates, document types, enrichment data, clients and training jobs" },
+    { "name": "$XSAPPNAME.Admin", "description": "Manage the user accounts of the built-in login (not used with XSUAA)" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "DocumentClerk", "description": "Upload, review and confirm documents", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Process"] },
+    { "name": "ExtractionExpert", "description": "Maintain schemas, templates and master data; train models; process documents",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Process", "$XSAPPNAME.Manage"] },
+    { "name": "Administrator", "description": "Everything",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Process", "$XSAPPNAME.Manage", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "DocumentAiViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "DocumentAiClerk", "role-template-references": ["$XSAPPNAME.DocumentClerk"] },
+    { "name": "DocumentAiExpert", "role-template-references": ["$XSAPPNAME.ExtractionExpert"] },
+    { "name": "DocumentAiAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

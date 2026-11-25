@@ -1,39 +1,50 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: AiDocument-ai
+  name: document-ai
   labels:
-    app: AiDocument-ai
+    app: document-ai
     part-of: uim-platform
 spec:
+  # file storage is a single-node snapshot — keep one replica
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
-      app: AiDocument-ai
+      app: document-ai
   template:
     metadata:
       labels:
-        app: AiDocument-ai
+        app: document-ai
     spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 999
       containers:
-      - name: AiDocument-ai
-        image: uim-platform/AiDocument-ai:latest
+      - name: document-ai
+        image: uim-platform/document-ai:latest
         ports:
         - containerPort: 8096
           protocol: TCP
         envFrom:
         - configMapRef:
-            name: AiDocument-ai-config
+            name: document-ai-config
+        - secretRef:
+            name: document-ai-secret
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
-            path: /api/v1/health
+            path: /health
             port: 8096
           initialDelaySeconds: 5
           periodSeconds: 30
           timeoutSeconds: 3
         readinessProbe:
           httpGet:
-            path: /api/v1/health
+            path: /health
             port: 8096
           initialDelaySeconds: 3
           periodSeconds: 10
@@ -43,9 +54,24 @@ spec:
             memory: "64Mi"
             cpu: "100m"
           limits:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "384Mi"
+            cpu: "1000m"
         securityContext:
-          runAsNonRoot: true
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: document-ai-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: document-ai-data
+  labels:
+    app: document-ai
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi

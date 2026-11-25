@@ -44,7 +44,7 @@ sap.ui.define([], function () {
       if (!value) {
         return "";
       }
-      var special = { mlModel: "ML Model", generativeAi: "Generative AI", templateBased: "Template Based", lineItem: "Line Item",
+      var special = { done: "Extracted", mlModel: "ML Model", generativeAi: "Generative AI", templateBased: "Template Based", lineItem: "Line Item",
         notChecked: "Not Checked", string: "Text", billOfLading: "Bill of Lading", letterOfCredit: "Letter of Credit" };
       if (special[value]) {
         return special[value];

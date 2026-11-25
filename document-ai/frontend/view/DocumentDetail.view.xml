@@ -40,7 +40,7 @@
           <MessageStrip text="{errorMessage}" type="{= %{status} === 'rejected' ? 'Warning' : 'Error' }" showIcon="true"
             visible="{= !!%{errorMessage} }" class="sapUiSmallMarginBottom"/>
           <MessageStrip text="{i18n>reviewHint}" type="Warning" showIcon="true" visible="{needsReview}" class="sapUiSmallMarginBottom"/>
-          <layout:HorizontalLayout allowWrapping="true">
+          <HBox wrap="Wrap" alignItems="Start">
             <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
               <Label text="{i18n>colStatus}"/>
               <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.documentIcon'}"
@@ -48,7 +48,7 @@
             </VBox>
             <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="12rem">
               <Label text="{i18n>colConfidence}"/>
-              <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+              <ProgressIndicator percentValue="{= %{confidencePercent} }" displayValue="{confidencePercent} %" showValue="true"
                 state="{path: 'confidencePercent', formatter: '.formatter.percentState'}"/>
             </VBox>
             <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
@@ -64,7 +64,7 @@
               <Label text="{i18n>colMatch}"/>
               <ObjectStatus text="{= %{matchedEnrichmentName} || ${path: 'matchStatus', formatter: '.formatter.enumText'} }"
                 state="{path: 'matchStatus', formatter: '.formatter.matchState'}"/>
-              <Text text="{path: 'matchScore', formatter: '.formatter.percent'}" visible="{= %{matchScore} > 0 }"/>
+              <Text text="{path: 'matchScore', targetType: 'any', formatter: '.formatter.percent'}" visible="{= %{matchScore} > 0 }"/>
             </VBox>
             <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
               <Label text="{i18n>colExtraction}"/>
@@ -73,7 +73,7 @@
             </VBox>
             <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
               <Label text="{i18n>colFile}"/>
-              <Text text="{fileType} · {path: 'fileSize', formatter: '.formatter.fileSize'} · {pageCount} {i18n>pages} · {language}"/>
+              <Text text="{fileType} · {path: 'fileSize', targetType: 'any', formatter: '.formatter.fileSize'} · {pageCount} {i18n>pages} · {language}"/>
               <Text text="{labelsText}" visible="{= !!%{labelsText} }"/>
             </VBox>
             <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" visible="{= !!%{confirmedBy} }">
@@ -81,7 +81,7 @@
               <Text text="{confirmedBy}"/>
               <Text text="{path: 'confirmedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
             </VBox>
-          </layout:HorizontalLayout>
+          </HBox>
         </VBox>
       </f:DynamicPageHeader>
     </f:header>
@@ -104,17 +104,17 @@
             <Column hAlign="End"/>
           </columns>
           <items>
-            <ColumnListItem highlight="{parts: ['confidenceLevel', 'missing', 'corrected'], formatter: '.formatter.valueState'}">
+            <ColumnListItem highlight="{parts: ['confidenceLevel', {path: 'missing', targetType: 'any'}, {path: 'corrected', targetType: 'any'}], formatter: '.formatter.valueState'}">
               <VBox>
                 <Label text="{label}" required="{required}" design="Bold"/>
                 <Text text="{name} · {path: 'valueType', formatter: '.formatter.enumText'}" class="sapUiTinyMarginTop"/>
               </VBox>
               <VBox>
                 <ObjectStatus text="{= %{value} || ${i18n>notFound} }"
-                  state="{parts: ['confidenceLevel', 'missing', 'corrected'], formatter: '.formatter.valueState'}"/>
+                  state="{parts: ['confidenceLevel', {path: 'missing', targetType: 'any'}, {path: 'corrected', targetType: 'any'}], formatter: '.formatter.valueState'}"/>
                 <Text text="{i18n>wasValue} {= %{originalValue} || '–' } ({correctedBy})" visible="{corrected}" class="sapUiTinyMarginTop"/>
               </VBox>
-              <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+              <ProgressIndicator percentValue="{= %{confidencePercent} }" displayValue="{confidencePercent} %" showValue="true"
                 state="{path: 'confidencePercent', formatter: '.formatter.percentState'}"/>
               <Text text="{page}"/>
               <Button icon="sap-icon://edit" tooltip="{i18n>correct}" type="Transparent" press=".onCorrect"
@@ -125,28 +125,29 @@
 
         <!-- line items: one group per row -->
         <Table id="lineItemsTable" growing="true" growingThreshold="200" noDataText="{i18n>noLineItems}" class="sapUiMediumMarginTop"
-          items="{path: '/ExtractedFields', parameters: {$orderby: 'rowIndex,sequenceNumber'}, sorter: {path: 'rowIndex', group: true},
-            suspended: true, templateShareable: false}">
+          items="{path: '/ExtractedFields', parameters: {$orderby: 'rowIndex,sequenceNumber'}, suspended: true, templateShareable: false}">
           <headerToolbar>
             <OverflowToolbar>
               <Title text="{i18n>lineItems}" level="H3"/>
             </OverflowToolbar>
           </headerToolbar>
           <columns>
+            <Column width="4rem" hAlign="End"><Text text="{i18n>colRow}"/></Column>
             <Column width="25%"><Text text="{i18n>colField}"/></Column>
             <Column width="35%"><Text text="{i18n>colValue}"/></Column>
             <Column width="10rem"><Text text="{i18n>colConfidence}"/></Column>
             <Column hAlign="End"/>
           </columns>
           <items>
-            <ColumnListItem highlight="{parts: ['confidenceLevel', 'missing', 'corrected'], formatter: '.formatter.valueState'}">
+            <ColumnListItem highlight="{parts: ['confidenceLevel', {path: 'missing', targetType: 'any'}, {path: 'corrected', targetType: 'any'}], formatter: '.formatter.valueState'}">
+              <Text text="{rowIndex}"/>
               <Label text="{label}" required="{required}"/>
               <VBox>
                 <ObjectStatus text="{= %{value} || '–' }"
-                  state="{parts: ['confidenceLevel', 'missing', 'corrected'], formatter: '.formatter.valueState'}"/>
+                  state="{parts: ['confidenceLevel', {path: 'missing', targetType: 'any'}, {path: 'corrected', targetType: 'any'}], formatter: '.formatter.valueState'}"/>
                 <Text text="{i18n>wasValue} {= %{originalValue} || '–' }" visible="{corrected}"/>
               </VBox>
-              <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+              <ProgressIndicator percentValue="{= %{confidencePercent} }" displayValue="{confidencePercent} %" showValue="true"
                 state="{path: 'confidencePercent', formatter: '.formatter.percentState'}"/>
               <Button icon="sap-icon://edit" tooltip="{i18n>correct}" type="Transparent" press=".onCorrect"
                 visible="{= %{documentStatus} === 'done' &amp;&amp; %{session>/canProcess} }"/>
