@@ -1,0 +1,122 @@
+<mvc:View controllerName="uim.documentai.controller.SchemaDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
+  height="100%">
+  <f:DynamicPage id="schemaPage" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:navigationActions>
+          <Button icon="sap-icon://nav-back" type="Transparent" tooltip="{i18n>back}" press=".onNavBack"/>
+        </f:navigationActions>
+        <f:heading><Title text="{name} · v{version}" level="H2"/></f:heading>
+        <f:expandedContent><Text text="{description}"/></f:expandedContent>
+        <f:snappedContent>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.schemaState'}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button text="{i18n>activate}" type="Emphasized" icon="sap-icon://activate" press=".onOperation"
+            visible="{= %{session>/canManage} &amp;&amp; %{status} === 'draft' }">
+            <customData><core:CustomData key="action" value="ActivateSchema"/><core:CustomData key="toast" value="statusChanged"/></customData></Button>
+          <Button text="{i18n>deprecate}" icon="sap-icon://past" press=".onOperation"
+            visible="{= %{session>/canManage} &amp;&amp; %{status} === 'active' }">
+            <customData><core:CustomData key="action" value="DeprecateSchema"/><core:CustomData key="toast" value="statusChanged"/></customData></Button>
+          <Button text="{i18n>copyVersion}" icon="sap-icon://copy" press=".onCopy" visible="{session>/canManage}"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <layout:HorizontalLayout allowWrapping="true">
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colStatus}"/>
+            <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.schemaState'}"
+              class="sapMObjectStatusLarge"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colCategory}"/>
+            <Text text="{path: 'category', formatter: '.formatter.enumText'}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colLanguages}"/>
+            <Text text="{supportedLanguagesText}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colFields}"/>
+            <Text text="{headerFieldCount} {i18n>headerFields} · {lineItemFieldCount} {i18n>lineItems}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" visible="{= !!%{basedOnId} }">
+            <Label text="{i18n>colBasedOn}"/>
+            <Text text="{basedOnId}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>colActivatedAt}"/>
+            <Text text="{path: 'activatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+          </VBox>
+        </layout:HorizontalLayout>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <VBox class="sapUiResponsiveContentPadding">
+        <MessageStrip text="{i18n>schemaFrozen}" type="Information" showIcon="true" visible="{= %{status} !== 'draft' }"
+          class="sapUiSmallMarginBottom"/>
+        <Table id="fieldsTable" mode="SingleSelectLeft" growing="true" growingThreshold="100" noDataText="{i18n>noFields}"
+          items="{path: '/SchemaFields', parameters: {$orderby: 'fieldScope,sequenceNumber'}, sorter: {path: 'fieldScope', group: true},
+            suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>schemaFields}" level="H3"/>
+              <ToolbarSpacer/>
+              <Button text="{i18n>addField}" type="Emphasized" icon="sap-icon://add" press=".onOpenDialog"
+                visible="{= %{session>/canManage} &amp;&amp; %{status} === 'draft' }">
+                <customData><core:CustomData key="dialog" value="schemaField"/></customData></Button>
+              <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{= %{session>/canManage} &amp;&amp; %{status} === 'draft' }">
+                <customData><core:CustomData key="table" value="fieldsTable"/><core:CustomData key="dialog" value="schemaField"/></customData></Button>
+              <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{= %{session>/canManage} &amp;&amp; %{status} === 'draft' }">
+                <customData><core:CustomData key="table" value="fieldsTable"/></customData></Button>
+            </OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column width="5rem" hAlign="End"><Text text="{i18n>colSequence}"/></Column>
+            <Column width="25%"><Text text="{i18n>colField}"/></Column>
+            <Column><Text text="{i18n>colType}"/></Column>
+            <Column hAlign="Center"><Text text="{i18n>colRequired}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDefault}"/></Column>
+            <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <Text text="{sequenceNumber}"/>
+              <ObjectIdentifier title="{label}" text="{name}"/>
+              <Text text="{path: 'valueType', formatter: '.formatter.enumText'}"/>
+              <core:Icon src="sap-icon://accept" visible="{required}"/>
+              <Text text="{defaultValue}"/>
+              <Text text="{description}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <Table id="schemaDocumentsTable" growing="true" noDataText="{i18n>noDocuments}" class="sapUiMediumMarginTop"
+          items="{path: '/Documents', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar><Title text="{i18n>tabDocuments}" level="H3"/></OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column width="40%"><Text text="{i18n>colDocument}"/></Column>
+            <Column><Text text="{i18n>colStatus}"/></Column>
+            <Column width="12rem"><Text text="{i18n>colConfidence}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem type="Navigation" press=".onDocumentPress">
+              <ObjectIdentifier title="{fileName}" text="{documentTypeName}"/>
+              <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.documentState'}"/>
+              <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+                state="{path: 'confidencePercent', formatter: '.formatter.percentState'}" visible="{= %{extractedFieldCount} > 0 }"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </VBox>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

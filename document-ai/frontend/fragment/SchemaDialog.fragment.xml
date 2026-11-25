@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+  <Dialog title="{= %{view>/form/schema/edit} ? ${i18n>editSchema} : ${i18n>createSchema} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/schema/id}" enabled="{= !%{view>/form/schema/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/schema/name}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/schema/description}" rows="2"/>
+      <Label text="{i18n>colCategory}"/>
+      <Select selectedKey="{view>/form/schema/category}" width="100%">
+        <core:Item key="general" text="{i18n>enum_general}"/>
+        <core:Item key="invoice" text="{i18n>enum_invoice}"/>
+        <core:Item key="purchaseOrder" text="{i18n>enum_purchaseOrder}"/>
+        <core:Item key="paymentAdvice" text="{i18n>enum_paymentAdvice}"/>
+        <core:Item key="deliveryNote" text="{i18n>enum_deliveryNote}"/>
+        <core:Item key="creditMemo" text="{i18n>enum_creditMemo}"/>
+        <core:Item key="bankStatement" text="{i18n>enum_bankStatement}"/>
+        <core:Item key="receipt" text="{i18n>enum_receipt}"/>
+        <core:Item key="contract" text="{i18n>enum_contract}"/>
+        <core:Item key="customsDeclaration" text="{i18n>enum_customsDeclaration}"/>
+        <core:Item key="billOfLading" text="{i18n>enum_billOfLading}"/>
+        <core:Item key="letterOfCredit" text="{i18n>enum_letterOfCredit}"/>
+        <core:Item key="custom" text="{i18n>enum_custom}"/>
+      </Select>
+      <Label text="{i18n>colDocumentType}"/>
+      <ComboBox selectedKey="{view>/form/schema/documentTypeId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/DocumentTypes', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colClient}"/>
+      <ComboBox selectedKey="{view>/form/schema/clientId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/Clients', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colLanguages}"/>
+      <TextArea value="{view>/form/schema/supportedLanguages}" rows="2" placeholder="{i18n>languagesPlaceholder}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

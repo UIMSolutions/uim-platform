@@ -1,0 +1,62 @@
+[
+  {
+    "clientId": null,
+    "documentTypeId": null,
+    "attributesText": "senderName=ACME Corp; senderCity=Berlin",
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "sup-acme",
+    "matchedDocumentCount": 2,
+    "externalId": "100042",
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "name": "ACME Corp",
+    "description": "Supplier 100042",
+    "attributes": [
+      "senderName=ACME Corp",
+      "senderCity=Berlin"
+    ],
+    "subtype": "supplier",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "clientId": null,
+    "documentTypeId": null,
+    "attributesText": "senderName=Globex GmbH; senderCity=Hamburg",
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "sup-globex",
+    "matchedDocumentCount": 1,
+    "externalId": "100077",
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "name": "Globex GmbH",
+    "description": "Supplier 100077",
+    "attributes": [
+      "senderName=Globex GmbH",
+      "senderCity=Hamburg"
+    ],
+    "subtype": "supplier",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "clientId": null,
+    "documentTypeId": null,
+    "attributesText": "senderName=Initech AG; senderCity=Munich",
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "sup-initech",
+    "matchedDocumentCount": 0,
+    "externalId": "100103",
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "name": "Initech AG",
+    "description": "Supplier 100103",
+    "attributes": [
+      "senderName=Initech AG",
+      "senderCity=Munich"
+    ],
+    "subtype": "supplier",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  }
+]

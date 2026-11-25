@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+  <Dialog title="{= %{view>/form/training/edit} ? ${i18n>editTraining} : ${i18n>createTraining} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/training/id}" enabled="{= !%{view>/form/training/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/training/name}"/>
+      <Label text="{i18n>colSchema}" required="true"/>
+      <ComboBox selectedKey="{view>/form/training/schemaId}" width="100%" enabled="{= !%{view>/form/training/edit} }"
+        items="{path: '/Schemas', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colDocumentType}"/>
+      <ComboBox selectedKey="{view>/form/training/documentTypeId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/DocumentTypes', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colClient}"/>
+      <ComboBox selectedKey="{view>/form/training/clientId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/Clients', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/training/description}" rows="2"/>
+      <Label text="" visible="{= !%{view>/form/training/edit} }"/>
+      <CheckBox text="{i18n>startNow}" selected="{view>/form/training/startNow}" visible="{= !%{view>/form/training/edit} }"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

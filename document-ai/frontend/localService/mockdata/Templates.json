@@ -1,0 +1,21 @@
+[
+  {
+    "clientId": "finance",
+    "documentTypeId": "supplier-invoice",
+    "senderName": "ACME Corp",
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "acme-invoice",
+    "sampleDocumentIds": [],
+    "documentCount": 2,
+    "schemaName": "Supplier Invoice",
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "name": "ACME Corp invoice layout",
+    "sampleCount": 0,
+    "schemaId": "invoice",
+    "description": "Two column layout, totals bottom right",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  }
+]

@@ -1,0 +1,69 @@
+[
+  {
+    "clientId": null,
+    "documentCount": 5,
+    "supportedFileTypesText": "pdf, png, jpeg, tiff",
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "supplier-invoice",
+    "defaultSchemaId": "invoice",
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "clientName": "",
+    "name": "Supplier Invoice",
+    "category": "invoice",
+    "description": "Supplier Invoice documents",
+    "defaultSchemaName": "Supplier Invoice",
+    "tenantId": "default",
+    "supportedFileTypes": [
+      "pdf",
+      "png",
+      "jpeg",
+      "tiff"
+    ],
+    "updatedBy": "anonymous"
+  },
+  {
+    "clientId": null,
+    "documentCount": 1,
+    "supportedFileTypesText": "pdf, docx, xlsx",
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "purchase-order",
+    "defaultSchemaId": "purchase-order",
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "clientName": "",
+    "name": "Purchase Order",
+    "category": "purchaseOrder",
+    "description": "Purchase Order documents",
+    "defaultSchemaName": "Purchase Order",
+    "tenantId": "default",
+    "supportedFileTypes": [
+      "pdf",
+      "docx",
+      "xlsx"
+    ],
+    "updatedBy": "anonymous"
+  },
+  {
+    "clientId": null,
+    "documentCount": 0,
+    "supportedFileTypesText": "pdf, png, jpeg",
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "receipt",
+    "defaultSchemaId": null,
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "clientName": "",
+    "name": "Expense Receipt",
+    "category": "receipt",
+    "description": "Expense Receipt documents",
+    "defaultSchemaName": "",
+    "tenantId": "default",
+    "supportedFileTypes": [
+      "pdf",
+      "png",
+      "jpeg"
+    ],
+    "updatedBy": "anonymous"
+  }
+]

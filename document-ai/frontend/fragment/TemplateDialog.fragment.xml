@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+  <Dialog title="{= %{view>/form/template/edit} ? ${i18n>editTemplate} : ${i18n>createTemplate} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/template/id}" enabled="{= !%{view>/form/template/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/template/name}"/>
+      <Label text="{i18n>colSchema}" required="true"/>
+      <ComboBox selectedKey="{view>/form/template/schemaId}" width="100%" enabled="{= !%{view>/form/template/edit} }"
+        items="{path: '/Schemas', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colSender}"/>
+      <Input value="{view>/form/template/senderName}" placeholder="ACME Corp"/>
+      <Label text="{i18n>colDocumentType}"/>
+      <ComboBox selectedKey="{view>/form/template/documentTypeId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/DocumentTypes', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colClient}"/>
+      <ComboBox selectedKey="{view>/form/template/clientId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/Clients', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/template/description}" rows="2"/>
+      <Label text="{i18n>colSamples}"/>
+      <TextArea value="{view>/form/template/sampleDocumentIds}" rows="2" placeholder="{i18n>samplesPlaceholder}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

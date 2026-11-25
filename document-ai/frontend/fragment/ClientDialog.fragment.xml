@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+  <Dialog title="{= %{view>/form/client/edit} ? ${i18n>editClient} : ${i18n>createClient} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/client/id}" enabled="{= !%{view>/form/client/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/client/name}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/client/description}" rows="2"/>
+      <Label text="{i18n>colQuota}"/>
+      <StepInput value="{view>/form/client/documentQuota}" min="0" max="100000000" step="100" description="{i18n>quotaHint}"/>
+      <Label text=""/>
+      <CheckBox text="{i18n>colDataFeedback}" selected="{view>/form/client/dataFeedbackEnabled}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

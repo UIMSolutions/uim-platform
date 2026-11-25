@@ -1,0 +1,30 @@
+[
+  {
+    "documentCount": 5,
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "finance",
+    "dataFeedbackEnabled": true,
+    "documentQuota": 1000,
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "name": "Finance – Accounts Payable",
+    "quotaUsedPercent": 0,
+    "description": "Supplier invoices and receipts of the shared service center",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "documentCount": 1,
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "procurement",
+    "dataFeedbackEnabled": false,
+    "documentQuota": 0,
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "name": "Procurement",
+    "quotaUsedPercent": 0,
+    "description": "Purchase orders and order confirmations",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  }
+]

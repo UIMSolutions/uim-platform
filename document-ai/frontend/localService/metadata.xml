@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.documentai" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Document">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientName" Type="Edm.String"/>
+        <Property Name="fileName" Type="Edm.String" Nullable="false"/>
+        <Property Name="fileType" Type="Edm.String"/>
+        <Property Name="mimeType" Type="Edm.String"/>
+        <Property Name="fileSize" Type="Edm.Int64"/>
+        <Property Name="pageCount" Type="Edm.Int32"/>
+        <Property Name="language" Type="Edm.String"/>
+        <Property Name="documentTypeId" Type="Edm.String"/>
+        <Property Name="documentTypeName" Type="Edm.String"/>
+        <Property Name="schemaId" Type="Edm.String"/>
+        <Property Name="schemaName" Type="Edm.String"/>
+        <Property Name="templateId" Type="Edm.String"/>
+        <Property Name="templateName" Type="Edm.String"/>
+        <Property Name="extractionMethod" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="labelsText" Type="Edm.String"/>
+        <Property Name="attempts" Type="Edm.Int32"/>
+        <Property Name="processedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="confirmedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="confirmedBy" Type="Edm.String"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+        <Property Name="overallConfidence" Type="Edm.Double"/>
+        <Property Name="confidencePercent" Type="Edm.Int32"/>
+        <Property Name="confidenceLevel" Type="Edm.String"/>
+        <Property Name="extractedFieldCount" Type="Edm.Int32"/>
+        <Property Name="lineItemCount" Type="Edm.Int32"/>
+        <Property Name="lowConfidenceCount" Type="Edm.Int32"/>
+        <Property Name="correctedFieldCount" Type="Edm.Int32"/>
+        <Property Name="needsReview" Type="Edm.Boolean"/>
+        <Property Name="matchedEnrichmentId" Type="Edm.String"/>
+        <Property Name="matchedEnrichmentName" Type="Edm.String"/>
+        <Property Name="matchStatus" Type="Edm.String"/>
+        <Property Name="matchScore" Type="Edm.Double"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ExtractedField">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="documentId" Type="Edm.String"/>
+        <Property Name="documentName" Type="Edm.String"/>
+        <Property Name="documentStatus" Type="Edm.String"/>
+        <Property Name="schemaFieldId" Type="Edm.String"/>
+        <Property Name="fieldScope" Type="Edm.String"/>
+        <Property Name="rowIndex" Type="Edm.Int32"/>
+        <Property Name="sequenceNumber" Type="Edm.Int32"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="label" Type="Edm.String"/>
+        <Property Name="valueType" Type="Edm.String"/>
+        <Property Name="required" Type="Edm.Boolean"/>
+        <Property Name="value" Type="Edm.String"/>
+        <Property Name="originalValue" Type="Edm.String"/>
+        <Property Name="confidence" Type="Edm.Double"/>
+        <Property Name="confidencePercent" Type="Edm.Int32"/>
+        <Property Name="confidenceLevel" Type="Edm.String"/>
+        <Property Name="page" Type="Edm.Int32"/>
+        <Property Name="coordinates" Type="Edm.String"/>
+        <Property Name="corrected" Type="Edm.Boolean"/>
+        <Property Name="correctedBy" Type="Edm.String"/>
+        <Property Name="missing" Type="Edm.Boolean"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Schema">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="documentTypeId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="supportedLanguages" Type="Collection(Edm.String)"/>
+        <Property Name="supportedLanguagesText" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.Int32"/>
+        <Property Name="basedOnId" Type="Edm.String"/>
+        <Property Name="activatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="headerFieldCount" Type="Edm.Int32"/>
+        <Property Name="lineItemFieldCount" Type="Edm.Int32"/>
+        <Property Name="documentCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="SchemaField">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="schemaId" Type="Edm.String" Nullable="false"/>
+        <Property Name="schemaStatus" Type="Edm.String"/>
+        <Property Name="fieldScope" Type="Edm.String"/>
+        <Property Name="sequenceNumber" Type="Edm.Int32"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="label" Type="Edm.String"/>
+        <Property Name="valueType" Type="Edm.String"/>
+        <Property Name="required" Type="Edm.Boolean"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="defaultValue" Type="Edm.String"/>
+        <Property Name="format" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Template">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="schemaId" Type="Edm.String" Nullable="false"/>
+        <Property Name="schemaName" Type="Edm.String"/>
+        <Property Name="documentTypeId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="senderName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="sampleDocumentIds" Type="Collection(Edm.String)"/>
+        <Property Name="sampleCount" Type="Edm.Int32"/>
+        <Property Name="documentCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DocumentType">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="defaultSchemaId" Type="Edm.String"/>
+        <Property Name="defaultSchemaName" Type="Edm.String"/>
+        <Property Name="supportedFileTypes" Type="Collection(Edm.String)"/>
+        <Property Name="supportedFileTypesText" Type="Edm.String"/>
+        <Property Name="documentCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="EnrichmentRecord">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="documentTypeId" Type="Edm.String"/>
+        <Property Name="subtype" Type="Edm.String"/>
+        <Property Name="externalId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="attributes" Type="Collection(Edm.String)"/>
+        <Property Name="attributesText" Type="Edm.String"/>
+        <Property Name="matchedDocumentCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Client">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="documentQuota" Type="Edm.Int32"/>
+        <Property Name="dataFeedbackEnabled" Type="Edm.Boolean"/>
+        <Property Name="documentCount" Type="Edm.Int32"/>
+        <Property Name="quotaUsedPercent" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="TrainingJob">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="documentTypeId" Type="Edm.String"/>
+        <Property Name="schemaId" Type="Edm.String" Nullable="false"/>
+        <Property Name="schemaName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="modelVersion" Type="Edm.String"/>
+        <Property Name="documentCount" Type="Edm.Int32"/>
+        <Property Name="fieldCount" Type="Edm.Int32"/>
+        <Property Name="accuracy" Type="Edm.Double"/>
+        <Property Name="accuracyPercent" Type="Edm.Int32"/>
+        <Property Name="progressPercent" Type="Edm.Int32"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="temporarilyLocked" Type="Edm.Boolean"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="documents" Type="Edm.Int32"/>
+        <Property Name="pendingDocuments" Type="Edm.Int32"/>
+        <Property Name="doneDocuments" Type="Edm.Int32"/>
+        <Property Name="reviewDocuments" Type="Edm.Int32"/>
+        <Property Name="confirmedDocuments" Type="Edm.Int32"/>
+        <Property Name="rejectedDocuments" Type="Edm.Int32"/>
+        <Property Name="failedDocuments" Type="Edm.Int32"/>
+        <Property Name="documentsLast24h" Type="Edm.Int32"/>
+        <Property Name="extractedFields" Type="Edm.Int32"/>
+        <Property Name="correctedFields" Type="Edm.Int32"/>
+        <Property Name="correctionRate" Type="Edm.Int32"/>
+        <Property Name="averageConfidence" Type="Edm.Int32"/>
+        <Property Name="matchedDocuments" Type="Edm.Int32"/>
+        <Property Name="schemas" Type="Edm.Int32"/>
+        <Property Name="activeSchemas" Type="Edm.Int32"/>
+        <Property Name="templates" Type="Edm.Int32"/>
+        <Property Name="documentTypes" Type="Edm.Int32"/>
+        <Property Name="enrichmentRecords" Type="Edm.Int32"/>
+        <Property Name="clients" Type="Edm.Int32"/>
+        <Property Name="trainingJobs" Type="Edm.Int32"/>
+        <Property Name="runningTrainingJobs" Type="Edm.Int32"/>
+        <Property Name="bestAccuracy" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="ProcessingResult">
+        <Property Name="documents" Type="Edm.Int32"/>
+        <Property Name="extracted" Type="Edm.Int32"/>
+        <Property Name="failed" Type="Edm.Int32"/>
+        <Property Name="messages" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="clients" Type="Edm.Int32"/>
+        <Property Name="documentTypes" Type="Edm.Int32"/>
+        <Property Name="schemas" Type="Edm.Int32"/>
+        <Property Name="schemaFields" Type="Edm.Int32"/>
+        <Property Name="templates" Type="Edm.Int32"/>
+        <Property Name="enrichmentRecords" Type="Edm.Int32"/>
+        <Property Name="documents" Type="Edm.Int32"/>
+        <Property Name="trainingJobs" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="ExtractDocument" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.Document"/>
+      </Action>
+      <Action Name="ConfirmDocument" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.Document"/>
+      </Action>
+      <Action Name="RejectDocument" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="reason" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.Document"/>
+      </Action>
+      <Action Name="ProcessPendingDocuments" IsBound="false">
+        <ReturnType Type="uim.documentai.ProcessingResult"/>
+      </Action>
+      <Action Name="CorrectField" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="value" Type="Edm.String"/>
+        <ReturnType Type="uim.documentai.ExtractedField"/>
+      </Action>
+      <Action Name="ActivateSchema" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.Schema"/>
+      </Action>
+      <Action Name="DeprecateSchema" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.Schema"/>
+      </Action>
+      <Action Name="CopySchema" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="newId" Type="Edm.String"/>
+        <ReturnType Type="uim.documentai.Schema"/>
+      </Action>
+      <Action Name="ActivateTemplate" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.Template"/>
+      </Action>
+      <Action Name="DeactivateTemplate" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.Template"/>
+      </Action>
+      <Action Name="StartTraining" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.TrainingJob"/>
+      </Action>
+      <Action Name="CancelTraining" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.documentai.TrainingJob"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.documentai.SeedResult"/>
+      </Action>
+      <EntityContainer Name="DocumentAiService">
+        <EntitySet Name="Documents" EntityType="uim.documentai.Document"/>
+        <EntitySet Name="ExtractedFields" EntityType="uim.documentai.ExtractedField"/>
+        <EntitySet Name="Schemas" EntityType="uim.documentai.Schema"/>
+        <EntitySet Name="SchemaFields" EntityType="uim.documentai.SchemaField"/>
+        <EntitySet Name="Templates" EntityType="uim.documentai.Template"/>
+        <EntitySet Name="DocumentTypes" EntityType="uim.documentai.DocumentType"/>
+        <EntitySet Name="EnrichmentData" EntityType="uim.documentai.EnrichmentRecord"/>
+        <EntitySet Name="Clients" EntityType="uim.documentai.Client"/>
+        <EntitySet Name="TrainingJobs" EntityType="uim.documentai.TrainingJob"/>
+        <EntitySet Name="Users" EntityType="uim.documentai.User"/>
+        <Singleton Name="Statistics" Type="uim.documentai.Statistic"/>
+        <ActionImport Name="ExtractDocument" Action="uim.documentai.ExtractDocument"/>
+        <ActionImport Name="ConfirmDocument" Action="uim.documentai.ConfirmDocument"/>
+        <ActionImport Name="RejectDocument" Action="uim.documentai.RejectDocument"/>
+        <ActionImport Name="ProcessPendingDocuments" Action="uim.documentai.ProcessPendingDocuments"/>
+        <ActionImport Name="CorrectField" Action="uim.documentai.CorrectField"/>
+        <ActionImport Name="ActivateSchema" Action="uim.documentai.ActivateSchema"/>
+        <ActionImport Name="DeprecateSchema" Action="uim.documentai.DeprecateSchema"/>
+        <ActionImport Name="CopySchema" Action="uim.documentai.CopySchema"/>
+        <ActionImport Name="ActivateTemplate" Action="uim.documentai.ActivateTemplate"/>
+        <ActionImport Name="DeactivateTemplate" Action="uim.documentai.DeactivateTemplate"/>
+        <ActionImport Name="StartTraining" Action="uim.documentai.StartTraining"/>
+        <ActionImport Name="CancelTraining" Action="uim.documentai.CancelTraining"/>
+        <ActionImport Name="SeedDemoData" Action="uim.documentai.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.documentai.ProcessingResult/documents"><Annotation Term="Common.Label" String="Documents"/></Annotations>
+      <Annotations Target="uim.documentai.ProcessingResult/extracted"><Annotation Term="Common.Label" String="Extracted"/></Annotations>
+      <Annotations Target="uim.documentai.ProcessingResult/failed"><Annotation Term="Common.Label" String="Failed"/></Annotations>
+      <Annotations Target="uim.documentai.ProcessingResult/messages"><Annotation Term="Common.Label" String="Messages"/></Annotations>
+      <Annotations Target="uim.documentai.Document/id"><Annotation Term="Common.Label" String="Document"/></Annotations>
+      <Annotations Target="uim.documentai.Document/clientId"><Annotation Term="Common.Label" String="Client"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/clientName"><Annotation Term="Common.Label" String="Client Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/fileName"><Annotation Term="Common.Label" String="File Name"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/fileType"><Annotation Term="Common.Label" String="File Type"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/mimeType"><Annotation Term="Common.Label" String="MIME Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/fileSize"><Annotation Term="Common.Label" String="File Size (Bytes)"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/pageCount"><Annotation Term="Common.Label" String="Pages"/></Annotations>
+      <Annotations Target="uim.documentai.Document/language"><Annotation Term="Common.Label" String="Language"/></Annotations>
+      <Annotations Target="uim.documentai.Document/documentTypeId"><Annotation Term="Common.Label" String="Document Type"/></Annotations>
+      <Annotations Target="uim.documentai.Document/documentTypeName"><Annotation Term="Common.Label" String="Document Type Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/schemaId"><Annotation Term="Common.Label" String="Schema"/></Annotations>
+      <Annotations Target="uim.documentai.Document/schemaName"><Annotation Term="Common.Label" String="Schema Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/templateId"><Annotation Term="Common.Label" String="Template"/></Annotations>
+      <Annotations Target="uim.documentai.Document/templateName"><Annotation Term="Common.Label" String="Template Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/extractionMethod"><Annotation Term="Common.Label" String="Extraction Method"/></Annotations>
+      <Annotations Target="uim.documentai.Document/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.documentai.Document/labelsText"><Annotation Term="Common.Label" String="Labels"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/attempts"><Annotation Term="Common.Label" String="Extraction Runs"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/processedAt"><Annotation Term="Common.Label" String="Extracted At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/confirmedAt"><Annotation Term="Common.Label" String="Confirmed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/confirmedBy"><Annotation Term="Common.Label" String="Confirmed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/errorMessage"><Annotation Term="Common.Label" String="Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/overallConfidence"><Annotation Term="Common.Label" String="Confidence"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/confidencePercent"><Annotation Term="Common.Label" String="Confidence (%)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/confidenceLevel"><Annotation Term="Common.Label" String="Confidence Level"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/extractedFieldCount"><Annotation Term="Common.Label" String="Values"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/lineItemCount"><Annotation Term="Common.Label" String="Line Items"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/lowConfidenceCount"><Annotation Term="Common.Label" String="To Review"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/correctedFieldCount"><Annotation Term="Common.Label" String="Corrected"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/needsReview"><Annotation Term="Common.Label" String="Needs Review"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/matchedEnrichmentId"><Annotation Term="Common.Label" String="Matched Record"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/matchedEnrichmentName"><Annotation Term="Common.Label" String="Matched Record Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/matchStatus"><Annotation Term="Common.Label" String="Match"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/matchScore"><Annotation Term="Common.Label" String="Match Score"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Document">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Document"/><PropertyValue Property="TypeNamePlural" String="Documents"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fileName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="documentTypeName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fileName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="documentTypeName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="confidencePercent"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lowConfidenceCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>documentTypeId</PropertyPath><PropertyPath>schemaId</PropertyPath><PropertyPath>clientId</PropertyPath><PropertyPath>needsReview</PropertyPath><PropertyPath>matchStatus</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/Documents">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/id"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/documentId"><Annotation Term="Common.Label" String="Document"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/documentName"><Annotation Term="Common.Label" String="Document Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/documentStatus"><Annotation Term="Common.Label" String="Document Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/schemaFieldId"><Annotation Term="Common.Label" String="Schema Field"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/fieldScope"><Annotation Term="Common.Label" String="Scope"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/rowIndex"><Annotation Term="Common.Label" String="Row"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/sequenceNumber"><Annotation Term="Common.Label" String="Sequence"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/name"><Annotation Term="Common.Label" String="Field"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/label"><Annotation Term="Common.Label" String="Label"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/valueType"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/required"><Annotation Term="Common.Label" String="Required"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/value"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/originalValue"><Annotation Term="Common.Label" String="Extracted Value"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/confidence"><Annotation Term="Common.Label" String="Confidence"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/confidencePercent"><Annotation Term="Common.Label" String="Confidence (%)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/confidenceLevel"><Annotation Term="Common.Label" String="Confidence Level"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/page"><Annotation Term="Common.Label" String="Page"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/coordinates"><Annotation Term="Common.Label" String="Position"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/corrected"><Annotation Term="Common.Label" String="Corrected"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/correctedBy"><Annotation Term="Common.Label" String="Corrected By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/missing"><Annotation Term="Common.Label" String="Missing"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.ExtractedField">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Extracted Value"/><PropertyValue Property="TypeNamePlural" String="Extracted Values"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="label"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="value"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="label"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="value"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="confidencePercent"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="confidenceLevel"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="corrected"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>documentId</PropertyPath><PropertyPath>fieldScope</PropertyPath><PropertyPath>confidenceLevel</PropertyPath><PropertyPath>corrected</PropertyPath><PropertyPath>missing</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/ExtractedFields">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.Schema/id"><Annotation Term="Common.Label" String="Schema"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/clientId"><Annotation Term="Common.Label" String="Client"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/documentTypeId"><Annotation Term="Common.Label" String="Document Type"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/supportedLanguages"><Annotation Term="Common.Label" String="Languages"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/supportedLanguagesText"><Annotation Term="Common.Label" String="Languages"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/version"><Annotation Term="Common.Label" String="Version"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/basedOnId"><Annotation Term="Common.Label" String="Based On"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/activatedAt"><Annotation Term="Common.Label" String="Activated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/headerFieldCount"><Annotation Term="Common.Label" String="Header Fields"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/lineItemFieldCount"><Annotation Term="Common.Label" String="Line Item Fields"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/documentCount"><Annotation Term="Common.Label" String="Documents"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Schema">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Schema"/><PropertyValue Property="TypeNamePlural" String="Schemas"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="version"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="headerFieldCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lineItemFieldCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>category</PropertyPath><PropertyPath>documentTypeId</PropertyPath><PropertyPath>clientId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/Schemas">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.SchemaField/id"><Annotation Term="Common.Label" String="Field"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/schemaId"><Annotation Term="Common.Label" String="Schema"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/schemaStatus"><Annotation Term="Common.Label" String="Schema Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/fieldScope"><Annotation Term="Common.Label" String="Scope"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/sequenceNumber"><Annotation Term="Common.Label" String="Sequence"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/label"><Annotation Term="Common.Label" String="Label"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/valueType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/required"><Annotation Term="Common.Label" String="Required"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/defaultValue"><Annotation Term="Common.Label" String="Default"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/format"><Annotation Term="Common.Label" String="Format"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.SchemaField">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Schema Field"/><PropertyValue Property="TypeNamePlural" String="Schema Fields"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="label"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="fieldScope"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sequenceNumber"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="label"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="valueType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="required"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>schemaId</PropertyPath><PropertyPath>fieldScope</PropertyPath><PropertyPath>valueType</PropertyPath><PropertyPath>required</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/SchemaFields">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.Template/id"><Annotation Term="Common.Label" String="Template"/></Annotations>
+      <Annotations Target="uim.documentai.Template/clientId"><Annotation Term="Common.Label" String="Client"/></Annotations>
+      <Annotations Target="uim.documentai.Template/schemaId"><Annotation Term="Common.Label" String="Schema"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/schemaName"><Annotation Term="Common.Label" String="Schema Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/documentTypeId"><Annotation Term="Common.Label" String="Document Type"/></Annotations>
+      <Annotations Target="uim.documentai.Template/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.documentai.Template/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.documentai.Template/senderName"><Annotation Term="Common.Label" String="Sender"/></Annotations>
+      <Annotations Target="uim.documentai.Template/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/sampleDocumentIds"><Annotation Term="Common.Label" String="Sample Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Template/sampleCount"><Annotation Term="Common.Label" String="Samples"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/documentCount"><Annotation Term="Common.Label" String="Documents"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Template">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Template"/><PropertyValue Property="TypeNamePlural" String="Templates"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="senderName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="senderName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="schemaName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="documentCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>schemaId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>documentTypeId</PropertyPath><PropertyPath>clientId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/Templates">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentType/id"><Annotation Term="Common.Label" String="Document Type"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/clientId"><Annotation Term="Common.Label" String="Client"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/clientName"><Annotation Term="Common.Label" String="Client Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/defaultSchemaId"><Annotation Term="Common.Label" String="Default Schema"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/defaultSchemaName"><Annotation Term="Common.Label" String="Default Schema Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/supportedFileTypes"><Annotation Term="Common.Label" String="File Types"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/supportedFileTypesText"><Annotation Term="Common.Label" String="File Types"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/documentCount"><Annotation Term="Common.Label" String="Documents"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.DocumentType">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Document Type"/><PropertyValue Property="TypeNamePlural" String="Document Types"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="defaultSchemaName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="supportedFileTypesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="documentCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>category</PropertyPath><PropertyPath>clientId</PropertyPath><PropertyPath>defaultSchemaId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/DocumentTypes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/id"><Annotation Term="Common.Label" String="Record"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/clientId"><Annotation Term="Common.Label" String="Client"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/documentTypeId"><Annotation Term="Common.Label" String="Document Type"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/subtype"><Annotation Term="Common.Label" String="Subtype"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/externalId"><Annotation Term="Common.Label" String="External ID"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/attributes"><Annotation Term="Common.Label" String="Attributes"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/attributesText"><Annotation Term="Common.Label" String="Attributes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/matchedDocumentCount"><Annotation Term="Common.Label" String="Matched Documents"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.EnrichmentRecord">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Enrichment Record"/><PropertyValue Property="TypeNamePlural" String="Enrichment Data"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="externalId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subtype"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="externalId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="attributesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="matchedDocumentCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>subtype</PropertyPath><PropertyPath>clientId</PropertyPath><PropertyPath>documentTypeId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/EnrichmentData">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.Client/id"><Annotation Term="Common.Label" String="Client"/></Annotations>
+      <Annotations Target="uim.documentai.Client/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.documentai.Client/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.documentai.Client/documentQuota"><Annotation Term="Common.Label" String="Document Quota"/></Annotations>
+      <Annotations Target="uim.documentai.Client/dataFeedbackEnabled"><Annotation Term="Common.Label" String="Data Feedback"/></Annotations>
+      <Annotations Target="uim.documentai.Client/documentCount"><Annotation Term="Common.Label" String="Documents"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Client/quotaUsedPercent"><Annotation Term="Common.Label" String="Quota Used (%)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Client/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Client/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Client/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Client/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Client/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.Client">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Client"/><PropertyValue Property="TypeNamePlural" String="Clients"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="documentQuota"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="documentCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="quotaUsedPercent"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dataFeedbackEnabled"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>dataFeedbackEnabled</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/Clients">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/id"><Annotation Term="Common.Label" String="Training Job"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/clientId"><Annotation Term="Common.Label" String="Client"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/documentTypeId"><Annotation Term="Common.Label" String="Document Type"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/schemaId"><Annotation Term="Common.Label" String="Schema"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/schemaName"><Annotation Term="Common.Label" String="Schema Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/statusMessage"><Annotation Term="Common.Label" String="Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/modelVersion"><Annotation Term="Common.Label" String="Model Version"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/documentCount"><Annotation Term="Common.Label" String="Documents"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/fieldCount"><Annotation Term="Common.Label" String="Values"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/accuracy"><Annotation Term="Common.Label" String="Accuracy"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/accuracyPercent"><Annotation Term="Common.Label" String="Accuracy (%)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/progressPercent"><Annotation Term="Common.Label" String="Progress"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/startedAt"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/completedAt"><Annotation Term="Common.Label" String="Finished At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.TrainingJob">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Training Job"/><PropertyValue Property="TypeNamePlural" String="Training Jobs"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="schemaName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="schemaName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="progressPercent"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="accuracyPercent"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="modelVersion"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>schemaId</PropertyPath><PropertyPath>clientId</PropertyPath><PropertyPath>documentTypeId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/TrainingJobs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.User/id"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.documentai.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.documentai.User/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.documentai.User/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.documentai.User/scopesText"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.documentai.User/temporarilyLocked"><Annotation Term="Common.Label" String="Temporarily Locked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User/failedLogins"><Annotation Term="Common.Label" String="Failed Logins"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.documentai.User">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="User"/><PropertyValue Property="TypeNamePlural" String="Users"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="locked"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastLoginAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>locked</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/documents"><Annotation Term="Common.Label" String="Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/pendingDocuments"><Annotation Term="Common.Label" String="Pending Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/doneDocuments"><Annotation Term="Common.Label" String="Done Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/reviewDocuments"><Annotation Term="Common.Label" String="Review Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/confirmedDocuments"><Annotation Term="Common.Label" String="Confirmed Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/rejectedDocuments"><Annotation Term="Common.Label" String="Rejected Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/failedDocuments"><Annotation Term="Common.Label" String="Failed Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/documentsLast24h"><Annotation Term="Common.Label" String="Documents (24 h)"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/extractedFields"><Annotation Term="Common.Label" String="Extracted Fields"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/correctedFields"><Annotation Term="Common.Label" String="Corrected Fields"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/correctionRate"><Annotation Term="Common.Label" String="Correction Rate"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/averageConfidence"><Annotation Term="Common.Label" String="Average Confidence"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/matchedDocuments"><Annotation Term="Common.Label" String="Matched Documents"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/schemas"><Annotation Term="Common.Label" String="Schemas"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/activeSchemas"><Annotation Term="Common.Label" String="Active Schemas"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/templates"><Annotation Term="Common.Label" String="Templates"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/documentTypes"><Annotation Term="Common.Label" String="Document Types"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/enrichmentRecords"><Annotation Term="Common.Label" String="Enrichment Records"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/clients"><Annotation Term="Common.Label" String="Clients"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/trainingJobs"><Annotation Term="Common.Label" String="Training Jobs"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/runningTrainingJobs"><Annotation Term="Common.Label" String="Running Training Jobs"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic/bestAccuracy"><Annotation Term="Common.Label" String="Best Accuracy"/></Annotations>
+      <Annotations Target="uim.documentai.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="documents"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="pendingDocuments"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="doneDocuments"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reviewDocuments"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="confirmedDocuments"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rejectedDocuments"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="failedDocuments"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="documentsLast24h"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.documentai.DocumentAiService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Document AI"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

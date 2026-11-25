@@ -1,0 +1,53 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+  <!-- registers a document: the file is picked locally for name, size and type; its content stays with the caller -->
+  <Dialog title="{i18n>uploadTitle}" contentWidth="36rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colFile}" required="true"/>
+      <u:FileUploader width="100%" change=".onFileSelected" sendXHR="false" placeholder="{i18n>pickFile}"
+        fileType="pdf,png,jpg,jpeg,tif,tiff,xlsx,docx" buttonText="{i18n>browse}"/>
+      <Label text="{i18n>colFileName}" required="true"/>
+      <Input value="{view>/form/upload/fileName}" placeholder="invoice-2026-0042.pdf"/>
+      <Label text="{i18n>colDocumentType}"/>
+      <ComboBox selectedKey="{view>/form/upload/documentTypeId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/DocumentTypes', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colSchema}"/>
+      <ComboBox selectedKey="{view>/form/upload/schemaId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/Schemas', parameters: {$select: 'id,name', $orderby: 'name'}, filters: [{path: 'status', operator: 'EQ', value1: 'active'}], templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colTemplate}"/>
+      <ComboBox selectedKey="{view>/form/upload/templateId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/Templates', parameters: {$select: 'id,name', $orderby: 'name'}, filters: [{path: 'status', operator: 'EQ', value1: 'active'}], templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colClient}"/>
+      <ComboBox selectedKey="{view>/form/upload/clientId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/Clients', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colExtractionMethod}"/>
+      <Select selectedKey="{view>/form/upload/extractionMethod}" width="100%">
+        <core:Item key="" text="{i18n>automatic}"/>
+        <core:Item key="mlModel" text="{i18n>enum_mlModel}"/>
+        <core:Item key="generativeAi" text="{i18n>enum_generativeAi}"/>
+        <core:Item key="templateBased" text="{i18n>enum_templateBased}"/>
+        <core:Item key="hybrid" text="{i18n>enum_hybrid}"/>
+      </Select>
+      <Label text="{i18n>colLanguage} / {i18n>pages}"/>
+      <Input value="{view>/form/upload/language}" maxLength="8">
+        <layoutData><layout:GridData xmlns:layout="sap.ui.layout" span="L4 M4 S6"/></layoutData>
+      </Input>
+      <StepInput value="{view>/form/upload/pageCount}" min="1" max="10000">
+        <layoutData><layout:GridData xmlns:layout="sap.ui.layout" span="L4 M4 S6"/></layoutData>
+      </StepInput>
+      <Label text="{i18n>colLabels}"/>
+      <TextArea value="{view>/form/upload/labels}" rows="3" placeholder="{i18n>labelsPlaceholder}"/>
+      <Label text=""/>
+      <CheckBox text="{i18n>extractNow}" selected="{view>/form/upload/extractNow}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

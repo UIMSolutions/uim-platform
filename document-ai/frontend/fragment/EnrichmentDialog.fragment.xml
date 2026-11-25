@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+  <Dialog title="{= %{view>/form/enrichment/edit} ? ${i18n>editEnrichment} : ${i18n>createEnrichment} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/enrichment/id}" enabled="{= !%{view>/form/enrichment/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/enrichment/name}"/>
+      <Label text="{i18n>colSubtype}"/>
+      <Select selectedKey="{view>/form/enrichment/subtype}" width="100%">
+        <core:Item key="supplier" text="{i18n>enum_supplier}"/>
+        <core:Item key="customer" text="{i18n>enum_customer}"/>
+        <core:Item key="businessEntity" text="{i18n>enum_businessEntity}"/>
+        <core:Item key="employee" text="{i18n>enum_employee}"/>
+        <core:Item key="material" text="{i18n>enum_material}"/>
+        <core:Item key="custom" text="{i18n>enum_custom}"/>
+      </Select>
+      <Label text="{i18n>colExternalId}"/>
+      <Input value="{view>/form/enrichment/externalId}" placeholder="100042"/>
+      <Label text="{i18n>colAttributes}" required="true"/>
+      <TextArea value="{view>/form/enrichment/attributes}" rows="4" placeholder="{i18n>attributesPlaceholder}"/>
+      <Label text="{i18n>colDocumentType}"/>
+      <ComboBox selectedKey="{view>/form/enrichment/documentTypeId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/DocumentTypes', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colClient}"/>
+      <ComboBox selectedKey="{view>/form/enrichment/clientId}" width="100%" showClearIcon="true" placeholder="{i18n>none}"
+        items="{path: '/Clients', parameters: {$select: 'id,name', $orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/enrichment/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

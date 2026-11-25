@@ -1,0 +1,26 @@
+[
+  {
+    "clientId": null,
+    "documentTypeId": "supplier-invoice",
+    "documentCount": 0,
+    "statusMessage": "",
+    "updatedAt": "2026-11-25T07:02:21Z",
+    "id": "train-invoice",
+    "accuracyPercent": 0,
+    "schemaName": "Supplier Invoice",
+    "createdAt": "2026-11-25T07:02:21Z",
+    "createdBy": "anonymous",
+    "name": "Supplier invoice model",
+    "startedAt": null,
+    "fieldCount": 0,
+    "completedAt": null,
+    "schemaId": "invoice",
+    "accuracy": 0,
+    "progressPercent": 0,
+    "description": "Retrain with the confirmed invoices of Accounts Payable",
+    "modelVersion": "",
+    "tenantId": "default",
+    "status": "pending",
+    "updatedBy": "anonymous"
+  }
+]

@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <!-- correct an extracted value: numbers with '.', dates YYYY-MM-DD, currencies ISO 4217 -->
+  <Dialog title="{i18n>correctTitle}" contentWidth="30rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colField}"/>
+      <Text text="{view>/form/correct/label} ({path: 'view>/form/correct/valueType', formatter: '.formatter.enumText'})"/>
+      <Label text="{i18n>colExtracted}"/>
+      <Text text="{= %{view>/form/correct/originalValue} || '–' } · {view>/form/correct/confidencePercent} %"/>
+      <Label text="{i18n>colValue}"/>
+      <Input value="{view>/form/correct/value}" submit=".onSave"
+        placeholder="{= %{view>/form/correct/valueType} === 'date' ? 'YYYY-MM-DD' : %{view>/form/correct/valueType} === 'number' ? '1234.56' : %{view>/form/correct/valueType} === 'currency' ? 'EUR' : '' }"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

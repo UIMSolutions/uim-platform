@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+  <Dialog title="{= %{view>/form/schemaField/edit} ? ${i18n>editField} : ${i18n>createField} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/schemaField/id}" enabled="{= !%{view>/form/schemaField/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colScope}"/>
+      <SegmentedButton selectedKey="{view>/form/schemaField/fieldScope}">
+        <items>
+          <SegmentedButtonItem key="header" text="{i18n>enum_header}"/>
+          <SegmentedButtonItem key="lineItem" text="{i18n>enum_lineItem}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colSequence}"/>
+      <StepInput value="{view>/form/schemaField/sequenceNumber}" min="0" max="100000" step="10"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/schemaField/name}" placeholder="documentNumber"/>
+      <Label text="{i18n>colLabel}"/>
+      <Input value="{view>/form/schemaField/label}" placeholder="{i18n>labelPlaceholder}"/>
+      <Label text="{i18n>colType}"/>
+      <Select selectedKey="{view>/form/schemaField/valueType}" width="100%">
+        <core:Item key="string" text="{i18n>enum_string}"/>
+        <core:Item key="number" text="{i18n>enum_number}"/>
+        <core:Item key="date" text="{i18n>enum_date}"/>
+        <core:Item key="currency" text="{i18n>enum_currency}"/>
+        <core:Item key="boolean" text="{i18n>enum_boolean}"/>
+        <core:Item key="address" text="{i18n>enum_address}"/>
+      </Select>
+      <Label text=""/>
+      <CheckBox text="{i18n>colRequired}" selected="{view>/form/schemaField/required}"/>
+      <Label text="{i18n>colDefault}"/>
+      <Input value="{view>/form/schemaField/defaultValue}"/>
+      <Label text="{i18n>colFormat}"/>
+      <Input value="{view>/form/schemaField/format}" placeholder="YYYY-MM-DD"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/schemaField/description}" rows="2" placeholder="{i18n>promptPlaceholder}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

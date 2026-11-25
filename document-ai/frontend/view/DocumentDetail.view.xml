@@ -1,0 +1,159 @@
+<mvc:View controllerName="uim.documentai.controller.DocumentDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
+  height="100%">
+  <f:DynamicPage id="documentPage" showFooter="false" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:navigationActions>
+          <Button icon="sap-icon://nav-back" type="Transparent" tooltip="{i18n>back}" press=".onNavBack"/>
+        </f:navigationActions>
+        <f:heading>
+          <HBox alignItems="Center">
+            <core:Icon src="{path: 'fileType', formatter: '.formatter.fileIcon'}" size="1.5rem" class="sapUiSmallMarginEnd"/>
+            <Title text="{fileName}" level="H2" wrapping="true"/>
+          </HBox>
+        </f:heading>
+        <f:expandedContent><Text text="{documentTypeName} · {schemaName}"/></f:expandedContent>
+        <f:snappedContent>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.documentState'}"/>
+        </f:snappedContent>
+        <f:actions>
+          <Button text="{= %{status} === 'pending' ? ${i18n>extract} : ${i18n>reprocess} }" icon="sap-icon://synchronize"
+            press=".onOperation" visible="{= %{session>/canProcess} &amp;&amp; (%{status} === 'pending' || %{status} === 'failed' || %{status} === 'done') }">
+            <customData><core:CustomData key="action" value="ExtractDocument"/><core:CustomData key="toast" value="extracted"/></customData></Button>
+          <Button id="confirmButton" text="{i18n>confirm}" type="Accept" icon="sap-icon://accept" press=".onOperation"
+            visible="{= %{session>/canProcess} &amp;&amp; %{status} === 'done' }">
+            <customData><core:CustomData key="action" value="ConfirmDocument"/><core:CustomData key="toast" value="confirmed"/></customData></Button>
+          <Button text="{i18n>reject}" type="Reject" icon="sap-icon://decline" press=".onOperation"
+            visible="{= %{session>/canProcess} &amp;&amp; (%{status} === 'done' || %{status} === 'failed') }">
+            <customData><core:CustomData key="action" value="RejectDocument"/><core:CustomData key="param" value="reason"/>
+              <core:CustomData key="required" value="true"/><core:CustomData key="title" value="rejectTitle"/>
+              <core:CustomData key="label" value="colReason"/><core:CustomData key="toast" value="rejected"/></customData></Button>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <VBox>
+          <MessageStrip text="{errorMessage}" type="{= %{status} === 'rejected' ? 'Warning' : 'Error' }" showIcon="true"
+            visible="{= !!%{errorMessage} }" class="sapUiSmallMarginBottom"/>
+          <MessageStrip text="{i18n>reviewHint}" type="Warning" showIcon="true" visible="{needsReview}" class="sapUiSmallMarginBottom"/>
+          <layout:HorizontalLayout allowWrapping="true">
+            <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+              <Label text="{i18n>colStatus}"/>
+              <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.documentIcon'}"
+                state="{path: 'status', formatter: '.formatter.documentState'}" class="sapMObjectStatusLarge"/>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="12rem">
+              <Label text="{i18n>colConfidence}"/>
+              <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+                state="{path: 'confidencePercent', formatter: '.formatter.percentState'}"/>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+              <Label text="{i18n>colValues}"/>
+              <ObjectNumber number="{extractedFieldCount}" unit="· {lineItemCount} {i18n>colLineItems}"/>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+              <Label text="{i18n>colToReview}"/>
+              <ObjectNumber number="{lowConfidenceCount}" unit="· {correctedFieldCount} {i18n>kpiCorrected}"
+                state="{= %{lowConfidenceCount} > 0 ? 'Warning' : 'Success' }"/>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+              <Label text="{i18n>colMatch}"/>
+              <ObjectStatus text="{= %{matchedEnrichmentName} || ${path: 'matchStatus', formatter: '.formatter.enumText'} }"
+                state="{path: 'matchStatus', formatter: '.formatter.matchState'}"/>
+              <Text text="{path: 'matchScore', formatter: '.formatter.percent'}" visible="{= %{matchScore} > 0 }"/>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+              <Label text="{i18n>colExtraction}"/>
+              <Text text="{path: 'extractionMethod', formatter: '.formatter.enumText'}{= %{templateName} ? ' · ' + %{templateName} : '' }"/>
+              <Text text="{path: 'processedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+              <Label text="{i18n>colFile}"/>
+              <Text text="{fileType} · {path: 'fileSize', formatter: '.formatter.fileSize'} · {pageCount} {i18n>pages} · {language}"/>
+              <Text text="{labelsText}" visible="{= !!%{labelsText} }"/>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" visible="{= !!%{confirmedBy} }">
+              <Label text="{= %{status} === 'rejected' ? ${i18n>rejectedBy} : ${i18n>confirmedBy} }"/>
+              <Text text="{confirmedBy}"/>
+              <Text text="{path: 'confirmedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </VBox>
+          </layout:HorizontalLayout>
+        </VBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <VBox class="sapUiResponsiveContentPadding">
+        <!-- header fields -->
+        <Table id="headerTable" growing="true" growingThreshold="100" noDataText="{i18n>noValues}"
+          items="{path: '/ExtractedFields', parameters: {$orderby: 'sequenceNumber'}, suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>headerFields}" level="H3"/>
+            </OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column width="25%"><Text text="{i18n>colField}"/></Column>
+            <Column width="35%"><Text text="{i18n>colValue}"/></Column>
+            <Column width="10rem"><Text text="{i18n>colConfidence}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colPage}"/></Column>
+            <Column hAlign="End"/>
+          </columns>
+          <items>
+            <ColumnListItem highlight="{parts: ['confidenceLevel', 'missing', 'corrected'], formatter: '.formatter.valueState'}">
+              <VBox>
+                <Label text="{label}" required="{required}" design="Bold"/>
+                <Text text="{name} · {path: 'valueType', formatter: '.formatter.enumText'}" class="sapUiTinyMarginTop"/>
+              </VBox>
+              <VBox>
+                <ObjectStatus text="{= %{value} || ${i18n>notFound} }"
+                  state="{parts: ['confidenceLevel', 'missing', 'corrected'], formatter: '.formatter.valueState'}"/>
+                <Text text="{i18n>wasValue} {= %{originalValue} || '–' } ({correctedBy})" visible="{corrected}" class="sapUiTinyMarginTop"/>
+              </VBox>
+              <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+                state="{path: 'confidencePercent', formatter: '.formatter.percentState'}"/>
+              <Text text="{page}"/>
+              <Button icon="sap-icon://edit" tooltip="{i18n>correct}" type="Transparent" press=".onCorrect"
+                visible="{= %{documentStatus} === 'done' &amp;&amp; %{session>/canProcess} }"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+
+        <!-- line items: one group per row -->
+        <Table id="lineItemsTable" growing="true" growingThreshold="200" noDataText="{i18n>noLineItems}" class="sapUiMediumMarginTop"
+          items="{path: '/ExtractedFields', parameters: {$orderby: 'rowIndex,sequenceNumber'}, sorter: {path: 'rowIndex', group: true},
+            suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>lineItems}" level="H3"/>
+            </OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column width="25%"><Text text="{i18n>colField}"/></Column>
+            <Column width="35%"><Text text="{i18n>colValue}"/></Column>
+            <Column width="10rem"><Text text="{i18n>colConfidence}"/></Column>
+            <Column hAlign="End"/>
+          </columns>
+          <items>
+            <ColumnListItem highlight="{parts: ['confidenceLevel', 'missing', 'corrected'], formatter: '.formatter.valueState'}">
+              <Label text="{label}" required="{required}"/>
+              <VBox>
+                <ObjectStatus text="{= %{value} || '–' }"
+                  state="{parts: ['confidenceLevel', 'missing', 'corrected'], formatter: '.formatter.valueState'}"/>
+                <Text text="{i18n>wasValue} {= %{originalValue} || '–' }" visible="{corrected}"/>
+              </VBox>
+              <ProgressIndicator percentValue="{confidencePercent}" displayValue="{confidencePercent} %" showValue="true"
+                state="{path: 'confidencePercent', formatter: '.formatter.percentState'}"/>
+              <Button icon="sap-icon://edit" tooltip="{i18n>correct}" type="Transparent" press=".onCorrect"
+                visible="{= %{documentStatus} === 'done' &amp;&amp; %{session>/canProcess} }"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </VBox>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>
