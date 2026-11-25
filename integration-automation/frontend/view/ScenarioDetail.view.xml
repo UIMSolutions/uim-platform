@@ -1,0 +1,112 @@
+<mvc:View controllerName="uim.integrationautomation.controller.ScenarioDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
+  height="100%">
+  <f:DynamicPage id="scenarioPage" headerExpanded="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{name}" wrapping="true"/></f:heading>
+        <f:expandedContent><Text text="{id} · {i18n>colVersion} {version}"/></f:expandedContent>
+        <f:snappedContent><ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.scenarioState'}"/></f:snappedContent>
+        <f:navigationActions>
+          <Button icon="sap-icon://decline" type="Transparent" tooltip="{i18n>close}" press=".onNavBack"/>
+        </f:navigationActions>
+        <f:actions>
+          <Button text="{i18n>newWorkflow}" type="Emphasized" icon="sap-icon://begin" press=".onNewWorkflow"
+            visible="{= %{session>/canExecute} &amp;&amp; %{status} === 'active' }"/>
+          <Button text="{i18n>activate}" type="Emphasized" icon="sap-icon://activate" press=".onScenarioAction"
+            visible="{= %{session>/canManage} &amp;&amp; (%{status} === 'draft' || %{status} === 'deprecated') }"><customData><core:CustomData key="action" value="ActivateScenario"/></customData></Button>
+          <Button text="{i18n>deprecate}" icon="sap-icon://warning" press=".onScenarioAction"
+            visible="{= %{session>/canManage} &amp;&amp; %{status} === 'active' }"><customData><core:CustomData key="action" value="DeprecateScenario"/></customData></Button>
+          <Button text="{i18n>archive}" icon="sap-icon://attachment-zip-file" press=".onScenarioAction"
+            visible="{= %{session>/canManage} &amp;&amp; (%{status} === 'draft' || %{status} === 'deprecated') }"><customData><core:CustomData key="action" value="ArchiveScenario"/></customData></Button>
+          <Button text="{i18n>copy}" icon="sap-icon://copy" press=".onCopy" visible="{session>/canManage}"/>
+          <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditScenario" visible="{session>/canManage}"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <layout:HorizontalLayout allowWrapping="true">
+          <layout:VerticalLayout class="sapUiMediumMarginEnd">
+            <ObjectStatus title="{i18n>colStatus}" text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.scenarioState'}"/>
+            <ObjectAttribute title="{i18n>colCategory}" text="{path: 'category', formatter: '.formatter.enumText'}"/>
+            <ObjectAttribute title="{i18n>basedOn}" text="{basedOnId}" visible="{= !!%{basedOnId} }"/>
+          </layout:VerticalLayout>
+          <layout:VerticalLayout class="sapUiMediumMarginEnd">
+            <ObjectAttribute title="{i18n>colSourceSystemType}" text="{path: 'sourceSystemType', formatter: '.formatter.enumText'}"/>
+            <ObjectAttribute title="{i18n>colTargetSystemType}" text="{path: 'targetSystemType', formatter: '.formatter.enumText'}"/>
+          </layout:VerticalLayout>
+          <layout:VerticalLayout class="sapUiMediumMarginEnd">
+            <ObjectAttribute title="{i18n>colTemplates}" text="{taskCount} · {path: 'estimatedMinutes', formatter: '.formatter.minutes'}"/>
+            <ObjectAttribute title="{i18n>colWorkflows}" text="{workflowCount} ({openWorkflowCount} {i18n>kpiOpen})"/>
+            <ObjectAttribute title="{i18n>activatedAt}" text="{path: 'activatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+          </layout:VerticalLayout>
+          <layout:VerticalLayout>
+            <Text text="{description}" width="30rem" maxLines="4"/>
+            <Text text="{i18n>colPrerequisites}: {prerequisitesText}" visible="{= !!%{prerequisitesText} }" width="30rem" class="sapUiTinyMarginTop"/>
+          </layout:VerticalLayout>
+        </layout:HorizontalLayout>
+      </f:DynamicPageHeader>
+    </f:header>
+    <f:content>
+      <VBox class="sapUiResponsiveContentPadding">
+        <MessageStrip text="{i18n>templatesFrozen}" type="Information" showIcon="true" visible="{= %{status} !== 'draft' }" class="sapUiSmallMarginBottom"/>
+        <Table id="templatesTable" mode="SingleSelectLeft" noDataText="{i18n>noTemplates}"
+          items="{path: '/ScenarioTasks', parameters: {$orderby: 'sequenceNumber', $select: 'scenarioId,description,destinationId,automationEndpoint,automationPayload,requiresSourceSystem,requiresTargetSystem,afterPrevious,dependsOn,instructions,estimatedMinutes,priority'}, suspended: true, templateShareable: false}">
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>templates}" level="H3"/>
+              <ToolbarSpacer/>
+              <Button text="{i18n>create}" type="Emphasized" icon="sap-icon://add" press=".onCreateTemplate"
+                visible="{= %{session>/canManage} &amp;&amp; %{status} === 'draft' }"/>
+              <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{= %{session>/canManage} &amp;&amp; %{status} === 'draft' }"><customData><core:CustomData key="table" value="templatesTable"/><core:CustomData key="dialog" value="scenarioTask"/></customData></Button>
+              <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{= %{session>/canManage} &amp;&amp; %{status} === 'draft' }"><customData><core:CustomData key="table" value="templatesTable"/></customData></Button>
+            </OverflowToolbar>
+          </headerToolbar>
+          <columns>
+            <Column width="4rem" hAlign="End"><Text text="#"/></Column>
+            <Column><Text text="{i18n>colTask}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRole}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDependencies}"/></Column>
+            <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colAutomation}"/></Column>
+            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="{i18n>colEstimated}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <Text text="{sequenceNumber}"/>
+              <VBox>
+                <HBox alignItems="Center">
+                  <core:Icon src="{path: 'taskType', formatter: '.formatter.typeIcon'}" tooltip="{path: 'taskType', formatter: '.formatter.enumText'}" class="sapUiTinyMarginEnd"/>
+                  <Text text="{name}"/>
+                </HBox>
+                <Text text="{instructions}" maxLines="2" class="sapUiTinyMarginTop"/>
+              </VBox>
+              <ObjectIdentifier title="{assignedRole}" text="{path: 'priority', formatter: '.formatter.enumText'}"/>
+              <Text text="{dependenciesText}"/>
+              <Text text="{automationEndpoint}" visible="{= %{taskType} === 'automated' }"/>
+              <Text text="{path: 'estimatedMinutes', formatter: '.formatter.minutes'}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+        <Table id="scenarioWorkflowsTable" noDataText="{i18n>noWorkflows}" class="sapUiMediumMarginTop"
+          items="{path: '/Workflows', parameters: {$orderby: 'createdAt desc', $select: 'scenarioId'}, suspended: true, templateShareable: false}">
+          <headerToolbar><OverflowToolbar><Title text="{i18n>tabWorkflows}" level="H3"/></OverflowToolbar></headerToolbar>
+          <columns>
+            <Column><Text text="{i18n>colWorkflow}"/></Column>
+            <Column><Text text="{i18n>colStatus}"/></Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" width="14rem"><Text text="{i18n>colProgress}"/></Column>
+          </columns>
+          <items>
+            <ColumnListItem type="Navigation" press=".onWorkflowPress">
+              <ObjectIdentifier title="{name}" text="{scenarioVersion}"/>
+              <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.workflowState'}"/>
+              <ProgressIndicator percentValue="{progressPercent}" displayValue="{completedTasks} / {totalTasks}" showValue="true"
+                state="{path: 'status', formatter: '.formatter.progressState'}"/>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </VBox>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

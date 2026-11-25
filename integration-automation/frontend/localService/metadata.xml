@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.integrationautomation" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="System">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="systemType" Type="Edm.String"/>
+        <Property Name="host" Type="Edm.String" Nullable="false"/>
+        <Property Name="port" Type="Edm.Int32"/>
+        <Property Name="protocol" Type="Edm.String"/>
+        <Property Name="client" Type="Edm.String"/>
+        <Property Name="sid" Type="Edm.String"/>
+        <Property Name="environment" Type="Edm.String"/>
+        <Property Name="region" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="lastTestedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastTestMessage" Type="Edm.String"/>
+        <Property Name="destinationCount" Type="Edm.Int32"/>
+        <Property Name="openWorkflowCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Destination">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="systemId" Type="Edm.String"/>
+        <Property Name="systemName" Type="Edm.String"/>
+        <Property Name="destinationType" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String"/>
+        <Property Name="authentication" Type="Edm.String"/>
+        <Property Name="proxyType" Type="Edm.String"/>
+        <Property Name="locationId" Type="Edm.String"/>
+        <Property Name="user" Type="Edm.String"/>
+        <Property Name="tokenServiceUrl" Type="Edm.String"/>
+        <Property Name="audience" Type="Edm.String"/>
+        <Property Name="scope" Type="Edm.String"/>
+        <Property Name="enabled" Type="Edm.Boolean"/>
+        <Property Name="authorizationVariable" Type="Edm.String"/>
+        <Property Name="templateCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Scenario">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="sourceSystemType" Type="Edm.String"/>
+        <Property Name="targetSystemType" Type="Edm.String"/>
+        <Property Name="prerequisites" Type="Collection(Edm.String)"/>
+        <Property Name="prerequisitesText" Type="Edm.String"/>
+        <Property Name="basedOnId" Type="Edm.String"/>
+        <Property Name="activatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="taskCount" Type="Edm.Int32"/>
+        <Property Name="workflowCount" Type="Edm.Int32"/>
+        <Property Name="openWorkflowCount" Type="Edm.Int32"/>
+        <Property Name="estimatedMinutes" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ScenarioTask">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioId" Type="Edm.String" Nullable="false"/>
+        <Property Name="sequenceNumber" Type="Edm.Int32"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="taskType" Type="Edm.String"/>
+        <Property Name="priority" Type="Edm.String"/>
+        <Property Name="assignedRole" Type="Edm.String"/>
+        <Property Name="instructions" Type="Edm.String"/>
+        <Property Name="destinationId" Type="Edm.String"/>
+        <Property Name="automationEndpoint" Type="Edm.String"/>
+        <Property Name="automationPayload" Type="Edm.String"/>
+        <Property Name="requiresSourceSystem" Type="Edm.Boolean"/>
+        <Property Name="requiresTargetSystem" Type="Edm.Boolean"/>
+        <Property Name="afterPrevious" Type="Edm.Boolean"/>
+        <Property Name="dependsOn" Type="Collection(Edm.String)"/>
+        <Property Name="dependenciesText" Type="Edm.String"/>
+        <Property Name="estimatedMinutes" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Workflow">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioId" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioName" Type="Edm.String"/>
+        <Property Name="scenarioVersion" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="sourceSystemId" Type="Edm.String"/>
+        <Property Name="sourceSystemName" Type="Edm.String"/>
+        <Property Name="targetSystemId" Type="Edm.String"/>
+        <Property Name="targetSystemName" Type="Edm.String"/>
+        <Property Name="totalTasks" Type="Edm.Int32"/>
+        <Property Name="completedTasks" Type="Edm.Int32"/>
+        <Property Name="failedTasks" Type="Edm.Int32"/>
+        <Property Name="progressPercent" Type="Edm.Int32"/>
+        <Property Name="currentTaskId" Type="Edm.String"/>
+        <Property Name="currentTaskName" Type="Edm.String"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="terminationReason" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="WorkflowTask">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="workflowId" Type="Edm.String"/>
+        <Property Name="workflowName" Type="Edm.String"/>
+        <Property Name="workflowStatus" Type="Edm.String"/>
+        <Property Name="templateId" Type="Edm.String"/>
+        <Property Name="sequenceNumber" Type="Edm.Int32"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="taskType" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="priority" Type="Edm.String"/>
+        <Property Name="assignedTo" Type="Edm.String"/>
+        <Property Name="assignedRole" Type="Edm.String"/>
+        <Property Name="instructions" Type="Edm.String"/>
+        <Property Name="destinationId" Type="Edm.String"/>
+        <Property Name="automationEndpoint" Type="Edm.String"/>
+        <Property Name="sourceSystemId" Type="Edm.String"/>
+        <Property Name="targetSystemId" Type="Edm.String"/>
+        <Property Name="dependsOn" Type="Collection(Edm.String)"/>
+        <Property Name="ready" Type="Edm.Boolean"/>
+        <Property Name="waitingFor" Type="Edm.String"/>
+        <Property Name="result" Type="Edm.String"/>
+        <Property Name="errorMessage" Type="Edm.String"/>
+        <Property Name="processedBy" Type="Edm.String"/>
+        <Property Name="attempts" Type="Edm.Int32"/>
+        <Property Name="estimatedMinutes" Type="Edm.Int32"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="durationSeconds" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ExecutionLog">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="workflowId" Type="Edm.String"/>
+        <Property Name="taskId" Type="Edm.String"/>
+        <Property Name="action" Type="Edm.String"/>
+        <Property Name="outcome" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="details" Type="Edm.String"/>
+        <Property Name="executedBy" Type="Edm.String"/>
+        <Property Name="durationMs" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="temporarilyLocked" Type="Edm.Boolean"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="systems" Type="Edm.Int32"/>
+        <Property Name="reachableSystems" Type="Edm.Int32"/>
+        <Property Name="unreachableSystems" Type="Edm.Int32"/>
+        <Property Name="destinations" Type="Edm.Int32"/>
+        <Property Name="scenarios" Type="Edm.Int32"/>
+        <Property Name="activeScenarios" Type="Edm.Int32"/>
+        <Property Name="draftScenarios" Type="Edm.Int32"/>
+        <Property Name="workflows" Type="Edm.Int32"/>
+        <Property Name="openWorkflows" Type="Edm.Int32"/>
+        <Property Name="maxOpenWorkflows" Type="Edm.Int32"/>
+        <Property Name="runningWorkflows" Type="Edm.Int32"/>
+        <Property Name="suspendedWorkflows" Type="Edm.Int32"/>
+        <Property Name="failedWorkflows" Type="Edm.Int32"/>
+        <Property Name="completedWorkflows" Type="Edm.Int32"/>
+        <Property Name="tasks" Type="Edm.Int32"/>
+        <Property Name="openTasks" Type="Edm.Int32"/>
+        <Property Name="readyTasks" Type="Edm.Int32"/>
+        <Property Name="myOpenTasks" Type="Edm.Int32"/>
+        <Property Name="failedTasks" Type="Edm.Int32"/>
+        <Property Name="automatedTasks" Type="Edm.Int32"/>
+        <Property Name="executionLogs" Type="Edm.Int32"/>
+        <Property Name="failuresLast24h" Type="Edm.Int32"/>
+        <Property Name="completionRate" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="AutomationRunResult">
+        <Property Name="workflows" Type="Edm.Int32"/>
+        <Property Name="executed" Type="Edm.Int32"/>
+        <Property Name="succeeded" Type="Edm.Int32"/>
+        <Property Name="failed" Type="Edm.Int32"/>
+        <Property Name="notified" Type="Edm.Int32"/>
+        <Property Name="messages" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="PurgeResult">
+        <Property Name="removed" Type="Edm.Int32"/>
+        <Property Name="olderThanDays" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="systems" Type="Edm.Int32"/>
+        <Property Name="destinations" Type="Edm.Int32"/>
+        <Property Name="scenarios" Type="Edm.Int32"/>
+        <Property Name="scenarioTasks" Type="Edm.Int32"/>
+        <Property Name="workflows" Type="Edm.Int32"/>
+        <Property Name="workflowTasks" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="TestSystemConnection" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.System"/>
+      </Action>
+      <Action Name="ActivateScenario" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.Scenario"/>
+      </Action>
+      <Action Name="DeprecateScenario" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.Scenario"/>
+      </Action>
+      <Action Name="ArchiveScenario" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.Scenario"/>
+      </Action>
+      <Action Name="CopyScenario" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="newId" Type="Edm.String"/>
+        <ReturnType Type="uim.integrationautomation.Scenario"/>
+      </Action>
+      <Action Name="StartWorkflow" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.Workflow"/>
+      </Action>
+      <Action Name="SuspendWorkflow" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.Workflow"/>
+      </Action>
+      <Action Name="ResumeWorkflow" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.Workflow"/>
+      </Action>
+      <Action Name="TerminateWorkflow" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="reason" Type="Edm.String"/>
+        <ReturnType Type="uim.integrationautomation.Workflow"/>
+      </Action>
+      <Action Name="StartTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.WorkflowTask"/>
+      </Action>
+      <Action Name="CompleteTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="result" Type="Edm.String"/>
+        <ReturnType Type="uim.integrationautomation.WorkflowTask"/>
+      </Action>
+      <Action Name="FailTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="errorMessage" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.WorkflowTask"/>
+      </Action>
+      <Action Name="SkipTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="reason" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.WorkflowTask"/>
+      </Action>
+      <Action Name="RetryTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.WorkflowTask"/>
+      </Action>
+      <Action Name="AssignTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="assignedTo" Type="Edm.String"/>
+        <Parameter Name="priority" Type="Edm.String"/>
+        <ReturnType Type="uim.integrationautomation.WorkflowTask"/>
+      </Action>
+      <Action Name="RunAutomatedTasks" IsBound="false">
+        <Parameter Name="workflowId" Type="Edm.String"/>
+        <ReturnType Type="uim.integrationautomation.AutomationRunResult"/>
+      </Action>
+      <Action Name="PurgeExecutionLogs" IsBound="false">
+        <Parameter Name="olderThanDays" Type="Edm.Int32" Nullable="false"/>
+        <ReturnType Type="uim.integrationautomation.PurgeResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.integrationautomation.SeedResult"/>
+      </Action>
+      <EntityContainer Name="IntegrationAutomationService">
+        <EntitySet Name="Systems" EntityType="uim.integrationautomation.System"/>
+        <EntitySet Name="Destinations" EntityType="uim.integrationautomation.Destination"/>
+        <EntitySet Name="Scenarios" EntityType="uim.integrationautomation.Scenario"/>
+        <EntitySet Name="ScenarioTasks" EntityType="uim.integrationautomation.ScenarioTask"/>
+        <EntitySet Name="Workflows" EntityType="uim.integrationautomation.Workflow"/>
+        <EntitySet Name="WorkflowTasks" EntityType="uim.integrationautomation.WorkflowTask"/>
+        <EntitySet Name="ExecutionLogs" EntityType="uim.integrationautomation.ExecutionLog"/>
+        <EntitySet Name="Users" EntityType="uim.integrationautomation.User"/>
+        <Singleton Name="Statistics" Type="uim.integrationautomation.Statistic"/>
+        <ActionImport Name="TestSystemConnection" Action="uim.integrationautomation.TestSystemConnection"/>
+        <ActionImport Name="ActivateScenario" Action="uim.integrationautomation.ActivateScenario"/>
+        <ActionImport Name="DeprecateScenario" Action="uim.integrationautomation.DeprecateScenario"/>
+        <ActionImport Name="ArchiveScenario" Action="uim.integrationautomation.ArchiveScenario"/>
+        <ActionImport Name="CopyScenario" Action="uim.integrationautomation.CopyScenario"/>
+        <ActionImport Name="StartWorkflow" Action="uim.integrationautomation.StartWorkflow"/>
+        <ActionImport Name="SuspendWorkflow" Action="uim.integrationautomation.SuspendWorkflow"/>
+        <ActionImport Name="ResumeWorkflow" Action="uim.integrationautomation.ResumeWorkflow"/>
+        <ActionImport Name="TerminateWorkflow" Action="uim.integrationautomation.TerminateWorkflow"/>
+        <ActionImport Name="StartTask" Action="uim.integrationautomation.StartTask"/>
+        <ActionImport Name="CompleteTask" Action="uim.integrationautomation.CompleteTask"/>
+        <ActionImport Name="FailTask" Action="uim.integrationautomation.FailTask"/>
+        <ActionImport Name="SkipTask" Action="uim.integrationautomation.SkipTask"/>
+        <ActionImport Name="RetryTask" Action="uim.integrationautomation.RetryTask"/>
+        <ActionImport Name="AssignTask" Action="uim.integrationautomation.AssignTask"/>
+        <ActionImport Name="RunAutomatedTasks" Action="uim.integrationautomation.RunAutomatedTasks"/>
+        <ActionImport Name="PurgeExecutionLogs" Action="uim.integrationautomation.PurgeExecutionLogs"/>
+        <ActionImport Name="SeedDemoData" Action="uim.integrationautomation.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.integrationautomation.AutomationRunResult/workflows"><Annotation Term="Common.Label" String="Workflows"/></Annotations>
+      <Annotations Target="uim.integrationautomation.AutomationRunResult/executed"><Annotation Term="Common.Label" String="Executed"/></Annotations>
+      <Annotations Target="uim.integrationautomation.AutomationRunResult/succeeded"><Annotation Term="Common.Label" String="Succeeded"/></Annotations>
+      <Annotations Target="uim.integrationautomation.AutomationRunResult/failed"><Annotation Term="Common.Label" String="Failed"/></Annotations>
+      <Annotations Target="uim.integrationautomation.AutomationRunResult/notified"><Annotation Term="Common.Label" String="Notified"/></Annotations>
+      <Annotations Target="uim.integrationautomation.AutomationRunResult/messages"><Annotation Term="Common.Label" String="Messages"/></Annotations>
+      <Annotations Target="uim.integrationautomation.PurgeResult/removed"><Annotation Term="Common.Label" String="Removed"/></Annotations>
+      <Annotations Target="uim.integrationautomation.PurgeResult/olderThanDays"><Annotation Term="Common.Label" String="Days"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/id"><Annotation Term="Common.Label" String="System"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/systemType"><Annotation Term="Common.Label" String="System Type"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/host"><Annotation Term="Common.Label" String="Host"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/port"><Annotation Term="Common.Label" String="Port"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/protocol"><Annotation Term="Common.Label" String="Protocol"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/client"><Annotation Term="Common.Label" String="Client"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/sid"><Annotation Term="Common.Label" String="SID"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/environment"><Annotation Term="Common.Label" String="Environment"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/region"><Annotation Term="Common.Label" String="Region"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/status"><Annotation Term="Common.Label" String="Connection"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/lastTestedAt"><Annotation Term="Common.Label" String="Last Tested"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/lastTestMessage"><Annotation Term="Common.Label" String="Last Test Result"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/destinationCount"><Annotation Term="Common.Label" String="Destinations"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/openWorkflowCount"><Annotation Term="Common.Label" String="Open Workflows"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.System">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="System"/><PropertyValue Property="TypeNamePlural" String="Systems"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="host"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="systemType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="environment"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="host"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>systemType</PropertyPath><PropertyPath>environment</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService/Systems">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/id"><Annotation Term="Common.Label" String="Destination"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/systemId"><Annotation Term="Common.Label" String="System"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/systemName"><Annotation Term="Common.Label" String="System Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/destinationType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/url"><Annotation Term="Common.Label" String="URL"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/authentication"><Annotation Term="Common.Label" String="Authentication"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/proxyType"><Annotation Term="Common.Label" String="Proxy Type"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/locationId"><Annotation Term="Common.Label" String="Location ID"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/user"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/tokenServiceUrl"><Annotation Term="Common.Label" String="Token Service URL"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/audience"><Annotation Term="Common.Label" String="Audience"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/scope"><Annotation Term="Common.Label" String="Scope"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/enabled"><Annotation Term="Common.Label" String="Enabled"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/authorizationVariable"><Annotation Term="Common.Label" String="Credential Variable"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/templateCount"><Annotation Term="Common.Label" String="Used by Task Templates"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Destination">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Destination"/><PropertyValue Property="TypeNamePlural" String="Destinations"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="destinationType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="authentication"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="proxyType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="enabled"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>destinationType</PropertyPath><PropertyPath>authentication</PropertyPath><PropertyPath>proxyType</PropertyPath><PropertyPath>systemId</PropertyPath><PropertyPath>enabled</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService/Destinations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/id"><Annotation Term="Common.Label" String="Scenario"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/sourceSystemType"><Annotation Term="Common.Label" String="Source System Type"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/targetSystemType"><Annotation Term="Common.Label" String="Target System Type"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/prerequisites"><Annotation Term="Common.Label" String="Prerequisites"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/prerequisitesText"><Annotation Term="Common.Label" String="Prerequisites"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/basedOnId"><Annotation Term="Common.Label" String="Based On"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/activatedAt"><Annotation Term="Common.Label" String="Activated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/taskCount"><Annotation Term="Common.Label" String="Task Templates"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/workflowCount"><Annotation Term="Common.Label" String="Workflows"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/openWorkflowCount"><Annotation Term="Common.Label" String="Open Workflows"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/estimatedMinutes"><Annotation Term="Common.Label" String="Estimated Minutes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Scenario">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Scenario"/><PropertyValue Property="TypeNamePlural" String="Scenarios"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="version"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="taskCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="workflowCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>category</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>sourceSystemType</PropertyPath><PropertyPath>targetSystemType</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService/Scenarios">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/id"><Annotation Term="Common.Label" String="Task Template"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/sequenceNumber"><Annotation Term="Common.Label" String="Sequence"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/taskType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/priority"><Annotation Term="Common.Label" String="Priority"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/assignedRole"><Annotation Term="Common.Label" String="Role"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/instructions"><Annotation Term="Common.Label" String="Instructions"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/destinationId"><Annotation Term="Common.Label" String="Destination"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/automationEndpoint"><Annotation Term="Common.Label" String="Endpoint"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/automationPayload"><Annotation Term="Common.Label" String="Payload"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/requiresSourceSystem"><Annotation Term="Common.Label" String="Needs Source System"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/requiresTargetSystem"><Annotation Term="Common.Label" String="Needs Target System"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/afterPrevious"><Annotation Term="Common.Label" String="After Previous"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/dependsOn"><Annotation Term="Common.Label" String="Depends On"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/dependenciesText"><Annotation Term="Common.Label" String="Dependencies"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/estimatedMinutes"><Annotation Term="Common.Label" String="Estimated Minutes"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ScenarioTask">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Task Template"/><PropertyValue Property="TypeNamePlural" String="Task Templates"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="taskType"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sequenceNumber"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="taskType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="assignedRole"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="priority"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="dependenciesText"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>scenarioId</PropertyPath><PropertyPath>taskType</PropertyPath><PropertyPath>priority</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService/ScenarioTasks">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/id"><Annotation Term="Common.Label" String="Workflow"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/scenarioName"><Annotation Term="Common.Label" String="Scenario Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/scenarioVersion"><Annotation Term="Common.Label" String="Scenario Version"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/sourceSystemId"><Annotation Term="Common.Label" String="Source System"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/sourceSystemName"><Annotation Term="Common.Label" String="Source System Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/targetSystemId"><Annotation Term="Common.Label" String="Target System"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/targetSystemName"><Annotation Term="Common.Label" String="Target System Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/totalTasks"><Annotation Term="Common.Label" String="Tasks"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/completedTasks"><Annotation Term="Common.Label" String="Done"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/failedTasks"><Annotation Term="Common.Label" String="Failed"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/progressPercent"><Annotation Term="Common.Label" String="Progress"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/currentTaskId"><Annotation Term="Common.Label" String="Current Task"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/currentTaskName"><Annotation Term="Common.Label" String="Current Task Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/startedAt"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/completedAt"><Annotation Term="Common.Label" String="Finished At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/terminationReason"><Annotation Term="Common.Label" String="Termination Reason"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Workflow">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Workflow"/><PropertyValue Property="TypeNamePlural" String="Workflows"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="progressPercent"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="currentTaskName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="startedAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>scenarioId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>sourceSystemId</PropertyPath><PropertyPath>targetSystemId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService/Workflows">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/id"><Annotation Term="Common.Label" String="Task"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/workflowId"><Annotation Term="Common.Label" String="Workflow"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/workflowName"><Annotation Term="Common.Label" String="Workflow Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/workflowStatus"><Annotation Term="Common.Label" String="Workflow Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/templateId"><Annotation Term="Common.Label" String="Task Template"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/sequenceNumber"><Annotation Term="Common.Label" String="Sequence"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/name"><Annotation Term="Common.Label" String="Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/description"><Annotation Term="Common.Label" String="Description"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/taskType"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/priority"><Annotation Term="Common.Label" String="Priority"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/assignedTo"><Annotation Term="Common.Label" String="Assigned To"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/assignedRole"><Annotation Term="Common.Label" String="Role"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/instructions"><Annotation Term="Common.Label" String="Instructions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/destinationId"><Annotation Term="Common.Label" String="Destination"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/automationEndpoint"><Annotation Term="Common.Label" String="Endpoint"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/sourceSystemId"><Annotation Term="Common.Label" String="Source System"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/targetSystemId"><Annotation Term="Common.Label" String="Target System"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/dependsOn"><Annotation Term="Common.Label" String="Depends On"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/ready"><Annotation Term="Common.Label" String="Ready"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/waitingFor"><Annotation Term="Common.Label" String="Waiting For"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/result"><Annotation Term="Common.Label" String="Result"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/errorMessage"><Annotation Term="Common.Label" String="Error"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/processedBy"><Annotation Term="Common.Label" String="Processed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/attempts"><Annotation Term="Common.Label" String="Attempts"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/estimatedMinutes"><Annotation Term="Common.Label" String="Estimated Minutes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/startedAt"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/completedAt"><Annotation Term="Common.Label" String="Finished At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/durationSeconds"><Annotation Term="Common.Label" String="Duration (s)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.WorkflowTask">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Task"/><PropertyValue Property="TypeNamePlural" String="Tasks"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="workflowName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sequenceNumber"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="taskType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="assignedTo"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="priority"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>workflowId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>taskType</PropertyPath><PropertyPath>assignedTo</PropertyPath><PropertyPath>assignedRole</PropertyPath><PropertyPath>ready</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService/WorkflowTasks">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/id"><Annotation Term="Common.Label" String="Entry"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/workflowId"><Annotation Term="Common.Label" String="Workflow"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/taskId"><Annotation Term="Common.Label" String="Task"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/action"><Annotation Term="Common.Label" String="Action"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/outcome"><Annotation Term="Common.Label" String="Outcome"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/details"><Annotation Term="Common.Label" String="Details"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/executedBy"><Annotation Term="Common.Label" String="Executed By"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/durationMs"><Annotation Term="Common.Label" String="Duration (ms)"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.ExecutionLog">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Log Entry"/><PropertyValue Property="TypeNamePlural" String="Execution Log"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="action"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="message"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="action"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="outcome"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="message"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executedBy"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>workflowId</PropertyPath><PropertyPath>taskId</PropertyPath><PropertyPath>action</PropertyPath><PropertyPath>outcome</PropertyPath><PropertyPath>executedBy</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService/ExecutionLogs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.User/id"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/scopesText"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/temporarilyLocked"><Annotation Term="Common.Label" String="Temporarily Locked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/failedLogins"><Annotation Term="Common.Label" String="Failed Logins"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.integrationautomation.User">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="User"/><PropertyValue Property="TypeNamePlural" String="Users"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="locked"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastLoginAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>locked</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/systems"><Annotation Term="Common.Label" String="Systems"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/reachableSystems"><Annotation Term="Common.Label" String="Reachable Systems"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/unreachableSystems"><Annotation Term="Common.Label" String="Unreachable Systems"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/destinations"><Annotation Term="Common.Label" String="Destinations"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/scenarios"><Annotation Term="Common.Label" String="Scenarios"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/activeScenarios"><Annotation Term="Common.Label" String="Active Scenarios"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/draftScenarios"><Annotation Term="Common.Label" String="Draft Scenarios"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/workflows"><Annotation Term="Common.Label" String="Workflows"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/openWorkflows"><Annotation Term="Common.Label" String="Open Workflows"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/maxOpenWorkflows"><Annotation Term="Common.Label" String="Max Open Workflows"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/runningWorkflows"><Annotation Term="Common.Label" String="Running Workflows"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/suspendedWorkflows"><Annotation Term="Common.Label" String="Suspended Workflows"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/failedWorkflows"><Annotation Term="Common.Label" String="Failed Workflows"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/completedWorkflows"><Annotation Term="Common.Label" String="Completed Workflows"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/tasks"><Annotation Term="Common.Label" String="Tasks"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/openTasks"><Annotation Term="Common.Label" String="Open Tasks"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/readyTasks"><Annotation Term="Common.Label" String="Ready Tasks"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/myOpenTasks"><Annotation Term="Common.Label" String="My Open Tasks"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/failedTasks"><Annotation Term="Common.Label" String="Failed Tasks"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/automatedTasks"><Annotation Term="Common.Label" String="Automated Tasks"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/executionLogs"><Annotation Term="Common.Label" String="Execution Logs"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/failuresLast24h"><Annotation Term="Common.Label" String="Failures (24 h)"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic/completionRate"><Annotation Term="Common.Label" String="Completion Rate"/></Annotations>
+      <Annotations Target="uim.integrationautomation.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="systems"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reachableSystems"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="unreachableSystems"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="destinations"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarios"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeScenarios"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="draftScenarios"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="workflows"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.integrationautomation.IntegrationAutomationService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Integration Automation"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

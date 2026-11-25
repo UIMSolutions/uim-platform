@@ -1,0 +1,10 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>purgeTitle}" contentWidth="26rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="6" labelSpanL="6">
+      <Label text="{i18n>olderThanDays}" required="true"/>
+      <StepInput value="{view>/form/purge/olderThanDays}" min="1" max="36500"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>purge}" type="Reject" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

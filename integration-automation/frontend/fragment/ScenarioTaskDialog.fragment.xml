@@ -1,0 +1,60 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/scenarioTask/edit} ? ${i18n>editTemplate} : ${i18n>createTemplate} }" contentWidth="40rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/scenarioTask/id}" enabled="{= !%{view>/form/scenarioTask/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colSequence}"/>
+      <StepInput value="{view>/form/scenarioTask/sequenceNumber}" min="1" max="9999" step="10"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/scenarioTask/name}"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/scenarioTask/description}"/>
+      <Label text="{i18n>colType}"/>
+      <SegmentedButton selectedKey="{view>/form/scenarioTask/taskType}">
+        <items>
+          <SegmentedButtonItem key="manual" icon="sap-icon://employee" text="{i18n>enum_manual}"/>
+          <SegmentedButtonItem key="approval" icon="sap-icon://approvals" text="{i18n>enum_approval}"/>
+          <SegmentedButtonItem key="automated" icon="sap-icon://it-system" text="{i18n>enum_automated}"/>
+          <SegmentedButtonItem key="notification" icon="sap-icon://bell" text="{i18n>enum_notification}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colPriority}"/>
+      <Select selectedKey="{view>/form/scenarioTask/priority}">
+        <core:Item key="low" text="{i18n>enum_low}"/>
+        <core:Item key="medium" text="{i18n>enum_medium}"/>
+        <core:Item key="high" text="{i18n>enum_high}"/>
+        <core:Item key="critical" text="{i18n>enum_critical}"/>
+      </Select>
+      <Label text="{i18n>colRole}"/>
+      <Input value="{view>/form/scenarioTask/assignedRole}" placeholder="Integration Expert"/>
+      <Label text="{i18n>colInstructions}"/>
+      <TextArea value="{view>/form/scenarioTask/instructions}" rows="4" growing="true"/>
+      <Label text="{i18n>colDestination}" visible="{= %{view>/form/scenarioTask/taskType} === 'automated' }"/>
+      <ComboBox selectedKey="{view>/form/scenarioTask/destinationId}" showClearIcon="true" width="100%"
+        visible="{= %{view>/form/scenarioTask/taskType} === 'automated' }"
+        items="{path: '/Destinations', parameters: {$orderby: 'name', $select: 'id,name,url'}, templateShareable: false}">
+        <core:ListItem key="{id}" text="{name}" additionalText="{url}"/>
+      </ComboBox>
+      <Label text="{i18n>colEndpoint}" required="{= %{view>/form/scenarioTask/taskType} === 'automated' }"
+        visible="{= %{view>/form/scenarioTask/taskType} === 'automated' }"/>
+      <Input value="{view>/form/scenarioTask/automationEndpoint}" placeholder="{i18n>endpointPlaceholder}"
+        visible="{= %{view>/form/scenarioTask/taskType} === 'automated' }"/>
+      <Label text="{i18n>colPayload}" visible="{= %{view>/form/scenarioTask/taskType} === 'automated' }"/>
+      <TextArea value="{view>/form/scenarioTask/automationPayload}" rows="3" placeholder="{i18n>payloadPlaceholder}"
+        visible="{= %{view>/form/scenarioTask/taskType} === 'automated' }"/>
+      <Label text="{i18n>colSystems}"/>
+      <HBox>
+        <CheckBox text="{i18n>needsSource}" selected="{view>/form/scenarioTask/requiresSourceSystem}"/>
+        <CheckBox text="{i18n>needsTarget}" selected="{view>/form/scenarioTask/requiresTargetSystem}"/>
+      </HBox>
+      <Label text="{i18n>colDependencies}"/>
+      <CheckBox text="{i18n>afterPrevious}" selected="{view>/form/scenarioTask/afterPrevious}"/>
+      <Label text="{i18n>dependsOn}"/>
+      <TextArea value="{view>/form/scenarioTask/dependsOn}" rows="2" placeholder="{i18n>dependsOnPlaceholder}"/>
+      <Label text="{i18n>colEstimated}"/>
+      <StepInput value="{view>/form/scenarioTask/estimatedMinutes}" min="0" max="100000" step="5" description="min"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,79 @@
+[
+  {
+    "prerequisitesText": "Administrator access to both systems; SAP BTP subaccount with Cloud Integration",
+    "basedOnId": null,
+    "openWorkflowCount": 1,
+    "updatedAt": "2026-11-25T05:45:08Z",
+    "id": "sf-s4-employee",
+    "prerequisites": [
+      "Administrator access to both systems",
+      "SAP BTP subaccount with Cloud Integration"
+    ],
+    "estimatedMinutes": 115,
+    "createdAt": "2026-11-25T05:45:08Z",
+    "createdBy": "anonymous",
+    "name": "Integrate SAP SuccessFactors Employee Central with SAP S/4HANA Cloud",
+    "activatedAt": "2026-11-25T05:45:08Z",
+    "sourceSystemType": "sapSuccessFactors",
+    "category": "recruitToRetire",
+    "taskCount": 6,
+    "workflowCount": 1,
+    "description": "Replicate employees and organisational data from Employee Central to S/4HANA Cloud (business partners, cost centers).",
+    "targetSystemType": "sapS4HanaCloud",
+    "version": "1.0",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  },
+  {
+    "prerequisitesText": "Ariba realm with integration toolkit; S/4HANA communication scenario SAP_COM_0A00",
+    "basedOnId": null,
+    "openWorkflowCount": 1,
+    "updatedAt": "2026-11-25T05:45:08Z",
+    "id": "s4-ariba-procurement",
+    "prerequisites": [
+      "Ariba realm with integration toolkit",
+      "S/4HANA communication scenario SAP_COM_0A00"
+    ],
+    "estimatedMinutes": 95,
+    "createdAt": "2026-11-25T05:45:08Z",
+    "createdBy": "anonymous",
+    "name": "Connect SAP S/4HANA Cloud with SAP Ariba Procurement",
+    "activatedAt": "2026-11-25T05:45:08Z",
+    "sourceSystemType": "sapS4HanaCloud",
+    "category": "sourceToPay",
+    "taskCount": 4,
+    "workflowCount": 1,
+    "description": "Purchase orders, order confirmations and invoices between S/4HANA Cloud and Ariba Network.",
+    "targetSystemType": "sapAriba",
+    "version": "1.0",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  },
+  {
+    "prerequisitesText": "Event Mesh service instance",
+    "basedOnId": null,
+    "openWorkflowCount": 0,
+    "updatedAt": "2026-11-25T05:45:08Z",
+    "id": "btp-event-mesh",
+    "prerequisites": [
+      "Event Mesh service instance"
+    ],
+    "estimatedMinutes": 30,
+    "createdAt": "2026-11-25T05:45:08Z",
+    "createdBy": "anonymous",
+    "name": "Set up SAP Event Mesh for S/4HANA business events",
+    "activatedAt": null,
+    "sourceSystemType": "sapS4HanaCloud",
+    "category": "btpServices",
+    "taskCount": 2,
+    "workflowCount": 0,
+    "description": "Publish business partner events from S/4HANA Cloud to SAP Event Mesh.",
+    "targetSystemType": "sapBtp",
+    "version": "1.0",
+    "tenantId": "default",
+    "status": "draft",
+    "updatedBy": "anonymous"
+  }
+]

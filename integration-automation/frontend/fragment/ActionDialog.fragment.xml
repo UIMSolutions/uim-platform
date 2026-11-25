@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <!-- an operation that takes one text: complete (result), fail (error), skip (reason), terminate (reason), copy (new id) -->
+  <Dialog title="{view>/form/taskAction/title}" contentWidth="30rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colTask}"/>
+      <Text text="{view>/form/taskAction/name}"/>
+      <Label text="{view>/form/taskAction/label}" required="{view>/form/taskAction/required}"/>
+      <TextArea value="{view>/form/taskAction/text}" rows="3" growing="true" width="100%"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>ok}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

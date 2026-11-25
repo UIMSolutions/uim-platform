@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>assignTask}" contentWidth="28rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colTask}"/>
+      <Text text="{view>/form/assign/name}"/>
+      <Label text="{i18n>colAssigned}"/>
+      <Input value="{view>/form/assign/assignedTo}" placeholder="{i18n>assignPlaceholder}"/>
+      <Label text="{i18n>colPriority}"/>
+      <Select selectedKey="{view>/form/assign/priority}">
+        <core:Item key="low" text="{i18n>enum_low}"/>
+        <core:Item key="medium" text="{i18n>enum_medium}"/>
+        <core:Item key="high" text="{i18n>enum_high}"/>
+        <core:Item key="critical" text="{i18n>enum_critical}"/>
+      </Select>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

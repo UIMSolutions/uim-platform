@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/system/edit} ? ${i18n>editSystem} : ${i18n>createSystem} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/system/id}" enabled="{= !%{view>/form/system/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/system/name}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/system/description}" rows="2"/>
+      <Label text="{i18n>colSystemType}"/>
+      <Select selectedKey="{view>/form/system/systemType}" width="100%">
+        <core:Item key="sapS4HanaCloud" text="SAP S/4HANA Cloud"/>
+        <core:Item key="sapS4Hana" text="SAP S/4HANA"/>
+        <core:Item key="sapBtp" text="SAP BTP"/>
+        <core:Item key="sapSuccessFactors" text="SAP SuccessFactors"/>
+        <core:Item key="sapAriba" text="SAP Ariba"/>
+        <core:Item key="sapConcur" text="SAP Concur"/>
+        <core:Item key="sapFieldglass" text="SAP Fieldglass"/>
+        <core:Item key="sapIntegratedBusinessPlanning" text="SAP Integrated Business Planning"/>
+        <core:Item key="sapBuildWorkZone" text="SAP Build Work Zone"/>
+        <core:Item key="onPremise" text="{i18n>enum_onPremise}"/>
+        <core:Item key="thirdParty" text="{i18n>enum_thirdParty}"/>
+      </Select>
+      <Label text="{i18n>colHost}" required="true"/>
+      <Input value="{view>/form/system/host}" placeholder="my300000.s4hana.cloud.sap"/>
+      <Label text="{i18n>colPort}"/>
+      <StepInput value="{view>/form/system/port}" min="1" max="65535"/>
+      <Label text="{i18n>colProtocol}"/>
+      <SegmentedButton selectedKey="{view>/form/system/protocol}">
+        <items>
+          <SegmentedButtonItem key="https" text="HTTPS"/>
+          <SegmentedButtonItem key="http" text="HTTP"/>
+          <SegmentedButtonItem key="rfc" text="RFC"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colClient} / {i18n>colSid}"/>
+      <Input value="{view>/form/system/client}" placeholder="100" maxLength="3">
+        <layoutData><layout:GridData xmlns:layout="sap.ui.layout" span="L3 M3 S6"/></layoutData>
+      </Input>
+      <Input value="{view>/form/system/sid}" placeholder="S4P" maxLength="3">
+        <layoutData><layout:GridData xmlns:layout="sap.ui.layout" span="L3 M3 S6"/></layoutData>
+      </Input>
+      <Label text="{i18n>colEnvironment}"/>
+      <Select selectedKey="{view>/form/system/environment}" width="100%">
+        <core:Item key="production" text="{i18n>enum_production}"/>
+        <core:Item key="quality" text="{i18n>enum_quality}"/>
+        <core:Item key="test" text="{i18n>enum_test}"/>
+        <core:Item key="development" text="{i18n>enum_development}"/>
+      </Select>
+      <Label text="{i18n>colRegion}"/>
+      <Input value="{view>/form/system/region}" placeholder="eu10"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

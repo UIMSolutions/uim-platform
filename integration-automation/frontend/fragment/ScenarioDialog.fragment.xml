@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/scenario/edit} ? ${i18n>editScenario} : ${i18n>createScenario} }" contentWidth="36rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/scenario/id}" enabled="{= !%{view>/form/scenario/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/scenario/name}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/scenario/description}" rows="3"/>
+      <Label text="{i18n>colCategory}"/>
+      <Select selectedKey="{view>/form/scenario/category}" width="100%">
+        <core:Item key="leadToCash" text="{i18n>enum_leadToCash}"/>
+        <core:Item key="sourceToPay" text="{i18n>enum_sourceToPay}"/>
+        <core:Item key="recruitToRetire" text="{i18n>enum_recruitToRetire}"/>
+        <core:Item key="designToOperate" text="{i18n>enum_designToOperate}"/>
+        <core:Item key="btpServices" text="{i18n>enum_btpServices}"/>
+        <core:Item key="s4HanaIntegration" text="{i18n>enum_s4HanaIntegration}"/>
+        <core:Item key="communicationManagement" text="{i18n>enum_communicationManagement}"/>
+        <core:Item key="custom" text="{i18n>enum_custom}"/>
+      </Select>
+      <Label text="{i18n>colVersion}"/>
+      <Input value="{view>/form/scenario/version}" width="8rem"/>
+      <Label text="{i18n>colSourceSystemType}"/>
+      <Select selectedKey="{view>/form/scenario/sourceSystemType}" width="100%">
+        <core:Item key="any" text="{i18n>enum_any}"/>
+        <core:Item key="sapS4HanaCloud" text="SAP S/4HANA Cloud"/>
+        <core:Item key="sapS4Hana" text="SAP S/4HANA"/>
+        <core:Item key="sapBtp" text="SAP BTP"/>
+        <core:Item key="sapSuccessFactors" text="SAP SuccessFactors"/>
+        <core:Item key="sapAriba" text="SAP Ariba"/>
+        <core:Item key="sapConcur" text="SAP Concur"/>
+        <core:Item key="sapFieldglass" text="SAP Fieldglass"/>
+        <core:Item key="sapIntegratedBusinessPlanning" text="SAP Integrated Business Planning"/>
+        <core:Item key="sapBuildWorkZone" text="SAP Build Work Zone"/>
+        <core:Item key="onPremise" text="{i18n>enum_onPremise}"/>
+        <core:Item key="thirdParty" text="{i18n>enum_thirdParty}"/>
+      </Select>
+      <Label text="{i18n>colTargetSystemType}"/>
+      <Select selectedKey="{view>/form/scenario/targetSystemType}" width="100%">
+        <core:Item key="any" text="{i18n>enum_any}"/>
+        <core:Item key="sapS4HanaCloud" text="SAP S/4HANA Cloud"/>
+        <core:Item key="sapS4Hana" text="SAP S/4HANA"/>
+        <core:Item key="sapBtp" text="SAP BTP"/>
+        <core:Item key="sapSuccessFactors" text="SAP SuccessFactors"/>
+        <core:Item key="sapAriba" text="SAP Ariba"/>
+        <core:Item key="sapConcur" text="SAP Concur"/>
+        <core:Item key="sapFieldglass" text="SAP Fieldglass"/>
+        <core:Item key="sapIntegratedBusinessPlanning" text="SAP Integrated Business Planning"/>
+        <core:Item key="sapBuildWorkZone" text="SAP Build Work Zone"/>
+        <core:Item key="onPremise" text="{i18n>enum_onPremise}"/>
+        <core:Item key="thirdParty" text="{i18n>enum_thirdParty}"/>
+      </Select>
+      <Label text="{i18n>colPrerequisites}"/>
+      <TextArea value="{view>/form/scenario/prerequisites}" rows="3" placeholder="{i18n>onePerLine}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

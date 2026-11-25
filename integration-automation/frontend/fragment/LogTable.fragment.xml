@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <!-- the execution log (Main: all entries, WorkflowDetail: filtered by the workflow) -->
+  <Table id="logTable" growing="true" growingThreshold="50" noDataText="{i18n>noLog}"
+    items="{path: '/ExecutionLogs', parameters: {$orderby: 'createdAt desc', $count: true, $select: 'workflowId,taskId,details'}, suspended: true, templateShareable: false}">
+    <headerToolbar>
+      <OverflowToolbar>
+        <Title text="{i18n>tabLog}" level="H3"/>
+        <ToolbarSpacer/>
+        <Select selectedKey="{view>/outcome}" change=".onOutcomeFilter" width="10rem">
+          <core:Item key="" text="{i18n>allOutcomes}"/>
+          <core:Item key="success" text="{i18n>enum_success}"/>
+          <core:Item key="failure" text="{i18n>enum_failure}"/>
+          <core:Item key="timeout" text="{i18n>enum_timeout}"/>
+          <core:Item key="skipped" text="{i18n>enum_skipped}"/>
+          <core:Item key="info" text="{i18n>enum_info}"/>
+        </Select>
+        <SearchField width="12rem" search=".onSearch"><customData><core:CustomData key="table" value="logTable"/></customData></SearchField>
+        <Button text="{i18n>purge}" icon="sap-icon://delete" press=".onOpenDialog" visible="{session>/canManage}"><customData><core:CustomData key="dialog" value="purge"/></customData></Button>
+      </OverflowToolbar>
+    </headerToolbar>
+    <columns>
+      <Column width="12rem"><Text text="{i18n>colTime}"/></Column>
+      <Column><Text text="{i18n>colAction}"/></Column>
+      <Column><Text text="{i18n>colOutcome}"/></Column>
+      <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMessage}"/></Column>
+      <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colBy}"/></Column>
+      <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="{i18n>colDuration}"/></Column>
+    </columns>
+    <items>
+      <ColumnListItem>
+        <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+        <Text text="{action}"/>
+        <ObjectStatus text="{path: 'outcome', formatter: '.formatter.enumText'}" state="{path: 'outcome', formatter: '.formatter.outcomeState'}"/>
+        <Text text="{message}" tooltip="{details}"/>
+        <Text text="{executedBy}"/>
+        <Text text="{= %{durationMs} > 0 ? %{durationMs} + ' ms' : '' }"/>
+      </ColumnListItem>
+    </items>
+  </Table>
+</core:FragmentDefinition>

@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/destination/edit} ? ${i18n>editDestination} : ${i18n>createDestination} }" contentWidth="36rem">
+    <MessageStrip text="{i18n>credentialsHint}" type="Information" showIcon="true" class="sapUiSmallMargin"/>
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/destination/id}" enabled="{= !%{view>/form/destination/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/destination/name}" placeholder="S4_BUSINESS_PARTNER"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/destination/description}"/>
+      <Label text="{i18n>colSystem}"/>
+      <ComboBox selectedKey="{view>/form/destination/systemId}" showClearIcon="true" width="100%"
+        items="{path: '/Systems', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </ComboBox>
+      <Label text="{i18n>colType}"/>
+      <Select selectedKey="{view>/form/destination/destinationType}" width="100%">
+        <core:Item key="http" text="HTTP"/>
+        <core:Item key="odata" text="OData"/>
+        <core:Item key="soap" text="SOAP"/>
+        <core:Item key="restApi" text="REST API"/>
+        <core:Item key="rfc" text="RFC"/>
+      </Select>
+      <Label text="{i18n>colUrl}" required="{= %{view>/form/destination/destinationType} !== 'rfc' }"/>
+      <Input value="{view>/form/destination/url}" placeholder="https://"/>
+      <Label text="{i18n>colProxyType}"/>
+      <Select selectedKey="{view>/form/destination/proxyType}" width="100%">
+        <core:Item key="internet" text="{i18n>enum_internet}"/>
+        <core:Item key="onPremise" text="{i18n>enum_onPremise}"/>
+        <core:Item key="privateLink" text="{i18n>enum_privateLink}"/>
+      </Select>
+      <Label text="{i18n>colLocationId}" visible="{= %{view>/form/destination/proxyType} === 'onPremise' }"/>
+      <Input value="{view>/form/destination/locationId}" visible="{= %{view>/form/destination/proxyType} === 'onPremise' }"/>
+      <Label text="{i18n>colAuthentication}"/>
+      <Select selectedKey="{view>/form/destination/authentication}" width="100%">
+        <core:Item key="noAuthentication" text="{i18n>enum_noAuthentication}"/>
+        <core:Item key="basic" text="{i18n>enum_basic}"/>
+        <core:Item key="oauth2ClientCredentials" text="OAuth2 Client Credentials"/>
+        <core:Item key="oauth2SamlBearerAssertion" text="OAuth2 SAML Bearer Assertion"/>
+        <core:Item key="clientCertificate" text="{i18n>enum_clientCertificate}"/>
+        <core:Item key="principalPropagation" text="{i18n>enum_principalPropagation}"/>
+      </Select>
+      <Label text="{i18n>colUser}" visible="{= %{view>/form/destination/authentication} === 'basic' }"/>
+      <Input value="{view>/form/destination/user}" visible="{= %{view>/form/destination/authentication} === 'basic' }"/>
+      <Label text="{i18n>colTokenServiceUrl}" visible="{= %{view>/form/destination/authentication} === 'oauth2ClientCredentials' || %{view>/form/destination/authentication} === 'oauth2SamlBearerAssertion' }"/>
+      <Input value="{view>/form/destination/tokenServiceUrl}" visible="{= %{view>/form/destination/authentication} === 'oauth2ClientCredentials' || %{view>/form/destination/authentication} === 'oauth2SamlBearerAssertion' }"/>
+      <Label text="{i18n>colAudience} / {i18n>colScope}" visible="{= %{view>/form/destination/authentication} === 'oauth2ClientCredentials' || %{view>/form/destination/authentication} === 'oauth2SamlBearerAssertion' }"/>
+      <Input value="{view>/form/destination/audience}" visible="{= %{view>/form/destination/authentication} === 'oauth2ClientCredentials' || %{view>/form/destination/authentication} === 'oauth2SamlBearerAssertion' }"/>
+      <Input value="{view>/form/destination/scope}" visible="{= %{view>/form/destination/authentication} === 'oauth2ClientCredentials' || %{view>/form/destination/authentication} === 'oauth2SamlBearerAssertion' }"/>
+      <Label text="{i18n>colEnabled}"/>
+      <Switch state="{view>/form/destination/enabled}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>
