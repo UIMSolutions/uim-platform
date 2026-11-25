@@ -1,0 +1,68 @@
+name "integration-automation"
+description "Integration Automation service (SAP Cloud Integration Automation style) — system landscape, destinations, integration scenarios with task templates, guided workflows with manual, approval, automated and notification tasks, automation through destinations, execution log and monitoring. D/vibe.d backend with REST, OData v4 (SAP Fiori), built-in JWT login, CLI and GtkD GUI"
+homepage "https://github.com/UIMSolutions/uim-platform"
+authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
+copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
+license "Apache-2.0"
+
+targetPath "build"
+sourcePaths "source"
+importPaths "source"
+
+// Shared platform library: generic OData v4 engine, document stores,
+// security (HS256/RS256), CLI and GtkD entity browser.
+dependency "service" path="../../service"
+dependency "uim-framework" version="~>26.11.1"  // 26.11.2 dropped uim.services, which ../../service needs
+dependency "vibe-d" version="~>0.10.5"
+
+buildRequirements "allowWarnings" "silenceDeprecations"
+
+// ── HTTP server: REST (/api/v1) + OData v4 (/odata/v4/integration-automation) + Fiori (/app) + /auth ──
+// dub build            (or --config=defaultRun)
+// ./build/uim-integration-automation-platform-service
+configuration "defaultRun" {
+	targetType "executable"
+	targetName "uim-integration-automation-platform-service"
+	mainSourceFile "source/app.d"
+	excludedSourceFiles "source/cli.d" "source/gui.d"
+}
+
+// ── Command line interface ──────────────────────────────────────────────────
+// dub build --config=cli
+// ./build/uim-integration-automation-cli help
+configuration "cli" {
+	targetType "executable"
+	targetName "uim-integration-automation-cli"
+	mainSourceFile "source/cli.d"
+	excludedSourceFiles "source/app.d" "source/gui.d"
+}
+
+// ── Desktop GUI (GtkD 3 / GTK 3.24) ─────────────────────────────────────────
+// dub build --config=gui
+// ./build/uim-integration-automation-gui [--tenant=<id>] [--data-file=<path>]
+configuration "gui" {
+	targetType "executable"
+	targetName "uim-integration-automation-gui"
+	mainSourceFile "source/gui.d"
+	excludedSourceFiles "source/app.d" "source/cli.d"
+	dependency "gtk-d" version="~>3.11.0"
+}
+
+// ── Libraries / unit tests (dub test) ───────────────────────────────────────
+configuration "defaultTest" {
+	targetType "library"
+	sourcePaths "tests"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "modules" {
+	targetType "library"
+	versions "show_module"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
+
+configuration "tests" {
+	targetType "library"
+	versions "show_module" "show_test"
+	excludedSourceFiles "source/app.d" "source/cli.d" "source/gui.d"
+}
