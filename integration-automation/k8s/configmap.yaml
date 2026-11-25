@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: integration-automation-config
+  labels:
+    app: integration-automation
+    part-of: uim-platform
+data:
+  IA_HOST: "0.0.0.0"
+  IA_PORT: "8090"
+  IA_STORAGE: "file"
+  IA_DATA_FILE: "/data/integration-automation.json"
+  IA_FRONTEND_DIR: "/app/frontend"
+  IA_AUTH_MODE: "jwt"
+  IA_TOKEN_TTL_SECONDS: "3600"
+  IA_WORKER_INTERVAL_SECONDS: "10"
+  IA_MAX_OPEN_WORKFLOWS: "15"
+  # simulate | http — http calls the destinations of automated tasks
+  IA_AUTOMATION_MODE: "simulate"
+  # simulate | tcp — tcp opens a TCP connection to test systems
+  IA_CONNECTIVITY_MODE: "simulate"
+  IA_LOG_RETENTION_DAYS: "90"

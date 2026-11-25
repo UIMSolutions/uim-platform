@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integration-automation
+  labels:
+    app: integration-automation
+    part-of: uim-platform
+spec:
+  # file storage is a single-node snapshot — keep one replica
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: integration-automation
+  template:
+    metadata:
+      labels:
+        app: integration-automation
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 999
+      containers:
+      - name: integration-automation
+        image: uim-platform/integration-automation:latest
+        ports:
+        - containerPort: 8090
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: integration-automation-config
+        - secretRef:
+            name: integration-automation-secret
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8090
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8090
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "384Mi"
+            cpu: "1000m"
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: integration-automation-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: integration-automation-data
+  labels:
+    app: integration-automation
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi

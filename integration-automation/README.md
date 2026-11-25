@@ -1,570 +1,309 @@
-# UIM Integration Automation Platform Service
+# UIM Integration Automation
 
+Guided integration workflows in the style of **SAP Cloud Integration Automation Service (CIAS)**: integration
+experts describe an integration once as a **scenario** with task templates; operators instantiate it as a
+**workflow** for a concrete pair of systems, work through the manual and approval tasks, and the service executes
+the automated tasks through **destinations** — with dependencies, monitoring and a complete execution log.
 
-## Documentation update
+- **Backend** — D, uim-framework 26.11, vibe.d 0.10.5, hexagonal / clean architecture (`backend/`)
+- **Frontend** — SAP Fiori 3 / OpenUI5 1.120 app (`frontend/`)
+- **Approuter** — SAP BTP entry point with XSUAA (`approuter/`), MTA deployment (`mta.yaml`), Kubernetes (`k8s/`)
+- **Interfaces** — OData v4 (Fiori), REST, CLI, GtkD desktop GUI — all driven by one EDM model
+- **Security** — built-in login with JWT (HS256, PBKDF2 passwords, lockout), XSUAA (RS256) on BTP, or open for development
 
-This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+See [UML.md](UML.md) for class, component, state and sequence diagrams and [NAFv4.md](NAFv4.md) for the NATO
+Architecture Framework v4 description.
 
-A microservice for guided integration workflow automation, system landscape
-management, and destination connectivity, inspired by **SAP Cloud Integration
-Automation Service (CIAS)**. Built with **D** and **vibe.d**, following
-**Clean Architecture** and **Hexagonal Architecture** (Ports & Adapters)
-principles.
+---
 
-Part of the [UIM Platform](https://www.....de/uim/sap) suite.
+## Concepts
 
-## Features
+```text
+System ──< Destination                     the landscape: where integrations happen and how APIs are reached
+Scenario ──< ScenarioTask (template)       the reusable definition (draft → active → deprecated → archived)
+Scenario ──< Workflow ──< WorkflowTask     an instance for one source and one target system
+Workflow ──< ExecutionLog                  everything that happened, by whom, with which outcome
+```
 
-| Capability | Description |
+| Concept | Meaning |
 |---|---|
-| **Integration Scenarios** | Pre-built and custom scenario templates with step definitions, category taxonomy (Lead-to-Cash, Source-to-Pay, Recruit-to-Retire, Design-to-Operate, etc.), and lifecycle management (Draft → Active → Deprecated → Archived) |
-| **Workflow Orchestration** | Runtime workflow instances derived from scenario templates with state machine (Planned → In Progress → Completed / Terminated / Failed / Suspended), dependency-based step ordering, and tenant-level limit of 15 concurrent workflows |
-| **Workflow Steps / Tasks** | Four step types (Manual, Automated, Approval, Notification) with priority levels (Low → Critical), assignee tracking, dependency management, and guided task completion |
-| **System Landscape** | Registry of SAP and third-party systems (S/4HANA, S/4HANA Cloud, BTP, SuccessFactors, Ariba, Concur, Fieldglass, IBP, Build Work Zone, On-Premise, Third-Party) with connection testing and status monitoring |
-| **Destinations** | Named connectivity endpoints supporting HTTP, RFC, OData, SOAP, and REST API protocols with authentication methods (Basic, OAuth2 Client Credentials, OAuth2 SAML, Certificate, SAML Bearer, Principal Propagation, No Auth) and proxy routing (Internet, On-Premise, Private Link) |
-| **Monitoring & Execution Logs** | Execution history with outcome tracking (Success, Failure, Skipped, Timeout, Error), failure filtering, and per-workflow summary aggregation |
-| **Workflow Engine** | Domain service for advancing workflows through steps, checking dependency satisfaction, and enforcing the 15-workflow-per-tenant concurrency limit |
-| **Step Executor** | Domain service for step lifecycle transitions (start, complete, fail, skip) with automatic execution log recording |
+| **System** | An SAP or third-party system of the landscape (S/4HANA Cloud, SuccessFactors, BTP, Ariba, …) with host, port, client, SID, environment and the result of the last connection test. |
+| **Destination** | How automated tasks reach an API: type (HTTP, OData, SOAP, REST, RFC), URL, authentication, proxy (internet, Cloud Connector, private link). Secrets are never stored. |
+| **Scenario** | Category (Lead-to-Cash, Source-to-Pay, …), version, required source/target system types, prerequisites. |
+| **Task template** | A guided step: manual, approval, automated (destination + endpoint + payload) or notification; role, instructions, priority, estimate, dependencies. |
+| **Workflow** | A running instance: status, progress, current task, source and target system. |
+| **Task** | A copy of a template inside a workflow with its own status, assignee, result, error, attempts and duration. |
 
-## Architecture
+### Task types
 
-```
-integration-automation/
-├── source/
-│   ├── app.d                                  # Entry point & composition root
-│   ├── domain/                                # Pure business logic (no dependencies)
-│   │   ├── types.d                            #   Type aliases & enums
-│   │   ├── entities/                          #   Core domain structs
-│   │   │   ├── integration_scenario.d         #     Scenario templates with step definitions
-│   │   │   ├── workflow.d                     #     Runtime workflow instances
-│   │   │   ├── workflow_step.d                #     Individual task / step execution
-│   │   │   ├── system_connection.d            #     System landscape entries
-│   │   │   ├── destination.d                  #     Connectivity endpoints
-│   │   │   └── execution_log.d                #     Audit trail for step executions
-│   │   ├── ports/                             #   Repository interfaces (ports)
-│   │   │   ├── scenario_repository.d
-│   │   │   ├── workflow_repository.d
-│   │   │   ├── step_repository.d
-│   │   │   ├── system_repository.d
-│   │   │   ├── destination_repository.d
-│   │   │   └── execution_log_repository.d
-│   │   └── services/                          #   Stateless domain services
-│   │       ├── workflow_engine.d              #     Workflow advancement & limit enforcement
-│   │       └── step_executor.d                #     Step lifecycle transitions & logging
-│   ├── application/                           #   Application layer (use cases)
-│   │   ├── dto.d                              #     Request / Response DTOs & UsecaseResult
-│   │   └── usecases/                         #     Application services
-│   │       ├── manage.scenarios.d
-│   │       ├── manage.workflows.d
-│   │       ├── manage.steps.d
-│   │       ├── manage.systems.d
-│   │       ├── manage.destinations.d
-│   │       └── monitor_executions.d
-│   ├── infrastructure/                        #   Technical adapters
-│   │   ├── config.d                           #     Environment-based configuration
-│   │   ├── container.d                        #     Dependency injection wiring
-│   │   └── persistence/                       #     In-memory repository implementations
-│   │       ├── in_memory_scenario_repo.d
-│   │       ├── in_memory_workflow_repo.d
-│   │       ├── in_memory_step_repo.d
-│   │       ├── in_memory_system_repo.d
-│   │       ├── in_memory_destination_repo.d
-│   │       └── in_memory_execution_log_repo.d
-│   └── presentation/                          #   HTTP driving adapters
-│       └── http/
-│           ├── json_utils.d                   #     JSON helper functions
-│           ├── health_controller.d
-│           ├── scenario_controller.d
-│           ├── workflow_controller.d
-│           ├── step_controller.d
-│           ├── system_controller.d
-│           ├── destination_controller.d
-│           └── monitoring_controller.d
-└── dub.sdl
-```
-
-## Multi-Tenancy
-
-Every request must include the `X-Tenant-Id` HTTP header to scope data to a
-specific tenant. Step-level operations also use `X-User-Id` for task assignment
-and audit trail purposes.
-
-| Header | Required | Description |
+| Type | Processed by | Notes |
 |---|---|---|
-| `X-Tenant-Id` | **Yes** | Tenant identifier — all reads/writes are scoped to this tenant |
-| `X-User-Id` | Contextual | User identifier — required for step start/complete/fail/skip and my-tasks |
+| `manual` | a person | start → complete with a result, or fail with an error |
+| `approval` | a person | complete = approve, fail = reject; **cannot be skipped** |
+| `automated` | the automation gateway | `POST`/`GET` destination URL + endpoint; 2xx = success |
+| `notification` | the automation gateway | informs the role / assignee (webhook in `http` mode) and completes |
 
-## REST API
+### Dependencies
 
-All endpoints are prefixed with `/api/v1/`. Request and response bodies use
-`Content-Type: application/json`.
+A template depends on the templates with the **next lower sequence number** (`afterPrevious`, default) and on any
+templates listed in `dependsOn`. Dependencies may only point to *lower* sequence numbers, so the graph is always
+acyclic and tasks with the same sequence number run in parallel. A task is **ready** when all its dependencies are
+completed or skipped.
 
-### Health
+### Lifecycles
 
-```
-GET  /api/v1/health                         → {"status":"UP","service":"integration-automation"}
-```
-
-### Integration Scenarios
-
-```
-GET    /api/v1/scenarios                    List all scenarios
-POST   /api/v1/scenarios                    Create a scenario
-GET    /api/v1/scenarios/{id}               Get scenario by ID
-PUT    /api/v1/scenarios/{id}               Update a scenario
-DELETE /api/v1/scenarios/{id}               Delete a scenario
-```
-
-### Workflows
-
-```
-GET    /api/v1/workflows                    List all workflows
-POST   /api/v1/workflows                    Create a workflow from a scenario template
-GET    /api/v1/workflows/{id}               Get workflow by ID
-POST   /api/v1/workflows/start/{id}         Start a workflow
-POST   /api/v1/workflows/suspend/{id}       Suspend a running workflow
-POST   /api/v1/workflows/resume/{id}        Resume a suspended workflow
-POST   /api/v1/workflows/terminate/{id}     Terminate a workflow
-DELETE /api/v1/workflows/{id}               Delete a workflow
+```text
+Scenario   draft ──activate──▶ active ──deprecate──▶ deprecated ──archive──▶ archived
+             └────────────────archive─────────────────────────────▲
+Workflow   planned ──start──▶ inProgress ⇄ suspended
+                               │  ▲ retry / skip
+                               ▼  │
+                              failed          inProgress ──(all tasks done)──▶ completed
+           any open ──terminate──▶ terminated
+Task       pending ──start──▶ inProgress ──complete──▶ completed
+                                         └──fail────▶ failed ──retry──▶ pending
+           pending | failed ──skip──▶ skipped (not approvals)
 ```
 
-### Workflow Steps / Tasks
+### Business rules (enforced by the use cases)
 
-```
-GET    /api/v1/steps                        List all steps
-POST   /api/v1/steps                        Create a step
-GET    /api/v1/steps/{id}                   Get step by ID
-POST   /api/v1/steps/start/{id}             Start a step
-POST   /api/v1/steps/complete/{id}          Complete a step
-POST   /api/v1/steps/fail/{id}              Fail a step
-POST   /api/v1/steps/skip/{id}              Skip a step
-GET    /api/v1/my-tasks                     List tasks assigned to authenticated user
-DELETE /api/v1/steps/{id}                   Delete a step
+| Rule | |
+|---|---|
+| Open workflow limit | at most `maxOpenWorkflows` (default **15**, the SAP CIAS limit) planned, running, suspended or failed workflows per tenant |
+| Active scenarios only | workflows are created from **active** scenarios with at least one task template |
+| Frozen templates | task templates change only while the scenario is a **draft**; category, version and system types of a non-draft scenario are fixed — *copy as new version* creates a draft `1.0 → 1.1` with remapped templates |
+| Systems | required when a template needs them, must exist, must differ and must match the scenario's system types (`any` = no restriction) |
+| Dependencies | a task starts only when its dependencies are done; a failed task fails the workflow until it is retried or skipped |
+| Running workflows | tasks change only while the workflow is in progress or failed (not planned, suspended or finished) |
+| Assignees | must be valid user names; when the built-in login has users, the user must exist |
+| References | systems, destinations and scenarios cannot be deleted while destinations, templates or workflows use them; only planned or finished workflows can be deleted (the log is kept) |
+| Unique names | destination names are unique per tenant (case insensitive) |
+
+---
+
+## Project layout
+
+```text
+integration-automation/
+├── mta.yaml                      SAP BTP deployment (backend, approuter, XSUAA, config service)
+├── backend/                      D / vibe.d service
+│   ├── dub.sdl                   configurations: defaultRun (server), cli, gui, defaultTest
+│   ├── config/default.json       defaults (overridden by IA_* env vars and VCAP_SERVICES)
+│   ├── source/app.d | cli.d | gui.d
+│   ├── source/uim/platform/integration_automation/
+│   │   ├── domain/               entities, types (ids, time, scopes), enumerations, exceptions,
+│   │   │                         services (WorkflowEngine, ScenarioPlanner — pure functions)
+│   │   ├── ports/                usecases, services, repositories, storages, messaging, gateways
+│   │   ├── application/          use cases, application services (statistics, demo data), DTOs
+│   │   ├── infrastructure/       configuration, logging, security (JWT, PBKDF2), clients
+│   │   │                         (automation gateway, connectivity probe, clock), workers, container
+│   │   ├── persistence/          document repositories, batching stores, mappers, records
+│   │   └── presentation/         odata (EDM model + engine), http (REST, auth, health), web, cli, gui
+│   ├── tests/                    integration tests across all layers
+│   └── Dockerfile | Containerfile
+├── frontend/                     SAP Fiori 3 / OpenUI5 app
+│   ├── manifest.json | Component.js | index.html
+│   ├── view/ controller/ fragment/   Main (tabs), WorkflowDetail, ScenarioDetail, dialogs
+│   ├── model/                    models, formatter, session (JWT login), dialog definitions
+│   ├── i18n/                     English, German
+│   ├── localService/             $metadata and mock data captured from the backend
+│   └── test/                     QUnit (formatter, models, session), OPA5 journey
+├── approuter/                    @sap/approuter: xs-app.json, xs-security.json, default-env.json (local, ignored)
+└── k8s/                          deployment, service, configmap, secret example
 ```
 
-### System Landscape
+---
 
-```
-GET    /api/v1/systems                      List all systems
-POST   /api/v1/systems                      Register a system
-GET    /api/v1/systems/{id}                 Get system by ID
-PUT    /api/v1/systems/{id}                 Update a system
-POST   /api/v1/systems/test/{id}            Test system connectivity
-DELETE /api/v1/systems/{id}                 Delete a system
-```
+## Build and run
 
-### Destinations
-
-```
-GET    /api/v1/destinations                 List all destinations
-POST   /api/v1/destinations                 Create a destination
-GET    /api/v1/destinations/{id}            Get destination by ID
-PUT    /api/v1/destinations/{id}            Update a destination
-DELETE /api/v1/destinations/{id}            Delete a destination
-```
-
-### Monitoring
-
-```
-GET    /api/v1/monitoring/logs              List all execution logs
-GET    /api/v1/monitoring/failures          List failed execution logs
-GET    /api/v1/monitoring/summary/{id}      Get workflow execution summary
-```
-
-## Build and Run
+Requirements: `dub` with `dmd` or `ldc2`; the shared library `../../service` (path dependency).
 
 ```bash
-# Build
-cd integration-automation
-dub build
-
-# Run (default: 0.0.0.0:8090)
-./build/uim-integration-automation-platform-service
-
-# Override host/port via environment
-CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-service
+cd backend
+dub build                      # server   → build/uim-integration-automation-platform-service
+dub build --config=cli         # CLI      → build/uim-integration-automation-cli
+dub build --config=gui         # GtkD GUI → build/uim-integration-automation-gui
+dub test                       # unit and integration tests
 ```
+
+### Local development
+
+```bash
+cd backend
+IA_AUTH_MODE=open ./build/uim-integration-automation-platform-service
+# Fiori app:  http://localhost:8090/app/index.html     ("Create Demo Content" in an empty tenant)
+# OData:      http://localhost:8090/odata/v4/integration-automation/$metadata
+# REST:       http://localhost:8090/api/v1/integration-automation/meta
+```
+
+With the defaults (`config/default.json`: `authMode: jwt`, `storage: file`) the server creates the user `admin` on
+first start and logs a generated password once (set `IA_ADMIN_PASSWORD` and `IA_JWT_SECRET` to choose them). The
+Fiori app then shows a login dialog.
+
+### CLI
+
+The CLI uses the same container and storage; with `--data-file` it shares the JSON snapshot with a running server.
+
+```bash
+./build/uim-integration-automation-cli help
+./build/uim-integration-automation-cli seed --data-file=data/integration-automation.json
+./build/uim-integration-automation-cli list Workflows --filter="status eq 'inProgress'"
+./build/uim-integration-automation-cli tasks wf-employee-wave1
+./build/uim-integration-automation-cli task-start <task> ; ./build/uim-integration-automation-cli complete <task> "done"
+./build/uim-integration-automation-cli instantiate sf-s4-employee --source=sf-prd --target=s4-cloud-prd --start
+./build/uim-integration-automation-cli run                # ready automated / notification tasks
+./build/uim-integration-automation-cli token admin        # access token (jwt mode)
+```
+
+Further commands: `stats`, `test`, `activate`, `deprecate`, `archive`, `copy`, `start`, `suspend`, `resume`,
+`terminate`, `fail`, `skip`, `retry`, `assign`, `purge`, `passwd`, `config` and the generic `sets`, `metadata`,
+`get`, `create`, `update`, `delete`, `invoke` (all with `--json` / `--csv`).
+
+### Container / Kubernetes / BTP
+
+```bash
+# from the repository root (path dependency on ../../service)
+docker build -f integration-automation/backend/Dockerfile -t uim-platform/integration-automation .
+kubectl apply -f integration-automation/k8s/          # after copying secret.example.yaml to secret.yaml
+mbt build && cf deploy mta_archives/uim-integration-automation_2.0.0.mtar   # SAP BTP Cloud Foundry
+```
+
+Locally behind the approuter: `cd approuter && npm install && npm start` with `default-env.json` pointing to
+`http://localhost:8090`.
+
+---
+
+## Authentication and authorization
+
+| Mode | Selected by | Behaviour |
+|---|---|---|
+| `xsuaa` | XSUAA binding in `VCAP_SERVICES` | approuter login, RS256 tokens verified, scopes enforced |
+| `jwt` | `authMode: "jwt"` (or `requireAuthentication: true`) | built-in login (`/auth/login`), HS256 tokens, scopes enforced |
+| `open` | `authMode: "open"` | no authentication (local development); tenant from `X-Tenant-Id`, user from `X-User-Id` |
+
+| Scope | Allows | XSUAA role template |
+|---|---|---|
+| `Read` | read everything | Viewer |
+| `Execute` | create and run workflows; start, complete, fail, skip, retry and assign tasks; run automation | TaskProcessor |
+| `Manage` | maintain systems, destinations, scenarios and templates; test connections; purge the log (implies `Execute`) | IntegrationExpert |
+| `Admin` | manage the users of the built-in login (`/Users`) | Administrator |
+
+Built-in login endpoints:
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/auth/config` | `{mode, loginRequired}` (public) |
+| POST | `/auth/login` | `{username, password, tenant?}` (JSON or form) → `{access_token, token_type, expires_in, scope, user}` |
+| GET | `/auth/me` | the caller |
+| POST | `/auth/password` | `{currentPassword, newPassword}` |
+| POST | `/auth/logout` | 204 (stateless) |
+
+Tokens carry XSUAA compatible claims (`sub`, `user_id`, `user_name`, `zid`, `scope[]`, `exp`, `jti`). Passwords:
+PBKDF2-HMAC-SHA256 (120 000 rounds, random salt, transparent rehash), at least 10 characters. After 5 failed logins
+the account is locked for 15 minutes; unknown users and wrong passwords answer alike. The last administrator cannot
+be deleted, locked or demoted. The Fiori app shows a login dialog in `jwt` mode, keeps the token per browser tab and
+offers password change and sign-out in the user menu; buttons follow the scopes of the session.
+
+### Destination credentials
+
+Passwords, client secrets and certificates are never stored by this service. In `automationMode: http` the
+automation gateway sends the `Authorization` header from the environment variable
+`IA_DESTINATION_<NAME>_AUTHORIZATION` (destination name upper case, other characters `_`, e.g.
+`IA_DESTINATION_S4_BUSINESS_PARTNER_AUTHORIZATION="Bearer …"`); the Destinations list shows the variable name.
+
+---
+
+## APIs
+
+### OData v4 — `/odata/v4/integration-automation`
+
+| Entity set | Operations | Write scope |
+|---|---|---|
+| `Systems`, `Destinations`, `Scenarios`, `ScenarioTasks` | CRUD | Manage |
+| `Workflows` | create (from a scenario), PATCH name/description, delete | Execute |
+| `WorkflowTasks` | read, PATCH `assignedTo` / `priority` | Execute |
+| `ExecutionLogs` | read only | — |
+| `Users` | CRUD | Admin |
+| `Statistics` | singleton | — |
+
+Actions: `TestSystemConnection`, `ActivateScenario`, `DeprecateScenario`, `ArchiveScenario`, `CopyScenario`,
+`StartWorkflow`, `SuspendWorkflow`, `ResumeWorkflow`, `TerminateWorkflow`, `StartTask`, `CompleteTask`, `FailTask`,
+`SkipTask`, `RetryTask`, `AssignTask`, `RunAutomatedTasks`, `PurgeExecutionLogs`, `SeedDemoData`.
+`$metadata` carries Fiori annotations (`UI.LineItem`, `UI.SelectionFields`, `UI.HeaderInfo`, `Common.Label`,
+`Core.Computed`, `Core.Immutable`). Supported: `$filter`, `$orderby`, `$select`, `$top`, `$skip`, `$count`,
+`$search`, `$batch`, server-driven paging.
+
+### REST — `/api/v1/integration-automation`
+
+| Method | Path | |
+|---|---|---|
+| GET/POST | `/{resource}` | `systems`, `destinations`, `scenarios`, `scenario-tasks`, `workflows`, `tasks`, `execution-logs`, `users` — lists answer `{count, resources}` and accept OData query options |
+| GET/PUT/PATCH/DELETE | `/{resource}/{id}` | |
+| POST | `/systems/{id}/test` | connection test |
+| POST | `/scenarios/{id}/activate` · `/deprecate` · `/archive` · `/copy` `{newId?}` | |
+| GET | `/scenarios/{id}/tasks` | templates in sequence |
+| POST | `/workflows/{id}/start` · `/suspend` · `/resume` · `/terminate` `{reason?}` | |
+| GET | `/workflows/{id}/tasks` · `/workflows/{id}/logs` | |
+| POST | `/tasks/{id}/start` · `/complete` `{result?}` · `/fail` `{errorMessage}` · `/skip` `{reason}` · `/retry` · `/assign` `{assignedTo?, priority?}` | |
+| GET | `/my-tasks` | open tasks assigned to the caller |
+| POST | `/automation/run` `{workflowId?}` | run ready automated tasks |
+| POST | `/execution-logs/purge` `{olderThanDays}` | |
+| GET | `/statistics` · `/meta` | |
+| POST | `/demo-data` | demo content for an empty tenant |
+
+Errors: `{"error": {code, message, requestId, target}}` with 400 (invalid), 401, 403 (scope), 404, 405, 409 (conflict),
+422 (business rule) and 500. Health: `GET /health` and `/api/v1/health` (public).
+
+---
 
 ## Configuration
 
-| Variable | Default | Description |
-|---|---|---|
-| `CIA_HOST` | `0.0.0.0` | HTTP bind address |
-| `CIA_PORT` | `8090` | HTTP listen port |
+Precedence: built-in defaults → `config/default.json` → `config/<UIM_PROFILE>.json` → `IA_*` environment variables →
+Cloud Foundry (`PORT`, `VCAP_SERVICES`, user-provided service `integration-automation-config`) → CLI options.
+`CIA_HOST` / `CIA_PORT` of the first generation still work.
 
-## Domain Model Overview
+| Key | Env | Default | |
+|---|---|---|---|
+| `port` / `host` | `IA_PORT` / `IA_HOST` | `8090` / `0.0.0.0` | |
+| `storage` / `dataFile` | `IA_STORAGE` / `IA_DATA_FILE` | `memory` / `data/integration-automation.json` | `file`: JSON snapshot shared by server, CLI and GUI (single node) |
+| `authMode` | `IA_AUTH_MODE` | `open` | `open` or `jwt` (XSUAA binding wins) |
+| `jwtSecret` | `IA_JWT_SECRET` | random per start | ≥ 32 characters |
+| `tokenTtlSeconds` | `IA_TOKEN_TTL_SECONDS` | `3600` | |
+| `adminUser` / `adminPassword` | `IA_ADMIN_USER` / `IA_ADMIN_PASSWORD` | `admin` / generated | first administrator in `jwt` mode |
+| `maxFailedLogins` / `lockSeconds` / `minPasswordLength` | | `5` / `900` / `10` | |
+| `maxOpenWorkflows` | `IA_MAX_OPEN_WORKFLOWS` | `15` | `0` = unlimited |
+| `workerIntervalSeconds` | `IA_WORKER_INTERVAL_SECONDS` | `5` | automation worker; `0` = run automated tasks inline |
+| `workerTenants` | `IA_WORKER_TENANTS` | `["default"]` | comma separated in env |
+| `automationMode` | `IA_AUTOMATION_MODE` | `simulate` | `simulate` or `http` |
+| `automationTimeoutSeconds` | `IA_AUTOMATION_TIMEOUT_SECONDS` | `30` | |
+| `notificationWebhookUrl` | `IA_NOTIFICATION_WEBHOOK_URL` | — | notifications in `http` mode |
+| `connectivityMode` | `IA_CONNECTIVITY_MODE` | `simulate` | `simulate` or `tcp` (connection tests) |
+| `logRetentionDays` | `IA_LOG_RETENTION_DAYS` | `0` | daily purge of older log entries; `0` = keep |
+| `frontendDir` | `IA_FRONTEND_DIR` | `../frontend` | serves the Fiori app under `/app` (empty on BTP) |
+| `apiPath` / `odataPath` / `maxPageSize` / `maxRequestBytes` | | `/api/v1` / `/odata/v4/integration-automation` / `200` / 4 MiB | |
 
-### Type Aliases
-
-| Alias | Underlying | Purpose |
-|---|---|---|
-| `ScenarioId` | `string` | Integration scenario identifier |
-| `WorkflowId` | `string` | Workflow instance identifier |
-| `WorkflowStepId` | `string` | Workflow step identifier |
-| `SystemConnectionId` | `string` | System landscape entry identifier |
-| `DestinationId` | `string` | Destination endpoint identifier |
-| `TaskAssignmentId` | `string` | Task assignment identifier |
-| `ExecutionLogId` | `string` | Execution log entry identifier |
-| `TenantId` | `string` | Tenant identifier |
-| `UserId` | `string` | User identifier |
-
-### Enumerations
-
-| Enum | Values |
-|---|---|
-| **ScenarioStatus** | Draft, Active, Deprecated, Archived |
-| **WorkflowStatus** | Planned, InProgress, Completed, Terminated, Failed, Suspended |
-| **StepType** | Manual, Automated, Approval, Notification |
-| **StepStatus** | Pending, InProgress, Completed, Skipped, Failed, Blocked |
-| **StepPriority** | Low, Medium, High, Critical |
-| **SystemType** | SapS4Hana, SapS4HanaCloud, SapBtp, SapSuccessFactors, SapAriba, SapConcur, SapFieldglass, SapIntegratedBusinessPlanning, SapBuildWorkZone, OnPremise, ThirdParty |
-| **ConnectionStatus** | Active, Inactive, Error, Testing |
-| **DestinationType** | HTTP, RFC, OData, SOAP, RestApi |
-| **AuthenticationType** | Basic, OAuth2ClientCredentials, OAuth2Saml, Certificate, SamlBearer, PrincipalPropagation, NoAuthentication |
-| **ProxyType** | Internet, OnPremise, PrivateLink |
-| **ExecutionOutcome** | Success, Failure, Skipped, Timeout, Error |
-| **ScenarioCategory** | LeadToCash, SourceToPay, RecruitToRetire, DesignToOperate, BtpServices, S4HanaIntegration, CommunicationManagement, Custom |
-
-### Domain Services
-
-- **WorkflowEngine** — advances a workflow through its steps based on dependency resolution, enforces the 15-concurrent-workflow limit per tenant
-- **StepExecutor** — manages step lifecycle transitions (start → complete / fail / skip) and automatically records execution log entries
-
-### Entities
-
-#### IntegrationScenario
-
-| Field | Type | Description |
-|---|---|---|
-| `id` | `ScenarioId` | Unique scenario identifier |
-| `tenantId` | `TenantId` | Owning tenant |
-| `name` | `string` | Scenario name (e.g. "SAP S/4HANA Cloud Integration") |
-| `description` | `string` | Detailed description |
-| `category` | `ScenarioCategory` | Taxonomy category |
-| `version_` | `string` | Version string (default `"1.0"`) |
-| `status` | `ScenarioStatus` | Lifecycle state (default `draft`) |
-| `sourceSystemType` | `SystemType` | Source system type for this scenario |
-| `targetSystemType` | `SystemType` | Target system type for this scenario |
-| `prerequisites` | `string[]` | Prerequisite descriptions |
-| `stepTemplates` | `ScenarioStepTemplate[]` | Ordered step definitions |
-| `createdBy` | `string` | Creator user ID |
-| `createdAt` | `long` | Creation timestamp (hnsecs) |
-| `updatedAt` | `long` | Last update timestamp |
-
-#### ScenarioStepTemplate
-
-| Field | Type | Description |
-|---|---|---|
-| `name` | `string` | Step name |
-| `description` | `string` | Step description |
-| `type_` | `StepType` | Manual, Automated, Approval, or Notification |
-| `priority` | `StepPriority` | Priority level (default `medium`) |
-| `sequenceNumber` | `int` | Execution order number |
-| `assignedRole` | `string` | Role responsible for the task |
-| `instructions` | `string` | Detailed task instructions |
-| `automationEndpoint` | `string` | API endpoint for automated steps |
-| `automationPayload` | `string` | Payload template for automation |
-| `requiresSourceSystem` | `bool` | Whether step uses source system |
-| `requiresTargetSystem` | `bool` | Whether step uses target system |
-| `dependsOnSteps` | `int[]` | Sequence numbers of prerequisite steps |
-| `estimatedDurationMinutes` | `int` | Estimated time to complete |
-
-#### Workflow
-
-| Field | Type | Description |
-|---|---|---|
-| `id` | `WorkflowId` | Unique workflow identifier |
-| `tenantId` | `TenantId` | Owning tenant |
-| `scenarioId` | `ScenarioId` | Parent scenario template |
-| `name` | `string` | Workflow name |
-| `description` | `string` | Description |
-| `status` | `WorkflowStatus` | State machine state (default `planned`) |
-| `currentStepIndex` | `int` | 0-based index of current step |
-| `totalSteps` | `int` | Total number of steps |
-| `completedSteps` | `int` | Count of completed steps |
-| `sourceSystemConnectionId` | `SystemConnectionId` | Selected source system |
-| `targetSystemConnectionId` | `SystemConnectionId` | Selected target system |
-| `createdBy` | `string` | Creator user ID |
-| `startedAt` | `long` | Workflow start timestamp |
-| `completedAt` | `long` | Workflow completion timestamp |
-| `createdAt` | `long` | Creation timestamp |
-| `updatedAt` | `long` | Last update timestamp |
-
-#### WorkflowStep
-
-| Field | Type | Description |
-|---|---|---|
-| `id` | `WorkflowStepId` | Unique step identifier |
-| `workflowId` | `WorkflowId` | Parent workflow |
-| `tenantId` | `TenantId` | Owning tenant |
-| `name` | `string` | Step name |
-| `description` | `string` | Step description |
-| `type_` | `StepType` | Step type |
-| `status` | `StepStatus` | Current Status(default `pending`) |
-| `priority` | `StepPriority` | Priority level (default `medium`) |
-| `sequenceNumber` | `int` | Execution order number |
-| `assignedTo` | `string` | Assigned user ID |
-| `assignedRole` | `string` | Required role |
-| `instructions` | `string` | Detailed instructions |
-| `automationEndpoint` | `string` | Endpoint for automated execution |
-| `automationPayload` | `string` | Payload for automated execution |
-| `sourceSystemConnectionId` | `SystemConnectionId` | Source system reference |
-| `targetSystemConnectionId` | `SystemConnectionId` | Target system reference |
-| `dependencies` | `WorkflowStepId[]` | IDs of steps that must complete first |
-| `result` | `string` | Outcome details / response |
-| `errorMessage` | `string` | Error message on failure |
-| `startedAt` | `long` | Step start timestamp |
-| `completedAt` | `long` | Step completion timestamp |
-| `createdAt` | `long` | Creation timestamp |
-| `estimatedDurationMinutes` | `int` | Estimated time to complete |
-
-#### SystemConnection
-
-| Field | Type | Description |
-|---|---|---|
-| `id` | `SystemConnectionId` | Unique system identifier |
-| `tenantId` | `TenantId` | Owning tenant |
-| `name` | `string` | System display name (e.g. "Production S/4HANA") |
-| `description` | `string` | Description |
-| `systemType` | `SystemType` | Type of SAP or third-party system |
-| `host` | `string` | Hostname or IP |
-| `port` | `ushort` | Port number |
-| `client` | `string` | SAP client number |
-| `protocol` | `string` | Protocol (default `"https"`) |
-| `status` | `ConnectionStatus` | Connection Status(default `inactive`) |
-| `environment` | `string` | e.g. "production", "staging", "dev" |
-| `region` | `string` | e.g. "eu10", "us20" |
-| `systemId` | `string` | SAP System ID (SID) |
-| `tenant` | `string` | Subaccount / tenant identifier |
-| `createdBy` | `string` | Creator user ID |
-| `createdAt` | `long` | Creation timestamp |
-| `updatedAt` | `long` | Last update timestamp |
-
-#### Destination
-
-| Field | Type | Description |
-|---|---|---|
-| `id` | `DestinationId` | Unique destination identifier |
-| `tenantId` | `TenantId` | Owning tenant |
-| `name` | `string` | Unique destination name per tenant |
-| `description` | `string` | Description |
-| `systemId` | `SystemConnectionId` | Linked system connection |
-| `destinationType` | `DestinationType` | Protocol (HTTP, RFC, OData, SOAP, RestApi) |
-| `url` | `string` | Full URL for the destination |
-| `authenticationType` | `AuthenticationType` | Authentication method |
-| `proxyType` | `ProxyType` | Routing (default `internet`) |
-| `cloudConnectorLocationId` | `string` | For on-premise routing |
-| `user` | `string` | Basic auth user |
-| `tokenServiceUrl` | `string` | OAuth token endpoint |
-| `tokenServiceUser` | `string` | OAuth token service user |
-| `audience` | `string` | OAuth audience |
-| `scope_` | `string` | OAuth scope |
-| `isEnabled` | `bool` | Whether destination is active (default `true`) |
-| `createdBy` | `string` | Creator user ID |
-| `createdAt` | `long` | Creation timestamp |
-| `updatedAt` | `long` | Last update timestamp |
-
-#### ExecutionLog
-
-| Field | Type | Description |
-|---|---|---|
-| `id` | `ExecutionLogId` | Unique log identifier |
-| `workflowId` | `WorkflowId` | Parent workflow |
-| `stepId` | `WorkflowStepId` | Related step |
-| `tenantId` | `TenantId` | Owning tenant |
-| `action` | `string` | Action name (e.g. "step.started", "step.completed") |
-| `outcome` | `ExecutionOutcome` | Execution outcome |
-| `message` | `string` | Human-readable message |
-| `details` | `string` | Extended info (JSON payload, error trace) |
-| `executedBy` | `string` | User ID or "system" |
-| `durationMs` | `long` | Execution duration in milliseconds |
-| `timestamp` | `long` | Event timestamp |
-
-### Business Rules
-
-| Rule | Description |
-|---|---|
-| **Workflow Limit** | Max 15 active (in-progress) workflows per tenant |
-| **Scenario Must Be Active** | A workflow can only be created from a scenario in `active` status |
-| **Dependency Resolution** | A step cannot start until all steps in its `dependencies` list are `completed` |
-| **Step State Machine** | `pending` → `inProgress` → `completed` / `failed` / `skipped`; steps in `blocked` state wait for dependencies |
-| **Workflow Advancement** | After a step completes or is skipped, the `WorkflowEngine` checks if the next pending step's dependencies are met and advances `currentStepIndex` |
-| **Workflow Completion** | When all steps are completed or skipped, the workflow automatically transitions to `completed` |
-| **Unique Destination Names** | Destination names must be unique within a tenant |
-| **System Validation** | When creating a destination with a `systemId`, the referenced system must exist |
-| **Connection Testing** | `POST /api/v1/systems/test/{id}` simulates a test and sets the system status to `active` |
-
-### Error Response Format
-
-All error responses return a JSON body:
-
-```json {
-  "error": "Human-readable error message",
-  "status": 400
-}
-```
-
-| HTTP Status | Meaning |
-|---|---|
-| `200` | Success |
-| `201` | Created (POST with new resource) |
-| `400` | Validation error or business rule violation |
-| `404` | Resource not found |
-| `500` | Internal server error |
-
-### Request / Response Examples
-
-#### Create a Scenario
-
-```bash
-curl -X POST http://localhost:8090/api/v1/scenarios \
-  -H "Content-Type: application/json" \
-  -H "X-Tenant-Id: tenant-001" \
-  -d '{
-    "name": "S/4HANA Cloud Migration",
-    "description": "End-to-end S/4HANA Cloud integration setup",
-    "category": "s4HanaIntegration",
-    "version": "1.0",
-    "sourceSystemType": "sapS4Hana",
-    "targetSystemType": "sapS4HanaCloud",
-    "createdBy": "admin",
-    "prerequisites": ["VPN connectivity established", "SAP user accounts provisioned"],
-    "stepTemplates": [{
-        "name": "Configure RFC Connection",
-        "description": "Set up RFC destination in SM59",
-        "type_": "manual",
-        "priority": "high",
-        "sequenceNumber": 1,
-        "assignedRole": "BASIS_ADMIN",
-        "instructions": "Open SM59 and create a new RFC destination..."
-      }
-    ]
-  }'
-```
-
-Response (`201`):
-
-```json { "id": "550e8400-e29b-41d4-a716-446655440000" }
-```
-
-#### Create a Workflow from Scenario
-
-```bash
-curl -X POST http://localhost:8090/api/v1/workflows \
-  -H "Content-Type: application/json" \
-  -H "X-Tenant-Id: tenant-001" \
-  -d '{
-    "scenarioId": "550e8400-e29b-41d4-a716-446655440000",
-    "name": "Q1 Migration Workflow",
-    "sourceSystemConnectionId": "sys-001",
-    "targetSystemConnectionId": "sys-002",
-    "createdBy": "project-manager"
-  }'
-```
-
-#### Start and Complete a Step
-
-```bash
-# Start a step
-curl -X POST http://localhost:8090/api/v1/steps/start/step-uuid \
-  -H "X-Tenant-Id: tenant-001" \
-  -H "X-User-Id: basis-admin-01"
-
-# Complete a step
-curl -X POST http://localhost:8090/api/v1/steps/complete/step-uuid \
-  -H "Content-Type: application/json" \
-  -H "X-Tenant-Id: tenant-001" \
-  -d '{ "completedBy": "basis-admin-01", "result": "RFC destination created successfully" }'
-```
-
-#### Get Workflow Summary
-
-```bash
-curl http://localhost:8090/api/v1/monitoring/summary/workflow-uuid \
-  -H "X-Tenant-Id: tenant-001"
-```
-
-Response:
-
-```json {
-  "workflowId": "workflow-uuid",
-  "workflowName": "Q1 Migration Workflow",
-  "status": "inProgress",
-  "totalSteps": 5,
-  "completedSteps": 2,
-  "inProgressSteps": 1,
-  "pendingSteps": 2,
-  "failedSteps": 0,
-  "skippedSteps": 0,
-  "totalLogEntries": 5
-}
-```
+`config/default.json` sets `storage: file`, `authMode: jwt` and `logRetentionDays: 90` for a ready-to-use local
+installation. `./build/uim-integration-automation-cli config` prints the effective configuration (secrets masked).
 
 ---
 
-## Component Diagram
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        HTTP Clients                              │
-│               (Browser / CLI / API Consumer)                     │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ HTTP/JSON + X-Tenant-Id header
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Presentation Layer  «driving adapters»                          │
-│                                                                  │
-│  ScenarioController · WorkflowController · StepController        │
-│  SystemController · DestinationController · MonitoringController │
-│  HealthController                                                │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ delegates to
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Application Layer  «use cases»                                  │
-│                                                                  │
-│  ManageScenariosUseCase · ManageWorkflowsUseCase                 │
-│  ManageStepsUseCase     · ManageSystemsUseCase                   │
-│  ManageDestinationsUseCase · MonitorExecutionsUseCase             │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ depends on ports + domain services
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Domain Layer  «pure business logic»                             │
-│                                                                  │
-│  Entities:  IntegrationScenario · Workflow · WorkflowStep        │
-│             SystemConnection · Destination · ExecutionLog         │
-│                                                                  │
-│  Ports:     ScenarioRepository · WorkflowRepository              │
-│             StepRepository · SystemRepository                    │
-│             DestinationRepository · ExecutionLogRepository        │
-│                                                                  │
-│  Services:  WorkflowEngine · StepExecutor                        │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ implemented by
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Infrastructure Layer  «driven adapters»                         │
-│                                                                  │
-│  AppConfig (CIA_HOST/CIA_PORT)  ·  Container (DI wiring)         │
-│                                                                  │
-│  MemoryScenarioRepo · MemoryWorkflowRepo                    │
-│  MemoryStepRepo     · MemorySystemRepo                      │
-│  MemoryDestinationRepo · MemoryExecutionLogRepo              │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-*Part of the [UIM Platform](https://www.....de/uim/sap) suite.*
-*© 2018–2026, Ozan Nurettin Suel, UI Manufaktur — Apache-2.0*
-
-## Testing
+## Tests
 
 ```bash
-dub test
+cd backend && dub test
 ```
+
+29 test modules: domain (entities, state machines, workflow engine, scenario planner, scopes), persistence mapping,
+configuration, security (PBKDF2 vectors, token issuing), automation and connectivity adapters, and
+`tests/integration_automation_flows.d` — the guided workflow end to end through the ports, the business rules,
+failing automation / suspend / terminate / housekeeping, REST and OData over vibe.d test requests, the JWT login with
+the scopes Read / Execute / Manage / Admin, the CLI and the batching file store.
+
+Frontend: `frontend/test/unit/unitTests.qunit.html` (formatter, models, dialogs, session) and the OPA5 journey
+`frontend/test/integration/opaTests.qunit.html` (against a running backend with demo data, served under `/app/test/`).
+
+---
 
 ## License
 
-See the repository root [LICENSE](../LICENSE) file.
+Apache 2.0 — © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)

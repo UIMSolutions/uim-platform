@@ -1,0 +1,26 @@
+{
+  "xsappname": "uim-integration-automation",
+  "tenant-mode": "dedicated",
+  "description": "UIM Integration Automation — guided integration workflows, system landscape, destinations and automation",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read systems, destinations, scenarios, workflows, tasks and the execution log" },
+    { "name": "$XSAPPNAME.Execute", "description": "Run workflows and process tasks (start, complete, fail, skip, retry, assign)" },
+    { "name": "$XSAPPNAME.Manage", "description": "Maintain systems, destinations, scenarios and task templates; test connections, purge the log" },
+    { "name": "$XSAPPNAME.Admin", "description": "Manage the user accounts of the built-in login (not used with XSUAA)" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only (monitoring)", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "TaskProcessor", "description": "Run workflows and process tasks", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Execute"] },
+    { "name": "IntegrationExpert", "description": "Maintain the landscape and scenarios, run workflows",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Execute", "$XSAPPNAME.Manage"] },
+    { "name": "Administrator", "description": "Everything",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Execute", "$XSAPPNAME.Manage", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "IntegrationAutomationViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "IntegrationAutomationTaskProcessor", "role-template-references": ["$XSAPPNAME.TaskProcessor"] },
+    { "name": "IntegrationAutomationExpert", "role-template-references": ["$XSAPPNAME.IntegrationExpert"] },
+    { "name": "IntegrationAutomationAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}
