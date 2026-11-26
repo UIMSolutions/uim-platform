@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/subscription/edit} ? ${i18n>editSubscription} : ${i18n>createSubscription} }" contentWidth="42rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/subscription/id}" enabled="{= !%{view>/form/subscription/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/subscription/name}"/>
+      <Label text="{i18n>colProducer}" required="true"/>
+      <Select selectedKey="{view>/form/subscription/producerSystemId}" forceSelection="false"
+        enabled="{= !%{view>/form/subscription/edit} }"
+        items="{path: '/Systems', parameters: {$orderby: 'name', $filter: 'systemType ne \'consumer\''}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colEventType}" required="true"/>
+      <Input value="{view>/form/subscription/eventType}" showSuggestion="true" placeholder="{i18n>patternHint}"
+        suggestionItems="{path: '/EventTypes', parameters: {$orderby: 'eventType'}, templateShareable: false}">
+        <suggestionItems><core:Item key="{eventType}" text="{eventType}"/></suggestionItems>
+      </Input>
+      <Label text="{i18n>colConsumer}" required="true"/>
+      <Select selectedKey="{view>/form/subscription/consumerSystemId}" forceSelection="false"
+        enabled="{= !%{view>/form/subscription/edit} }"
+        items="{path: '/Systems', parameters: {$orderby: 'name', $filter: 'systemType ne \'producer\''}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colChannel}" required="true"/>
+      <Select selectedKey="{view>/form/subscription/channelId}" forceSelection="false"
+        items="{path: '/Channels', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({consumerSystemName})"/>
+      </Select>
+      <Label text="{i18n>colRetries}"/>
+      <StepInput value="{view>/form/subscription/maxRetries}" min="0" max="20" width="8rem"/>
+      <Label text="{i18n>backoff}"/>
+      <StepInput value="{view>/form/subscription/retryBackoffSeconds}" min="1" max="3600" step="5" width="8rem"
+        description="{i18n>backoffDoubling}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/subscription/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/formation/edit} ? ${i18n>editFormation} : ${i18n>createFormation} }" contentWidth="32rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/formation/id}" enabled="{= !%{view>/form/formation/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/formation/name}"/>
+      <Label text="{i18n>colGlobalAccount}"/>
+      <Input value="{view>/form/formation/globalAccountId}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/formation/description}" rows="3"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,25 @@
+[
+  {
+    "activeChannels": 3,
+    "activeSubscriptions": 3,
+    "activeTopics": 4,
+    "channels": 3,
+    "consumers": 3,
+    "deadLetters": 0,
+    "deliveredLast24h": 2,
+    "eventsLast24h": 4,
+    "filters": 2,
+    "formations": 1,
+    "messages": 4,
+    "openDeadLetters": 0,
+    "openMessages": 2,
+    "producers": 2,
+    "queuedMessages": 1,
+    "retryingMessages": 1,
+    "subscriptions": 3,
+    "systems": 4,
+    "tenantId": "default",
+    "topics": 4,
+    "users": 0
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "attribute": "data.country",
+    "updatedAt": "2026-11-26T13:38:51Z",
+    "id": "bp-dach",
+    "summary": "data.country oneOf DE, AT, CH",
+    "createdAt": "2026-11-26T13:38:51Z",
+    "createdBy": "anonymous",
+    "operator": "oneOf",
+    "active": true,
+    "subscriptionId": "bp-to-crm",
+    "description": "DACH business partners only",
+    "subscriptionName": "Business partners (DACH) to CRM",
+    "filterType": "include",
+    "tenantId": "default",
+    "value": "DE, AT, CH",
+    "updatedBy": "anonymous"
+  },
+  {
+    "attribute": "data.blocked",
+    "updatedAt": "2026-11-26T13:38:51Z",
+    "id": "bp-not-blocked",
+    "summary": "not data.blocked equals true",
+    "createdAt": "2026-11-26T13:38:51Z",
+    "createdBy": "anonymous",
+    "operator": "equals",
+    "active": true,
+    "subscriptionId": "bp-to-crm",
+    "description": "no blocked partners",
+    "subscriptionName": "Business partners (DACH) to CRM",
+    "filterType": "exclude",
+    "tenantId": "default",
+    "value": "true",
+    "updatedBy": "anonymous"
+  }
+]

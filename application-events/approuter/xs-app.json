@@ -1,0 +1,48 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": { "logoutEndpoint": "/do/logout" },
+  "routes": [
+    {
+      "source": "^/odata/v4/appevents/(.*)$",
+      "target": "/odata/v4/appevents/$1",
+      "destination": "application-events-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": "$XSAPPNAME.Read"
+    },
+    {
+      "source": "^/api/v1/appevents/events(.*)$",
+      "target": "/api/v1/appevents/events$1",
+      "destination": "application-events-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false,
+      "scope": ["$XSAPPNAME.Publish", "$XSAPPNAME.Read"]
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "application-events-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": "$XSAPPNAME.Read"
+    },
+    {
+      "source": "^/auth/(config|me)$",
+      "target": "/auth/$1",
+      "destination": "application-events-srv",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/health$",
+      "destination": "application-events-srv",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.appevents" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Formation">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="globalAccountId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="systemCount" Type="Edm.Int32"/>
+        <Property Name="subscriptionCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="System">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="systemType" Type="Edm.String"/>
+        <Property Name="systemUrl" Type="Edm.String"/>
+        <Property Name="formationId" Type="Edm.String"/>
+        <Property Name="formationName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="channelCount" Type="Edm.Int32"/>
+        <Property Name="subscriptionCount" Type="Edm.Int32"/>
+        <Property Name="lastEventAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="EventType">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="eventType" Type="Edm.String" Nullable="false"/>
+        <Property Name="title" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.String"/>
+        <Property Name="ownerSystemId" Type="Edm.String"/>
+        <Property Name="ownerSystemName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="subscriptionCount" Type="Edm.Int32"/>
+        <Property Name="messageCount" Type="Edm.Int32"/>
+        <Property Name="lastPublishedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Channel">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="channelType" Type="Edm.String"/>
+        <Property Name="endpoint" Type="Edm.String"/>
+        <Property Name="consumerSystemId" Type="Edm.String" Nullable="false"/>
+        <Property Name="consumerSystemName" Type="Edm.String"/>
+        <Property Name="deliveryMode" Type="Edm.String"/>
+        <Property Name="maxSizeBytes" Type="Edm.Int64"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="subscriptionCount" Type="Edm.Int32"/>
+        <Property Name="openCount" Type="Edm.Int32"/>
+        <Property Name="queuedCount" Type="Edm.Int32"/>
+        <Property Name="deliveredCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Subscription">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="producerSystemId" Type="Edm.String" Nullable="false"/>
+        <Property Name="producerSystemName" Type="Edm.String"/>
+        <Property Name="consumerSystemId" Type="Edm.String" Nullable="false"/>
+        <Property Name="consumerSystemName" Type="Edm.String"/>
+        <Property Name="eventType" Type="Edm.String" Nullable="false"/>
+        <Property Name="channelId" Type="Edm.String" Nullable="false"/>
+        <Property Name="channelName" Type="Edm.String"/>
+        <Property Name="channelType" Type="Edm.String"/>
+        <Property Name="formationId" Type="Edm.String"/>
+        <Property Name="formationName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="maxRetries" Type="Edm.Int32"/>
+        <Property Name="retryBackoffSeconds" Type="Edm.Int32"/>
+        <Property Name="filterCount" Type="Edm.Int32"/>
+        <Property Name="messageCount" Type="Edm.Int32"/>
+        <Property Name="deliveredCount" Type="Edm.Int32"/>
+        <Property Name="openCount" Type="Edm.Int32"/>
+        <Property Name="deadLetterCount" Type="Edm.Int32"/>
+        <Property Name="health" Type="Edm.String"/>
+        <Property Name="lastMatchedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Filter">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="subscriptionId" Type="Edm.String" Nullable="false"/>
+        <Property Name="subscriptionName" Type="Edm.String"/>
+        <Property Name="filterType" Type="Edm.String"/>
+        <Property Name="attribute" Type="Edm.String" Nullable="false"/>
+        <Property Name="operator" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Message">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="subscriptionId" Type="Edm.String"/>
+        <Property Name="subscriptionName" Type="Edm.String"/>
+        <Property Name="channelId" Type="Edm.String"/>
+        <Property Name="channelName" Type="Edm.String"/>
+        <Property Name="producerSystemId" Type="Edm.String"/>
+        <Property Name="consumerSystemId" Type="Edm.String"/>
+        <Property Name="eventId" Type="Edm.String"/>
+        <Property Name="eventType" Type="Edm.String"/>
+        <Property Name="subject" Type="Edm.String"/>
+        <Property Name="payload" Type="Edm.String"/>
+        <Property Name="contentType" Type="Edm.String"/>
+        <Property Name="eventTime" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="sizeBytes" Type="Edm.Int64"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="attempts" Type="Edm.Int32"/>
+        <Property Name="maxAttempts" Type="Edm.Int32"/>
+        <Property Name="nextAttemptAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastAttemptAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastError" Type="Edm.String"/>
+        <Property Name="deliveredAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DeadLetter">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="messageId" Type="Edm.String"/>
+        <Property Name="subscriptionId" Type="Edm.String"/>
+        <Property Name="subscriptionName" Type="Edm.String"/>
+        <Property Name="channelId" Type="Edm.String"/>
+        <Property Name="channelName" Type="Edm.String"/>
+        <Property Name="eventId" Type="Edm.String"/>
+        <Property Name="eventType" Type="Edm.String"/>
+        <Property Name="reason" Type="Edm.String"/>
+        <Property Name="attempts" Type="Edm.Int32"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="resolvedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="resolvedBy" Type="Edm.String"/>
+        <Property Name="payload" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="temporarilyLocked" Type="Edm.Boolean"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="formations" Type="Edm.Int32"/>
+        <Property Name="systems" Type="Edm.Int32"/>
+        <Property Name="producers" Type="Edm.Int32"/>
+        <Property Name="consumers" Type="Edm.Int32"/>
+        <Property Name="topics" Type="Edm.Int32"/>
+        <Property Name="activeTopics" Type="Edm.Int32"/>
+        <Property Name="channels" Type="Edm.Int32"/>
+        <Property Name="activeChannels" Type="Edm.Int32"/>
+        <Property Name="subscriptions" Type="Edm.Int32"/>
+        <Property Name="activeSubscriptions" Type="Edm.Int32"/>
+        <Property Name="filters" Type="Edm.Int32"/>
+        <Property Name="messages" Type="Edm.Int32"/>
+        <Property Name="openMessages" Type="Edm.Int32"/>
+        <Property Name="retryingMessages" Type="Edm.Int32"/>
+        <Property Name="queuedMessages" Type="Edm.Int32"/>
+        <Property Name="eventsLast24h" Type="Edm.Int32"/>
+        <Property Name="deliveredLast24h" Type="Edm.Int32"/>
+        <Property Name="deadLetters" Type="Edm.Int32"/>
+        <Property Name="openDeadLetters" Type="Edm.Int32"/>
+        <Property Name="users" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="PublishResult">
+        <Property Name="eventId" Type="Edm.String"/>
+        <Property Name="eventType" Type="Edm.String"/>
+        <Property Name="source" Type="Edm.String"/>
+        <Property Name="duplicate" Type="Edm.Boolean"/>
+        <Property Name="preview" Type="Edm.Boolean"/>
+        <Property Name="candidates" Type="Edm.Int32"/>
+        <Property Name="routed" Type="Edm.Int32"/>
+        <Property Name="filtered" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="delivered" Type="Edm.Int32"/>
+        <Property Name="queued" Type="Edm.Int32"/>
+        <Property Name="retrying" Type="Edm.Int32"/>
+        <Property Name="deadLettered" Type="Edm.Int32"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="outcomes" Type="Edm.String"/>
+        <Property Name="notes" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="DeliveryResult">
+        <Property Name="messageId" Type="Edm.String"/>
+        <Property Name="subscriptionName" Type="Edm.String"/>
+        <Property Name="channelName" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="attempts" Type="Edm.Int32"/>
+        <Property Name="nextAttemptAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="statusCode" Type="Edm.Int32"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="deadLetterId" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="DispatchSummary">
+        <Property Name="due" Type="Edm.Int32"/>
+        <Property Name="attempted" Type="Edm.Int32"/>
+        <Property Name="delivered" Type="Edm.Int32"/>
+        <Property Name="queued" Type="Edm.Int32"/>
+        <Property Name="retrying" Type="Edm.Int32"/>
+        <Property Name="deadLettered" Type="Edm.Int32"/>
+        <Property Name="dropped" Type="Edm.Int32"/>
+        <Property Name="waiting" Type="Edm.Int32"/>
+        <Property Name="messages" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="PurgeResult">
+        <Property Name="messages" Type="Edm.Int32"/>
+        <Property Name="deadLetters" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="formations" Type="Edm.Int32"/>
+        <Property Name="systems" Type="Edm.Int32"/>
+        <Property Name="topics" Type="Edm.Int32"/>
+        <Property Name="channels" Type="Edm.Int32"/>
+        <Property Name="subscriptions" Type="Edm.Int32"/>
+        <Property Name="filters" Type="Edm.Int32"/>
+        <Property Name="events" Type="Edm.Int32"/>
+        <Property Name="messages" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="PublishEvent" IsBound="false">
+        <Parameter Name="type" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="source" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="subject" Type="Edm.String"/>
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="time" Type="Edm.String"/>
+        <Parameter Name="data" Type="Edm.String"/>
+        <ReturnType Type="uim.appevents.PublishResult"/>
+      </Action>
+      <Action Name="PreviewRouting" IsBound="false">
+        <Parameter Name="type" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="source" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="subject" Type="Edm.String"/>
+        <Parameter Name="id" Type="Edm.String"/>
+        <Parameter Name="time" Type="Edm.String"/>
+        <Parameter Name="data" Type="Edm.String"/>
+        <ReturnType Type="uim.appevents.PublishResult"/>
+      </Action>
+      <Action Name="DispatchDue" IsBound="false">
+        <ReturnType Type="uim.appevents.DispatchSummary"/>
+      </Action>
+      <Action Name="DeliverMessage" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.DeliveryResult"/>
+      </Action>
+      <Action Name="AcknowledgeMessage" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.Message"/>
+      </Action>
+      <Action Name="RequeueDeadLetter" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.DeliveryResult"/>
+      </Action>
+      <Action Name="RequeueDeadLetters" IsBound="false">
+        <Parameter Name="subscriptionId" Type="Edm.String"/>
+        <ReturnType Type="uim.appevents.DispatchSummary"/>
+      </Action>
+      <Action Name="DiscardDeadLetter" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.DeadLetter"/>
+      </Action>
+      <Action Name="PauseSubscription" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.Subscription"/>
+      </Action>
+      <Action Name="ResumeSubscription" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.Subscription"/>
+      </Action>
+      <Action Name="SetChannelStatus" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="status" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.Channel"/>
+      </Action>
+      <Action Name="SetEventTypeStatus" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="status" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.EventType"/>
+      </Action>
+      <Action Name="SetSystemStatus" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="status" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.System"/>
+      </Action>
+      <Action Name="SetFormationStatus" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="status" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.Formation"/>
+      </Action>
+      <Action Name="AssignSystem" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="systemId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.System"/>
+      </Action>
+      <Action Name="UnassignSystem" IsBound="false">
+        <Parameter Name="systemId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.appevents.System"/>
+      </Action>
+      <Action Name="PurgeMessages" IsBound="false">
+        <ReturnType Type="uim.appevents.PurgeResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.appevents.SeedResult"/>
+      </Action>
+      <EntityContainer Name="EventHubService">
+        <EntitySet Name="Formations" EntityType="uim.appevents.Formation"/>
+        <EntitySet Name="Systems" EntityType="uim.appevents.System"/>
+        <EntitySet Name="EventTypes" EntityType="uim.appevents.EventType"/>
+        <EntitySet Name="Channels" EntityType="uim.appevents.Channel"/>
+        <EntitySet Name="Subscriptions" EntityType="uim.appevents.Subscription"/>
+        <EntitySet Name="Filters" EntityType="uim.appevents.Filter"/>
+        <EntitySet Name="Messages" EntityType="uim.appevents.Message"/>
+        <EntitySet Name="DeadLetters" EntityType="uim.appevents.DeadLetter"/>
+        <EntitySet Name="Users" EntityType="uim.appevents.User"/>
+        <Singleton Name="Statistics" Type="uim.appevents.Statistic"/>
+        <ActionImport Name="PublishEvent" Action="uim.appevents.PublishEvent"/>
+        <ActionImport Name="PreviewRouting" Action="uim.appevents.PreviewRouting"/>
+        <ActionImport Name="DispatchDue" Action="uim.appevents.DispatchDue"/>
+        <ActionImport Name="DeliverMessage" Action="uim.appevents.DeliverMessage"/>
+        <ActionImport Name="AcknowledgeMessage" Action="uim.appevents.AcknowledgeMessage"/>
+        <ActionImport Name="RequeueDeadLetter" Action="uim.appevents.RequeueDeadLetter"/>
+        <ActionImport Name="RequeueDeadLetters" Action="uim.appevents.RequeueDeadLetters"/>
+        <ActionImport Name="DiscardDeadLetter" Action="uim.appevents.DiscardDeadLetter"/>
+        <ActionImport Name="PauseSubscription" Action="uim.appevents.PauseSubscription"/>
+        <ActionImport Name="ResumeSubscription" Action="uim.appevents.ResumeSubscription"/>
+        <ActionImport Name="SetChannelStatus" Action="uim.appevents.SetChannelStatus"/>
+        <ActionImport Name="SetEventTypeStatus" Action="uim.appevents.SetEventTypeStatus"/>
+        <ActionImport Name="SetSystemStatus" Action="uim.appevents.SetSystemStatus"/>
+        <ActionImport Name="SetFormationStatus" Action="uim.appevents.SetFormationStatus"/>
+        <ActionImport Name="AssignSystem" Action="uim.appevents.AssignSystem"/>
+        <ActionImport Name="UnassignSystem" Action="uim.appevents.UnassignSystem"/>
+        <ActionImport Name="PurgeMessages" Action="uim.appevents.PurgeMessages"/>
+        <ActionImport Name="SeedDemoData" Action="uim.appevents.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.appevents.PublishResult/eventId"><Annotation Term="Common.Label" String="Event ID"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/eventType"><Annotation Term="Common.Label" String="Event Type"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/source"><Annotation Term="Common.Label" String="Source"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/duplicate"><Annotation Term="Common.Label" String="Duplicate"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/preview"><Annotation Term="Common.Label" String="Preview"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/candidates"><Annotation Term="Common.Label" String="Candidates"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/routed"><Annotation Term="Common.Label" String="Routed"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/filtered"><Annotation Term="Common.Label" String="Filtered"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/skipped"><Annotation Term="Common.Label" String="Skipped"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/delivered"><Annotation Term="Common.Label" String="Delivered"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/queued"><Annotation Term="Common.Label" String="Queued"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/retrying"><Annotation Term="Common.Label" String="Retrying"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/deadLettered"><Annotation Term="Common.Label" String="Dead Letters"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/summary"><Annotation Term="Common.Label" String="Summary"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/outcomes"><Annotation Term="Common.Label" String="Subscriptions"/></Annotations>
+      <Annotations Target="uim.appevents.PublishResult/notes"><Annotation Term="Common.Label" String="Notes"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/messageId"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/subscriptionName"><Annotation Term="Common.Label" String="Subscription"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/channelName"><Annotation Term="Common.Label" String="Channel"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/attempts"><Annotation Term="Common.Label" String="Attempts"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/nextAttemptAt"><Annotation Term="Common.Label" String="Next Attempt"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/statusCode"><Annotation Term="Common.Label" String="HTTP Status"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.appevents.DeliveryResult/deadLetterId"><Annotation Term="Common.Label" String="Dead Letter"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/due"><Annotation Term="Common.Label" String="Due"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/attempted"><Annotation Term="Common.Label" String="Attempted"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/delivered"><Annotation Term="Common.Label" String="Delivered"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/queued"><Annotation Term="Common.Label" String="Queued"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/retrying"><Annotation Term="Common.Label" String="Retrying"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/deadLettered"><Annotation Term="Common.Label" String="Dead Letters"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/dropped"><Annotation Term="Common.Label" String="Dropped"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/waiting"><Annotation Term="Common.Label" String="Waiting"/></Annotations>
+      <Annotations Target="uim.appevents.DispatchSummary/messages"><Annotation Term="Common.Label" String="Messages"/></Annotations>
+      <Annotations Target="uim.appevents.PurgeResult/messages"><Annotation Term="Common.Label" String="Messages"/></Annotations>
+      <Annotations Target="uim.appevents.PurgeResult/deadLetters"><Annotation Term="Common.Label" String="Dead Letters"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/id"><Annotation Term="Common.Label" String="Formation"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/globalAccountId"><Annotation Term="Common.Label" String="Global Account"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/systemCount"><Annotation Term="Common.Label" String="Systems"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/subscriptionCount"><Annotation Term="Common.Label" String="Subscriptions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Formation/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Formation">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Formation"/><PropertyValue Property="TypeNamePlural" String="Formations"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="systemCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptionCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="globalAccountId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/Formations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.System/id"><Annotation Term="Common.Label" String="System"/></Annotations>
+      <Annotations Target="uim.appevents.System/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.appevents.System/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.appevents.System/systemType"><Annotation Term="Common.Label" String="Role"/></Annotations>
+      <Annotations Target="uim.appevents.System/systemUrl"><Annotation Term="Common.Label" String="URL"/></Annotations>
+      <Annotations Target="uim.appevents.System/formationId"><Annotation Term="Common.Label" String="Formation"/></Annotations>
+      <Annotations Target="uim.appevents.System/formationName"><Annotation Term="Common.Label" String="Formation Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/channelCount"><Annotation Term="Common.Label" String="Channels"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/subscriptionCount"><Annotation Term="Common.Label" String="Subscriptions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/lastEventAt"><Annotation Term="Common.Label" String="Last Event"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.System">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="System"/><PropertyValue Property="TypeNamePlural" String="Systems"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="systemType"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="systemType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="formationName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptionCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastEventAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>systemType</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>formationId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/Systems">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventType/id"><Annotation Term="Common.Label" String="Event Type"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/eventType"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/ownerSystemId"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/ownerSystemName"><Annotation Term="Common.Label" String="Owner Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/subscriptionCount"><Annotation Term="Common.Label" String="Subscriptions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/messageCount"><Annotation Term="Common.Label" String="Messages"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/lastPublishedAt"><Annotation Term="Common.Label" String="Last Published"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.EventType">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Event Type"/><PropertyValue Property="TypeNamePlural" String="Event Catalog"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="title"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="title"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="version"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptionCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>category</PropertyPath><PropertyPath>ownerSystemId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/EventTypes">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.Channel/id"><Annotation Term="Common.Label" String="Channel"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/channelType"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/endpoint"><Annotation Term="Common.Label" String="Endpoint"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/consumerSystemId"><Annotation Term="Common.Label" String="Consumer"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/consumerSystemName"><Annotation Term="Common.Label" String="Consumer Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/deliveryMode"><Annotation Term="Common.Label" String="Delivery"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/maxSizeBytes"><Annotation Term="Common.Label" String="Max. Size (bytes)"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/subscriptionCount"><Annotation Term="Common.Label" String="Subscriptions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/openCount"><Annotation Term="Common.Label" String="Open Messages"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/queuedCount"><Annotation Term="Common.Label" String="Queued"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/deliveredCount"><Annotation Term="Common.Label" String="Delivered"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Channel">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Channel"/><PropertyValue Property="TypeNamePlural" String="Channels"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="endpoint"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="channelType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="consumerSystemName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deliveryMode"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="openCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>channelType</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>consumerSystemId</PropertyPath><PropertyPath>deliveryMode</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/Channels">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.Subscription/id"><Annotation Term="Common.Label" String="Subscription"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/producerSystemId"><Annotation Term="Common.Label" String="Producer"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/producerSystemName"><Annotation Term="Common.Label" String="Producer Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/consumerSystemId"><Annotation Term="Common.Label" String="Consumer"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/consumerSystemName"><Annotation Term="Common.Label" String="Consumer Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/eventType"><Annotation Term="Common.Label" String="Event Type"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/channelId"><Annotation Term="Common.Label" String="Channel"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/channelName"><Annotation Term="Common.Label" String="Channel Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/channelType"><Annotation Term="Common.Label" String="Channel Type"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/formationId"><Annotation Term="Common.Label" String="Formation"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/formationName"><Annotation Term="Common.Label" String="Formation Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/maxRetries"><Annotation Term="Common.Label" String="Max. Retries"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/retryBackoffSeconds"><Annotation Term="Common.Label" String="Back-off (s)"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/filterCount"><Annotation Term="Common.Label" String="Filters"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/messageCount"><Annotation Term="Common.Label" String="Messages"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/deliveredCount"><Annotation Term="Common.Label" String="Delivered"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/openCount"><Annotation Term="Common.Label" String="Open"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/deadLetterCount"><Annotation Term="Common.Label" String="Open Dead Letters"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/health"><Annotation Term="Common.Label" String="Health"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/lastMatchedAt"><Annotation Term="Common.Label" String="Last Event"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Subscription">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Subscription"/><PropertyValue Property="TypeNamePlural" String="Subscriptions"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="producerSystemName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="consumerSystemName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="health"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deliveredCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>producerSystemId</PropertyPath><PropertyPath>consumerSystemId</PropertyPath><PropertyPath>channelId</PropertyPath><PropertyPath>health</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/Subscriptions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.Filter/id"><Annotation Term="Common.Label" String="Filter"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/subscriptionId"><Annotation Term="Common.Label" String="Subscription"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/subscriptionName"><Annotation Term="Common.Label" String="Subscription Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/filterType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/attribute"><Annotation Term="Common.Label" String="Attribute"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/operator"><Annotation Term="Common.Label" String="Operator"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/value"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/active"><Annotation Term="Common.Label" String="Active"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/summary"><Annotation Term="Common.Label" String="Filter"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Filter/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Filter">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Filter"/><PropertyValue Property="TypeNamePlural" String="Filters"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="summary"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptionName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="summary"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="filterType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="active"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>subscriptionId</PropertyPath><PropertyPath>filterType</PropertyPath><PropertyPath>active</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/Filters">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.Message/id"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.appevents.Message/subscriptionId"><Annotation Term="Common.Label" String="Subscription"/></Annotations>
+      <Annotations Target="uim.appevents.Message/subscriptionName"><Annotation Term="Common.Label" String="Subscription Name"/></Annotations>
+      <Annotations Target="uim.appevents.Message/channelId"><Annotation Term="Common.Label" String="Channel"/></Annotations>
+      <Annotations Target="uim.appevents.Message/channelName"><Annotation Term="Common.Label" String="Channel Name"/></Annotations>
+      <Annotations Target="uim.appevents.Message/producerSystemId"><Annotation Term="Common.Label" String="Source"/></Annotations>
+      <Annotations Target="uim.appevents.Message/consumerSystemId"><Annotation Term="Common.Label" String="Consumer"/></Annotations>
+      <Annotations Target="uim.appevents.Message/eventId"><Annotation Term="Common.Label" String="Event ID"/></Annotations>
+      <Annotations Target="uim.appevents.Message/eventType"><Annotation Term="Common.Label" String="Event Type"/></Annotations>
+      <Annotations Target="uim.appevents.Message/subject"><Annotation Term="Common.Label" String="Subject"/></Annotations>
+      <Annotations Target="uim.appevents.Message/payload"><Annotation Term="Common.Label" String="Payload"/></Annotations>
+      <Annotations Target="uim.appevents.Message/contentType"><Annotation Term="Common.Label" String="Content Type"/></Annotations>
+      <Annotations Target="uim.appevents.Message/eventTime"><Annotation Term="Common.Label" String="Event Time"/></Annotations>
+      <Annotations Target="uim.appevents.Message/sizeBytes"><Annotation Term="Common.Label" String="Size (bytes)"/></Annotations>
+      <Annotations Target="uim.appevents.Message/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.appevents.Message/attempts"><Annotation Term="Common.Label" String="Attempts"/></Annotations>
+      <Annotations Target="uim.appevents.Message/maxAttempts"><Annotation Term="Common.Label" String="Max. Attempts"/></Annotations>
+      <Annotations Target="uim.appevents.Message/nextAttemptAt"><Annotation Term="Common.Label" String="Next Attempt"/></Annotations>
+      <Annotations Target="uim.appevents.Message/lastAttemptAt"><Annotation Term="Common.Label" String="Last Attempt"/></Annotations>
+      <Annotations Target="uim.appevents.Message/lastError"><Annotation Term="Common.Label" String="Last Error"/></Annotations>
+      <Annotations Target="uim.appevents.Message/deliveredAt"><Annotation Term="Common.Label" String="Delivered At"/></Annotations>
+      <Annotations Target="uim.appevents.Message/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Message/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Message/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Message/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Message/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.Message">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Message"/><PropertyValue Property="TypeNamePlural" String="Messages"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptionName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptionName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="attempts"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deliveredAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>subscriptionId</PropertyPath><PropertyPath>channelId</PropertyPath><PropertyPath>producerSystemId</PropertyPath><PropertyPath>eventType</PropertyPath><PropertyPath>eventId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/Messages">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/id"><Annotation Term="Common.Label" String="Dead Letter"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/messageId"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/subscriptionId"><Annotation Term="Common.Label" String="Subscription"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/subscriptionName"><Annotation Term="Common.Label" String="Subscription Name"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/channelId"><Annotation Term="Common.Label" String="Channel"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/channelName"><Annotation Term="Common.Label" String="Channel Name"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/eventId"><Annotation Term="Common.Label" String="Event ID"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/eventType"><Annotation Term="Common.Label" String="Event Type"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/reason"><Annotation Term="Common.Label" String="Reason"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/attempts"><Annotation Term="Common.Label" String="Attempts"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/resolvedAt"><Annotation Term="Common.Label" String="Resolved At"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/resolvedBy"><Annotation Term="Common.Label" String="Resolved By"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/payload"><Annotation Term="Common.Label" String="Payload"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.DeadLetter">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Dead Letter"/><PropertyValue Property="TypeNamePlural" String="Dead Letters"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reason"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subscriptionName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reason"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="attempts"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>subscriptionId</PropertyPath><PropertyPath>channelId</PropertyPath><PropertyPath>eventType</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/DeadLetters">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.User/id"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.appevents.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.appevents.User/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.appevents.User/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.appevents.User/scopesText"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.appevents.User/temporarilyLocked"><Annotation Term="Common.Label" String="Temporarily Locked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User/failedLogins"><Annotation Term="Common.Label" String="Failed Logins"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.appevents.User">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="User"/><PropertyValue Property="TypeNamePlural" String="Users"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="locked"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastLoginAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>locked</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/formations"><Annotation Term="Common.Label" String="Formations"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/systems"><Annotation Term="Common.Label" String="Systems"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/producers"><Annotation Term="Common.Label" String="Producers"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/consumers"><Annotation Term="Common.Label" String="Consumers"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/topics"><Annotation Term="Common.Label" String="Topics"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/activeTopics"><Annotation Term="Common.Label" String="Active Topics"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/channels"><Annotation Term="Common.Label" String="Channels"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/activeChannels"><Annotation Term="Common.Label" String="Active Channels"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/subscriptions"><Annotation Term="Common.Label" String="Subscriptions"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/activeSubscriptions"><Annotation Term="Common.Label" String="Active Subscriptions"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/filters"><Annotation Term="Common.Label" String="Filters"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/messages"><Annotation Term="Common.Label" String="Messages"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/openMessages"><Annotation Term="Common.Label" String="Open Messages"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/retryingMessages"><Annotation Term="Common.Label" String="Retrying Messages"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/queuedMessages"><Annotation Term="Common.Label" String="Queued Messages"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/eventsLast24h"><Annotation Term="Common.Label" String="Events (24 h)"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/deliveredLast24h"><Annotation Term="Common.Label" String="Delivered (24 h)"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/deadLetters"><Annotation Term="Common.Label" String="Dead Letters"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/openDeadLetters"><Annotation Term="Common.Label" String="Open Dead Letters"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic/users"><Annotation Term="Common.Label" String="Users"/></Annotations>
+      <Annotations Target="uim.appevents.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="formations"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="systems"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="producers"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="consumers"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="topics"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeTopics"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="channels"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeChannels"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.appevents.EventHubService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Application Event Hub"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

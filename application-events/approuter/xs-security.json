@@ -1,0 +1,30 @@
+{
+  "xsappname": "uim-application-events",
+  "tenant-mode": "dedicated",
+  "description": "UIM Application Event Hub — formations, systems, event catalog, channels, subscriptions, delivery and dead letters",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read the landscape, event catalog, subscriptions, messages and dead letters" },
+    { "name": "$XSAPPNAME.Publish", "description": "Publish CloudEvents (technical users of producer systems)" },
+    { "name": "$XSAPPNAME.Operate", "description": "Deliver, pull and acknowledge messages; requeue and discard dead letters; pause and resume subscriptions" },
+    { "name": "$XSAPPNAME.Manage", "description": "Maintain formations, systems, event types, channels, subscriptions and filters" },
+    { "name": "$XSAPPNAME.Admin", "description": "Manage the user accounts of the built-in login (not used with XSUAA)" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "Producer", "description": "Publish events of a producer system", "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Publish"] },
+    { "name": "Operator", "description": "Watch and operate the delivery",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Publish", "$XSAPPNAME.Operate"] },
+    { "name": "IntegrationAdministrator", "description": "Maintain the landscape, catalog and subscriptions; operate",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Publish", "$XSAPPNAME.Operate", "$XSAPPNAME.Manage"] },
+    { "name": "Administrator", "description": "Everything",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Publish", "$XSAPPNAME.Operate", "$XSAPPNAME.Manage", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "EventHubViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "EventHubProducer", "role-template-references": ["$XSAPPNAME.Producer"] },
+    { "name": "EventHubOperator", "role-template-references": ["$XSAPPNAME.Operator"] },
+    { "name": "EventHubIntegrationAdministrator", "role-template-references": ["$XSAPPNAME.IntegrationAdministrator"] },
+    { "name": "EventHubAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

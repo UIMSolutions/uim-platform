@@ -1,0 +1,180 @@
+<mvc:View controllerName="uim.appevents.controller.SubscriptionDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+  height="100%">
+  <uxap:ObjectPageLayout id="subscriptionPage" showFooter="false" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:breadcrumbs>
+          <Breadcrumbs><Link text="{i18n>tabSubscriptions}" press=".onNavBack"/></Breadcrumbs>
+        </uxap:breadcrumbs>
+        <uxap:heading><Title text="{name}" wrapping="true"/></uxap:heading>
+        <uxap:expandedContent><Text text="{eventType}"/></uxap:expandedContent>
+        <uxap:snappedContent>
+          <Text text="{parts: ['producerSystemName', 'consumerSystemName'], formatter: '.formatter.route'}"/>
+        </uxap:snappedContent>
+        <uxap:actions>
+          <Button text="{i18n>publishTest}" type="Emphasized" icon="sap-icon://paper-plane" press=".onPublish"
+            visible="{session>/canPublish}"/>
+          <Button text="{= %{status} === 'paused' ? ${i18n>resume} : ${i18n>pause} }"
+            icon="{= %{status} === 'paused' ? 'sap-icon://media-play' : 'sap-icon://media-pause' }"
+            press=".onPauseResume" visible="{session>/canOperate}"/>
+          <Button text="{i18n>requeueAll}" icon="sap-icon://redo" press=".onRequeueAll"
+            visible="{= %{session>/canOperate} &amp;&amp; %{deadLetterCount} > 0 }"/>
+          <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditObject" visible="{session>/canManage}">
+            <customData><core:CustomData key="dialog" value="subscription"/></customData></Button>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <HBox wrap="Wrap" alignItems="Center">
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colHealth}"/>
+          <ObjectStatus text="{path: 'health', formatter: '.formatter.enumText'}" icon="{path: 'health', formatter: '.formatter.healthIcon'}"
+            state="{path: 'health', formatter: '.formatter.healthState'}"/>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colRoute}"/>
+          <Text text="{parts: ['producerSystemName', 'consumerSystemName'], formatter: '.formatter.route'}"/>
+          <Text text="{formationName}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colChannel}"/>
+          <Link text="{channelName}" press=".onChannelPress"/>
+          <Text text="{path: 'channelType', formatter: '.formatter.enumText'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colDelivered}"/>
+          <ObjectNumber number="{deliveredCount}" unit="/ {messageCount}" emphasized="true"/>
+          <Text text="{openCount} {i18n>colOpen} · {deadLetterCount} {i18n>tabDeadLetters}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colRetries}"/>
+          <Text text="{maxRetries} × · {retryBackoffSeconds} s {i18n>backoffDoubling}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colLastEvent}"/>
+          <Text text="{path: 'lastMatchedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+        </VBox>
+      </HBox>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionFilters}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="filtersTable" mode="SingleSelectLeft" noDataText="{i18n>noFilters}"
+              items="{path: '/Filters', parameters: {$orderby: 'createdAt'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Text text="{i18n>filterRule}"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="filter"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="filtersTable"/><core:CustomData key="dialog" value="filter"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="filtersTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="40%"><Text text="{i18n>colFilter}"/></Column>
+                <Column><Text text="{i18n>colType}"/></Column>
+                <Column><Text text="{i18n>colActive}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{summary}"/>
+                  <ObjectStatus text="{path: 'filterType', formatter: '.formatter.enumText'}"
+                    state="{= %{filterType} === 'exclude' ? 'Warning' : 'Information' }"/>
+                  <ObjectStatus icon="{= %{active} ? 'sap-icon://accept' : 'sap-icon://less' }" state="{= %{active} ? 'Success' : 'None' }"/>
+                  <Text text="{description}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabMessages}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="subscriptionMessagesTable" growing="true" growingThreshold="25" noDataText="{i18n>noMessages}"
+              items="{path: '/Messages', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column width="30%"><Text text="{i18n>colEventType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="Center"><Text text="{i18n>colAttempts}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="25%"><Text text="{i18n>colInfo}"/></Column>
+                <Column hAlign="End" width="9rem"><Text text=""/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <ObjectIdentifier title="{path: 'eventType', formatter: '.formatter.shortType'}" text="{subject}" tooltip="{eventType}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.messageIcon'}"
+                    state="{path: 'status', formatter: '.formatter.messageState'}"/>
+                  <Text text="{parts: ['attempts', 'maxAttempts'], formatter: '.formatter.attempts'}"/>
+                  <Text text="{lastError}" maxLines="2"/>
+                  <HBox justifyContent="End">
+                    <Button icon="sap-icon://syntax" tooltip="{i18n>payload}" type="Transparent" press=".onShowPayload"/>
+                    <Button icon="sap-icon://paper-plane" tooltip="{i18n>deliverNow}" type="Transparent" press=".onDeliver"
+                      visible="{= %{session>/canOperate} &amp;&amp; (%{status} === 'pending' || %{status} === 'retrying') }"/>
+                  </HBox>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabDeadLetters}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="subscriptionDeadLettersTable" noDataText="{i18n>noDeadLetters}"
+              items="{path: '/DeadLetters', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colEventType}"/></Column>
+                <Column width="40%"><Text text="{i18n>colReason}"/></Column>
+                <Column hAlign="End" width="9rem"><Text text=""/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <Text text="{path: 'eventType', formatter: '.formatter.shortType'}" tooltip="{eventType}"/>
+                  <Text text="{reason}" maxLines="3"/>
+                  <HBox justifyContent="End">
+                    <Button icon="sap-icon://syntax" tooltip="{i18n>payload}" type="Transparent" press=".onShowPayload"/>
+                    <Button icon="sap-icon://redo" tooltip="{i18n>requeue}" type="Transparent" press=".onRequeue"
+                      visible="{session>/canOperate}"/>
+                  </HBox>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionDetails}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" editable="false">
+              <Label text="{i18n>colId}"/><Text text="{id}"/>
+              <Label text="{i18n>colEventType}"/><Text text="{eventType}"/>
+              <Label text="{i18n>colProducer}"/><Text text="{producerSystemName} ({producerSystemId})"/>
+              <Label text="{i18n>colConsumer}"/><Text text="{consumerSystemName} ({consumerSystemId})"/>
+              <Label text="{i18n>colDescription}"/><Text text="{description}"/>
+              <Label text="{i18n>colCreated}"/>
+              <Text text="{createdBy} · {path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

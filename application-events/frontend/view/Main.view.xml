@@ -1,0 +1,425 @@
+<mvc:View controllerName="uim.appevents.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>appTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+        <f:actions>
+          <Button id="publishButton" text="{i18n>publish}" type="Emphasized" icon="sap-icon://paper-plane"
+            press=".onPublish" visible="{session>/canPublish}"/>
+          <Button id="dispatchButton" text="{i18n>dispatch}" icon="sap-icon://process" press=".onDispatch"
+            visible="{session>/canOperate}"/>
+          <Button id="seedButton" text="{i18n>seed}" icon="sap-icon://add-product" press=".onSeed"
+            visible="{= %{/Statistics/systems} === 0 &amp;&amp; %{/Statistics/formations} === 0 &amp;&amp; %{session>/canManage} }"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+          <Button id="userButton" icon="sap-icon://person-placeholder" text="{session>/displayName}" type="Transparent"
+            press=".onUserMenu" visible="{session>/authenticated}"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpis" binding="{/Statistics}" wrap="Wrap" alignItems="Center" class="sapUiSmallMarginBottom">
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiEvents}"/>
+            <ObjectNumber number="{eventsLast24h}" unit="{i18n>kpiToday}" state="Information"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiDelivered}"/>
+            <ObjectNumber number="{deliveredLast24h}" unit="{i18n>kpiToday}" state="Success"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiOpen}"/>
+            <ObjectNumber number="{openMessages}" unit="· {retryingMessages} {i18n>kpiRetrying} · {queuedMessages} {i18n>kpiQueued}"
+              state="{= %{retryingMessages} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiDeadLetters}"/>
+            <ObjectNumber number="{openDeadLetters}" unit="/ {deadLetters}" state="{= %{openDeadLetters} > 0 ? 'Error' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSubscriptions}"/>
+            <ObjectNumber number="{activeSubscriptions}" unit="/ {subscriptions} {i18n>kpiActive} · {filters} {i18n>kpiFilters}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSystems}"/>
+            <ObjectNumber number="{systems}" unit="· {producers} {i18n>kpiProducers} · {consumers} {i18n>kpiConsumers}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiCatalog}"/>
+            <ObjectNumber number="{activeTopics}" unit="/ {topics} {i18n>kpiActive} · {activeChannels} {i18n>kpiChannels}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Subscriptions ─────────────────────────────────────────── -->
+          <IconTabFilter key="subscriptions" icon="sap-icon://chain-link" text="{i18n>tabSubscriptions}"
+            count="{/Statistics/subscriptions}">
+            <Table id="subscriptionsTable" mode="SingleSelectLeft" growing="true" growingThreshold="50"
+              noDataText="{i18n>noSubscriptions}"
+              items="{path: '/Subscriptions', parameters: {$orderby: 'name', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSubscriptions}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}">
+                    <customData><core:CustomData key="table" value="subscriptionsTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="subscription"/></customData></Button>
+                  <Button text="{i18n>pauseResume}" icon="sap-icon://media-pause" press=".onPauseResume" visible="{session>/canOperate}">
+                    <customData><core:CustomData key="table" value="subscriptionsTable"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="subscriptionsTable"/><core:CustomData key="dialog" value="subscription"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="subscriptionsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="24%"><Text text="{i18n>colSubscription}"/></Column>
+                <Column><Text text="{i18n>colRoute}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colEventType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colDelivered}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastEvent}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onSubscriptionPress">
+                  <ObjectIdentifier title="{name}" text="{channelName}"/>
+                  <Text text="{parts: ['producerSystemName', 'consumerSystemName'], formatter: '.formatter.route'}"/>
+                  <Text text="{eventType}" wrapping="true" tooltip="{eventType}"/>
+                  <HBox alignItems="Center">
+                    <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"
+                      class="sapUiTinyMarginEnd"/>
+                    <ObjectStatus icon="{path: 'health', formatter: '.formatter.healthIcon'}" state="{path: 'health', formatter: '.formatter.healthState'}"
+                      tooltip="{path: 'health', formatter: '.formatter.enumText'}"/>
+                  </HBox>
+                  <ObjectNumber number="{deliveredCount}" unit="/ {messageCount}"
+                    state="{= %{deadLetterCount} > 0 ? 'Error' : %{openCount} > 0 ? 'Warning' : 'None' }"/>
+                  <Text text="{path: 'lastMatchedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Messages ──────────────────────────────────────────────── -->
+          <IconTabFilter key="messages" icon="sap-icon://email" text="{i18n>tabMessages}" count="{/Statistics/messages}">
+            <Table id="messagesTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noMessages}"
+              items="{path: '/Messages', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabMessages}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton selectedKey="{view>/messageFilter}" selectionChange=".onMessageFilter">
+                    <items>
+                      <SegmentedButtonItem key="" text="{i18n>all}"/>
+                      <SegmentedButtonItem key="open" icon="sap-icon://pending" tooltip="{i18n>filterOpen}"/>
+                      <SegmentedButtonItem key="retrying" icon="sap-icon://refresh" tooltip="{i18n>enum_retrying}"/>
+                      <SegmentedButtonItem key="delivered" icon="sap-icon://accept" tooltip="{i18n>enum_delivered}"/>
+                      <SegmentedButtonItem key="failed" icon="sap-icon://message-error" tooltip="{i18n>filterFailed}"/>
+                    </items>
+                  </SegmentedButton>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}">
+                    <customData><core:CustomData key="table" value="messagesTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>payload}" icon="sap-icon://syntax" press=".onShowPayload">
+                    <customData><core:CustomData key="table" value="messagesTable"/></customData></Button>
+                  <Button text="{i18n>deliverNow}" icon="sap-icon://paper-plane" press=".onDeliver" visible="{session>/canOperate}">
+                    <customData><core:CustomData key="table" value="messagesTable"/></customData></Button>
+                  <Button text="{i18n>purge}" icon="sap-icon://eraser" press=".onPurge" visible="{session>/canManage}"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colEventType}"/></Column>
+                <Column><Text text="{i18n>colSubscription}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center"><Text text="{i18n>colAttempts}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="28%"><Text text="{i18n>colInfo}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onSubscriptionPress">
+                  <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <ObjectIdentifier title="{path: 'eventType', formatter: '.formatter.shortType'}" text="{subject}" tooltip="{eventType}"/>
+                  <Text text="{subscriptionName}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.messageIcon'}"
+                    state="{path: 'status', formatter: '.formatter.messageState'}"/>
+                  <Text text="{parts: ['attempts', 'maxAttempts'], formatter: '.formatter.attempts'}"/>
+                  <Text text="{= %{status} === 'retrying' ? ${i18n>nextAttempt} + ' ' + %{nextAttemptAt} : '' }{lastError}" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Dead letters ──────────────────────────────────────────── -->
+          <IconTabFilter key="deadLetters" icon="sap-icon://message-error" text="{i18n>tabDeadLetters}"
+            count="{/Statistics/openDeadLetters}" iconColor="{= %{/Statistics/openDeadLetters} > 0 ? 'Negative' : 'Default' }">
+            <Table id="deadLettersTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noDeadLetters}"
+              items="{path: '/DeadLetters', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabDeadLetters}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton selectedKey="{view>/deadLetterFilter}" selectionChange=".onDeadLetterFilter">
+                    <items>
+                      <SegmentedButtonItem key="open" text="{i18n>enum_open}"/>
+                      <SegmentedButtonItem key="" text="{i18n>all}"/>
+                    </items>
+                  </SegmentedButton>
+                  <Button text="{i18n>payload}" icon="sap-icon://syntax" press=".onShowPayload">
+                    <customData><core:CustomData key="table" value="deadLettersTable"/></customData></Button>
+                  <Button text="{i18n>requeue}" icon="sap-icon://redo" press=".onRequeue" visible="{session>/canOperate}">
+                    <customData><core:CustomData key="table" value="deadLettersTable"/></customData></Button>
+                  <Button text="{i18n>requeueAll}" icon="sap-icon://refresh" press=".onRequeueAll" visible="{session>/canOperate}"/>
+                  <Button text="{i18n>discard}" icon="sap-icon://decline" press=".onOperation" visible="{session>/canOperate}">
+                    <customData><core:CustomData key="table" value="deadLettersTable"/><core:CustomData key="action" value="DiscardDeadLetter"/>
+                      <core:CustomData key="toast" value="discarded"/><core:CustomData key="confirm" value="confirmDiscard"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colEventType}"/></Column>
+                <Column><Text text="{i18n>colSubscription}"/></Column>
+                <Column width="32%"><Text text="{i18n>colReason}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onSubscriptionPress">
+                  <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <Text text="{path: 'eventType', formatter: '.formatter.shortType'}" tooltip="{eventType}"/>
+                  <Text text="{subscriptionName}"/>
+                  <Text text="{reason}" maxLines="3"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Event catalog ─────────────────────────────────────────── -->
+          <IconTabFilter key="catalog" icon="sap-icon://course-book" text="{i18n>tabCatalog}" count="{/Statistics/topics}">
+            <Table id="topicsTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noTopics}"
+              items="{path: '/EventTypes', parameters: {$orderby: 'category,title'}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabCatalog}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}">
+                    <customData><core:CustomData key="table" value="topicsTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="topic"/></customData></Button>
+                  <MenuButton text="{i18n>setStatus}" icon="sap-icon://status-in-process" visible="{session>/canManage}">
+                    <menu>
+                      <Menu>
+                        <MenuItem text="{i18n>enum_active}" press=".onOperation">
+                          <customData><core:CustomData key="table" value="topicsTable"/><core:CustomData key="action" value="SetEventTypeStatus"/>
+                            <core:CustomData key="status" value="active"/><core:CustomData key="toast" value="statusChanged"/></customData></MenuItem>
+                        <MenuItem text="{i18n>enum_deprecated}" press=".onOperation">
+                          <customData><core:CustomData key="table" value="topicsTable"/><core:CustomData key="action" value="SetEventTypeStatus"/>
+                            <core:CustomData key="status" value="deprecated"/><core:CustomData key="toast" value="statusChanged"/></customData></MenuItem>
+                        <MenuItem text="{i18n>enum_retired}" press=".onOperation">
+                          <customData><core:CustomData key="table" value="topicsTable"/><core:CustomData key="action" value="SetEventTypeStatus"/>
+                            <core:CustomData key="status" value="retired"/><core:CustomData key="toast" value="statusChanged"/>
+                            <core:CustomData key="confirm" value="confirmRetire"/></customData></MenuItem>
+                      </Menu>
+                    </menu>
+                  </MenuButton>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="topicsTable"/><core:CustomData key="dialog" value="topic"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="topicsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="30%"><Text text="{i18n>colEventType}"/></Column>
+                <Column><Text text="{i18n>colCategory}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colOwner}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colSubscriptions}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastPublished}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{title}" text="{eventType}"/>
+                  <Text text="{category} · v{version}"/>
+                  <Text text="{ownerSystemName}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <ObjectNumber number="{subscriptionCount}" unit="· {messageCount} {i18n>kpiMessages}"/>
+                  <Text text="{path: 'lastPublishedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Channels ──────────────────────────────────────────────── -->
+          <IconTabFilter key="channels" icon="sap-icon://dimension" text="{i18n>tabChannels}" count="{/Statistics/channels}">
+            <Table id="channelsTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noChannels}"
+              items="{path: '/Channels', parameters: {$orderby: 'name'}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabChannels}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="channel"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="channelsTable"/><core:CustomData key="dialog" value="channel"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="channelsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="26%"><Text text="{i18n>colChannel}"/></Column>
+                <Column><Text text="{i18n>colConsumer}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDelivery}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colOpen}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onChannelPress">
+                  <HBox alignItems="Center">
+                    <core:Icon src="{path: 'channelType', formatter: '.formatter.channelIcon'}" class="sapUiSmallMarginEnd"/>
+                    <ObjectIdentifier title="{name}" text="{= %{endpoint} || ${i18n>enum_queue} }"/>
+                  </HBox>
+                  <Text text="{consumerSystemName}"/>
+                  <Text text="{path: 'deliveryMode', formatter: '.formatter.enumText'} · {path: 'maxSizeBytes', formatter: '.formatter.bytes'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <ObjectNumber number="{openCount}" unit="· {deliveredCount} {i18n>enum_delivered}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Landscape: systems and formations ─────────────────────── -->
+          <IconTabFilter key="landscape" icon="sap-icon://it-system" text="{i18n>tabLandscape}" count="{/Statistics/systems}">
+            <Table id="systemsTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noSystems}"
+              items="{path: '/Systems', parameters: {$orderby: 'name'}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>systems}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="system"/></customData></Button>
+                  <Button text="{i18n>activate}" icon="sap-icon://play" press=".onOperation" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="systemsTable"/><core:CustomData key="action" value="SetSystemStatus"/>
+                      <core:CustomData key="status" value="active"/><core:CustomData key="toast" value="statusChanged"/></customData></Button>
+                  <Button text="{i18n>deactivate}" icon="sap-icon://pause" press=".onOperation" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="systemsTable"/><core:CustomData key="action" value="SetSystemStatus"/>
+                      <core:CustomData key="status" value="inactive"/><core:CustomData key="toast" value="statusChanged"/></customData></Button>
+                  <Button text="{i18n>unassign}" icon="sap-icon://broken-link" press=".onUnassign" visible="{session>/canManage}"/>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="systemsTable"/><core:CustomData key="dialog" value="system"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="systemsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="28%"><Text text="{i18n>colSystem}"/></Column>
+                <Column><Text text="{i18n>colRole}"/></Column>
+                <Column><Text text="{i18n>colFormation}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colSubscriptions}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colLastEvent}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{id} · {systemUrl}"/>
+                  <ObjectStatus text="{path: 'systemType', formatter: '.formatter.enumText'}" icon="{path: 'systemType', formatter: '.formatter.systemIcon'}"/>
+                  <Text text="{formationName}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <ObjectNumber number="{subscriptionCount}" unit="· {channelCount} {i18n>kpiChannels}"/>
+                  <Text text="{path: 'lastEventAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="formationsTable" mode="SingleSelectLeft" class="sapUiMediumMarginTop" noDataText="{i18n>noFormations}"
+              items="{path: '/Formations', parameters: {$orderby: 'name'}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>formations}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="formation"/></customData></Button>
+                  <Button text="{i18n>assign}" icon="sap-icon://chain-link" press=".onAssign" visible="{session>/canManage}"/>
+                  <Button text="{i18n>activate}" icon="sap-icon://play" press=".onOperation" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="formationsTable"/><core:CustomData key="action" value="SetFormationStatus"/>
+                      <core:CustomData key="status" value="active"/><core:CustomData key="toast" value="statusChanged"/></customData></Button>
+                  <Button text="{i18n>deactivate}" icon="sap-icon://pause" press=".onOperation" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="formationsTable"/><core:CustomData key="action" value="SetFormationStatus"/>
+                      <core:CustomData key="status" value="inactive"/><core:CustomData key="toast" value="statusChanged"/>
+                      <core:CustomData key="confirm" value="confirmDeactivateFormation"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="formationsTable"/><core:CustomData key="dialog" value="formation"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="formationsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="30%"><Text text="{i18n>colFormation}"/></Column>
+                <Column><Text text="{i18n>colGlobalAccount}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>systems}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colSubscriptions}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{globalAccountId}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <ObjectNumber number="{systemCount}"/>
+                  <ObjectNumber number="{subscriptionCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Users (built-in login, administrators) ─────────────────── -->
+          <IconTabFilter key="users" icon="sap-icon://group" text="{i18n>tabUsers}"
+            visible="{= %{session>/isAdmin} &amp;&amp; %{session>/loginRequired} }">
+            <Table id="usersTable" mode="SingleSelectLeft" noDataText="{i18n>noUsers}"
+              items="{path: '/Users', parameters: {$orderby: 'id'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabUsers}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add-employee" press=".onOpenDialog">
+                    <customData><core:CustomData key="dialog" value="user"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditUser"/>
+                  <Button text="{i18n>lock}" icon="sap-icon://locked" press=".onLockUser">
+                    <customData><core:CustomData key="locked" value="true"/></customData></Button>
+                  <Button text="{i18n>unlock}" icon="sap-icon://unlocked" press=".onLockUser">
+                    <customData><core:CustomData key="locked" value="false"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete">
+                    <customData><core:CustomData key="table" value="usersTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colScopes}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastLogin}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{id}" text="{displayName}"/>
+                  <Text text="{scopesText}"/>
+                  <ObjectStatus text="{= %{locked} ? ${i18n>locked} : %{temporarilyLocked} ? ${i18n>temporarilyLocked} : ${i18n>enum_active} }"
+                    state="{= %{locked} || %{temporarilyLocked} ? 'Error' : 'Success' }"/>
+                  <Text text="{path: 'lastLoginAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

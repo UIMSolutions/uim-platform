@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>publishTitle}" contentWidth="44rem" icon="sap-icon://paper-plane">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colSource}" required="true"/>
+      <Select selectedKey="{view>/form/publish/source}" forceSelection="false"
+        items="{path: '/Systems', parameters: {$orderby: 'name', $filter: 'systemType ne \'consumer\''}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colEventType}" required="true"/>
+      <ComboBox value="{view>/form/publish/type}" width="100%"
+        items="{path: '/EventTypes', parameters: {$orderby: 'eventType', $filter: 'status ne \'retired\''}, templateShareable: false}">
+        <core:Item key="{eventType}" text="{eventType}"/>
+      </ComboBox>
+      <Label text="{i18n>colSubject}"/>
+      <Input value="{view>/form/publish/subject}" placeholder="BusinessPartner/1000042"/>
+      <Label text="{i18n>eventId}"/>
+      <Input value="{view>/form/publish/id}" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>payload}"/>
+      <TextArea value="{view>/form/publish/data}" rows="8" width="100%" class="sapUiTinyMarginTop"
+        valueState="{path: 'view>/form/publish/data', formatter: '.formatter.payloadState'}"
+        valueStateText="{i18n>invalidJson}"/>
+    </form:SimpleForm>
+    <buttons>
+      <Button text="{i18n>publish}" type="Emphasized" icon="sap-icon://paper-plane" press=".onSendPublish"
+        visible="{session>/canPublish}"/>
+      <Button text="{i18n>preview}" icon="sap-icon://show" press=".onPreviewPublish"/>
+      <Button text="{i18n>cancel}" press=".onCloseDialog"/>
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

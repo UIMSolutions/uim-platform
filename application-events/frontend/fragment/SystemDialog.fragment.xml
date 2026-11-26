@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/system/edit} ? ${i18n>editSystem} : ${i18n>createSystem} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/system/id}" enabled="{= !%{view>/form/system/edit} }" placeholder="{i18n>systemIdHint}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/system/name}"/>
+      <Label text="{i18n>colRole}" required="true"/>
+      <SegmentedButton selectedKey="{view>/form/system/systemType}">
+        <items>
+          <SegmentedButtonItem key="producer" text="{i18n>enum_producer}"/>
+          <SegmentedButtonItem key="consumer" text="{i18n>enum_consumer}"/>
+          <SegmentedButtonItem key="both" text="{i18n>enum_both}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colFormation}"/>
+      <Select selectedKey="{view>/form/system/formationId}" forceSelection="false"
+        items="{path: '/Formations', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colUrl}"/>
+      <Input value="{view>/form/system/systemUrl}" type="Url" placeholder="https://…"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/system/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

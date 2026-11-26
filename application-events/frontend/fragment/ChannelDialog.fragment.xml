@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/channel/edit} ? ${i18n>editChannel} : ${i18n>createChannel} }" contentWidth="36rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/channel/id}" enabled="{= !%{view>/form/channel/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/channel/name}"/>
+      <Label text="{i18n>colType}" required="true"/>
+      <SegmentedButton selectedKey="{view>/form/channel/channelType}" enabled="{= !%{view>/form/channel/edit} }">
+        <items>
+          <SegmentedButtonItem key="webhook" icon="sap-icon://world" text="{i18n>enum_webhook}"/>
+          <SegmentedButtonItem key="queue" icon="sap-icon://inbox" text="{i18n>enum_queue}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colEndpoint}" required="{= %{view>/form/channel/channelType} === 'webhook' }"/>
+      <Input value="{view>/form/channel/endpoint}" type="Url" placeholder="https://…/events"
+        enabled="{= %{view>/form/channel/channelType} === 'webhook' }"/>
+      <Label text="{i18n>colConsumer}" required="true"/>
+      <Select selectedKey="{view>/form/channel/consumerSystemId}" forceSelection="false" enabled="{= !%{view>/form/channel/edit} }"
+        items="{path: '/Systems', parameters: {$orderby: 'name', $filter: 'systemType ne \'producer\''}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colDelivery}"/>
+      <Select selectedKey="{view>/form/channel/deliveryMode}">
+        <core:Item key="atLeastOnce" text="{i18n>enum_atLeastOnce}"/>
+        <core:Item key="atMostOnce" text="{i18n>enum_atMostOnce}"/>
+      </Select>
+      <Label text="{i18n>maxSize}"/>
+      <StepInput value="{view>/form/channel/maxSizeBytes}" min="1024" max="16777216" step="65536" width="12rem"
+        description="{path: 'view>/form/channel/maxSizeBytes', formatter: '.formatter.bytes'}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/channel/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

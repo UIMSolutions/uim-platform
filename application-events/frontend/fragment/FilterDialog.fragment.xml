@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/filter/edit} ? ${i18n>editFilter} : ${i18n>createFilter} }" contentWidth="34rem">
+    <MessageStrip text="{i18n>filterHelp}" showIcon="true" class="sapUiSmallMargin"/>
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colType}"/>
+      <SegmentedButton selectedKey="{view>/form/filter/filterType}">
+        <items>
+          <SegmentedButtonItem key="include" text="{i18n>enum_include}"/>
+          <SegmentedButtonItem key="exclude" text="{i18n>enum_exclude}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colAttribute}" required="true"/>
+      <Input value="{view>/form/filter/attribute}" placeholder="data.country · subject · type · source" showSuggestion="true">
+        <suggestionItems>
+          <core:Item text="type"/><core:Item text="source"/><core:Item text="subject"/><core:Item text="datacontenttype"/>
+          <core:Item text="data."/>
+        </suggestionItems>
+      </Input>
+      <Label text="{i18n>colOperator}"/>
+      <Select selectedKey="{view>/form/filter/operator}">
+        <core:Item key="equals" text="{i18n>enum_equals}"/>
+        <core:Item key="notEquals" text="{i18n>enum_notEquals}"/>
+        <core:Item key="contains" text="{i18n>enum_contains}"/>
+        <core:Item key="startsWith" text="{i18n>enum_startsWith}"/>
+        <core:Item key="endsWith" text="{i18n>enum_endsWith}"/>
+        <core:Item key="oneOf" text="{i18n>enum_oneOf}"/>
+        <core:Item key="exists" text="{i18n>enum_exists}"/>
+      </Select>
+      <Label text="{i18n>colValue}" required="{= %{view>/form/filter/operator} !== 'exists' }"/>
+      <Input value="{view>/form/filter/value}" enabled="{= %{view>/form/filter/operator} !== 'exists' }"
+        placeholder="{= %{view>/form/filter/operator} === 'oneOf' ? 'DE, AT, CH' : '' }"/>
+      <Label text="{i18n>colActive}"/>
+      <Switch state="{view>/form/filter/active}"/>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/filter/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

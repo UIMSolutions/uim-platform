@@ -1,0 +1,16 @@
+[
+  {
+    "subscriptionCount": 3,
+    "updatedAt": "2026-11-26T13:38:51Z",
+    "id": "landscape",
+    "systemCount": 4,
+    "createdAt": "2026-11-26T13:38:51Z",
+    "createdBy": "anonymous",
+    "name": "Customer Landscape",
+    "globalAccountId": "ga-demo",
+    "description": "S/4HANA Cloud, SuccessFactors and the side-by-side extensions on SAP BTP",
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  }
+]

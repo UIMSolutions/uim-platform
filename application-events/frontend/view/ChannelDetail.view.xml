@@ -1,0 +1,130 @@
+<mvc:View controllerName="uim.appevents.controller.ChannelDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+  height="100%">
+  <uxap:ObjectPageLayout id="channelPage" showFooter="false" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:breadcrumbs>
+          <Breadcrumbs><Link text="{i18n>tabChannels}" press=".onNavBack"/></Breadcrumbs>
+        </uxap:breadcrumbs>
+        <uxap:heading><Title text="{name}" wrapping="true"/></uxap:heading>
+        <uxap:expandedContent><Text text="{= %{endpoint} || ${i18n>queueHint} }"/></uxap:expandedContent>
+        <uxap:snappedContent><Text text="{consumerSystemName}"/></uxap:snappedContent>
+        <uxap:actions>
+          <MenuButton text="{i18n>setStatus}" icon="sap-icon://status-in-process" visible="{session>/canManage}">
+            <menu>
+              <Menu>
+                <MenuItem text="{i18n>enum_active}" icon="sap-icon://play" press=".onOperation">
+                  <customData><core:CustomData key="action" value="SetChannelStatus"/><core:CustomData key="status" value="active"/>
+                    <core:CustomData key="toast" value="statusChanged"/></customData></MenuItem>
+                <MenuItem text="{i18n>enum_draining}" icon="sap-icon://inbox" press=".onOperation">
+                  <customData><core:CustomData key="action" value="SetChannelStatus"/><core:CustomData key="status" value="draining"/>
+                    <core:CustomData key="toast" value="statusChanged"/></customData></MenuItem>
+                <MenuItem text="{i18n>enum_inactive}" icon="sap-icon://pause" press=".onOperation">
+                  <customData><core:CustomData key="action" value="SetChannelStatus"/><core:CustomData key="status" value="inactive"/>
+                    <core:CustomData key="toast" value="statusChanged"/></customData></MenuItem>
+              </Menu>
+            </menu>
+          </MenuButton>
+          <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditObject" visible="{session>/canManage}">
+            <customData><core:CustomData key="dialog" value="channel"/></customData></Button>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <HBox wrap="Wrap" alignItems="Center">
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colType}"/>
+          <ObjectStatus text="{path: 'channelType', formatter: '.formatter.enumText'}" icon="{path: 'channelType', formatter: '.formatter.channelIcon'}"/>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colDelivery}"/>
+          <Text text="{path: 'deliveryMode', formatter: '.formatter.enumText'}"/>
+          <Text text="{i18n>maxSize} {path: 'maxSizeBytes', formatter: '.formatter.bytes'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colOpen}"/>
+          <ObjectNumber number="{openCount}" unit="· {queuedCount} {i18n>kpiQueued}" emphasized="true"
+            state="{= %{queuedCount} > 0 ? 'Information' : 'None' }"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colDelivered}"/>
+          <ObjectNumber number="{deliveredCount}"/>
+        </VBox>
+      </HBox>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>tabMessages}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="channelMessagesTable" growing="true" growingThreshold="25" noDataText="{i18n>noMessages}"
+              items="{path: '/Messages', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colEventType}"/></Column>
+                <Column><Text text="{i18n>colSubscription}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End" width="10rem"><Text text=""/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <ObjectIdentifier title="{path: 'eventType', formatter: '.formatter.shortType'}" text="{subject}" tooltip="{eventType}"/>
+                  <Text text="{subscriptionName}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.messageIcon'}"
+                    state="{path: 'status', formatter: '.formatter.messageState'}"/>
+                  <HBox justifyContent="End">
+                    <Button icon="sap-icon://syntax" tooltip="{i18n>payload}" type="Transparent" press=".onShowPayload"/>
+                    <Button icon="sap-icon://accept" tooltip="{i18n>acknowledge}" type="Transparent" press=".onAcknowledge"
+                      visible="{= %{session>/canOperate} &amp;&amp; %{status} === 'queued' }"/>
+                  </HBox>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>tabSubscriptions}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="channelSubscriptionsTable" noDataText="{i18n>noSubscriptions}"
+              items="{path: '/Subscriptions', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colSubscription}"/></Column>
+                <Column><Text text="{i18n>colEventType}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onSubscriptionPress">
+                  <ObjectIdentifier title="{name}" text="{producerSystemName}"/>
+                  <Text text="{eventType}"/>
+                  <ObjectStatus text="{path: 'health', formatter: '.formatter.enumText'}" icon="{path: 'health', formatter: '.formatter.healthIcon'}"
+                    state="{path: 'health', formatter: '.formatter.healthState'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionDetails}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" editable="false">
+              <Label text="{i18n>colId}"/><Text text="{id}"/>
+              <Label text="{i18n>colEndpoint}"/><Text text="{endpoint}"/>
+              <Label text="{i18n>colConsumer}"/><Text text="{consumerSystemName} ({consumerSystemId})"/>
+              <Label text="{i18n>colDescription}"/><Text text="{description}"/>
+              <Label text="{i18n>pullApi}"/><Text text="GET /api/v1/appevents/channels/{id}/pull · POST /api/v1/appevents/messages/&lt;id&gt;/ack"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>
