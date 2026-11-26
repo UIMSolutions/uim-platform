@@ -1,0 +1,163 @@
+<mvc:View controllerName="uim.autoscaler.controller.PolicyDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+  height="100%">
+  <uxap:ObjectPageLayout id="policyPage" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:breadcrumbs>
+          <Breadcrumbs><Link text="{i18n>tabPolicies}" press=".onNavBack"/></Breadcrumbs>
+        </uxap:breadcrumbs>
+        <uxap:heading><Title text="{name}" wrapping="true"/></uxap:heading>
+        <uxap:expandedContent><Text text="{description}"/></uxap:expandedContent>
+        <uxap:actions>
+          <Button text="{i18n>activate}" type="Emphasized" icon="sap-icon://play" press=".onOperation"
+            visible="{= %{session>/canManage} &amp;&amp; %{status} !== 'active' }">
+            <customData><core:CustomData key="action" value="ActivatePolicy"/><core:CustomData key="toast" value="statusChanged"/></customData></Button>
+          <Button text="{i18n>deactivate}" icon="sap-icon://pause" press=".onOperation"
+            visible="{= %{session>/canManage} &amp;&amp; %{status} === 'active' }">
+            <customData><core:CustomData key="action" value="DeactivatePolicy"/><core:CustomData key="toast" value="statusChanged"/></customData></Button>
+          <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditPolicy" visible="{session>/canManage}"/>
+          <Button text="{i18n>copy}" icon="sap-icon://copy" press=".onCopy" visible="{session>/canManage}"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <HBox wrap="Wrap" alignItems="Center">
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colStatus}"/>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.policyState'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colLimits}"/>
+          <ObjectNumber number="{parts: [{path: 'instanceMinCount', targetType: 'any'}, {path: 'instanceMaxCount', targetType: 'any'}], formatter: '.formatter.limits'}" unit="{i18n>colInstances}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colTimezone}"/>
+          <Text text="{timezone}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colActiveSchedule}"/>
+          <ObjectStatus text="{= %{activeScheduleName} || '–' }" icon="{= %{activeScheduleName} ? 'sap-icon://appointment-2' : '' }" state="Information"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colCustomMetricsFrom}"/>
+          <Text text="{path: 'customMetricAllowFrom', formatter: '.formatter.enumText'}"/>
+        </VBox>
+      </HBox>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionRules}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="rulesTable" mode="SingleSelectLeft" noDataText="{i18n>noRules}"
+              items="{path: '/Rules', parameters: {$orderby: 'createdAt'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>sectionRules}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="rule"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="rulesTable"/><core:CustomData key="dialog" value="rule"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="rulesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colMetric}"/></Column>
+                <Column><Text text="{i18n>colThreshold}"/></Column>
+                <Column><Text text="{i18n>colBreach}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCoolDown}"/></Column>
+                <Column><Text text="{i18n>colAdjustment}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colEnabled}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <HBox alignItems="Center">
+                    <core:Icon src="{path: 'metricName', formatter: '.formatter.metricIcon'}" class="sapUiTinyMarginEnd"/>
+                    <ObjectIdentifier title="{metricName}" text="{= %{metricType} === 'custom' ? ${i18n>enum_custom} : '' }"/>
+                  </HBox>
+                  <Text text="{parts: ['operator', 'threshold', 'unit'], formatter: '.formatter.threshold'}"/>
+                  <Text text="{path: 'breachDurationSeconds', formatter: '.formatter.seconds'}"/>
+                  <Text text="{path: 'coolDownSeconds', formatter: '.formatter.seconds'}"/>
+                  <ObjectStatus text="{adjustment}" icon="{path: 'direction', formatter: '.formatter.directionIcon'}"
+                    state="{path: 'direction', formatter: '.formatter.directionState'}"/>
+                  <ObjectStatus text="{= %{enabled} ? ${i18n>yes} : ${i18n>no} }" state="{= %{enabled} ? 'Success' : 'None' }"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionSchedules}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="schedulesTable" mode="SingleSelectLeft" noDataText="{i18n>noSchedules}"
+              items="{path: '/Schedules', parameters: {$orderby: 'createdAt'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>sectionSchedules}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="schedule"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditSchedule" visible="{session>/canManage}"/>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="schedulesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colKind}"/></Column>
+                <Column width="30%"><Text text="{i18n>colWindow}"/></Column>
+                <Column><Text text="{i18n>colLimits}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colInitialMin}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{= %{name} || %{id} }"/>
+                  <Text text="{path: 'kind', formatter: '.formatter.enumText'}"/>
+                  <Text text="{parts: ['kind', 'daysText', 'startTime', 'endTime', 'startDateTime', 'endDateTime'], formatter: '.formatter.scheduleWindow'}"/>
+                  <Text text="{parts: [{path: 'instanceMinCount', targetType: 'any'}, {path: 'instanceMaxCount', targetType: 'any'}], formatter: '.formatter.limits'}"/>
+                  <Text text="{= %{initialMinInstanceCount} > 0 ? %{initialMinInstanceCount} : '–' }"/>
+                  <ObjectStatus text="{= !%{enabled} ? ${i18n>disabled} : %{active} ? ${i18n>activeNow} : ${i18n>waiting} }"
+                    state="{= !%{enabled} ? 'None' : %{active} ? 'Information' : 'Success' }"
+                    icon="{= %{active} ? 'sap-icon://appointment-2' : '' }"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionBindings}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="policyBindingsTable" noDataText="{i18n>noBindings}"
+              items="{path: '/Bindings', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colApplication}"/></Column>
+                <Column><Text text="{i18n>colAutoscaling}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colInstances}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastDecision}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onBindingPress">
+                  <ObjectIdentifier title="{name}" text="{appGuid}"/>
+                  <ObjectStatus text="{= %{status} === 'suspended' ? ${i18n>enum_suspended} : %{autoscaled} ? ${i18n>enum_active} : ${i18n>notAutoscaled} }"
+                    state="{parts: [{path: 'status', targetType: 'any'}, {path: 'autoscaled', targetType: 'any'}], formatter: '.formatter.bindingState'}"/>
+                  <ObjectNumber number="{currentInstances}" unit="/ {maxInstances}"/>
+                  <Text text="{lastDecision}" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,17 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>scaleTitle}" contentWidth="30rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colApplication}"/>
+      <Text text="{view>/form/scale/name}"/>
+      <Label text="{i18n>colCurrent}"/>
+      <Text text="{view>/form/scale/current}"/>
+      <Label text="{i18n>colInstances}" required="true"/>
+      <StepInput value="{view>/form/scale/instances}" min="1" max="{view>/form/scale/max}"/>
+      <Label text="{i18n>colReason}"/>
+      <Input value="{view>/form/scale/reason}" placeholder="{i18n>scaleReasonHint}"/>
+    </form:SimpleForm>
+    <MessageStrip text="{i18n>scaleHint}" showIcon="true" class="sapUiSmallMargin"/>
+    <beginButton><Button text="{i18n>scale}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

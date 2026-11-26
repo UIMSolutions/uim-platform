@@ -1,0 +1,19 @@
+{
+  "activePolicies": 2,
+  "activeSchedules": 1,
+  "autoscaledBindings": 4,
+  "bindings": 5,
+  "failedLast24h": 0,
+  "instances": 13,
+  "metricSamples": 82,
+  "policies": 3,
+  "rules": 6,
+  "samplesLast24h": 82,
+  "scaleInsLast24h": 0,
+  "scaleOutsLast24h": 3,
+  "scalingEvents": 3,
+  "schedules": 2,
+  "suspendedBindings": 0,
+  "tenantId": "default",
+  "users": 1
+}

@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>metricTitle}" contentWidth="30rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colApplication}"/>
+      <Text text="{view>/form/metric/name}"/>
+      <Label text="{i18n>colMetric}" required="true"/>
+      <ComboBox value="{view>/form/metric/metricName}" placeholder="cpu, jobqueue …">
+          <core:Item key="cpu" text="cpu (%)"/>
+          <core:Item key="cpuutil" text="cpuutil (%)"/>
+          <core:Item key="memoryused" text="memoryused (MB)"/>
+          <core:Item key="memoryutil" text="memoryutil (%)"/>
+          <core:Item key="disk" text="disk (MB)"/>
+          <core:Item key="diskutil" text="diskutil (%)"/>
+          <core:Item key="throughput" text="throughput (rps)"/>
+          <core:Item key="responsetime" text="responsetime (ms)"/>
+      </ComboBox>
+      <Label text="{i18n>colValue}" required="true"/>
+      <StepInput value="{view>/form/metric/value}" min="0" max="100000000" displayValuePrecision="1"/>
+      <Label text="{i18n>colUnit}"/>
+      <Input value="{view>/form/metric/unit}" placeholder="{i18n>unitHint}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>send}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

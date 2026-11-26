@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/policy/edit} ? ${i18n>editPolicy} : ${i18n>createPolicy} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/policy/id}" enabled="{= !%{view>/form/policy/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/policy/name}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/policy/description}" rows="2"/>
+      <Label text="{i18n>colMinInstances}"/>
+      <StepInput value="{view>/form/policy/instanceMinCount}" min="1" max="1000"/>
+      <Label text="{i18n>colMaxInstances}"/>
+      <StepInput value="{view>/form/policy/instanceMaxCount}" min="1" max="1000"/>
+      <Label text="{i18n>colTimezone}"/>
+      <Input value="{view>/form/policy/timezone}" placeholder="UTC, Europe/Berlin, +01:00"/>
+      <Label text="{i18n>colCustomMetricsFrom}"/>
+      <SegmentedButton selectedKey="{view>/form/policy/customMetricAllowFrom}">
+        <items>
+          <SegmentedButtonItem key="sameApp" text="{i18n>enum_sameApp}"/>
+          <SegmentedButtonItem key="boundApp" text="{i18n>enum_boundApp}"/>
+        </items>
+      </SegmentedButton>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

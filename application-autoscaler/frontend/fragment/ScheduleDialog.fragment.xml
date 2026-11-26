@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/schedule/edit} ? ${i18n>editSchedule} : ${i18n>createSchedule} }" contentWidth="38rem">
+    <MessageStrip text="{i18n>scheduleHint}" showIcon="true" class="sapUiSmallMargin"/>
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colName}"/>
+      <Input value="{view>/form/schedule/name}"/>
+      <Label text="{i18n>colKind}"/>
+      <SegmentedButton selectedKey="{view>/form/schedule/kind}" enabled="{= !%{view>/form/schedule/edit} }">
+        <items>
+          <SegmentedButtonItem key="recurring" text="{i18n>enum_recurring}"/>
+          <SegmentedButtonItem key="specificDate" text="{i18n>enum_specificDate}"/>
+        </items>
+      </SegmentedButton>
+
+      <Label text="{i18n>colTimeWindow}" required="true" visible="{= %{view>/form/schedule/kind} === 'recurring' }"/>
+      <HBox visible="{= %{view>/form/schedule/kind} === 'recurring' }">
+        <TimePicker value="{view>/form/schedule/startTime}" valueFormat="HH:mm" displayFormat="HH:mm" width="8rem" class="sapUiTinyMarginEnd"/>
+        <TimePicker value="{view>/form/schedule/endTime}" valueFormat="HH:mm" displayFormat="HH:mm" width="8rem"/>
+      </HBox>
+      <Label text="{i18n>colDaysOfWeek}" visible="{= %{view>/form/schedule/kind} === 'recurring' }"/>
+      <Input value="{view>/form/schedule/daysOfWeek}" placeholder="{i18n>daysOfWeekHint}" visible="{= %{view>/form/schedule/kind} === 'recurring' }"/>
+      <Label text="{i18n>colDaysOfMonth}" visible="{= %{view>/form/schedule/kind} === 'recurring' }"/>
+      <Input value="{view>/form/schedule/daysOfMonth}" placeholder="1, 15" visible="{= %{view>/form/schedule/kind} === 'recurring' }"/>
+      <Label text="{i18n>colValidity}" visible="{= %{view>/form/schedule/kind} === 'recurring' }"/>
+      <HBox visible="{= %{view>/form/schedule/kind} === 'recurring' }">
+        <DatePicker value="{view>/form/schedule/startDate}" valueFormat="yyyy-MM-dd" width="10rem" class="sapUiTinyMarginEnd"/>
+        <DatePicker value="{view>/form/schedule/endDate}" valueFormat="yyyy-MM-dd" width="10rem"/>
+      </HBox>
+
+      <Label text="{i18n>colStart}" required="true" visible="{= %{view>/form/schedule/kind} === 'specificDate' }"/>
+      <DateTimePicker value="{view>/form/schedule/startDateTime}" valueFormat="yyyy-MM-dd'T'HH:mm"
+        visible="{= %{view>/form/schedule/kind} === 'specificDate' }"/>
+      <Label text="{i18n>colEnd}" required="true" visible="{= %{view>/form/schedule/kind} === 'specificDate' }"/>
+      <DateTimePicker value="{view>/form/schedule/endDateTime}" valueFormat="yyyy-MM-dd'T'HH:mm"
+        visible="{= %{view>/form/schedule/kind} === 'specificDate' }"/>
+
+      <Label text="{i18n>colMinInstances}"/>
+      <StepInput value="{view>/form/schedule/instanceMinCount}" min="1" max="1000"/>
+      <Label text="{i18n>colMaxInstances}"/>
+      <StepInput value="{view>/form/schedule/instanceMaxCount}" min="1" max="1000"/>
+      <Label text="{i18n>colInitialMin}"/>
+      <StepInput value="{view>/form/schedule/initialMinInstanceCount}" min="0" max="1000" description="{i18n>initialMinHint}"/>
+      <Label text=""/>
+      <CheckBox text="{i18n>colEnabled}" selected="{view>/form/schedule/enabled}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

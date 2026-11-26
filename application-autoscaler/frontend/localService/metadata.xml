@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.autoscaler" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Binding">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="appGuid" Type="Edm.String" Nullable="false"/>
+        <Property Name="serviceInstanceId" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="policyId" Type="Edm.String"/>
+        <Property Name="policyName" Type="Edm.String"/>
+        <Property Name="policyStatus" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="autoscaled" Type="Edm.Boolean"/>
+        <Property Name="currentInstances" Type="Edm.Int32"/>
+        <Property Name="minInstances" Type="Edm.Int32"/>
+        <Property Name="maxInstances" Type="Edm.Int32"/>
+        <Property Name="limitSource" Type="Edm.String"/>
+        <Property Name="utilizationPercent" Type="Edm.Int32"/>
+        <Property Name="lastScaledAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastEvaluatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastDecision" Type="Edm.String"/>
+        <Property Name="sampleCount" Type="Edm.Int32"/>
+        <Property Name="lastMetricAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="eventCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Policy">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="instanceMinCount" Type="Edm.Int32"/>
+        <Property Name="instanceMaxCount" Type="Edm.Int32"/>
+        <Property Name="timezone" Type="Edm.String"/>
+        <Property Name="customMetricAllowFrom" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="ruleCount" Type="Edm.Int32"/>
+        <Property Name="scheduleCount" Type="Edm.Int32"/>
+        <Property Name="bindingCount" Type="Edm.Int32"/>
+        <Property Name="activeScheduleName" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Rule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="policyId" Type="Edm.String" Nullable="false"/>
+        <Property Name="policyName" Type="Edm.String"/>
+        <Property Name="metricType" Type="Edm.String"/>
+        <Property Name="customMetricName" Type="Edm.String"/>
+        <Property Name="metricName" Type="Edm.String"/>
+        <Property Name="operator" Type="Edm.String"/>
+        <Property Name="threshold" Type="Edm.Double"/>
+        <Property Name="unit" Type="Edm.String"/>
+        <Property Name="breachDurationSeconds" Type="Edm.Int32"/>
+        <Property Name="coolDownSeconds" Type="Edm.Int32"/>
+        <Property Name="adjustment" Type="Edm.String"/>
+        <Property Name="direction" Type="Edm.String"/>
+        <Property Name="enabled" Type="Edm.Boolean"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Schedule">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="policyId" Type="Edm.String" Nullable="false"/>
+        <Property Name="policyName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="kind" Type="Edm.String"/>
+        <Property Name="startTime" Type="Edm.String"/>
+        <Property Name="endTime" Type="Edm.String"/>
+        <Property Name="daysOfWeek" Type="Collection(Edm.String)"/>
+        <Property Name="daysOfMonth" Type="Collection(Edm.String)"/>
+        <Property Name="daysText" Type="Edm.String"/>
+        <Property Name="startDate" Type="Edm.String"/>
+        <Property Name="endDate" Type="Edm.String"/>
+        <Property Name="startDateTime" Type="Edm.String"/>
+        <Property Name="endDateTime" Type="Edm.String"/>
+        <Property Name="instanceMinCount" Type="Edm.Int32"/>
+        <Property Name="instanceMaxCount" Type="Edm.Int32"/>
+        <Property Name="initialMinInstanceCount" Type="Edm.Int32"/>
+        <Property Name="enabled" Type="Edm.Boolean"/>
+        <Property Name="active" Type="Edm.Boolean"/>
+        <Property Name="timezone" Type="Edm.String"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="MetricSample">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="bindingId" Type="Edm.String" Nullable="false"/>
+        <Property Name="bindingName" Type="Edm.String"/>
+        <Property Name="metricName" Type="Edm.String" Nullable="false"/>
+        <Property Name="custom" Type="Edm.Boolean"/>
+        <Property Name="value" Type="Edm.Double" Nullable="false"/>
+        <Property Name="unit" Type="Edm.String"/>
+        <Property Name="measuredAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="source" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ScalingEvent">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="bindingId" Type="Edm.String"/>
+        <Property Name="bindingName" Type="Edm.String"/>
+        <Property Name="policyId" Type="Edm.String"/>
+        <Property Name="policyName" Type="Edm.String"/>
+        <Property Name="ruleId" Type="Edm.String"/>
+        <Property Name="scheduleId" Type="Edm.String"/>
+        <Property Name="trigger" Type="Edm.String"/>
+        <Property Name="direction" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="oldInstances" Type="Edm.Int32"/>
+        <Property Name="newInstances" Type="Edm.Int32"/>
+        <Property Name="delta" Type="Edm.Int32"/>
+        <Property Name="metricName" Type="Edm.String"/>
+        <Property Name="metricValue" Type="Edm.Double"/>
+        <Property Name="threshold" Type="Edm.Double"/>
+        <Property Name="reason" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="temporarilyLocked" Type="Edm.Boolean"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="bindings" Type="Edm.Int32"/>
+        <Property Name="autoscaledBindings" Type="Edm.Int32"/>
+        <Property Name="suspendedBindings" Type="Edm.Int32"/>
+        <Property Name="instances" Type="Edm.Int32"/>
+        <Property Name="policies" Type="Edm.Int32"/>
+        <Property Name="activePolicies" Type="Edm.Int32"/>
+        <Property Name="rules" Type="Edm.Int32"/>
+        <Property Name="schedules" Type="Edm.Int32"/>
+        <Property Name="activeSchedules" Type="Edm.Int32"/>
+        <Property Name="metricSamples" Type="Edm.Int32"/>
+        <Property Name="samplesLast24h" Type="Edm.Int32"/>
+        <Property Name="scalingEvents" Type="Edm.Int32"/>
+        <Property Name="scaleOutsLast24h" Type="Edm.Int32"/>
+        <Property Name="scaleInsLast24h" Type="Edm.Int32"/>
+        <Property Name="failedLast24h" Type="Edm.Int32"/>
+        <Property Name="users" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="EvaluationResult">
+        <Property Name="bindingId" Type="Edm.String"/>
+        <Property Name="bindingName" Type="Edm.String"/>
+        <Property Name="trigger" Type="Edm.String"/>
+        <Property Name="direction" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="oldInstances" Type="Edm.Int32"/>
+        <Property Name="newInstances" Type="Edm.Int32"/>
+        <Property Name="minInstances" Type="Edm.Int32"/>
+        <Property Name="maxInstances" Type="Edm.Int32"/>
+        <Property Name="limitSource" Type="Edm.String"/>
+        <Property Name="reason" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="eventId" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="EvaluationSummary">
+        <Property Name="bindings" Type="Edm.Int32"/>
+        <Property Name="evaluated" Type="Edm.Int32"/>
+        <Property Name="scaledOut" Type="Edm.Int32"/>
+        <Property Name="scaledIn" Type="Edm.Int32"/>
+        <Property Name="unchanged" Type="Edm.Int32"/>
+        <Property Name="failed" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="messages" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="SimulationResult">
+        <Property Name="bindingId" Type="Edm.String"/>
+        <Property Name="metricName" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.Double"/>
+        <Property Name="samples" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="PurgeResult">
+        <Property Name="samples" Type="Edm.Int32"/>
+        <Property Name="events" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="bindings" Type="Edm.Int32"/>
+        <Property Name="policies" Type="Edm.Int32"/>
+        <Property Name="rules" Type="Edm.Int32"/>
+        <Property Name="schedules" Type="Edm.Int32"/>
+        <Property Name="samples" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="EvaluateBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.autoscaler.EvaluationResult"/>
+      </Action>
+      <Action Name="PreviewScaling" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.autoscaler.EvaluationResult"/>
+      </Action>
+      <Action Name="EvaluateAll" IsBound="false">
+        <ReturnType Type="uim.autoscaler.EvaluationSummary"/>
+      </Action>
+      <Action Name="ScaleBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="instances" Type="Edm.Int32" Nullable="false"/>
+        <Parameter Name="reason" Type="Edm.String"/>
+        <ReturnType Type="uim.autoscaler.EvaluationResult"/>
+      </Action>
+      <Action Name="SuspendBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.autoscaler.Binding"/>
+      </Action>
+      <Action Name="ResumeBinding" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.autoscaler.Binding"/>
+      </Action>
+      <Action Name="AttachPolicy" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="policyId" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.autoscaler.Binding"/>
+      </Action>
+      <Action Name="DetachPolicy" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.autoscaler.Binding"/>
+      </Action>
+      <Action Name="ActivatePolicy" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.autoscaler.Policy"/>
+      </Action>
+      <Action Name="DeactivatePolicy" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.autoscaler.Policy"/>
+      </Action>
+      <Action Name="CopyPolicy" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="newId" Type="Edm.String"/>
+        <ReturnType Type="uim.autoscaler.Policy"/>
+      </Action>
+      <Action Name="SimulateLoad" IsBound="false">
+        <Parameter Name="bindingId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="metricName" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="value" Type="Edm.Double" Nullable="false"/>
+        <Parameter Name="durationSeconds" Type="Edm.Int32"/>
+        <Parameter Name="stepSeconds" Type="Edm.Int32"/>
+        <ReturnType Type="uim.autoscaler.SimulationResult"/>
+      </Action>
+      <Action Name="PurgeMetrics" IsBound="false">
+        <ReturnType Type="uim.autoscaler.PurgeResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.autoscaler.SeedResult"/>
+      </Action>
+      <EntityContainer Name="AutoscalerService">
+        <EntitySet Name="Bindings" EntityType="uim.autoscaler.Binding"/>
+        <EntitySet Name="Policies" EntityType="uim.autoscaler.Policy"/>
+        <EntitySet Name="Rules" EntityType="uim.autoscaler.Rule"/>
+        <EntitySet Name="Schedules" EntityType="uim.autoscaler.Schedule"/>
+        <EntitySet Name="MetricSamples" EntityType="uim.autoscaler.MetricSample"/>
+        <EntitySet Name="ScalingEvents" EntityType="uim.autoscaler.ScalingEvent"/>
+        <EntitySet Name="Users" EntityType="uim.autoscaler.User"/>
+        <Singleton Name="Statistics" Type="uim.autoscaler.Statistic"/>
+        <ActionImport Name="EvaluateBinding" Action="uim.autoscaler.EvaluateBinding"/>
+        <ActionImport Name="PreviewScaling" Action="uim.autoscaler.PreviewScaling"/>
+        <ActionImport Name="EvaluateAll" Action="uim.autoscaler.EvaluateAll"/>
+        <ActionImport Name="ScaleBinding" Action="uim.autoscaler.ScaleBinding"/>
+        <ActionImport Name="SuspendBinding" Action="uim.autoscaler.SuspendBinding"/>
+        <ActionImport Name="ResumeBinding" Action="uim.autoscaler.ResumeBinding"/>
+        <ActionImport Name="AttachPolicy" Action="uim.autoscaler.AttachPolicy"/>
+        <ActionImport Name="DetachPolicy" Action="uim.autoscaler.DetachPolicy"/>
+        <ActionImport Name="ActivatePolicy" Action="uim.autoscaler.ActivatePolicy"/>
+        <ActionImport Name="DeactivatePolicy" Action="uim.autoscaler.DeactivatePolicy"/>
+        <ActionImport Name="CopyPolicy" Action="uim.autoscaler.CopyPolicy"/>
+        <ActionImport Name="SimulateLoad" Action="uim.autoscaler.SimulateLoad"/>
+        <ActionImport Name="PurgeMetrics" Action="uim.autoscaler.PurgeMetrics"/>
+        <ActionImport Name="SeedDemoData" Action="uim.autoscaler.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.autoscaler.EvaluationResult/bindingId"><Annotation Term="Common.Label" String="Binding"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/bindingName"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/trigger"><Annotation Term="Common.Label" String="Trigger"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/direction"><Annotation Term="Common.Label" String="Direction"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/oldInstances"><Annotation Term="Common.Label" String="From"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/newInstances"><Annotation Term="Common.Label" String="To"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/minInstances"><Annotation Term="Common.Label" String="Minimum"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/maxInstances"><Annotation Term="Common.Label" String="Maximum"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/limitSource"><Annotation Term="Common.Label" String="Limits From"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/reason"><Annotation Term="Common.Label" String="Reason"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationResult/eventId"><Annotation Term="Common.Label" String="Event"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationSummary/bindings"><Annotation Term="Common.Label" String="Bindings"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationSummary/evaluated"><Annotation Term="Common.Label" String="Evaluated"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationSummary/scaledOut"><Annotation Term="Common.Label" String="Scaled Out"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationSummary/scaledIn"><Annotation Term="Common.Label" String="Scaled In"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationSummary/unchanged"><Annotation Term="Common.Label" String="Unchanged"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationSummary/failed"><Annotation Term="Common.Label" String="Failed"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationSummary/skipped"><Annotation Term="Common.Label" String="Skipped"/></Annotations>
+      <Annotations Target="uim.autoscaler.EvaluationSummary/messages"><Annotation Term="Common.Label" String="Messages"/></Annotations>
+      <Annotations Target="uim.autoscaler.SimulationResult/bindingId"><Annotation Term="Common.Label" String="Binding"/></Annotations>
+      <Annotations Target="uim.autoscaler.SimulationResult/metricName"><Annotation Term="Common.Label" String="Metric"/></Annotations>
+      <Annotations Target="uim.autoscaler.SimulationResult/value"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.autoscaler.SimulationResult/samples"><Annotation Term="Common.Label" String="Samples"/></Annotations>
+      <Annotations Target="uim.autoscaler.PurgeResult/samples"><Annotation Term="Common.Label" String="Samples"/></Annotations>
+      <Annotations Target="uim.autoscaler.PurgeResult/events"><Annotation Term="Common.Label" String="Events"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/id"><Annotation Term="Common.Label" String="Binding"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/name"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/appGuid"><Annotation Term="Common.Label" String="Application GUID"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/serviceInstanceId"><Annotation Term="Common.Label" String="Service Instance"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/policyId"><Annotation Term="Common.Label" String="Policy"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/policyName"><Annotation Term="Common.Label" String="Policy Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/policyStatus"><Annotation Term="Common.Label" String="Policy Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/status"><Annotation Term="Common.Label" String="Autoscaling"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/autoscaled"><Annotation Term="Common.Label" String="Autoscaled"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/currentInstances"><Annotation Term="Common.Label" String="Instances"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/minInstances"><Annotation Term="Common.Label" String="Minimum"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/maxInstances"><Annotation Term="Common.Label" String="Maximum"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/limitSource"><Annotation Term="Common.Label" String="Limits From"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/utilizationPercent"><Annotation Term="Common.Label" String="Of Maximum (%)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/lastScaledAt"><Annotation Term="Common.Label" String="Last Scaled"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/lastEvaluatedAt"><Annotation Term="Common.Label" String="Last Evaluated"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/lastDecision"><Annotation Term="Common.Label" String="Last Decision"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/sampleCount"><Annotation Term="Common.Label" String="Samples"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/lastMetricAt"><Annotation Term="Common.Label" String="Last Metric"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/eventCount"><Annotation Term="Common.Label" String="Scaling Events"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Binding">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Binding"/><PropertyValue Property="TypeNamePlural" String="Bindings"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="policyName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="policyName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="currentInstances"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="minInstances"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="maxInstances"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastScaledAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>policyId</PropertyPath><PropertyPath>autoscaled</PropertyPath><PropertyPath>serviceInstanceId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.AutoscalerService/Bindings">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.Policy/id"><Annotation Term="Common.Label" String="Policy"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/instanceMinCount"><Annotation Term="Common.Label" String="Minimum Instances"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/instanceMaxCount"><Annotation Term="Common.Label" String="Maximum Instances"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/timezone"><Annotation Term="Common.Label" String="Time Zone"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/customMetricAllowFrom"><Annotation Term="Common.Label" String="Custom Metrics From"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/ruleCount"><Annotation Term="Common.Label" String="Rules"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/scheduleCount"><Annotation Term="Common.Label" String="Schedules"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/bindingCount"><Annotation Term="Common.Label" String="Bindings"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/activeScheduleName"><Annotation Term="Common.Label" String="Active Schedule"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Policy">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Policy"/><PropertyValue Property="TypeNamePlural" String="Policies"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="instanceMinCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="instanceMaxCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="ruleCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scheduleCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindingCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>timezone</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.AutoscalerService/Policies">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.Rule/id"><Annotation Term="Common.Label" String="Rule"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/policyId"><Annotation Term="Common.Label" String="Policy"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/policyName"><Annotation Term="Common.Label" String="Policy Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/metricType"><Annotation Term="Common.Label" String="Metric Type"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/customMetricName"><Annotation Term="Common.Label" String="Custom Metric"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/metricName"><Annotation Term="Common.Label" String="Metric"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/operator"><Annotation Term="Common.Label" String="Operator"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/threshold"><Annotation Term="Common.Label" String="Threshold"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/unit"><Annotation Term="Common.Label" String="Unit"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/breachDurationSeconds"><Annotation Term="Common.Label" String="Breach Duration (s)"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/coolDownSeconds"><Annotation Term="Common.Label" String="Cool-Down (s)"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/adjustment"><Annotation Term="Common.Label" String="Adjustment"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/direction"><Annotation Term="Common.Label" String="Direction"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/enabled"><Annotation Term="Common.Label" String="Enabled"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/summary"><Annotation Term="Common.Label" String="Rule"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Rule">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Scaling Rule"/><PropertyValue Property="TypeNamePlural" String="Scaling Rules"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="summary"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="policyName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="metricName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="operator"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="threshold"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="breachDurationSeconds"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="coolDownSeconds"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="adjustment"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="enabled"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>policyId</PropertyPath><PropertyPath>metricType</PropertyPath><PropertyPath>direction</PropertyPath><PropertyPath>enabled</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.AutoscalerService/Rules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/id"><Annotation Term="Common.Label" String="Schedule"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/policyId"><Annotation Term="Common.Label" String="Policy"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/policyName"><Annotation Term="Common.Label" String="Policy Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/kind"><Annotation Term="Common.Label" String="Kind"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/startTime"><Annotation Term="Common.Label" String="Start Time"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/endTime"><Annotation Term="Common.Label" String="End Time"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/daysOfWeek"><Annotation Term="Common.Label" String="Days of the Week"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/daysOfMonth"><Annotation Term="Common.Label" String="Days of the Month"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/daysText"><Annotation Term="Common.Label" String="Days"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/startDate"><Annotation Term="Common.Label" String="Valid From"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/endDate"><Annotation Term="Common.Label" String="Valid To"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/startDateTime"><Annotation Term="Common.Label" String="Start"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/endDateTime"><Annotation Term="Common.Label" String="End"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/instanceMinCount"><Annotation Term="Common.Label" String="Minimum Instances"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/instanceMaxCount"><Annotation Term="Common.Label" String="Maximum Instances"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/initialMinInstanceCount"><Annotation Term="Common.Label" String="Initial Minimum"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/enabled"><Annotation Term="Common.Label" String="Enabled"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/active"><Annotation Term="Common.Label" String="Active Now"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/timezone"><Annotation Term="Common.Label" String="Time Zone"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/summary"><Annotation Term="Common.Label" String="Schedule"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.Schedule">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Schedule"/><PropertyValue Property="TypeNamePlural" String="Schedules"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="summary"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kind"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="summary"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="instanceMinCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="instanceMaxCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="enabled"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="active"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>policyId</PropertyPath><PropertyPath>kind</PropertyPath><PropertyPath>enabled</PropertyPath><PropertyPath>active</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.AutoscalerService/Schedules">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/id"><Annotation Term="Common.Label" String="Sample"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/bindingId"><Annotation Term="Common.Label" String="Binding"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/bindingName"><Annotation Term="Common.Label" String="Application"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/metricName"><Annotation Term="Common.Label" String="Metric"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/custom"><Annotation Term="Common.Label" String="Custom Metric"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/value"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/unit"><Annotation Term="Common.Label" String="Unit"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/measuredAt"><Annotation Term="Common.Label" String="Measured At"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/source"><Annotation Term="Common.Label" String="Source"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.MetricSample">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Metric Sample"/><PropertyValue Property="TypeNamePlural" String="Metric Samples"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="metricName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindingName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindingName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="metricName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="value"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="unit"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="measuredAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="source"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>bindingId</PropertyPath><PropertyPath>metricName</PropertyPath><PropertyPath>source</PropertyPath><PropertyPath>custom</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.AutoscalerService/MetricSamples">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/id"><Annotation Term="Common.Label" String="Event"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/bindingId"><Annotation Term="Common.Label" String="Binding"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/bindingName"><Annotation Term="Common.Label" String="Application"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/policyId"><Annotation Term="Common.Label" String="Policy"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/policyName"><Annotation Term="Common.Label" String="Policy Name"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/ruleId"><Annotation Term="Common.Label" String="Rule"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/scheduleId"><Annotation Term="Common.Label" String="Schedule"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/trigger"><Annotation Term="Common.Label" String="Trigger"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/direction"><Annotation Term="Common.Label" String="Direction"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/oldInstances"><Annotation Term="Common.Label" String="From"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/newInstances"><Annotation Term="Common.Label" String="To"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/delta"><Annotation Term="Common.Label" String="Change"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/metricName"><Annotation Term="Common.Label" String="Metric"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/metricValue"><Annotation Term="Common.Label" String="Value"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/threshold"><Annotation Term="Common.Label" String="Threshold"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/reason"><Annotation Term="Common.Label" String="Reason"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.ScalingEvent">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Scaling Event"/><PropertyValue Property="TypeNamePlural" String="Scaling History"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="reason"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindingName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindingName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="trigger"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="direction"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="oldInstances"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="newInstances"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>bindingId</PropertyPath><PropertyPath>policyId</PropertyPath><PropertyPath>trigger</PropertyPath><PropertyPath>direction</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.AutoscalerService/ScalingEvents">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.User/id"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/scopesText"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/temporarilyLocked"><Annotation Term="Common.Label" String="Temporarily Locked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/failedLogins"><Annotation Term="Common.Label" String="Failed Logins"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.autoscaler.User">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="User"/><PropertyValue Property="TypeNamePlural" String="Users"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="locked"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastLoginAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>locked</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.AutoscalerService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/bindings"><Annotation Term="Common.Label" String="Bindings"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/autoscaledBindings"><Annotation Term="Common.Label" String="Autoscaled Bindings"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/suspendedBindings"><Annotation Term="Common.Label" String="Suspended Bindings"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/instances"><Annotation Term="Common.Label" String="Instances"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/policies"><Annotation Term="Common.Label" String="Policies"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/activePolicies"><Annotation Term="Common.Label" String="Active Policies"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/rules"><Annotation Term="Common.Label" String="Rules"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/schedules"><Annotation Term="Common.Label" String="Schedules"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/activeSchedules"><Annotation Term="Common.Label" String="Active Schedules"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/metricSamples"><Annotation Term="Common.Label" String="Metric Samples"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/samplesLast24h"><Annotation Term="Common.Label" String="Samples (24 h)"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/scalingEvents"><Annotation Term="Common.Label" String="Scaling Events"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/scaleOutsLast24h"><Annotation Term="Common.Label" String="Scale Outs (24 h)"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/scaleInsLast24h"><Annotation Term="Common.Label" String="Scale Ins (24 h)"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/failedLast24h"><Annotation Term="Common.Label" String="Failed (24 h)"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic/users"><Annotation Term="Common.Label" String="Users"/></Annotations>
+      <Annotations Target="uim.autoscaler.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="bindings"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="autoscaledBindings"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="suspendedBindings"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="instances"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="policies"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activePolicies"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rules"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="schedules"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.autoscaler.AutoscalerService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Application Autoscaler"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

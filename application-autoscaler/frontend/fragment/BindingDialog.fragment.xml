@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/binding/edit} ? ${i18n>editBinding} : ${i18n>createBinding} }" contentWidth="34rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/binding/id}" enabled="{= !%{view>/form/binding/edit} }" placeholder="{i18n>idPlaceholder}"/>
+      <Label text="{i18n>colApplication}" required="true"/>
+      <Input value="{view>/form/binding/name}"/>
+      <Label text="{i18n>colAppGuid}" required="true"/>
+      <Input value="{view>/form/binding/appGuid}" enabled="{= !%{view>/form/binding/edit} }"/>
+      <Label text="{i18n>colServiceInstance}"/>
+      <Input value="{view>/form/binding/serviceInstanceId}"/>
+      <Label text="{i18n>colPolicy}"/>
+      <Select selectedKey="{view>/form/binding/policyId}" forceSelection="false" items="{path: '/Policies', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colInstances}"/>
+      <StepInput value="{view>/form/binding/currentInstances}" min="0" max="1000" enabled="{= !%{view>/form/binding/edit} }"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/binding/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,138 @@
+<mvc:View controllerName="uim.autoscaler.controller.BindingDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+  height="100%">
+  <uxap:ObjectPageLayout id="bindingPage" showFooter="false" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:breadcrumbs>
+          <Breadcrumbs><Link text="{i18n>tabBindings}" press=".onNavBack"/></Breadcrumbs>
+        </uxap:breadcrumbs>
+        <uxap:heading><Title text="{name}" wrapping="true"/></uxap:heading>
+        <uxap:expandedContent><Text text="{appGuid}"/></uxap:expandedContent>
+        <uxap:snappedContent><Text text="{currentInstances} {i18n>colInstances}"/></uxap:snappedContent>
+        <uxap:actions>
+          <Button text="{i18n>evaluate}" type="Emphasized" icon="sap-icon://synchronize" press=".onEvaluate" visible="{session>/canOperate}"/>
+          <Button text="{i18n>preview}" icon="sap-icon://show" press=".onPreview" enabled="{= !!%{policyId} }"/>
+          <Button text="{i18n>scale}" icon="sap-icon://resize-horizontal" press=".onScale" visible="{session>/canOperate}"/>
+          <Button text="{i18n>sendMetric}" icon="sap-icon://add-activity" press=".onSendMetric" visible="{session>/canOperate}"/>
+          <Button text="{i18n>simulate}" icon="sap-icon://simulate" press=".onSimulate" visible="{session>/canOperate}"/>
+          <Button text="{= %{status} === 'suspended' ? ${i18n>resume} : ${i18n>suspend} }"
+            icon="{= %{status} === 'suspended' ? 'sap-icon://media-play' : 'sap-icon://media-pause' }"
+            press=".onSuspendResume" visible="{session>/canOperate}"/>
+          <Button text="{i18n>attachPolicy}" icon="sap-icon://chain-link" press=".onAttach" visible="{session>/canManage}"/>
+          <Button text="{i18n>detachPolicy}" icon="sap-icon://broken-link" press=".onDetach"
+            visible="{= %{session>/canManage} &amp;&amp; !!%{policyId} }"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <HBox wrap="Wrap" alignItems="Center">
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colInstances}"/>
+          <ObjectNumber number="{currentInstances}" unit="/ {maxInstances}" emphasized="true"
+            state="{path: 'utilizationPercent', formatter: '.formatter.utilizationState'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colLimits}"/>
+          <ObjectStatus text="{parts: [{path: 'minInstances', targetType: 'any'}, {path: 'maxInstances', targetType: 'any'}], formatter: '.formatter.limits'}"
+            icon="{= %{limitSource} &amp;&amp; %{limitSource} !== 'policy' ? 'sap-icon://appointment-2' : '' }"/>
+          <Text text="{limitSource}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colPolicy}"/>
+          <Link text="{= %{policyName} || ${i18n>noPolicy} }" press=".onPolicyPress" enabled="{= !!%{policyId} }"/>
+          <ObjectStatus text="{path: 'policyStatus', formatter: '.formatter.enumText'}" state="{path: 'policyStatus', formatter: '.formatter.policyState'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colAutoscaling}"/>
+          <ObjectStatus text="{= %{status} === 'suspended' ? ${i18n>enum_suspended} : %{autoscaled} ? ${i18n>enum_active} : ${i18n>notAutoscaled} }"
+            state="{parts: [{path: 'status', targetType: 'any'}, {path: 'autoscaled', targetType: 'any'}], formatter: '.formatter.bindingState'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="28rem">
+          <Label text="{i18n>colLastDecision}"/>
+          <Text text="{lastDecision}" maxLines="3"/>
+          <Text text="{path: 'lastEvaluatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+        </VBox>
+      </HBox>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionHistory}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="bindingEventsTable" growing="true" growingThreshold="25" noDataText="{i18n>noEvents}"
+              items="{path: '/ScalingEvents', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colTrigger}"/></Column>
+                <Column hAlign="Center"><Text text="{i18n>colInstances}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colMetric}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="35%"><Text text="{i18n>colReason}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <ObjectStatus text="{path: 'trigger', formatter: '.formatter.enumText'}" icon="{path: 'trigger', formatter: '.formatter.triggerIcon'}"/>
+                  <ObjectStatus text="{parts: ['oldInstances', 'newInstances'], formatter: '.formatter.instanceChange'}"
+                    icon="{path: 'direction', formatter: '.formatter.directionIcon'}" state="{path: 'direction', formatter: '.formatter.directionState'}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.statusState'}"/>
+                  <Text text="{= %{metricName} ? %{metricName} + ' = ' + %{metricValue} : '' }"/>
+                  <Text text="{reason}{= %{message} ? ' — ' + %{message} : '' }" maxLines="3"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionMetrics}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="bindingSamplesTable" growing="true" growingThreshold="50" noDataText="{i18n>noSamples}"
+              items="{path: '/MetricSamples', parameters: {$orderby: 'measuredAt desc'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column><Text text="{i18n>colMetric}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colValue}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSource}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{path: 'measuredAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <HBox alignItems="Center">
+                    <core:Icon src="{path: 'metricName', formatter: '.formatter.metricIcon'}" class="sapUiTinyMarginEnd"/>
+                    <Text text="{metricName}"/>
+                  </HBox>
+                  <ObjectNumber number="{path: 'value', formatter: '.formatter.number'}" unit="{unit}"/>
+                  <Text text="{source}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionDetails}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <form:SimpleForm layout="ColumnLayout" editable="false">
+              <Label text="{i18n>colId}"/><Text text="{id}"/>
+              <Label text="{i18n>colAppGuid}"/><Text text="{appGuid}"/>
+              <Label text="{i18n>colServiceInstance}"/><Text text="{serviceInstanceId}"/>
+              <Label text="{i18n>colDescription}"/><Text text="{description}"/>
+              <Label text="{i18n>colLastScaled}"/>
+              <Text text="{path: 'lastScaledAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Label text="{i18n>colLastMetric}"/>
+              <Text text="{path: 'lastMetricAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+              <Label text="{i18n>colCreated}"/>
+              <Text text="{createdBy} · {path: 'createdAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+            </form:SimpleForm>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

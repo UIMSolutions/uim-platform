@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/rule/edit} ? ${i18n>editRule} : ${i18n>createRule} }" contentWidth="36rem">
+    <MessageStrip text="{i18n>ruleHint}" showIcon="true" class="sapUiSmallMargin"/>
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colMetric}" required="true"/>
+      <Select selectedKey="{view>/form/rule/metricType}">
+          <core:Item key="cpu" text="cpu (%)"/>
+          <core:Item key="cpuutil" text="cpuutil (%)"/>
+          <core:Item key="memoryused" text="memoryused (MB)"/>
+          <core:Item key="memoryutil" text="memoryutil (%)"/>
+          <core:Item key="disk" text="disk (MB)"/>
+          <core:Item key="diskutil" text="diskutil (%)"/>
+          <core:Item key="throughput" text="throughput (rps)"/>
+          <core:Item key="responsetime" text="responsetime (ms)"/>
+          <core:Item key="custom" text="{i18n>enum_custom}"/>
+      </Select>
+      <Label text="{i18n>colCustomMetric}" required="true" visible="{= %{view>/form/rule/metricType} === 'custom' }"/>
+      <Input value="{view>/form/rule/customMetricName}" placeholder="jobqueue" visible="{= %{view>/form/rule/metricType} === 'custom' }"/>
+      <Label text="{i18n>colThreshold}" required="true"/>
+      <HBox>
+        <Select selectedKey="{view>/form/rule/operator}" width="6rem" class="sapUiTinyMarginEnd">
+          <core:Item key="&gt;=" text="&gt;="/>
+          <core:Item key="&gt;" text="&gt;"/>
+          <core:Item key="&lt;=" text="&lt;="/>
+          <core:Item key="&lt;" text="&lt;"/>
+        </Select>
+        <StepInput value="{view>/form/rule/threshold}" min="0" max="1000000" displayValuePrecision="1"/>
+      </HBox>
+      <Label text="{i18n>colBreach}"/>
+      <StepInput value="{view>/form/rule/breachDurationSeconds}" min="60" max="3600" step="30" description="s"/>
+      <Label text="{i18n>colCoolDown}"/>
+      <StepInput value="{view>/form/rule/coolDownSeconds}" min="60" max="3600" step="30" description="s"/>
+      <Label text="{i18n>colAdjustment}" required="true"/>
+      <Input value="{view>/form/rule/adjustment}" placeholder="+1, -1, +50%, -25%"/>
+      <Label text=""/>
+      <CheckBox text="{i18n>colEnabled}" selected="{view>/form/rule/enabled}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>
