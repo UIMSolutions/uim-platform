@@ -226,3 +226,10 @@ service/build/libuim-platform-service.a
 service/build/libuim-platform-service.a
 service/build/libuim-platform-service.a
 integration-automation/backend/build/uim-integration-automation-platform-service
+document-ai/backend/build/document-ai-test-defaultTest
+document-ai/backend/build/uim-document-ai-cli
+document-ai/backend/build/uim-document-ai-gui
+document-ai/backend/build/uim-document-ai-platform-service
+service/build/libuim-platform-service.a
+service/build/libuim-platform-service.a
+service/build/libuim-platform-service.a
