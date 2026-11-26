@@ -3,10 +3,23 @@ kind: ConfigMap
 metadata:
   name: application-events-config
   namespace: uim-platform
+  labels:
+    app: application-events-service
+    part-of: uim-platform
 data:
   APPEVENTS_HOST: "0.0.0.0"
   APPEVENTS_PORT: "8132"
-  APPEVENTS_PERSISTENCE: "memory"
-  APPEVENTS_FILE_PATH: "./data"
-  APPEVENTS_MONGODB_URI: "mongodb://localhost:27017"
-  APPEVENTS_MONGODB_DB: "appevents"
+  APPEVENTS_STORAGE: "file"
+  APPEVENTS_DATA_FILE: "/data/application-events.json"
+  APPEVENTS_FRONTEND_DIR: "/app/frontend"
+  APPEVENTS_AUTH_MODE: "jwt"
+  APPEVENTS_TOKEN_TTL_SECONDS: "3600"
+  # simulate | http — http POSTs the CloudEvents (structured mode) to the webhook endpoints
+  APPEVENTS_DELIVERY_MODE: "http"
+  APPEVENTS_DELIVERY_TIMEOUT_SECONDS: "10"
+  APPEVENTS_DISPATCH_INTERVAL_SECONDS: "10"
+  APPEVENTS_REQUIRE_REGISTERED_TOPICS: "true"
+  APPEVENTS_DELIVER_ON_PUBLISH: "true"
+  APPEVENTS_MAX_PAYLOAD_BYTES: "1048576"
+  APPEVENTS_MESSAGE_RETENTION_HOURS: "72"
+  APPEVENTS_DEAD_LETTER_RETENTION_DAYS: "30"

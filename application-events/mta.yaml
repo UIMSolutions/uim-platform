@@ -1,0 +1,93 @@
+_schema-version: "3.3"
+ID: uim-application-events
+version: 2.0.0
+description: UIM Application Event Hub — D/vibe.d backend (REST, OData v4, CloudEvents), SAP Fiori 3 / OpenUI5 UI and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: application-events-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun --compiler=ldc2
+        - dub build --build=release --config=cli --compiler=ldc2
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-application-events-platform-service build/uim-application-events-cli dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-application-events-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /health
+    properties:
+      APPEVENTS_HOST: 0.0.0.0
+      # The snapshot lives on the (ephemeral) container disk — single instance only.
+      APPEVENTS_STORAGE: file
+      APPEVENTS_DATA_FILE: data/application-events.json
+      APPEVENTS_FRONTEND_DIR: ""
+      # authentication: the XSUAA binding below switches the service to xsuaa mode
+      APPEVENTS_AUTH_MODE: open
+      # simulate | http (POST the CloudEvents to the webhooks of the channels)
+      APPEVENTS_DELIVERY_MODE: http
+      APPEVENTS_DISPATCH_INTERVAL_SECONDS: 10
+    provides:
+      - name: application-events-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: application-events-xsuaa
+      - name: application-events-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: application-events-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: application-events-xsuaa
+      - name: application-events-srv-api
+        group: destinations
+        properties:
+          name: application-events-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 60000
+
+resources:
+  - name: application-events-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-application-events-${space}
+
+  # Runtime overrides read from VCAP_SERVICES (credentials of the service named
+  # "application-events-config"), e.g.:
+  #   cf update-user-provided-service application-events-config \
+  #     -p '{"deliveryTimeoutSeconds":5,"messageRetentionHours":168,"requireRegisteredTopics":false}'
+  - name: application-events-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: application-events-config
+      config:
+        workerTenants: ["default"]

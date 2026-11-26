@@ -5,8 +5,12 @@ metadata:
   namespace: uim-platform
   labels:
     app: application-events-service
+    part-of: uim-platform
 spec:
+  # file storage is a single-node snapshot — keep one replica
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: application-events-service
@@ -15,34 +19,61 @@ spec:
       labels:
         app: application-events-service
     spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 999
       containers:
       - name: application-events-service
-        image: uim-application-events-platform-service:latest
+        image: uim-platform/application-events:latest
         ports:
         - containerPort: 8132
+          protocol: TCP
         envFrom:
         - configMapRef:
             name: application-events-config
+        - secretRef:
+            name: application-events-secret
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
-            path: /api/v1/health
-            port: 8132
-          initialDelaySeconds: 10
-          periodSeconds: 30
-        readinessProbe:
-          httpGet:
-            path: /api/v1/health
+            path: /health
             port: 8132
           initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8132
+          initialDelaySeconds: 3
           periodSeconds: 10
+          timeoutSeconds: 3
         resources:
           requests:
-            memory: "128Mi"
+            memory: "64Mi"
             cpu: "100m"
           limits:
             memory: "512Mi"
-            cpu: "500m"
+            cpu: "1000m"
         securityContext:
-          runAsNonRoot: true
-          readOnlyRootFilesystem: false
+          readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: application-events-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: application-events-data
+  namespace: uim-platform
+  labels:
+    app: application-events-service
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi

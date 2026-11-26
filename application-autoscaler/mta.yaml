@@ -1,0 +1,92 @@
+_schema-version: "3.3"
+ID: uim-application-autoscaler
+version: 2.0.0
+description: UIM Application Autoscaler — D/vibe.d backend (REST, OData v4), SAP Fiori 3 / OpenUI5 UI and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: application-autoscaler-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun --compiler=ldc2
+        - dub build --build=release --config=cli --compiler=ldc2
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-application-autoscaler-platform-service build/uim-application-autoscaler-cli dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-application-autoscaler-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /health
+    properties:
+      AUTOSCALER_HOST: 0.0.0.0
+      # The snapshot lives on the (ephemeral) container disk — single instance only.
+      AUTOSCALER_STORAGE: file
+      AUTOSCALER_DATA_FILE: data/application-autoscaler.json
+      AUTOSCALER_FRONTEND_DIR: ""
+      # authentication: the XSUAA binding below switches the service to xsuaa mode
+      AUTOSCALER_AUTH_MODE: open
+      AUTOSCALER_INSTANCE_MODE: simulate
+      AUTOSCALER_EVALUATION_INTERVAL_SECONDS: 30
+    provides:
+      - name: application-autoscaler-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: application-autoscaler-xsuaa
+      - name: application-autoscaler-config
+
+  # ── Approuter (serves the Fiori app from resources/) ──────────────────────
+  - name: application-autoscaler-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: application-autoscaler-xsuaa
+      - name: application-autoscaler-srv-api
+        group: destinations
+        properties:
+          name: application-autoscaler-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 60000
+
+resources:
+  - name: application-autoscaler-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-application-autoscaler-${space}
+
+  # Runtime overrides read from VCAP_SERVICES (credentials of the service named
+  # "application-autoscaler-config"), e.g.:
+  #   cf update-user-provided-service application-autoscaler-config \
+  #     -p '{"instanceMode":"http","instanceUrl":"https://…/scale","evaluationIntervalSeconds":60}'
+  - name: application-autoscaler-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: application-autoscaler-config
+      config:
+        workerTenants: ["default"]

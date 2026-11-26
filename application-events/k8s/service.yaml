@@ -3,11 +3,15 @@ kind: Service
 metadata:
   name: application-events-service
   namespace: uim-platform
+  labels:
+    app: application-events-service
+    part-of: uim-platform
 spec:
   selector:
     app: application-events-service
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     port: 8132
     targetPort: 8132
   type: ClusterIP
