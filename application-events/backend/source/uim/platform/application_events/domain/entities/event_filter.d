@@ -37,7 +37,7 @@ struct EventFilter {
   EventSubscriptionId subscriptionId;
   FilterType filterType = FilterType.include;
   string attribute;
-  FilterOperator operator_ = FilterOperator.equals;
+  EventFilterOperator operator_ = EventFilterOperator.equals;
   string value;
   bool active = true;
   string description;
@@ -45,7 +45,7 @@ struct EventFilter {
   /// "data.country equals DE"
   string summary() const {
     auto text = (filterType == FilterType.exclude ? "not " : "") ~ attribute ~ " " ~ cast(string) operator_;
-    return operator_ == FilterOperator.exists ? text : text ~ " " ~ value;
+    return operator_ == EventFilterOperator.exists ? text : text ~ " " ~ value;
   }
 
   void validate() const {
@@ -55,7 +55,7 @@ struct EventFilter {
     if (!isValidFilterAttribute(attribute))
       throw AehException.invalid("Filter attribute '" ~ attribute ~ "' is invalid (" ~ envelopeAttributes.join(", ")
           ~ " or data.<member>[.<member>…])");
-    if (operator_ != FilterOperator.exists)
+    if (operator_ != EventFilterOperator.exists)
       requireText(value, "Filter value");
     requireMaxLength(value, 1000, "Filter value");
     requireMaxLength(description, 1000, "Description");
@@ -75,7 +75,7 @@ unittest {
   assert(f.summary == "data.country equals DE");
   f.value = "";
   assert(failsWith(AehErrorKind.invalid, () { f.validate(); }));
-  f.operator_ = FilterOperator.exists;
+  f.operator_ = EventFilterOperator.exists;
   f.filterType = FilterType.exclude;
   f.validate();
   assert(f.summary == "not data.country exists");

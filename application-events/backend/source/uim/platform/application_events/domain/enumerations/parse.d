@@ -50,6 +50,6 @@ unittest {
   assert(parseDomainEnum!TopicStatus("deprecated") == TopicStatus.deprecated_);
   assert(parseDomainEnumOr!DeliveryMode("", DeliveryMode.atLeastOnce) == DeliveryMode.atLeastOnce);
   assert(domainEnumOr!MessageStatus("garbage", MessageStatus.pending) == MessageStatus.pending);
-  assert(failsWith(AehErrorKind.invalid, () { parseDomainEnum!FilterOperator("like"); }));
+  assert(failsWith(AehErrorKind.invalid, () { parseDomainEnum!EventFilterOperator("like"); }));
   assert(domainEnumValues!SystemType == ["producer", "consumer", "both"]);
 }

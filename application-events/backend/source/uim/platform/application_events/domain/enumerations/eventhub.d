@@ -75,7 +75,7 @@ enum FilterType : string {
   exclude = "exclude"
 }
 
-enum FilterOperator : string {
+enum EventFilterOperator : string {
   equals = "equals",
   notEquals = "notEquals",
   contains = "contains",

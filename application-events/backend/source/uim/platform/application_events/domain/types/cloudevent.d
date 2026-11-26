@@ -31,9 +31,14 @@ struct CloudEvent {
   string dataContentType = "application/json";
   Json data; /// undefined / null = no data
 
+  /// The payload without the const qualifier (Json is a value type).
+  Json payloadJson() const @trusted {
+    return *cast(Json*)&data;
+  }
+
   /// The payload as compact JSON text ("" without data).
   string dataText() const @trusted {
-    auto d = cast(Json) data;
+    auto d = payloadJson;
     if (d.type == Json.Type.undefined || d.type == Json.Type.null_)
       return "";
     return d.toString;
@@ -72,7 +77,7 @@ struct CloudEvent {
       found = false;
       return "";
     }
-    Json current = cast(Json) data;
+    Json current = payloadJson;
     foreach (part; n.split(".")[1 .. $]) {
       if (current.type == Json.Type.object && part in current)
         current = current[part];
@@ -109,7 +114,7 @@ struct CloudEvent {
     if (time > 0)
       j["time"] = isoTimeText(time);
     j["datacontenttype"] = dataContentType;
-    auto d = cast(Json) data;
+    auto d = payloadJson;
     if (d.type != Json.Type.undefined && d.type != Json.Type.null_)
       j["data"] = d;
     return j;
