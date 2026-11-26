@@ -1,0 +1,27 @@
+{
+  "xsappname": "uim-application-autoscaler",
+  "tenant-mode": "dedicated",
+  "description": "UIM Application Autoscaler — scaling policies, rules, schedules, metrics and scaling history of bound applications",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read bindings, policies, rules, schedules, metrics and the scaling history" },
+    { "name": "$XSAPPNAME.Operate", "description": "Submit metrics, run evaluations, scale manually, suspend and resume autoscaling" },
+    { "name": "$XSAPPNAME.Manage", "description": "Maintain bindings, policies, rules and schedules; attach and detach policies" },
+    { "name": "$XSAPPNAME.Admin", "description": "Manage the user accounts of the built-in login (not used with XSUAA)" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "Operator", "description": "Watch, evaluate and scale applications",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Operate"] },
+    { "name": "ScalingAdministrator", "description": "Maintain policies, rules, schedules and bindings; operate",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Operate", "$XSAPPNAME.Manage"] },
+    { "name": "Administrator", "description": "Everything",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Operate", "$XSAPPNAME.Manage", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "AutoscalerViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "AutoscalerOperator", "role-template-references": ["$XSAPPNAME.Operator"] },
+    { "name": "AutoscalerScalingAdministrator", "role-template-references": ["$XSAPPNAME.ScalingAdministrator"] },
+    { "name": "AutoscalerAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

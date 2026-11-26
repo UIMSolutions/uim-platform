@@ -6,7 +6,10 @@ metadata:
     app: application-autoscaler
     part-of: uim-platform
 spec:
+  # file storage is a single-node snapshot — keep one replica
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: application-autoscaler
@@ -15,6 +18,9 @@ spec:
       labels:
         app: application-autoscaler
     spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 999
       containers:
       - name: application-autoscaler
         image: uim-platform/application-autoscaler:latest
@@ -24,16 +30,21 @@ spec:
         envFrom:
         - configMapRef:
             name: application-autoscaler-config
+        - secretRef:
+            name: application-autoscaler-secret
+        volumeMounts:
+        - name: data
+          mountPath: /data
         livenessProbe:
           httpGet:
-            path: /api/v1/health
+            path: /health
             port: 8097
           initialDelaySeconds: 5
           periodSeconds: 30
           timeoutSeconds: 3
         readinessProbe:
           httpGet:
-            path: /api/v1/health
+            path: /health
             port: 8097
           initialDelaySeconds: 3
           periodSeconds: 10
@@ -43,8 +54,24 @@ spec:
             memory: "64Mi"
             cpu: "100m"
           limits:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "384Mi"
+            cpu: "1000m"
         securityContext:
-          runAsNonRoot: true
           readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: application-autoscaler-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: application-autoscaler-data
+  labels:
+    app: application-autoscaler
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi

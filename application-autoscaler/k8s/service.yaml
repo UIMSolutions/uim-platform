@@ -6,11 +6,10 @@ metadata:
     app: application-autoscaler
     part-of: uim-platform
 spec:
-  type: ClusterIP
   selector:
     app: application-autoscaler
   ports:
   - name: http
-    port: 8097
+    port: 80
     targetPort: 8097
     protocol: TCP
