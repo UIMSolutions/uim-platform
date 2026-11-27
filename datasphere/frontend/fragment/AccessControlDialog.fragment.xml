@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/accessControl/edit} ? ${i18n>editAccessControl} : ${i18n>createAccessControl} }" contentWidth="40rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/accessControl/id}" enabled="{= !%{view>/form/accessControl/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colSpace}" required="true"/>
+      <Select selectedKey="{view>/form/accessControl/spaceId}" forceSelection="false" enabled="{= !%{view>/form/accessControl/edit} }"
+        items="{path: '/Spaces', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/accessControl/name}"/>
+      <Label text="{i18n>colCriteriaColumn}" required="true"/>
+      <Input value="{view>/form/accessControl/criteriaColumn}" placeholder="COUNTRY"/>
+      <Label text="{i18n>colOperator}"/>
+      <Select selectedKey="{view>/form/accessControl/criteriaOperator}">
+        <core:Item key="equals" text="{i18n>enum_equals}"/>
+        <core:Item key="oneOf" text="{i18n>enum_oneOf}"/>
+        <core:Item key="startsWith" text="{i18n>enum_startsWith}"/>
+        <core:Item key="between" text="{i18n>enum_between}"/>
+      </Select>
+      <Label text="{i18n>colValues}" required="true"/>
+      <TextArea value="{view>/form/accessControl/criteriaValues}" rows="2" width="100%" placeholder="DE, AT, CH"/>
+      <Label text="{i18n>colProtectedViewIds}"/>
+      <TextArea value="{view>/form/accessControl/targetViewIds}" rows="2" width="100%" placeholder="sales-orders"/>
+      <Label text="{i18n>colUsers}"/>
+      <TextArea value="{view>/form/accessControl/assignedUsers}" rows="2" width="100%" placeholder="ada, grace"/>
+      <Label text="{i18n>colEnabled}"/>
+      <CheckBox selected="{view>/form/accessControl/enabled}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/accessControl/description}" rows="2" width="100%"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

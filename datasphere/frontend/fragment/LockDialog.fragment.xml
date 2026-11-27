@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>lockSpace}" contentWidth="28rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colSpace}"/>
+      <Text text="{view>/form/lock/name} ({view>/form/lock/id})"/>
+      <Label text="{i18n>lockReason}"/>
+      <TextArea value="{view>/form/lock/reason}" rows="2" width="100%"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>lock}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

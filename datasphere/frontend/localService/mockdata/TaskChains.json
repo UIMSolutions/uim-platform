@@ -1,0 +1,33 @@
+[
+  {
+    "status": "active",
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "nightly",
+    "nextRunAt": "2026-11-27T16:56:10Z",
+    "lastRunMessage": "4 of 4 steps completed",
+    "intervalMinutes": 0,
+    "lastRunStatus": "completed",
+    "frequency": "daily",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "Nightly sales load",
+    "stepCount": 4,
+    "failurePolicy": "stop",
+    "startAt": "2026-11-26T16:56:10Z",
+    "spaceName": "Sales Analytics",
+    "stepsText": "1. Replicate sales orders → 2. Replicate customers → 3. Load DACH orders → 4. Persist sales orders view",
+    "lastRunAt": "2026-11-26T16:56:10Z",
+    "description": "Replicate, transform and persist the sales data every night",
+    "taskIds": [
+      "replicate-orders",
+      "replicate-customers",
+      "load-orders-dach",
+      "persist-sales-orders"
+    ],
+    "lastRunDurationMs": 1211,
+    "tenantId": "default",
+    "schedule": "daily",
+    "updatedBy": "anonymous"
+  }
+]

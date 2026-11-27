@@ -1,0 +1,32 @@
+[
+  {
+    "enabled": true,
+    "viewsText": "V_SALES_ORDERS",
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "dach",
+    "usersText": "ada, admin",
+    "criteriaColumn": "COUNTRY",
+    "criteriaOperator": "oneOf",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "DACH sales",
+    "assignedUsers": [
+      "ada",
+      "admin"
+    ],
+    "criteriaValues": [
+      "DE",
+      "AT",
+      "CH"
+    ],
+    "criteriaText": "COUNTRY oneOf DE, AT, CH",
+    "spaceName": "Sales Analytics",
+    "targetViewIds": [
+      "sales-orders"
+    ],
+    "description": "Sales of Germany, Austria and Switzerland",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  }
+]

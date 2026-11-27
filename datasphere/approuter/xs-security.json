@@ -1,0 +1,31 @@
+{
+  "xsappname": "uim-datasphere",
+  "tenant-mode": "dedicated",
+  "description": "UIM Datasphere — spaces, connections, remote tables, views, data flows, schedules, data access controls and catalog",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read spaces, models, schedules, runs and the catalog; check row access" },
+    { "name": "$XSAPPNAME.Integrate", "description": "Validate connections; replicate, run data flows, persist views; deploy; run and pause schedules" },
+    { "name": "$XSAPPNAME.Model", "description": "Maintain remote tables, views, data flows, data access controls and the catalog" },
+    { "name": "$XSAPPNAME.Manage", "description": "Maintain spaces, members, connections, tasks and task chains; purge runs" },
+    { "name": "$XSAPPNAME.Admin", "description": "Manage the user accounts of the built-in login (not used with XSUAA)" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "Integrator", "description": "Run and monitor the data integration",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Integrate"] },
+    { "name": "Modeler", "description": "Build models and govern them; run them",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Integrate", "$XSAPPNAME.Model"] },
+    { "name": "SpaceAdministrator", "description": "Manage spaces, connections and schedules; model; run",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Integrate", "$XSAPPNAME.Model", "$XSAPPNAME.Manage"] },
+    { "name": "Administrator", "description": "Everything",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Integrate", "$XSAPPNAME.Model", "$XSAPPNAME.Manage", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "DatasphereViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "DatasphereIntegrator", "role-template-references": ["$XSAPPNAME.Integrator"] },
+    { "name": "DatasphereModeler", "role-template-references": ["$XSAPPNAME.Modeler"] },
+    { "name": "DatasphereSpaceAdministrator", "role-template-references": ["$XSAPPNAME.SpaceAdministrator"] },
+    { "name": "DatasphereAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

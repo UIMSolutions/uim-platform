@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/space/edit} ? ${i18n>editSpace} : ${i18n>createSpace} }" contentWidth="36rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colSpaceId}" required="true"/>
+      <Input value="{view>/form/space/id}" enabled="{= !%{view>/form/space/edit} }" placeholder="{i18n>technicalNameHint}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/space/name}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/space/description}" rows="2" width="100%"/>
+      <Label text="{i18n>colPriority}"/>
+      <StepInput value="{view>/form/space/priority}" min="1" max="8" step="1" width="10rem"/>
+      <Label text="{i18n>colDiskGiB}"/>
+      <StepInput value="{view>/form/space/diskQuotaGiB}" min="0.25" max="65536" step="1" width="10rem"/>
+      <Label text="{i18n>colMemoryGiB}"/>
+      <StepInput value="{view>/form/space/memoryQuotaGiB}" min="0.25" max="65536" step="1" width="10rem"/>
+      <Label text="{i18n>auditLog}"/>
+      <CheckBox selected="{view>/form/space/auditLogEnabled}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

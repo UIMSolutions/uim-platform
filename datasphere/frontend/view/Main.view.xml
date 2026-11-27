@@ -1,0 +1,556 @@
+<mvc:View controllerName="uim.datasphere.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+  height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>appTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>appDescription}"/></f:snappedContent>
+        <f:actions>
+          <ComboBox id="spaceFilter" selectedKey="{view>/space}" selectionChange=".onSpaceFilter" placeholder="{i18n>allSpaces}" width="14rem"
+            items="{path: '/Spaces', parameters: {$orderby: 'id', $select: 'id,name'}, templateShareable: false}">
+            <items><core:Item key="{id}" text="{name} ({id})"/></items>
+          </ComboBox>
+          <Button icon="sap-icon://clear-filter" tooltip="{i18n>allSpaces}" press=".onAllSpaces" visible="{= !!%{view>/space} }"/>
+          <Button id="runDueButton" text="{i18n>runDue}" icon="sap-icon://process" press=".onRunDue"
+            visible="{session>/canIntegrate}"/>
+          <Button id="seedButton" text="{i18n>seed}" icon="sap-icon://add-product" press=".onSeed"
+            visible="{= %{/Statistics/spaces} === 0 &amp;&amp; %{session>/canManage} }"/>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+          <Button id="userButton" icon="sap-icon://person-placeholder" text="{session>/displayName}" type="Transparent"
+            press=".onUserMenu" visible="{session>/authenticated}"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <!-- KPI header bound to the Statistics singleton -->
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox id="kpis" binding="{/Statistics}" wrap="Wrap" alignItems="Center" class="sapUiSmallMarginBottom">
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSpaces}"/>
+            <ObjectNumber number="{spaces}" unit="· {lockedSpaces} {i18n>kpiLocked}"
+              state="{= %{lockedSpaces} > 0 ? 'Warning' : 'None' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="12rem">
+            <Label text="{i18n>kpiDisk}"/>
+            <ProgressIndicator percentValue="{= %{diskQuotaMiB} > 0 ? Math.min(100, 100 * %{usedDiskMiB} / %{diskQuotaMiB}) : 0 }"
+              displayValue="{parts: [{path: 'usedDiskMiB', targetType: 'any'}, {path: 'diskQuotaMiB', targetType: 'any'}], formatter: '.formatter.mibUsage'}"
+              state="{= %{diskQuotaMiB} > 0 &amp;&amp; %{usedDiskMiB} / %{diskQuotaMiB} > 0.9 ? 'Error' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiConnections}"/>
+            <ObjectNumber number="{validConnections}" unit="/ {connections} {i18n>kpiValid}"
+              state="{= %{validConnections} &lt; %{connections} ? 'Warning' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiReplicated}"/>
+            <ObjectNumber number="{replicatedTables}" unit="/ {remoteTables} {i18n>kpiRemoteTables}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiViews}"/>
+            <ObjectNumber number="{deployedViews}" unit="/ {views} {i18n>kpiDeployed} · {exposedViews} {i18n>kpiExposed}"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiRuns}"/>
+            <ObjectNumber number="{runsLast24h}" unit="· {failedRunsLast24h} {i18n>kpiFailed}"
+              state="{= %{failedRunsLast24h} > 0 ? 'Error' : 'Success' }"/>
+          </VBox>
+          <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+            <Label text="{i18n>kpiSchedules}"/>
+            <ObjectNumber number="{scheduledTasks}" unit="/ {tasks} {i18n>kpiTasks} · {taskChains} {i18n>kpiChains}"/>
+          </VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Spaces ────────────────────────────────────────────────── -->
+          <IconTabFilter key="spaces" icon="sap-icon://folder-blank" text="{i18n>tabSpaces}" count="{/Statistics/spaces}">
+            <Table id="spacesTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noSpaces}"
+              items="{path: '/Spaces', parameters: {$orderby: 'id', $count: true}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabSpaces}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>search}">
+                    <customData><core:CustomData key="table" value="spacesTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="space"/></customData></Button>
+                  <Button text="{i18n>lockUnlock}" icon="sap-icon://locked" press=".onLockUnlock" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="spacesTable"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="spacesTable"/><core:CustomData key="dialog" value="space"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="spacesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="24%"><Text text="{i18n>colSpace}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column width="22%"><Text text="{i18n>colDisk}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colMemory}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colPriority}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="{i18n>colObjects}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press=".onSpacePress">
+                  <ObjectIdentifier title="{name}" text="{id}"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.state'}"
+                    tooltip="{lockedReason}"/>
+                  <ProgressIndicator percentValue="{path: 'diskUsagePercent', targetType: 'any', formatter: '.formatter.percent'}"
+                    displayValue="{parts: [{path: 'usedDiskGiB', targetType: 'any'}, {path: 'diskQuotaGiB', targetType: 'any'}], formatter: '.formatter.gibUsage'}"
+                    state="{path: 'diskUsagePercent', targetType: 'any', formatter: '.formatter.usageState'}"/>
+                  <Text text="{path: 'memoryQuotaGiB', targetType: 'any', formatter: '.formatter.gib'}"/>
+                  <Text text="{priority}"/>
+                  <ObjectNumber number="{objectCount}" unit="· {memberCount} {i18n>colMembers}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Data integration: connections and remote tables ────────── -->
+          <IconTabFilter key="integration" icon="sap-icon://connected" text="{i18n>tabIntegration}" count="{/Statistics/remoteTables}">
+            <Table id="connectionsTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noConnections}" class="sapUiMediumMarginBottom"
+              items="{path: '/Connections', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>connections}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>validate}" icon="sap-icon://connected" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="connectionsTable"/><core:CustomData key="action" value="ValidateConnection"/>
+                      <core:CustomData key="toast" value="validated"/></customData></Button>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="connection"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="connectionsTable"/><core:CustomData key="dialog" value="connection"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="connectionsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="26%"><Text text="{i18n>colConnection}"/></Column>
+                <Column><Text text="{i18n>colEndpoint}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colRemoteTables}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colSpace}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <HBox alignItems="Center">
+                    <core:Icon src="{path: 'connectionType', formatter: '.formatter.connectionIcon'}" class="sapUiTinyMarginEnd"/>
+                    <ObjectIdentifier title="{name}" text="{path: 'connectionType', formatter: '.formatter.enumText'}"/>
+                  </HBox>
+                  <Text text="{endpoint}" wrapping="true"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.icon'}"
+                    state="{path: 'status', formatter: '.formatter.state'}" tooltip="{statusMessage}"/>
+                  <Text text="{remoteTableCount}"/>
+                  <Link text="{spaceName}" press=".onSpacePress"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="remoteTablesTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noRemoteTables}"
+              items="{path: '/RemoteTables', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>remoteTables}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="12rem" search=".onSearch" placeholder="{i18n>search}">
+                    <customData><core:CustomData key="table" value="remoteTablesTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>replicate}" icon="sap-icon://download" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="remoteTablesTable"/><core:CustomData key="action" value="ReplicateRemoteTable"/>
+                      <core:CustomData key="run" value="true"/></customData></Button>
+                  <Button text="{i18n>dropReplica}" icon="sap-icon://cloud" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="remoteTablesTable"/><core:CustomData key="action" value="DropReplica"/>
+                      <core:CustomData key="confirm" value="confirmDropReplica"/><core:CustomData key="toast" value="replicaDropped"/></customData></Button>
+                  <Button text="{i18n>definition}" icon="sap-icon://syntax" press=".onShowDefinition">
+                    <customData><core:CustomData key="table" value="remoteTablesTable"/></customData></Button>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canModel}">
+                    <customData><core:CustomData key="dialog" value="remoteTable"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="remoteTablesTable"/><core:CustomData key="dialog" value="remoteTable"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="remoteTablesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="26%"><Text text="{i18n>colRemoteTable}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRemoteObject}"/></Column>
+                <Column><Text text="{i18n>colAccess}"/></Column>
+                <Column><Text text="{i18n>colReplication}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colRows}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colReplicatedAt}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{businessName}" text="{name}"/>
+                  <Text text="{connectionName}: {remoteSchema}.{remoteObject}" wrapping="true"/>
+                  <Text text="{path: 'replicationMode', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'replicationStatus', formatter: '.formatter.enumText'}" icon="{path: 'replicationStatus', formatter: '.formatter.icon'}"
+                    state="{path: 'replicationStatus', formatter: '.formatter.state'}" tooltip="{lastMessage}"/>
+                  <ObjectNumber number="{path: 'rowCount', targetType: 'any', formatter: '.formatter.count'}" unit="{path: 'sizeMiB', targetType: 'any', formatter: '.formatter.mib'}"/>
+                  <Text text="{path: 'lastReplicatedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Modeling: views and data flows ───────────────────────── -->
+          <IconTabFilter key="modeling" icon="sap-icon://grid" text="{i18n>tabModeling}" count="{/Statistics/views}">
+            <Table id="viewsTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noViews}" class="sapUiMediumMarginBottom"
+              items="{path: '/Views', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>views}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="12rem" search=".onSearch" placeholder="{i18n>search}">
+                    <customData><core:CustomData key="table" value="viewsTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>deploy}" icon="sap-icon://upload-to-cloud" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="viewsTable"/><core:CustomData key="action" value="DeployView"/>
+                      <core:CustomData key="toast" value="deployed"/></customData></Button>
+                  <Button text="{i18n>persist}" icon="sap-icon://database" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="viewsTable"/><core:CustomData key="action" value="PersistView"/>
+                      <core:CustomData key="run" value="true"/></customData></Button>
+                  <Button text="{i18n>removePersistence}" icon="sap-icon://eraser" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="viewsTable"/><core:CustomData key="action" value="RemovePersistence"/>
+                      <core:CustomData key="confirm" value="confirmRemovePersistence"/><core:CustomData key="toast" value="persistenceRemoved"/></customData></Button>
+                  <Button text="{i18n>checkAccess}" icon="sap-icon://shield" press=".onCheckAccess">
+                    <customData><core:CustomData key="table" value="viewsTable"/></customData></Button>
+                  <Button text="{i18n>definition}" icon="sap-icon://syntax" press=".onShowDefinition">
+                    <customData><core:CustomData key="table" value="viewsTable"/></customData></Button>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canModel}">
+                    <customData><core:CustomData key="dialog" value="view"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="viewsTable"/><core:CustomData key="dialog" value="view"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="viewsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="26%"><Text text="{i18n>colView}"/></Column>
+                <Column><Text text="{i18n>colSemantic}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSources}"/></Column>
+                <Column><Text text="{i18n>colDeployment}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colPersistence}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center"><Text text="{i18n>colSecurity}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{businessName}" text="{name}"/>
+                  <VBox>
+                    <Text text="{path: 'semantic', formatter: '.formatter.enumText'}"/>
+                    <ObjectStatus text="{i18n>exposed}" icon="sap-icon://share-2" state="Information" visible="{exposed}"/>
+                  </VBox>
+                  <Text text="{sourcesText}" wrapping="true"/>
+                  <ObjectStatus text="{path: 'deploymentStatus', formatter: '.formatter.enumText'}" icon="{path: 'deploymentStatus', formatter: '.formatter.icon'}"
+                    state="{path: 'deploymentStatus', formatter: '.formatter.state'}"/>
+                  <ObjectStatus text="{parts: [{path: 'persisted', targetType: 'any'}, {path: 'rowCount', targetType: 'any'}], formatter: '.formatter.persistence'}"
+                    state="{path: 'lastRunStatus', formatter: '.formatter.state'}" tooltip="{lastRunMessage}"/>
+                  <core:Icon src="sap-icon://shield" visible="{= %{protectedBy} > 0 }" tooltip="{protectedBy} {i18n>accessControls}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="dataFlowsTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noDataFlows}"
+              items="{path: '/DataFlows', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>dataFlows}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>deploy}" icon="sap-icon://upload-to-cloud" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="dataFlowsTable"/><core:CustomData key="action" value="DeployDataFlow"/>
+                      <core:CustomData key="toast" value="deployed"/></customData></Button>
+                  <Button text="{i18n>run}" icon="sap-icon://media-play" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="dataFlowsTable"/><core:CustomData key="action" value="RunDataFlow"/>
+                      <core:CustomData key="run" value="true"/></customData></Button>
+                  <Button text="{i18n>definition}" icon="sap-icon://syntax" press=".onShowDefinition">
+                    <customData><core:CustomData key="table" value="dataFlowsTable"/></customData></Button>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canModel}">
+                    <customData><core:CustomData key="dialog" value="dataFlow"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="dataFlowsTable"/><core:CustomData key="dialog" value="dataFlow"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="dataFlowsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="26%"><Text text="{i18n>colDataFlow}"/></Column>
+                <Column><Text text="{i18n>colFlow}"/></Column>
+                <Column><Text text="{i18n>colDeployment}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastRun}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colTargetRows}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{businessName}" text="{name}"/>
+                  <Text text="{sourcesText} → {targetTable} ({path: 'loadMode', formatter: '.formatter.enumText'})" wrapping="true"/>
+                  <ObjectStatus text="{path: 'deploymentStatus', formatter: '.formatter.enumText'}" icon="{path: 'deploymentStatus', formatter: '.formatter.icon'}"
+                    state="{path: 'deploymentStatus', formatter: '.formatter.state'}"/>
+                  <ObjectStatus text="{path: 'lastRunStatus', formatter: '.formatter.enumText'}" icon="{path: 'lastRunStatus', formatter: '.formatter.icon'}"
+                    state="{path: 'lastRunStatus', formatter: '.formatter.state'}" tooltip="{lastRunMessage}"/>
+                  <ObjectNumber number="{path: 'targetRows', targetType: 'any', formatter: '.formatter.count'}" unit="{path: 'targetMiB', targetType: 'any', formatter: '.formatter.mib'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Scheduling: tasks and task chains ────────────────────── -->
+          <IconTabFilter key="scheduling" icon="sap-icon://appointment-2" text="{i18n>tabScheduling}" count="{/Statistics/tasks}">
+            <Table id="tasksTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noTasks}" class="sapUiMediumMarginBottom"
+              items="{path: '/Tasks', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tasks}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>runNow}" icon="sap-icon://media-play" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="tasksTable"/><core:CustomData key="action" value="RunTask"/>
+                      <core:CustomData key="run" value="true"/></customData></Button>
+                  <Button text="{i18n>pauseResume}" icon="sap-icon://media-pause" press=".onPauseResume" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="tasksTable"/><core:CustomData key="kind" value="Task"/></customData></Button>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="task"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="tasksTable"/><core:CustomData key="dialog" value="task"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="tasksTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="26%"><Text text="{i18n>colTask}"/></Column>
+                <Column><Text text="{i18n>colObject}"/></Column>
+                <Column><Text text="{i18n>colSchedule}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colNextRun}"/></Column>
+                <Column><Text text="{i18n>colLastRun}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{path: 'taskType', formatter: '.formatter.enumText'}"/>
+                  <HBox alignItems="Center">
+                    <core:Icon src="{path: 'taskType', formatter: '.formatter.typeIcon'}" class="sapUiTinyMarginEnd"/>
+                    <Text text="{targetName}"/>
+                  </HBox>
+                  <ObjectStatus text="{schedule}" state="{path: 'status', formatter: '.formatter.state'}"
+                    icon="{= %{status} === 'paused' ? 'sap-icon://media-pause' : '' }"/>
+                  <Text text="{path: 'nextRunAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <ObjectStatus text="{path: 'lastRunStatus', formatter: '.formatter.enumText'}" icon="{path: 'lastRunStatus', formatter: '.formatter.icon'}"
+                    state="{path: 'lastRunStatus', formatter: '.formatter.state'}" tooltip="{lastRunMessage}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="taskChainsTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noTaskChains}"
+              items="{path: '/TaskChains', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>taskChains}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>runNow}" icon="sap-icon://media-play" press=".onOperation" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="taskChainsTable"/><core:CustomData key="action" value="RunTaskChain"/>
+                      <core:CustomData key="run" value="true"/></customData></Button>
+                  <Button text="{i18n>pauseResume}" icon="sap-icon://media-pause" press=".onPauseResume" visible="{session>/canIntegrate}">
+                    <customData><core:CustomData key="table" value="taskChainsTable"/><core:CustomData key="kind" value="TaskChain"/></customData></Button>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="taskChain"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="taskChainsTable"/><core:CustomData key="dialog" value="taskChain"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="taskChainsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="26%"><Text text="{i18n>colTaskChain}"/></Column>
+                <Column><Text text="{i18n>colSteps}"/></Column>
+                <Column><Text text="{i18n>colSchedule}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colNextRun}"/></Column>
+                <Column><Text text="{i18n>colLastRun}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{i18n>onFailure}: {path: 'failurePolicy', formatter: '.formatter.enumText'}"/>
+                  <Text text="{stepsText}" wrapping="true"/>
+                  <ObjectStatus text="{schedule}" state="{path: 'status', formatter: '.formatter.state'}"
+                    icon="{= %{status} === 'paused' ? 'sap-icon://media-pause' : '' }"/>
+                  <Text text="{path: 'nextRunAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <ObjectStatus text="{path: 'lastRunStatus', formatter: '.formatter.enumText'}" icon="{path: 'lastRunStatus', formatter: '.formatter.icon'}"
+                    state="{path: 'lastRunStatus', formatter: '.formatter.state'}" tooltip="{lastRunMessage}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Monitor: the run log ─────────────────────────────────── -->
+          <IconTabFilter key="monitor" icon="sap-icon://line-charts" text="{i18n>tabMonitor}" count="{/Statistics/failedRunsLast24h}"
+            iconColor="{= %{/Statistics/failedRunsLast24h} > 0 ? 'Negative' : 'Default' }">
+            <Table id="runsTable" growing="true" growingThreshold="50" noDataText="{i18n>noRuns}"
+              items="{path: '/Runs', parameters: {$orderby: 'startedAt desc'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>runs}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton selectedKey="{view>/runFilter}" selectionChange=".onRunFilter">
+                    <items>
+                      <SegmentedButtonItem key="" text="{i18n>all}"/>
+                      <SegmentedButtonItem key="failed" icon="sap-icon://status-negative" tooltip="{i18n>enum_failed}"/>
+                      <SegmentedButtonItem key="completed" icon="sap-icon://status-positive" tooltip="{i18n>enum_completed}"/>
+                      <SegmentedButtonItem key="taskChain" icon="sap-icon://chain-link" tooltip="{i18n>enum_taskChain}"/>
+                    </items>
+                  </SegmentedButton>
+                  <SearchField width="12rem" search=".onSearch" placeholder="{i18n>search}">
+                    <customData><core:CustomData key="table" value="runsTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>purge}" icon="sap-icon://eraser" press=".onPurge" visible="{session>/canManage}"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="12rem"><Text text="{i18n>colStarted}"/></Column>
+                <Column><Text text="{i18n>colObject}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colRows}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colDuration}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" width="34%"><Text text="{i18n>colMessage}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <VBox>
+                    <Text text="{path: 'startedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                    <Text text="{parts: [{path: 'trigger', targetType: 'any'}, {path: 'attempts', targetType: 'any'}, {path: 'chainRunId', targetType: 'any'}], formatter: '.formatter.runInfo'}"
+                      class="sapUiTinyMarginTop"/>
+                  </VBox>
+                  <HBox alignItems="Center">
+                    <core:Icon src="{path: 'objectType', formatter: '.formatter.typeIcon'}" class="sapUiTinyMarginEnd"
+                      tooltip="{path: 'objectType', formatter: '.formatter.enumText'}"/>
+                    <ObjectIdentifier title="{objectName}" text="{spaceName}"/>
+                  </HBox>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.icon'}"
+                    state="{path: 'status', formatter: '.formatter.state'}"/>
+                  <ObjectNumber number="{path: 'rowsProcessed', targetType: 'any', formatter: '.formatter.count'}"/>
+                  <Text text="{path: 'durationMs', targetType: 'any', formatter: '.formatter.duration'}"/>
+                  <Text text="{message}" wrapping="true"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Governance: data access controls and catalog ────────── -->
+          <IconTabFilter key="governance" icon="sap-icon://shield" text="{i18n>tabGovernance}" count="{/Statistics/catalogAssets}">
+            <Table id="accessControlsTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noAccessControls}"
+              class="sapUiMediumMarginBottom"
+              items="{path: '/AccessControls', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>accessControls}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canModel}">
+                    <customData><core:CustomData key="dialog" value="accessControl"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="accessControlsTable"/><core:CustomData key="dialog" value="accessControl"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="accessControlsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="24%"><Text text="{i18n>colName}"/></Column>
+                <Column><Text text="{i18n>colCriteria}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colProtectedViews}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colUsers}"/></Column>
+                <Column hAlign="Center"><Text text="{i18n>colEnabled}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{criteriaText}" wrapping="true"/>
+                  <Text text="{viewsText}" wrapping="true"/>
+                  <Text text="{usersText}" wrapping="true"/>
+                  <core:Icon src="{= %{enabled} ? 'sap-icon://accept' : 'sap-icon://decline' }"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+
+            <Table id="catalogTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noCatalog}"
+              items="{path: '/CatalogAssets', parameters: {$orderby: 'businessName'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>catalog}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="14rem" search=".onSearch" placeholder="{i18n>searchCatalog}">
+                    <customData><core:CustomData key="table" value="catalogTable"/></customData>
+                  </SearchField>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canModel}">
+                    <customData><core:CustomData key="dialog" value="catalog"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="catalogTable"/><core:CustomData key="dialog" value="catalog"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canModel}">
+                    <customData><core:CustomData key="table" value="catalogTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="28%"><Text text="{i18n>colAsset}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colOwner}"/></Column>
+                <Column><Text text="{i18n>colQuality}"/></Column>
+                <Column><Text text="{i18n>colSensitivity}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colTags}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <HBox alignItems="Center">
+                    <core:Icon src="{path: 'assetType', formatter: '.formatter.typeIcon'}" class="sapUiTinyMarginEnd"
+                      tooltip="{path: 'assetType', formatter: '.formatter.enumText'}"/>
+                    <ObjectIdentifier title="{businessName}" text="{description}"/>
+                  </HBox>
+                  <Text text="{owner}"/>
+                  <ObjectStatus text="{path: 'qualityStatus', formatter: '.formatter.enumText'}" state="{path: 'qualityStatus', formatter: '.formatter.state'}"/>
+                  <ObjectStatus text="{path: 'sensitivity', formatter: '.formatter.enumText'}" state="{path: 'sensitivity', formatter: '.formatter.state'}"/>
+                  <Text text="{tagsText}" wrapping="true"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Users (built-in login; administrators only) ──────────── -->
+          <IconTabFilter key="users" icon="sap-icon://group" text="{i18n>tabUsers}"
+            visible="{= %{session>/isAdmin} &amp;&amp; %{session>/loginRequired} }">
+            <Table id="usersTable" mode="SingleSelectLeft" growing="true" noDataText="{i18n>noUsers}"
+              items="{path: '/Users', parameters: {$orderby: 'id'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabUsers}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog">
+                    <customData><core:CustomData key="dialog" value="user"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditUser"/>
+                  <Button text="{i18n>lock}" icon="sap-icon://locked" press=".onLockUser">
+                    <customData><core:CustomData key="locked" value="true"/></customData></Button>
+                  <Button text="{i18n>unlock}" icon="sap-icon://unlocked" press=".onLockUser">
+                    <customData><core:CustomData key="locked" value="false"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete">
+                    <customData><core:CustomData key="table" value="usersTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colScopes}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastLogin}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{id}" text="{displayName}"/>
+                  <Text text="{scopesText}"/>
+                  <ObjectStatus text="{= %{locked} ? ${i18n>locked} : %{temporarilyLocked} ? ${i18n>temporarilyLocked} : ${i18n>enum_active} }"
+                    state="{= %{locked} || %{temporarilyLocked} ? 'Error' : 'Success' }"/>
+                  <Text text="{path: 'lastLoginAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

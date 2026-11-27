@@ -1,0 +1,34 @@
+[
+  {
+    "deployedAt": "2026-11-26T16:56:10Z",
+    "transformCount": 2,
+    "spaceId": "SALES",
+    "sourceObjects": [
+      "S4_SALES_ORDERS"
+    ],
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "orders-dach",
+    "businessName": "Orders of the DACH region",
+    "lastRunDurationMs": 174,
+    "lastRunMessage": "34986 of 87467 rows loaded into T_ORDERS_DACH",
+    "lastRunStatus": "completed",
+    "targetTable": "T_ORDERS_DACH",
+    "deploymentStatus": "deployed",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "DF_ORDERS_DACH",
+    "sourcesText": "S4_SALES_ORDERS",
+    "loadMode": "truncate",
+    "spaceName": "Sales Analytics",
+    "lastRunAt": "2026-11-26T16:56:10Z",
+    "description": "Filters the S/4HANA sales orders to Germany, Austria and Switzerland",
+    "targetRows": 34986,
+    "transforms": [
+      "filter: COUNTRY IN ('DE', 'AT', 'CH')",
+      "projection: SALESORDER, COUNTRY, NETAMOUNT, CURRENCY"
+    ],
+    "tenantId": "default",
+    "targetMiB": 2.14,
+    "updatedBy": "anonymous"
+  }
+]

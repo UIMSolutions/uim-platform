@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/view/edit} ? ${i18n>editView} : ${i18n>createView} }" contentWidth="52rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/view/id}" enabled="{= !%{view>/form/view/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colSpace}" required="true"/>
+      <Select selectedKey="{view>/form/view/spaceId}" forceSelection="false" enabled="{= !%{view>/form/view/edit} }"
+        items="{path: '/Spaces', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colTechnicalName}" required="true"/>
+      <Input value="{view>/form/view/name}" enabled="{= !%{view>/form/view/edit} }"/>
+      <Label text="{i18n>colBusinessName}"/>
+      <Input value="{view>/form/view/businessName}"/>
+      <Label text="{i18n>colSemantic}"/>
+      <Select selectedKey="{view>/form/view/semantic}">
+        <core:Item key="relationalDataset" text="{i18n>enum_relationalDataset}"/>
+        <core:Item key="analyticalDataset" text="{i18n>enum_analyticalDataset}"/>
+        <core:Item key="fact" text="{i18n>enum_fact}"/>
+        <core:Item key="dimension" text="{i18n>enum_dimension}"/>
+        <core:Item key="text" text="{i18n>enum_text}"/>
+        <core:Item key="hierarchy" text="{i18n>enum_hierarchy}"/>
+      </Select>
+      <Label text="{i18n>colSql}" required="true"/>
+      <TextArea value="{view>/form/view/sqlExpression}" rows="7" width="100%" growing="true" class="sapUiTinyMarginBottom"/>
+      <Label text="{i18n>colColumns}"/>
+      <TextArea value="{view>/form/view/columns}" rows="4" width="100%" placeholder="ORDER_ID:NVARCHAR(10) key&#10;NETAMOUNT:DECIMAL(15,2)"/>
+      <Label text="{i18n>exposedForConsumption}"/>
+      <CheckBox selected="{view>/form/view/exposed}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/view/description}" rows="2" width="100%"/>
+      <Label text=""/>
+      <Text text="{i18n>viewDeployHint}" class="sapUiTinyMarginTop"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

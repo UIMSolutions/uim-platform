@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/remoteTable/edit} ? ${i18n>editRemoteTable} : ${i18n>createRemoteTable} }" contentWidth="44rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/remoteTable/id}" enabled="{= !%{view>/form/remoteTable/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colSpace}" required="true"/>
+      <Select selectedKey="{view>/form/remoteTable/spaceId}" forceSelection="false" enabled="{= !%{view>/form/remoteTable/edit} }"
+        items="{path: '/Spaces', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colConnection}" required="true"/>
+      <Select selectedKey="{view>/form/remoteTable/connectionId}" forceSelection="false" enabled="{= !%{view>/form/remoteTable/edit} }"
+        items="{path: '/Connections', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({spaceId})"/>
+      </Select>
+      <Label text="{i18n>colTechnicalName}" required="true"/>
+      <Input value="{view>/form/remoteTable/name}" enabled="{= !%{view>/form/remoteTable/edit} }"/>
+      <Label text="{i18n>colBusinessName}"/>
+      <Input value="{view>/form/remoteTable/businessName}"/>
+      <Label text="{i18n>colRemoteSchema}"/>
+      <Input value="{view>/form/remoteTable/remoteSchema}"/>
+      <Label text="{i18n>colRemoteObject}" required="true"/>
+      <Input value="{view>/form/remoteTable/remoteObject}"/>
+      <Label text="{i18n>colAccess}"/>
+      <Select selectedKey="{view>/form/remoteTable/replicationMode}">
+        <core:Item key="remote" text="{i18n>enum_remote}"/>
+        <core:Item key="snapshot" text="{i18n>enum_snapshot}"/>
+        <core:Item key="scheduled" text="{i18n>enum_scheduled}"/>
+        <core:Item key="realtime" text="{i18n>enum_realtime}"/>
+      </Select>
+      <Label text="{i18n>colColumns}"/>
+      <TextArea value="{view>/form/remoteTable/columns}" rows="5" width="100%" placeholder="ORDER_ID:NVARCHAR(10) key&#10;AMOUNT:DECIMAL(15,2)"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/remoteTable/description}" rows="2" width="100%"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

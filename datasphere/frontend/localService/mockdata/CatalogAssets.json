@@ -1,0 +1,92 @@
+[
+  {
+    "termsText": "Net Amount, Sold-To Party",
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "asset-sales-orders",
+    "glossaryTerms": [
+      "Net Amount",
+      "Sold-To Party"
+    ],
+    "businessName": "Sales Orders",
+    "lastAccessedAt": null,
+    "owner": "ada",
+    "assetType": "view",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "V_SALES_ORDERS",
+    "qualityStatus": "good",
+    "tags": [
+      "sales",
+      "revenue",
+      "S/4HANA"
+    ],
+    "tagsText": "sales, revenue, S/4HANA",
+    "spaceName": "Sales Analytics",
+    "sourceObjectId": "sales-orders",
+    "description": "Analytical dataset of all S/4HANA sales orders",
+    "accessCount": 0,
+    "sensitivity": "confidential",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "termsText": "Customer, Industry",
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "asset-customers",
+    "glossaryTerms": [
+      "Customer",
+      "Industry"
+    ],
+    "businessName": "Customers",
+    "lastAccessedAt": null,
+    "owner": "ada",
+    "assetType": "view",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "V_CUSTOMERS",
+    "qualityStatus": "excellent",
+    "tags": [
+      "master data",
+      "customer"
+    ],
+    "tagsText": "master data, customer",
+    "spaceName": "Sales Analytics",
+    "sourceObjectId": "customers-dim",
+    "description": "Customer master data from S/4HANA",
+    "accessCount": 0,
+    "sensitivity": "internal",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "termsText": "Sales Order",
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "asset-orders",
+    "glossaryTerms": [
+      "Sales Order"
+    ],
+    "businessName": "Sales Orders (replica)",
+    "lastAccessedAt": null,
+    "owner": "ada",
+    "assetType": "remoteTable",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "S4_SALES_ORDERS",
+    "qualityStatus": "adequate",
+    "tags": [
+      "sales",
+      "replica"
+    ],
+    "tagsText": "sales, replica",
+    "spaceName": "Sales Analytics",
+    "sourceObjectId": "orders",
+    "description": "Replica of I_SALESORDER",
+    "accessCount": 0,
+    "sensitivity": "confidential",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  }
+]

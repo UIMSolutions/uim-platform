@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/dataFlow/edit} ? ${i18n>editDataFlow} : ${i18n>createDataFlow} }" contentWidth="46rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/dataFlow/id}" enabled="{= !%{view>/form/dataFlow/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colSpace}" required="true"/>
+      <Select selectedKey="{view>/form/dataFlow/spaceId}" forceSelection="false" enabled="{= !%{view>/form/dataFlow/edit} }"
+        items="{path: '/Spaces', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colTechnicalName}" required="true"/>
+      <Input value="{view>/form/dataFlow/name}" enabled="{= !%{view>/form/dataFlow/edit} }"/>
+      <Label text="{i18n>colBusinessName}"/>
+      <Input value="{view>/form/dataFlow/businessName}"/>
+      <Label text="{i18n>colSources}"/>
+      <TextArea value="{view>/form/dataFlow/sourceObjects}" rows="2" width="100%" placeholder="S4_SALES_ORDERS"/>
+      <Label text="{i18n>colTransforms}"/>
+      <TextArea value="{view>/form/dataFlow/transforms}" rows="4" width="100%" placeholder="filter: COUNTRY = 'DE'&#10;projection: SALESORDER, NETAMOUNT"/>
+      <Label text="{i18n>colTargetTable}"/>
+      <Input value="{view>/form/dataFlow/targetTable}"/>
+      <Label text="{i18n>colLoadMode}"/>
+      <Select selectedKey="{view>/form/dataFlow/loadMode}">
+        <core:Item key="append" text="{i18n>enum_append}"/>
+        <core:Item key="truncate" text="{i18n>enum_truncate}"/>
+        <core:Item key="upsert" text="{i18n>enum_upsert}"/>
+      </Select>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/dataFlow/description}" rows="2" width="100%"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

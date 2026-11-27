@@ -1,0 +1,164 @@
+<mvc:View controllerName="uim.datasphere.controller.SpaceDetail"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core"
+  height="100%">
+  <uxap:ObjectPageLayout id="spacePage" showFooter="false" upperCaseAnchorBar="false">
+    <uxap:headerTitle>
+      <uxap:ObjectPageDynamicHeaderTitle>
+        <uxap:breadcrumbs>
+          <Breadcrumbs><Link text="{i18n>tabSpaces}" press=".onNavBack"/></Breadcrumbs>
+        </uxap:breadcrumbs>
+        <uxap:heading><Title text="{name}" wrapping="true"/></uxap:heading>
+        <uxap:expandedContent><Text text="{id} · {description}"/></uxap:expandedContent>
+        <uxap:snappedContent><Text text="{id}"/></uxap:snappedContent>
+        <uxap:actions>
+          <Button text="{= %{status} === 'locked' ? ${i18n>unlock} : ${i18n>lock} }"
+            icon="{= %{status} === 'locked' ? 'sap-icon://unlocked' : 'sap-icon://locked' }"
+            press=".onLockUnlock" visible="{session>/canManage}"/>
+          <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEditObject" visible="{session>/canManage}">
+            <customData><core:CustomData key="dialog" value="space"/></customData></Button>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </uxap:actions>
+      </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+
+    <uxap:headerContent>
+      <HBox wrap="Wrap" alignItems="Center">
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colStatus}"/>
+          <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.state'}"
+            icon="{= %{status} === 'locked' ? 'sap-icon://locked' : 'sap-icon://status-positive' }"/>
+          <Text text="{lockedReason}" visible="{= !!%{lockedReason} }"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom" width="16rem">
+          <Label text="{i18n>colDisk}"/>
+          <ProgressIndicator percentValue="{path: 'diskUsagePercent', targetType: 'any', formatter: '.formatter.percent'}"
+            displayValue="{parts: [{path: 'usedDiskGiB', targetType: 'any'}, {path: 'diskQuotaGiB', targetType: 'any'}, {path: 'diskUsagePercent', targetType: 'any'}], formatter: '.formatter.gibUsage'}"
+            state="{path: 'diskUsagePercent', targetType: 'any', formatter: '.formatter.usageState'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colMemory}"/>
+          <Text text="{path: 'memoryQuotaGiB', targetType: 'any', formatter: '.formatter.gib'}"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colPriority}"/>
+          <RatingIndicator value="{priority}" maxValue="8" editable="false" iconSize="1rem"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>colObjects}"/>
+          <ObjectNumber number="{objectCount}" unit="· {memberCount} {i18n>colMembers}" emphasized="true"/>
+        </VBox>
+        <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+          <Label text="{i18n>auditLog}"/>
+          <Text text="{= %{auditLogEnabled} ? ${i18n>yes} : ${i18n>no} }"/>
+        </VBox>
+      </HBox>
+    </uxap:headerContent>
+
+    <uxap:sections>
+      <uxap:ObjectPageSection title="{i18n>sectionMembers}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="membersTable" mode="SingleSelectLeft" noDataText="{i18n>noMembers}"
+              items="{path: '/Members', parameters: {$orderby: 'userName'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>addMember}" icon="sap-icon://add-employee" press=".onOpenDialog" visible="{session>/canManage}">
+                    <customData><core:CustomData key="dialog" value="member"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="membersTable"/><core:CustomData key="dialog" value="member"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canManage}">
+                    <customData><core:CustomData key="table" value="membersTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colRole}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{displayName}" text="{userName}"/>
+                  <ObjectStatus text="{path: 'role', formatter: '.formatter.enumText'}"
+                    state="{= %{role} === 'administrator' ? 'Information' : 'None' }"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionObjects}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection title="{i18n>remoteTables}">
+            <Table id="spaceTablesTable" noDataText="{i18n>noRemoteTables}"
+              items="{path: '/RemoteTables', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colRemoteTable}"/></Column>
+                <Column><Text text="{i18n>colReplication}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colRows}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colSize}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{businessName}" text="{name} · {connectionName}"/>
+                  <ObjectStatus text="{path: 'replicationStatus', formatter: '.formatter.enumText'}"
+                    state="{path: 'replicationStatus', formatter: '.formatter.state'}"/>
+                  <Text text="{path: 'rowCount', targetType: 'any', formatter: '.formatter.count'}"/>
+                  <Text text="{path: 'sizeMiB', targetType: 'any', formatter: '.formatter.mib'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+          <uxap:ObjectPageSubSection title="{i18n>views}">
+            <Table id="spaceViewsTable" noDataText="{i18n>noViews}"
+              items="{path: '/Views', parameters: {$orderby: 'name'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column><Text text="{i18n>colView}"/></Column>
+                <Column><Text text="{i18n>colDeployment}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colPersistence}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{businessName}" text="{name} · {path: 'semantic', formatter: '.formatter.enumText'}"/>
+                  <ObjectStatus text="{path: 'deploymentStatus', formatter: '.formatter.enumText'}"
+                    state="{path: 'deploymentStatus', formatter: '.formatter.state'}"/>
+                  <Text text="{parts: [{path: 'persisted', targetType: 'any'}, {path: 'rowCount', targetType: 'any'}], formatter: '.formatter.persistence'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+
+      <uxap:ObjectPageSection title="{i18n>sectionRuns}">
+        <uxap:subSections>
+          <uxap:ObjectPageSubSection>
+            <Table id="spaceRunsTable" growing="true" growingThreshold="20" noDataText="{i18n>noRuns}"
+              items="{path: '/Runs', parameters: {$orderby: 'startedAt desc'}, suspended: true, templateShareable: false}">
+              <columns>
+                <Column width="12rem"><Text text="{i18n>colStarted}"/></Column>
+                <Column><Text text="{i18n>colObject}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRows}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" width="40%"><Text text="{i18n>colMessage}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <Text text="{path: 'startedAt', type: 'sap.ui.model.odata.type.DateTimeOffset', formatOptions: {style: 'medium'}}"/>
+                  <HBox alignItems="Center">
+                    <core:Icon src="{path: 'objectType', formatter: '.formatter.typeIcon'}" class="sapUiTinyMarginEnd"/>
+                    <Text text="{objectName}"/>
+                  </HBox>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" icon="{path: 'status', formatter: '.formatter.icon'}"
+                    state="{path: 'status', formatter: '.formatter.state'}"/>
+                  <Text text="{path: 'rowsProcessed', targetType: 'any', formatter: '.formatter.count'}"/>
+                  <Text text="{message}" wrapping="true"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </uxap:ObjectPageSubSection>
+        </uxap:subSections>
+      </uxap:ObjectPageSection>
+    </uxap:sections>
+  </uxap:ObjectPageLayout>
+</mvc:View>

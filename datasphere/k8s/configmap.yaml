@@ -1,10 +1,21 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cloud-datasphere-config
+  name: datasphere-config
+  namespace: uim-platform
   labels:
-    app: cloud-datasphere
+    app: datasphere-service
     part-of: uim-platform
 data:
   DATASPHERE_HOST: "0.0.0.0"
   DATASPHERE_PORT: "8095"
+  DATASPHERE_STORAGE: "file"
+  DATASPHERE_DATA_FILE: "/data/datasphere.json"
+  DATASPHERE_FRONTEND_DIR: "/app/frontend"
+  DATASPHERE_AUTH_MODE: "jwt"
+  DATASPHERE_TOKEN_TTL_SECONDS: "3600"
+  # scheduler: due tasks and task chains run every n seconds (0 = on demand only)
+  DATASPHERE_SCHEDULER_INTERVAL_SECONDS: "60"
+  DATASPHERE_ENFORCE_QUOTA: "true"
+  DATASPHERE_RUN_RETENTION_DAYS: "30"
+  DATASPHERE_PROCESSING_MODE: "simulate"

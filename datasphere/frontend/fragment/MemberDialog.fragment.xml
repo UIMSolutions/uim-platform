@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/member/edit} ? ${i18n>editMember} : ${i18n>addMember} }" contentWidth="30rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colSpace}" required="true"/>
+      <Select selectedKey="{view>/form/member/spaceId}" forceSelection="false" enabled="{= !%{view>/form/member/edit} }"
+        items="{path: '/Spaces', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colUser}" required="true"/>
+      <Input value="{view>/form/member/userName}" enabled="{= !%{view>/form/member/edit} }"/>
+      <Label text="{i18n>colName}"/>
+      <Input value="{view>/form/member/displayName}"/>
+      <Label text="{i18n>colRole}" required="true"/>
+      <Select selectedKey="{view>/form/member/role}">
+        <core:Item key="viewer" text="{i18n>enum_viewer}"/>
+        <core:Item key="modeler" text="{i18n>enum_modeler}"/>
+        <core:Item key="integrator" text="{i18n>enum_integrator}"/>
+        <core:Item key="administrator" text="{i18n>enum_administrator}"/>
+      </Select>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

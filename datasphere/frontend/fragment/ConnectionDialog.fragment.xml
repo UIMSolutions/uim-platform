@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/connection/edit} ? ${i18n>editConnection} : ${i18n>createConnection} }" contentWidth="40rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/connection/id}" enabled="{= !%{view>/form/connection/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colSpace}" required="true"/>
+      <Select selectedKey="{view>/form/connection/spaceId}" forceSelection="false" enabled="{= !%{view>/form/connection/edit} }"
+        items="{path: '/Spaces', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/connection/name}"/>
+      <Label text="{i18n>colType}" required="true"/>
+      <Select selectedKey="{view>/form/connection/connectionType}">
+        <core:Item key="hana" text="{i18n>enum_hana}"/>
+        <core:Item key="s4hana" text="{i18n>enum_s4hana}"/>
+        <core:Item key="bw" text="{i18n>enum_bw}"/>
+        <core:Item key="hdl" text="{i18n>enum_hdl}"/>
+        <core:Item key="odata" text="{i18n>enum_odata}"/>
+        <core:Item key="sql" text="{i18n>enum_sql}"/>
+        <core:Item key="abap" text="{i18n>enum_abap}"/>
+        <core:Item key="kafka" text="{i18n>enum_kafka}"/>
+        <core:Item key="file" text="{i18n>enum_file}"/>
+        <core:Item key="other" text="{i18n>enum_other}"/>
+      </Select>
+      <Label text="{i18n>colHost}"/>
+      <Input value="{view>/form/connection/host}" placeholder="my-s4.s4hana.cloud.sap"/>
+      <Label text="{i18n>colPort}"/>
+      <StepInput value="{view>/form/connection/port}" min="0" max="65535" step="1" width="10rem"/>
+      <Label text="{i18n>colDatabase}"/>
+      <Input value="{view>/form/connection/database}"/>
+      <Label text="{i18n>colConnUser}"/>
+      <Input value="{view>/form/connection/user}" autocomplete="off"/>
+      <Label text="{i18n>loginPassword}"/>
+      <Input value="{view>/form/connection/password}" type="Password" autocomplete="new-password" placeholder="{= %{view>/form/connection/edit} ? ${i18n>passwordKeep} : '' }"/>
+      <Label text="{i18n>colProperties}"/>
+      <TextArea value="{view>/form/connection/properties}" rows="2" width="100%" placeholder="encrypt=true"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/connection/description}" rows="2" width="100%"/>
+      <Label text=""/>
+      <Text text="{i18n>connectionRevalidate}" class="sapUiTinyMarginTop"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

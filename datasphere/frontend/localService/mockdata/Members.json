@@ -1,0 +1,67 @@
+[
+  {
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "SALES.admin",
+    "userName": "admin",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "spaceName": "Sales Analytics",
+    "displayName": "Administrator",
+    "tenantId": "default",
+    "role": "administrator",
+    "updatedBy": "anonymous"
+  },
+  {
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "SALES.ada",
+    "userName": "ada",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "spaceName": "Sales Analytics",
+    "displayName": "Ada Lovelace",
+    "tenantId": "default",
+    "role": "modeler",
+    "updatedBy": "anonymous"
+  },
+  {
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "SALES.grace",
+    "userName": "grace",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "spaceName": "Sales Analytics",
+    "displayName": "Grace Hopper",
+    "tenantId": "default",
+    "role": "integrator",
+    "updatedBy": "anonymous"
+  },
+  {
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "SALES.bob",
+    "userName": "bob",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "spaceName": "Sales Analytics",
+    "displayName": "Bob Viewer",
+    "tenantId": "default",
+    "role": "viewer",
+    "updatedBy": "anonymous"
+  },
+  {
+    "spaceId": "HR",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "HR.admin",
+    "userName": "admin",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "spaceName": "People Analytics",
+    "displayName": "Administrator",
+    "tenantId": "default",
+    "role": "administrator",
+    "updatedBy": "anonymous"
+  }
+]

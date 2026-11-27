@@ -1,0 +1,54 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/catalog/edit} ? ${i18n>editAsset} : ${i18n>createAsset} }" contentWidth="42rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/catalog/id}" enabled="{= !%{view>/form/catalog/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colSpace}" required="true"/>
+      <Select selectedKey="{view>/form/catalog/spaceId}" forceSelection="false" enabled="{= !%{view>/form/catalog/edit} }"
+        items="{path: '/Spaces', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/catalog/name}"/>
+      <Label text="{i18n>colBusinessName}"/>
+      <Input value="{view>/form/catalog/businessName}"/>
+      <Label text="{i18n>colType}"/>
+      <Select selectedKey="{view>/form/catalog/assetType}">
+        <core:Item key="view" text="{i18n>enum_view}"/>
+        <core:Item key="remoteTable" text="{i18n>enum_remoteTable}"/>
+        <core:Item key="table" text="{i18n>enum_table}"/>
+        <core:Item key="dataFlow" text="{i18n>enum_dataFlow}"/>
+        <core:Item key="analyticModel" text="{i18n>enum_analyticModel}"/>
+        <core:Item key="connection" text="{i18n>enum_connection}"/>
+        <core:Item key="other" text="{i18n>enum_other}"/>
+      </Select>
+      <Label text="{i18n>colSourceObject}"/>
+      <Input value="{view>/form/catalog/sourceObjectId}"/>
+      <Label text="{i18n>colOwner}"/>
+      <Input value="{view>/form/catalog/owner}"/>
+      <Label text="{i18n>colQuality}"/>
+      <Select selectedKey="{view>/form/catalog/qualityStatus}">
+        <core:Item key="unknown" text="{i18n>enum_unknown}"/>
+        <core:Item key="poor" text="{i18n>enum_poor}"/>
+        <core:Item key="adequate" text="{i18n>enum_adequate}"/>
+        <core:Item key="good" text="{i18n>enum_good}"/>
+        <core:Item key="excellent" text="{i18n>enum_excellent}"/>
+      </Select>
+      <Label text="{i18n>colSensitivity}"/>
+      <Select selectedKey="{view>/form/catalog/sensitivity}">
+        <core:Item key="public" text="{i18n>enum_public}"/>
+        <core:Item key="internal" text="{i18n>enum_internal}"/>
+        <core:Item key="confidential" text="{i18n>enum_confidential}"/>
+        <core:Item key="restricted" text="{i18n>enum_restricted}"/>
+      </Select>
+      <Label text="{i18n>colTags}"/>
+      <TextArea value="{view>/form/catalog/tags}" rows="2" width="100%" placeholder="sales, revenue"/>
+      <Label text="{i18n>colGlossary}"/>
+      <TextArea value="{view>/form/catalog/glossaryTerms}" rows="2" width="100%"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/catalog/description}" rows="3" width="100%"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,76 @@
+[
+  {
+    "sourceObjects": [
+      "S4_CUSTOMERS"
+    ],
+    "id": "customers-dim",
+    "lastRunMessage": "",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "V_CUSTOMERS",
+    "spaceName": "Sales Analytics",
+    "persistedAt": null,
+    "rowCount": 0,
+    "sqlExpression": "SELECT CUSTOMER, NAME, COUNTRY, INDUSTRY FROM S4_CUSTOMERS",
+    "businessName": "Customers",
+    "columnCount": 4,
+    "deploymentStatus": "deployed",
+    "sourcesText": "S4_CUSTOMERS",
+    "columns": [
+      "CUSTOMER:NVARCHAR(10) key",
+      "NAME:NVARCHAR(80)",
+      "COUNTRY:NVARCHAR(3)",
+      "INDUSTRY:NVARCHAR(4)"
+    ],
+    "persisted": false,
+    "deployedAt": "2026-11-26T16:56:10Z",
+    "updatedBy": "anonymous",
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "persistedMiB": 0,
+    "lastRunStatus": "notRun",
+    "exposed": false,
+    "semantic": "dimension",
+    "protectedBy": 0,
+    "description": "",
+    "tenantId": "default"
+  },
+  {
+    "sourceObjects": [
+      "S4_SALES_ORDERS",
+      "V_CUSTOMERS"
+    ],
+    "id": "sales-orders",
+    "lastRunMessage": "259540 rows persisted",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "V_SALES_ORDERS",
+    "spaceName": "Sales Analytics",
+    "persistedAt": "2026-11-26T16:56:10Z",
+    "rowCount": 259540,
+    "sqlExpression": "SELECT o.SALESORDER, o.COUNTRY, c.NAME AS CUSTOMERNAME, o.NETAMOUNT, o.CURRENCY\nFROM S4_SALES_ORDERS o\nLEFT JOIN V_CUSTOMERS c ON c.CUSTOMER = o.SOLDTOPARTY",
+    "businessName": "Sales Orders (analytical)",
+    "columnCount": 5,
+    "deploymentStatus": "deployed",
+    "sourcesText": "S4_SALES_ORDERS, V_CUSTOMERS",
+    "columns": [
+      "SALESORDER:NVARCHAR(10) key",
+      "COUNTRY:NVARCHAR(3)",
+      "CUSTOMERNAME:NVARCHAR(80)",
+      "NETAMOUNT:DECIMAL(15,2)",
+      "CURRENCY:NVARCHAR(5)"
+    ],
+    "persisted": true,
+    "deployedAt": "2026-11-26T16:56:10Z",
+    "updatedBy": "anonymous",
+    "spaceId": "SALES",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "persistedMiB": 52.47,
+    "lastRunStatus": "completed",
+    "exposed": true,
+    "semantic": "analyticalDataset",
+    "protectedBy": 1,
+    "description": "",
+    "tenantId": "default"
+  }
+]

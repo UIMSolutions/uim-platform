@@ -1,0 +1,83 @@
+[
+  {
+    "properties": [
+      "encrypt=true"
+    ],
+    "endpoint": "my-s4.s4hana.cloud.sap:443",
+    "spaceId": "SALES",
+    "statusMessage": "connected to my-s4.s4hana.cloud.sap:443 as DATASPHERE_COMM",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "S4",
+    "host": "my-s4.s4hana.cloud.sap",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "S/4HANA Cloud",
+    "user": "DATASPHERE_COMM",
+    "lastValidatedAt": "2026-11-26T16:56:10Z",
+    "spaceName": "Sales Analytics",
+    "port": 443,
+    "database": "",
+    "description": "",
+    "password": null,
+    "remoteTableCount": 2,
+    "hasPassword": true,
+    "connectionType": "s4hana",
+    "tenantId": "default",
+    "status": "valid",
+    "updatedBy": "anonymous"
+  },
+  {
+    "properties": [
+      "encrypt=true"
+    ],
+    "endpoint": "fin.hana.prod-eu10.hanacloud.ondemand.com:443/FINANCE",
+    "spaceId": "SALES",
+    "statusMessage": "connected to fin.hana.prod-eu10.hanacloud.ondemand.com:443/FINANCE as DSP_READER",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "HANA",
+    "host": "fin.hana.prod-eu10.hanacloud.ondemand.com",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "HANA Cloud (Finance)",
+    "user": "DSP_READER",
+    "lastValidatedAt": "2026-11-26T16:56:10Z",
+    "spaceName": "Sales Analytics",
+    "port": 443,
+    "database": "FINANCE",
+    "description": "",
+    "password": null,
+    "remoteTableCount": 1,
+    "hasPassword": true,
+    "connectionType": "hana",
+    "tenantId": "default",
+    "status": "valid",
+    "updatedBy": "anonymous"
+  },
+  {
+    "properties": [
+      "encrypt=true"
+    ],
+    "endpoint": "orders.unreachable.invalid:5432/orders",
+    "spaceId": "SALES",
+    "statusMessage": "host 'orders.unreachable.invalid' is not reachable (connect timed out)",
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "LEGACY",
+    "host": "orders.unreachable.invalid",
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "Legacy Orders DB",
+    "user": "reader",
+    "lastValidatedAt": "2026-11-26T16:56:10Z",
+    "spaceName": "Sales Analytics",
+    "port": 5432,
+    "database": "orders",
+    "description": "",
+    "password": null,
+    "remoteTableCount": 1,
+    "hasPassword": true,
+    "connectionType": "sql",
+    "tenantId": "default",
+    "status": "invalid",
+    "updatedBy": "anonymous"
+  }
+]

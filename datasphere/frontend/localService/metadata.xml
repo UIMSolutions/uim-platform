@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.datasphere" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Space">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="priority" Type="Edm.Int32"/>
+        <Property Name="diskQuotaGiB" Type="Edm.Double"/>
+        <Property Name="memoryQuotaGiB" Type="Edm.Double"/>
+        <Property Name="usedDiskGiB" Type="Edm.Double"/>
+        <Property Name="diskUsagePercent" Type="Edm.Double"/>
+        <Property Name="auditLogEnabled" Type="Edm.Boolean"/>
+        <Property Name="lockedReason" Type="Edm.String"/>
+        <Property Name="memberCount" Type="Edm.Int32"/>
+        <Property Name="objectCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Member">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="userName" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="role" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Connection">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="connectionType" Type="Edm.String"/>
+        <Property Name="host" Type="Edm.String"/>
+        <Property Name="port" Type="Edm.Int32"/>
+        <Property Name="database" Type="Edm.String"/>
+        <Property Name="user" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="properties" Type="Collection(Edm.String)"/>
+        <Property Name="endpoint" Type="Edm.String"/>
+        <Property Name="hasPassword" Type="Edm.Boolean"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="lastValidatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="remoteTableCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="RemoteTable">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="connectionId" Type="Edm.String" Nullable="false"/>
+        <Property Name="connectionName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="businessName" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="remoteSchema" Type="Edm.String"/>
+        <Property Name="remoteObject" Type="Edm.String" Nullable="false"/>
+        <Property Name="replicationMode" Type="Edm.String"/>
+        <Property Name="replicationStatus" Type="Edm.String"/>
+        <Property Name="columns" Type="Collection(Edm.String)"/>
+        <Property Name="columnCount" Type="Edm.Int32"/>
+        <Property Name="rowCount" Type="Edm.Int64"/>
+        <Property Name="sizeMiB" Type="Edm.Double"/>
+        <Property Name="lastReplicatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastMessage" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="View">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="businessName" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="semantic" Type="Edm.String"/>
+        <Property Name="sqlExpression" Type="Edm.String"/>
+        <Property Name="sourceObjects" Type="Collection(Edm.String)"/>
+        <Property Name="sourcesText" Type="Edm.String"/>
+        <Property Name="columns" Type="Collection(Edm.String)"/>
+        <Property Name="columnCount" Type="Edm.Int32"/>
+        <Property Name="exposed" Type="Edm.Boolean"/>
+        <Property Name="deploymentStatus" Type="Edm.String"/>
+        <Property Name="deployedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="persisted" Type="Edm.Boolean"/>
+        <Property Name="rowCount" Type="Edm.Int64"/>
+        <Property Name="persistedMiB" Type="Edm.Double"/>
+        <Property Name="persistedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastRunStatus" Type="Edm.String"/>
+        <Property Name="lastRunMessage" Type="Edm.String"/>
+        <Property Name="protectedBy" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="DataFlow">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="businessName" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="sourceObjects" Type="Collection(Edm.String)"/>
+        <Property Name="sourcesText" Type="Edm.String"/>
+        <Property Name="transforms" Type="Collection(Edm.String)"/>
+        <Property Name="transformCount" Type="Edm.Int32"/>
+        <Property Name="targetTable" Type="Edm.String"/>
+        <Property Name="loadMode" Type="Edm.String"/>
+        <Property Name="deploymentStatus" Type="Edm.String"/>
+        <Property Name="deployedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastRunStatus" Type="Edm.String"/>
+        <Property Name="lastRunAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastRunDurationMs" Type="Edm.Int64"/>
+        <Property Name="targetRows" Type="Edm.Int64"/>
+        <Property Name="targetMiB" Type="Edm.Double"/>
+        <Property Name="lastRunMessage" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Task">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="frequency" Type="Edm.String"/>
+        <Property Name="intervalMinutes" Type="Edm.Int32"/>
+        <Property Name="startAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="schedule" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="nextRunAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastRunStatus" Type="Edm.String"/>
+        <Property Name="lastRunAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastRunDurationMs" Type="Edm.Int64"/>
+        <Property Name="lastRunMessage" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="taskType" Type="Edm.String"/>
+        <Property Name="targetObjectId" Type="Edm.String" Nullable="false"/>
+        <Property Name="targetName" Type="Edm.String"/>
+        <Property Name="maxRetries" Type="Edm.Int32"/>
+        <Property Name="consecutiveFailures" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="TaskChain">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="frequency" Type="Edm.String"/>
+        <Property Name="intervalMinutes" Type="Edm.Int32"/>
+        <Property Name="startAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="schedule" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="nextRunAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastRunStatus" Type="Edm.String"/>
+        <Property Name="lastRunAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="lastRunDurationMs" Type="Edm.Int64"/>
+        <Property Name="lastRunMessage" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="taskIds" Type="Collection(Edm.String)"/>
+        <Property Name="stepsText" Type="Edm.String"/>
+        <Property Name="stepCount" Type="Edm.Int32"/>
+        <Property Name="failurePolicy" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Run">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String"/>
+        <Property Name="objectId" Type="Edm.String"/>
+        <Property Name="objectName" Type="Edm.String"/>
+        <Property Name="taskId" Type="Edm.String"/>
+        <Property Name="chainRunId" Type="Edm.String"/>
+        <Property Name="trigger" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="attempts" Type="Edm.Int32"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="finishedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="durationMs" Type="Edm.Int64"/>
+        <Property Name="rowsProcessed" Type="Edm.Int64"/>
+        <Property Name="sizeMiB" Type="Edm.Double"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="AccessControl">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="criteriaColumn" Type="Edm.String" Nullable="false"/>
+        <Property Name="criteriaOperator" Type="Edm.String"/>
+        <Property Name="criteriaValues" Type="Collection(Edm.String)"/>
+        <Property Name="criteriaText" Type="Edm.String"/>
+        <Property Name="targetViewIds" Type="Collection(Edm.String)"/>
+        <Property Name="viewsText" Type="Edm.String"/>
+        <Property Name="assignedUsers" Type="Collection(Edm.String)"/>
+        <Property Name="usersText" Type="Edm.String"/>
+        <Property Name="enabled" Type="Edm.Boolean"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="CatalogAsset">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="businessName" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="assetType" Type="Edm.String"/>
+        <Property Name="sourceObjectId" Type="Edm.String"/>
+        <Property Name="owner" Type="Edm.String"/>
+        <Property Name="qualityStatus" Type="Edm.String"/>
+        <Property Name="sensitivity" Type="Edm.String"/>
+        <Property Name="tags" Type="Collection(Edm.String)"/>
+        <Property Name="tagsText" Type="Edm.String"/>
+        <Property Name="glossaryTerms" Type="Collection(Edm.String)"/>
+        <Property Name="termsText" Type="Edm.String"/>
+        <Property Name="accessCount" Type="Edm.Int64"/>
+        <Property Name="lastAccessedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="temporarilyLocked" Type="Edm.Boolean"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="spaces" Type="Edm.Int32"/>
+        <Property Name="lockedSpaces" Type="Edm.Int32"/>
+        <Property Name="members" Type="Edm.Int32"/>
+        <Property Name="connections" Type="Edm.Int32"/>
+        <Property Name="validConnections" Type="Edm.Int32"/>
+        <Property Name="remoteTables" Type="Edm.Int32"/>
+        <Property Name="replicatedTables" Type="Edm.Int32"/>
+        <Property Name="views" Type="Edm.Int32"/>
+        <Property Name="deployedViews" Type="Edm.Int32"/>
+        <Property Name="exposedViews" Type="Edm.Int32"/>
+        <Property Name="dataFlows" Type="Edm.Int32"/>
+        <Property Name="tasks" Type="Edm.Int32"/>
+        <Property Name="scheduledTasks" Type="Edm.Int32"/>
+        <Property Name="taskChains" Type="Edm.Int32"/>
+        <Property Name="runsLast24h" Type="Edm.Int32"/>
+        <Property Name="failedRunsLast24h" Type="Edm.Int32"/>
+        <Property Name="accessControls" Type="Edm.Int32"/>
+        <Property Name="catalogAssets" Type="Edm.Int32"/>
+        <Property Name="usedDiskMiB" Type="Edm.Int32"/>
+        <Property Name="diskQuotaMiB" Type="Edm.Int32"/>
+        <Property Name="users" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="AccessDecision">
+        <Property Name="viewId" Type="Edm.String"/>
+        <Property Name="user" Type="Edm.String"/>
+        <Property Name="allowed" Type="Edm.Boolean"/>
+        <Property Name="protected" Type="Edm.Boolean"/>
+        <Property Name="matchedControls" Type="Edm.String"/>
+        <Property Name="reason" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="SchedulerSummary">
+        <Property Name="due" Type="Edm.Int32"/>
+        <Property Name="started" Type="Edm.Int32"/>
+        <Property Name="completed" Type="Edm.Int32"/>
+        <Property Name="failed" Type="Edm.Int32"/>
+        <Property Name="skipped" Type="Edm.Int32"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="messages" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="PurgeResult">
+        <Property Name="runs" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="spaces" Type="Edm.Int32"/>
+        <Property Name="members" Type="Edm.Int32"/>
+        <Property Name="connections" Type="Edm.Int32"/>
+        <Property Name="remoteTables" Type="Edm.Int32"/>
+        <Property Name="views" Type="Edm.Int32"/>
+        <Property Name="dataFlows" Type="Edm.Int32"/>
+        <Property Name="tasks" Type="Edm.Int32"/>
+        <Property Name="taskChains" Type="Edm.Int32"/>
+        <Property Name="accessControls" Type="Edm.Int32"/>
+        <Property Name="catalogAssets" Type="Edm.Int32"/>
+        <Property Name="runs" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="LockSpace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="reason" Type="Edm.String"/>
+        <ReturnType Type="uim.datasphere.Space"/>
+      </Action>
+      <Action Name="UnlockSpace" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Space"/>
+      </Action>
+      <Action Name="ValidateConnection" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Connection"/>
+      </Action>
+      <Action Name="ReplicateRemoteTable" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Run"/>
+      </Action>
+      <Action Name="DropReplica" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.RemoteTable"/>
+      </Action>
+      <Action Name="DeployView" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.View"/>
+      </Action>
+      <Action Name="PersistView" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Run"/>
+      </Action>
+      <Action Name="RemovePersistence" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.View"/>
+      </Action>
+      <Action Name="CheckDataAccess" IsBound="false">
+        <Parameter Name="viewId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="user" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="row" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.AccessDecision"/>
+      </Action>
+      <Action Name="DeployDataFlow" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.DataFlow"/>
+      </Action>
+      <Action Name="RunDataFlow" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Run"/>
+      </Action>
+      <Action Name="RunTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Run"/>
+      </Action>
+      <Action Name="PauseTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Task"/>
+      </Action>
+      <Action Name="ResumeTask" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Task"/>
+      </Action>
+      <Action Name="RunTaskChain" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.Run"/>
+      </Action>
+      <Action Name="PauseTaskChain" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.TaskChain"/>
+      </Action>
+      <Action Name="ResumeTaskChain" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.datasphere.TaskChain"/>
+      </Action>
+      <Action Name="RunDueSchedules" IsBound="false">
+        <ReturnType Type="uim.datasphere.SchedulerSummary"/>
+      </Action>
+      <Action Name="PurgeRuns" IsBound="false">
+        <ReturnType Type="uim.datasphere.PurgeResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.datasphere.SeedResult"/>
+      </Action>
+      <EntityContainer Name="DatasphereService">
+        <EntitySet Name="Spaces" EntityType="uim.datasphere.Space"/>
+        <EntitySet Name="Members" EntityType="uim.datasphere.Member"/>
+        <EntitySet Name="Connections" EntityType="uim.datasphere.Connection"/>
+        <EntitySet Name="RemoteTables" EntityType="uim.datasphere.RemoteTable"/>
+        <EntitySet Name="Views" EntityType="uim.datasphere.View"/>
+        <EntitySet Name="DataFlows" EntityType="uim.datasphere.DataFlow"/>
+        <EntitySet Name="Tasks" EntityType="uim.datasphere.Task"/>
+        <EntitySet Name="TaskChains" EntityType="uim.datasphere.TaskChain"/>
+        <EntitySet Name="Runs" EntityType="uim.datasphere.Run"/>
+        <EntitySet Name="AccessControls" EntityType="uim.datasphere.AccessControl"/>
+        <EntitySet Name="CatalogAssets" EntityType="uim.datasphere.CatalogAsset"/>
+        <EntitySet Name="Users" EntityType="uim.datasphere.User"/>
+        <Singleton Name="Statistics" Type="uim.datasphere.Statistic"/>
+        <ActionImport Name="LockSpace" Action="uim.datasphere.LockSpace"/>
+        <ActionImport Name="UnlockSpace" Action="uim.datasphere.UnlockSpace"/>
+        <ActionImport Name="ValidateConnection" Action="uim.datasphere.ValidateConnection"/>
+        <ActionImport Name="ReplicateRemoteTable" Action="uim.datasphere.ReplicateRemoteTable"/>
+        <ActionImport Name="DropReplica" Action="uim.datasphere.DropReplica"/>
+        <ActionImport Name="DeployView" Action="uim.datasphere.DeployView"/>
+        <ActionImport Name="PersistView" Action="uim.datasphere.PersistView"/>
+        <ActionImport Name="RemovePersistence" Action="uim.datasphere.RemovePersistence"/>
+        <ActionImport Name="CheckDataAccess" Action="uim.datasphere.CheckDataAccess"/>
+        <ActionImport Name="DeployDataFlow" Action="uim.datasphere.DeployDataFlow"/>
+        <ActionImport Name="RunDataFlow" Action="uim.datasphere.RunDataFlow"/>
+        <ActionImport Name="RunTask" Action="uim.datasphere.RunTask"/>
+        <ActionImport Name="PauseTask" Action="uim.datasphere.PauseTask"/>
+        <ActionImport Name="ResumeTask" Action="uim.datasphere.ResumeTask"/>
+        <ActionImport Name="RunTaskChain" Action="uim.datasphere.RunTaskChain"/>
+        <ActionImport Name="PauseTaskChain" Action="uim.datasphere.PauseTaskChain"/>
+        <ActionImport Name="ResumeTaskChain" Action="uim.datasphere.ResumeTaskChain"/>
+        <ActionImport Name="RunDueSchedules" Action="uim.datasphere.RunDueSchedules"/>
+        <ActionImport Name="PurgeRuns" Action="uim.datasphere.PurgeRuns"/>
+        <ActionImport Name="SeedDemoData" Action="uim.datasphere.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.datasphere.AccessDecision/viewId"><Annotation Term="Common.Label" String="View"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessDecision/user"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessDecision/allowed"><Annotation Term="Common.Label" String="Allowed"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessDecision/protected"><Annotation Term="Common.Label" String="Protected"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessDecision/matchedControls"><Annotation Term="Common.Label" String="Granted By"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessDecision/reason"><Annotation Term="Common.Label" String="Reason"/></Annotations>
+      <Annotations Target="uim.datasphere.SchedulerSummary/due"><Annotation Term="Common.Label" String="Due"/></Annotations>
+      <Annotations Target="uim.datasphere.SchedulerSummary/started"><Annotation Term="Common.Label" String="Started"/></Annotations>
+      <Annotations Target="uim.datasphere.SchedulerSummary/completed"><Annotation Term="Common.Label" String="Completed"/></Annotations>
+      <Annotations Target="uim.datasphere.SchedulerSummary/failed"><Annotation Term="Common.Label" String="Failed"/></Annotations>
+      <Annotations Target="uim.datasphere.SchedulerSummary/skipped"><Annotation Term="Common.Label" String="Skipped"/></Annotations>
+      <Annotations Target="uim.datasphere.SchedulerSummary/summary"><Annotation Term="Common.Label" String="Summary"/></Annotations>
+      <Annotations Target="uim.datasphere.SchedulerSummary/messages"><Annotation Term="Common.Label" String="Messages"/></Annotations>
+      <Annotations Target="uim.datasphere.PurgeResult/runs"><Annotation Term="Common.Label" String="Runs"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/id"><Annotation Term="Common.Label" String="Space"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/priority"><Annotation Term="Common.Label" String="Priority"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/diskQuotaGiB"><Annotation Term="Common.Label" String="Disk (GiB)"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/memoryQuotaGiB"><Annotation Term="Common.Label" String="Memory (GiB)"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/usedDiskGiB"><Annotation Term="Common.Label" String="Used Disk (GiB)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/diskUsagePercent"><Annotation Term="Common.Label" String="Disk Used (%)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/auditLogEnabled"><Annotation Term="Common.Label" String="Audit Log"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/lockedReason"><Annotation Term="Common.Label" String="Lock Reason"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/memberCount"><Annotation Term="Common.Label" String="Members"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/objectCount"><Annotation Term="Common.Label" String="Objects"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Space">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Space"/><PropertyValue Property="TypeNamePlural" String="Spaces"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="priority"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="usedDiskGiB"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="diskQuotaGiB"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="diskUsagePercent"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="objectCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/Spaces">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.Member/id"><Annotation Term="Common.Label" String="Member"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/userName"><Annotation Term="Common.Label" String="User"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/role"><Annotation Term="Common.Label" String="Role"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Member/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Member">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Member"/><PropertyValue Property="TypeNamePlural" String="Members"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="role"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="role"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="spaceName"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>role</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/Members">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.Connection/id"><Annotation Term="Common.Label" String="Connection"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/connectionType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/host"><Annotation Term="Common.Label" String="Host"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/port"><Annotation Term="Common.Label" String="Port"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/database"><Annotation Term="Common.Label" String="Database"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/user"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/properties"><Annotation Term="Common.Label" String="Properties"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/endpoint"><Annotation Term="Common.Label" String="Endpoint"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/hasPassword"><Annotation Term="Common.Label" String="Password Set"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/statusMessage"><Annotation Term="Common.Label" String="Status Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/lastValidatedAt"><Annotation Term="Common.Label" String="Validated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/remoteTableCount"><Annotation Term="Common.Label" String="Remote Tables"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Connection">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Connection"/><PropertyValue Property="TypeNamePlural" String="Connections"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="endpoint"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="connectionType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="endpoint"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="remoteTableCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="spaceName"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>connectionType</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/Connections">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/id"><Annotation Term="Common.Label" String="Remote Table"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/connectionId"><Annotation Term="Common.Label" String="Connection"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/connectionName"><Annotation Term="Common.Label" String="Connection Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/name"><Annotation Term="Common.Label" String="Technical Name"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/businessName"><Annotation Term="Common.Label" String="Business Name"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/remoteSchema"><Annotation Term="Common.Label" String="Remote Schema"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/remoteObject"><Annotation Term="Common.Label" String="Remote Object"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/replicationMode"><Annotation Term="Common.Label" String="Access"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/replicationStatus"><Annotation Term="Common.Label" String="Replication"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/columns"><Annotation Term="Common.Label" String="Columns"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/columnCount"><Annotation Term="Common.Label" String="Columns"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/rowCount"><Annotation Term="Common.Label" String="Rows"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/sizeMiB"><Annotation Term="Common.Label" String="Size (MiB)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/lastReplicatedAt"><Annotation Term="Common.Label" String="Replicated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/lastMessage"><Annotation Term="Common.Label" String="Last Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.RemoteTable">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Remote Table"/><PropertyValue Property="TypeNamePlural" String="Remote Tables"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="connectionName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="replicationMode"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="replicationStatus"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rowCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sizeMiB"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>connectionId</PropertyPath><PropertyPath>replicationMode</PropertyPath><PropertyPath>replicationStatus</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/RemoteTables">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.View/id"><Annotation Term="Common.Label" String="View"/></Annotations>
+      <Annotations Target="uim.datasphere.View/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/name"><Annotation Term="Common.Label" String="Technical Name"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/businessName"><Annotation Term="Common.Label" String="Business Name"/></Annotations>
+      <Annotations Target="uim.datasphere.View/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.View/semantic"><Annotation Term="Common.Label" String="Semantic Usage"/></Annotations>
+      <Annotations Target="uim.datasphere.View/sqlExpression"><Annotation Term="Common.Label" String="SQL"/></Annotations>
+      <Annotations Target="uim.datasphere.View/sourceObjects"><Annotation Term="Common.Label" String="Sources"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/sourcesText"><Annotation Term="Common.Label" String="Sources"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/columns"><Annotation Term="Common.Label" String="Columns"/></Annotations>
+      <Annotations Target="uim.datasphere.View/columnCount"><Annotation Term="Common.Label" String="Columns"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/exposed"><Annotation Term="Common.Label" String="Exposed"/></Annotations>
+      <Annotations Target="uim.datasphere.View/deploymentStatus"><Annotation Term="Common.Label" String="Deployment"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/deployedAt"><Annotation Term="Common.Label" String="Deployed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/persisted"><Annotation Term="Common.Label" String="Persisted"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/rowCount"><Annotation Term="Common.Label" String="Rows"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/persistedMiB"><Annotation Term="Common.Label" String="Persisted (MiB)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/persistedAt"><Annotation Term="Common.Label" String="Persisted At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/lastRunStatus"><Annotation Term="Common.Label" String="Last Persistence"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/lastRunMessage"><Annotation Term="Common.Label" String="Last Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/protectedBy"><Annotation Term="Common.Label" String="Access Controls"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.View">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="View"/><PropertyValue Property="TypeNamePlural" String="Views"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="semantic"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deploymentStatus"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="exposed"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="persisted"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rowCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>semantic</PropertyPath><PropertyPath>deploymentStatus</PropertyPath><PropertyPath>exposed</PropertyPath><PropertyPath>persisted</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/Views">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/id"><Annotation Term="Common.Label" String="Data Flow"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/name"><Annotation Term="Common.Label" String="Technical Name"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/businessName"><Annotation Term="Common.Label" String="Business Name"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/sourceObjects"><Annotation Term="Common.Label" String="Sources"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/sourcesText"><Annotation Term="Common.Label" String="Sources"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/transforms"><Annotation Term="Common.Label" String="Transformations"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/transformCount"><Annotation Term="Common.Label" String="Transformations"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/targetTable"><Annotation Term="Common.Label" String="Target Table"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/loadMode"><Annotation Term="Common.Label" String="Load Mode"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/deploymentStatus"><Annotation Term="Common.Label" String="Deployment"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/deployedAt"><Annotation Term="Common.Label" String="Deployed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/lastRunStatus"><Annotation Term="Common.Label" String="Last Run"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/lastRunAt"><Annotation Term="Common.Label" String="Last Run At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/lastRunDurationMs"><Annotation Term="Common.Label" String="Duration (ms)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/targetRows"><Annotation Term="Common.Label" String="Target Rows"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/targetMiB"><Annotation Term="Common.Label" String="Target (MiB)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/lastRunMessage"><Annotation Term="Common.Label" String="Last Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.DataFlow">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Data Flow"/><PropertyValue Property="TypeNamePlural" String="Data Flows"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sourcesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="targetTable"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deploymentStatus"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastRunStatus"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="targetRows"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>deploymentStatus</PropertyPath><PropertyPath>lastRunStatus</PropertyPath><PropertyPath>loadMode</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/DataFlows">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.Task/id"><Annotation Term="Common.Label" String="Task"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/frequency"><Annotation Term="Common.Label" String="Frequency"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/intervalMinutes"><Annotation Term="Common.Label" String="Interval (min)"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/startAt"><Annotation Term="Common.Label" String="Start"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/schedule"><Annotation Term="Common.Label" String="Schedule"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/status"><Annotation Term="Common.Label" String="Schedule Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/nextRunAt"><Annotation Term="Common.Label" String="Next Run"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/lastRunStatus"><Annotation Term="Common.Label" String="Last Run"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/lastRunAt"><Annotation Term="Common.Label" String="Last Run At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/lastRunDurationMs"><Annotation Term="Common.Label" String="Duration (ms)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/lastRunMessage"><Annotation Term="Common.Label" String="Last Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/taskType"><Annotation Term="Common.Label" String="Type"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/targetObjectId"><Annotation Term="Common.Label" String="Object"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/targetName"><Annotation Term="Common.Label" String="Object Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/maxRetries"><Annotation Term="Common.Label" String="Retries"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/consecutiveFailures"><Annotation Term="Common.Label" String="Failures in a Row"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Task">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Task"/><PropertyValue Property="TypeNamePlural" String="Tasks"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="targetName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="taskType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="targetName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="schedule"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="nextRunAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastRunStatus"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>taskType</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>lastRunStatus</PropertyPath><PropertyPath>frequency</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/Tasks">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/id"><Annotation Term="Common.Label" String="Task Chain"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/frequency"><Annotation Term="Common.Label" String="Frequency"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/intervalMinutes"><Annotation Term="Common.Label" String="Interval (min)"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/startAt"><Annotation Term="Common.Label" String="Start"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/schedule"><Annotation Term="Common.Label" String="Schedule"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/status"><Annotation Term="Common.Label" String="Schedule Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/nextRunAt"><Annotation Term="Common.Label" String="Next Run"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/lastRunStatus"><Annotation Term="Common.Label" String="Last Run"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/lastRunAt"><Annotation Term="Common.Label" String="Last Run At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/lastRunDurationMs"><Annotation Term="Common.Label" String="Duration (ms)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/lastRunMessage"><Annotation Term="Common.Label" String="Last Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/taskIds"><Annotation Term="Common.Label" String="Steps"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/stepsText"><Annotation Term="Common.Label" String="Steps"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/stepCount"><Annotation Term="Common.Label" String="Steps"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/failurePolicy"><Annotation Term="Common.Label" String="On Failure"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.TaskChain">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Task Chain"/><PropertyValue Property="TypeNamePlural" String="Task Chains"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="stepsText"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="stepCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="failurePolicy"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="schedule"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="nextRunAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastRunStatus"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>lastRunStatus</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/TaskChains">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.Run/id"><Annotation Term="Common.Label" String="Run"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/objectType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/objectId"><Annotation Term="Common.Label" String="Object"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/objectName"><Annotation Term="Common.Label" String="Object Name"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/taskId"><Annotation Term="Common.Label" String="Task"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/chainRunId"><Annotation Term="Common.Label" String="Chain Run"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/trigger"><Annotation Term="Common.Label" String="Trigger"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/attempts"><Annotation Term="Common.Label" String="Attempt"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/startedAt"><Annotation Term="Common.Label" String="Started At"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/finishedAt"><Annotation Term="Common.Label" String="Finished At"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/durationMs"><Annotation Term="Common.Label" String="Duration (ms)"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/rowsProcessed"><Annotation Term="Common.Label" String="Rows"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/sizeMiB"><Annotation Term="Common.Label" String="Size (MiB)"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Run/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.Run">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Run"/><PropertyValue Property="TypeNamePlural" String="Runs"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="objectName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="message"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="startedAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="objectType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="objectName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="trigger"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="durationMs"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rowsProcessed"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="message"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>objectType</PropertyPath><PropertyPath>objectId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>trigger</PropertyPath><PropertyPath>taskId</PropertyPath><PropertyPath>chainRunId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/Runs">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/id"><Annotation Term="Common.Label" String="Data Access Control"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/criteriaColumn"><Annotation Term="Common.Label" String="Criteria Column"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/criteriaOperator"><Annotation Term="Common.Label" String="Operator"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/criteriaValues"><Annotation Term="Common.Label" String="Values"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/criteriaText"><Annotation Term="Common.Label" String="Criteria"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/targetViewIds"><Annotation Term="Common.Label" String="Protected Views"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/viewsText"><Annotation Term="Common.Label" String="Protected Views"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/assignedUsers"><Annotation Term="Common.Label" String="Users"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/usersText"><Annotation Term="Common.Label" String="Users"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/enabled"><Annotation Term="Common.Label" String="Enabled"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.AccessControl">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Data Access Control"/><PropertyValue Property="TypeNamePlural" String="Data Access Controls"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="criteriaText"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="criteriaText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="viewsText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="usersText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="enabled"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>enabled</PropertyPath><PropertyPath>criteriaOperator</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/AccessControls">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/id"><Annotation Term="Common.Label" String="Asset"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/spaceId"><Annotation Term="Common.Label" String="Space"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/spaceName"><Annotation Term="Common.Label" String="Space Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/businessName"><Annotation Term="Common.Label" String="Business Name"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/assetType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/sourceObjectId"><Annotation Term="Common.Label" String="Object"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/owner"><Annotation Term="Common.Label" String="Owner"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/qualityStatus"><Annotation Term="Common.Label" String="Quality"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/sensitivity"><Annotation Term="Common.Label" String="Sensitivity"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/tags"><Annotation Term="Common.Label" String="Tags"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/tagsText"><Annotation Term="Common.Label" String="Tags"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/glossaryTerms"><Annotation Term="Common.Label" String="Glossary Terms"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/termsText"><Annotation Term="Common.Label" String="Glossary Terms"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/accessCount"><Annotation Term="Common.Label" String="Accesses"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/lastAccessedAt"><Annotation Term="Common.Label" String="Last Access"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.CatalogAsset">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Catalog Asset"/><PropertyValue Property="TypeNamePlural" String="Catalog"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessName"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="businessName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="assetType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="owner"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="qualityStatus"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sensitivity"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tagsText"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>spaceId</PropertyPath><PropertyPath>assetType</PropertyPath><PropertyPath>qualityStatus</PropertyPath><PropertyPath>sensitivity</PropertyPath><PropertyPath>owner</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/CatalogAssets">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.User/id"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.datasphere.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.datasphere.User/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.datasphere.User/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.datasphere.User/scopesText"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.datasphere.User/temporarilyLocked"><Annotation Term="Common.Label" String="Temporarily Locked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User/failedLogins"><Annotation Term="Common.Label" String="Failed Logins"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.datasphere.User">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="User"/><PropertyValue Property="TypeNamePlural" String="Users"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="locked"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastLoginAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>locked</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/spaces"><Annotation Term="Common.Label" String="Spaces"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/lockedSpaces"><Annotation Term="Common.Label" String="Locked Spaces"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/members"><Annotation Term="Common.Label" String="Members"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/connections"><Annotation Term="Common.Label" String="Connections"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/validConnections"><Annotation Term="Common.Label" String="Valid Connections"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/remoteTables"><Annotation Term="Common.Label" String="Remote Tables"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/replicatedTables"><Annotation Term="Common.Label" String="Replicated Tables"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/views"><Annotation Term="Common.Label" String="Views"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/deployedViews"><Annotation Term="Common.Label" String="Deployed Views"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/exposedViews"><Annotation Term="Common.Label" String="Exposed Views"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/dataFlows"><Annotation Term="Common.Label" String="Data Flows"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/tasks"><Annotation Term="Common.Label" String="Tasks"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/scheduledTasks"><Annotation Term="Common.Label" String="Scheduled Tasks"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/taskChains"><Annotation Term="Common.Label" String="Task Chains"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/runsLast24h"><Annotation Term="Common.Label" String="Runs (24 h)"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/failedRunsLast24h"><Annotation Term="Common.Label" String="Failed Runs (24 h)"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/accessControls"><Annotation Term="Common.Label" String="Access Controls"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/catalogAssets"><Annotation Term="Common.Label" String="Catalog Assets"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/usedDiskMiB"><Annotation Term="Common.Label" String="Used Disk (MiB)"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/diskQuotaMiB"><Annotation Term="Common.Label" String="Disk Quota (MiB)"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic/users"><Annotation Term="Common.Label" String="Users"/></Annotations>
+      <Annotations Target="uim.datasphere.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="spaces"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lockedSpaces"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="members"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="connections"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="validConnections"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="remoteTables"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="replicatedTables"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="views"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.datasphere.DatasphereService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="Datasphere"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

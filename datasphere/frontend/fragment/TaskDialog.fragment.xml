@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/task/edit} ? ${i18n>editTask} : ${i18n>createTask} }" contentWidth="40rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colId}"/>
+      <Input value="{view>/form/task/id}" enabled="{= !%{view>/form/task/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colSpace}" required="true"/>
+      <Select selectedKey="{view>/form/task/spaceId}" forceSelection="false" enabled="{= !%{view>/form/task/edit} }"
+        items="{path: '/Spaces', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({id})"/>
+      </Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/task/name}"/>
+      <Label text="{i18n>colType}" required="true"/>
+      <Select selectedKey="{view>/form/task/taskType}" enabled="{= !%{view>/form/task/edit} }">
+        <core:Item key="replication" text="{i18n>enum_replication}"/>
+        <core:Item key="dataFlow" text="{i18n>enum_dataFlow}"/>
+        <core:Item key="viewPersistence" text="{i18n>enum_viewPersistence}"/>
+      </Select>
+      <Label text="{i18n>colObject}" required="true"/>
+      <Select selectedKey="{view>/form/task/targetObjectId}" forceSelection="false" width="100%"
+        visible="{= %{view>/form/task/taskType} === 'replication' }"
+        items="{path: '/RemoteTables', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{businessName} ({name}) · {spaceId}"/>
+      </Select>
+      <Select selectedKey="{view>/form/task/targetObjectId}" forceSelection="false" width="100%"
+        visible="{= %{view>/form/task/taskType} === 'dataFlow' }"
+        items="{path: '/DataFlows', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{businessName} ({name}) · {spaceId}"/>
+      </Select>
+      <Select selectedKey="{view>/form/task/targetObjectId}" forceSelection="false" width="100%"
+        visible="{= %{view>/form/task/taskType} === 'viewPersistence' }"
+        items="{path: '/Views', parameters: {$orderby: 'name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{businessName} ({name}) · {spaceId}"/>
+      </Select>
+      <Label text="{i18n>colFrequency}"/>
+      <Select selectedKey="{view>/form/task/frequency}">
+        <core:Item key="manual" text="{i18n>enum_manual}"/>
+        <core:Item key="interval" text="{i18n>enum_interval}"/>
+        <core:Item key="hourly" text="{i18n>enum_hourly}"/>
+        <core:Item key="daily" text="{i18n>enum_daily}"/>
+        <core:Item key="weekly" text="{i18n>enum_weekly}"/>
+        <core:Item key="monthly" text="{i18n>enum_monthly}"/>
+      </Select>
+      <Label text="{i18n>colInterval}" visible="{= %{view>/form/task/frequency} === 'interval' }"/>
+      <StepInput value="{view>/form/task/intervalMinutes}" min="5" max="10080" step="5" width="10rem" description="{i18n>minutes}" visible="{= %{view>/form/task/frequency} === 'interval' }"/>
+      <Label text="{i18n>colStart}"/>
+      <Input value="{view>/form/task/startAt}" placeholder="2026-12-01T02:00:00Z"/>
+      <Label text="{i18n>colRetries}"/>
+      <StepInput value="{view>/form/task/maxRetries}" min="0" max="10" step="1" width="10rem"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/task/description}" rows="2" width="100%"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

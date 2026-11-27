@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{i18n>checkAccess}" contentWidth="36rem">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3">
+      <Label text="{i18n>colView}"/>
+      <Text text="{view>/form/accessCheck/viewName} ({view>/form/accessCheck/viewId})"/>
+      <Label text="{i18n>colUser}" required="true"/>
+      <Input value="{view>/form/accessCheck/user}"/>
+      <Label text="{i18n>colRow}" required="true"/>
+      <TextArea value="{view>/form/accessCheck/row}" rows="5" width="100%"/>
+      <Label text="{i18n>result}"/>
+      <MessageStrip visible="{= !!%{view>/form/accessCheck/result} }" showIcon="true"
+        type="{= %{view>/form/accessCheck/result/allowed} ? 'Success' : 'Error' }"
+        text="{= %{view>/form/accessCheck/result/allowed} ? ${i18n>rowVisible} : ${i18n>rowHidden} }: {view>/form/accessCheck/result/reason}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>check}" type="Emphasized" press=".onRunCheck"/></beginButton>
+    <endButton><Button text="{i18n>close}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,42 @@
+[
+  {
+    "diskQuotaGiB": 20,
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "SALES",
+    "diskUsagePercent": 0.45,
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "Sales Analytics",
+    "objectCount": 20,
+    "priority": 6,
+    "memberCount": 4,
+    "usedDiskGiB": 0.09,
+    "auditLogEnabled": true,
+    "lockedReason": "",
+    "description": "Orders and customers of S/4HANA Cloud for SAP Analytics Cloud",
+    "memoryQuotaGiB": 4,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  },
+  {
+    "diskQuotaGiB": 5,
+    "updatedAt": "2026-11-26T16:56:10Z",
+    "id": "HR",
+    "diskUsagePercent": 0,
+    "createdAt": "2026-11-26T16:56:10Z",
+    "createdBy": "anonymous",
+    "name": "People Analytics",
+    "objectCount": 0,
+    "priority": 3,
+    "memberCount": 1,
+    "usedDiskGiB": 0,
+    "auditLogEnabled": true,
+    "lockedReason": "",
+    "description": "Head count and hires (SuccessFactors)",
+    "memoryQuotaGiB": 1,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  }
+]
