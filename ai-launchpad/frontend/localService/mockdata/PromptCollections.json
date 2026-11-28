@@ -1,0 +1,28 @@
+[
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "service-desk",
+    "workspaceName": "GenAI Lab",
+    "workspaceId": "genai-lab",
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Service Desk",
+    "description": "Prompts of the customer service desk",
+    "promptCount": 2,
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "engineering",
+    "workspaceName": "GenAI Lab",
+    "workspaceId": "genai-lab",
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Engineering",
+    "description": "Prompts for developers",
+    "promptCount": 1,
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  }
+]

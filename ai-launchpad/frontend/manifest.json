@@ -1,0 +1,97 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "uim.ailaunchpad",
+    "type": "application",
+    "i18n": {
+      "bundleName": "uim.ailaunchpad.i18n.i18n",
+      "supportedLocales": ["", "de"],
+      "fallbackLocale": ""
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "2.0.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/ai-launchpad/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0",
+          "localUri": "localService/metadata.xml"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "sap-icon://da"
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "uim.ailaunchpad.view.App",
+      "type": "XML",
+      "id": "root"
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.tnt": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "uim.ailaunchpad.i18n.i18n",
+          "supportedLocales": ["", "de"],
+          "fallbackLocale": ""
+        }
+      }
+    },
+    "resources": {
+      "css": [{ "uri": "css/style.css" }]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "uim.ailaunchpad.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        { "name": "launchpad", "pattern": "", "target": "launchpad" },
+        { "name": "runtimes", "pattern": "runtimes/:tab:", "target": "runtimes" },
+        { "name": "lifecycle", "pattern": "lifecycle/:tab:", "target": "lifecycle" },
+        { "name": "genai", "pattern": "genai/:tab:", "target": "genai" },
+        { "name": "admin", "pattern": "admin/:tab:", "target": "admin" }
+      ],
+      "targets": {
+        "launchpad": { "id": "launchpad", "name": "Launchpad", "level": 1 },
+        "runtimes": { "id": "runtimes", "name": "Runtimes", "level": 2 },
+        "lifecycle": { "id": "lifecycle", "name": "Lifecycle", "level": 2 },
+        "genai": { "id": "genai", "name": "GenAI", "level": 2 },
+        "admin": { "id": "admin", "name": "Admin", "level": 2 }
+      }
+    }
+  }
+}

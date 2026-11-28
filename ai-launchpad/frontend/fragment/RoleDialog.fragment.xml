@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/role/edit} ? ${i18n>editRole} : ${i18n>createRole} }" contentWidth="34rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="true"/>
+      <Input value="{view>/form/role/id}" enabled="{= !%{view>/form/role/edit} }" placeholder="{i18n>idRole}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/role/name}"/>
+      <Label text="{i18n>colScopes}" required="true"/>
+      <MultiComboBox selectedKeys="{path: 'view>/form/role/scopes', formatter: '.formatter.splitList'}" selectionFinish=".onRoleScopes">
+        <core:Item key="Read" text="Read — {i18n>scopeRead}"/>
+        <core:Item key="Operate" text="Operate — {i18n>scopeOperate}"/>
+        <core:Item key="Develop" text="Develop — {i18n>scopeDevelop}"/>
+        <core:Item key="Manage" text="Manage — {i18n>scopeManage}"/>
+        <core:Item key="Admin" text="Admin — {i18n>scopeAdmin}"/>
+      </MultiComboBox>
+      <Label text=""/>
+      <Text text="{i18n>scopeImplications}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/role/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

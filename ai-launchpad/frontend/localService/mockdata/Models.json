@@ -1,0 +1,21 @@
+[
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "fraud-xgb-1",
+    "executionId": null,
+    "sizeMiB": 48,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "fraud-xgb",
+    "url": "ai://default/models/fraud-xgb/1",
+    "scenarioId": "fraud-detection",
+    "labels": [],
+    "labelsText": "",
+    "description": "Imported baseline model",
+    "scenarioName": "Fraud Detection",
+    "version": "1",
+    "tenantId": "default",
+    "status": "available",
+    "updatedBy": "anonymous"
+  }
+]

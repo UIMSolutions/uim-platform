@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ai-launchpad
+  name: ai-launchpad-service
+  namespace: uim-platform
   labels:
-    app: ai-launchpad
+    app: ai-launchpad-service
+    part-of: uim-platform
 spec:
-  type: ClusterIP
   selector:
-    app: ai-launchpad
+    app: ai-launchpad-service
   ports:
-  - port: 8097
-    targetPort: 8097
+  - name: http
     protocol: TCP
-    name: http
+    port: 8097
+    targetPort: 8097
+  type: ClusterIP

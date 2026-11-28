@@ -1,0 +1,91 @@
+_schema-version: "3.3"
+ID: uim-ai-launchpad
+version: 2.0.0
+description: UIM AI Launchpad — D/vibe.d backend (REST, OData v4), SAP Fiori 3 / OpenUI5 launchpad and approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # ── D / vibe.d backend ────────────────────────────────────────────────────
+  - name: ai-launchpad-srv
+    type: custom
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - dub build --build=release --config=defaultRun --compiler=ldc2
+        - dub build --build=release --config=cli --compiler=ldc2
+        - rm -rf dist && mkdir -p dist/config
+        - cp build/uim-ai-launchpad-platform-service build/uim-ai-launchpad-cli dist/
+        - cp config/default.json dist/config/
+      build-result: dist
+    parameters:
+      buildpack: binary_buildpack
+      command: ./uim-ai-launchpad-platform-service
+      memory: 256M
+      disk-quota: 512M
+      health-check-type: http
+      health-check-http-endpoint: /health
+    properties:
+      AILP_HOST: 0.0.0.0
+      # The snapshot lives on the (ephemeral) container disk — single instance only.
+      AILP_STORAGE: file
+      AILP_DATA_FILE: data/ai-launchpad.json
+      AILP_FRONTEND_DIR: ""
+      # authentication: the XSUAA binding below switches the service to xsuaa mode
+      AILP_AUTH_MODE: open
+      AILP_RECONCILE_INTERVAL_SECONDS: 15
+    provides:
+      - name: ai-launchpad-srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: ai-launchpad-xsuaa
+      - name: ai-launchpad-config
+
+  # ── Approuter (serves the Fiori launchpad from resources/) ──────────────────────
+  - name: ai-launchpad-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf resources
+        - cp -r ../frontend resources
+        - rm -rf resources/test resources/localService resources/node_modules resources/dist
+        - npm install --omit=dev
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      keep-existing-routes: true
+    requires:
+      - name: ai-launchpad-xsuaa
+      - name: ai-launchpad-srv-api
+        group: destinations
+        properties:
+          name: ai-launchpad-srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 60000
+
+resources:
+  - name: ai-launchpad-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: approuter/xs-security.json
+      config:
+        xsappname: uim-ai-launchpad-${space}
+
+  # Runtime overrides read from VCAP_SERVICES (credentials of the service named
+  # "ai-launchpad-config"), e.g.:
+  #   cf update-user-provided-service ai-launchpad-config \
+  #     -p '{"logRetentionDays":90,"reconcileIntervalSeconds":30,"simulatedExecutionSeconds":300}'
+  - name: ai-launchpad-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: ai-launchpad-config
+      config:
+        workerTenants: ["default"]

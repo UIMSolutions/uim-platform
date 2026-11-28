@@ -1,0 +1,147 @@
+<mvc:View controllerName="uim.ailaunchpad.controller.GenAI"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+  xmlns:l="sap.ui.layout" height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>genaiTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>genaiDescription}"/></f:snappedContent>
+        <f:actions>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <HBox binding="{/Statistics}" wrap="Wrap" class="ailpKpis">
+          <VBox><Label text="{i18n>kpiPrompts}"/>
+            <ObjectNumber number="{activePrompts}" unit="/ {prompts} {i18n>kpiActive}"/></VBox>
+          <VBox><Label text="{i18n>kpiCollections}"/><ObjectNumber number="{promptCollections}"/></VBox>
+          <VBox><Label text="{i18n>kpiPromptRuns}"/><ObjectNumber number="{promptRuns}"/></VBox>
+        </HBox>
+      </f:DynamicPageHeader>
+    </f:header>
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding">
+        <items>
+          <!-- ── Prompts ──────────────────────────────────────────────── -->
+          <IconTabFilter key="prompts" icon="sap-icon://discussion-2" text="{i18n>tabPrompts}" count="{/Statistics/prompts}">
+            <Table id="promptsTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noData}"
+              items="{path: '/Prompts', parameters: {$orderby: 'name'}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabPrompts}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="12rem" search=".onSearch" placeholder="{i18n>search}"><customData><core:CustomData key="table" value="promptsTable"/></customData></SearchField>
+                  <Button text="{i18n>tryPrompt}" icon="sap-icon://lab" press=".onTryPrompt" visible="{session>/canOperate}"><customData><core:CustomData key="table" value="promptsTable"/></customData></Button>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canDevelop}"><customData><core:CustomData key="dialog" value="prompt"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canDevelop}"><customData><core:CustomData key="table" value="promptsTable"/><core:CustomData key="dialog" value="prompt"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canDevelop}"><customData><core:CustomData key="table" value="promptsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCollection}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colModel}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colInputs}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="{i18n>colVersion}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End"><Text text="{i18n>colRuns}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{description}"/>
+                  <Text text="{collectionName}"/>
+                  <Text text="{modelName} ({modelVersion})"/>
+                  <ObjectStatus text="{path: 'status', formatter: '.formatter.enumText'}" state="{path: 'status', formatter: '.formatter.state'}"/>
+                  <Text text="{inputParamsText}" class="ailpMono"/>
+                  <ObjectNumber number="{version}"/>
+                  <ObjectNumber number="{runCount}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Collections ──────────────────────────────────────────── -->
+          <IconTabFilter key="collections" icon="sap-icon://course-book" text="{i18n>tabCollections}"
+            count="{/Statistics/promptCollections}">
+            <Table id="collectionsTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noData}"
+              items="{path: '/PromptCollections', parameters: {$orderby: 'name'}, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabCollections}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="{session>/canDevelop}"><customData><core:CustomData key="dialog" value="collection"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="{session>/canDevelop}"><customData><core:CustomData key="table" value="collectionsTable"/><core:CustomData key="dialog" value="collection"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="{session>/canDevelop}"><customData><core:CustomData key="table" value="collectionsTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colName}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colWorkspace}"/></Column>
+                <Column hAlign="End"><Text text="{i18n>colPrompts}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{id}"/>
+                  <Text text="{workspaceName}"/>
+                  <ObjectNumber number="{promptCount}"/>
+                  <Text text="{description}" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Playground ───────────────────────────────────────────── -->
+          <IconTabFilter key="playground" icon="sap-icon://lab" text="{i18n>tabPlayground}" visible="{session>/canOperate}">
+            <l:Grid defaultSpan="XL6 L6 M12 S12" containerQuery="true">
+              <VBox>
+                <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3"
+                  title="{i18n>playgroundPrompt}">
+                  <Label text="{i18n>colPrompt}" required="true"/>
+                  <ComboBox id="playgroundPrompt" selectedKey="{view>/playground/promptId}" selectionChange=".onPlaygroundPrompt"
+                    placeholder="{i18n>selectPrompt}"
+                    items="{path: '/Prompts', parameters: {$orderby: 'name', $select: 'id,name,status'}, templateShareable: false}">
+                    <core:Item key="{id}" text="{name}" enabled="{= %{status} !== 'archived' }"/>
+                  </ComboBox>
+                  <Label text="{i18n>colModel}"/>
+                  <Text text="{view>/playground/prompt/modelName} · {i18n>colTemperature} {view>/playground/prompt/temperature} · {i18n>colMaxTokens} {view>/playground/prompt/maxTokens}"
+                    visible="{= !!${view>/playground/prompt} }"/>
+                  <Label text="{i18n>colSystemMessage}"/>
+                  <Text text="{view>/playground/prompt/systemMessage}" class="ailpMono" visible="{= !!${view>/playground/prompt} }"/>
+                  <Label text="{i18n>colUserMessage}"/>
+                  <Text text="{view>/playground/prompt/userMessage}" class="ailpMono" visible="{= !!${view>/playground/prompt} }"/>
+                </form:SimpleForm>
+                <Panel headerText="{i18n>playgroundInputs}" visible="{= !!${view>/playground/prompt} }">
+                  <VBox items="{path: 'view>/playground/inputs', templateShareable: false}">
+                    <VBox class="sapUiTinyMarginBottom">
+                      <Label text="{view>name}" required="true"/>
+                      <TextArea value="{view>value}" rows="2" width="100%" growing="true" growingMaxLines="10"/>
+                    </VBox>
+                  </VBox>
+                  <Text text="{i18n>noInputs}" visible="{= ${view>/playground/inputs}.length === 0 }"/>
+                  <Button id="runPromptButton" text="{i18n>runPrompt}" icon="sap-icon://media-play" type="Emphasized"
+                    press=".onRunPrompt" class="sapUiSmallMarginTop" busy="{view>/playground/busy}" busyIndicatorDelay="0"/>
+                </Panel>
+              </VBox>
+              <Panel headerText="{i18n>playgroundResult}" class="ailpOutput">
+                <MessageStrip text="{i18n>playgroundHint}" showIcon="true" visible="{= !${view>/playground/result} }"/>
+                <VBox visible="{= !!${view>/playground/result} }">
+                  <ObjectAttribute title="{i18n>colModel}" text="{view>/playground/result/modelName} (v{view>/playground/result/promptVersion})"/>
+                  <ObjectAttribute title="{i18n>tokens}"
+                    text="{view>/playground/result/promptTokens} + {view>/playground/result/completionTokens} · {view>/playground/result/latencyMs} ms"/>
+                  <Label text="{i18n>output}" class="sapUiSmallMarginTop"/>
+                  <TextArea id="playgroundOutput" value="{view>/playground/result/output}" editable="false" rows="8" width="100%"
+                    growing="true"/>
+                  <Label text="{i18n>renderedPrompt}" class="sapUiSmallMarginTop"/>
+                  <TextArea value="{view>/playground/result/renderedPrompt}" editable="false" rows="5" width="100%" growing="true"/>
+                </VBox>
+              </Panel>
+            </l:Grid>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,36 @@
+[
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "default",
+    "activeDeployments": 1,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "labels": [],
+    "labelsText": "",
+    "connectionName": "SAP AI Core (EU)",
+    "activeExecutions": 1,
+    "description": "Default resource group",
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "status": "ready",
+    "updatedBy": "anonymous"
+  },
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "fraud-team",
+    "activeDeployments": 0,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "labels": [
+      "ext.ai.sap.com/team=fraud"
+    ],
+    "labelsText": "ext.ai.sap.com/team=fraud",
+    "connectionName": "SAP AI Core (EU)",
+    "activeExecutions": 1,
+    "description": "Capacity of the fraud team",
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "status": "ready",
+    "updatedBy": "anonymous"
+  }
+]

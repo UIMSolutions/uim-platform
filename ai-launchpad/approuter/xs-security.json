@@ -1,0 +1,31 @@
+{
+  "xsappname": "uim-ai-launchpad",
+  "tenant-mode": "dedicated",
+  "description": "UIM AI Launchpad — AI runtimes, ML life cycle, generative AI hub, launchpad and administration",
+  "scopes": [
+    { "name": "$XSAPPNAME.Read", "description": "Read the launchpad, runtimes, the ML life cycle, the registry and prompts" },
+    { "name": "$XSAPPNAME.Operate", "description": "Validate connections, start and stop executions and deployments, run prompts, reconcile" },
+    { "name": "$XSAPPNAME.Develop", "description": "Maintain scenarios, configurations, models, datasets, prompt collections and prompts" },
+    { "name": "$XSAPPNAME.Manage", "description": "Maintain workspaces, connections and resource groups; create demo content" },
+    { "name": "$XSAPPNAME.Admin", "description": "Administration: audit log and launchpad tiles (users and roles of the built-in login)" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Read only", "scope-references": ["$XSAPPNAME.Read"] },
+    { "name": "Operator", "description": "Operate runtimes, executions, deployments and the playground",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Operate"] },
+    { "name": "Developer", "description": "Develop scenarios, configurations, the registry and prompts; operate",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Operate", "$XSAPPNAME.Develop"] },
+    { "name": "Manager", "description": "Manage workspaces, connections and resource groups; develop and operate",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Operate", "$XSAPPNAME.Develop", "$XSAPPNAME.Manage"] },
+    { "name": "Administrator", "description": "Everything",
+      "scope-references": ["$XSAPPNAME.Read", "$XSAPPNAME.Operate", "$XSAPPNAME.Develop", "$XSAPPNAME.Manage", "$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    { "name": "AILaunchpadViewer", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "AILaunchpadOperator", "role-template-references": ["$XSAPPNAME.Operator"] },
+    { "name": "AILaunchpadDeveloper", "role-template-references": ["$XSAPPNAME.Developer"] },
+    { "name": "AILaunchpadManager", "role-template-references": ["$XSAPPNAME.Manager"] },
+    { "name": "AILaunchpadAdministrator", "role-template-references": ["$XSAPPNAME.Administrator"] }
+  ],
+  "oauth2-configuration": { "redirect-uris": ["https://*.hana.ondemand.com/**", "http://localhost:5000/**"] }
+}

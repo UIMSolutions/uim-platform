@@ -1,0 +1,201 @@
+<mvc:View controllerName="uim.ailaunchpad.controller.Admin"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" height="100%">
+  <f:DynamicPage id="page" headerExpanded="true" toggleHeaderOnTitleClick="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading><Title text="{i18n>adminTitle}" level="H2"/></f:heading>
+        <f:snappedContent><Text text="{i18n>adminDescription}"/></f:snappedContent>
+        <f:actions>
+          <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" press=".onRefresh"/>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
+        <VBox>
+          <MessageStrip id="notAdmin" text="{i18n>adminOnly}" type="Warning" showIcon="true" visible="{= !${session>/isAdmin} }"/>
+          <MessageStrip text="{i18n>xsuaaUsers}" type="Information" showIcon="true" visible="{= ${session>/mode} === 'xsuaa' }"/>
+          <HBox binding="{/Statistics}" wrap="Wrap" class="ailpKpis" visible="{session>/isAdmin}">
+            <VBox><Label text="{i18n>kpiUsers}"/>
+              <ObjectNumber number="{users}" unit="· {lockedUsers} {i18n>kpiLocked}" state="{= %{lockedUsers} > 0 ? 'Warning' : 'None' }"/></VBox>
+            <VBox><Label text="{i18n>kpiRoles}"/><ObjectNumber number="{roles}"/></VBox>
+            <VBox><Label text="{i18n>kpiLogEntries}"/>
+              <ObjectNumber number="{logEntriesLast24h}" unit="· {warningsLast24h} {i18n>kpiWarnings}"
+                state="{= %{warningsLast24h} > 0 ? 'Warning' : 'None' }"/></VBox>
+            <VBox><Label text="{i18n>kpiTiles}"/><ObjectNumber number="{tiles}"/></VBox>
+          </HBox>
+        </VBox>
+      </f:DynamicPageHeader>
+    </f:header>
+    <f:content>
+      <IconTabBar id="tabs" selectedKey="{view>/tab}" select=".onTabSelect" expandable="false" class="sapUiResponsiveContentPadding"
+        visible="{session>/isAdmin}">
+        <items>
+          <!-- ── Users ────────────────────────────────────────────────── -->
+          <IconTabFilter key="users" icon="sap-icon://employee" text="{i18n>tabUsers}" count="{/Statistics/users}">
+            <MessageStrip text="{i18n>openModeUsers}" type="Information" showIcon="true" visible="{= !${session>/loginRequired} }"
+              class="sapUiSmallMarginBottom"/>
+            <Table id="usersTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noData}"
+              items="{path: '/Users', parameters: {$orderby: 'id'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabUsers}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SearchField width="12rem" search=".onSearch" placeholder="{i18n>search}"><customData><core:CustomData key="table" value="usersTable"/></customData></SearchField>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="true"><customData><core:CustomData key="dialog" value="user"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="true"><customData><core:CustomData key="table" value="usersTable"/><core:CustomData key="dialog" value="user"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="true"><customData><core:CustomData key="table" value="usersTable"/></customData></Button>
+                  <Button text="{i18n>lock}" icon="sap-icon://locked" press=".onLockUser" visible="true"><customData><core:CustomData key="locked" value="true"/></customData></Button>
+                  <Button text="{i18n>unlock}" icon="sap-icon://unlocked" press=".onLockUser" visible="true"><customData><core:CustomData key="locked" value="false"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colUser}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colEmail}"/></Column>
+                <Column><Text text="{i18n>colRoles}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colScopes}"/></Column>
+                <Column><Text text="{i18n>colStatus}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colLastLogin}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{displayName}" text="{id}"/>
+                  <Text text="{email}"/>
+                  <Text text="{rolesText}"/>
+                  <Text text="{scopesText}"/>
+                  <ObjectStatus text="{= %{locked} ? ${i18n>locked} : %{temporarilyLocked} ? ${i18n>temporarilyLocked} : ${i18n>enum_active} }"
+                    state="{= %{locked} ? 'Error' : %{temporarilyLocked} ? 'Warning' : 'Success' }"
+                    icon="{= %{locked} || %{temporarilyLocked} ? 'sap-icon://locked' : 'sap-icon://status-positive' }"/>
+                  <Text text="{path: 'lastLoginAt', formatter: '.formatter.relativeTime'}"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Roles ────────────────────────────────────────────────── -->
+          <IconTabFilter key="roles" icon="sap-icon://key-user-settings" text="{i18n>tabRoles}" count="{/Statistics/roles}">
+            <Table id="rolesTable" mode="SingleSelectLeft" growing="true" growingThreshold="50" noDataText="{i18n>noData}"
+              items="{path: '/Roles', parameters: {$orderby: 'createdAt'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabRoles}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="true"><customData><core:CustomData key="dialog" value="role"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="true"><customData><core:CustomData key="table" value="rolesTable"/><core:CustomData key="dialog" value="role"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="true"><customData><core:CustomData key="table" value="rolesTable"/></customData></Button>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column><Text text="{i18n>colRole}"/></Column>
+                <Column><Text text="{i18n>colScopes}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colType}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colUsers}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colDescription}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <ObjectIdentifier title="{name}" text="{id}"/>
+                  <Text text="{scopesText}"/>
+                  <ObjectStatus text="{= %{builtIn} ? ${i18n>builtIn} : ${i18n>custom} }" state="{= %{builtIn} ? 'Information' : 'None' }"
+                    icon="{= %{builtIn} ? 'sap-icon://locked' : '' }"/>
+                  <ObjectNumber number="{userCount}"/>
+                  <Text text="{description}" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Audit log ────────────────────────────────────────────── -->
+          <IconTabFilter key="logs" icon="sap-icon://log" text="{i18n>tabLogs}" count="{/Statistics/logEntriesLast24h}">
+            <Table id="logsTable" growing="true" growingThreshold="100" noDataText="{i18n>noData}" mode="SingleSelectMaster"
+              itemPress=".onLogDetails" selectionChange=".onLogDetails"
+              items="{path: '/LogEntries', parameters: {$orderby: 'createdAt desc'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabLogs}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <SegmentedButton selectedKey="{view>/logSeverity}" selectionChange=".onLogFilter">
+                    <items>
+                      <SegmentedButtonItem key="" text="{i18n>all}"/>
+                      <SegmentedButtonItem key="warning" text="{i18n>enum_warning}"/>
+                      <SegmentedButtonItem key="error" text="{i18n>enum_error}"/>
+                    </items>
+                  </SegmentedButton>
+                  <Select selectedKey="{view>/logCategory}" change=".onLogFilter" width="11rem">
+                    <core:Item key="" text="{i18n>allCategories}"/>
+                    <core:Item key="security" text="{i18n>enum_security}"/>
+                    <core:Item key="administration" text="{i18n>enum_administration}"/>
+                    <core:Item key="runtime" text="{i18n>enum_runtime}"/>
+                    <core:Item key="lifecycle" text="{i18n>enum_lifecycle}"/>
+                    <core:Item key="genai" text="{i18n>enum_genai}"/>
+                    <core:Item key="system" text="{i18n>enum_system}"/>
+                  </Select>
+                  <SearchField width="12rem" search=".onSearch" placeholder="{i18n>search}"><customData><core:CustomData key="table" value="logsTable"/></customData></SearchField>
+                  <Button id="purgeButton" text="{i18n>purgeLogs}" icon="sap-icon://delete" press=".onPurgeLogs"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="11rem"><Text text="{i18n>colTime}"/></Column>
+                <Column width="7rem"><Text text="{i18n>colSeverity}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="9rem"><Text text="{i18n>colCategory}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colEvent}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" width="8rem"><Text text="{i18n>colUser}"/></Column>
+                <Column><Text text="{i18n>colMessage}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Active">
+                  <Text text="{path: 'createdAt', formatter: '.formatter.dateTime'}"/>
+                  <ObjectStatus text="{path: 'severity', formatter: '.formatter.enumText'}" state="{path: 'severity', formatter: '.formatter.state'}"
+                    icon="{path: 'severity', formatter: '.formatter.stateIcon'}"/>
+                  <Text text="{path: 'category', formatter: '.formatter.enumText'}"/>
+                  <Text text="{eventType}" class="ailpMono"/>
+                  <Text text="{actor}"/>
+                  <Text text="{message}" maxLines="2"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+
+          <!-- ── Launchpad tiles ──────────────────────────────────────── -->
+          <IconTabFilter key="tiles" icon="sap-icon://grid" text="{i18n>tabTiles}" count="{/Statistics/tiles}">
+            <Table id="tilesTable" mode="SingleSelectLeft" growing="true" growingThreshold="100" noDataText="{i18n>noData}"
+              items="{path: '/Tiles', parameters: {$orderby: 'sortOrder'}, suspended: true, templateShareable: false}">
+              <headerToolbar>
+                <OverflowToolbar>
+                  <Title text="{i18n>tabTiles}" level="H3"/>
+                  <ToolbarSpacer/>
+                  <Button text="{i18n>create}" icon="sap-icon://add" press=".onOpenDialog" visible="true"><customData><core:CustomData key="dialog" value="tile"/></customData></Button>
+                  <Button text="{i18n>edit}" icon="sap-icon://edit" press=".onEdit" visible="true"><customData><core:CustomData key="table" value="tilesTable"/><core:CustomData key="dialog" value="tile"/></customData></Button>
+                  <Button text="{i18n>delete}" icon="sap-icon://delete" press=".onDelete" visible="true"><customData><core:CustomData key="table" value="tilesTable"/></customData></Button>
+                  <Button text="{i18n>restoreTiles}" icon="sap-icon://reset" press=".onRestoreTiles"/>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="3rem"><Text text=""/></Column>
+                <Column><Text text="{i18n>colTitle}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colGroup}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="End"><Text text="{i18n>colOrder}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colTarget}"/></Column>
+                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colKpi}"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRequiredScope}"/></Column>
+                <Column><Text text="{i18n>colVisible}"/></Column>
+              </columns>
+              <items>
+                <ColumnListItem>
+                  <core:Icon src="{icon}" size="1.25rem"/>
+                  <ObjectIdentifier title="{title}" text="{subtitle}"/>
+                  <Text text="{groupName}"/>
+                  <ObjectNumber number="{sortOrder}"/>
+                  <Text text="{target}" class="ailpMono" wrapping="true"/>
+                  <Text text="{kpi}"/>
+                  <Text text="{requiredScope}"/>
+                  <ObjectStatus text="{= %{visible} ? ${i18n>yes} : ${i18n>no} }" state="{= %{visible} ? 'Success' : 'None' }"/>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </IconTabFilter>
+        </items>
+      </IconTabBar>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

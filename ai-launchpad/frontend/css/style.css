@@ -1,0 +1,7 @@
+/* Launchpad: tile groups and tiles */
+.ailpLaunchpad .ailpGroupTitle { margin: 1.5rem 0 0.5rem 0.25rem; }
+.ailpLaunchpad .ailpTile { margin: 0 0.5rem 0.5rem 0; }
+.ailpLaunchpad .ailpHero { padding: 1.5rem 0.25rem 0.5rem 0.25rem; }
+.ailpKpis > * { margin-right: 2rem; margin-bottom: 0.5rem; }
+.ailpOutput textarea { font-family: "72Mono", monospace; }
+.ailpMono { font-family: "72Mono", monospace; }

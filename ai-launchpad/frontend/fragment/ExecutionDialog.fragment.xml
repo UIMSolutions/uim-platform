@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/execution/edit} ? ${i18n>editExecution} : ${i18n>createExecution} }" contentWidth="34rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colConfiguration}" required="true"/>
+      <Select selectedKey="{view>/form/execution/configurationId}" forceSelection="false"
+        items="{path: '/Configurations', parameters: {$orderby: 'name', $select: 'id,name,executableId'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({executableId})"/>
+      </Select>
+      <Label text="{i18n>colResourceGroup}"/>
+      <Select selectedKey="{view>/form/execution/resourceGroupId}" forceSelection="false"
+        items="{path: '/ResourceGroups', parameters: {$orderby: 'id', $select: 'id,status'}, templateShareable: false}">
+        <core:Item key="{id}" text="{id}" enabled="{= %{status} === 'ready' }"/>
+      </Select>
+      <Label text=""/>
+      <Text text="{i18n>defaultResourceGroupHint}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

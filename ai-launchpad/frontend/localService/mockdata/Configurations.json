@@ -1,0 +1,74 @@
+[
+  {
+    "executableId": "training",
+    "parametersText": "epochs=20, learningRate=0.001",
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "fraud-train",
+    "executionCount": 1,
+    "parameters": [
+      "epochs=20",
+      "learningRate=0.001"
+    ],
+    "inUse": true,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Fraud training (XGBoost)",
+    "inputArtifacts": [
+      "trainingData=transactions-2026"
+    ],
+    "inputArtifactsText": "trainingData=transactions-2026",
+    "scenarioId": "fraud-detection",
+    "deploymentCount": 0,
+    "scenarioName": "Fraud Detection",
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "executableId": "serving",
+    "parametersText": "modelVersion=1",
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "fraud-serve",
+    "executionCount": 0,
+    "parameters": [
+      "modelVersion=1"
+    ],
+    "inUse": true,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Fraud serving",
+    "inputArtifacts": [],
+    "inputArtifactsText": "",
+    "scenarioId": "fraud-detection",
+    "deploymentCount": 1,
+    "scenarioName": "Fraud Detection",
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "executableId": "training",
+    "parametersText": "horizonDays=30, simulate.outcome=failed",
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "forecast-train",
+    "executionCount": 1,
+    "parameters": [
+      "horizonDays=30",
+      "simulate.outcome=failed"
+    ],
+    "inUse": true,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Forecast training (Prophet)",
+    "inputArtifacts": [
+      "trainingData=sales-history"
+    ],
+    "inputArtifactsText": "trainingData=sales-history",
+    "scenarioId": "demand-forecast",
+    "deploymentCount": 0,
+    "scenarioName": "Demand Forecast",
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  }
+]

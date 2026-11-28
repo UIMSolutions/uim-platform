@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/workspace/edit} ? ${i18n>editWorkspace} : ${i18n>createWorkspace} }" contentWidth="34rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="true"/>
+      <Input value="{view>/form/workspace/id}" enabled="{= !%{view>/form/workspace/edit} }" placeholder="{i18n>idWorkspace}"/>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/workspace/name}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/workspace/description}" rows="3"/>
+      <Label text="{i18n>colStatus}"/>
+      <Select selectedKey="{view>/form/workspace/status}">
+        <core:Item key="active" text="{i18n>enum_active}"/>
+        <core:Item key="inactive" text="{i18n>enum_inactive}"/>
+      </Select>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

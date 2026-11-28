@@ -1,0 +1,22 @@
+<mvc:View controllerName="uim.ailaunchpad.controller.App"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:tnt="sap.tnt" displayBlock="true" height="100%">
+  <tnt:ToolPage id="toolPage">
+    <tnt:header>
+      <f:ShellBar id="shellBar" title="{i18n>appTitle}" secondTitle="{view>/pageTitle}" homeIcon="./css/logo.svg"
+        homeIconTooltip="{i18n>home}" homeIconPressed=".onHome"
+        showNavButton="{= ${view>/page} !== 'launchpad' }" navButtonPressed=".onNavBack"
+        avatarPressed=".onAvatarPressed">
+        <f:profile>
+          <Avatar id="avatar" initials="{session>/initials}" displaySize="XS" tooltip="{session>/displayName}"/>
+        </f:profile>
+        <f:additionalContent>
+          <Button id="homeButton" icon="sap-icon://home" tooltip="{i18n>home}" type="Transparent" press=".onHome"
+            visible="{= ${view>/page} !== 'launchpad' }"/>
+        </f:additionalContent>
+      </f:ShellBar>
+    </tnt:header>
+    <tnt:mainContents>
+      <App id="app" busy="{view>/busy}" busyIndicatorDelay="300"/>
+    </tnt:mainContents>
+  </tnt:ToolPage>
+</mvc:View>

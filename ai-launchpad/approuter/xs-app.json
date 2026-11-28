@@ -1,0 +1,40 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": { "logoutEndpoint": "/do/logout" },
+  "routes": [
+    {
+      "source": "^/odata/v4/ai-launchpad/(.*)$",
+      "target": "/odata/v4/ai-launchpad/$1",
+      "destination": "ai-launchpad-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": "$XSAPPNAME.Read"
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "ai-launchpad-srv",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true,
+      "scope": "$XSAPPNAME.Read"
+    },
+    {
+      "source": "^/auth/(config|me)$",
+      "target": "/auth/$1",
+      "destination": "ai-launchpad-srv",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/health$",
+      "destination": "ai-launchpad-srv",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "localDir": "resources",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

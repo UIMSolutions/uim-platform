@@ -1,0 +1,52 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/tile/edit} ? ${i18n>editTile} : ${i18n>createTile} }" contentWidth="40rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="true"/>
+      <Input value="{view>/form/tile/id}" enabled="{= !%{view>/form/tile/edit} }" placeholder="{i18n>idTile}"/>
+      <Label text="{i18n>colTitle}" required="true"/>
+      <Input value="{view>/form/tile/title}"/>
+      <Label text="{i18n>colSubtitle}"/>
+      <Input value="{view>/form/tile/subtitle}"/>
+      <Label text="{i18n>colFooter}"/>
+      <Input value="{view>/form/tile/info}"/>
+      <Label text="{i18n>colIcon}"/>
+      <HBox alignItems="Center">
+        <Input value="{view>/form/tile/icon}" width="16rem" placeholder="sap-icon://product"/>
+        <core:Icon src="{view>/form/tile/icon}" size="1.5rem" class="sapUiSmallMarginBegin"/>
+      </HBox>
+      <Label text="{i18n>colGroup}"/>
+      <Input value="{view>/form/tile/groupName}"/>
+      <Label text="{i18n>colOrder}"/>
+      <StepInput value="{view>/form/tile/sortOrder}" min="0" max="100000" step="10" width="9rem"/>
+      <Label text="{i18n>colTargetType}"/>
+      <SegmentedButton selectedKey="{view>/form/tile/targetType}">
+        <items>
+          <SegmentedButtonItem key="app" text="{i18n>enum_app}"/>
+          <SegmentedButtonItem key="url" text="{i18n>enum_url}"/>
+        </items>
+      </SegmentedButton>
+      <Label text="{i18n>colTarget}" required="true"/>
+      <Input value="{view>/form/tile/target}"
+        placeholder="{= %{view>/form/tile/targetType} === 'url' ? 'https://…' : 'lifecycle/executions' }"/>
+      <Label text="{i18n>colKpi}"/>
+      <Select selectedKey="{view>/form/tile/kpi}" forceSelection="false" items="{path: 'view>/kpis', templateShareable: false}">
+        <core:Item key="{view>key}" text="{view>text}"/>
+      </Select>
+      <Label text="{i18n>colKpiUnit}"/>
+      <Input value="{view>/form/tile/kpiUnit}" width="10rem"/>
+      <Label text="{i18n>colRequiredScope}"/>
+      <Select selectedKey="{view>/form/tile/requiredScope}">
+        <core:Item key="" text="{i18n>everyone}"/>
+        <core:Item key="Read" text="Read"/>
+        <core:Item key="Operate" text="Operate"/>
+        <core:Item key="Develop" text="Develop"/>
+        <core:Item key="Manage" text="Manage"/>
+        <core:Item key="Admin" text="Admin"/>
+      </Select>
+      <Label text="{i18n>colVisible}"/>
+      <Switch state="{view>/form/tile/visible}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

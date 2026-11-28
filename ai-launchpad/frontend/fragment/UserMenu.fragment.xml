@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <ResponsivePopover title="{= ${session>/displayName} || ${i18n>openMode} }" placement="Bottom" contentWidth="18rem">
+    <content>
+    <VBox class="sapUiSmallMargin">
+      <ObjectAttribute title="{i18n>colUser}" text="{session>/user}" visible="{session>/authenticated}"/>
+      <ObjectAttribute title="{i18n>colEmail}" text="{session>/email}" visible="{= !!${session>/email} }"/>
+      <ObjectAttribute title="{i18n>loginTenant}" text="{session>/tenant}"/>
+      <ObjectAttribute title="{i18n>colRoles}" text="{path: 'session>/roles', formatter: '.formatter.join'}" visible="{session>/authenticated}"/>
+      <ObjectAttribute title="{i18n>colScopes}" text="{path: 'session>/scopes', formatter: '.formatter.join'}"/>
+      <ObjectAttribute title="{i18n>security}" text="{path: 'session>/mode', formatter: '.formatter.enumText'}"/>
+    </VBox>
+      <List showSeparators="None">
+        <StandardListItem title="{i18n>changePassword}" icon="sap-icon://key" type="Active" press=".onChangePassword"
+          visible="{session>/loginRequired}"/>
+        <StandardListItem title="{i18n>logout}" icon="sap-icon://log" type="Active" press=".onLogout"
+          visible="{session>/loginRequired}"/>
+      </List>
+    </content>
+    <endButton><Button text="{i18n>close}" press=".onCloseUserMenu"/></endButton>
+  </ResponsivePopover>
+</core:FragmentDefinition>

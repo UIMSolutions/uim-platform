@@ -2,8 +2,19 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: ai-launchpad-config
+  namespace: uim-platform
   labels:
-    app: ai-launchpad
+    app: ai-launchpad-service
+    part-of: uim-platform
 data:
   AILP_HOST: "0.0.0.0"
   AILP_PORT: "8097"
+  AILP_STORAGE: "file"
+  AILP_DATA_FILE: "/data/ai-launchpad.json"
+  AILP_FRONTEND_DIR: "/app/frontend"
+  AILP_AUTH_MODE: "jwt"
+  AILP_TOKEN_TTL_SECONDS: "3600"
+  # reconcile worker: executions and deployments are synchronized every n seconds (0 = on demand only)
+  AILP_RECONCILE_INTERVAL_SECONDS: "15"
+  AILP_LOG_RETENTION_DAYS: "30"
+  AILP_RUNTIME_MODE: "simulate"

@@ -1,0 +1,92 @@
+[
+  {
+    "updatedAt": "2026-11-27T16:00:17Z",
+    "id": "Viewer",
+    "scopes": [
+      "Read"
+    ],
+    "scopesText": "Read",
+    "createdAt": "2026-11-27T16:00:17Z",
+    "createdBy": "system",
+    "name": "Viewer",
+    "builtIn": true,
+    "userCount": 0,
+    "description": "Read the launchpad, runtimes, the ML life cycle, the registry and prompts",
+    "tenantId": "default",
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-27T16:00:17Z",
+    "id": "Operator",
+    "scopes": [
+      "Read",
+      "Operate"
+    ],
+    "scopesText": "Read, Operate",
+    "createdAt": "2026-11-27T16:00:17Z",
+    "createdBy": "system",
+    "name": "Operator",
+    "builtIn": true,
+    "userCount": 0,
+    "description": "Validate connections, start and stop executions and deployments, run prompts",
+    "tenantId": "default",
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-27T16:00:17Z",
+    "id": "Developer",
+    "scopes": [
+      "Read",
+      "Operate",
+      "Develop"
+    ],
+    "scopesText": "Read, Operate, Develop",
+    "createdAt": "2026-11-27T16:00:17Z",
+    "createdBy": "system",
+    "name": "AI Developer",
+    "builtIn": true,
+    "userCount": 0,
+    "description": "Maintain scenarios, configurations, models, datasets and prompts; operate",
+    "tenantId": "default",
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-27T16:00:17Z",
+    "id": "Manager",
+    "scopes": [
+      "Read",
+      "Operate",
+      "Develop",
+      "Manage"
+    ],
+    "scopesText": "Read, Operate, Develop, Manage",
+    "createdAt": "2026-11-27T16:00:17Z",
+    "createdBy": "system",
+    "name": "AI Manager",
+    "builtIn": true,
+    "userCount": 0,
+    "description": "Maintain workspaces, connections and resource groups; develop and operate",
+    "tenantId": "default",
+    "updatedBy": "system"
+  },
+  {
+    "updatedAt": "2026-11-27T16:00:17Z",
+    "id": "Administrator",
+    "scopes": [
+      "Read",
+      "Operate",
+      "Develop",
+      "Manage",
+      "Admin"
+    ],
+    "scopesText": "Read, Operate, Develop, Manage, Admin",
+    "createdAt": "2026-11-27T16:00:17Z",
+    "createdBy": "system",
+    "name": "Administrator",
+    "builtIn": true,
+    "userCount": 0,
+    "description": "Everything, including users, roles, the audit log and tiles",
+    "tenantId": "default",
+    "updatedBy": "system"
+  }
+]

@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/deployment/edit} ? ${i18n>editDeployment} : ${i18n>createDeployment} }" contentWidth="34rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="false"/>
+      <Input value="{view>/form/deployment/id}" enabled="{= !%{view>/form/deployment/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colConfiguration}" required="true"/>
+      <Select selectedKey="{view>/form/deployment/configurationId}" enabled="{= !%{view>/form/deployment/edit} }" forceSelection="false"
+        items="{path: '/Configurations', parameters: {$orderby: 'name', $select: 'id,name,executableId'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name} ({executableId})"/>
+      </Select>
+      <Label text="{i18n>colResourceGroup}"/>
+      <Select selectedKey="{view>/form/deployment/resourceGroupId}" enabled="{= !%{view>/form/deployment/edit} }" forceSelection="false"
+        items="{path: '/ResourceGroups', parameters: {$orderby: 'id', $select: 'id,status'}, templateShareable: false}">
+        <core:Item key="{id}" text="{id}" enabled="{= %{status} === 'ready' }"/>
+      </Select>
+      <Label text="{i18n>colReplicas}"/>
+      <HBox alignItems="Center">
+        <StepInput value="{view>/form/deployment/minReplicas}" min="1" max="10" width="8rem"/>
+        <Text text="–" class="sapUiTinyMarginBeginEnd"/>
+        <StepInput value="{view>/form/deployment/maxReplicas}" min="1" max="10" width="8rem"/>
+      </HBox>
+      <Label text="{i18n>colTtl}"/>
+      <StepInput value="{view>/form/deployment/ttlMinutes}" min="0" max="525600" step="15" width="10rem"
+        description="{i18n>ttlHint}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

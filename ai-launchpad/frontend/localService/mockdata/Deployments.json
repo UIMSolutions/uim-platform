@@ -1,0 +1,25 @@
+[
+  {
+    "configurationName": "Fraud serving",
+    "resourceGroupId": "default",
+    "statusMessage": "Waiting for the runtime",
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "fraud-api",
+    "maxReplicas": 3,
+    "stoppedAt": null,
+    "status": "pending",
+    "minReplicas": 1,
+    "expiresAt": null,
+    "ttlMinutes": 0,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "deploymentUrl": null,
+    "startedAt": null,
+    "scenarioId": "fraud-detection",
+    "scenarioName": "Fraud Detection",
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "configurationId": "fraud-serve",
+    "updatedBy": "anonymous"
+  }
+]

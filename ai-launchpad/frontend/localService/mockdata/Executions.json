@@ -1,0 +1,40 @@
+[
+  {
+    "configurationName": "Fraud training (XGBoost)",
+    "resourceGroupId": "fraud-team",
+    "durationSeconds": 0,
+    "statusMessage": "Running",
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "34684379f3f7417d",
+    "status": "running",
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "startedAt": "2026-11-27T16:00:19Z",
+    "scenarioId": "fraud-detection",
+    "completedAt": null,
+    "scenarioName": "Fraud Detection",
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "configurationId": "fraud-train",
+    "updatedBy": "system"
+  },
+  {
+    "configurationName": "Forecast training (Prophet)",
+    "resourceGroupId": "default",
+    "durationSeconds": 0,
+    "statusMessage": "Running",
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "5cca67d3c85d45ed",
+    "status": "running",
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "startedAt": "2026-11-27T16:00:19Z",
+    "scenarioId": "demand-forecast",
+    "completedAt": null,
+    "scenarioName": "Demand Forecast",
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "configurationId": "forecast-train",
+    "updatedBy": "system"
+  }
+]

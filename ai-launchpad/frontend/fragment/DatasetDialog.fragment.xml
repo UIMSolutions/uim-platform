@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/dataset/edit} ? ${i18n>editDataset} : ${i18n>createDataset} }" contentWidth="38rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="false"/>
+      <Input value="{view>/form/dataset/id}" enabled="{= !%{view>/form/dataset/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colScenario}" required="true"/>
+      <Select selectedKey="{view>/form/dataset/scenarioId}" enabled="{= !%{view>/form/dataset/edit} }" forceSelection="false"
+        items="{path: '/Scenarios', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/dataset/name}"/>
+      <Label text="{i18n>colUrl}" required="true"/>
+      <Input value="{view>/form/dataset/url}" placeholder="s3://bucket/path/data.parquet"/>
+      <Label text="{i18n>colSize}"/>
+      <StepInput value="{view>/form/dataset/sizeMiB}" min="0" displayValuePrecision="1" description="MiB" width="10rem"/>
+      <Label text="{i18n>colStatus}"/>
+      <Select selectedKey="{view>/form/dataset/status}">
+        <core:Item key="available" text="{i18n>enum_available}"/>
+        <core:Item key="archived" text="{i18n>enum_archived}"/>
+      </Select>
+      <Label text="{i18n>colLabels}"/>
+      <TextArea value="{view>/form/dataset/labels}" rows="2" class="ailpMono"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/dataset/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

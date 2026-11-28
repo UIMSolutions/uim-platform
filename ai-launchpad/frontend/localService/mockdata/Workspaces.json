@@ -1,0 +1,28 @@
+[
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "ml-team",
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "ML Team",
+    "promptCollectionCount": 0,
+    "description": "Classic machine learning: fraud detection and forecasting",
+    "connectionCount": 2,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  },
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "genai-lab",
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "GenAI Lab",
+    "promptCollectionCount": 2,
+    "description": "Generative AI use cases of the service desk",
+    "connectionCount": 0,
+    "tenantId": "default",
+    "status": "active",
+    "updatedBy": "anonymous"
+  }
+]

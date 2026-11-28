@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/configuration/edit} ? ${i18n>editConfiguration} : ${i18n>createConfiguration} }" contentWidth="38rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="false"/>
+      <Input value="{view>/form/configuration/id}" enabled="{= !%{view>/form/configuration/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colScenario}" required="true"/>
+      <Select selectedKey="{view>/form/configuration/scenarioId}" enabled="{= !%{view>/form/configuration/edit} }" forceSelection="false"
+        items="{path: '/Scenarios', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/configuration/name}"/>
+      <Label text="{i18n>colExecutable}" required="true"/>
+      <Input value="{view>/form/configuration/executableId}" placeholder="training"/>
+      <Label text="{i18n>colParameters}"/>
+      <TextArea value="{view>/form/configuration/parameters}" rows="4" placeholder="epochs=20&#10;learningRate=0.001" class="ailpMono"/>
+      <Label text="{i18n>colInputArtifacts}"/>
+      <TextArea value="{view>/form/configuration/inputArtifacts}" rows="2" placeholder="trainingData=&lt;dataset id&gt;" class="ailpMono"/>
+      <Label text=""/>
+      <Text text="{i18n>configurationImmutable}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

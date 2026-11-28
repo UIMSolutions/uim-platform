@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/connection/edit} ? ${i18n>editConnection} : ${i18n>createConnection} }" contentWidth="38rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="false"/>
+      <Input value="{view>/form/connection/id}" enabled="{= !%{view>/form/connection/edit} }" placeholder="{i18n>idGenerated}"/>
+      <Label text="{i18n>colWorkspace}" required="true"/>
+      <Select selectedKey="{view>/form/connection/workspaceId}" enabled="{= !%{view>/form/connection/edit} }" forceSelection="false"
+        items="{path: '/Workspaces', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/connection/name}"/>
+      <Label text="{i18n>colType}"/>
+      <Select selectedKey="{view>/form/connection/connectionType}">
+        <core:Item key="aiCore" text="{i18n>enum_aiCore}"/>
+        <core:Item key="custom" text="{i18n>enum_custom}"/>
+      </Select>
+      <Label text="{i18n>colUrl}" required="true"/>
+      <Input value="{view>/form/connection/url}" type="Url" placeholder="https://api.ai.&lt;region&gt;.ml.hana.ondemand.com/v2"/>
+      <Label text="{i18n>colAuthUrl}"/>
+      <Input value="{view>/form/connection/authUrl}" type="Url" placeholder="https://&lt;subdomain&gt;.authentication.&lt;region&gt;.hana.ondemand.com/oauth/token"/>
+      <Label text="{i18n>colClientId}"/>
+      <Input value="{view>/form/connection/clientId}" autocomplete="off"/>
+      <Label text="{i18n>colClientSecret}"/>
+      <Input value="{view>/form/connection/clientSecret}" type="Password" autocomplete="new-password"
+        placeholder="{= %{view>/form/connection/edit} ? ${i18n>secretKeep} : '' }"/>
+      <Label text="{i18n>colDefaultResourceGroup}"/>
+      <Input value="{view>/form/connection/defaultResourceGroup}"/>
+      <Label text="{i18n>colDescription}"/>
+      <TextArea value="{view>/form/connection/description}" rows="2"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>

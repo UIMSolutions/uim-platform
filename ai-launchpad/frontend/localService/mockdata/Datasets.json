@@ -1,0 +1,36 @@
+[
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "transactions-2026",
+    "sizeMiB": 2048,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Card transactions 2026",
+    "url": "s3://demo-bucket/fraud/transactions-2026.parquet",
+    "scenarioId": "fraud-detection",
+    "labels": [],
+    "labelsText": "",
+    "description": "Demo data",
+    "scenarioName": "Fraud Detection",
+    "tenantId": "default",
+    "status": "available",
+    "updatedBy": "anonymous"
+  },
+  {
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "sales-history",
+    "sizeMiB": 512,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Sales history",
+    "url": "s3://demo-bucket/forecast/sales-history.csv",
+    "scenarioId": "demand-forecast",
+    "labels": [],
+    "labelsText": "",
+    "description": "Demo data",
+    "scenarioName": "Demand Forecast",
+    "tenantId": "default",
+    "status": "available",
+    "updatedBy": "anonymous"
+  }
+]

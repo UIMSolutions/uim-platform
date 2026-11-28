@@ -1,0 +1,54 @@
+[
+  {
+    "modelCount": 1,
+    "executionCount": 1,
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "fraud-detection",
+    "datasetCount": 1,
+    "executablesText": "training, serving",
+    "configurationCount": 2,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Fraud Detection",
+    "labels": [
+      "ext.ai.sap.com/domain=fraud-detection"
+    ],
+    "executables": [
+      "training",
+      "serving"
+    ],
+    "connectionName": "SAP AI Core (EU)",
+    "labelsText": "ext.ai.sap.com/domain=fraud-detection",
+    "description": "Detect fraudulent card transactions",
+    "deploymentCount": 1,
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  },
+  {
+    "modelCount": 0,
+    "executionCount": 1,
+    "updatedAt": "2026-11-27T16:00:19Z",
+    "id": "demand-forecast",
+    "datasetCount": 1,
+    "executablesText": "training, batch-scoring",
+    "configurationCount": 1,
+    "createdAt": "2026-11-27T16:00:19Z",
+    "createdBy": "anonymous",
+    "name": "Demand Forecast",
+    "labels": [
+      "ext.ai.sap.com/domain=demand-forecast"
+    ],
+    "executables": [
+      "training",
+      "batch-scoring"
+    ],
+    "connectionName": "SAP AI Core (EU)",
+    "labelsText": "ext.ai.sap.com/domain=demand-forecast",
+    "description": "Forecast the demand per product and store",
+    "deploymentCount": 0,
+    "connectionId": "aicore-eu",
+    "tenantId": "default",
+    "updatedBy": "anonymous"
+  }
+]

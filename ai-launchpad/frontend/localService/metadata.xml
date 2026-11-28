@@ -1,0 +1,967 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="uim.ailaunchpad" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Workspace">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="connectionCount" Type="Edm.Int32"/>
+        <Property Name="promptCollectionCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Connection">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="workspaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="connectionType" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String" Nullable="false"/>
+        <Property Name="authUrl" Type="Edm.String"/>
+        <Property Name="clientId" Type="Edm.String"/>
+        <Property Name="clientSecret" Type="Edm.String"/>
+        <Property Name="hasSecret" Type="Edm.Boolean"/>
+        <Property Name="defaultResourceGroup" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="lastValidatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="resourceGroupCount" Type="Edm.Int32"/>
+        <Property Name="scenarioCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="ResourceGroup">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="connectionId" Type="Edm.String" Nullable="false"/>
+        <Property Name="connectionName" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="labelsText" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="activeExecutions" Type="Edm.Int32"/>
+        <Property Name="activeDeployments" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Scenario">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="connectionId" Type="Edm.String" Nullable="false"/>
+        <Property Name="connectionName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="executables" Type="Collection(Edm.String)"/>
+        <Property Name="executablesText" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="labelsText" Type="Edm.String"/>
+        <Property Name="configurationCount" Type="Edm.Int32"/>
+        <Property Name="executionCount" Type="Edm.Int32"/>
+        <Property Name="deploymentCount" Type="Edm.Int32"/>
+        <Property Name="modelCount" Type="Edm.Int32"/>
+        <Property Name="datasetCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Configuration">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioId" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioName" Type="Edm.String"/>
+        <Property Name="connectionId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="executableId" Type="Edm.String" Nullable="false"/>
+        <Property Name="parameters" Type="Collection(Edm.String)"/>
+        <Property Name="parametersText" Type="Edm.String"/>
+        <Property Name="inputArtifacts" Type="Collection(Edm.String)"/>
+        <Property Name="inputArtifactsText" Type="Edm.String"/>
+        <Property Name="executionCount" Type="Edm.Int32"/>
+        <Property Name="deploymentCount" Type="Edm.Int32"/>
+        <Property Name="inUse" Type="Edm.Boolean"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Execution">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="configurationId" Type="Edm.String" Nullable="false"/>
+        <Property Name="configurationName" Type="Edm.String"/>
+        <Property Name="scenarioId" Type="Edm.String"/>
+        <Property Name="scenarioName" Type="Edm.String"/>
+        <Property Name="connectionId" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="completedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="durationSeconds" Type="Edm.Int64"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Deployment">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="configurationId" Type="Edm.String" Nullable="false"/>
+        <Property Name="configurationName" Type="Edm.String"/>
+        <Property Name="scenarioId" Type="Edm.String"/>
+        <Property Name="scenarioName" Type="Edm.String"/>
+        <Property Name="connectionId" Type="Edm.String"/>
+        <Property Name="resourceGroupId" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="statusMessage" Type="Edm.String"/>
+        <Property Name="deploymentUrl" Type="Edm.String"/>
+        <Property Name="minReplicas" Type="Edm.Int32"/>
+        <Property Name="maxReplicas" Type="Edm.Int32"/>
+        <Property Name="ttlMinutes" Type="Edm.Int32"/>
+        <Property Name="startedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="stoppedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="expiresAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Model">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioId" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioName" Type="Edm.String"/>
+        <Property Name="executionId" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="version" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String"/>
+        <Property Name="sizeMiB" Type="Edm.Double"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="labelsText" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Dataset">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioId" Type="Edm.String" Nullable="false"/>
+        <Property Name="scenarioName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" Nullable="false"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="url" Type="Edm.String" Nullable="false"/>
+        <Property Name="sizeMiB" Type="Edm.Double"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="labels" Type="Collection(Edm.String)"/>
+        <Property Name="labelsText" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="PromptCollection">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="workspaceId" Type="Edm.String" Nullable="false"/>
+        <Property Name="workspaceName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="promptCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Prompt">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="collectionId" Type="Edm.String" Nullable="false"/>
+        <Property Name="collectionName" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="modelName" Type="Edm.String"/>
+        <Property Name="modelVersion" Type="Edm.String"/>
+        <Property Name="systemMessage" Type="Edm.String"/>
+        <Property Name="userMessage" Type="Edm.String" Nullable="false"/>
+        <Property Name="temperature" Type="Edm.Double"/>
+        <Property Name="maxTokens" Type="Edm.Int32"/>
+        <Property Name="topP" Type="Edm.Double"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="version" Type="Edm.Int32"/>
+        <Property Name="inputParams" Type="Collection(Edm.String)"/>
+        <Property Name="inputParamsText" Type="Edm.String"/>
+        <Property Name="lastOutput" Type="Edm.String"/>
+        <Property Name="lastRunAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="runCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Tile">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="title" Type="Edm.String" Nullable="false"/>
+        <Property Name="subtitle" Type="Edm.String"/>
+        <Property Name="info" Type="Edm.String"/>
+        <Property Name="icon" Type="Edm.String"/>
+        <Property Name="groupName" Type="Edm.String"/>
+        <Property Name="sortOrder" Type="Edm.Int32"/>
+        <Property Name="targetType" Type="Edm.String"/>
+        <Property Name="target" Type="Edm.String" Nullable="false"/>
+        <Property Name="kpi" Type="Edm.String"/>
+        <Property Name="kpiUnit" Type="Edm.String"/>
+        <Property Name="requiredScope" Type="Edm.String"/>
+        <Property Name="visible" Type="Edm.Boolean"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="LaunchpadTile">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="title" Type="Edm.String" Nullable="false"/>
+        <Property Name="subtitle" Type="Edm.String"/>
+        <Property Name="info" Type="Edm.String"/>
+        <Property Name="icon" Type="Edm.String"/>
+        <Property Name="groupName" Type="Edm.String"/>
+        <Property Name="sortOrder" Type="Edm.Int32"/>
+        <Property Name="targetType" Type="Edm.String"/>
+        <Property Name="target" Type="Edm.String" Nullable="false"/>
+        <Property Name="kpi" Type="Edm.String"/>
+        <Property Name="kpiUnit" Type="Edm.String"/>
+        <Property Name="requiredScope" Type="Edm.String"/>
+        <Property Name="kpiValue" Type="Edm.Int64"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="displayName" Type="Edm.String"/>
+        <Property Name="email" Type="Edm.String"/>
+        <Property Name="password" Type="Edm.String"/>
+        <Property Name="roles" Type="Collection(Edm.String)"/>
+        <Property Name="rolesText" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="locked" Type="Edm.Boolean"/>
+        <Property Name="temporarilyLocked" Type="Edm.Boolean"/>
+        <Property Name="failedLogins" Type="Edm.Int32"/>
+        <Property Name="lastLoginAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Role">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="scopes" Type="Collection(Edm.String)"/>
+        <Property Name="scopesText" Type="Edm.String"/>
+        <Property Name="builtIn" Type="Edm.Boolean"/>
+        <Property Name="userCount" Type="Edm.Int32"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="LogEntry">
+        <Key><PropertyRef Name="id"/></Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="severity" Type="Edm.String"/>
+        <Property Name="eventType" Type="Edm.String"/>
+        <Property Name="subject" Type="Edm.String"/>
+        <Property Name="actor" Type="Edm.String"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="details" Type="Edm.String"/>
+        <Property Name="tenantId" Type="Edm.String"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="createdBy" Type="Edm.String"/>
+        <Property Name="updatedAt" Type="Edm.DateTimeOffset" Precision="3"/>
+        <Property Name="updatedBy" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Statistic">
+        <Key><PropertyRef Name="tenantId"/></Key>
+        <Property Name="tenantId" Type="Edm.String" Nullable="false"/>
+        <Property Name="workspaces" Type="Edm.Int32"/>
+        <Property Name="connections" Type="Edm.Int32"/>
+        <Property Name="activeConnections" Type="Edm.Int32"/>
+        <Property Name="resourceGroups" Type="Edm.Int32"/>
+        <Property Name="scenarios" Type="Edm.Int32"/>
+        <Property Name="configurations" Type="Edm.Int32"/>
+        <Property Name="executions" Type="Edm.Int32"/>
+        <Property Name="runningExecutions" Type="Edm.Int32"/>
+        <Property Name="failedExecutions" Type="Edm.Int32"/>
+        <Property Name="deployments" Type="Edm.Int32"/>
+        <Property Name="runningDeployments" Type="Edm.Int32"/>
+        <Property Name="models" Type="Edm.Int32"/>
+        <Property Name="datasets" Type="Edm.Int32"/>
+        <Property Name="promptCollections" Type="Edm.Int32"/>
+        <Property Name="prompts" Type="Edm.Int32"/>
+        <Property Name="activePrompts" Type="Edm.Int32"/>
+        <Property Name="promptRuns" Type="Edm.Int32"/>
+        <Property Name="users" Type="Edm.Int32"/>
+        <Property Name="lockedUsers" Type="Edm.Int32"/>
+        <Property Name="roles" Type="Edm.Int32"/>
+        <Property Name="tiles" Type="Edm.Int32"/>
+        <Property Name="logEntriesLast24h" Type="Edm.Int32"/>
+        <Property Name="warningsLast24h" Type="Edm.Int32"/>
+      </EntityType>
+      <ComplexType Name="ReconcileSummary">
+        <Property Name="checked" Type="Edm.Int32"/>
+        <Property Name="started" Type="Edm.Int32"/>
+        <Property Name="completed" Type="Edm.Int32"/>
+        <Property Name="failed" Type="Edm.Int32"/>
+        <Property Name="deployed" Type="Edm.Int32"/>
+        <Property Name="dead" Type="Edm.Int32"/>
+        <Property Name="expired" Type="Edm.Int32"/>
+        <Property Name="summary" Type="Edm.String"/>
+        <Property Name="messages" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="PromptRunResult">
+        <Property Name="promptId" Type="Edm.String"/>
+        <Property Name="promptVersion" Type="Edm.Int32"/>
+        <Property Name="modelName" Type="Edm.String"/>
+        <Property Name="renderedPrompt" Type="Edm.String"/>
+        <Property Name="output" Type="Edm.String"/>
+        <Property Name="promptTokens" Type="Edm.Int32"/>
+        <Property Name="completionTokens" Type="Edm.Int32"/>
+        <Property Name="latencyMs" Type="Edm.Int64"/>
+      </ComplexType>
+      <ComplexType Name="PurgeResult">
+        <Property Name="entries" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="TileResult">
+        <Property Name="tiles" Type="Edm.Int32"/>
+      </ComplexType>
+      <ComplexType Name="SeedResult">
+        <Property Name="workspaces" Type="Edm.Int32"/>
+        <Property Name="connections" Type="Edm.Int32"/>
+        <Property Name="resourceGroups" Type="Edm.Int32"/>
+        <Property Name="scenarios" Type="Edm.Int32"/>
+        <Property Name="configurations" Type="Edm.Int32"/>
+        <Property Name="executions" Type="Edm.Int32"/>
+        <Property Name="deployments" Type="Edm.Int32"/>
+        <Property Name="models" Type="Edm.Int32"/>
+        <Property Name="datasets" Type="Edm.Int32"/>
+        <Property Name="promptCollections" Type="Edm.Int32"/>
+        <Property Name="prompts" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="ValidateConnection" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ailaunchpad.Connection"/>
+      </Action>
+      <Action Name="StopExecution" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ailaunchpad.Execution"/>
+      </Action>
+      <Action Name="StopDeployment" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ailaunchpad.Deployment"/>
+      </Action>
+      <Action Name="StartDeployment" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="uim.ailaunchpad.Deployment"/>
+      </Action>
+      <Action Name="RunPrompt" IsBound="false">
+        <Parameter Name="id" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="inputs" Type="Edm.String"/>
+        <ReturnType Type="uim.ailaunchpad.PromptRunResult"/>
+      </Action>
+      <Action Name="Reconcile" IsBound="false">
+        <ReturnType Type="uim.ailaunchpad.ReconcileSummary"/>
+      </Action>
+      <Action Name="PurgeLogs" IsBound="false">
+        <ReturnType Type="uim.ailaunchpad.PurgeResult"/>
+      </Action>
+      <Action Name="RestoreDefaultTiles" IsBound="false">
+        <ReturnType Type="uim.ailaunchpad.TileResult"/>
+      </Action>
+      <Action Name="SeedDemoData" IsBound="false">
+        <ReturnType Type="uim.ailaunchpad.SeedResult"/>
+      </Action>
+      <EntityContainer Name="AiLaunchpadService">
+        <EntitySet Name="Workspaces" EntityType="uim.ailaunchpad.Workspace"/>
+        <EntitySet Name="Connections" EntityType="uim.ailaunchpad.Connection"/>
+        <EntitySet Name="ResourceGroups" EntityType="uim.ailaunchpad.ResourceGroup"/>
+        <EntitySet Name="Scenarios" EntityType="uim.ailaunchpad.Scenario"/>
+        <EntitySet Name="Configurations" EntityType="uim.ailaunchpad.Configuration"/>
+        <EntitySet Name="Executions" EntityType="uim.ailaunchpad.Execution"/>
+        <EntitySet Name="Deployments" EntityType="uim.ailaunchpad.Deployment"/>
+        <EntitySet Name="Models" EntityType="uim.ailaunchpad.Model"/>
+        <EntitySet Name="Datasets" EntityType="uim.ailaunchpad.Dataset"/>
+        <EntitySet Name="PromptCollections" EntityType="uim.ailaunchpad.PromptCollection"/>
+        <EntitySet Name="Prompts" EntityType="uim.ailaunchpad.Prompt"/>
+        <EntitySet Name="Tiles" EntityType="uim.ailaunchpad.Tile"/>
+        <EntitySet Name="LaunchpadTiles" EntityType="uim.ailaunchpad.LaunchpadTile"/>
+        <EntitySet Name="Users" EntityType="uim.ailaunchpad.User"/>
+        <EntitySet Name="Roles" EntityType="uim.ailaunchpad.Role"/>
+        <EntitySet Name="LogEntries" EntityType="uim.ailaunchpad.LogEntry"/>
+        <Singleton Name="Statistics" Type="uim.ailaunchpad.Statistic"/>
+        <ActionImport Name="ValidateConnection" Action="uim.ailaunchpad.ValidateConnection"/>
+        <ActionImport Name="StopExecution" Action="uim.ailaunchpad.StopExecution"/>
+        <ActionImport Name="StopDeployment" Action="uim.ailaunchpad.StopDeployment"/>
+        <ActionImport Name="StartDeployment" Action="uim.ailaunchpad.StartDeployment"/>
+        <ActionImport Name="RunPrompt" Action="uim.ailaunchpad.RunPrompt"/>
+        <ActionImport Name="Reconcile" Action="uim.ailaunchpad.Reconcile"/>
+        <ActionImport Name="PurgeLogs" Action="uim.ailaunchpad.PurgeLogs"/>
+        <ActionImport Name="RestoreDefaultTiles" Action="uim.ailaunchpad.RestoreDefaultTiles"/>
+        <ActionImport Name="SeedDemoData" Action="uim.ailaunchpad.SeedDemoData"/>
+      </EntityContainer>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/checked"><Annotation Term="Common.Label" String="Checked"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/started"><Annotation Term="Common.Label" String="Started"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/completed"><Annotation Term="Common.Label" String="Completed"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/failed"><Annotation Term="Common.Label" String="Failed"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/deployed"><Annotation Term="Common.Label" String="Deployed"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/dead"><Annotation Term="Common.Label" String="Dead"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/expired"><Annotation Term="Common.Label" String="Expired"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/summary"><Annotation Term="Common.Label" String="Summary"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ReconcileSummary/messages"><Annotation Term="Common.Label" String="Messages"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptRunResult/promptId"><Annotation Term="Common.Label" String="Prompt"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptRunResult/promptVersion"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptRunResult/modelName"><Annotation Term="Common.Label" String="Model"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptRunResult/renderedPrompt"><Annotation Term="Common.Label" String="Prompt"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptRunResult/output"><Annotation Term="Common.Label" String="Output"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptRunResult/promptTokens"><Annotation Term="Common.Label" String="Prompt Tokens"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptRunResult/completionTokens"><Annotation Term="Common.Label" String="Completion Tokens"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptRunResult/latencyMs"><Annotation Term="Common.Label" String="Latency (ms)"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PurgeResult/entries"><Annotation Term="Common.Label" String="Entries"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.TileResult/tiles"><Annotation Term="Common.Label" String="Tiles"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/id"><Annotation Term="Common.Label" String="Workspace"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/connectionCount"><Annotation Term="Common.Label" String="Connections"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/promptCollectionCount"><Annotation Term="Common.Label" String="Prompt Collections"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Workspace">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Workspace"/><PropertyValue Property="TypeNamePlural" String="Workspaces"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="connectionCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="promptCollectionCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Workspaces">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/id"><Annotation Term="Common.Label" String="Connection"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/workspaceId"><Annotation Term="Common.Label" String="Workspace"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/connectionType"><Annotation Term="Common.Label" String="Type"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/url"><Annotation Term="Common.Label" String="Service URL"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/authUrl"><Annotation Term="Common.Label" String="Auth URL"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/clientId"><Annotation Term="Common.Label" String="Client ID"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/clientSecret"><Annotation Term="Common.Label" String="Client Secret"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/hasSecret"><Annotation Term="Common.Label" String="Secret Set"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/defaultResourceGroup"><Annotation Term="Common.Label" String="Default Resource Group"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/statusMessage"><Annotation Term="Common.Label" String="Status Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/lastValidatedAt"><Annotation Term="Common.Label" String="Validated At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/resourceGroupCount"><Annotation Term="Common.Label" String="Resource Groups"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/scenarioCount"><Annotation Term="Common.Label" String="Scenarios"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Connection">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Connection"/><PropertyValue Property="TypeNamePlural" String="Connections"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="connectionType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="workspaceName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>workspaceId</PropertyPath><PropertyPath>connectionType</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Connections">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/id"><Annotation Term="Common.Label" String="Resource Group"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/connectionId"><Annotation Term="Common.Label" String="Connection"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/connectionName"><Annotation Term="Common.Label" String="Connection Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/labelsText"><Annotation Term="Common.Label" String="Labels"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/activeExecutions"><Annotation Term="Common.Label" String="Active Executions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/activeDeployments"><Annotation Term="Common.Label" String="Active Deployments"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.ResourceGroup">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Resource Group"/><PropertyValue Property="TypeNamePlural" String="Resource Groups"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="connectionName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="labelsText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeExecutions"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeDeployments"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>connectionId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/ResourceGroups">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/id"><Annotation Term="Common.Label" String="Scenario"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/connectionId"><Annotation Term="Common.Label" String="Connection"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/connectionName"><Annotation Term="Common.Label" String="Connection Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/executables"><Annotation Term="Common.Label" String="Executables"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/executablesText"><Annotation Term="Common.Label" String="Executables"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/labelsText"><Annotation Term="Common.Label" String="Labels"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/configurationCount"><Annotation Term="Common.Label" String="Configurations"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/executionCount"><Annotation Term="Common.Label" String="Executions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/deploymentCount"><Annotation Term="Common.Label" String="Deployments"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/modelCount"><Annotation Term="Common.Label" String="Models"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/datasetCount"><Annotation Term="Common.Label" String="Datasets"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Scenario">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Scenario"/><PropertyValue Property="TypeNamePlural" String="Scenarios"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="connectionName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executablesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurationCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executionCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deploymentCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>connectionId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Scenarios">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/id"><Annotation Term="Common.Label" String="Configuration"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/scenarioName"><Annotation Term="Common.Label" String="Scenario Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/connectionId"><Annotation Term="Common.Label" String="Connection"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/executableId"><Annotation Term="Common.Label" String="Executable"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/parameters"><Annotation Term="Common.Label" String="Parameters"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/parametersText"><Annotation Term="Common.Label" String="Parameters"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/inputArtifacts"><Annotation Term="Common.Label" String="Input Artifacts"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/inputArtifactsText"><Annotation Term="Common.Label" String="Input Artifacts"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/executionCount"><Annotation Term="Common.Label" String="Executions"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/deploymentCount"><Annotation Term="Common.Label" String="Deployments"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/inUse"><Annotation Term="Common.Label" String="In Use"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Configuration">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Configuration"/><PropertyValue Property="TypeNamePlural" String="Configurations"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executableId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executableId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="parametersText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executionCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deploymentCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>scenarioId</PropertyPath><PropertyPath>executableId</PropertyPath><PropertyPath>connectionId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Configurations">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/id"><Annotation Term="Common.Label" String="Execution"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/configurationId"><Annotation Term="Common.Label" String="Configuration"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/configurationName"><Annotation Term="Common.Label" String="Configuration Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/scenarioName"><Annotation Term="Common.Label" String="Scenario Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/connectionId"><Annotation Term="Common.Label" String="Connection"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/statusMessage"><Annotation Term="Common.Label" String="Status Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/startedAt"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/completedAt"><Annotation Term="Common.Label" String="Completed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/durationSeconds"><Annotation Term="Common.Label" String="Duration (s)"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Execution">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Execution"/><PropertyValue Property="TypeNamePlural" String="Executions"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="statusMessage"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurationName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroupId"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="startedAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="durationSeconds"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>scenarioId</PropertyPath><PropertyPath>configurationId</PropertyPath><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>connectionId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Executions">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/id"><Annotation Term="Common.Label" String="Deployment"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/configurationId"><Annotation Term="Common.Label" String="Configuration"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/configurationName"><Annotation Term="Common.Label" String="Configuration Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/scenarioName"><Annotation Term="Common.Label" String="Scenario Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/connectionId"><Annotation Term="Common.Label" String="Connection"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/resourceGroupId"><Annotation Term="Common.Label" String="Resource Group"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/status"><Annotation Term="Common.Label" String="Status"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/statusMessage"><Annotation Term="Common.Label" String="Status Message"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/deploymentUrl"><Annotation Term="Common.Label" String="Inference URL"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/minReplicas"><Annotation Term="Common.Label" String="Min Replicas"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/maxReplicas"><Annotation Term="Common.Label" String="Max Replicas"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/ttlMinutes"><Annotation Term="Common.Label" String="TTL (min)"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/startedAt"><Annotation Term="Common.Label" String="Started At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/stoppedAt"><Annotation Term="Common.Label" String="Stopped At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/expiresAt"><Annotation Term="Common.Label" String="Expires At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Deployment">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Deployment"/><PropertyValue Property="TypeNamePlural" String="Deployments"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deploymentUrl"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurationName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="deploymentUrl"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="maxReplicas"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="startedAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>status</PropertyPath><PropertyPath>scenarioId</PropertyPath><PropertyPath>configurationId</PropertyPath><PropertyPath>resourceGroupId</PropertyPath><PropertyPath>connectionId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Deployments">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/id"><Annotation Term="Common.Label" String="Model"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/scenarioName"><Annotation Term="Common.Label" String="Scenario Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/executionId"><Annotation Term="Common.Label" String="Execution"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/version"><Annotation Term="Common.Label" String="Version"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/url"><Annotation Term="Common.Label" String="URL"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/sizeMiB"><Annotation Term="Common.Label" String="Size (MiB)"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/labelsText"><Annotation Term="Common.Label" String="Labels"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Model">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Model"/><PropertyValue Property="TypeNamePlural" String="Models"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="version"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="version"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sizeMiB"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executionId"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>scenarioId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>executionId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Models">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/id"><Annotation Term="Common.Label" String="Dataset"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/scenarioId"><Annotation Term="Common.Label" String="Scenario"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/scenarioName"><Annotation Term="Common.Label" String="Scenario Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/url"><Annotation Term="Common.Label" String="URL"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/sizeMiB"><Annotation Term="Common.Label" String="Size (MiB)"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/labels"><Annotation Term="Common.Label" String="Labels"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/labelsText"><Annotation Term="Common.Label" String="Labels"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Dataset">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Dataset"/><PropertyValue Property="TypeNamePlural" String="Datasets"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarioName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="url"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sizeMiB"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>scenarioId</PropertyPath><PropertyPath>status</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Datasets">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/id"><Annotation Term="Common.Label" String="Collection"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/workspaceId"><Annotation Term="Common.Label" String="Workspace"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/workspaceName"><Annotation Term="Common.Label" String="Workspace Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/promptCount"><Annotation Term="Common.Label" String="Prompts"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.PromptCollection">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Prompt Collection"/><PropertyValue Property="TypeNamePlural" String="Prompt Collections"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="workspaceName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="promptCount"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>workspaceId</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/PromptCollections">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/id"><Annotation Term="Common.Label" String="Prompt"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/collectionId"><Annotation Term="Common.Label" String="Collection"/><Annotation Term="Core.Immutable" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/collectionName"><Annotation Term="Common.Label" String="Collection Name"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/modelName"><Annotation Term="Common.Label" String="Model"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/modelVersion"><Annotation Term="Common.Label" String="Model Version"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/systemMessage"><Annotation Term="Common.Label" String="System Message"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/userMessage"><Annotation Term="Common.Label" String="User Message"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/temperature"><Annotation Term="Common.Label" String="Temperature"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/maxTokens"><Annotation Term="Common.Label" String="Max Tokens"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/topP"><Annotation Term="Common.Label" String="Top P"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/status"><Annotation Term="Common.Label" String="Status"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/version"><Annotation Term="Common.Label" String="Version"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/inputParams"><Annotation Term="Common.Label" String="Inputs"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/inputParamsText"><Annotation Term="Common.Label" String="Inputs"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/lastOutput"><Annotation Term="Common.Label" String="Last Output"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/lastRunAt"><Annotation Term="Common.Label" String="Last Run"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/runCount"><Annotation Term="Common.Label" String="Runs"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Prompt">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Prompt"/><PropertyValue Property="TypeNamePlural" String="Prompts"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="modelName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="collectionName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="modelName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="status"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="version"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="inputParamsText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="runCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>collectionId</PropertyPath><PropertyPath>status</PropertyPath><PropertyPath>modelName</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Prompts">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/id"><Annotation Term="Common.Label" String="Tile"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/subtitle"><Annotation Term="Common.Label" String="Subtitle"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/info"><Annotation Term="Common.Label" String="Footer"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/icon"><Annotation Term="Common.Label" String="Icon"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/groupName"><Annotation Term="Common.Label" String="Group"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/sortOrder"><Annotation Term="Common.Label" String="Order"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/targetType"><Annotation Term="Common.Label" String="Target Type"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/target"><Annotation Term="Common.Label" String="Target"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/kpi"><Annotation Term="Common.Label" String="KPI"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/kpiUnit"><Annotation Term="Common.Label" String="KPI Unit"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/requiredScope"><Annotation Term="Common.Label" String="Required Scope"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/visible"><Annotation Term="Common.Label" String="Visible"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Tile">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Tile"/><PropertyValue Property="TypeNamePlural" String="Tiles"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="title"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subtitle"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="title"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="groupName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="sortOrder"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="target"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kpi"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="requiredScope"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="visible"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>groupName</PropertyPath><PropertyPath>targetType</PropertyPath><PropertyPath>visible</PropertyPath><PropertyPath>requiredScope</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Tiles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/id"><Annotation Term="Common.Label" String="Tile"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/title"><Annotation Term="Common.Label" String="Title"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/subtitle"><Annotation Term="Common.Label" String="Subtitle"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/info"><Annotation Term="Common.Label" String="Footer"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/icon"><Annotation Term="Common.Label" String="Icon"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/groupName"><Annotation Term="Common.Label" String="Group"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/sortOrder"><Annotation Term="Common.Label" String="Order"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/targetType"><Annotation Term="Common.Label" String="Target Type"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/target"><Annotation Term="Common.Label" String="Target"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/kpi"><Annotation Term="Common.Label" String="KPI"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/kpiUnit"><Annotation Term="Common.Label" String="KPI Unit"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/requiredScope"><Annotation Term="Common.Label" String="Required Scope"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile/kpiValue"><Annotation Term="Common.Label" String="KPI Value"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LaunchpadTile">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Tile"/><PropertyValue Property="TypeNamePlural" String="Launchpad"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="title"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subtitle"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="groupName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="title"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="subtitle"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="kpiValue"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>groupName</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/LaunchpadTiles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.User/id"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/displayName"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/email"><Annotation Term="Common.Label" String="E-Mail"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/password"><Annotation Term="Common.Label" String="Password"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/roles"><Annotation Term="Common.Label" String="Roles"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/rolesText"><Annotation Term="Common.Label" String="Roles"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/scopes"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/scopesText"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/locked"><Annotation Term="Common.Label" String="Locked"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/temporarilyLocked"><Annotation Term="Common.Label" String="Temporarily Locked"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/failedLogins"><Annotation Term="Common.Label" String="Failed Logins"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/lastLoginAt"><Annotation Term="Common.Label" String="Last Login"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.User">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="User"/><PropertyValue Property="TypeNamePlural" String="Users"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="displayName"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="email"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="rolesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="locked"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="lastLoginAt"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>locked</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Users">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/id"><Annotation Term="Common.Label" String="Role"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/name"><Annotation Term="Common.Label" String="Name"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/description"><Annotation Term="Common.Label" String="Description"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/scopes"><Annotation Term="Common.Label" String="Scopes"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/scopesText"><Annotation Term="Common.Label" String="Scopes"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/builtIn"><Annotation Term="Common.Label" String="Built-in"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/userCount"><Annotation Term="Common.Label" String="Users"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Role">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Role"/><PropertyValue Property="TypeNamePlural" String="Roles"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="description"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="id"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="name"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scopesText"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="builtIn"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="userCount"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>builtIn</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/Roles">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/id"><Annotation Term="Common.Label" String="Entry"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/category"><Annotation Term="Common.Label" String="Category"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/severity"><Annotation Term="Common.Label" String="Severity"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/eventType"><Annotation Term="Common.Label" String="Event"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/subject"><Annotation Term="Common.Label" String="Subject"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/actor"><Annotation Term="Common.Label" String="User"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/message"><Annotation Term="Common.Label" String="Message"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/details"><Annotation Term="Common.Label" String="Details"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/tenantId"><Annotation Term="Common.Label" String="Tenant"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/createdAt"><Annotation Term="Common.Label" String="Created At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/createdBy"><Annotation Term="Common.Label" String="Created By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/updatedAt"><Annotation Term="Common.Label" String="Changed At"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry/updatedBy"><Annotation Term="Common.Label" String="Changed By"/><Annotation Term="Core.Computed" Bool="true"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.LogEntry">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Log Entry"/><PropertyValue Property="TypeNamePlural" String="Audit Log"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="message"/></Record></PropertyValue><PropertyValue Property="Description"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="createdAt"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="severity"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="category"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="eventType"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="actor"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="message"/></Record></Collection></Annotation>
+        <Annotation Term="UI.SelectionFields"><Collection><PropertyPath>category</PropertyPath><PropertyPath>severity</PropertyPath><PropertyPath>eventType</PropertyPath><PropertyPath>actor</PropertyPath><PropertyPath>subject</PropertyPath></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService/LogEntries">
+        <Annotation Term="Capabilities.InsertRestrictions"><Record><PropertyValue Property="Insertable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions"><Record><PropertyValue Property="Updatable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions"><Record><PropertyValue Property="Deletable" Bool="false"/></Record></Annotation>
+        <Annotation Term="Capabilities.SearchRestrictions"><Record><PropertyValue Property="Searchable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.CountRestrictions"><Record><PropertyValue Property="Countable" Bool="true"/></Record></Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions"><Record><PropertyValue Property="Navigability"><EnumMember>Capabilities.NavigationType/None</EnumMember></PropertyValue></Record></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/tenantId"><Annotation Term="Common.Label" String="Tenant"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/workspaces"><Annotation Term="Common.Label" String="Workspaces"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/connections"><Annotation Term="Common.Label" String="Connections"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/activeConnections"><Annotation Term="Common.Label" String="Active Connections"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/resourceGroups"><Annotation Term="Common.Label" String="Resource Groups"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/scenarios"><Annotation Term="Common.Label" String="Scenarios"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/configurations"><Annotation Term="Common.Label" String="Configurations"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/executions"><Annotation Term="Common.Label" String="Executions"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/runningExecutions"><Annotation Term="Common.Label" String="Running Executions"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/failedExecutions"><Annotation Term="Common.Label" String="Failed Executions"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/deployments"><Annotation Term="Common.Label" String="Deployments"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/runningDeployments"><Annotation Term="Common.Label" String="Running Deployments"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/models"><Annotation Term="Common.Label" String="Models"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/datasets"><Annotation Term="Common.Label" String="Datasets"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/promptCollections"><Annotation Term="Common.Label" String="Prompt Collections"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/prompts"><Annotation Term="Common.Label" String="Prompts"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/activePrompts"><Annotation Term="Common.Label" String="Active Prompts"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/promptRuns"><Annotation Term="Common.Label" String="Prompt Runs"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/users"><Annotation Term="Common.Label" String="Users"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/lockedUsers"><Annotation Term="Common.Label" String="Locked Users"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/roles"><Annotation Term="Common.Label" String="Roles"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/tiles"><Annotation Term="Common.Label" String="Tiles"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/logEntriesLast24h"><Annotation Term="Common.Label" String="Log Entries (24 h)"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic/warningsLast24h"><Annotation Term="Common.Label" String="Warnings (24 h)"/></Annotations>
+      <Annotations Target="uim.ailaunchpad.Statistic">
+        <Annotation Term="UI.HeaderInfo"><Record Type="UI.HeaderInfoType"><PropertyValue Property="TypeName" String="Statistics"/><PropertyValue Property="TypeNamePlural" String="Statistics"/><PropertyValue Property="Title"><Record Type="UI.DataField"><PropertyValue Property="Value" Path="tenantId"/></Record></PropertyValue></Record></Annotation>
+        <Annotation Term="UI.LineItem"><Collection><Record Type="UI.DataField"><PropertyValue Property="Value" Path="workspaces"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="connections"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="activeConnections"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="resourceGroups"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="scenarios"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="configurations"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="executions"/></Record><Record Type="UI.DataField"><PropertyValue Property="Value" Path="runningExecutions"/></Record></Collection></Annotation>
+      </Annotations>
+      <Annotations Target="uim.ailaunchpad.AiLaunchpadService"><Annotation Term="Capabilities.BatchSupported" Bool="true"/><Annotation Term="Capabilities.BatchSupport"><Record><PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="false"/><PropertyValue Property="SupportedFormats"><Collection><String>multipart/mixed</String><String>application/json</String></Collection></PropertyValue></Record></Annotation><Annotation Term="Common.Label" String="AI Launchpad"/></Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

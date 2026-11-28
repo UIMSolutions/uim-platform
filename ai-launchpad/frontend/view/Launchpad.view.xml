@@ -1,0 +1,48 @@
+<mvc:View controllerName="uim.ailaunchpad.controller.Launchpad"
+  xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" height="100%">
+  <Page id="launchpadPage" showHeader="false" class="ailpLaunchpad sapUiContentPadding">
+    <content>
+      <VBox class="ailpHero">
+        <HBox justifyContent="SpaceBetween" alignItems="End" wrap="Wrap">
+          <VBox class="sapUiSmallMarginBottom">
+            <Title id="welcome" level="H1" titleStyle="H3"
+              text="{= ${session>/displayName} ? ${i18n>welcome} + ', ' + ${session>/displayName} : ${i18n>welcome} }"/>
+            <Text text="{i18n>launchpadIntro}"/>
+          </VBox>
+          <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+            <SearchField id="tileSearch" width="16rem" placeholder="{i18n>searchTiles}" liveChange=".onFilterTiles"
+              value="{launchpad>/query}"/>
+            <Button id="seedButton" text="{i18n>seed}" icon="sap-icon://add-product" class="sapUiTinyMarginBegin"
+              press=".onSeed" visible="{= ${launchpad>/empty} &amp;&amp; ${session>/canManage} }"/>
+            <Button icon="sap-icon://refresh" tooltip="{i18n>refresh}" class="sapUiTinyMarginBegin" press=".onRefresh"/>
+          </HBox>
+        </HBox>
+        <MessageStrip id="emptyStrip" text="{i18n>launchpadEmpty}" type="Information" showIcon="true"
+          visible="{= ${launchpad>/empty} &amp;&amp; !${launchpad>/busy} }" class="sapUiSmallMarginTop"/>
+        <MessageStrip id="noTilesStrip" text="{i18n>noTiles}" type="Warning" showIcon="true"
+          visible="{= ${launchpad>/groups}.length === 0 &amp;&amp; !${launchpad>/busy} }" class="sapUiSmallMarginTop"/>
+      </VBox>
+      <VBox id="groups" busy="{launchpad>/busy}" busyIndicatorDelay="0"
+        items="{path: 'launchpad>/groups', templateShareable: false}">
+        <items>
+          <VBox>
+            <Title text="{launchpad>name}" level="H2" titleStyle="H5" class="ailpGroupTitle"/>
+            <HBox wrap="Wrap" items="{path: 'launchpad>tiles', templateShareable: false}">
+              <items>
+                <GenericTile class="ailpTile" header="{launchpad>title}" subheader="{launchpad>subtitle}"
+                  press=".onTilePress" url="{= ${launchpad>targetType} === 'url' ? ${launchpad>target} : '' }"
+                  tooltip="{launchpad>subtitle}">
+                  <TileContent unit="{launchpad>kpiUnit}" footer="{launchpad>info}">
+                    <NumericContent value="{path: 'launchpad>kpiValue', formatter: '.formatter.kpi'}" nullifyValue="false"
+                      icon="{launchpad>icon}" withMargin="false" animateTextChange="false"
+                      valueColor="{parts: ['launchpad>kpi', 'launchpad>kpiValue'], formatter: '.formatter.kpiColor'}"/>
+                  </TileContent>
+                </GenericTile>
+              </items>
+            </HBox>
+          </VBox>
+        </items>
+      </VBox>
+    </content>
+  </Page>
+</mvc:View>

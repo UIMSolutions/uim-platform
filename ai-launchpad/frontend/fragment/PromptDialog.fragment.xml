@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+  <Dialog title="{= %{view>/form/prompt/edit} ? ${i18n>editPrompt} : ${i18n>createPrompt} }" contentWidth="44rem" draggable="true" resizable="true">
+    <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4">
+      <Label text="{i18n>colId}" required="true"/>
+      <Input value="{view>/form/prompt/id}" enabled="{= !%{view>/form/prompt/edit} }" placeholder="{i18n>idPrompt}"/>
+      <Label text="{i18n>colCollection}" required="true"/>
+      <Select selectedKey="{view>/form/prompt/collectionId}" enabled="{= !%{view>/form/prompt/edit} }" forceSelection="false"
+        items="{path: '/PromptCollections', parameters: {$orderby: 'name', $select: 'id,name'}, templateShareable: false}">
+        <core:Item key="{id}" text="{name}"/>
+      </Select>
+      <Label text="{i18n>colName}" required="true"/>
+      <Input value="{view>/form/prompt/name}"/>
+      <Label text="{i18n>colModel}"/>
+      <HBox>
+        <Input value="{view>/form/prompt/modelName}" width="14rem" placeholder="gpt-4o-mini"/>
+        <Input value="{view>/form/prompt/modelVersion}" width="8rem" class="sapUiTinyMarginBegin" placeholder="latest"/>
+      </HBox>
+      <Label text="{i18n>colSystemMessage}"/>
+      <TextArea value="{view>/form/prompt/systemMessage}" rows="3" growing="true" class="ailpMono"/>
+      <Label text="{i18n>colUserMessage}" required="true"/>
+      <TextArea value="{view>/form/prompt/userMessage}" rows="5" growing="true" class="ailpMono" placeholder="{i18n>placeholderHint}"/>
+      <Label text="{i18n>colTemperature}"/>
+      <StepInput value="{view>/form/prompt/temperature}" min="0" max="2" step="0.1" displayValuePrecision="1" width="9rem"/>
+      <Label text="{i18n>colMaxTokens}"/>
+      <StepInput value="{view>/form/prompt/maxTokens}" min="1" max="32768" step="64" width="9rem"/>
+      <Label text="{i18n>colTopP}"/>
+      <StepInput value="{view>/form/prompt/topP}" min="0" max="1" step="0.05" displayValuePrecision="2" width="9rem"/>
+      <Label text="{i18n>colStatus}"/>
+      <Select selectedKey="{view>/form/prompt/status}">
+        <core:Item key="draft" text="{i18n>enum_draft}"/>
+        <core:Item key="active" text="{i18n>enum_active}"/>
+        <core:Item key="archived" text="{i18n>enum_archived}"/>
+      </Select>
+      <Label text="{i18n>colDescription}"/>
+      <Input value="{view>/form/prompt/description}"/>
+    </form:SimpleForm>
+    <beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave"/></beginButton>
+    <endButton><Button text="{i18n>cancel}" press=".onCloseDialog"/></endButton>
+  </Dialog>
+</core:FragmentDefinition>
